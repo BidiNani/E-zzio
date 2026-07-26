@@ -1,7 +1,7 @@
-*.db
-*.sqlite
-*.sqlite3
+# E-ZZIO Runtime Databases
+data/*.db
+data/*.sqlite
+data/*.wal
 __pycache__/
 *.pyc
 .pytest_cache/
-reports/
