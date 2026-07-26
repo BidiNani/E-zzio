@@ -1,0 +1,6 @@
+{"provider": "gemini", "ok": false, "model": "gemini-2.0-flash", "status": 429, "blocked": false, "reason": null, "logged_prompt": "[prompt_logging_disabled]", "created_at": "2026-06-10T15:21:12"}
+{"provider": "gemini", "ok": false, "model": "gemini-2.0-flash", "status": 429, "blocked": false, "reason": null, "logged_prompt": "[prompt_logging_disabled]", "created_at": "2026-06-10T15:21:14"}
+{"provider": "gemini", "ok": false, "model": "gemini-2.0-flash", "status": 429, "blocked": false, "reason": null, "logged_prompt": "[prompt_logging_disabled]", "created_at": "2026-06-10T15:21:29"}
+{"provider": "gemini", "ok": false, "model": "gemini-2.0-flash", "status": 429, "blocked": false, "reason": null, "logged_prompt": "[prompt_logging_disabled]", "created_at": "2026-06-10T15:21:32"}
+{"provider": "gemini", "ok": false, "model": "gemini-2.0-flash", "status": 429, "blocked": false, "reason": null, "logged_prompt": "[prompt_logging_disabled]", "created_at": "2026-06-10T15:22:25"}
+{"provider": "gemini", "ok": false, "model": "gemini-2.0-flash", "status": 429, "blocked": false, "reason": null, "logged_prompt": "[prompt_logging_disabled]", "created_at": "2026-06-10T15:22:27"}

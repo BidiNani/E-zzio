@@ -1,0 +1,13 @@
+{
+  "id": "20260610_112655_f171536749",
+  "kind": "omni.command.reply",
+  "created_at": "2026-06-10T11:26:55",
+  "payload": {
+    "target": "powershell",
+    "user": "enrik",
+    "input": "/truth",
+    "answer": "{\n  \"ok\": true,\n  \"truth_policy\": \"E-ZZIO doit distinguer prêt, configuré, connecté et actif.\",\n  \"pc\": {\n    \"state\": \"active\",\n    \"detail\": \"API locale E-ZZIO active sur le PC.\"\n  },\n  \"smartphone\": {\n    \"state\": \"bridge_ready\",\n    \"detail\": \"Bridge LAN/API prêt. Accès possible via navigateur ou future app si start_ezzio_lan.ps1 est lancé.\",\n    \"not_yet\": [\n      \"application APK finale non confirmée\",\n      \"commandes vocales non intégrées\"\n    ]\n  },\n  \"discord\": {\n    \"state\": \"ready_not_configured\",\n    \"webhook_configured\": false,\n    \"bot_configured\": false,\n    \"send_enabled\": false,\n    \"detail\": \"Connecteur officiel prêt. Envoi réel verrouillé par EZZIO_BRIDGE_ALLOW_SEND.\"\n  },\n  \"messenger\": {\n    \"state\": \"ready_not_configured\",\n    \"page_token_configured\": false,\n    \"recipient_configured\": false,\n    \"send_enabled\": false,\n    \"detail\": \"Connecteur Meta Page prêt côté API. Nécessite token Page + PSID.\"\n  },\n  \"ads\": {\n    \"state\": \"forbidden\",\n    \"detail\": \"Aucune pub, aucun tracking, aucun sponsor.\"\n  },\n  \"gpu\": {\n    \"state\": \"untouched\",\n    \"detail\": \"CPU/RAM only. GTX réservée.\"\n  }\n}",
+    "model": "command-router",
+    "ok": true
+  }
+}

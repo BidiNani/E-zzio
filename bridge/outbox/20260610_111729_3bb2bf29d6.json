@@ -1,0 +1,15 @@
+{
+  "id": "20260610_111729_3bb2bf29d6",
+  "kind": "omni.reply",
+  "created_at": "2026-06-10T11:17:29",
+  "payload": {
+    "target": "repair-test",
+    "user": "enrik",
+    "input": "E-ZZIO, réponds court : le bridge partout est-il réparé ?",
+    "answer": "Le bridge part everywhere est généralement réparé, mais il serait mieux de préciser si vous faites référence à un pont spécifique ou à un contexte particulier.",
+    "model": "qwen3:1.7b",
+    "elapsed_ms": 19085,
+    "ok": true,
+    "error": null
+  }
+}

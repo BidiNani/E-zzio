@@ -1,0 +1,408 @@
+{
+  "ok": true,
+  "version": "v2.12-supervisor-watchdog-mobile-home",
+  "created_at": "2026-06-10T11:31:59",
+  "summary": {
+    "checks_total": 7,
+    "checks_failed": 0,
+    "cpu_ram_only": true,
+    "no_ads": true
+  },
+  "checks": {
+    "system": {
+      "ok": true,
+      "name": "system",
+      "data": {
+        "time": "2026-06-10T11:31:59",
+        "python": "3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]",
+        "project_root": "G:\\AI\\E-zzio",
+        "cpu": {
+          "physical_cores": 12,
+          "logical_cores": 24,
+          "percent": 16.5
+        },
+        "ram": {
+          "total_gb": 31.93,
+          "available_gb": 19.86,
+          "used_percent": 37.8
+        },
+        "disk": {
+          "root": "G:\\",
+          "total_gb": 119.23,
+          "free_gb": 45.18,
+          "used_percent": 62.1
+        },
+        "lan_ips": [
+          "192.168.1.10",
+          "172.30.192.1",
+          "172.30.176.1"
+        ],
+        "env_policy": {
+          "OLLAMA_NUM_GPU": "0",
+          "CUDA_VISIBLE_DEVICES": "",
+          "GGML_CUDA": "0",
+          "EZZIO_GPU_POLICY": "cpu_ram_only",
+          "EZZIO_NO_ADS": "true",
+          "EZZIO_NO_TRACKING": "true",
+          "EZZIO_NO_SPONSORS": "true"
+        }
+      }
+    },
+    "routers": {
+      "ok": true,
+      "name": "routers",
+      "data": {
+        "loaded_count": 14,
+        "failed_count": 0,
+        "loaded": [
+          "routers.system",
+          "routers.chat",
+          "routers.memory",
+          "routers.actions",
+          "routers.models",
+          "routers.autonomy",
+          "routers.cloud",
+          "routers.knowledge",
+          "routers.compress",
+          "routers.forge",
+          "routers.vision",
+          "routers.omnipresence",
+          "routers.omni_bridge",
+          "routers.supervisor"
+        ],
+        "failed": {}
+      }
+    },
+    "forge": {
+      "ok": true,
+      "name": "forge",
+      "data": {
+        "version": "v2.9-indispensable-core",
+        "policy": {
+          "global": "CPU/RAM only",
+          "ollama_gpu": "disabled",
+          "comfyui_gpu": "disabled by --cpu script",
+          "ffmpeg": "CPU encoding only",
+          "apk_build": "CPU build tools only",
+          "dangerous_filesystem": "sandboxed_outputs_only"
+        },
+        "paths": {
+          "forge_root": "G:\\AI\\E-zzio\\forge",
+          "outputs": "G:\\AI\\E-zzio\\forge\\outputs",
+          "workflows": "G:\\AI\\E-zzio\\forge\\workflows",
+          "mobile": "G:\\AI\\E-zzio\\forge\\mobile",
+          "comfy_root": "G:\\AI\\external\\ComfyUI"
+        },
+        "environment_lock": {
+          "OLLAMA_NUM_GPU": "0",
+          "CUDA_VISIBLE_DEVICES": "",
+          "GGML_CUDA": "0",
+          "CUDA_DEVICE_ORDER": "PCI_BUS_ID",
+          "EZZIO_GPU_POLICY": "cpu_ram_only",
+          "EZZIO_NUM_GPU": "0",
+          "PYTORCH_ENABLE_MPS_FALLBACK": "0"
+        },
+        "availability": {
+          "comfyui_installed": true,
+          "comfyui_online": true,
+          "ffmpeg": true,
+          "node": true,
+          "npm": true,
+          "java": true,
+          "android_home": false
+        },
+        "practical_note": {
+          "image_cpu": "possible mais lent",
+          "video_cpu": "préférer keyframes + ffmpeg",
+          "apk_cpu": "OK avec Node + Android SDK",
+          "vision_cpu": "qwen2.5vl:3b via Ollama CPU-only"
+        }
+      }
+    },
+    "vision": {
+      "ok": true,
+      "name": "vision",
+      "data": {
+        "version": "v2.9.3-vision-windows-tactical-no-leak",
+        "model": "qwen2.5vl:3b",
+        "fallback_text_model": "qwen3:1.7b",
+        "cpu_ram_only": true,
+        "prompt_profile": "windows_ezzio_tactical_no_leak",
+        "paths": {
+          "vision_root": "G:\\AI\\E-zzio\\forge\\vision",
+          "inbox": "G:\\AI\\E-zzio\\forge\\vision\\inbox",
+          "outputs": "G:\\AI\\E-zzio\\forge\\vision\\outputs"
+        },
+        "capabilities": {
+          "image_upload": true,
+          "image_path_analysis": true,
+          "screenshot_debug": true,
+          "ui_analysis": true,
+          "creative_prompt_help": true,
+          "auto_routing_hint": true,
+          "windows_powershell_bias": true,
+          "prompt_leak_cleanup": true
+        }
+      }
+    },
+    "omni": {
+      "ok": true,
+      "name": "omni",
+      "data": {
+        "version": "v2.11.4-truth-guard-omni-commands",
+        "ok": true,
+        "identity": {
+          "name": "E-ZZIO",
+          "meaning": "ami IA local et organisme logiciel d'Enrik",
+          "bridge_definition": "pont logiciel entre API PC, smartphone LAN, Discord/Messenger officiels"
+        },
+        "models": {
+          "fast": "qwen3:1.7b",
+          "companion": "hermes3:8b"
+        },
+        "commands": [
+          {
+            "command": "/help",
+            "description": "Liste des commandes."
+          },
+          {
+            "command": "/whoami",
+            "description": "Identité E-ZZIO."
+          },
+          {
+            "command": "/truth",
+            "description": "Ce qui est actif, prêt, ou pas encore configuré."
+          },
+          {
+            "command": "/everywhere",
+            "description": "État PC/smartphone/Discord/Messenger."
+          },
+          {
+            "command": "/status",
+            "description": "État API."
+          },
+          {
+            "command": "/routers",
+            "description": "Routers chargés/échoués."
+          },
+          {
+            "command": "/forge",
+            "description": "État Forge/ComfyUI/FFmpeg/APK."
+          },
+          {
+            "command": "/vision",
+            "description": "État Vision/Yeux."
+          },
+          {
+            "command": "/mobile",
+            "description": "Config smartphone LAN."
+          },
+          {
+            "command": "/discord",
+            "description": "État connecteur Discord."
+          },
+          {
+            "command": "/messenger",
+            "description": "État connecteur Messenger."
+          },
+          {
+            "command": "/noads",
+            "description": "Politique zéro pub/tracking/sponsor."
+          }
+        ],
+        "truth": {
+          "ok": true,
+          "truth_policy": "E-ZZIO doit distinguer prêt, configuré, connecté et actif.",
+          "pc": {
+            "state": "active",
+            "detail": "API locale E-ZZIO active sur le PC."
+          },
+          "smartphone": {
+            "state": "bridge_ready",
+            "detail": "Bridge LAN/API prêt. Accès possible via navigateur ou future app si start_ezzio_lan.ps1 est lancé.",
+            "not_yet": [
+              "application APK finale non confirmée",
+              "commandes vocales non intégrées"
+            ]
+          },
+          "discord": {
+            "state": "ready_not_configured",
+            "webhook_configured": false,
+            "bot_configured": false,
+            "send_enabled": false,
+            "detail": "Connecteur officiel prêt. Envoi réel verrouillé par EZZIO_BRIDGE_ALLOW_SEND."
+          },
+          "messenger": {
+            "state": "ready_not_configured",
+            "page_token_configured": false,
+            "recipient_configured": false,
+            "send_enabled": false,
+            "detail": "Connecteur Meta Page prêt côté API. Nécessite token Page + PSID."
+          },
+          "ads": {
+            "state": "forbidden",
+            "detail": "Aucune pub, aucun tracking, aucun sponsor."
+          },
+          "gpu": {
+            "state": "untouched",
+            "detail": "CPU/RAM only. GTX réservée."
+          }
+        },
+        "mobile": {
+          "ok": true,
+          "name": "E-ZZIO Mobile Bridge",
+          "status": "bridge_ready_not_full_app",
+          "policy": {
+            "local_wifi_only": true,
+            "token_required_for_mobile_reply": true,
+            "ads": "forbidden",
+            "tracking": "forbidden",
+            "gpu": "untouched"
+          },
+          "urls": [
+            {
+              "host": "192.168.1.10",
+              "base_url": "http://192.168.1.10:8000",
+              "status": "http://192.168.1.10:8000/status",
+              "router_status": "http://192.168.1.10:8000/router-status",
+              "mobile_pull": "http://192.168.1.10:8000/omni/mobile/pull",
+              "mobile_inbox": "http://192.168.1.10:8000/omni/mobile/inbox",
+              "omni_reply": "http://192.168.1.10:8000/omni-bridge/reply",
+              "mobile_reply": "http://192.168.1.10:8000/omni-bridge/mobile/reply",
+              "commands": "http://192.168.1.10:8000/omni-bridge/commands",
+              "truth": "http://192.168.1.10:8000/omni-bridge/truth"
+            },
+            {
+              "host": "172.30.192.1",
+              "base_url": "http://172.30.192.1:8000",
+              "status": "http://172.30.192.1:8000/status",
+              "router_status": "http://172.30.192.1:8000/router-status",
+              "mobile_pull": "http://172.30.192.1:8000/omni/mobile/pull",
+              "mobile_inbox": "http://172.30.192.1:8000/omni/mobile/inbox",
+              "omni_reply": "http://172.30.192.1:8000/omni-bridge/reply",
+              "mobile_reply": "http://172.30.192.1:8000/omni-bridge/mobile/reply",
+              "commands": "http://172.30.192.1:8000/omni-bridge/commands",
+              "truth": "http://172.30.192.1:8000/omni-bridge/truth"
+            },
+            {
+              "host": "172.30.176.1",
+              "base_url": "http://172.30.176.1:8000",
+              "status": "http://172.30.176.1:8000/status",
+              "router_status": "http://172.30.176.1:8000/router-status",
+              "mobile_pull": "http://172.30.176.1:8000/omni/mobile/pull",
+              "mobile_inbox": "http://172.30.176.1:8000/omni/mobile/inbox",
+              "omni_reply": "http://172.30.176.1:8000/omni-bridge/reply",
+              "mobile_reply": "http://172.30.176.1:8000/omni-bridge/mobile/reply",
+              "commands": "http://172.30.176.1:8000/omni-bridge/commands",
+              "truth": "http://172.30.176.1:8000/omni-bridge/truth"
+            }
+          ],
+          "token_preview": "05c73...e4db0",
+          "headers": {
+            "X-EZZIO-Mobile-Token": "<token dans secrets/omnipresence.env>"
+          },
+          "commands": [
+            {
+              "command": "/help",
+              "description": "Liste des commandes."
+            },
+            {
+              "command": "/whoami",
+              "description": "Identité E-ZZIO."
+            },
+            {
+              "command": "/truth",
+              "description": "Ce qui est actif, prêt, ou pas encore configuré."
+            },
+            {
+              "command": "/everywhere",
+              "description": "État PC/smartphone/Discord/Messenger."
+            },
+            {
+              "command": "/status",
+              "description": "État API."
+            },
+            {
+              "command": "/routers",
+              "description": "Routers chargés/échoués."
+            },
+            {
+              "command": "/forge",
+              "description": "État Forge/ComfyUI/FFmpeg/APK."
+            },
+            {
+              "command": "/vision",
+              "description": "État Vision/Yeux."
+            },
+            {
+              "command": "/mobile",
+              "description": "Config smartphone LAN."
+            },
+            {
+              "command": "/discord",
+              "description": "État connecteur Discord."
+            },
+            {
+              "command": "/messenger",
+              "description": "État connecteur Messenger."
+            },
+            {
+              "command": "/noads",
+              "description": "Politique zéro pub/tracking/sponsor."
+            }
+          ],
+          "truth": {
+            "state": "bridge_ready",
+            "detail": "Bridge LAN/API prêt. Accès possible via navigateur ou future app si start_ezzio_lan.ps1 est lancé.",
+            "not_yet": [
+              "application APK finale non confirmée",
+              "commandes vocales non intégrées"
+            ]
+          }
+        },
+        "security": {
+          "mobile_token_configured": true,
+          "mobile_token_preview": "05c73...e4db0",
+          "send_enabled": false
+        },
+        "policy": {
+          "cpu_ram_only": true,
+          "gpu": "untouched",
+          "ads": "forbidden",
+          "tracking": "forbidden",
+          "sponsors": "forbidden",
+          "external_send_default": "dry-run/disabled"
+        },
+        "paths": {
+          "bridge": "G:\\AI\\E-zzio\\bridge",
+          "inbox": "G:\\AI\\E-zzio\\bridge\\inbox",
+          "outbox": "G:\\AI\\E-zzio\\bridge\\outbox",
+          "mobile": "G:\\AI\\E-zzio\\bridge\\mobile",
+          "brain_logs": "G:\\AI\\E-zzio\\bridge\\brain",
+          "secrets": "G:\\AI\\E-zzio\\secrets\\omnipresence.env"
+        }
+      }
+    },
+    "models": {
+      "ok": true,
+      "name": "models",
+      "data": {
+        "ok": false,
+        "error": "cannot import name 'status' from 'core.model_registry' (G:\\AI\\E-zzio\\core\\model_registry.py)"
+      }
+    },
+    "no_ads": {
+      "ok": true,
+      "name": "no_ads",
+      "data": {
+        "ok": true,
+        "ads": "forbidden",
+        "tracking": "forbidden",
+        "sponsors": "forbidden",
+        "paid_recommendations": "forbidden",
+        "data_sale": "forbidden",
+        "policy": "E-ZZIO est local-first, sans pub ni tracking."
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "20260610_112027_da037a43e4",
+  "kind": "omni.inbox",
+  "created_at": "2026-06-10T11:20:27",
+  "payload": {
+    "source": "powershell",
+    "user": "enrik",
+    "text": "/whoami",
+    "mode": "fast"
+  }
+}

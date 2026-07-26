@@ -1,0 +1,133 @@
+{
+  "ok": true,
+  "guarded": true,
+  "created_at": "2026-06-10T12:06:26",
+  "elapsed_ms": 42806,
+  "best": {
+    "ok": true,
+    "accepted": true,
+    "identity_score": 90,
+    "bad_hits": [],
+    "good_hits": [
+      "ami ia",
+      "local",
+      "enrik",
+      "pc",
+      "cpu",
+      "ram",
+      "sans pub",
+      "tracking"
+    ],
+    "model": "hermes3:8b",
+    "elapsed_ms": 6685,
+    "reply_chars": 179,
+    "reply": "E-ZZIO est un ami IA local pour Enrik sur PC, conçu pour une utilisation efficace du CPU et de la RAM, tout en restant court, honnête et sûr, sans publicité intrusive ou tracking."
+  },
+  "accepted_count": 4,
+  "results": [
+    {
+      "ok": true,
+      "accepted": false,
+      "identity_score": -40,
+      "bad_hits": [],
+      "good_hits": [],
+      "model": "qwen3:1.7b",
+      "elapsed_ms": 6311,
+      "reply_chars": 0,
+      "reply": ""
+    },
+    {
+      "ok": true,
+      "accepted": true,
+      "identity_score": 70,
+      "bad_hits": [],
+      "good_hits": [
+        "assistant",
+        "local",
+        "pc",
+        "sans pub",
+        "tracking"
+      ],
+      "model": "llama3.2:3b",
+      "elapsed_ms": 3080,
+      "reply_chars": 162,
+      "reply": "E-ZZIO est un assistant IA local sur PC, conçu pour fournir une assistance fiable et sécurisée en utilisant les ressources du système, sans publicité ni tracking."
+    },
+    {
+      "ok": true,
+      "accepted": false,
+      "identity_score": -40,
+      "bad_hits": [],
+      "good_hits": [],
+      "model": "qwen3:4b",
+      "elapsed_ms": 10679,
+      "reply_chars": 0,
+      "reply": ""
+    },
+    {
+      "ok": true,
+      "accepted": true,
+      "identity_score": 60,
+      "bad_hits": [],
+      "good_hits": [
+        "assistant",
+        "local",
+        "enrik",
+        "pc"
+      ],
+      "model": "phi4-mini:latest",
+      "elapsed_ms": 5443,
+      "reply_chars": 113,
+      "reply": "E-ZZIO aide Enrik en tant qu'assistant personnel fiable pour la gestion quotidienne des tâches locales sur le PC."
+    },
+    {
+      "ok": true,
+      "accepted": true,
+      "identity_score": 90,
+      "bad_hits": [],
+      "good_hits": [
+        "assistant",
+        "local",
+        "enrik",
+        "pc",
+        "cpu",
+        "ram",
+        "sans pub",
+        "vision",
+        "forge",
+        "supervision"
+      ],
+      "model": "qwen2.5-coder:7b",
+      "elapsed_ms": 10605,
+      "reply_chars": 140,
+      "reply": "E-ZZIO est l'assistant IA local d'Enrik pour PC, optimisé CPU/RAM, sans publicité, avec vision, forge, mémoire, supervision et ponts futurs."
+    },
+    {
+      "ok": true,
+      "accepted": true,
+      "identity_score": 90,
+      "bad_hits": [],
+      "good_hits": [
+        "ami ia",
+        "local",
+        "enrik",
+        "pc",
+        "cpu",
+        "ram",
+        "sans pub",
+        "tracking"
+      ],
+      "model": "hermes3:8b",
+      "elapsed_ms": 6685,
+      "reply_chars": 179,
+      "reply": "E-ZZIO est un ami IA local pour Enrik sur PC, conçu pour une utilisation efficace du CPU et de la RAM, tout en restant court, honnête et sûr, sans publicité intrusive ou tracking."
+    }
+  ],
+  "recommendation": {
+    "rule": "ne jamais choisir un modèle qui répond vide, hallucine E-ZZIO automobile, ou viole la politique zéro pub",
+    "fast_default": "à choisir selon bench accepté, sinon qwen2.5-coder:1.5b pour tâches courtes",
+    "normal_default": "phi4-mini:latest ou qwen2.5-coder:7b si accepté",
+    "code_default": "qwen2.5-coder:7b",
+    "deep_default": "qwen3:8b ou deepseek-r1:8b après bench deep"
+  }
+}

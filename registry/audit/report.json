@@ -1,0 +1,65 @@
+{
+  "timestamp": "2026-07-26T01:01:03Z",
+  "registry": {
+    "modules": 16,
+    "hash": "3455F39671CFD484A5485582F2F41C199988DA9C15B3C3712D4AD2DDFDD08B8D",
+    "resolved": 13
+  },
+  "profiles": {
+    "production": {
+      "tokens": 1862.0,
+      "size": 6144
+    },
+    "discord": {
+      "tokens": 2097.0,
+      "size": 6920
+    },
+    "coding": {
+      "tokens": 2153.0,
+      "size": 7105
+    },
+    "terminal": {
+      "tokens": 2095.0,
+      "size": 6913
+    },
+    "full": {
+      "tokens": 1984.0,
+      "size": 6547
+    }
+  },
+  "compiler": {
+    "version": "10.1.0"
+  },
+  "outputs": {
+    "persona.terminal.md": {
+      "tokens": 2095.0,
+      "size": 7031,
+      "sha256": "8A25A04755FE7D86AA17ECAD933756DA495CC3C81D9CC5295F0080A539701B77",
+      "file": "persona.terminal.md"
+    },
+    "persona.production.md": {
+      "tokens": 1862.0,
+      "size": 6256,
+      "sha256": "686DF68767235ED5BECE16C3BBE0B01FD8F52E935E342542CDE0ECA3456D7ED0",
+      "file": "persona.production.md"
+    },
+    "persona.coding.md": {
+      "tokens": 2153.0,
+      "size": 7231,
+      "sha256": "EBB2D06E8D3C3764A63420C63E4D709F9599AE1C43BCC517AB302A415B2ED88C",
+      "file": "persona.coding.md"
+    },
+    "persona.discord.md": {
+      "tokens": 2097.0,
+      "size": 7041,
+      "sha256": "72A022B90695A4031882620EB412A6573855132826C8752371A3490B8BCE7D7D",
+      "file": "persona.discord.md"
+    },
+    "persona.full.md": {
+      "tokens": 1984.0,
+      "size": 6662,
+      "sha256": "6DA2F38AC5A66742D87F5CEB05C31F4B86CBAEFF70211770EF1E399BCB058279",
+      "file": "persona.full.md"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "20260610_112955_0997df25d1",
+  "kind": "omni.inbox",
+  "created_at": "2026-06-10T11:29:55",
+  "payload": {
+    "source": "powershell",
+    "user": "enrik",
+    "text": "/help",
+    "mode": "fast"
+  }
+}

@@ -1,0 +1,10 @@
+{
+    "library": [
+        {"name": "deepseek-r1:8b", "tags": ["reasoning", "complex", "logic"], "desc": "Raisonnement profond"},
+        {"name": "qwen2.5-coder:7b", "tags": ["coding", "technical", "scripting"], "desc": "Expert code"},
+        {"name": "gemma4:e4b", "tags": ["creative", "writing", "nuance"], "desc": "Rédaction fluide"},
+        {"name": "qwen2.5vl:3b", "tags": ["vision", "image", "analysis"], "desc": "Perception visuelle"},
+        {"name": "llama3.1:8b", "tags": ["general", "fast", "chat"], "desc": "Usage généraliste"},
+        {"name": "hermes3:8b", "tags": ["roleplay", "empathy", "human"], "desc": "Assistant empathique"}
+    ]
+}

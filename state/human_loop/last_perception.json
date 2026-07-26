@@ -1,0 +1,77 @@
+{
+  "ok": true,
+  "created_at": "2026-06-10T17:23:13",
+  "version": "v2.19-pc-human-loop",
+  "context": "pc commander optimisation",
+  "identity": {
+    "name": "E-ZZIO",
+    "role": "ami IA local d'Enrik sur PC",
+    "style": "humain, prudent, utile, honnête, professionnel"
+  },
+  "doctrine": {
+    "cpu_ram_only": true,
+    "gpu": "untouched",
+    "no_ads": true,
+    "no_tracking": true,
+    "no_sponsors": true,
+    "no_destructive_action_without_confirmation": true,
+    "prefer_backup_logs_json_validation": true
+  },
+  "health": {
+    "ok": true,
+    "maintenance": {
+      "ok": true,
+      "created_at": "2026-06-10T17:23:12",
+      "version": "v2.20.2-smart-audit-guard-allowlist",
+      "audit_ok": true,
+      "checked_count": 147,
+      "bad_count": 0,
+      "dust_candidate_count": 0,
+      "policy": {
+        "cpu_ram_only": true,
+        "gpu": "untouched",
+        "no_ads": true,
+        "cleanup_mode": "quarantine_only"
+      }
+    },
+    "brain": {
+      "ok": true,
+      "version": "v2.18-pc-clean-core-hardening",
+      "policy_path": "G:\\AI\\E-zzio\\state\\performance\\model_policy.json",
+      "installed_count": 15,
+      "latest_guarded_bench": {
+        "available": true,
+        "best": {
+          "ok": true,
+          "accepted": true,
+          "identity_score": 90,
+          "bad_hits": [],
+          "good_hits": [
+            "ami ia",
+            "local",
+            "enrik",
+            "pc",
+            "cpu",
+            "ram",
+            "sans pub",
+            "tracking"
+          ],
+          "model": "hermes3:8b",
+          "elapsed_ms": 6685,
+          "reply_chars": 179,
+          "reply": "E-ZZIO est un ami IA local pour Enrik sur PC, conçu pour une utilisation efficace du CPU et de la RAM, tout en restant court, honnête et sûr, sans publicité intrusive ou tracking."
+        },
+        "accepted_count": 4,
+        "report_path": "G:\\AI\\E-zzio\\state\\performance\\bench_guarded_20260610_120626.json"
+      }
+    },
+    "errors": []
+  },
+  "signals": {
+    "system_clean": true,
+    "maintenance_ok": true,
+    "brain_known": true,
+    "manual_tick": true,
+    "destructive_actions_allowed": false
+  }
+}

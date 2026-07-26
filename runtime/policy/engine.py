@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime, timedelta
 from typing import Tuple, Optional
-from runtime.contracts.execution_context import CapabilityToken, TokenSigner
+from runtime.contracts.capability import CapabilityToken, TokenSigner
 from runtime.tools.tool_schema import ToolRequest
 from runtime.tools.manifest_provider import ManifestProvider
 

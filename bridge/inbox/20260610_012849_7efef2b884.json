@@ -1,0 +1,13 @@
+{
+  "id": "20260610_012849_7efef2b884",
+  "kind": "inbox.message",
+  "created_at": "2026-06-10T01:28:49",
+  "payload": {
+    "source": "install",
+    "user": "ezzio",
+    "text": "Omnipresence Hub installé.",
+    "metadata": {
+      "version": "v2.11"
+    }
+  }
+}

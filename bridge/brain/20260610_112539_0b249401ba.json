@@ -1,0 +1,15 @@
+{
+  "id": "20260610_112539_0b249401ba",
+  "kind": "brain.reply",
+  "created_at": "2026-06-10T11:25:39",
+  "payload": {
+    "source": "repair-test",
+    "user": "enrik",
+    "input": "Le bridge E-ZZIO est-il réparé ?",
+    "answer": "",
+    "model": "qwen3:1.7b",
+    "elapsed_ms": 12750,
+    "ok": true,
+    "error": null
+  }
+}

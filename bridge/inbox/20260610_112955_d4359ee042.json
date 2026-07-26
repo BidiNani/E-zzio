@@ -1,0 +1,11 @@
+{
+  "id": "20260610_112955_d4359ee042",
+  "kind": "omni.inbox",
+  "created_at": "2026-06-10T11:29:55",
+  "payload": {
+    "source": "powershell",
+    "user": "enrik",
+    "text": "/routers",
+    "mode": "fast"
+  }
+}

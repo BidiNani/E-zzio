@@ -1,0 +1,11 @@
+{
+  "id": "20260610_112120_bf95530d08",
+  "kind": "omni.inbox",
+  "created_at": "2026-06-10T11:21:20",
+  "payload": {
+    "source": "powershell",
+    "user": "enrik",
+    "text": "/noads",
+    "mode": "fast"
+  }
+}

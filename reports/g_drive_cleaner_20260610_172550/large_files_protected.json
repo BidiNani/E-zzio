@@ -1,0 +1,90 @@
+[
+  {
+    "path": "G:\\Ollama\\Models\\blobs\\sha256-4c27e0f5b5adf02ac956c7322bd2ee7636fe3f45a8512c9aba5385242cb6e09a",
+    "size_bytes": 9608338848,
+    "size": "8,95 GB",
+    "extension": "",
+    "last_write": "2026-06-08T23:31:01",
+    "protected": true
+  },
+  {
+    "path": "G:\\AI\\E-zzio\\models\\gemma-4-E4B-it-Q4_K_M.gguf",
+    "size_bytes": 5335289664,
+    "size": "4,97 GB",
+    "extension": ".gguf",
+    "last_write": "2026-05-28T22:03:07",
+    "protected": true
+  },
+  {
+    "path": "G:\\Ollama\\Models\\blobs\\sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f",
+    "size_bytes": 5225374496,
+    "size": "4,87 GB",
+    "extension": "",
+    "last_write": "2026-06-05T15:56:06",
+    "protected": true
+  },
+  {
+    "path": "G:\\Ollama\\Models\\blobs\\sha256-e6a7edc1a4d7d9b2de136a221a57336b76316cfe53a252aeba814496c5ae439d",
+    "size_bytes": 5225373760,
+    "size": "4,87 GB",
+    "extension": "",
+    "last_write": "2026-06-05T15:57:20",
+    "protected": true
+  },
+  {
+    "path": "G:\\Ollama\\Models\\blobs\\sha256-77bcee066a76dcdd10d0d123c87e32c8ec2c74e31b6ffd87ebee49c9ac215dca",
+    "size_bytes": 4942873344,
+    "size": "4,60 GB",
+    "extension": "",
+    "last_write": "2026-06-08T23:51:12",
+    "protected": true
+  },
+  {
+    "path": "G:\\Ollama\\Models\\blobs\\sha256-667b0c1932bc6ffc593ed1d03f895bf2dc8dc6df21db3042284a6f4416b06a29",
+    "size_bytes": 4920738944,
+    "size": "4,58 GB",
+    "extension": "",
+    "last_write": "2026-06-08T23:25:47",
+    "protected": true
+  },
+  {
+    "path": "G:\\Ollama\\Models\\blobs\\sha256-60e05f2100071479f596b964f89f510f057ce397ea22f2833a0cfe029bfc2463",
+    "size_bytes": 4683074048,
+    "size": "4,36 GB",
+    "extension": "",
+    "last_write": "2026-06-06T02:21:10",
+    "protected": true
+  },
+  {
+    "path": "G:\\Ollama\\Models\\blobs\\sha256-c8985d236593f7a17da2a3da49588aa951a9b1e57ce97753364fbf59e63af84a",
+    "size_bytes": 4661217024,
+    "size": "4,34 GB",
+    "extension": "",
+    "last_write": "2026-06-08T23:27:36",
+    "protected": true
+  },
+  {
+    "path": "G:\\Ollama\\Models\\blobs\\sha256-e9758e589d443f653821b7be9bb9092c1bf7434522b70ec6e83591b1320fdb4d",
+    "size_bytes": 3200614720,
+    "size": "2,98 GB",
+    "extension": "",
+    "last_write": "2026-06-06T02:28:13",
+    "protected": true
+  },
+  {
+    "path": "G:\\Ollama\\Models\\blobs\\sha256-3e4cb14174460404e7a233e531675303b2fbf7749c02f91864fe311ab6344e4f",
+    "size_bytes": 2497280480,
+    "size": "2,33 GB",
+    "extension": "",
+    "last_write": "2026-06-07T15:45:03",
+    "protected": true
+  },
+  {
+    "path": "G:\\Ollama\\Models\\blobs\\sha256-3c168af1dea0a414299c7d9077e100ac763370e5a98b3c53801a958a47f0a5db",
+    "size_bytes": 2491874624,
+    "size": "2,32 GB",
+    "extension": "",
+    "last_write": "2026-06-08T23:50:17",
+    "protected": true
+  }
+]

@@ -1,0 +1,30 @@
+{
+  "ok": true,
+  "level": "fast",
+  "created_at": "2026-06-10T11:52:44",
+  "elapsed_ms": 1473,
+  "results": [
+    {
+      "ok": true,
+      "model": "qwen3:1.7b",
+      "elapsed_ms": 913,
+      "reply": ""
+    },
+    {
+      "ok": true,
+      "model": "llama3.2:3b",
+      "elapsed_ms": 312,
+      "reply": "OK"
+    },
+    {
+      "ok": true,
+      "model": "qwen2.5-coder:1.5b",
+      "elapsed_ms": 246,
+      "reply": "OK"
+    }
+  ],
+  "policy": {
+    "cpu_ram_only": true,
+    "gpu": "untouched"
+  }
+}

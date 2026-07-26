@@ -1,0 +1,15 @@
+{
+  "id": "20260610_112613_eeb5fa1537",
+  "kind": "brain.reply",
+  "created_at": "2026-06-10T11:26:13",
+  "payload": {
+    "source": "mobile",
+    "user": "enrik",
+    "input": "Peux-tu être sur mon smartphone ?",
+    "answer": "Je suis le bridge logiciel E-ZZIO, prêt à connecter",
+    "model": "qwen3:1.7b",
+    "elapsed_ms": 12077,
+    "ok": true,
+    "error": null
+  }
+}

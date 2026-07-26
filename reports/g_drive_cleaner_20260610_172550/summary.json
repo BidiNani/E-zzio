@@ -1,0 +1,42 @@
+{
+  "created_at": "2026-06-10T17:28:22",
+  "version": "v2.27-g-drive-cleaner-safe-audit",
+  "drive": "G:\\",
+  "mode": "dry_run",
+  "scanned_files": 327876,
+  "scanned_total_bytes": 80694886315,
+  "scanned_total": "75,15 GB",
+  "large_file_threshold_gb": 2,
+  "large_files_not_protected_count": 0,
+  "large_files_protected_count": 11,
+  "safe_delete_candidates_count": 16345,
+  "safe_delete_candidates_bytes": 305539503,
+  "safe_delete_candidates_size": "291,39 MB",
+  "deleted_count": 0,
+  "deleted_bytes": 0,
+  "deleted_size": "0 B",
+  "quarantined_count": 0,
+  "quarantined_bytes": 0,
+  "quarantined_size": "0 B",
+  "failed_count": 0,
+  "reports": {
+    "actions": "G:\\AI\\E-zzio\\reports\\g_drive_cleaner_20260610_172550\\actions.jsonl",
+    "safe_delete_candidates": "G:\\AI\\E-zzio\\reports\\g_drive_cleaner_20260610_172550\\safe_delete_candidates.json",
+    "large_files_not_protected": "G:\\AI\\E-zzio\\reports\\g_drive_cleaner_20260610_172550\\large_files_not_protected.json",
+    "large_files_protected": "G:\\AI\\E-zzio\\reports\\g_drive_cleaner_20260610_172550\\large_files_protected.json",
+    "summary": "G:\\AI\\E-zzio\\reports\\g_drive_cleaner_20260610_172550\\summary.json"
+  },
+  "quarantine_root": null,
+  "protections": {
+    "ai_models": true,
+    "ollama_models": true,
+    "games": true,
+    "saves": true,
+    "secrets": true,
+    "comfy_models": true,
+    "state": true,
+    "checkpoints": true
+  },
+  "gpu_policy": "cpu_ram_only",
+  "no_ads": true
+}

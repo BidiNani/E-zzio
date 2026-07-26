@@ -1,0 +1,15 @@
+{
+  "id": "20260610_112221_31c6383137",
+  "kind": "omni.reply",
+  "created_at": "2026-06-10T11:22:21",
+  "payload": {
+    "target": "mobile",
+    "user": "enrik",
+    "input": "Donne-moi les commandes utiles.",
+    "answer": "",
+    "model": "qwen3:1.7b",
+    "elapsed_ms": 14342,
+    "ok": true,
+    "error": null
+  }
+}

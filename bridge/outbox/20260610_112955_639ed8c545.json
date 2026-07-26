@@ -1,0 +1,13 @@
+{
+  "id": "20260610_112955_639ed8c545",
+  "kind": "omni.command.reply",
+  "created_at": "2026-06-10T11:29:55",
+  "payload": {
+    "target": "powershell",
+    "user": "enrik",
+    "input": "/forge",
+    "answer": "{\n  \"ok\": true,\n  \"source\": \"core.creative_forge.status\",\n  \"data\": {\n    \"version\": \"v2.9-indispensable-core\",\n    \"policy\": {\n      \"global\": \"CPU/RAM only\",\n      \"ollama_gpu\": \"disabled\",\n      \"comfyui_gpu\": \"disabled by --cpu script\",\n      \"ffmpeg\": \"CPU encoding only\",\n      \"apk_build\": \"CPU build tools only\",\n      \"dangerous_filesystem\": \"sandboxed_outputs_only\"\n    },\n    \"paths\": {\n      \"forge_root\": \"G:\\\\AI\\\\E-zzio\\\\forge\",\n      \"outputs\": \"G:\\\\AI\\\\E-zzio\\\\forge\\\\outputs\",\n      \"workflows\": \"G:\\\\AI\\\\E-zzio\\\\forge\\\\workflows\",\n      \"mobile\": \"G:\\\\AI\\\\E-zzio\\\\forge\\\\mobile\",\n      \"comfy_root\": \"G:\\\\AI\\\\external\\\\ComfyUI\"\n    },\n    \"environment_lock\": {\n      \"OLLAMA_NUM_GPU\": \"0\",\n      \"CUDA_VISIBLE_DEVICES\": \"\",\n      \"GGML_CUDA\": \"0\",\n      \"CUDA_DEVICE_ORDER\": \"PCI_BUS_ID\",\n      \"EZZIO_GPU_POLICY\": \"cpu_ram_only\",\n      \"EZZIO_NUM_GPU\": \"0\",\n      \"PYTORCH_ENABLE_MPS_FALLBACK\": \"0\"\n    },\n    \"availability\": {\n      \"comfyui_installed\": true,\n      \"comfyui_online\": true,\n      \"ffmpeg\": true,\n      \"node\": true,\n      \"npm\": true,\n      \"java\": true,\n      \"android_home\": false\n    },\n    \"practical_note\": {\n      \"image_cpu\": \"possible mais lent\",\n      \"video_cpu\": \"préférer keyframes + ffmpeg\",\n      \"apk_cpu\": \"OK avec Node + Android SDK\",\n      \"vision_cpu\": \"qwen2.5vl:3b via Ollama CPU-only\"\n    }\n  }\n}",
+    "model": "command-router",
+    "ok": true
+  }
+}

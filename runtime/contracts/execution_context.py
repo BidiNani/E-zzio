@@ -7,3 +7,6 @@ class ExecutionContext:
     tool_name: str
     arguments: Dict[str, Any] = field(default_factory=dict)
     metadata: Dict[str, Any] = field(default_factory=dict)
+# Alias de retrocompatibilite
+from runtime.contracts.capability import CapabilityToken
+

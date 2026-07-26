@@ -1,0 +1,11 @@
+{
+  "id": "20260610_112625_564283920f",
+  "kind": "mobile.reply",
+  "created_at": "2026-06-10T11:26:25",
+  "payload": {
+    "title": "E-ZZIO",
+    "text": "Discord est un module prêt côté API, mais son envoi réel nécessite une configuration spécifique (webhook/token) et l'autorisation EZZIO_BRIDGE_ALLOW_SEND=true. Si ces conditions ne sont pas vérifiées, Discord n'est pas actif.",
+    "source": "mobile",
+    "user": "enrik"
+  }
+}
