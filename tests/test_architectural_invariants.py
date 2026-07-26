@@ -25,12 +25,16 @@ if __name__ == "__main__":
     print("ALL ARCHITECTURAL INVARIANTS PASSED SUCCESSFULLY")
 
 
+
+
+
 def test_audit_immutability():
-    """Vérifie que l'objet AuditEvent est frozen (immuable)."""
+    """Vérifie que l'objet AuditEvent est frozen (immuable) avec FrozenInstanceError."""
     import pytest
+    from dataclasses import FrozenInstanceError
     from runtime.audit import AuditEvent
     event = AuditEvent(component="Test", action="TEST_ACTION")
-    with pytest.raises(Exception):
+    with pytest.raises(FrozenInstanceError):
         event.status = "TAMPERED"
 
 def test_capability_audit_trace():
@@ -56,4 +60,3 @@ def test_capability_audit_trace():
     assert len(events) > 0
     assert events[0].status == "BLOCKED"
     assert events[0].action == "EXECUTION_BLOCKED"
-
