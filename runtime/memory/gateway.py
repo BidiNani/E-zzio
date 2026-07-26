@@ -1,31 +1,62 @@
-from typing import Dict, Any, Optional
-from runtime.memory.events import RuntimeEvent
-from runtime.memory.sqlite.store import SQLiteEventStore
+from typing import Optional, Dict, Any, List
+from runtime.memory.models import MemoryItem
+from runtime.memory.store import MemoryStore
+from runtime.memory.policies import MemoryPolicyEngine
+from runtime.memory.retention import MemoryRetentionManager
 
 class MemoryGateway:
-    """Intercepte les événements du runtime et les route vers l'EventStore selon la Policy."""
+    """
+    Unified access gateway orchestrating policy checks, storage, 
+    and retention for memory operations.
+    """
+    def __init__(
+        self,
+        store: Optional[MemoryStore] = None,
+        policy_engine: Optional[MemoryPolicyEngine] = None,
+        retention_manager: Optional[MemoryRetentionManager] = None
+    ):
+        self.store = store or MemoryStore()
+        self.policy_engine = policy_engine or MemoryPolicyEngine()
+        self.retention_manager = retention_manager or MemoryRetentionManager(self.store)
 
-    def __init__(self, store: SQLiteEventStore, manifest_provider=None):
-        self.store = store
-        self.manifest_provider = manifest_provider
+    def write_memory(
+        self,
+        session_id: str,
+        content: Dict[str, Any],
+        capability_id: Optional[str],
+        token_meta: Dict[str, Any],
+        ttl_seconds: Optional[float] = None
+    ) -> Optional[MemoryItem]:
+        """
+        Enforces policy and writes a memory item if authorized.
+        """
+        if not self.policy_engine.authorize_write(capability_id, token_meta, session_id):
+            return None
 
-    def remember(self, event_payload: Dict[str, Any], retention_score: float = 1.0):
-        """Enregistre un événement dans le Ledger de manière immuable."""
-        success = event_payload.get("success", True)
-        if not success:
-            retention_score = max(retention_score, 1.0)
-
-        event = RuntimeEvent(
-            event_id=event_payload.get("request_id", "req_unknown"),
-            event_type=event_payload.get("event_type", "ToolExecuted"),
-            trace_id=event_payload.get("trace_id", "trace_default"),
-            session_id=event_payload.get("session_id", "default_session"),
-            actor=event_payload.get("actor", "kernel"),
-            timestamp=event_payload.get("timestamp", "2026-07-26T00:00:00"),
-            payload=event_payload
+        item = MemoryItem(
+            session_id=session_id,
+            content=content,
+            capability_id=capability_id
         )
-        self.store.append_event(event, retention_score=retention_score)
+        written_item = self.store.write(item)
+        if ttl_seconds:
+            self.retention_manager.set_ttl(written_item.memory_id, ttl_seconds)
+        return written_item
 
-    def _on_execution_finished(self, payload: Dict[str, Any]):
-        """Callback écoutant l'événement ExecutionFinished de l'EventBus."""
-        self.remember(payload)
+    def read_memory(
+        self,
+        memory_id: str,
+        capability_id: Optional[str],
+        token_meta: Dict[str, Any],
+        session_id: str = "default"
+    ) -> Optional[MemoryItem]:
+        """
+        Enforces policy, checks expiration, and retrieves a memory item.
+        """
+        if not self.policy_engine.authorize_read(capability_id, token_meta, session_id):
+            return None
+
+        if self.retention_manager.is_expired(memory_id):
+            return None
+
+        return self.store.read(memory_id)

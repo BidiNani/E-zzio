@@ -60,3 +60,43 @@ def test_capability_audit_trace():
     assert len(events) > 0
     assert events[0].status == "BLOCKED"
     assert events[0].action == "EXECUTION_BLOCKED"
+
+
+def test_memory_gateway_full_authorized_flow():
+    """Vérifie le flux complet d'écriture/lecture mémoriel avec autorisation."""
+    from runtime.memory import MemoryGateway
+    from runtime.audit import AuditBridge
+
+    registry = AuditBridge.get_registry()
+    registry.clear()
+
+    gateway = MemoryGateway()
+
+    # Simulation d'un token valide
+    token_meta = {"state": "ACTIVE"}
+
+    # Écriture
+    item = gateway.write_memory(
+        session_id="session_test",
+        content={"key": "value"},
+        capability_id="cap_valid_01",
+        token_meta=token_meta
+    )
+
+    assert item is not None
+    assert item.session_id == "session_test"
+
+    # Lecture
+    read_item = gateway.read_memory(
+        memory_id=item.memory_id,
+        capability_id="cap_valid_01",
+        token_meta=token_meta,
+        session_id="session_test"
+    )
+
+    assert read_item is not None
+    assert read_item.content == {"key": "value"}
+
+    # Vérification des traces d'audit émanant de la passerelle
+    events = registry.query(capability_id="cap_valid_01")
+    assert len(events) >= 2
