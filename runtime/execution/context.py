@@ -34,6 +34,5 @@ class ExecutionContext:
 
     state: str = "REQUESTED"
 
-
     def has_capability(self) -> bool:
         return self.capability_id is not None

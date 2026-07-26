@@ -13,7 +13,6 @@ class ExecutionLoopManager:
     def __init__(self):
         self.active = {}
 
-
     def register(self, context: ExecutionContext):
 
         if not context.has_capability():
@@ -22,10 +21,9 @@ class ExecutionLoopManager:
 
         context.state = ExecutionState.AUTHORIZED
 
-        self.active[context.execution_id]=context
+        self.active[context.execution_id] = context
 
         return True
-
 
     def get(self, execution_id):
 
