@@ -56,3 +56,4 @@ def test_capability_audit_trace():
     assert len(events) > 0
     assert events[0].status == "BLOCKED"
     assert events[0].action == "EXECUTION_BLOCKED"
+
