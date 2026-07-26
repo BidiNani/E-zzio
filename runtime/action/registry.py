@@ -1,18 +1,20 @@
 import time
 import uuid
+import inspect
 import importlib
 from typing import Dict, Any, Callable, Optional, List
 from runtime.action.contracts import ActionContract
 from runtime.action.store import ActionStore
+from runtime.action.context import ExecutionContext
 
 class ActionRegistry:
-    """Dynamic registry supporting persistence, execution ledger, and automatic bootstrap hydration."""
+    """Dynamic registry supporting persistence, context inspection, budget enforcement, and execution ledger."""
     def __init__(self, store: Optional[ActionStore] = None):
         self._contracts: Dict[str, ActionContract] = {}
-        self._handlers: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {}
+        self._handlers: Dict[str, Callable] = {}
         self.store = store or ActionStore()
 
-    def register(self, contract: ActionContract, handler: Callable[[Dict[str, Any]], Dict[str, Any]]):
+    def register(self, contract: ActionContract, handler: Callable):
         self._contracts[contract.name] = contract
         self._handlers[contract.name] = handler
         self.store.save_contract(
@@ -28,9 +30,6 @@ class ActionRegistry:
         )
 
     def bootstrap(self, handler_resolver: Optional[Callable[[str], Callable]] = None) -> int:
-        """
-        Recharge les contrats depuis SQLite et résout leurs handlers pour restaurer l'état du registre au démarrage.
-        """
         raw_contracts = self.store.load_contracts()
         loaded_count = 0
 
@@ -46,7 +45,6 @@ class ActionRegistry:
             )
             self._contracts[contract.name] = contract
             
-            # Résolution du handler
             handler = None
             if handler_resolver and contract.handler_ref:
                 handler = handler_resolver(contract.handler_ref)
@@ -60,7 +58,6 @@ class ActionRegistry:
         return loaded_count
 
     def _default_resolver(self, handler_ref: str) -> Optional[Callable]:
-        """Résout dynamiquement une référence textuelle (ex: 'module.sub:func') via importlib."""
         try:
             if ":" in handler_ref:
                 mod_name, func_name = handler_ref.split(":")
@@ -77,23 +74,47 @@ class ActionRegistry:
     def get_contract(self, name: str) -> Optional[ActionContract]:
         return self._contracts.get(name)
 
-    def execute(self, name: str, payload: Dict[str, Any], active_permissions: Optional[List[str]] = None) -> Dict[str, Any]:
+    def _invoke_handler(self, handler: Callable, ctx: ExecutionContext, payload: Dict[str, Any]) -> Any:
+        """Inspects signature to support both legacy handler(payload) and v2 handler(ctx, payload)."""
+        sig = inspect.signature(handler)
+        params = list(sig.parameters.values())
+        
+        if len(params) == 1:
+            return handler(payload)
+        return handler(ctx, payload)
+
+    def execute(self, name: str, payload: Dict[str, Any], context: Optional[ExecutionContext] = None) -> Dict[str, Any]:
         exec_id = f"exec_{uuid.uuid4().hex}"
         start_time = time.time()
         contract = self._contracts.get(name)
         cost = contract.cost if contract else 1
+
+        ctx = context or ExecutionContext(
+            trace_id=exec_id,
+            agent_id="ezzio-core",
+            permissions=["*"],
+            budget_remaining=100
+        )
 
         if not contract:
             res = {"status": "BLOCKED", "error": f"Unknown action: '{name}'"}
             self.store.log_execution(exec_id, name, "BLOCKED", payload, res, cost, 0.0)
             return res
 
-        perms = active_permissions or []
+        # 1. Vérification du Budget
+        if ctx.budget_remaining < contract.cost:
+            res = {"status": "BLOCKED", "error": f"Insufficient execution budget ({ctx.budget_remaining} < {contract.cost})"}
+            self.store.log_execution(exec_id, name, "BLOCKED", payload, res, cost, 0.0)
+            return res
+
+        # 2. Vérification des Permissions
+        perms = ctx.permissions or []
         if contract.permission != "*" and "*" not in perms and contract.permission not in perms:
             res = {"status": "BLOCKED", "error": f"Permission denied for action '{name}'"}
             self.store.log_execution(exec_id, name, "BLOCKED", payload, res, cost, 0.0)
             return res
 
+        # 3. Validation du Payload
         validation_errors = contract.validate_payload(payload)
         if validation_errors:
             res = {"status": "BLOCKED", "error": f"Payload validation failed: {validation_errors}"}
@@ -107,9 +128,18 @@ class ActionRegistry:
             return res
 
         try:
-            result = handler(payload)
+            # Consommation du budget
+            active_ctx = ctx.consume_budget(contract.cost)
+            
+            # Invocation sécurisée
+            result = self._invoke_handler(handler, active_ctx, payload)
             duration_ms = round((time.time() - start_time) * 1000, 2)
-            res = {"status": "SUCCESS", "result": result}
+            
+            res = {
+                "status": "SUCCESS", 
+                "result": result, 
+                "budget_remaining": active_ctx.budget_remaining
+            }
             self.store.log_execution(exec_id, name, "SUCCESS", payload, res, cost, duration_ms)
             return res
         except Exception as e:
