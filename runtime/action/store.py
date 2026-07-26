@@ -21,6 +21,7 @@ class ActionStore:
                     name TEXT NOT NULL,
                     description TEXT,
                     permission TEXT NOT NULL,
+                    handler_ref TEXT DEFAULT '',
                     cost INTEGER DEFAULT 1,
                     timeout REAL DEFAULT 5.0,
                     schema TEXT NOT NULL,
@@ -41,16 +42,29 @@ class ActionStore:
             ''')
             conn.commit()
 
-    def save_contract(self, action_id: str, version: str, name: str, description: str, permission: str, cost: int, timeout: float, schema: Dict[str, str]):
+    def save_contract(self, action_id: str, version: str, name: str, description: str, permission: str, handler_ref: str, cost: int, timeout: float, schema: Dict[str, str]):
         now = datetime.now(timezone.utc).isoformat()
         with sqlite3.connect(self.db_path) as conn:
             conn.execute(
                 '''INSERT OR REPLACE INTO action_contracts 
-                   (id, version, name, description, permission, cost, timeout, schema, updated_at)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                (action_id, version, name, description, permission, cost, timeout, json.dumps(schema, default=str), now)
+                   (id, version, name, description, permission, handler_ref, cost, timeout, schema, updated_at)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                (action_id, version, name, description, permission, handler_ref, cost, timeout, json.dumps(schema, default=str), now)
             )
             conn.commit()
+
+    def load_contracts(self) -> List[Dict[str, Any]]:
+        """Charge l'ensemble des contrats persistés depuis SQLite pour le bootstrap."""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.execute("SELECT id, version, name, description, permission, handler_ref, cost, timeout, schema FROM action_contracts")
+            return [
+                {
+                    "id": row[0], "version": row[1], "name": row[2],
+                    "description": row[3], "permission": row[4], "handler_ref": row[5],
+                    "cost": row[6], "timeout": row[7], "schema": json.loads(row[8])
+                }
+                for row in cursor.fetchall()
+            ]
 
     def log_execution(self, exec_id: str, action_name: str, status: str, payload: Dict[str, Any], result: Dict[str, Any], cost: int, duration_ms: float):
         now = datetime.now(timezone.utc).isoformat()

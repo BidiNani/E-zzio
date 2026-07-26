@@ -1,11 +1,12 @@
 import time
 import uuid
+import importlib
 from typing import Dict, Any, Callable, Optional, List
 from runtime.action.contracts import ActionContract
 from runtime.action.store import ActionStore
 
 class ActionRegistry:
-    """Dynamic registry for action contracts, permissions, handlers, and persistent execution ledger."""
+    """Dynamic registry supporting persistence, execution ledger, and automatic bootstrap hydration."""
     def __init__(self, store: Optional[ActionStore] = None):
         self._contracts: Dict[str, ActionContract] = {}
         self._handlers: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {}
@@ -20,16 +21,63 @@ class ActionRegistry:
             name=contract.name,
             description=contract.description,
             permission=contract.permission,
+            handler_ref=contract.handler_ref,
             cost=contract.cost,
             timeout=contract.timeout,
             schema=contract.schema
         )
 
+    def bootstrap(self, handler_resolver: Optional[Callable[[str], Callable]] = None) -> int:
+        """
+        Recharge les contrats depuis SQLite et résout leurs handlers pour restaurer l'état du registre au démarrage.
+        """
+        raw_contracts = self.store.load_contracts()
+        loaded_count = 0
+
+        for rc in raw_contracts:
+            contract = ActionContract(
+                name=rc["name"],
+                description=rc["description"],
+                permission=rc["permission"],
+                handler_ref=rc["handler_ref"],
+                cost=rc["cost"],
+                timeout=rc["timeout"],
+                schema=rc["schema"]
+            )
+            self._contracts[contract.name] = contract
+            
+            # Résolution du handler
+            handler = None
+            if handler_resolver and contract.handler_ref:
+                handler = handler_resolver(contract.handler_ref)
+            elif contract.handler_ref:
+                handler = self._default_resolver(contract.handler_ref)
+
+            if handler:
+                self._handlers[contract.name] = handler
+                loaded_count += 1
+
+        return loaded_count
+
+    def _default_resolver(self, handler_ref: str) -> Optional[Callable]:
+        """Résout dynamiquement une référence textuelle (ex: 'module.sub:func') via importlib."""
+        try:
+            if ":" in handler_ref:
+                mod_name, func_name = handler_ref.split(":")
+            else:
+                parts = handler_ref.split(".")
+                mod_name, func_name = ".".join(parts[:-1]), parts[-1]
+            
+            mod = importlib.import_module(mod_name)
+            return getattr(mod, func_name)
+        except Exception as e:
+            print(f"[!] Erreur de résolution du handler '{handler_ref}': {e}")
+            return None
+
     def get_contract(self, name: str) -> Optional[ActionContract]:
         return self._contracts.get(name)
 
     def execute(self, name: str, payload: Dict[str, Any], active_permissions: Optional[List[str]] = None) -> Dict[str, Any]:
-        # UUID complet pour éviter les collisions SQLite
         exec_id = f"exec_{uuid.uuid4().hex}"
         start_time = time.time()
         contract = self._contracts.get(name)
