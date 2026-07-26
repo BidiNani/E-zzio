@@ -1,9 +1,7 @@
 import sqlite3
-import os
 from typing import List
 
 class SQLiteExpiryStore:
-    """Persistent SQLite WAL backend for Memory Expiry."""
     def __init__(self, db_path: str = "memory_expiry.db"):
         self.db_path = db_path
         self._init_db()

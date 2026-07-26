@@ -21,8 +21,10 @@ class MemoryRetentionManager:
         
         purged = []
         for mem_id in expired_ids:
-            purged.append(mem_id)
+            # Suppression simultanée du store RAM et du registre SQLite
+            self.store.delete(mem_id)
             self.expiry_store.remove(mem_id)
+            purged.append(mem_id)
             AuditBridge.emit(
                 component="MemoryRetention",
                 action=AuditAction.MEMORY_EXPIRE,

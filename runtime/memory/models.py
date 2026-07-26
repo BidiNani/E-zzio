@@ -24,6 +24,5 @@ class MemoryItem:
     content_hash: str = field(init=False)
 
     def __post_init__(self):
-        # Sécurisation du contenu par hachage SHA-256
-        content_str = json.dumps(self.content, sort_keys=True)
+        content_str = json.dumps(self.content, sort_keys=True, default=str)
         object.__setattr__(self, 'content_hash', hashlib.sha256(content_str.encode()).hexdigest())

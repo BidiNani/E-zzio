@@ -11,11 +11,9 @@ class AuditRegistry:
         return self._last_hash
 
     def record(self, event: AuditEvent) -> AuditEvent:
-        # Sécurisation de la chaîne cryptographique
         event_str = f"{event.event_id}{event.timestamp}{event.action}{event.status}{self._last_hash}"
         current_hash = hashlib.sha256(event_str.encode()).hexdigest()
         
-        # Injection du hash dans l'instance immuable
         object.__setattr__(event, 'previous_hash', self._last_hash)
         object.__setattr__(event, 'current_hash', current_hash)
         
