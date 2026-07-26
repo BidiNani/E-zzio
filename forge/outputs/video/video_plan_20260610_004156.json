@@ -1,0 +1,21 @@
+{
+  "prompt": "E-ZZIO devient indispensable, système vivant tactique et autonome",
+  "style": "cinematic",
+  "duration_sec": 4,
+  "fps": 8,
+  "estimated_frames": 32,
+  "cpu_ram_only": true,
+  "recommended_cpu_limits": {
+    "max_duration_sec": 12,
+    "max_fps": 12,
+    "recommended_resolution": "512x512 or lower",
+    "preferred_method": "generate keyframes, then FFmpeg assembly"
+  },
+  "pipeline": [
+    "préparer prompt et storyboard",
+    "générer peu de keyframes en CPU",
+    "assembler les frames avec FFmpeg CPU",
+    "exporter MP4 dans forge/outputs/video"
+  ],
+  "warning": "La vidéo IA complète en CPU pur peut être extrêmement lente. E-ZZIO privilégie plans courts, keyframes et assemblage."
+}

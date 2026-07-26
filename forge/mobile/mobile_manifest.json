@@ -1,0 +1,9 @@
+{
+  "app_name": "E-ZZIO",
+  "app_id": "com.ezzio.local",
+  "frontend": "G:/AI/E-zzio/ezzio-ui",
+  "backend": "http://127.0.0.1:8000",
+  "cpu_ram_only": true,
+  "strategy": "SvelteKit static adapter + Capacitor Android",
+  "warning": "L'APK local ne contient pas Ollama + modèles. Il sert d'interface mobile vers l'API E-ZZIO."
+}

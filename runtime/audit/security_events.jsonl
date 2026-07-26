@@ -1,0 +1,83 @@
+{"time": "2026-07-26T17:19:35.692386", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : git.status"}
+{"time": "2026-07-26T17:21:33.526590", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : git.status"}
+{"time": "2026-07-26T17:22:57.224013", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : git.status"}
+{"time": "2026-07-26T17:23:46.256593", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : git.status"}
+{"time": "2026-07-26T17:23:46.366915", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : system.powershell"}
+{"time": "2026-07-26T17:23:46.471259", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : system.powershell"}
+{"time": "2026-07-26T17:23:46.582163", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : system.powershell"}
+{"time": "2026-07-26T17:23:46.692436", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : system.powershell"}
+{"time": "2026-07-26T17:24:40.615112", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : git.status"}
+{"time": "2026-07-26T17:24:40.740309", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : system.powershell"}
+{"time": "2026-07-26T17:24:40.844733", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : system.powershell"}
+{"time": "2026-07-26T17:24:40.955554", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : system.powershell"}
+{"time": "2026-07-26T17:24:41.065411", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : system.powershell"}
+{"time": "2026-07-26T18:42:08.956568", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : git.status"}
+{"time": "2026-07-26T18:42:09.502940", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : system.powershell"}
+{"time": "2026-07-26T18:42:09.612214", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : system.powershell"}
+{"time": "2026-07-26T18:42:09.723896", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : system.powershell"}
+{"time": "2026-07-26T18:42:09.833262", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : system.powershell"}
+{"time": "2026-07-26T18:44:17.815214", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : git.status"}
+{"time": "2026-07-26T18:44:18.362477", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : system.powershell"}
+{"time": "2026-07-26T18:44:18.472744", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : system.powershell"}
+{"time": "2026-07-26T18:44:18.580687", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : system.powershell"}
+{"time": "2026-07-26T18:44:18.690761", "level": "CRITICAL", "message": "PolicyEngine bloqué : Outil inconnu : system.powershell"}
+{"time": "2026-07-26T18:46:57.274267", "level": "CRITICAL", "message": "PolicyEngine bloqué : Privilège insuffisant."}
+{"time": "2026-07-26T18:46:57.819118", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T18:46:57.928453", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T18:46:58.037295", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T18:46:58.148016", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T18:48:51.690059", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T18:48:51.800512", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T18:48:51.909947", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T18:48:52.017955", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T18:50:09.523236", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T18:50:09.631497", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T18:50:09.742611", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T18:50:09.851556", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:02:27.708181", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:02:27.818574", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:02:27.927695", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:02:28.037342", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:05:54.854464", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:05:54.969401", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:05:55.094296", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:05:55.221967", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:10:28.610957", "level": "CRITICAL", "message": "Erreur d'infrastructure : Can't instantiate abstract class PowerShellExecutor with abstract methods collect_output, is_alive, spawn, terminate"}
+{"time": "2026-07-26T19:10:28.731083", "level": "CRITICAL", "message": "Erreur d'infrastructure : Can't instantiate abstract class PowerShellExecutor with abstract methods collect_output, is_alive, spawn, terminate"}
+{"time": "2026-07-26T19:10:28.840486", "level": "CRITICAL", "message": "Erreur d'infrastructure : Can't instantiate abstract class PowerShellExecutor with abstract methods collect_output, is_alive, spawn, terminate"}
+{"time": "2026-07-26T19:10:28.950269", "level": "CRITICAL", "message": "Erreur d'infrastructure : Can't instantiate abstract class PowerShellExecutor with abstract methods collect_output, is_alive, spawn, terminate"}
+{"time": "2026-07-26T19:10:31.645679", "level": "CRITICAL", "message": "Erreur d'infrastructure : Can't instantiate abstract class PowerShellExecutor with abstract methods collect_output, is_alive, spawn, terminate"}
+{"time": "2026-07-26T19:10:32.414063", "level": "CRITICAL", "message": "Erreur d'infrastructure : Can't instantiate abstract class PowerShellExecutor with abstract methods collect_output, is_alive, spawn, terminate"}
+{"time": "2026-07-26T19:10:32.523699", "level": "CRITICAL", "message": "Erreur d'infrastructure : Can't instantiate abstract class PowerShellExecutor with abstract methods collect_output, is_alive, spawn, terminate"}
+{"time": "2026-07-26T19:10:32.632239", "level": "CRITICAL", "message": "Erreur d'infrastructure : Can't instantiate abstract class PowerShellExecutor with abstract methods collect_output, is_alive, spawn, terminate"}
+{"time": "2026-07-26T19:10:32.741868", "level": "CRITICAL", "message": "Erreur d'infrastructure : Can't instantiate abstract class PowerShellExecutor with abstract methods collect_output, is_alive, spawn, terminate"}
+{"time": "2026-07-26T19:10:33.098422", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'llm.cognitive_reflection'"}
+{"time": "2026-07-26T19:12:31.048668", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'powershell.safe.execute'"}
+{"time": "2026-07-26T19:12:31.819108", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:12:31.931150", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:12:32.041083", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:12:32.149697", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:12:32.505516", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'llm.cognitive_reflection'"}
+{"time": "2026-07-26T19:15:28.764872", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'powershell.safe.execute'"}
+{"time": "2026-07-26T19:15:29.539712", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:15:29.649709", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:15:29.788669", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:15:29.897783", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:15:30.238589", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'llm.cognitive_reflection'"}
+{"time": "2026-07-26T19:34:44.295424", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'powershell.safe.execute'"}
+{"time": "2026-07-26T19:34:45.164216", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:34:45.272391", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:34:45.382297", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:34:45.491378", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:34:45.852045", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'llm.cognitive_reflection'"}
+{"time": "2026-07-26T19:36:32.686413", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:36:32.808827", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:36:32.916160", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:36:33.025632", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:36:34.718829", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'powershell.safe.execute'"}
+{"time": "2026-07-26T19:36:35.536212", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:36:35.646680", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:36:35.753635", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:36:35.864339", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'system.powershell'"}
+{"time": "2026-07-26T19:36:36.228015", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'llm.cognitive_reflection'"}
+{"time": "2026-07-26T19:38:35.549130", "level": "CRITICAL", "message": "Erreur d'infrastructure : Exécuteur introuvable pour 'llm.cognitive_reflection'"}

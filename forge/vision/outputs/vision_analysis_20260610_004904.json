@@ -1,0 +1,24 @@
+{
+  "ok": true,
+  "model": "qwen2.5vl:3b",
+  "cpu_ram_only": true,
+  "path": "G:\\AI\\E-zzio\\forge\\vision\\inbox\\ezzio_test_vision.png",
+  "image": {
+    "format": "PNG",
+    "width": 900,
+    "height": 420,
+    "mode": "RGB"
+  },
+  "mode": "debug",
+  "prompt": "Analyse cette capture et dis quoi corriger. Contexte Windows PowerShell E-ZZIO.",
+  "system_prompt_profile": "windows_ezzio_tactical",
+  "analysis": "1. Ce que je lis exactement :\n   ```\n   CPU/RAM ONLY - qwen2.5vl3b\n\n   Erreur simulée: routers/forge.py manquant\n\n   Action attendue : diagnostiquer et proposer correction\n   ```\n\n2. Diagnostic probable :\n   L'erreur indique qu'il manque le fichier `routers/forge.py` dans le répertoire `/AI/E-zzio/routers/forge.py`. Cela peut être dû à une installation incorrecte ou à un problème de configuration.\n\n3. Correction Windows/PowerShell :\n   - Ouvrez le terminal PowerShell en tant que administrateur.\n   - Entrez la commande suivante pour créer le répertoire `/AI/E-zzio/routers` si il n'existe pas déjà :\n     ```\n     mkdir G:/AI/E-zzio/routers\n     ```\n\n4. Test de validation :\n   - Vérifiez maintenant que le fichier `routers/forge.py` existe dans le répertoire `/AI/E-zzio/routers`.\n   - Si le fichier n'existe pas, vous pouvez créer manuellement le répertoire et le fichier avec la commande précédente.\n\n5. Prochain endpoint ou fichier à vérifier :\n   - Vous devez maintenant vérifier si le fichier `routers/forge.py` est correctement installé dans `/AI/E-zzio/routers`.\n   - Si ce n'est pas le cas, vous devrez réinstaller les modules nécessaires pour E-ZZIO.\n\nSi l'image montre une erreur, donne :\n  1. ce que tu lis exactement,\n  2. diagnostic probable,\n  3. correction Windows/PowerShell,\n  4.",
+  "quality_warnings": [],
+  "elapsed_ms": 31279,
+  "error": null,
+  "routing_hint": {
+    "next_organ": "mains",
+    "reason": "capture technique ou erreur détectée",
+    "next_action": "corriger/debugger en PowerShell"
+  }
+}
