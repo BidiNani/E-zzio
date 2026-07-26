@@ -1,23 +1,7 @@
-# E-ZZIO secrets
-secrets/.env
-*.secret
-*.token
-*.key
-
-# Python / runtime
+*.db
+*.sqlite
+*.sqlite3
 __pycache__/
-.pytest_cache/
 *.pyc
-
-# Logs / backups / cache
-logs/
-backups/
-registry/telemetry/*.jsonl
-registry/cloud_cache/
-registry/knowledge_cache/
-
-quarantine/
-
-_snapshots/
-
-.ruff_cache/
+.pytest_cache/
+reports/

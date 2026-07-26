@@ -24,5 +24,11 @@ class MemoryItem:
     content_hash: str = field(init=False)
 
     def __post_init__(self):
-        content_str = json.dumps(self.content, sort_keys=True, default=str)
-        object.__setattr__(self, 'content_hash', hashlib.sha256(content_str.encode()).hexdigest())
+        content_str = json.dumps(
+            self.content,
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=False,
+            default=str
+        )
+        object.__setattr__(self, 'content_hash', hashlib.sha256(content_str.encode("utf-8")).hexdigest())
