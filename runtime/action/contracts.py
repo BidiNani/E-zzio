@@ -1,14 +1,23 @@
+from enum import Enum
 from dataclasses import dataclass, field
 from typing import Dict, Any, List
+
+class RiskLevel(Enum):
+    LOW = "LOW"
+    MEDIUM = "MEDIUM"
+    HIGH = "HIGH"
+    CRITICAL = "CRITICAL"
 
 @dataclass
 class ActionContract:
     name: str
     description: str
     permission: str
-    handler_ref: str = ""  # Référence textuelle pour l'hydratation (ex: "runtime.action.handlers.default")
+    handler_ref: str = ""
     cost: int = 1
     timeout: float = 5.0
+    risk_level: RiskLevel = RiskLevel.LOW
+    requires_approval: bool = False
     schema: Dict[str, str] = field(default_factory=dict)
 
     def validate_payload(self, payload: Dict[str, Any]) -> List[str]:

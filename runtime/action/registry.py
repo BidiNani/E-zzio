@@ -4,23 +4,25 @@ import inspect
 import importlib
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
 from typing import Dict, Any, Callable, Optional, List
-from runtime.action.contracts import ActionContract
+from runtime.action.contracts import ActionContract, RiskLevel
 from runtime.action.store import ActionStore
 from runtime.action.context import ExecutionContext
+from runtime.action.state import ExecutionState
+from runtime.action.identity import ExecutionIdentity
+from runtime.action.resilience import CircuitBreaker
 
 class ActionRegistry:
-    """
-    Dynamic action registry with signature inspection, strict budget enforcement,
-    and ThreadPoolExecutor Timeout Watchdog isolation.
-    """
+    """Zero Defect Runtime Orchestrator enforcing state machine, cryptographic context, dry run, and resilience."""
     def __init__(self, store: Optional[ActionStore] = None):
         self._contracts: Dict[str, ActionContract] = {}
         self._handlers: Dict[str, Callable] = {}
+        self._circuit_breakers: Dict[str, CircuitBreaker] = {}
         self.store = store or ActionStore()
 
     def register(self, contract: ActionContract, handler: Callable):
         self._contracts[contract.name] = contract
         self._handlers[contract.name] = handler
+        self._circuit_breakers[contract.name] = CircuitBreaker()
         self.store.save_contract(
             action_id=contract.name.lower(),
             version="1.0",
@@ -30,6 +32,7 @@ class ActionRegistry:
             handler_ref=contract.handler_ref,
             cost=contract.cost,
             timeout=contract.timeout,
+            risk_level=contract.risk_level.value if isinstance(contract.risk_level, RiskLevel) else str(contract.risk_level),
             schema=contract.schema
         )
 
@@ -38,6 +41,7 @@ class ActionRegistry:
         loaded_count = 0
 
         for rc in raw_contracts:
+            risk = RiskLevel(rc["risk_level"]) if rc["risk_level"] in RiskLevel.__members__ else RiskLevel.LOW
             contract = ActionContract(
                 name=rc["name"],
                 description=rc["description"],
@@ -45,9 +49,11 @@ class ActionRegistry:
                 handler_ref=rc["handler_ref"],
                 cost=rc["cost"],
                 timeout=rc["timeout"],
+                risk_level=risk,
                 schema=rc["schema"]
             )
             self._contracts[contract.name] = contract
+            self._circuit_breakers[contract.name] = CircuitBreaker()
             
             handler = None
             if handler_resolver and contract.handler_ref:
@@ -68,7 +74,6 @@ class ActionRegistry:
             else:
                 parts = handler_ref.split(".")
                 mod_name, func_name = ".".join(parts[:-1]), parts[-1]
-            
             mod = importlib.import_module(mod_name)
             return getattr(mod, func_name)
         except Exception as e:
@@ -79,10 +84,8 @@ class ActionRegistry:
         return self._contracts.get(name)
 
     def _invoke_handler(self, handler: Callable, ctx: ExecutionContext, payload: Dict[str, Any]) -> Any:
-        """Strict signature inspection for 1 or 2 argument handlers."""
         sig = inspect.signature(handler)
         params = list(sig.parameters.values())
-        
         if len(params) == 1:
             return handler(payload)
         elif len(params) == 2:
@@ -90,11 +93,14 @@ class ActionRegistry:
         else:
             raise TypeError(f"Handler signature unsupported: expected 1 or 2 parameters, got {len(params)}.")
 
-    def execute(self, name: str, payload: Dict[str, Any], context: Optional[ExecutionContext] = None) -> Dict[str, Any]:
+    def execute(self, name: str, payload: Dict[str, Any], context: Optional[ExecutionContext] = None, dry_run: bool = False) -> Dict[str, Any]:
         exec_id = f"exec_{uuid.uuid4().hex}"
         start_time = time.time()
+        state = ExecutionState.CREATED
+
         contract = self._contracts.get(name)
         cost = contract.cost if contract else 1
+        risk_str = contract.risk_level.value if contract and isinstance(contract.risk_level, RiskLevel) else "LOW"
 
         ctx = context or ExecutionContext(
             trace_id=exec_id,
@@ -103,63 +109,111 @@ class ActionRegistry:
             budget_remaining=100
         )
 
+        # 1. Vérification de l'intégrité de la signature du contexte
+        if not ctx.verify_signature():
+            state = ExecutionState.QUARANTINED
+            res = {"status": state.value, "error": "ExecutionContext signature validation failed! Context tampered."}
+            self.store.log_execution(exec_id, name, state.value, payload, res, cost, 0.0)
+            return res
+
+        state = ExecutionState.VALIDATING
+
         if not contract:
+            state = ExecutionState.FAILED
             res = {"status": "BLOCKED", "error": f"Unknown action: '{name}'"}
             self.store.log_execution(exec_id, name, "BLOCKED", payload, res, cost, 0.0)
             return res
 
-        # 1. Vérification du Budget
+        # 2. Vérification Circuit Breaker
+        cb = self._circuit_breakers.get(name)
+        if cb and not cb.can_execute():
+            state = ExecutionState.FAILED
+            res = {"status": "BLOCKED", "error": f"Circuit breaker OPEN for action '{name}'"}
+            self.store.log_execution(exec_id, name, "BLOCKED", payload, res, cost, 0.0)
+            return res
+
+        # 3. Vérification du Budget
         if ctx.budget_remaining < contract.cost:
+            state = ExecutionState.FAILED
             res = {"status": "BLOCKED", "error": f"Insufficient execution budget ({ctx.budget_remaining} < {contract.cost})"}
             self.store.log_execution(exec_id, name, "BLOCKED", payload, res, cost, 0.0)
             return res
 
-        # 2. Vérification des Permissions
+        # 4. Vérification des Permissions
         perms = ctx.permissions or ()
         if contract.permission != "*" and "*" not in perms and contract.permission not in perms:
+            state = ExecutionState.FAILED
             res = {"status": "BLOCKED", "error": f"Permission denied for action '{name}'"}
             self.store.log_execution(exec_id, name, "BLOCKED", payload, res, cost, 0.0)
             return res
 
-        # 3. Validation du Payload
+        # 5. Validation du Payload
         validation_errors = contract.validate_payload(payload)
         if validation_errors:
+            state = ExecutionState.FAILED
             res = {"status": "BLOCKED", "error": f"Payload validation failed: {validation_errors}"}
             self.store.log_execution(exec_id, name, "BLOCKED", payload, res, cost, 0.0)
             return res
 
+        # 6. Mode DRY RUN (Simulation)
+        if dry_run:
+            state = ExecutionState.SIMULATED
+            res = {
+                "status": state.value,
+                "action": name,
+                "required_permission": contract.permission,
+                "estimated_cost": contract.cost,
+                "risk_level": risk_str
+            }
+            self.store.log_execution(exec_id, name, state.value, payload, res, cost, 0.0)
+            return res
+
+        state = ExecutionState.AUTHORIZED
         handler = self._handlers.get(name)
         if not handler:
+            state = ExecutionState.FAILED
             res = {"status": "ERROR", "error": f"No handler registered for action '{name}'"}
             self.store.log_execution(exec_id, name, "ERROR", payload, res, cost, 0.0)
             return res
 
+        state = ExecutionState.RUNNING
         try:
             active_ctx = ctx.consume_budget(contract.cost)
             timeout_seconds = contract.timeout if contract.timeout > 0 else 5.0
 
-            # Exécution isolée via ThreadPoolExecutor avec Watchdog
             with ThreadPoolExecutor(max_workers=1) as executor:
                 future = executor.submit(self._invoke_handler, handler, active_ctx, payload)
                 result = future.result(timeout=timeout_seconds)
 
             duration_ms = round((time.time() - start_time) * 1000, 2)
+            state = ExecutionState.SUCCESS
+            if cb: cb.record_success()
+
             res = {
-                "status": "SUCCESS",
+                "status": state.value,
                 "result": result,
                 "budget_remaining": active_ctx.budget_remaining
             }
-            self.store.log_execution(exec_id, name, "SUCCESS", payload, res, cost, duration_ms)
+            self.store.log_execution(exec_id, name, state.value, payload, res, cost, duration_ms)
+            self.store.log_evidence(exec_id, ctx.trace_id, name, state.value, risk_str, payload, ctx.to_dict(), res, duration_ms)
             return res
 
         except FuturesTimeoutError:
             duration_ms = round((time.time() - start_time) * 1000, 2)
-            res = {"status": "TIMEOUT", "error": f"Action '{name}' timed out after {contract.timeout}s"}
-            self.store.log_execution(exec_id, name, "TIMEOUT", payload, res, cost, duration_ms)
+            state = ExecutionState.TIMEOUT
+            if cb: cb.record_failure()
+
+            res = {"status": state.value, "error": f"Action '{name}' timed out after {contract.timeout}s"}
+            self.store.log_execution(exec_id, name, state.value, payload, res, cost, duration_ms)
+            self.store.log_evidence(exec_id, ctx.trace_id, name, state.value, risk_str, payload, ctx.to_dict(), res, duration_ms)
             return res
 
         except Exception as e:
             duration_ms = round((time.time() - start_time) * 1000, 2)
+            state = ExecutionState.FAILED
+            if cb: cb.record_failure()
+
             res = {"status": "ERROR", "error": str(e)}
             self.store.log_execution(exec_id, name, "ERROR", payload, res, cost, duration_ms)
+            self.store.log_evidence(exec_id, ctx.trace_id, name, state.value, risk_str, payload, ctx.to_dict(), res, duration_ms)
             return res

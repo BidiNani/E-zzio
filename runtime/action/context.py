@@ -1,27 +1,42 @@
+import hmac
+import hashlib
 from dataclasses import dataclass, field, replace, asdict
 from typing import Dict, Any, Tuple, Optional, Union, List
 
+SYSTEM_HMAC_SECRET = b"ezzio_kernel_zero_defect_secret_key"
+
+class SecurityError(Exception):
+    """Raised when context tampering is detected."""
+    pass
+
 @dataclass(frozen=True)
 class ExecutionContext:
-    """
-    Strictly immutable execution context supporting tuples for permissions,
-    strict budget guards, causal trace derivation, and serialization.
-    """
+    """Immutable execution context protected by HMAC-SHA256 cryptographic signatures."""
     trace_id: str
     parent_trace_id: Optional[str] = None
     agent_id: str = "ezzio-core"
     permissions: Tuple[str, ...] = ("*",)
     budget_remaining: int = 100
+    signature: str = ""
     metadata: Dict[str, Any] = field(default_factory=dict)
 
     def __post_init__(self):
-        # Conversion automatique des listes/ensembles en tuples immuables
         if isinstance(self.permissions, (list, set)):
             object.__setattr__(self, "permissions", tuple(self.permissions))
-        self.validate()
+        if not self.signature:
+            sig = self.compute_signature()
+            object.__setattr__(self, "signature", sig)
+        self.validate_structure()
 
-    def validate(self):
-        """Enforces runtime context integrity invariants."""
+    def compute_signature(self) -> str:
+        payload_str = f"{self.trace_id}|{self.parent_trace_id}|{self.agent_id}|{','.join(sorted(self.permissions))}|{self.budget_remaining}"
+        return hmac.new(SYSTEM_HMAC_SECRET, payload_str.encode("utf-8"), hashlib.sha256).hexdigest()
+
+    def verify_signature(self) -> bool:
+        return hmac.compare_digest(self.signature, self.compute_signature())
+
+    def validate_structure(self):
+        """Validates structure without throwing SecurityError during instantiation."""
         if not self.trace_id or not isinstance(self.trace_id, str):
             raise ValueError("ExecutionContext.trace_id must be a non-empty string.")
         if not self.agent_id or not isinstance(self.agent_id, str):
@@ -30,31 +45,28 @@ class ExecutionContext:
             raise ValueError(f"ExecutionContext.budget_remaining cannot be negative (got {self.budget_remaining}).")
 
     def consume_budget(self, cost: int) -> 'ExecutionContext':
-        """Returns a new context with decremented budget or raises ValueError if budget is exceeded."""
         new_budget = self.budget_remaining - cost
         if new_budget < 0:
             raise ValueError(f"Execution budget exceeded: remaining {self.budget_remaining} < cost {cost}.")
-        return replace(self, budget_remaining=new_budget)
+        return replace(self, budget_remaining=new_budget, signature="")
 
     def derive_child(self, child_trace_id: str, new_permissions: Optional[Union[Tuple[str, ...], List[str]]] = None) -> 'ExecutionContext':
-        """Derives a child context maintaining causal lineage."""
         perms = tuple(new_permissions) if new_permissions is not None else self.permissions
         return replace(
             self,
             trace_id=child_trace_id,
             parent_trace_id=self.trace_id,
-            permissions=perms
+            permissions=perms,
+            signature=""
         )
 
     def to_dict(self) -> Dict[str, Any]:
-        """Serializes context for EventBus transport or SQLite persistence."""
         data = asdict(self)
         data["permissions"] = list(self.permissions)
         return data
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ExecutionContext':
-        """Hydrates context from a serialized dictionary."""
         if "permissions" in data and isinstance(data["permissions"], list):
             data["permissions"] = tuple(data["permissions"])
         return cls(**data)

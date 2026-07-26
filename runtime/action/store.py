@@ -1,11 +1,12 @@
 import sqlite3
 import os
 import json
+import hashlib
 from typing import List, Dict, Any, Optional
 from datetime import datetime, timezone
 
 class ActionStore:
-    """Manages persistent storage for action contracts, metadata, and execution history."""
+    """Manages persistent storage with auto-migration, evidence ledger, and execution history."""
     def __init__(self, db_path: str = "data/action_registry.db"):
         os.makedirs(os.path.dirname(db_path), exist_ok=True)
         self.db_path = db_path
@@ -24,10 +25,16 @@ class ActionStore:
                     handler_ref TEXT DEFAULT '',
                     cost INTEGER DEFAULT 1,
                     timeout REAL DEFAULT 5.0,
+                    risk_level TEXT DEFAULT 'LOW',
                     schema TEXT NOT NULL,
                     updated_at TEXT NOT NULL
                 )
             ''')
+            try:
+                conn.execute("ALTER TABLE action_contracts ADD COLUMN risk_level TEXT DEFAULT 'LOW'")
+            except sqlite3.OperationalError:
+                pass
+
             conn.execute('''
                 CREATE TABLE IF NOT EXISTS execution_ledger (
                     exec_id TEXT PRIMARY KEY,
@@ -40,28 +47,52 @@ class ActionStore:
                     timestamp TEXT NOT NULL
                 )
             ''')
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS evidence_ledger (
+                    evidence_id TEXT PRIMARY KEY,
+                    exec_id TEXT NOT NULL,
+                    root_trace_id TEXT NOT NULL,
+                    action_name TEXT NOT NULL,
+                    state TEXT NOT NULL,
+                    risk_level TEXT NOT NULL,
+                    input_hash TEXT NOT NULL,
+                    context_hash TEXT NOT NULL,
+                    result_hash TEXT NOT NULL,
+                    duration_ms REAL,
+                    timestamp TEXT NOT NULL
+                )
+            ''')
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS budget_ledger (
+                    event_id TEXT PRIMARY KEY,
+                    root_trace_id TEXT NOT NULL,
+                    exec_id TEXT NOT NULL,
+                    amount INTEGER NOT NULL,
+                    remaining INTEGER NOT NULL,
+                    timestamp TEXT NOT NULL
+                )
+            ''')
             conn.commit()
 
-    def save_contract(self, action_id: str, version: str, name: str, description: str, permission: str, handler_ref: str, cost: int, timeout: float, schema: Dict[str, str]):
+    def save_contract(self, action_id: str, version: str, name: str, description: str, permission: str, handler_ref: str, cost: int, timeout: float, risk_level: str, schema: Dict[str, str]):
         now = datetime.now(timezone.utc).isoformat()
         with sqlite3.connect(self.db_path) as conn:
             conn.execute(
                 '''INSERT OR REPLACE INTO action_contracts 
-                   (id, version, name, description, permission, handler_ref, cost, timeout, schema, updated_at)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                (action_id, version, name, description, permission, handler_ref, cost, timeout, json.dumps(schema, default=str), now)
+                   (id, version, name, description, permission, handler_ref, cost, timeout, risk_level, schema, updated_at)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                (action_id, version, name, description, permission, handler_ref, cost, timeout, risk_level, json.dumps(schema, default=str), now)
             )
             conn.commit()
 
     def load_contracts(self) -> List[Dict[str, Any]]:
-        """Charge l'ensemble des contrats persistés depuis SQLite pour le bootstrap."""
         with sqlite3.connect(self.db_path) as conn:
-            cursor = conn.execute("SELECT id, version, name, description, permission, handler_ref, cost, timeout, schema FROM action_contracts")
+            cursor = conn.execute("SELECT id, version, name, description, permission, handler_ref, cost, timeout, risk_level, schema FROM action_contracts")
             return [
                 {
                     "id": row[0], "version": row[1], "name": row[2],
                     "description": row[3], "permission": row[4], "handler_ref": row[5],
-                    "cost": row[6], "timeout": row[7], "schema": json.loads(row[8])
+                    "cost": row[6], "timeout": row[7], "risk_level": row[8], "schema": json.loads(row[9])
                 }
                 for row in cursor.fetchall()
             ]
@@ -78,6 +109,7 @@ class ActionStore:
             conn.commit()
 
     def get_execution_history(self, action_name: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]]:
+        """Restauré : Lecture de l'historique d'exécution dans execution_ledger."""
         with sqlite3.connect(self.db_path) as conn:
             if action_name:
                 cursor = conn.execute(
@@ -98,8 +130,38 @@ class ActionStore:
                 for row in cursor.fetchall()
             ]
 
+    def log_evidence(self, exec_id: str, root_trace_id: str, action_name: str, state: str, risk_level: str, payload: dict, context_dict: dict, result: dict, duration_ms: float):
+        now = datetime.now(timezone.utc).isoformat()
+        in_hash = hashlib.sha256(json.dumps(payload, default=str, sort_keys=True).encode()).hexdigest()
+        ctx_hash = hashlib.sha256(json.dumps(context_dict, default=str, sort_keys=True).encode()).hexdigest()
+        res_hash = hashlib.sha256(json.dumps(result, default=str, sort_keys=True).encode()).hexdigest()
+        evidence_id = f"ev_{exec_id}"
+
+        with sqlite3.connect(self.db_path) as conn:
+            conn.execute(
+                '''INSERT INTO evidence_ledger 
+                   (evidence_id, exec_id, root_trace_id, action_name, state, risk_level, input_hash, context_hash, result_hash, duration_ms, timestamp)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                (evidence_id, exec_id, root_trace_id, action_name, state, risk_level, in_hash, ctx_hash, res_hash, duration_ms, now)
+            )
+            conn.commit()
+
+    def get_evidence_history(self, limit: int = 50) -> List[Dict[str, Any]]:
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.execute("SELECT evidence_id, exec_id, root_trace_id, action_name, state, risk_level, duration_ms, timestamp FROM evidence_ledger ORDER BY timestamp DESC LIMIT ?", (limit,))
+            return [
+                {
+                    "evidence_id": row[0], "exec_id": row[1], "root_trace_id": row[2],
+                    "action_name": row[3], "state": row[4], "risk_level": row[5],
+                    "duration_ms": row[6], "timestamp": row[7]
+                }
+                for row in cursor.fetchall()
+            ]
+
     def clear(self):
         with sqlite3.connect(self.db_path) as conn:
             conn.execute("DELETE FROM execution_ledger")
             conn.execute("DELETE FROM action_contracts")
+            conn.execute("DELETE FROM evidence_ledger")
+            conn.execute("DELETE FROM budget_ledger")
             conn.commit()
