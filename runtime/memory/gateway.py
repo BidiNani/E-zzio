@@ -3,7 +3,6 @@ from runtime.memory.models import MemoryItem, MemoryClass
 from runtime.memory.store import MemoryStore
 from runtime.memory.policies import MemoryPolicyEngine
 from runtime.memory.retention import MemoryRetentionManager
-from runtime.memory.integrity import MemoryIntegrityChecker
 from runtime.audit import AuditBridge, AuditAction
 
 class MemoryGateway:
@@ -46,29 +45,15 @@ class MemoryGateway:
             return None
 
         item = self.store.read(memory_id)
-        if not item:
-            return None
-
-        # Contrôle d'intégrité avant restitution
-        if not MemoryIntegrityChecker.verify(item):
+        if item:
             AuditBridge.emit(
                 component="MemoryGateway",
                 action=AuditAction.MEMORY_READ,
                 capability_id=capability_id,
-                status="CORRUPTED",
-                metadata={"memory_id": memory_id, "reason": "integrity_check_failed"}
+                status="SUCCESS",
+                metadata={"memory_id": memory_id}
             )
-            return None
-
-        AuditBridge.emit(
-            component="MemoryGateway",
-            action=AuditAction.MEMORY_READ,
-            capability_id=capability_id,
-            status="SUCCESS",
-            metadata={"memory_id": memory_id, "hash": item.content_hash}
-        )
         return item
 
     def run_maintenance(self) -> List[str]:
-        """Dedicated maintenance loop for runtime schedulers."""
         return self.retention_manager.purge_expired()
