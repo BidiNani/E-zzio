@@ -3,31 +3,21 @@ from runtime.audit.schema import AuditEvent
 from runtime.audit.registry import AuditRegistry
 
 class AuditBridge:
-    """
-    Global bridge used by all components to dispatch standardized audit events.
-    """
     _registry = AuditRegistry()
 
     @classmethod
     def emit(
-        cls,
-        component: str,
-        action: str,
-        execution_id: Optional[str] = None,
-        capability_id: Optional[str] = None,
-        status: str = "SUCCESS",
-        metadata: Optional[Dict[str, Any]] = None
+        cls, component: str, action: str,
+        execution_id: Optional[str] = None, capability_id: Optional[str] = None,
+        status: str = "SUCCESS", metadata: Optional[Dict[str, Any]] = None
     ) -> AuditEvent:
         event = AuditEvent(
-            component=component,
-            action=action,
-            execution_id=execution_id,
-            capability_id=capability_id,
-            status=status,
-            metadata=metadata or {}
+            component=component, action=action,
+            execution_id=execution_id, capability_id=capability_id,
+            status=status, metadata=metadata or {},
+            previous_hash=cls._registry.get_last_hash()
         )
-        cls._registry.record(event)
-        return event
+        return cls._registry.record(event)
 
     @classmethod
     def get_registry(cls) -> AuditRegistry:

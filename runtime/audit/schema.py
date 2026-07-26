@@ -5,10 +5,6 @@ import uuid
 
 @dataclass(frozen=True)
 class AuditEvent:
-    """
-    Standardized, immutable audit event representation.
-    Guarantees consistent tracking across Capability, Execution, and Memory.
-    """
     event_id: str = field(default_factory=lambda: f"audit_{uuid.uuid4().hex[:8]}")
     timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     component: str = "Unknown"
@@ -17,3 +13,5 @@ class AuditEvent:
     capability_id: Optional[str] = None
     status: str = "SUCCESS"
     metadata: Dict[str, Any] = field(default_factory=dict)
+    previous_hash: str = "GENESIS"
+    current_hash: Optional[str] = field(default=None, init=False)

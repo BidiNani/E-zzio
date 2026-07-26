@@ -73,7 +73,7 @@ def test_memory_gateway_full_authorized_flow():
     gateway = MemoryGateway()
 
     # Simulation d'un token valide
-    token_meta = {"state": "ACTIVE"}
+    token_meta = {"id": "cap_valid_01", "state": "ACTIVE", "permissions": ["memory.read", "memory.write"], "expires_at": 9999999999}
 
     # Écriture
     item = gateway.write_memory(
@@ -100,3 +100,29 @@ def test_memory_gateway_full_authorized_flow():
     # Vérification des traces d'audit émanant de la passerelle
     events = registry.query(capability_id="cap_valid_01")
     assert len(events) >= 2
+
+
+def test_audit_hash_chain_integrity():
+    """Vérifie que le chaînage cryptographique des événements d'audit est incassable."""
+    from runtime.audit import AuditBridge
+    registry = AuditBridge.get_registry()
+    registry.clear()
+    
+    e1 = AuditBridge.emit("Test", "ACT_1")
+    e2 = AuditBridge.emit("Test", "ACT_2")
+    e3 = AuditBridge.emit("Test", "ACT_3")
+    
+    assert e1.current_hash is not None
+    assert e2.previous_hash == e1.current_hash
+    assert e3.previous_hash == e2.current_hash
+
+def test_memory_content_hash_integrity():
+    """Vérifie le checksum SHA-256 de la mémoire."""
+    from runtime.memory.models import MemoryItem
+    item1 = MemoryItem(content={"directive": "protect"})
+    item2 = MemoryItem(content={"directive": "protect"})
+    item_diff = MemoryItem(content={"directive": "destroy"})
+    
+    assert item1.content_hash == item2.content_hash
+    assert item1.content_hash != item_diff.content_hash
+
