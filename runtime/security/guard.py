@@ -1,12 +1,26 @@
-class OutputGuard:
-    MAX_BYTES = 1024 * 512
+from runtime.policy.engine import PolicyEngine
+from runtime.security.secrets import SecretKeyManager
+from runtime.tools.manifest_provider import ManifestProvider
+from runtime.tools.tool_schema import ToolRequest
 
-    @staticmethod
-    def sanitize(output: str) -> str:
-        if not output:
-            return ""
-        encoded = output.encode("utf-8")
-        if len(encoded) > OutputGuard.MAX_BYTES:
-            truncated = encoded[:OutputGuard.MAX_BYTES].decode("utf-8", errors="ignore")
-            return truncated + "\n...[TRUNCATED BY OUTPUT GUARD: MAX BYTE LIMIT REACHED]..."
-        return output
+class SecurityGuard:
+    """
+    Pont de rétrocompatibilité natif conforme au contrat PolicyEngine.authorize.
+    """
+    def __init__(self, policy_engine = None):
+        if policy_engine:
+            self.policy_engine = policy_engine
+        else:
+            key_mgr = SecretKeyManager()
+            manifest_prov = ManifestProvider()
+            self.policy_engine = PolicyEngine(manifest_provider=manifest_prov, key_manager=key_mgr)
+
+    def check_permission(self, subject: str, permission: str) -> bool:
+        try:
+            # Création du ToolRequest attendu par le PolicyEngine moderne
+            request = ToolRequest(name=permission, arguments={}, call_id="bridge-call")
+            # authorize retourne un tuple (success: bool, reason: str, token)
+            success, _, _ = self.policy_engine.authorize(request, session_id=subject)
+            return bool(success)
+        except Exception:
+            return False
