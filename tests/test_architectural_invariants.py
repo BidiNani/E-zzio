@@ -23,3 +23,36 @@ if __name__ == "__main__":
     test_crypto_and_capability_flow()
     test_security_guard_bridge()
     print("ALL ARCHITECTURAL INVARIANTS PASSED SUCCESSFULLY")
+
+
+def test_audit_immutability():
+    """Vérifie que l'objet AuditEvent est frozen (immuable)."""
+    import pytest
+    from runtime.audit import AuditEvent
+    event = AuditEvent(component="Test", action="TEST_ACTION")
+    with pytest.raises(Exception):
+        event.status = "TAMPERED"
+
+def test_capability_audit_trace():
+    """Vérifie que les actions de la passerelle génèrent des traces dans l'AuditRegistry."""
+    from runtime.capabilities.service import CapabilityEnforcementGateway
+    from runtime.execution.context import ExecutionContext
+    from runtime.audit import AuditBridge
+    
+    registry = AuditBridge.get_registry()
+    registry.clear()
+    
+    gateway = CapabilityEnforcementGateway()
+    context = ExecutionContext(
+        execution_id="exec_test_001",
+        session_id="session_01",
+        capability_id=None,
+        tool_request={"action": "read"}
+    )
+    
+    gateway.authorize_execution(context, {})
+    
+    events = registry.query(execution_id="exec_test_001")
+    assert len(events) > 0
+    assert events[0].status == "BLOCKED"
+    assert events[0].action == "EXECUTION_BLOCKED"
