@@ -2,13 +2,17 @@ import time
 import uuid
 import inspect
 import importlib
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
 from typing import Dict, Any, Callable, Optional, List
 from runtime.action.contracts import ActionContract
 from runtime.action.store import ActionStore
 from runtime.action.context import ExecutionContext
 
 class ActionRegistry:
-    """Dynamic registry supporting persistence, context inspection, budget enforcement, and execution ledger."""
+    """
+    Dynamic action registry with signature inspection, strict budget enforcement,
+    and ThreadPoolExecutor Timeout Watchdog isolation.
+    """
     def __init__(self, store: Optional[ActionStore] = None):
         self._contracts: Dict[str, ActionContract] = {}
         self._handlers: Dict[str, Callable] = {}
@@ -75,13 +79,16 @@ class ActionRegistry:
         return self._contracts.get(name)
 
     def _invoke_handler(self, handler: Callable, ctx: ExecutionContext, payload: Dict[str, Any]) -> Any:
-        """Inspects signature to support both legacy handler(payload) and v2 handler(ctx, payload)."""
+        """Strict signature inspection for 1 or 2 argument handlers."""
         sig = inspect.signature(handler)
         params = list(sig.parameters.values())
         
         if len(params) == 1:
             return handler(payload)
-        return handler(ctx, payload)
+        elif len(params) == 2:
+            return handler(ctx, payload)
+        else:
+            raise TypeError(f"Handler signature unsupported: expected 1 or 2 parameters, got {len(params)}.")
 
     def execute(self, name: str, payload: Dict[str, Any], context: Optional[ExecutionContext] = None) -> Dict[str, Any]:
         exec_id = f"exec_{uuid.uuid4().hex}"
@@ -92,7 +99,7 @@ class ActionRegistry:
         ctx = context or ExecutionContext(
             trace_id=exec_id,
             agent_id="ezzio-core",
-            permissions=["*"],
+            permissions=("*",),
             budget_remaining=100
         )
 
@@ -108,7 +115,7 @@ class ActionRegistry:
             return res
 
         # 2. Vérification des Permissions
-        perms = ctx.permissions or []
+        perms = ctx.permissions or ()
         if contract.permission != "*" and "*" not in perms and contract.permission not in perms:
             res = {"status": "BLOCKED", "error": f"Permission denied for action '{name}'"}
             self.store.log_execution(exec_id, name, "BLOCKED", payload, res, cost, 0.0)
@@ -128,20 +135,29 @@ class ActionRegistry:
             return res
 
         try:
-            # Consommation du budget
             active_ctx = ctx.consume_budget(contract.cost)
-            
-            # Invocation sécurisée
-            result = self._invoke_handler(handler, active_ctx, payload)
+            timeout_seconds = contract.timeout if contract.timeout > 0 else 5.0
+
+            # Exécution isolée via ThreadPoolExecutor avec Watchdog
+            with ThreadPoolExecutor(max_workers=1) as executor:
+                future = executor.submit(self._invoke_handler, handler, active_ctx, payload)
+                result = future.result(timeout=timeout_seconds)
+
             duration_ms = round((time.time() - start_time) * 1000, 2)
-            
             res = {
-                "status": "SUCCESS", 
-                "result": result, 
+                "status": "SUCCESS",
+                "result": result,
                 "budget_remaining": active_ctx.budget_remaining
             }
             self.store.log_execution(exec_id, name, "SUCCESS", payload, res, cost, duration_ms)
             return res
+
+        except FuturesTimeoutError:
+            duration_ms = round((time.time() - start_time) * 1000, 2)
+            res = {"status": "TIMEOUT", "error": f"Action '{name}' timed out after {contract.timeout}s"}
+            self.store.log_execution(exec_id, name, "TIMEOUT", payload, res, cost, duration_ms)
+            return res
+
         except Exception as e:
             duration_ms = round((time.time() - start_time) * 1000, 2)
             res = {"status": "ERROR", "error": str(e)}
