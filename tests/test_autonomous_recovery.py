@@ -2,6 +2,7 @@ import unittest
 import os
 import tempfile
 import shutil
+import gc
 from runtime.recovery import (
     IncidentBundleGenerator, IncidentStore, Severity, IncidentCategory, AutonomousRecoveryEngine
 )
@@ -20,6 +21,8 @@ class TestAutonomousRecovery(unittest.TestCase):
 
     def tearDown(self):
         self.store.close()
+        # Forcer le garbage collector pour libérer tout handle SQLite résiduel
+        gc.collect()
         shutil.rmtree(self.test_dir, ignore_errors=True)
 
     def test_remediation_policy_timeout(self):

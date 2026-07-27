@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Dict, Any, Optional
+from typing import List, Dict, Any, Optional
 
 @dataclass(frozen=True)
 class RemediationAction:
@@ -11,7 +11,7 @@ class RemediationAction:
 class RecoveryPolicyEngine:
     """Moteur de décision politique : évalue un incident et prescrit une action contrôlée."""
 
-    def evaluate(self, incident_category: str, severity_score: int, telemetry_snapshot: Dict[str, Any], root_candidates: list) -> RemediationAction:
+    def evaluate(self, incident_category: str, severity_score: int, telemetry_snapshot: Dict[str, Any], root_candidates: List[str]) -> RemediationAction:
         
         # Règle 1 : Sûreté critique (Attaque HMAC / Security Violation) -> Quarantaine absolue
         if incident_category == "SECURITY_CONTEXT_FAILURE" or severity_score >= 100:

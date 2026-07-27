@@ -16,20 +16,23 @@ class AutonomousRecoveryEngine:
 
     def _init_db(self):
         with self._db_lock:
-            with sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False) as conn:
-                conn.execute("PRAGMA journal_mode=WAL;")
-                conn.execute('''
-                    CREATE TABLE IF NOT EXISTS remediation_actions (
-                        action_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        incident_id TEXT NOT NULL,
-                        action_type TEXT NOT NULL,
-                        parameters TEXT NOT NULL,
-                        reason TEXT NOT NULL,
-                        confidence REAL NOT NULL,
-                        executed_at TEXT NOT NULL
-                    )
-                ''')
-                conn.commit()
+            conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+            try:
+                with conn:
+                    conn.execute("PRAGMA journal_mode=WAL;")
+                    conn.execute('''
+                        CREATE TABLE IF NOT EXISTS remediation_actions (
+                            action_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            incident_id TEXT NOT NULL,
+                            action_type TEXT NOT NULL,
+                            parameters TEXT NOT NULL,
+                            reason TEXT NOT NULL,
+                            confidence REAL NOT NULL,
+                            executed_at TEXT NOT NULL
+                        )
+                    ''')
+            finally:
+                conn.close()  # Fermeture obligatoire pour libérer le lock Windows
 
     def process_incident(self, bundle: IncidentBundle) -> RemediationAction:
         """Évalue l'incident et applique la politique de remédiation contrôlée."""
@@ -43,18 +46,21 @@ class AutonomousRecoveryEngine:
         # Journalisation de l'action corrective dans SQLite
         timestamp = bundle.timestamp
         with self._db_lock:
-            with sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False) as conn:
-                conn.execute('''
-                    INSERT INTO remediation_actions (incident_id, action_type, parameters, reason, confidence, executed_at)
-                    VALUES (?, ?, ?, ?, ?, ?)
-                ''', (
-                    bundle.incident_id,
-                    action.action_type,
-                    json.dumps(action.parameters, default=str),
-                    action.reason,
-                    action.confidence,
-                    timestamp
-                ))
-                conn.commit()
+            conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+            try:
+                with conn:
+                    conn.execute('''
+                        INSERT INTO remediation_actions (incident_id, action_type, parameters, reason, confidence, executed_at)
+                        VALUES (?, ?, ?, ?, ?, ?)
+                    ''', (
+                        bundle.incident_id,
+                        action.action_type,
+                        json.dumps(action.parameters, default=str),
+                        action.reason,
+                        action.confidence,
+                        timestamp
+                    ))
+            finally:
+                conn.close()
 
         return action
