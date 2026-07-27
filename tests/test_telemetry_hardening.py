@@ -27,7 +27,7 @@ class TestEnterpriseTelemetry(unittest.TestCase):
         
         self.assertEqual(summary["total_executions"], 2)
         self.assertEqual(summary["dropped_metrics"], 0)
-        self.assertEqual(summary["collector_version"], "2.6.8.3")
+        self.assertEqual(summary["collector_version"], self.collector.collector_version)
         self.assertGreater(summary["flush_count"], 0)
 
     def test_queue_pressure_survival(self):

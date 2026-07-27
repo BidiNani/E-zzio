@@ -3,6 +3,7 @@ import os
 import json
 import hashlib
 import threading
+import statistics
 from typing import List, Dict, Any, Optional
 from datetime import datetime, timezone, timedelta
 from runtime.telemetry.metrics import ExecutionMetric
@@ -11,14 +12,14 @@ from runtime.telemetry.events import TelemetryEvent
 CURRENT_SCHEMA_VERSION = 4
 
 class TelemetryStorage:
-    """Stockage SQLite thread-safe avec maintenance VACUUM/ANALYZE et export JSON/Grafana."""
+    """Stockage SQLite v2.6.9 : Exports OTLP / Prometheus & Requêtes analytiques."""
     
     def __init__(self, db_path: str = "data/telemetry.db", retention_days: int = 90):
         os.makedirs(os.path.dirname(db_path), exist_ok=True)
         self.db_path = db_path
         self.retention_days = retention_days
         self._conn = None
-        self._db_lock = threading.Lock()
+        self._db_lock = threading.RLock()
 
     def connect(self):
         with self._db_lock:
@@ -70,7 +71,6 @@ class TelemetryStorage:
                     )
                 ''')
                 
-                # Index pour requêtes analytiques sous O(log N)
                 self._conn.execute("CREATE INDEX IF NOT EXISTS idx_status ON telemetry_metrics(status);")
                 self._conn.execute("CREATE INDEX IF NOT EXISTS idx_category ON telemetry_metrics(category);")
                 self._conn.execute("CREATE INDEX IF NOT EXISTS idx_timestamp ON telemetry_metrics(timestamp);")
@@ -108,8 +108,49 @@ class TelemetryStorage:
                 with self._conn:
                     self._conn.executemany(query, data)
 
+    def export_prometheus(self) -> str:
+        """Exporte les métriques système au format standard Prometheus TSDB."""
+        summary = self.get_summary()
+        lines = [
+            "# HELP ezzio_executions_total Total actions executed",
+            "# TYPE ezzio_executions_total counter",
+            f"ezzio_executions_total {summary.get('total_executions', 0)}",
+            "# HELP ezzio_success_rate Taux de succes des actions",
+            "# TYPE ezzio_success_rate gauge",
+            f"ezzio_success_rate {summary.get('success_rate', 1.0)}",
+            "# HELP ezzio_latency_p90_ms Latence P90 en millisecondes",
+            "# TYPE ezzio_latency_p90_ms gauge",
+            f"ezzio_latency_p90_ms {summary.get('latency', {}).get('p90', 0.0)}",
+            "# HELP ezzio_budget_consumed_total Budget total consomme",
+            "# TYPE ezzio_budget_consumed_total counter",
+            f"ezzio_budget_consumed_total {summary.get('total_budget_consumed', 0.0)}"
+        ]
+        return "\n".join(lines)
+
+    def export_otlp_spans(self, limit: int = 100) -> List[Dict[str, Any]]:
+        """Génère un tableau de Spans OTLP (OpenTelemetry) pour export externe."""
+        with self._db_lock:
+            if not self._conn: return []
+            cursor = self._conn.execute(
+                "SELECT exec_id, action_name, status, duration_ms, trace_id, span_id, timestamp FROM telemetry_metrics ORDER BY timestamp DESC LIMIT ?", 
+                (limit,)
+            )
+            spans = []
+            for row in cursor.fetchall():
+                spans.append({
+                    "traceId": row[4] or f"trace_{row[0]}",
+                    "spanId": row[5] or f"span_{row[0]}",
+                    "name": row[1],
+                    "kind": "SPAN_KIND_INTERNAL",
+                    "attributes": {
+                        "status": row[2],
+                        "duration_ms": row[3]
+                    },
+                    "timestamp": row[6]
+                })
+            return spans
+
     def run_maintenance(self):
-        """Maintenance préventive pour compacter la BDD et réorganiser les index."""
         with self._db_lock:
             if self._conn:
                 self._conn.execute("PRAGMA optimize;")
@@ -124,15 +165,6 @@ class TelemetryStorage:
                     self._conn.execute("DELETE FROM telemetry_metrics WHERE timestamp < ?", (cutoff_date,))
                     self._conn.execute("DELETE FROM telemetry_events WHERE timestamp < ?", (cutoff_timestamp,))
 
-    def export_json(self, limit: int = 1000) -> str:
-        """Export au format JSON pour intégration Grafana / OTLP Collector."""
-        with self._db_lock:
-            if not self._conn: return "[]"
-            cursor = self._conn.execute("SELECT exec_id, action_name, status, duration_ms, cost, timestamp FROM telemetry_metrics ORDER BY timestamp DESC LIMIT ?", (limit,))
-            columns = [col[0] for col in cursor.description]
-            results = [dict(zip(columns, row)) for row in cursor.fetchall()]
-            return json.dumps(results, indent=2)
-
     def get_summary(s) -> Dict[str, Any]:
         with s._db_lock:
             if not s._conn: return {}
@@ -144,12 +176,16 @@ class TelemetryStorage:
             total, successes, total_cost, t_min, t_max = row[0] or 0, row[1] or 0, row[2] or 0.0, row[3], row[4]
             
             cursor = s._conn.execute("SELECT duration_ms FROM telemetry_metrics ORDER BY timestamp DESC LIMIT 1000")
-            durations = sorted([r[0] for r in cursor.fetchall()])
+            durations = [r[0] for r in cursor.fetchall()]
             
-            p50 = durations[int(len(durations)*0.5)] if durations else 0
-            p90 = durations[int(len(durations)*0.9)] if durations else 0
-            p99 = durations[int(len(durations)*0.99)] if durations else 0
-            mean_lat = sum(durations)/len(durations) if durations else 0
+            mean_lat = statistics.mean(durations) if durations else 0.0
+            if len(durations) >= 2:
+                quantiles = statistics.quantiles(durations, n=100)
+                p50, p90, p99 = quantiles[49], quantiles[89], quantiles[98]
+            elif durations:
+                p50 = p90 = p99 = durations[0]
+            else:
+                p50 = p90 = p99 = 0.0
             
             throughput = 0.0
             if t_min and t_max:
@@ -164,7 +200,7 @@ class TelemetryStorage:
             return {
                 "total_executions": total,
                 "success_rate": round(successes / total, 4) if total > 0 else 1.0,
-                "latency": {"mean": round(mean_lat, 2), "p50": p50, "p90": p90, "p99": p99},
+                "latency": {"mean": round(mean_lat, 2), "p50": round(p50, 2), "p90": round(p90, 2), "p99": round(p99, 2)},
                 "throughput_eps": round(throughput, 2),
                 "total_budget_consumed": round(total_cost, 2),
                 "error_breakdown": error_breakdown
