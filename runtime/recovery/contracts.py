@@ -1,9 +1,14 @@
 import json
+import os
 import hmac
 import hashlib
 from dataclasses import dataclass, field, asdict
 from enum import Enum
 from typing import List, Dict, Any, Optional
+
+def get_recovery_secret() -> str:
+    """Récupère le secret HMAC depuis l'environnement ou utilise une clé par défaut."""
+    return os.environ.get("EZZIO_RECOVERY_HMAC_SECRET", "ezzio-sovereign-kernel-recovery-secret-2026")
 
 class Severity(str, Enum):
     INFO = "INFO"
@@ -87,8 +92,8 @@ def compute_decision_signature(
     approval_status: str,
     confidence: float,
     timestamp: str,
-    secret_key: str = "ezzio-kernel-recovery-secret"
+    secret_key: Optional[str] = None
 ) -> str:
-    """Calcule la signature HMAC-SHA256 infalsifiable d'une décision de remédiation."""
+    key = secret_key or get_recovery_secret()
     raw = f"{decision_trace_id}|{incident_id}|{action_type}|{approval_status}|{confidence}|{timestamp}"
-    return hmac.new(secret_key.encode('utf-8'), raw.encode('utf-8'), hashlib.sha256).hexdigest()
+    return hmac.new(key.encode('utf-8'), raw.encode('utf-8'), hashlib.sha256).hexdigest()

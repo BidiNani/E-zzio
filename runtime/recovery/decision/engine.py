@@ -5,36 +5,37 @@ import uuid
 from typing import Dict, Any, Optional
 from datetime import datetime, timezone
 
-from runtime.recovery.contracts import IncidentBundle, compute_decision_signature
+from runtime.recovery.contracts import IncidentBundle, compute_decision_signature, get_recovery_secret
 from runtime.recovery.decision.policies import RecoveryPolicyEngine, RemediationAction
 from runtime.recovery.decision.governor import DecisionGovernor, ExecutionApproval
 from runtime.recovery.rollback.manager import RollbackManager
+from runtime.recovery.ledger import RecoveryLedger
 from runtime.recovery.executor.quarantine import QuarantineExecutor
 from runtime.recovery.executor.scaling import ScalingExecutor
 from runtime.recovery.executor.retry import RetryExecutor
 from runtime.telemetry.collector import TelemetryCollector
 from runtime.telemetry.events import TelemetryEvent, EventType
 
-CURRENT_SCHEMA_VERSION = 4
-
 class AutonomousRecoveryEngine:
-    """Moteur de récupération autonome v2.7.4 : Scellé HMAC, Exécution, Rollback et Dry-Run."""
+    """Moteur de récupération autonome v2.7.5 : HMAC d'environnement, Recovery Ledger & Atomicité."""
 
     def __init__(
         self,
         policy_engine: Optional[RecoveryPolicyEngine] = None,
         governor: Optional[DecisionGovernor] = None,
         rollback_manager: Optional[RollbackManager] = None,
+        recovery_ledger: Optional[RecoveryLedger] = None,
         collector: Optional[TelemetryCollector] = None,
         db_path: str = "data/incidents.db",
-        secret_key: str = "ezzio-kernel-recovery-secret"
+        secret_key: Optional[str] = None
     ):
         self.policy_engine = policy_engine or RecoveryPolicyEngine()
         self.governor = governor or DecisionGovernor()
         self.rollback_manager = rollback_manager or RollbackManager(db_path=db_path)
+        self.recovery_ledger = recovery_ledger or RecoveryLedger(db_path=db_path)
         self.collector = collector or TelemetryCollector()
         self.db_path = db_path
-        self.secret_key = secret_key
+        self.secret_key = secret_key or get_recovery_secret()
         self._db_lock = threading.RLock()
         
         self.executors = {
@@ -72,7 +73,6 @@ class AutonomousRecoveryEngine:
         decision_trace_id = f"dt_{uuid.uuid4().hex[:8]}"
         timestamp = datetime.now(timezone.utc).isoformat()
         
-        # 1. Évaluation Politique & Gouvernance
         action = self.policy_engine.evaluate(
             incident_category=bundle.category,
             severity_score=bundle.severity_score,
@@ -85,7 +85,6 @@ class AutonomousRecoveryEngine:
             confidence=action.confidence
         )
 
-        # 2. Calcul du scellé cryptographique HMAC de la décision
         decision_sig = compute_decision_signature(
             decision_trace_id=decision_trace_id,
             incident_id=bundle.incident_id,
@@ -109,15 +108,14 @@ class AutonomousRecoveryEngine:
 
         execution_result = {"status": "SKIPPED", "reason": "Requires human approval"}
         rollback_record_id = None
+        prev_state, new_state = {}, {}
 
-        # 3. Exécution si approuvée
         if gov_decision.approval_status in [ExecutionApproval.AUTO_EXECUTE, ExecutionApproval.SUPERVISED_EXECUTE]:
             executor = self.executors.get(action.action_type)
             if executor:
                 ctx = {"action_name": bundle.action_name, "execution_id": bundle.execution_id}
                 execution_result = executor.execute(action.parameters, context=ctx)
                 
-                # 4. Consignation Rollback
                 prev_state = execution_result.get("previous_state", {})
                 new_state = execution_result.get("new_state", {})
                 target_comp = execution_result.get("target", bundle.action_name)
@@ -131,7 +129,16 @@ class AutonomousRecoveryEngine:
                 )
                 rollback_record_id = rb_rec.record_id
 
-        # 5. Persistance de la Decision Trace signée
+                # Inscription dans le Recovery Ledger cryptographique
+                self.recovery_ledger.record_recovery_event(
+                    incident_id=bundle.incident_id,
+                    decision_trace_id=decision_trace_id,
+                    action_type=action.action_type,
+                    before_state=prev_state,
+                    after_state=new_state,
+                    decision_signature=decision_sig
+                )
+
         with self._db_lock:
             conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
             try:
@@ -155,7 +162,6 @@ class AutonomousRecoveryEngine:
             finally:
                 conn.close()
 
-        # 6. Émission vers Evidence Ledger
         self.collector.record_event(TelemetryEvent(
             event_type=EventType.SYSTEM_HEALTH_CHECK,
             payload={
