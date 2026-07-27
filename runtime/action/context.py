@@ -1,9 +1,17 @@
+import os
 import hmac
 import hashlib
 from dataclasses import dataclass, field, replace, asdict
 from typing import Dict, Any, Tuple, Optional, Union, List
 
-SYSTEM_HMAC_SECRET = b"ezzio_kernel_zero_defect_secret_key"
+def get_hmac_secret() -> bytes:
+    """Récupère le secret HMAC depuis l'environnement ou applique un fallback sécurisé en dev."""
+    secret = os.environ.get("EZZIO_HMAC_SECRET")
+    if not secret:
+        return b"ezzio_kernel_default_secure_fallback_key_2026"
+    return secret.encode("utf-8")
+
+SYSTEM_HMAC_SECRET = get_hmac_secret()
 
 class SecurityError(Exception):
     """Raised when context tampering is detected."""
@@ -36,7 +44,6 @@ class ExecutionContext:
         return hmac.compare_digest(self.signature, self.compute_signature())
 
     def validate_structure(self):
-        """Validates structure without throwing SecurityError during instantiation."""
         if not self.trace_id or not isinstance(self.trace_id, str):
             raise ValueError("ExecutionContext.trace_id must be a non-empty string.")
         if not self.agent_id or not isinstance(self.agent_id, str):
