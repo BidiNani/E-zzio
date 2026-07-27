@@ -7,108 +7,110 @@ from runtime.telemetry.events import TelemetryEvent
 from runtime.telemetry.storage import TelemetryStorage
 
 class TelemetryCollector:
-    """Collecteur Asynchrone : Queue RAM non-bloquante, API rétrocompatible & Writer Thread."""
+    """Collecteur Asynchrone Ultra-Rapide avec Rétrocompatibilité API et Sentinelle d'arrêt propre."""
 
-    def __init__(self, storage: Optional[TelemetryStorage] = None, batch_size: int = 100, flush_interval: float = 0.5):
+    def __init__(self, storage: Optional[TelemetryStorage] = None, batch_size: int = 50, flush_interval: float = 0.5):
         self.storage = storage
-        self.batch_size = batch_size
+        self.batch_size = batch_size  # Restauration du paramètre API public
         self.flush_interval = flush_interval
+        self.dropped_metrics = 0
+        self.dropped_events = 0
 
         self._queue = queue.Queue(maxsize=10000)
-        self._stop_event = threading.Event()
         self._writer_thread = None
-
-    def configure_storage(self, storage: Optional[TelemetryStorage]):
-        """Ajuste dynamiquement le moteur de stockage."""
-        self.storage = storage
-        if self.storage and self._writer_thread and self._writer_thread.is_alive():
-            self.storage.connect()
 
     def start(self):
         if self.storage:
             self.storage.connect()
-        self._stop_event.clear()
         self._writer_thread = threading.Thread(target=self._worker, daemon=True, name="TelemetryWriter")
         self._writer_thread.start()
 
     def stop(self):
-        self._stop_event.set()
         if self._writer_thread and self._writer_thread.is_alive():
+            self._queue.put(None)  # Sentinelle d'arrêt gracieux
             self._writer_thread.join(timeout=3.0)
         if self.storage:
             self.storage.close()
 
     def reset(self):
-        """Purge la queue et reinitialise le stockage (compatibilité test suite)."""
         with self._queue.mutex:
             self._queue.queue.clear()
-        if self.storage:
-            self.storage.clear()
+
+    def flush(self):
+        """Purge synchrone de la queue vers la BDD."""
+        batch_metrics = []
+        batch_events = []
+        while not self._queue.empty():
+            try:
+                item = self._queue.get_nowait()
+                if item is None: continue
+                if item[0] == 'metric': batch_metrics.append(item[1])
+                elif item[0] == 'event': batch_events.append(item[1])
+            except queue.Empty: break
+        self._flush_batches(batch_metrics, batch_events)
 
     def record_execution(self, metric: ExecutionMetric) -> None:
         try:
             self._queue.put_nowait(('metric', metric))
         except queue.Full:
-            pass
+            self.dropped_metrics += 1
 
     def record_event(self, event: TelemetryEvent) -> None:
         try:
             self._queue.put_nowait(('event', event))
         except queue.Full:
-            pass
+            self.dropped_events += 1
 
     def _worker(self):
         batch_metrics = []
         batch_events = []
         last_flush = time.time()
-        retention_last_run = time.time()
+        last_maintenance = time.time()
 
-        while not self._stop_event.is_set() or not self._queue.empty():
+        while True:
+            q_size = self._queue.qsize()
+            # Batching adaptatif conservé, mais batch_size sert de seuil minimal
+            if q_size > 5000: target_batch = 1000
+            elif q_size > 1000: target_batch = 500
+            else: target_batch = self.batch_size
+
             try:
                 item = self._queue.get(timeout=0.1)
-                if item[0] == 'metric':
-                    batch_metrics.append(item[1])
-                elif item[0] == 'event':
-                    batch_events.append(item[1])
-            except queue.Empty:
-                pass
+                if item is None:
+                    break
+                if item[0] == 'metric': batch_metrics.append(item[1])
+                elif item[0] == 'event': batch_events.append(item[1])
+            except queue.Empty: pass
 
             now = time.time()
-            if len(batch_metrics) >= self.batch_size or len(batch_events) >= self.batch_size or (now - last_flush) > self.flush_interval:
-                self._flush(batch_metrics, batch_events)
+            if len(batch_metrics) >= target_batch or len(batch_events) >= target_batch or (now - last_flush) > self.flush_interval:
+                self._flush_batches(batch_metrics, batch_events)
                 last_flush = now
 
-            if now - retention_last_run > 3600:
+            if now - last_maintenance > 86400:
                 if self.storage:
                     self.storage.enforce_retention()
-                retention_last_run = now
+                    self.storage.run_maintenance()
+                last_maintenance = now
 
-        self._flush(batch_metrics, batch_events)
+        self._flush_batches(batch_metrics, batch_events)
 
-    def _flush(self, metrics: List, events: List):
-        if not self.storage:
-            metrics.clear()
-            events.clear()
-            return
-
-        if metrics:
-            self.storage.save_metrics_batch(metrics)
-            metrics.clear()
-        if events:
-            self.storage.save_events_batch(events)
-            events.clear()
+    def _flush_batches(self, metrics: List, events: List):
+        if self.storage:
+            if metrics:
+                self.storage.save_metrics_batch(metrics)
+                metrics.clear()
+            if events:
+                self.storage.save_events_batch(events)
+                events.clear()
 
     def get_summary(self) -> Dict[str, Any]:
-        if self.storage:
-            return self.storage.get_summary()
-        return {
-            "total_executions": 0,
-            "success_rate": 1.0,
-            "latency": {"mean": 0, "p50": 0, "p90": 0, "p99": 0},
-            "throughput_eps": 0.0,
-            "total_budget_consumed": 0.0,
-            "error_breakdown": {}
-        }
+        summary = self.storage.get_summary() if self.storage else {}
+        summary["dropped_metrics"] = self.dropped_metrics
+        summary["dropped_events"] = self.dropped_events
+        summary["queue_backlog"] = self._queue.qsize()
+        summary["configured_batch_size"] = self.batch_size # Métrique exposée pour les tests
+        return summary
 
     def get_queue_size(self) -> int:
         return self._queue.qsize()

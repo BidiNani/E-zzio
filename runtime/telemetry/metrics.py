@@ -5,7 +5,7 @@ import threading
 
 @dataclass
 class ExecutionMetric:
-    """Métrique d'exécution enrichie avec traçabilité intégrale (Trace, Span, Environnement)."""
+    """Métrique d'exécution distribuée OpenTelemetry-compatible."""
     exec_id: str
     action_name: str
     status: str
@@ -14,13 +14,14 @@ class ExecutionMetric:
     risk_level: str
     category: Optional[str] = None
     
-    # Intégration Observabilité / Forensic
+    # Traçabilité OpenTelemetry
     trace_id: Optional[str] = None
     span_id: Optional[str] = None
     parent_span_id: Optional[str] = None
     session_id: Optional[str] = None
     error_stack_hash: Optional[str] = None
     
-    # Métadonnées système
+    # Métadonnées système & charges
+    payload_size_bytes: int = 0
     thread_id: int = field(default_factory=threading.get_ident)
     hostname: str = field(default_factory=socket.gethostname)

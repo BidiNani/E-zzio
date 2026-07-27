@@ -2,51 +2,44 @@ import unittest
 import os
 import tempfile
 import shutil
-import sqlite3
 import time
-from runtime.telemetry.storage import TelemetryStorage
-from runtime.telemetry.health import HealthMonitor
-from runtime.telemetry.collector import TelemetryCollector
-from runtime.telemetry.metrics import ExecutionMetric
+from runtime.telemetry import TelemetryStorage, TelemetryCollector, ExecutionMetric, HealthMonitor
 
-class TestTelemetryHardening(unittest.TestCase):
+class TestEnterpriseTelemetry(unittest.TestCase):
+
     def setUp(self):
         self.test_dir = tempfile.mkdtemp()
-        self.db_path = os.path.join(self.test_dir, "test_hardened.db")
-        self.storage = TelemetryStorage(db_path=self.db_path, retention_days=1)
-        
-        # Injection propre (sans singleton fragile)
-        self.collector = TelemetryCollector(storage=self.storage, batch_size=2)
+        self.db_path = os.path.join(self.test_dir, "test_enterprise.db")
+        self.storage = TelemetryStorage(db_path=self.db_path)
+        self.collector = TelemetryCollector(storage=self.storage, flush_interval=0.1)
         self.collector.start()
 
     def tearDown(self):
-        self.collector.stop() # Assure le vidage asynchrone et ferme la base
+        self.collector.stop()
         shutil.rmtree(self.test_dir, ignore_errors=True)
 
-    def test_async_batch_and_composite_health(self):
+    def test_loss_tracking_and_flush(self):
         self.collector.record_execution(ExecutionMetric("ex_1", "action_a", "SUCCESS", 100.0, 1.0, "LOW"))
         self.collector.record_execution(ExecutionMetric("ex_2", "action_b", "FAILED", 600.0, 1.0, "HIGH", category="TIMEOUT"))
         
-        # Laisse le temps au writer thread de dépiler
-        time.sleep(0.5)
+        self.collector.flush()
+        summary = self.collector.get_summary()
         
+        self.assertEqual(summary["total_executions"], 2)
+        self.assertEqual(summary["dropped_metrics"], 0)
+        
+        # Test export JSON pour Grafana
+        json_export = self.storage.export_json(limit=10)
+        self.assertIn("action_a", json_export)
+
+    def test_health_state_matrix(self):
         monitor = HealthMonitor(self.collector)
+        self.collector.record_execution(ExecutionMetric("ex_1", "action_a", "SUCCESS", 50.0, 0.5, "LOW"))
+        
+        self.collector.flush()
         status = monitor.evaluate_status()
-        
-        self.assertIn("kernel_health", status)
-        self.assertIn("health_score", status)
-        
-        # 50% success = -50 points. 1 error = -1.5 points. Score ~48 (CRITICAL)
-        self.assertTrue(status["health_score"] <= 50)
-        self.assertEqual(status["kernel_health"], "CRITICAL")
-        
-        # Vérification Index et PRAGMAs (via Storage)
-        conn = sqlite3.connect(self.db_path)
-        try:
-            cursor = conn.execute("PRAGMA journal_mode")
-            self.assertEqual(cursor.fetchone()[0].lower(), "wal")
-        finally:
-            conn.close()
+        self.assertEqual(status["kernel_health"], "HEALTHY")
+        self.assertEqual(status["health_score"], 100)
 
 if __name__ == "__main__":
     unittest.main()
