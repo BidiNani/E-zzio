@@ -2,7 +2,7 @@
 # E-ZZIO RUNTIME & FORENSIC ARTIFACTS
 # ==========================================
 
-# Journaux, Snapshots & Quarantaine (Racine)
+# Artefacts d'exécution
 /logs/
 /backups/
 /_snapshots/
@@ -10,26 +10,29 @@
 /quarantine/
 /reports/
 
-# Fichiers sources explicites
+# Sources explicites autorisées
 !runtime/recovery/
 !runtime/recovery/**
 
-# Cache de Registre & Télémétrie
+# Cache Python
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# BDD & Registres
 registry/telemetry/
 registry/cloud_cache/
 data/*.db
 data/*.sqlite
 data/*.sqlite3
 
-# Python & BDD de tests
 *.db
 *.sqlite
 *.sqlite3
-__pycache__/
-*.pyc
 .pytest_cache/
 .coverage
 
-# Configuration & Secrets
+# Configurations & Secrets
 .env
 secrets/

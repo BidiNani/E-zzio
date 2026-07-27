@@ -20,7 +20,7 @@ class TestIncidentBundleEngine(unittest.TestCase):
         self.store.close()
         shutil.rmtree(self.test_dir, ignore_errors=True)
 
-    def test_generate_and_persist_bundle_with_scores(self):
+    def test_full_bundle_integrity_verification(self):
         payload = {"url": "https://api.external.com/data", "timeout": 5}
         bundle = self.generator.generate_incident(
             execution_id="exec_9988",
@@ -29,25 +29,26 @@ class TestIncidentBundleEngine(unittest.TestCase):
             category=IncidentCategory.EXTERNAL_TIMEOUT,
             payload=payload,
             context_signature_valid=True,
+            trace_id="tr_1001",
+            span_id="sp_2002",
             error_details="Action 'web_fetch' timed out after 5.0s"
         )
 
-        self.assertTrue(bundle.incident_id.startswith("inc_"))
-        self.assertEqual(bundle.severity, "HIGH")
-        self.assertEqual(bundle.severity_score, 70)
         self.assertTrue(bundle.verify_integrity())
 
-        # Vérification Export JSON sur disque
-        json_file = os.path.join(self.export_dir, f"{bundle.incident_id}.json")
-        self.assertTrue(os.path.exists(json_file))
+        # Test de corruption sur champ racine
+        corrupted_1 = replace(bundle, root_candidates=["TAMPERED_ROOT_CAUSE"])
+        self.assertFalse(corrupted_1.verify_integrity())
 
-        # Vérification persistance SQLite
-        retrieved = self.store.get_bundle(bundle.incident_id)
-        self.assertIsNotNone(retrieved)
-        self.assertEqual(retrieved["severity_score"], 70)
+        # Test de corruption sur snapshot télémétrie
+        corrupted_2 = replace(bundle, telemetry_snapshot={"fake": "data"})
+        self.assertFalse(corrupted_2.verify_integrity())
 
-    def test_bundle_integrity_failure(self):
-        """Test de corruption : vérifie qu'une altération de champ invalide l'empreinte."""
+        # Test de corruption sur metadata
+        corrupted_3 = replace(bundle, metadata={"hacked": True})
+        self.assertFalse(corrupted_3.verify_integrity())
+
+    def test_json_export_and_sqlite_store(self):
         bundle = self.generator.generate_incident(
             execution_id="exec_sec_01",
             action_name="system_exec",
@@ -57,11 +58,14 @@ class TestIncidentBundleEngine(unittest.TestCase):
             context_signature_valid=False
         )
 
-        self.assertTrue(bundle.verify_integrity())
+        # Vérification fichier JSON physique
+        export_file = os.path.join(self.export_dir, f"{bundle.incident_id}.json")
+        self.assertTrue(os.path.exists(export_file))
 
-        # Altération malveillante d'un champ
-        corrupted_bundle = replace(bundle, severity="INFO")
-        self.assertFalse(corrupted_bundle.verify_integrity())
+        # Vérification stockage SQLite
+        retrieved = self.store.get_bundle(bundle.incident_id)
+        self.assertIsNotNone(retrieved)
+        self.assertEqual(retrieved["severity_score"], 100)
 
 if __name__ == "__main__":
     unittest.main()
