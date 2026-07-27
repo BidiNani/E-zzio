@@ -1,32 +1,32 @@
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 from runtime.telemetry.collector import TelemetryCollector
 from runtime.telemetry.metrics import ExecutionMetric
 from runtime.recovery.queue.bus import RecoveryEventBus
 from runtime.recovery.contracts import IncidentBundle, Severity, IncidentCategory
 from runtime.gateway.session import SessionManager
+from runtime.core.ezzio_core import EzzioCore
 import uuid
 import time
 from datetime import datetime, timezone
 
 class CognitiveRuntimeAdapter:
-    """Pont entre l'API (FastAPI) et les moteurs internes (Memory, Routing LLM, Telemetry, Recovery)."""
+    """Interface sécurisée exposant le Noyau E-zzio aux APIs réseau."""
     
     def __init__(self, telemetry: TelemetryCollector, recovery: RecoveryEventBus):
         self.telemetry = telemetry
         self.recovery = recovery
         self.sessions = SessionManager()
+        self.core = EzzioCore(telemetry=self.telemetry, recovery=self.recovery)
 
     async def process(self, user_id: str, message: str) -> str:
         exec_id = f"exec_{uuid.uuid4().hex[:8]}"
         start_time = time.time()
         
         session = self.sessions.get_or_create(user_id)
-        session["message_count"] += 1
-        session["history"].append({"role": "user", "content": message})
-
+        
         metric = ExecutionMetric(
             exec_id=exec_id,
-            action_name="cognitive_processing",
+            action_name="core_think_cycle",
             status="RUNNING",
             duration_ms=0.0,
             cost=0.0,
@@ -34,9 +34,15 @@ class CognitiveRuntimeAdapter:
         )
 
         try:
-            # TODO: Remplacer par l'appel au Model Router (Ollama/Gemini)
-            response_text = f"🧠 [Cognitive Core] Contexte chargé. Message #{session['message_count']} traité. (Routeur LLM en attente de la Phase 4)."
+            # Appel au VRAI moteur cognitif (qui route vers Gemini ou Local)
+            response_text = await self.core.think(
+                user_id=user_id, 
+                message=message, 
+                context_history=session["history"]
+            )
             
+            session["message_count"] += 1
+            session["history"].append({"role": "user", "content": message})
             session["history"].append({"role": "assistant", "content": response_text})
             
             metric.status = "SUCCESS"
@@ -50,7 +56,6 @@ class CognitiveRuntimeAdapter:
             metric.duration_ms = round((time.time() - start_time) * 1000, 2)
             self.telemetry.record_execution(metric)
             
-            # Transfert au RecoveryEventBus pour décision autonome
             bundle = IncidentBundle(
                 incident_id=f"inc_{uuid.uuid4().hex[:8]}",
                 timestamp=datetime.now(timezone.utc).isoformat(),
@@ -58,7 +63,7 @@ class CognitiveRuntimeAdapter:
                 severity_score=70,
                 category=IncidentCategory.UNHANDLED_EXCEPTION,
                 execution_id=exec_id,
-                action_name="cognitive_processing",
+                action_name="core_think_cycle",
                 trace_id=None,
                 span_id=None,
                 state_trace=[],
@@ -67,8 +72,8 @@ class CognitiveRuntimeAdapter:
                 bundle_hash="",
                 telemetry_snapshot={},
                 findings=[],
-                root_candidates=[f"EXCEPTION: {str(e)}"],
+                root_candidates=[f"COGNITIVE_EXCEPTION: {str(e)}"],
                 metadata={"user_id": user_id}
             )
             self.recovery.publish_incident(bundle)
-            return "⚠️ Je rencontre une perturbation cognitive interne. Mon moteur de récupération autonome traite l'incident."
+            return "⚠️ Erreur cognitive sévère détectée. Le système de récupération a été engagé."
