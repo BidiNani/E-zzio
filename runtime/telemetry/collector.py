@@ -1,23 +1,33 @@
 import threading
 from typing import List, Dict, Any, Optional
 from runtime.telemetry.metrics import ExecutionMetric
-from runtime.telemetry.events import TelemetryEvent
+from runtime.telemetry.events import TelemetryEvent, EventType
 from runtime.telemetry.storage import TelemetryStorage
 
 class TelemetryCollector:
-    """Collecteur passif hybride : buffer RAM ultra-rapide + persistance SQLite isolée."""
+    """Collecteur passif hybride avec injection de dépendance différée."""
     _instance = None
     _lock = threading.Lock()
 
-    def __new__(cls, storage: Optional[TelemetryStorage] = None):
+    def __new__(cls):
         with cls._lock:
             if cls._instance is None:
                 cls._instance = super(TelemetryCollector, cls).__new__(cls)
                 cls._instance._metrics: List[ExecutionMetric] = []
                 cls._instance._events: List[TelemetryEvent] = []
-                cls._instance._storage = storage or TelemetryStorage()
+                cls._instance._storage = None
                 cls._instance._internal_lock = threading.Lock()
             return cls._instance
+
+    @classmethod
+    def reset_instance(cls):
+        """Purge complète du singleton (indispensable pour les tests isolés)."""
+        with cls._lock:
+            cls._instance = None
+
+    def configure_storage(self, storage: Optional[TelemetryStorage]):
+        with self._internal_lock:
+            self._storage = storage
 
     def record_execution(self, metric: ExecutionMetric) -> None:
         with self._internal_lock:
@@ -34,7 +44,9 @@ class TelemetryCollector:
                         category=metric.category
                     )
                 except Exception as e:
+                    # Remplacement du print par une trace forensique
                     self._events.append(TelemetryEvent(
+                        event_type=EventType.SYSTEM_HEALTH_CHECK,
                         payload={"error": f"TELEMETRY_STORAGE_FAILURE: {str(e)}"}
                     ))
 
@@ -50,7 +62,10 @@ class TelemetryCollector:
                         timestamp=event.timestamp
                     )
                 except Exception as e:
-                    pass
+                    self._events.append(TelemetryEvent(
+                        event_type=EventType.SYSTEM_HEALTH_CHECK,
+                        payload={"error": f"TELEMETRY_STORAGE_FAILURE (Event): {str(e)}"}
+                    ))
 
     def get_summary(self, persistent: bool = True) -> Dict[str, Any]:
         with self._internal_lock:

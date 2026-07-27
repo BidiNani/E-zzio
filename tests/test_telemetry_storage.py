@@ -3,24 +3,25 @@ import os
 import tempfile
 import shutil
 import gc
-from runtime.telemetry import TelemetryStorage
+from runtime.telemetry import TelemetryStorage, TelemetryCollector
 
 class TestTelemetryStorage(unittest.TestCase):
 
     def setUp(self):
-        # Création d'un dossier temporaire unique par test
         self.test_dir = tempfile.mkdtemp()
         self.db_path = os.path.join(self.test_dir, "test_telemetry.db")
         self.storage = TelemetryStorage(db_path=self.db_path)
+        
+        self.collector = TelemetryCollector()
+        self.collector.configure_storage(self.storage)
 
     def tearDown(self):
-        # Suppression explicite de l'instance pour libérer les références
+        # Séparation propre et purge du singleton
+        self.collector.configure_storage(None)
+        TelemetryCollector.reset_instance()
+        
         del self.storage
-        
-        # Forcer le ramasse-miettes pour clôturer tout handle orphelin sous Windows
-        gc.collect()
-        
-        # Suppression récursive (inclut les fichiers .db, .db-wal, .db-shm)
+        gc.collect() # Force la libération du lock Windows
         shutil.rmtree(self.test_dir, ignore_errors=True)
 
     def test_persistence_and_summary(self):
