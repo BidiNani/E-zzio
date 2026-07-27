@@ -1,18 +1,27 @@
 import unittest
 import os
-from runtime.telemetry import TelemetryStorage, TelemetryCollector, ExecutionMetric
+import tempfile
+import shutil
+import gc
+from runtime.telemetry import TelemetryStorage
 
 class TestTelemetryStorage(unittest.TestCase):
 
     def setUp(self):
-        self.db_path = "data/test_telemetry.db"
-        if os.path.exists(self.db_path):
-            os.remove(self.db_path)
+        # Création d'un dossier temporaire unique par test
+        self.test_dir = tempfile.mkdtemp()
+        self.db_path = os.path.join(self.test_dir, "test_telemetry.db")
         self.storage = TelemetryStorage(db_path=self.db_path)
 
     def tearDown(self):
-        if os.path.exists(self.db_path):
-            os.remove(self.db_path)
+        # Suppression explicite de l'instance pour libérer les références
+        del self.storage
+        
+        # Forcer le ramasse-miettes pour clôturer tout handle orphelin sous Windows
+        gc.collect()
+        
+        # Suppression récursive (inclut les fichiers .db, .db-wal, .db-shm)
+        shutil.rmtree(self.test_dir, ignore_errors=True)
 
     def test_persistence_and_summary(self):
         self.storage.save_metric("ex_100", "web_search", "SUCCESS", 150.0, 1.0, "LOW")

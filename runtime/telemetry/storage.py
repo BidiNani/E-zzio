@@ -19,62 +19,72 @@ class TelemetryStorage:
         return conn
 
     def _init_db(self):
-        with self._get_connection() as conn:
-            conn.execute('''
-                CREATE TABLE IF NOT EXISTS telemetry_schema (
-                    version INTEGER PRIMARY KEY,
-                    updated_at TEXT NOT NULL
-                )
-            ''')
-            
-            cursor = conn.execute("SELECT version FROM telemetry_schema ORDER BY version DESC LIMIT 1")
-            row = cursor.fetchone()
-            if not row:
-                now = datetime.now(timezone.utc).isoformat()
-                conn.execute("INSERT INTO telemetry_schema (version, updated_at) VALUES (?, ?)", (CURRENT_SCHEMA_VERSION, now))
+        conn = self._get_connection()
+        try:
+            with conn:
+                conn.execute('''
+                    CREATE TABLE IF NOT EXISTS telemetry_schema (
+                        version INTEGER PRIMARY KEY,
+                        updated_at TEXT NOT NULL
+                    )
+                ''')
+                
+                cursor = conn.execute("SELECT version FROM telemetry_schema ORDER BY version DESC LIMIT 1")
+                row = cursor.fetchone()
+                if not row:
+                    now = datetime.now(timezone.utc).isoformat()
+                    conn.execute("INSERT INTO telemetry_schema (version, updated_at) VALUES (?, ?)", (CURRENT_SCHEMA_VERSION, now))
 
-            conn.execute('''
-                CREATE TABLE IF NOT EXISTS telemetry_metrics (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    exec_id TEXT NOT NULL,
-                    action_name TEXT NOT NULL,
-                    status TEXT NOT NULL,
-                    duration_ms REAL NOT NULL,
-                    cost REAL NOT NULL,
-                    risk_level TEXT NOT NULL,
-                    category TEXT,
-                    timestamp TEXT NOT NULL
-                )
-            ''')
-            conn.execute('''
-                CREATE TABLE IF NOT EXISTS telemetry_events (
-                    event_id TEXT PRIMARY KEY,
-                    event_type TEXT NOT NULL,
-                    payload TEXT NOT NULL,
-                    timestamp REAL NOT NULL
-                )
-            ''')
-            conn.commit()
+                conn.execute('''
+                    CREATE TABLE IF NOT EXISTS telemetry_metrics (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        exec_id TEXT NOT NULL,
+                        action_name TEXT NOT NULL,
+                        status TEXT NOT NULL,
+                        duration_ms REAL NOT NULL,
+                        cost REAL NOT NULL,
+                        risk_level TEXT NOT NULL,
+                        category TEXT,
+                        timestamp TEXT NOT NULL
+                    )
+                ''')
+                conn.execute('''
+                    CREATE TABLE IF NOT EXISTS telemetry_events (
+                        event_id TEXT PRIMARY KEY,
+                        event_type TEXT NOT NULL,
+                        payload TEXT NOT NULL,
+                        timestamp REAL NOT NULL
+                    )
+                ''')
+        finally:
+            conn.close()  # Libération immédiate du verrou Windows
 
     def save_metric(self, exec_id: str, action_name: str, status: str, duration_ms: float, cost: float, risk_level: str, category: Optional[str] = None):
         now = datetime.now(timezone.utc).isoformat()
-        with self._get_connection() as conn:
-            conn.execute('''
-                INSERT INTO telemetry_metrics (exec_id, action_name, status, duration_ms, cost, risk_level, category, timestamp)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (exec_id, action_name, status, duration_ms, cost, risk_level, category, now))
-            conn.commit()
+        conn = self._get_connection()
+        try:
+            with conn:
+                conn.execute('''
+                    INSERT INTO telemetry_metrics (exec_id, action_name, status, duration_ms, cost, risk_level, category, timestamp)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ''', (exec_id, action_name, status, duration_ms, cost, risk_level, category, now))
+        finally:
+            conn.close()
 
     def save_event(self, event_id: str, event_type: str, payload: dict, timestamp: float):
-        with self._get_connection() as conn:
-            conn.execute('''
-                INSERT INTO telemetry_events (event_id, event_type, payload, timestamp)
-                VALUES (?, ?, ?, ?)
-            ''', (event_id, event_type, json.dumps(payload, default=str), timestamp))
-            conn.commit()
+        conn = self._get_connection()
+        try:
+            with conn:
+                conn.execute('''
+                    INSERT INTO telemetry_events (event_id, event_type, payload, timestamp)
+                    VALUES (?, ?, ?, ?)
+                ''', (event_id, event_type, json.dumps(payload, default=str), timestamp))
+        finally:
+            conn.close()
 
     def get_summary(self) -> Dict[str, Any]:
-        with self._get_connection() as conn:
+        conn = self._get_connection()
+        try:
             cursor = conn.execute("SELECT COUNT(*), SUM(CASE WHEN status='SUCCESS' THEN 1 ELSE 0 END), AVG(duration_ms) FROM telemetry_metrics")
             row = cursor.fetchone()
             total = row[0] or 0
@@ -90,9 +100,14 @@ class TelemetryStorage:
                 "mean_latency_ms": round(avg_duration, 2),
                 "error_breakdown": error_breakdown
             }
+        finally:
+            conn.close()
 
     def clear(self):
-        with self._get_connection() as conn:
-            conn.execute("DELETE FROM telemetry_metrics")
-            conn.execute("DELETE FROM telemetry_events")
-            conn.commit()
+        conn = self._get_connection()
+        try:
+            with conn:
+                conn.execute("DELETE FROM telemetry_metrics")
+                conn.execute("DELETE FROM telemetry_events")
+        finally:
+            conn.close()
