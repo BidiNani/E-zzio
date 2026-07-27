@@ -5,9 +5,12 @@ from dataclasses import dataclass, field, replace, asdict
 from typing import Dict, Any, Tuple, Optional, Union, List
 
 def get_hmac_secret() -> bytes:
-    """Récupère le secret HMAC depuis l'environnement ou applique un fallback sécurisé en dev."""
+    """Récupère le secret HMAC en exigeant une variable d'environnement en production."""
     secret = os.environ.get("EZZIO_HMAC_SECRET")
+    env = os.environ.get("EZZIO_ENV", "development")
     if not secret:
+        if env == "production":
+            raise RuntimeError("CRITICAL: EZZIO_HMAC_SECRET is missing in production environment!")
         return b"ezzio_kernel_default_secure_fallback_key_2026"
     return secret.encode("utf-8")
 
@@ -19,7 +22,7 @@ class SecurityError(Exception):
 
 @dataclass(frozen=True)
 class ExecutionContext:
-    """Immutable execution context protected by HMAC-SHA256 cryptographic signatures."""
+    """Immutable execution context protected by strict HMAC-SHA256 signatures."""
     trace_id: str
     parent_trace_id: Optional[str] = None
     agent_id: str = "ezzio-core"

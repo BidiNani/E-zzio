@@ -7,12 +7,12 @@ from typing import Dict, Any, Callable, Optional, List
 from runtime.action.contracts import ActionContract, RiskLevel
 from runtime.action.store import ActionStore
 from runtime.action.context import ExecutionContext
-from runtime.action.state import ExecutionState
+from runtime.action.state import ExecutionState, validate_transition
 from runtime.action.identity import ExecutionIdentity
 from runtime.action.resilience import CircuitBreaker
 
 class ActionRegistry:
-    """Zero Defect Runtime Orchestrator enforcing state machine, cryptographic context, dry run, and resilience."""
+    """Ultimate Sovereign Runtime Orchestrator enforcing strict State Machine transitions and cryptographic integrity."""
     def __init__(self, store: Optional[ActionStore] = None):
         self._contracts: Dict[str, ActionContract] = {}
         self._handlers: Dict[str, Callable] = {}
@@ -96,7 +96,9 @@ class ActionRegistry:
     def execute(self, name: str, payload: Dict[str, Any], context: Optional[ExecutionContext] = None, dry_run: bool = False) -> Dict[str, Any]:
         exec_id = f"exec_{uuid.uuid4().hex}"
         start_time = time.time()
-        state = ExecutionState.CREATED
+        
+        # 1. État initial : CREATED
+        current_state = ExecutionState.CREATED
 
         contract = self._contracts.get(name)
         cost = contract.cost if contract else 1
@@ -109,74 +111,90 @@ class ActionRegistry:
             budget_remaining=100
         )
 
-        # 1. Vérification de l'intégrité de la signature du contexte
+        # Vérification intégrité cryptographique HMAC
         if not ctx.verify_signature():
-            state = ExecutionState.QUARANTINED
-            res = {"status": state.value, "error": "ExecutionContext signature validation failed! Context tampered."}
-            self.store.log_execution(exec_id, name, state.value, payload, res, cost, 0.0)
+            validate_transition(current_state, ExecutionState.QUARANTINED)
+            current_state = ExecutionState.QUARANTINED
+            res = {"status": current_state.value, "error": "ExecutionContext signature validation failed! Context tampered."}
+            self.store.log_execution(exec_id, name, current_state.value, payload, res, cost, 0.0)
             return res
 
-        state = ExecutionState.VALIDATING
+        # 2. Transition CREATED -> VALIDATING
+        validate_transition(current_state, ExecutionState.VALIDATING)
+        current_state = ExecutionState.VALIDATING
 
         if not contract:
-            state = ExecutionState.FAILED
+            validate_transition(current_state, ExecutionState.FAILED)
+            current_state = ExecutionState.FAILED
             res = {"status": "BLOCKED", "error": f"Unknown action: '{name}'"}
             self.store.log_execution(exec_id, name, "BLOCKED", payload, res, cost, 0.0)
             return res
 
-        # 2. Vérification Circuit Breaker
+        # Circuit Breaker
         cb = self._circuit_breakers.get(name)
         if cb and not cb.can_execute():
-            state = ExecutionState.FAILED
+            validate_transition(current_state, ExecutionState.FAILED)
+            current_state = ExecutionState.FAILED
             res = {"status": "BLOCKED", "error": f"Circuit breaker OPEN for action '{name}'"}
             self.store.log_execution(exec_id, name, "BLOCKED", payload, res, cost, 0.0)
             return res
 
-        # 3. Vérification du Budget
+        # Budget Check
         if ctx.budget_remaining < contract.cost:
-            state = ExecutionState.FAILED
+            validate_transition(current_state, ExecutionState.FAILED)
+            current_state = ExecutionState.FAILED
             res = {"status": "BLOCKED", "error": f"Insufficient execution budget ({ctx.budget_remaining} < {contract.cost})"}
             self.store.log_execution(exec_id, name, "BLOCKED", payload, res, cost, 0.0)
             return res
 
-        # 4. Vérification des Permissions
+        # Permissions Check
         perms = ctx.permissions or ()
         if contract.permission != "*" and "*" not in perms and contract.permission not in perms:
-            state = ExecutionState.FAILED
+            validate_transition(current_state, ExecutionState.FAILED)
+            current_state = ExecutionState.FAILED
             res = {"status": "BLOCKED", "error": f"Permission denied for action '{name}'"}
             self.store.log_execution(exec_id, name, "BLOCKED", payload, res, cost, 0.0)
             return res
 
-        # 5. Validation du Payload
+        # Payload Validation
         validation_errors = contract.validate_payload(payload)
         if validation_errors:
-            state = ExecutionState.FAILED
+            validate_transition(current_state, ExecutionState.FAILED)
+            current_state = ExecutionState.FAILED
             res = {"status": "BLOCKED", "error": f"Payload validation failed: {validation_errors}"}
             self.store.log_execution(exec_id, name, "BLOCKED", payload, res, cost, 0.0)
             return res
 
-        # 6. Mode DRY RUN (Simulation)
+        # 3. Transition VALIDATING -> AUTHORIZED
+        validate_transition(current_state, ExecutionState.AUTHORIZED)
+        current_state = ExecutionState.AUTHORIZED
+
+        # Mode DRY RUN (Simulation)
         if dry_run:
-            state = ExecutionState.SIMULATED
+            validate_transition(current_state, ExecutionState.SIMULATED)
+            current_state = ExecutionState.SIMULATED
             res = {
-                "status": state.value,
+                "status": current_state.value,
                 "action": name,
                 "required_permission": contract.permission,
                 "estimated_cost": contract.cost,
                 "risk_level": risk_str
             }
-            self.store.log_execution(exec_id, name, state.value, payload, res, cost, 0.0)
+            self.store.log_execution(exec_id, name, current_state.value, payload, res, cost, 0.0)
             return res
 
-        state = ExecutionState.AUTHORIZED
         handler = self._handlers.get(name)
         if not handler:
-            state = ExecutionState.FAILED
+            validate_transition(current_state, ExecutionState.FAILED)
+            current_state = ExecutionState.FAILED
             res = {"status": "ERROR", "error": f"No handler registered for action '{name}'"}
             self.store.log_execution(exec_id, name, "ERROR", payload, res, cost, 0.0)
             return res
 
-        state = ExecutionState.RUNNING
+        # 4. Transition AUTHORIZED -> RUNNING
+        validate_transition(current_state, ExecutionState.RUNNING)
+        current_state = ExecutionState.RUNNING
+
         try:
             active_ctx = ctx.consume_budget(contract.cost)
             timeout_seconds = contract.timeout if contract.timeout > 0 else 5.0
@@ -186,34 +204,39 @@ class ActionRegistry:
                 result = future.result(timeout=timeout_seconds)
 
             duration_ms = round((time.time() - start_time) * 1000, 2)
-            state = ExecutionState.SUCCESS
+            
+            # 5. Transition RUNNING -> SUCCESS
+            validate_transition(current_state, ExecutionState.SUCCESS)
+            current_state = ExecutionState.SUCCESS
             if cb: cb.record_success()
 
             res = {
-                "status": state.value,
+                "status": current_state.value,
                 "result": result,
                 "budget_remaining": active_ctx.budget_remaining
             }
-            self.store.log_execution(exec_id, name, state.value, payload, res, cost, duration_ms)
-            self.store.log_evidence(exec_id, ctx.trace_id, name, state.value, risk_str, payload, ctx.to_dict(), res, duration_ms)
+            self.store.log_execution(exec_id, name, current_state.value, payload, res, cost, duration_ms)
+            self.store.log_evidence(exec_id, ctx.trace_id, name, current_state.value, risk_str, payload, ctx.to_dict(), res, duration_ms)
             return res
 
         except FuturesTimeoutError:
             duration_ms = round((time.time() - start_time) * 1000, 2)
-            state = ExecutionState.TIMEOUT
+            validate_transition(current_state, ExecutionState.TIMEOUT)
+            current_state = ExecutionState.TIMEOUT
             if cb: cb.record_failure()
 
-            res = {"status": state.value, "error": f"Action '{name}' timed out after {contract.timeout}s"}
-            self.store.log_execution(exec_id, name, state.value, payload, res, cost, duration_ms)
-            self.store.log_evidence(exec_id, ctx.trace_id, name, state.value, risk_str, payload, ctx.to_dict(), res, duration_ms)
+            res = {"status": current_state.value, "error": f"Action '{name}' timed out after {contract.timeout}s"}
+            self.store.log_execution(exec_id, name, current_state.value, payload, res, cost, duration_ms)
+            self.store.log_evidence(exec_id, ctx.trace_id, name, current_state.value, risk_str, payload, ctx.to_dict(), res, duration_ms)
             return res
 
         except Exception as e:
             duration_ms = round((time.time() - start_time) * 1000, 2)
-            state = ExecutionState.FAILED
+            validate_transition(current_state, ExecutionState.FAILED)
+            current_state = ExecutionState.FAILED
             if cb: cb.record_failure()
 
             res = {"status": "ERROR", "error": str(e)}
-            self.store.log_execution(exec_id, name, "ERROR", payload, res, cost, duration_ms)
-            self.store.log_evidence(exec_id, ctx.trace_id, name, state.value, risk_str, payload, ctx.to_dict(), res, duration_ms)
+            self.store.log_execution(exec_id, name, current_state.value, payload, res, cost, duration_ms)
+            self.store.log_evidence(exec_id, ctx.trace_id, name, current_state.value, risk_str, payload, ctx.to_dict(), res, duration_ms)
             return res
