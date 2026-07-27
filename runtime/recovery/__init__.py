@@ -1,6 +1,7 @@
-from runtime.recovery.contracts import IncidentBundle, Severity, SEVERITY_SCORES, IncidentCategory
+from runtime.recovery.contracts import IncidentBundle, Severity, SEVERITY_SCORES, IncidentCategory, Finding
 from runtime.recovery.store import IncidentStore
 from runtime.recovery.incident_bundle import IncidentBundleGenerator
+from runtime.recovery.decision import RecoveryPolicyEngine, RemediationAction, AutonomousRecoveryEngine
 
 __all__ = [
     "IncidentBundle",
@@ -8,5 +9,8 @@ __all__ = [
     "SEVERITY_SCORES",
     "IncidentCategory",
     "IncidentStore",
-    "IncidentBundleGenerator"
+    "IncidentBundleGenerator",
+    "RecoveryPolicyEngine",
+    "RemediationAction",
+    "AutonomousRecoveryEngine"
 ]
