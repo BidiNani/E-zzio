@@ -2,11 +2,12 @@ import sqlite3
 import os
 import json
 import hashlib
-from typing import List, Dict, Any, Optional
+import uuid
+from typing import List, Dict, Tuple, Any, Optional
 from datetime import datetime, timezone
 
 class ActionStore:
-    """Manages persistent storage with auto-migration, evidence ledger, state history, and execution logs."""
+    """Manages immutable persistent storage with cryptographic hash chains for forensic state audit."""
     def __init__(self, db_path: str = "data/action_registry.db"):
         os.makedirs(os.path.dirname(db_path), exist_ok=True)
         self.db_path = db_path
@@ -68,6 +69,7 @@ class ActionStore:
                     exec_id TEXT NOT NULL,
                     from_state TEXT NOT NULL,
                     to_state TEXT NOT NULL,
+                    transition_hash TEXT NOT NULL,
                     timestamp TEXT NOT NULL
                 )
             ''')
@@ -119,14 +121,27 @@ class ActionStore:
 
     def log_transition(self, exec_id: str, from_state: str, to_state: str):
         now = datetime.now(timezone.utc).isoformat()
-        transition_id = f"tx_{uuid.uuid4().hex[:12]}" if 'uuid' in globals() else f"tx_{datetime.now().timestamp()}"
+        # Entropie maximale 128 bits
+        transition_id = f"tx_{uuid.uuid4().hex}"
+        raw_sig = f"{exec_id}|{from_state}|{to_state}|{now}"
+        transition_hash = hashlib.sha256(raw_sig.encode("utf-8")).hexdigest()
+
         with sqlite3.connect(self.db_path) as conn:
             conn.execute(
-                '''INSERT INTO state_transitions (transition_id, exec_id, from_state, to_state, timestamp)
-                   VALUES (?, ?, ?, ?, ?)''',
-                (transition_id, exec_id, from_state, to_state, now)
+                '''INSERT INTO state_transitions (transition_id, exec_id, from_state, to_state, transition_hash, timestamp)
+                   VALUES (?, ?, ?, ?, ?, ?)''',
+                (transition_id, exec_id, from_state, to_state, transition_hash, now)
             )
             conn.commit()
+
+    def get_transition_history(self, exec_id: str) -> List[Tuple[str, str]]:
+        """Récupère l'historique séquentiel des états pour une exécution donnée."""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.execute(
+                "SELECT from_state, to_state FROM state_transitions WHERE exec_id = ? ORDER BY timestamp ASC",
+                (exec_id,)
+            )
+            return [(row[0], row[1]) for row in cursor.fetchall()]
 
     def get_execution_history(self, action_name: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]]:
         with sqlite3.connect(self.db_path) as conn:
