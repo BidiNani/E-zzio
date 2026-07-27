@@ -7,7 +7,7 @@ from typing import List, Dict, Tuple, Any, Optional
 from datetime import datetime, timezone
 
 class ActionStore:
-    """Manages immutable persistent storage with automated schema migrations and cryptographic hash chains."""
+    """Manages persistent storage with automated schema migrations and cryptographic hash chains."""
     def __init__(self, db_path: str = "data/action_registry.db"):
         os.makedirs(os.path.dirname(db_path), exist_ok=True)
         self.db_path = db_path
@@ -69,7 +69,7 @@ class ActionStore:
                     exec_id TEXT NOT NULL,
                     from_state TEXT NOT NULL,
                     to_state TEXT NOT NULL,
-                    transition_hash TEXT NOT NULL,
+                    transition_hash TEXT DEFAULT '',
                     timestamp TEXT NOT NULL
                 )
             ''')
@@ -85,26 +85,21 @@ class ActionStore:
             ''')
             conn.commit()
 
-            # Exécution des migrations et de la réparation rétroactive
             self._migrate_schema(conn)
             self._repair_transition_hashes(conn)
 
     def _migrate_schema(self, conn):
-        """Vérifie et applique les migrations de colonnes nécessaires pour les tables existantes."""
         cursor = conn.execute("PRAGMA table_info(state_transitions)")
         columns = {row[1] for row in cursor.fetchall()}
 
         if "transition_hash" not in columns:
-            conn.execute(
-                """
-                ALTER TABLE state_transitions
-                ADD COLUMN transition_hash TEXT DEFAULT ''
-                """
-            )
-            conn.commit()
+            try:
+                conn.execute("ALTER TABLE state_transitions ADD COLUMN transition_hash TEXT DEFAULT ''")
+                conn.commit()
+            except sqlite3.OperationalError:
+                pass
 
     def _repair_transition_hashes(self, conn):
-        """Répare et calcule les hashs SHA256 pour les anciennes lignes de transition non hachées."""
         rows = conn.execute(
             """
             SELECT transition_id, exec_id, from_state, to_state, timestamp

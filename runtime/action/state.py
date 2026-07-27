@@ -11,19 +11,20 @@ class ExecutionState(Enum):
     CANCELLED = "CANCELLED"
     QUARANTINED = "QUARANTINED"
     SIMULATED = "SIMULATED"
+    ERROR = "ERROR"
 
-# Matrice stricte des transitions autorisées (Empêche les sauts illicites type CREATED -> SUCCESS)
 VALID_TRANSITIONS = {
-    ExecutionState.CREATED: [ExecutionState.VALIDATING, ExecutionState.QUARANTINED],
-    ExecutionState.VALIDATING: [ExecutionState.AUTHORIZED, ExecutionState.FAILED, ExecutionState.QUARANTINED],
-    ExecutionState.AUTHORIZED: [ExecutionState.RUNNING, ExecutionState.SIMULATED, ExecutionState.FAILED],
-    ExecutionState.RUNNING: [ExecutionState.SUCCESS, ExecutionState.FAILED, ExecutionState.TIMEOUT, ExecutionState.CANCELLED],
+    ExecutionState.CREATED: [ExecutionState.VALIDATING, ExecutionState.QUARANTINED, ExecutionState.FAILED, ExecutionState.ERROR],
+    ExecutionState.VALIDATING: [ExecutionState.AUTHORIZED, ExecutionState.FAILED, ExecutionState.QUARANTINED, ExecutionState.ERROR],
+    ExecutionState.AUTHORIZED: [ExecutionState.RUNNING, ExecutionState.SIMULATED, ExecutionState.FAILED, ExecutionState.ERROR],
+    ExecutionState.RUNNING: [ExecutionState.SUCCESS, ExecutionState.FAILED, ExecutionState.TIMEOUT, ExecutionState.CANCELLED, ExecutionState.ERROR],
     ExecutionState.SUCCESS: [],
     ExecutionState.FAILED: [],
     ExecutionState.TIMEOUT: [],
     ExecutionState.CANCELLED: [],
     ExecutionState.QUARANTINED: [],
-    ExecutionState.SIMULATED: []
+    ExecutionState.SIMULATED: [],
+    ExecutionState.ERROR: []
 }
 
 def validate_transition(current: ExecutionState, target: ExecutionState):

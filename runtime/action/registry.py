@@ -94,7 +94,6 @@ class ActionRegistry:
             raise TypeError(f"Handler signature unsupported: expected 1 or 2 parameters, got {len(params)}.")
 
     def _transition_to(self, exec_id: str, current: ExecutionState, target: ExecutionState) -> ExecutionState:
-        """Valide la transition d'état et consigne immédiatement sa preuve dans SQLite."""
         validate_transition(current, target)
         self.store.log_transition(exec_id, current.value, target.value)
         return target
@@ -173,9 +172,9 @@ class ActionRegistry:
 
         handler = self._handlers.get(name)
         if not handler:
-            current_state = self._transition_to(exec_id, current_state, ExecutionState.FAILED)
-            res = {"status": "ERROR", "error": f"No handler registered for action '{name}'"}
-            self.store.log_execution(exec_id, name, "ERROR", payload, res, cost, 0.0)
+            current_state = self._transition_to(exec_id, current_state, ExecutionState.ERROR)
+            res = {"status": current_state.value, "error": f"No handler registered for action '{name}'"}
+            self.store.log_execution(exec_id, name, current_state.value, payload, res, cost, 0.0)
             return res
 
         current_state = self._transition_to(exec_id, current_state, ExecutionState.RUNNING)
@@ -211,12 +210,30 @@ class ActionRegistry:
             self.store.log_evidence(exec_id, ctx.trace_id, name, current_state.value, risk_str, payload, ctx.to_dict(), res, duration_ms)
             return res
 
+        except TypeError as e:
+            duration_ms = round((time.time() - start_time) * 1000, 2)
+            current_state = self._transition_to(exec_id, current_state, ExecutionState.ERROR)
+            if cb: cb.record_failure()
+
+            res = {
+                "status": current_state.value,
+                "error": str(e),
+                "category": "HANDLER_SIGNATURE_ERROR"
+            }
+            self.store.log_execution(exec_id, name, current_state.value, payload, res, cost, duration_ms)
+            self.store.log_evidence(exec_id, ctx.trace_id, name, current_state.value, risk_str, payload, ctx.to_dict(), res, duration_ms)
+            return res
+
         except Exception as e:
             duration_ms = round((time.time() - start_time) * 1000, 2)
             current_state = self._transition_to(exec_id, current_state, ExecutionState.FAILED)
             if cb: cb.record_failure()
 
-            res = {"status": current_state.value, "error": str(e)}
+            res = {
+                "status": current_state.value,
+                "error": str(e),
+                "category": "RUNTIME_FAILURE"
+            }
             self.store.log_execution(exec_id, name, current_state.value, payload, res, cost, duration_ms)
             self.store.log_evidence(exec_id, ctx.trace_id, name, current_state.value, risk_str, payload, ctx.to_dict(), res, duration_ms)
             return res
