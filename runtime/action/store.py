@@ -7,7 +7,7 @@ from typing import List, Dict, Tuple, Any, Optional
 from datetime import datetime, timezone
 
 class ActionStore:
-    """Manages immutable persistent storage with cryptographic hash chains for forensic state audit."""
+    """Manages immutable persistent storage with automated schema migrations and cryptographic hash chains."""
     def __init__(self, db_path: str = "data/action_registry.db"):
         os.makedirs(os.path.dirname(db_path), exist_ok=True)
         self.db_path = db_path
@@ -85,6 +85,49 @@ class ActionStore:
             ''')
             conn.commit()
 
+            # Exécution des migrations et de la réparation rétroactive
+            self._migrate_schema(conn)
+            self._repair_transition_hashes(conn)
+
+    def _migrate_schema(self, conn):
+        """Vérifie et applique les migrations de colonnes nécessaires pour les tables existantes."""
+        cursor = conn.execute("PRAGMA table_info(state_transitions)")
+        columns = {row[1] for row in cursor.fetchall()}
+
+        if "transition_hash" not in columns:
+            conn.execute(
+                """
+                ALTER TABLE state_transitions
+                ADD COLUMN transition_hash TEXT DEFAULT ''
+                """
+            )
+            conn.commit()
+
+    def _repair_transition_hashes(self, conn):
+        """Répare et calcule les hashs SHA256 pour les anciennes lignes de transition non hachées."""
+        rows = conn.execute(
+            """
+            SELECT transition_id, exec_id, from_state, to_state, timestamp
+            FROM state_transitions
+            WHERE transition_hash='' OR transition_hash IS NULL
+            """
+        ).fetchall()
+
+        for row in rows:
+            transition_id, exec_id, from_state, to_state, timestamp = row
+            raw = f"{exec_id}|{from_state}|{to_state}|{timestamp}"
+            digest = hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+            conn.execute(
+                """
+                UPDATE state_transitions
+                SET transition_hash=?
+                WHERE transition_id=?
+                """,
+                (digest, transition_id)
+            )
+        conn.commit()
+
     def save_contract(self, action_id: str, version: str, name: str, description: str, permission: str, handler_ref: str, cost: int, timeout: float, risk_level: str, schema: Dict[str, str]):
         now = datetime.now(timezone.utc).isoformat()
         with sqlite3.connect(self.db_path) as conn:
@@ -121,7 +164,6 @@ class ActionStore:
 
     def log_transition(self, exec_id: str, from_state: str, to_state: str):
         now = datetime.now(timezone.utc).isoformat()
-        # Entropie maximale 128 bits
         transition_id = f"tx_{uuid.uuid4().hex}"
         raw_sig = f"{exec_id}|{from_state}|{to_state}|{now}"
         transition_hash = hashlib.sha256(raw_sig.encode("utf-8")).hexdigest()
@@ -135,7 +177,6 @@ class ActionStore:
             conn.commit()
 
     def get_transition_history(self, exec_id: str) -> List[Tuple[str, str]]:
-        """Récupère l'historique séquentiel des états pour une exécution donnée."""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.execute(
                 "SELECT from_state, to_state FROM state_transitions WHERE exec_id = ? ORDER BY timestamp ASC",
