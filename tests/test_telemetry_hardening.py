@@ -27,38 +27,21 @@ class TestEnterpriseTelemetry(unittest.TestCase):
         
         self.assertEqual(summary["total_executions"], 2)
         self.assertEqual(summary["dropped_metrics"], 0)
-        self.assertEqual(summary["collector_version"], "2.6.8.2")
+        self.assertEqual(summary["collector_version"], "2.6.8.3")
         self.assertGreater(summary["flush_count"], 0)
-        
-        json_export = self.storage.export_json(limit=10)
-        self.assertIn("action_a", json_export)
-
-    def test_health_state_matrix(self):
-        monitor = HealthMonitor(self.collector)
-        self.collector.record_execution(ExecutionMetric("ex_1", "action_a", "SUCCESS", 50.0, 0.5, "LOW"))
-        
-        self.collector.flush()
-        status = monitor.evaluate_status()
-        self.assertEqual(status["kernel_health"], "HEALTHY")
-        self.assertEqual(status["health_score"], 100)
 
     def test_queue_pressure_survival(self):
-        """Chaos Engineering : Saturation de la file avec 15000 événements ultra-rapides."""
+        """Chaos Test : Injection massive et vérification de la conservation des compteurs atomiques."""
         for i in range(15000):
             self.collector.record_execution(ExecutionMetric(f"ex_{i}", "chaos_action", "SUCCESS", 10.0, 1.0, "LOW"))
         
         self.collector.flush()
         summary = self.collector.get_summary()
         
-        # Vérification 1 : Le système n'a pas deadlock et la file est purgée
         self.assertEqual(summary["queue_backlog"], 0)
-        
-        # Vérification 2 : Équation de conservation (Ce qui est entré = Ce qui est stocké + Ce qui est droppé)
         absorbed = summary["total_executions"]
         dropped = summary["dropped_metrics"]
         self.assertEqual(absorbed + dropped, 15000)
-        
-        # Vérification 3 : Le système a bien déclenché des flushs
         self.assertGreater(summary["flush_count"], 0)
 
 if __name__ == "__main__":

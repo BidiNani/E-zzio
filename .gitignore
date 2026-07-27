@@ -1,7 +1,27 @@
-# E-ZZIO Runtime Databases
+# ==========================================
+# E-ZZIO RUNTIME & FORENSIC ARTIFACTS
+# ==========================================
+
+logs/
+backups/
+_snapshots/
+recovery/
+quarantine/
+reports/
+
+registry/telemetry/
+registry/cloud_cache/
 data/*.db
 data/*.sqlite
-data/*.wal
+data/*.sqlite3
+
+*.db
+*.sqlite
+*.sqlite3
 __pycache__/
 *.pyc
 .pytest_cache/
+.coverage
+
+.env
+secrets/
