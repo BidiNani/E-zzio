@@ -5,7 +5,7 @@ from dataclasses import dataclass, field, replace, asdict
 from typing import Dict, Any, Tuple, Optional, Union, List
 
 def get_hmac_secret() -> bytes:
-    """Récupère dynamiquement le secret HMAC en exigeant une variable d'environnement en production."""
+    """Récupère le secret HMAC en exigeant une variable d'environnement en production."""
     secret = os.environ.get("EZZIO_HMAC_SECRET")
     env = os.environ.get("EZZIO_ENV", "development")
     if not secret:
@@ -14,13 +14,15 @@ def get_hmac_secret() -> bytes:
         return b"ezzio_kernel_default_secure_fallback_key_2026"
     return secret.encode("utf-8")
 
+SYSTEM_HMAC_SECRET = get_hmac_secret()
+
 class SecurityError(Exception):
     """Raised when context tampering is detected."""
     pass
 
 @dataclass(frozen=True)
 class ExecutionContext:
-    """Immutable execution context protected by dynamic HMAC-SHA256 signatures."""
+    """Immutable execution context protected by strict HMAC-SHA256 signatures."""
     trace_id: str
     parent_trace_id: Optional[str] = None
     agent_id: str = "ezzio-core"
@@ -38,9 +40,8 @@ class ExecutionContext:
         self.validate_structure()
 
     def compute_signature(self) -> str:
-        secret = get_hmac_secret()
         payload_str = f"{self.trace_id}|{self.parent_trace_id}|{self.agent_id}|{','.join(sorted(self.permissions))}|{self.budget_remaining}"
-        return hmac.new(secret, payload_str.encode("utf-8"), hashlib.sha256).hexdigest()
+        return hmac.new(SYSTEM_HMAC_SECRET, payload_str.encode("utf-8"), hashlib.sha256).hexdigest()
 
     def verify_signature(self) -> bool:
         return hmac.compare_digest(self.signature, self.compute_signature())
