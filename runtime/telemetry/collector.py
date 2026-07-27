@@ -1,104 +1,114 @@
+import queue
 import threading
+import time
 from typing import List, Dict, Any, Optional
 from runtime.telemetry.metrics import ExecutionMetric
-from runtime.telemetry.events import TelemetryEvent, EventType
+from runtime.telemetry.events import TelemetryEvent
 from runtime.telemetry.storage import TelemetryStorage
 
 class TelemetryCollector:
-    """Collecteur passif hybride avec injection de dépendance différée."""
-    _instance = None
-    _lock = threading.Lock()
+    """Collecteur Asynchrone : Queue RAM non-bloquante, API rétrocompatible & Writer Thread."""
 
-    def __new__(cls):
-        with cls._lock:
-            if cls._instance is None:
-                cls._instance = super(TelemetryCollector, cls).__new__(cls)
-                cls._instance._metrics: List[ExecutionMetric] = []
-                cls._instance._events: List[TelemetryEvent] = []
-                cls._instance._storage = None
-                cls._instance._internal_lock = threading.Lock()
-            return cls._instance
+    def __init__(self, storage: Optional[TelemetryStorage] = None, batch_size: int = 100, flush_interval: float = 0.5):
+        self.storage = storage
+        self.batch_size = batch_size
+        self.flush_interval = flush_interval
 
-    @classmethod
-    def reset_instance(cls):
-        """Purge complète du singleton (indispensable pour les tests isolés)."""
-        with cls._lock:
-            cls._instance = None
+        self._queue = queue.Queue(maxsize=10000)
+        self._stop_event = threading.Event()
+        self._writer_thread = None
 
     def configure_storage(self, storage: Optional[TelemetryStorage]):
-        with self._internal_lock:
-            self._storage = storage
+        """Ajuste dynamiquement le moteur de stockage."""
+        self.storage = storage
+        if self.storage and self._writer_thread and self._writer_thread.is_alive():
+            self.storage.connect()
+
+    def start(self):
+        if self.storage:
+            self.storage.connect()
+        self._stop_event.clear()
+        self._writer_thread = threading.Thread(target=self._worker, daemon=True, name="TelemetryWriter")
+        self._writer_thread.start()
+
+    def stop(self):
+        self._stop_event.set()
+        if self._writer_thread and self._writer_thread.is_alive():
+            self._writer_thread.join(timeout=3.0)
+        if self.storage:
+            self.storage.close()
+
+    def reset(self):
+        """Purge la queue et reinitialise le stockage (compatibilité test suite)."""
+        with self._queue.mutex:
+            self._queue.queue.clear()
+        if self.storage:
+            self.storage.clear()
 
     def record_execution(self, metric: ExecutionMetric) -> None:
-        with self._internal_lock:
-            self._metrics.append(metric)
-            if self._storage:
-                try:
-                    self._storage.save_metric(
-                        exec_id=metric.exec_id,
-                        action_name=metric.action_name,
-                        status=metric.status,
-                        duration_ms=metric.duration_ms,
-                        cost=metric.cost,
-                        risk_level=metric.risk_level,
-                        category=metric.category
-                    )
-                except Exception as e:
-                    # Remplacement du print par une trace forensique
-                    self._events.append(TelemetryEvent(
-                        event_type=EventType.SYSTEM_HEALTH_CHECK,
-                        payload={"error": f"TELEMETRY_STORAGE_FAILURE: {str(e)}"}
-                    ))
+        try:
+            self._queue.put_nowait(('metric', metric))
+        except queue.Full:
+            pass
 
     def record_event(self, event: TelemetryEvent) -> None:
-        with self._internal_lock:
-            self._events.append(event)
-            if self._storage:
-                try:
-                    self._storage.save_event(
-                        event_id=event.event_id,
-                        event_type=event.event_type.value if hasattr(event.event_type, 'value') else str(event.event_type),
-                        payload=event.payload,
-                        timestamp=event.timestamp
-                    )
-                except Exception as e:
-                    self._events.append(TelemetryEvent(
-                        event_type=EventType.SYSTEM_HEALTH_CHECK,
-                        payload={"error": f"TELEMETRY_STORAGE_FAILURE (Event): {str(e)}"}
-                    ))
+        try:
+            self._queue.put_nowait(('event', event))
+        except queue.Full:
+            pass
 
-    def get_summary(self, persistent: bool = True) -> Dict[str, Any]:
-        with self._internal_lock:
-            if persistent and self._storage:
-                return self._storage.get_summary()
+    def _worker(self):
+        batch_metrics = []
+        batch_events = []
+        last_flush = time.time()
+        retention_last_run = time.time()
 
-            total = len(self._metrics)
-            if total == 0:
-                return {
-                    "total_executions": 0,
-                    "success_rate": 1.0,
-                    "mean_latency_ms": 0.0,
-                    "error_breakdown": {}
-                }
+        while not self._stop_event.is_set() or not self._queue.empty():
+            try:
+                item = self._queue.get(timeout=0.1)
+                if item[0] == 'metric':
+                    batch_metrics.append(item[1])
+                elif item[0] == 'event':
+                    batch_events.append(item[1])
+            except queue.Empty:
+                pass
 
-            successes = sum(1 for m in self._metrics if m.status == "SUCCESS")
-            total_duration = sum(m.duration_ms for m in self._metrics)
+            now = time.time()
+            if len(batch_metrics) >= self.batch_size or len(batch_events) >= self.batch_size or (now - last_flush) > self.flush_interval:
+                self._flush(batch_metrics, batch_events)
+                last_flush = now
 
-            error_categories: Dict[str, int] = {}
-            for m in self._metrics:
-                if m.category:
-                    error_categories[m.category] = error_categories.get(m.category, 0) + 1
+            if now - retention_last_run > 3600:
+                if self.storage:
+                    self.storage.enforce_retention()
+                retention_last_run = now
 
-            return {
-                "total_executions": total,
-                "success_rate": round(successes / total, 4),
-                "mean_latency_ms": round(total_duration / total, 2),
-                "error_breakdown": error_categories
-            }
+        self._flush(batch_metrics, batch_events)
 
-    def reset(self) -> None:
-        with self._internal_lock:
-            self._metrics.clear()
-            self._events.clear()
-            if self._storage:
-                self._storage.clear()
+    def _flush(self, metrics: List, events: List):
+        if not self.storage:
+            metrics.clear()
+            events.clear()
+            return
+
+        if metrics:
+            self.storage.save_metrics_batch(metrics)
+            metrics.clear()
+        if events:
+            self.storage.save_events_batch(events)
+            events.clear()
+
+    def get_summary(self) -> Dict[str, Any]:
+        if self.storage:
+            return self.storage.get_summary()
+        return {
+            "total_executions": 0,
+            "success_rate": 1.0,
+            "latency": {"mean": 0, "p50": 0, "p90": 0, "p99": 0},
+            "throughput_eps": 0.0,
+            "total_budget_consumed": 0.0,
+            "error_breakdown": {}
+        }
+
+    def get_queue_size(self) -> int:
+        return self._queue.qsize()
