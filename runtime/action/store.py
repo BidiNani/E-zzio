@@ -6,7 +6,7 @@ from typing import List, Dict, Any, Optional
 from datetime import datetime, timezone
 
 class ActionStore:
-    """Manages persistent storage with auto-migration, evidence ledger, and execution history."""
+    """Manages persistent storage with auto-migration, evidence ledger, state history, and execution logs."""
     def __init__(self, db_path: str = "data/action_registry.db"):
         os.makedirs(os.path.dirname(db_path), exist_ok=True)
         self.db_path = db_path
@@ -63,6 +63,15 @@ class ActionStore:
                 )
             ''')
             conn.execute('''
+                CREATE TABLE IF NOT EXISTS state_transitions (
+                    transition_id TEXT PRIMARY KEY,
+                    exec_id TEXT NOT NULL,
+                    from_state TEXT NOT NULL,
+                    to_state TEXT NOT NULL,
+                    timestamp TEXT NOT NULL
+                )
+            ''')
+            conn.execute('''
                 CREATE TABLE IF NOT EXISTS budget_ledger (
                     event_id TEXT PRIMARY KEY,
                     root_trace_id TEXT NOT NULL,
@@ -108,8 +117,18 @@ class ActionStore:
             )
             conn.commit()
 
+    def log_transition(self, exec_id: str, from_state: str, to_state: str):
+        now = datetime.now(timezone.utc).isoformat()
+        transition_id = f"tx_{uuid.uuid4().hex[:12]}" if 'uuid' in globals() else f"tx_{datetime.now().timestamp()}"
+        with sqlite3.connect(self.db_path) as conn:
+            conn.execute(
+                '''INSERT INTO state_transitions (transition_id, exec_id, from_state, to_state, timestamp)
+                   VALUES (?, ?, ?, ?, ?)''',
+                (transition_id, exec_id, from_state, to_state, now)
+            )
+            conn.commit()
+
     def get_execution_history(self, action_name: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]]:
-        """Restauré : Lecture de l'historique d'exécution dans execution_ledger."""
         with sqlite3.connect(self.db_path) as conn:
             if action_name:
                 cursor = conn.execute(
@@ -163,5 +182,6 @@ class ActionStore:
             conn.execute("DELETE FROM execution_ledger")
             conn.execute("DELETE FROM action_contracts")
             conn.execute("DELETE FROM evidence_ledger")
+            conn.execute("DELETE FROM state_transitions")
             conn.execute("DELETE FROM budget_ledger")
             conn.commit()
