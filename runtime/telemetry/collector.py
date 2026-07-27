@@ -34,7 +34,6 @@ class TelemetryCollector:
                         category=metric.category
                     )
                 except Exception as e:
-                    # Enregistrement d'un événement d'échec de télémétrie en mémoire sans crash
                     self._events.append(TelemetryEvent(
                         payload={"error": f"TELEMETRY_STORAGE_FAILURE: {str(e)}"}
                     ))
