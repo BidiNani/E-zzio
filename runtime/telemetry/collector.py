@@ -34,7 +34,10 @@ class TelemetryCollector:
                         category=metric.category
                     )
                 except Exception as e:
-                    print(f"[!] Warning: Failed to persist telemetry metric: {e}")
+                    # Enregistrement d'un événement d'échec de télémétrie en mémoire sans crash
+                    self._events.append(TelemetryEvent(
+                        payload={"error": f"TELEMETRY_STORAGE_FAILURE: {str(e)}"}
+                    ))
 
     def record_event(self, event: TelemetryEvent) -> None:
         with self._internal_lock:
@@ -48,7 +51,7 @@ class TelemetryCollector:
                         timestamp=event.timestamp
                     )
                 except Exception as e:
-                    print(f"[!] Warning: Failed to persist telemetry event: {e}")
+                    pass
 
     def get_summary(self, persistent: bool = True) -> Dict[str, Any]:
         with self._internal_lock:

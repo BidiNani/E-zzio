@@ -4,16 +4,35 @@ import json
 from typing import Dict, Any, Optional
 from datetime import datetime, timezone
 
+CURRENT_SCHEMA_VERSION = 1
+
 class TelemetryStorage:
-    """Moteur de stockage persistant dédié à l'observabilité (data/telemetry.db)."""
+    """Moteur de stockage persistant durci dédié à l'observabilité (data/telemetry.db)."""
     def __init__(self, db_path: str = "data/telemetry.db"):
         os.makedirs(os.path.dirname(db_path), exist_ok=True)
         self.db_path = db_path
         self._init_db()
 
+    def _get_connection(self) -> sqlite3.Connection:
+        conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+        conn.execute("PRAGMA journal_mode=WAL;")
+        return conn
+
     def _init_db(self):
-        with sqlite3.connect(self.db_path) as conn:
-            conn.execute("PRAGMA journal_mode=WAL;")
+        with self._get_connection() as conn:
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS telemetry_schema (
+                    version INTEGER PRIMARY KEY,
+                    updated_at TEXT NOT NULL
+                )
+            ''')
+            
+            cursor = conn.execute("SELECT version FROM telemetry_schema ORDER BY version DESC LIMIT 1")
+            row = cursor.fetchone()
+            if not row:
+                now = datetime.now(timezone.utc).isoformat()
+                conn.execute("INSERT INTO telemetry_schema (version, updated_at) VALUES (?, ?)", (CURRENT_SCHEMA_VERSION, now))
+
             conn.execute('''
                 CREATE TABLE IF NOT EXISTS telemetry_metrics (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -39,7 +58,7 @@ class TelemetryStorage:
 
     def save_metric(self, exec_id: str, action_name: str, status: str, duration_ms: float, cost: float, risk_level: str, category: Optional[str] = None):
         now = datetime.now(timezone.utc).isoformat()
-        with sqlite3.connect(self.db_path) as conn:
+        with self._get_connection() as conn:
             conn.execute('''
                 INSERT INTO telemetry_metrics (exec_id, action_name, status, duration_ms, cost, risk_level, category, timestamp)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
@@ -47,7 +66,7 @@ class TelemetryStorage:
             conn.commit()
 
     def save_event(self, event_id: str, event_type: str, payload: dict, timestamp: float):
-        with sqlite3.connect(self.db_path) as conn:
+        with self._get_connection() as conn:
             conn.execute('''
                 INSERT INTO telemetry_events (event_id, event_type, payload, timestamp)
                 VALUES (?, ?, ?, ?)
@@ -55,7 +74,7 @@ class TelemetryStorage:
             conn.commit()
 
     def get_summary(self) -> Dict[str, Any]:
-        with sqlite3.connect(self.db_path) as conn:
+        with self._get_connection() as conn:
             cursor = conn.execute("SELECT COUNT(*), SUM(CASE WHEN status='SUCCESS' THEN 1 ELSE 0 END), AVG(duration_ms) FROM telemetry_metrics")
             row = cursor.fetchone()
             total = row[0] or 0
@@ -73,7 +92,7 @@ class TelemetryStorage:
             }
 
     def clear(self):
-        with sqlite3.connect(self.db_path) as conn:
+        with self._get_connection() as conn:
             conn.execute("DELETE FROM telemetry_metrics")
             conn.execute("DELETE FROM telemetry_events")
             conn.commit()
