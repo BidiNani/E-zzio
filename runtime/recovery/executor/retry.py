@@ -8,6 +8,9 @@ class RetryExecutor(BaseActionExecutor):
         return {
             "status": "SUCCESS",
             "target": "execution_retry_policy",
-            "previous_state": {"retry_scheduled": False},
+            "previous_state": {"retry_scheduled": False, "max_retries": 0},
             "new_state": {"retry_scheduled": True, "max_retries": max_retries, "backoff": backoff}
         }
+
+    def restore(self, previous_state: Dict[str, Any], context: Dict[str, Any]) -> Dict[str, Any]:
+        return {"status": "RESTORED", "retry_scheduled": False}

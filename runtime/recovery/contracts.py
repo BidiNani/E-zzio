@@ -1,4 +1,5 @@
 import json
+import hmac
 import hashlib
 from dataclasses import dataclass, field, asdict
 from enum import Enum
@@ -26,7 +27,6 @@ class IncidentCategory(str, Enum):
 
 @dataclass(frozen=True)
 class Finding:
-    """Constat d'analyse structuré produit par la chaîne d'analyseurs."""
     type: str
     confidence: float
     severity: str
@@ -37,7 +37,6 @@ class Finding:
 
 @dataclass(frozen=True)
 class IncidentBundle:
-    """Rapport d'incident forensique immuable avec scellé cryptographique à 100%."""
     incident_id: str
     timestamp: str
     severity: str
@@ -50,14 +49,13 @@ class IncidentBundle:
     state_trace: List[Dict[str, Any]]
     context_signature_valid: bool
     payload_hash: str
-    bundle_hash: str  # SHA-256 scellant 100% du contenu du bundle
+    bundle_hash: str
     telemetry_snapshot: Dict[str, Any]
     findings: List[Dict[str, Any]]
     root_candidates: List[str]
     metadata: Dict[str, Any] = field(default_factory=dict)
 
     def compute_canonical_hash(self) -> str:
-        """Génère l'empreinte SHA-256 canonique sur 100% des données du bundle."""
         canonical = {
             "incident_id": self.incident_id,
             "timestamp": self.timestamp,
@@ -80,5 +78,17 @@ class IncidentBundle:
         return hashlib.sha256(raw.encode('utf-8')).hexdigest()
 
     def verify_integrity(self) -> bool:
-        """Vérifie l'intégrité absolue à 100% du bundle."""
         return self.compute_canonical_hash() == self.bundle_hash
+
+def compute_decision_signature(
+    decision_trace_id: str,
+    incident_id: str,
+    action_type: str,
+    approval_status: str,
+    confidence: float,
+    timestamp: str,
+    secret_key: str = "ezzio-kernel-recovery-secret"
+) -> str:
+    """Calcule la signature HMAC-SHA256 infalsifiable d'une décision de remédiation."""
+    raw = f"{decision_trace_id}|{incident_id}|{action_type}|{approval_status}|{confidence}|{timestamp}"
+    return hmac.new(secret_key.encode('utf-8'), raw.encode('utf-8'), hashlib.sha256).hexdigest()

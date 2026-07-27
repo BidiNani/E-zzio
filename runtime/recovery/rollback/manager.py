@@ -17,7 +17,7 @@ class RollbackRecord:
     rollback_available: bool
 
 class RollbackManager:
-    """Consigne les changements d'état du runtime pour autoriser une marche arrière contrôlée."""
+    """Consigne et restaure l'état antérieur des composants du runtime."""
 
     def __init__(self, db_path: str = "data/incidents.db"):
         self.db_path = db_path
@@ -39,7 +39,8 @@ class RollbackManager:
                             previous_state TEXT NOT NULL,
                             new_state TEXT NOT NULL,
                             rollback_available INTEGER NOT NULL,
-                            timestamp TEXT NOT NULL
+                            timestamp TEXT NOT NULL,
+                            restored_at TEXT
                         )
                     ''')
             finally:
@@ -73,3 +74,38 @@ class RollbackManager:
             finally:
                 conn.close()
         return rec
+
+    def restore(self, record_id: str, executors: Dict[str, Any], context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """Exécute l'action inverse et invalide la réutilisation du rollback."""
+        with self._db_lock:
+            conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+            try:
+                cursor = conn.execute("SELECT record_id, action_type, previous_state, rollback_available FROM rollback_history WHERE record_id = ?", (record_id,))
+                row = cursor.fetchone()
+                if not row:
+                    return {"status": "FAILED", "reason": f"Rollback record '{record_id}' not found."}
+                
+                _, action_type, prev_state_json, available = row
+                if not available:
+                    return {"status": "FAILED", "reason": f"Rollback '{record_id}' has already been executed or invalidated."}
+
+                previous_state = json.loads(prev_state_json)
+                executor = executors.get(action_type)
+                if not executor or not hasattr(executor, "restore"):
+                    return {"status": "FAILED", "reason": f"No restore capability for action '{action_type}'."}
+
+                # Appliquer la restauration d'état
+                restore_res = executor.restore(previous_state, context or {})
+                now = datetime.now(timezone.utc).isoformat()
+
+                with conn:
+                    conn.execute("UPDATE rollback_history SET rollback_available = 0, restored_at = ? WHERE record_id = ?", (now, record_id))
+
+                return {
+                    "status": "SUCCESS",
+                    "record_id": record_id,
+                    "restored_state": previous_state,
+                    "execution_details": restore_res
+                }
+            finally:
+                conn.close()
