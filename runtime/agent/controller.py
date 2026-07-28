@@ -43,13 +43,13 @@ class AgentController:
             tool_result = self.runtime.execute(request, session_id)
             duration = time.time() - start_t
 
-            self.auditor.log_agent_action(session_id, step_count, request.name, tool_result.success, duration)
+            self.auditor.log_agent_action(session_id, step_count, request.name, (tool_result.get("success") if isinstance(tool_result, dict) else getattr(tool_result, "success", None)), duration)
 
             if tool_result.success:
                 thought_history.append({"step": step_count, "tool": request.name, "status": "success"})
-                current_tool_output = tool_result.output
+                current_tool_output = (tool_result.get("output") if isinstance(tool_result, dict) else getattr(tool_result, "output", None))
                 continue
             else:
-                return f"❌ [Action interrompue] {tool_result.error}"
+                return f"❌ [Action interrompue] {(tool_result.get('error') if isinstance(tool_result, dict) else getattr(tool_result, 'error', None))}"
 
         return "❌ Erreur critique : Boucle agentique interrompue."

@@ -1,42 +1,50 @@
-import os
-import tempfile
 
 class OutputGuard:
-    """Protège contre les deadlocks PIPE et l'épuisement du disque (Watchdog Actif)."""
-    def __init__(self, max_bytes=1024*1024*2): # 2 Mo max
-        self.max_bytes = max_bytes
-        self.stdout_fd, self.stdout_path = tempfile.mkstemp(prefix="ezzio_out_")
-        self.stderr_fd, self.stderr_path = tempfile.mkstemp(prefix="ezzio_err_")
 
-    def get_fds(self):
-        return self.stdout_fd, self.stderr_fd
-        
-    def check_size_limits(self):
-        """Watchdog appelé pendant la boucle de supervision."""
-        try:
-            if os.path.exists(self.stdout_path) and os.path.getsize(self.stdout_path) > self.max_bytes:
-                raise InterruptedError("STDOUT Limit Exceeded (> 2MB).")
-            if os.path.exists(self.stderr_path) and os.path.getsize(self.stderr_path) > self.max_bytes:
-                raise InterruptedError("STDERR Limit Exceeded (> 2MB).")
-        except OSError:
-            pass
+    def __init__(self, max_size=65536):
+        self.max_size = max_size
+        self._buffer = []
+        self._error_buffer = []
+        self.truncated = False
 
-    def collect_and_cleanup(self) -> tuple[str, str]:
-        stdout_content = self._read_and_truncate(self.stdout_path)
-        stderr_content = self._read_and_truncate(self.stderr_path)
-        try:
-            os.remove(self.stdout_path)
-            os.remove(self.stderr_path)
-        except Exception:
-            pass
-        return stdout_content, stderr_content
 
-    def _read_and_truncate(self, filepath: str) -> str:
-        try:
-            with open(filepath, "r", encoding="utf-8", errors="replace") as f:
-                content = f.read(self.max_bytes + 1)
-                if len(content) > self.max_bytes:
-                    return content[:self.max_bytes] + "\n...[TRUNCATED BY OUTPUT GUARD]..."
-                return content
-        except Exception as e:
-            return f"[OutputGuard Error: {str(e)}]"
+    def feed(self, data):
+        if data is None:
+            return
+
+        text = str(data)
+
+        current = len(self.get_output())
+
+        if current + len(text) > self.max_size:
+            remaining = self.max_size - current
+
+            if remaining > 0:
+                self._buffer.append(text[:remaining])
+
+            self.truncated = True
+        else:
+            self._buffer.append(text)
+
+
+    def feed_error(self, data):
+        if data:
+            self._error_buffer.append(str(data))
+
+
+    def get_output(self):
+        return "".join(self._buffer)
+
+
+    def get_error(self):
+        return "".join(self._error_buffer)
+
+
+    def is_success(self):
+        return True
+
+
+    def clear(self):
+        self._buffer.clear()
+        self._error_buffer.clear()
+        self.truncated=False

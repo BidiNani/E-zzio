@@ -41,11 +41,11 @@ class AgentPipeline:
         duration = time.time() - start_time
 
         self.auditor.log_tool(request, result, duration)
-        self.auditor.log_decision("TOOL_EXECUTION", {"tool": request.name, "success": result.success, "id": request.request_id})
+        self.auditor.log_decision("TOOL_EXECUTION", {"tool": request.name, "success": (result.get('success', False) if isinstance(result, dict) else getattr(result, 'success', False)), "id": request.request_id})
 
-        if result.success:
-            formatted = f"📂 [Exécution Outil ID:{request.request_id} | {request.name}]\n{result.output}"
+        if (result.get('success', False) if isinstance(result, dict) else getattr(result, 'success', False)):
+            formatted = f"📂 [Exécution Outil ID:{request.request_id} | {request.name}]\n{(result.get('output', '') if isinstance(result, dict) else getattr(result, 'output', ''))}"
             return AgentResult(step=AgentStep.TOOL_REQUEST, text=formatted, tool_request=request, tool_result=result)
         else:
-            formatted = f"❌ [Erreur Outil ID:{request.request_id}] {result.error}"
+            formatted = f"❌ [Erreur Outil ID:{request.request_id}] {(result.get("error", "") if isinstance(result, dict) else getattr(result, "error", ""))}"
             return AgentResult(step=AgentStep.ERROR, text=formatted, tool_request=request, tool_result=result)

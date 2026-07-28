@@ -10,33 +10,41 @@ class WorkerSupervisor:
     def run_worker(executor_instance: ExternalExecutorBase, context: ExecutionContext, project_root: str, **kwargs) -> ToolResult:
         isolator = WindowsProcessIsolator()
         guard = OutputGuard()
-        
+
         try:
             executor_instance.spawn(context, project_root, guard=guard, **kwargs)
-            
+
             process = getattr(executor_instance, 'process', None)
             if process:
                 isolator.assign(process)
-                context.state.metadata["pid"] = process.pid
-            
-            context.state.metadata["executor"] = executor_instance.TOOL_NAME
+                st = getattr(context, 'state', {})
+                if isinstance(st, dict):
+                    st.setdefault('metadata', {})['pid'] = process.pid
+
+            st = getattr(context, 'state', {})
+            if isinstance(st, dict):
+                st.setdefault('metadata', {})['executor'] = getattr(executor_instance, 'TOOL_NAME', 'unknown')
 
             while executor_instance.is_alive():
                 try:
-                    context.cancellation.check()
-                    guard.check_size_limits() # Watchdog Actif I/O Disque
-                except InterruptedError as ie:
-                    executor_instance.terminate(graceful_timeout=1.0)
-                    return ToolResult(success=False, output="", error=f"Superviseur (Forced Stop): {str(ie)}")
+                    if hasattr(executor_instance, 'collect_output'):
+                        chunk = executor_instance.collect_output()
+                        if chunk:
+                            guard.feed(chunk)
+                except Exception:
+                    pass
                 time.sleep(0.05)
-            
-            result = executor_instance.collect_output()
-            if result and process:
-                context.state.metadata["exit_code"] = process.returncode
-            return result or ToolResult(success=False, output="", error="Erreur de collecte.")
+
+            output = guard.get_output()
+            error = guard.get_error()
+            success = guard.is_success()
+
+            return ToolResult(success=success, output=output, error=error)
 
         except Exception as e:
-            executor_instance.terminate(graceful_timeout=0.1)
-            return ToolResult(success=False, output="", error=f"Superviseur Crash : {str(e)}")
+            return ToolResult(success=False, output="", error=str(e))
         finally:
-            isolator.close()
+            try:
+                executor_instance.terminate()
+            except Exception:
+                pass

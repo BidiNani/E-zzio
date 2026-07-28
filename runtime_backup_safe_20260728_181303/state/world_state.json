@@ -1,0 +1,43 @@
+{
+  "world_snapshot_id": "ws_20260726_034221",
+  "hash": "92eef08b1845e2c8",
+  "ttl_seconds": 300,
+  "updated_at": "2026-07-26T03:42:21.757095",
+  "machine": {
+    "cpu": {
+      "processor": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+      "machine": "AMD64",
+      "system": "Windows"
+    },
+    "memory": {
+      "total": "31.9GB",
+      "available": "17.6GB"
+    },
+    "gpu": {
+      "name": "GTX 1650 (Local)",
+      "policy": "CPU-only / Optimisé"
+    },
+    "python": "3.11.15",
+    "ollama": true
+  },
+  "project": {
+    "root": "G:\\AI\\E-zzio",
+    "files": 947,
+    "python_files": 244,
+    "powershell_files": 157,
+    "size_mb": 16.76,
+    "last_change": "2026-07-26 03:42:21"
+  },
+  "git": {
+    "branch": "unknown",
+    "status": "unknown",
+    "last_commit": "unknown",
+    "modified_files": 0
+  },
+  "health": {
+    "system_sensor": "ok",
+    "filesystem_sensor": "ok",
+    "git_sensor": "ok",
+    "last_check": "2026-07-26T03:42:27.515975"
+  }
+}
