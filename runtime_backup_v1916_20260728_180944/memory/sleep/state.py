@@ -6,8 +6,8 @@ class CognitiveState:
     """Représente la fatigue et la charge métabolique pure du Runtime (Corrigé: field factory)."""
     memory_pressure: float = 0.0
     unresolved_patterns: int = 0
-    last_micro_sleep: datetime = field(default_factory=datetime.utcnow)
-    last_deep_sleep: datetime = field(default_factory=datetime.utcnow)
+    last_micro_sleep: datetime = field(default_factory=lambda: __import__('datetime').datetime.now(__import__('datetime').timezone.utc))
+    last_deep_sleep: datetime = field(default_factory=lambda: __import__('datetime').datetime.now(__import__('datetime').timezone.utc))
 
     def reset_micro(self):
         self.memory_pressure = 0.0

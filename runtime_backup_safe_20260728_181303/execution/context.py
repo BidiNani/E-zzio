@@ -34,7 +34,7 @@ class ExecutionContext:
     tool_request: Dict[str, Any]
 
     created_at: datetime = field(
-        default_factory=datetime.utcnow
+        default_factory=lambda: __import__('datetime').datetime.now(__import__('datetime').timezone.utc)
     )
 
     timeout: float = 30.0
