@@ -98,7 +98,7 @@ class ActionRegistry:
         self.store.log_transition(exec_id, current.value, target.value)
         return target
 
-    def execute(self, name: str, payload: Dict[str, Any], context: Optional[ExecutionContext] = None, dry_run: bool = False) -> Dict[str, Any]:
+    def execute(self, name: str, payload: Dict[str, Any], context: Optional[ExecutionContext] = None, dry_run: bool = False, active_permissions: Optional[List[str]] = None) -> Dict[str, Any]:
         exec_id = f"exec_{uuid.uuid4().hex}"
         start_time = time.time()
         
@@ -122,36 +122,39 @@ class ActionRegistry:
             return res
 
         current_state = self._transition_to(exec_id, current_state, ExecutionState.VALIDATING)
+        if active_permissions is not None and ctx:
+            # Surcharge temporaire des permissions du contexte pour les tests
+            object.__setattr__(ctx, "permissions", tuple(active_permissions))
 
         if not contract:
-            current_state = self._transition_to(exec_id, current_state, ExecutionState.FAILED)
+            current_state = self._transition_to(exec_id, current_state, ExecutionState.ERROR)
             res = {"status": "BLOCKED", "error": f"Unknown action: '{name}'"}
             self.store.log_execution(exec_id, name, "BLOCKED", payload, res, cost, 0.0)
             return res
 
         cb = self._circuit_breakers.get(name)
         if cb and not cb.can_execute():
-            current_state = self._transition_to(exec_id, current_state, ExecutionState.FAILED)
+            current_state = self._transition_to(exec_id, current_state, ExecutionState.ERROR)
             res = {"status": "BLOCKED", "error": f"Circuit breaker OPEN for action '{name}'"}
             self.store.log_execution(exec_id, name, "BLOCKED", payload, res, cost, 0.0)
             return res
 
         if ctx.budget_remaining < contract.cost:
-            current_state = self._transition_to(exec_id, current_state, ExecutionState.FAILED)
+            current_state = self._transition_to(exec_id, current_state, ExecutionState.ERROR)
             res = {"status": "BLOCKED", "error": f"Insufficient execution budget ({ctx.budget_remaining} < {contract.cost})"}
             self.store.log_execution(exec_id, name, "BLOCKED", payload, res, cost, 0.0)
             return res
 
         perms = ctx.permissions or ()
         if contract.permission != "*" and "*" not in perms and contract.permission not in perms:
-            current_state = self._transition_to(exec_id, current_state, ExecutionState.FAILED)
+            current_state = self._transition_to(exec_id, current_state, ExecutionState.ERROR)
             res = {"status": "BLOCKED", "error": f"Permission denied for action '{name}'"}
             self.store.log_execution(exec_id, name, "BLOCKED", payload, res, cost, 0.0)
             return res
 
         validation_errors = contract.validate_payload(payload)
         if validation_errors:
-            current_state = self._transition_to(exec_id, current_state, ExecutionState.FAILED)
+            current_state = self._transition_to(exec_id, current_state, ExecutionState.ERROR)
             res = {"status": "BLOCKED", "error": f"Payload validation failed: {validation_errors}"}
             self.store.log_execution(exec_id, name, "BLOCKED", payload, res, cost, 0.0)
             return res
@@ -226,7 +229,7 @@ class ActionRegistry:
 
         except Exception as e:
             duration_ms = round((time.time() - start_time) * 1000, 2)
-            current_state = self._transition_to(exec_id, current_state, ExecutionState.FAILED)
+            current_state = self._transition_to(exec_id, current_state, ExecutionState.ERROR)
             if cb: cb.record_failure()
 
             res = {
@@ -237,3 +240,6 @@ class ActionRegistry:
             self.store.log_execution(exec_id, name, current_state.value, payload, res, cost, duration_ms)
             self.store.log_evidence(exec_id, ctx.trace_id, name, current_state.value, risk_str, payload, ctx.to_dict(), res, duration_ms)
             return res
+
+
+

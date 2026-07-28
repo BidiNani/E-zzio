@@ -146,17 +146,16 @@ class ActionStore:
                 for row in cursor.fetchall()
             ]
 
-    def log_execution(self, exec_id: str, action_name: str, status: str, payload: Dict[str, Any], result: Dict[str, Any], cost: int, duration_ms: float):
-        now = datetime.now(timezone.utc).isoformat()
+    def log_execution(self, exec_id, action_name, status, payload, result, cost, duration_ms):
+        import json
         with sqlite3.connect(self.db_path) as conn:
+            p_str = json.dumps(payload, default=str) if not isinstance(payload, str) else payload
+            r_str = json.dumps(result, default=str) if not isinstance(result, str) else result
             conn.execute(
-                '''INSERT INTO execution_ledger 
-                   (exec_id, action_name, status, payload, result, cost, duration_ms, timestamp)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)''',
-                (exec_id, action_name, status, json.dumps(payload, default=str), json.dumps(result, default=str), cost, duration_ms, now)
+                "INSERT INTO execution_ledger (exec_id, action_name, status, payload, result, cost, duration_ms, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'))",
+                (exec_id, action_name, status, p_str, r_str, cost, duration_ms)
             )
             conn.commit()
-
     def log_transition(self, exec_id: str, from_state: str, to_state: str):
         now = datetime.now(timezone.utc).isoformat()
         transition_id = f"tx_{uuid.uuid4().hex}"
@@ -174,32 +173,14 @@ class ActionStore:
     def get_transition_history(self, exec_id: str) -> List[Tuple[str, str]]:
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.execute(
-                "SELECT from_state, to_state FROM state_transitions WHERE exec_id = ? ORDER BY timestamp ASC",
+                "SELECT from_state, to_state FROM state_transitions WHERE exec_id = ? ORDER BY rowid ASC",
                 (exec_id,)
             )
             return [(row[0], row[1]) for row in cursor.fetchall()]
 
-    def get_execution_history(self, action_name: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]]:
-        with sqlite3.connect(self.db_path) as conn:
-            if action_name:
-                cursor = conn.execute(
-                    "SELECT exec_id, action_name, status, payload, result, cost, duration_ms, timestamp FROM execution_ledger WHERE action_name = ? ORDER BY timestamp DESC LIMIT ?",
-                    (action_name, limit)
-                )
-            else:
-                cursor = conn.execute(
-                    "SELECT exec_id, action_name, status, payload, result, cost, duration_ms, timestamp FROM execution_ledger ORDER BY timestamp DESC LIMIT ?",
-                    (limit,)
-                )
-            return [
-                {
-                    "exec_id": row[0], "action_name": row[1], "status": row[2],
-                    "payload": json.loads(row[3]), "result": json.loads(row[4]),
-                    "cost": row[5], "duration_ms": row[6], "timestamp": row[7]
-                }
-                for row in cursor.fetchall()
-            ]
 
+
+            
     def log_evidence(self, exec_id: str, root_trace_id: str, action_name: str, state: str, risk_level: str, payload: dict, context_dict: dict, result: dict, duration_ms: float):
         now = datetime.now(timezone.utc).isoformat()
         in_hash = hashlib.sha256(json.dumps(payload, default=str, sort_keys=True).encode()).hexdigest()
@@ -218,7 +199,7 @@ class ActionStore:
 
     def get_evidence_history(self, limit: int = 50) -> List[Dict[str, Any]]:
         with sqlite3.connect(self.db_path) as conn:
-            cursor = conn.execute("SELECT evidence_id, exec_id, root_trace_id, action_name, state, risk_level, duration_ms, timestamp FROM evidence_ledger ORDER BY timestamp DESC LIMIT ?", (limit,))
+            cursor = conn.execute("SELECT evidence_id, exec_id, root_trace_id, action_name, state, risk_level, duration_ms, timestamp FROM evidence_ledger limit ?", ( limit,))
             return [
                 {
                     "evidence_id": row[0], "exec_id": row[1], "root_trace_id": row[2],
@@ -227,6 +208,53 @@ class ActionStore:
                 }
                 for row in cursor.fetchall()
             ]
+
+
+
+    
+    def get_execution_history(self, action_name=None, limit=50):
+        import sqlite3
+        import json
+
+        with sqlite3.connect(self.db_path) as conn:
+            if action_name:
+                cursor = conn.execute(
+                    """
+                    SELECT exec_id, action_name, status, payload, result, cost, duration_ms, timestamp
+                    FROM execution_ledger
+                    WHERE action_name = ?
+                    ORDER BY rowid DESC
+                    LIMIT ?
+                    """,
+                    (action_name, limit)
+                )
+            else:
+                cursor = conn.execute(
+                    """
+                    SELECT exec_id, action_name, status, payload, result, cost, duration_ms, timestamp
+                    FROM execution_ledger
+                    ORDER BY rowid DESC
+                    LIMIT ?
+                    """,
+                    (limit,)
+                )
+
+            rows = cursor.fetchall()
+
+        history = []
+        for row in rows:
+            history.append({
+                "exec_id": row[0],
+                "action_name": row[1],
+                "status": row[2],
+                "payload": json.loads(row[3]) if isinstance(row[3], str) else row[3],
+                "result": json.loads(row[4]) if isinstance(row[4], str) else row[4],
+                "cost": row[5],
+                "duration_ms": row[6],
+                "timestamp": row[7]
+            })
+
+        return history
 
     def clear(self):
         with sqlite3.connect(self.db_path) as conn:

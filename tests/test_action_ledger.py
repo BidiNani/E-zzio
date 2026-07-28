@@ -22,7 +22,7 @@ def test_action_execution_ledger_persistence(tmp_path):
     registry.execute("NOTIFY_USER", {"message": "Hello"}, active_permissions=["notification.send"])
     
     # Test 2: Permission bloquée
-    registry.execute("NOTIFY_USER", {"message": "Blocked msg"}, active_permissions=[])
+    import time; time.sleep(0.02); registry.execute("NOTIFY_USER", {"message": "Blocked msg"}, active_permissions=[])
 
     history = store.get_execution_history(action_name="NOTIFY_USER")
     
