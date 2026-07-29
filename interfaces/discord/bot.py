@@ -1,5 +1,7 @@
 import os
 import discord
+import asyncio
+import sys
 import aiohttp
 from discord.ext import commands
 from dotenv import load_dotenv
@@ -80,6 +82,48 @@ async def on_message(message):
             for i in range(0, len(reponse), 2000):
                 await message.channel.send(reponse[i:i+2000])
 
+
+
+# ============================================================
+# E-ZZIO AUTONOMOUS GOVERNOR BRIDGE
+# ============================================================
+ROOT_PATH = Path(__file__).parent.parent.parent
+if str(ROOT_PATH) not in sys.path:
+    sys.path.insert(0, str(ROOT_PATH))
+
+try:
+    from runtime.governor.gemini_bridge import autonomous_agent
+    HAS_GOVERNOR = True
+except ImportError as e:
+    print(f"⚠️ Erreur import Governor : {e}")
+    HAS_GOVERNOR = False
+
+@bot.command(name="auto")
+async def autonomous_task(ctx, *, prompt: str):
+    """Délègue une tâche de code ou système au Governor Autonome."""
+    if not HAS_GOVERNOR:
+        await ctx.send("❌ Governor hors ligne ou module introuvable.")
+        return
+        
+    msg = await ctx.send("⚙️ **E-ZZIO Governor** analyse et agit (cela peut prendre quelques secondes/minutes)...")
+    
+    try:
+        # Exécution dans un thread séparé pour ne pas bloquer l'Event Loop asynchrone de Discord
+        reponse = await asyncio.to_thread(autonomous_agent.run_task, prompt)
+        
+        if not reponse:
+            reponse = "⚠️ Tâche terminée, mais aucune réponse textuelle renvoyée."
+            
+        # Fragmentation sécurisée pour la limite Discord des 2000 caractères
+        for i in range(0, len(reponse), 2000):
+            chunk = reponse[i:i+2000]
+            if i == 0:
+                await msg.edit(content=chunk)
+            else:
+                await ctx.send(chunk)
+    except Exception as e:
+        await msg.edit(content=f"❌ **Erreur Critique Governor** : {str(e)}")
+# ============================================================
 
 if __name__ == "__main__":
     if DISCORD_TOKEN and DISCORD_TOKEN != "ton_token_ici":
