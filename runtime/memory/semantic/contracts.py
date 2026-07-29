@@ -1,89 +1,88 @@
-from dataclasses import dataclass, field, asdict
-from typing import List, Dict, Any, Optional
+import os
+import json
 from datetime import datetime
-from enum import Enum
+from typing import List, Optional
+from pydantic import BaseModel, Field
 
-class SemanticSource(str, Enum):
-    KERNEL = "kernel"
-    DREAM = "dream"
-    AGENT = "agent"
+# Chemins de référence absolue
+MEMORY_DIR = "runtime/memory"
+MEMORY_FILE = os.path.join(MEMORY_DIR, "working_memory.json")
+LOG_FILE = "infrastructure/discord_actions.log"
 
-class SemanticIntent(str, Enum):
-    RECALL = "recall"
-    REASON = "reason"
-    COMPARE = "compare"
-    LEARN = "learn"
+# --- 1. CONTRATS SÉMANTIQUES (Pydantic Models) ---
 
-class MemoryType(str, Enum):
-    EPISODE = "episode"
-    RULE = "rule"
-    FACT = "fact"
-    BELIEF = "belief"
+class MemoryInteraction(BaseModel):
+    timestamp: str = Field(default_factory=lambda: datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    user_id: str
+    action: str
+    details: str
+    sentiment: Optional[str] = "neutral"
 
-@dataclass
-class SemanticFilters:
-    memory_type: List[MemoryType] = field(default_factory=lambda: [MemoryType.EPISODE, MemoryType.RULE, MemoryType.FACT, MemoryType.BELIEF])
-    confidence_min: float = 0.0
-    session_id: Optional[str] = None
+class WorkingMemorySchema(BaseModel):
+    version: str = "3.1-SemanticCore"
+    last_sync: str = Field(default_factory=lambda: datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    interactions: List[MemoryInteraction] = Field(default_factory=list)
 
-    def to_dict(self) -> Dict[str, Any]:
-        return {
-            "memory_type": [t.value if isinstance(t, MemoryType) else t for t in self.memory_type],
-            "confidence_min": self.confidence_min,
-            "session_id": self.session_id
-        }
+# --- 2. GESTIONNAIRE DE MÉMOIRE & VALIDATION ---
 
-@dataclass
-class SemanticQuery:
-    query_id: str
-    source: SemanticSource
-    intent: SemanticIntent
-    text: str
-    filters: SemanticFilters = field(default_factory=SemanticFilters)
-    top_k: int = 5
-    contract_version: str = "1.0"
-    timestamp: int = field(default_factory=lambda: int(__import__('datetime').datetime.now(__import__('datetime').timezone.utc).timestamp()))
+class SemanticMemoryManager:
+    def __init__(self):
+        self._ensure_storage()
 
-    def to_dict(self) -> Dict[str, Any]:
-        return {
-            "query_id": self.query_id,
-            "source": self.source.value if isinstance(self.source, SemanticSource) else self.source,
-            "intent": self.intent.value if isinstance(self.intent, SemanticIntent) else self.intent,
-            "text": self.text,
-            "filters": self.filters.to_dict(),
-            "top_k": self.top_k,
-            "contract_version": self.contract_version,
-            "timestamp": self.timestamp
-        }
+    def _ensure_storage(self):
+        os.makedirs(MEMORY_DIR, exist_ok=True)
+        os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
+        if not os.path.exists(MEMORY_FILE):
+            self._save_raw(WorkingMemorySchema().dict())
 
-@dataclass
-class SemanticResultItem:
-    memory_id: str
-    type: MemoryType
-    score: float
-    content: str
-    source: str = "sqlite"
-    embedding_version: str = "1.0"
-    embedding_dimension: Optional[int] = None
-    content_hash: Optional[str] = None
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    def _load_raw(self) -> dict:
+        try:
+            with open(MEMORY_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                # Validation structurelle via le schéma
+                return WorkingMemorySchema(**data).dict()
+        except Exception:
+            # En cas de corruption, on réinitialise proprement tout en gardant une trace
+            fresh = WorkingMemorySchema()
+            self._save_raw(fresh.dict())
+            return fresh.dict()
 
-    def to_dict(self) -> Dict[str, Any]:
-        d = asdict(self)
-        d["type"] = self.type.value if isinstance(self.type, MemoryType) else self.type
-        return d
+    def _save_raw(self, data: dict):
+        with open(MEMORY_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
 
-@dataclass
-class SemanticQueryResult:
-    query_id: str
-    results: List[SemanticResultItem] = field(default_factory=list)
-    metadata: Dict[str, Any] = field(default_factory=lambda: {"retriever": "semantic_v1", "latency_ms": 0})
-    contract_version: str = "1.0"
+    def record_interaction(self, user_id: str, action: str, details: str, sentiment: str = "neutral") -> bool:
+        try:
+            # Création et validation via le contrat Pydantic
+            interaction = MemoryInteraction(
+                user_id=str(user_id),
+                action=action,
+                details=details,
+                sentiment=sentiment
+            )
 
-    def to_dict(self) -> Dict[str, Any]:
-        return {
-            "query_id": self.query_id,
-            "results": [r.to_dict() for r in self.results],
-            "metadata": self.metadata,
-            "contract_version": self.contract_version
-        }
+            # Chargement de la mémoire actuelle
+            mem_data = self._load_raw()
+            
+            # Ajout et conservation d'un historique glissant des 100 dernières interactions
+            mem_data["interactions"].append(interaction.dict())
+            if len(mem_data["interactions"]) > 100:
+                mem_data["interactions"] = mem_data["interactions"][-100:]
+            
+            mem_data["last_sync"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            # Sauvegarde atomique
+            self._save_raw(mem_data)
+
+            # Journalisation texte en parallèle pour l'infrastructure
+            log_entry = f"[{interaction.timestamp}] [USER:{interaction.user_id}] [{interaction.sentiment}] {interaction.action} -> {interaction.details}\n"
+            with open(LOG_FILE, "a", encoding="utf-8") as lf:
+                lf.write(log_entry)
+
+            return True
+        except Exception as e:
+            print(f"[-] Erreur de validation du contrat sémantique : {e}")
+            return False
+
+# Instance globale prête à l'emploi
+memory_core = SemanticMemoryManager()

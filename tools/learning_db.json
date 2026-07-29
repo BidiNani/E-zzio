@@ -1,0 +1,11 @@
+{
+  "errors": [
+    {
+      "error_type": "NameError",
+      "signature": "name 'sqrt' is not defined",
+      "fix_action": "add_import",
+      "fix_code": "from math import sqrt",
+      "success_count": 1
+    }
+  ]
+}

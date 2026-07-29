@@ -1,0 +1,309 @@
+=== E-ZZIO RUNTIME CORE DUMP (EXTENDED) ===
+Date: 2026-07-26 20:01:54
+
+Branch: runtime-hardening-recovery
+
+
+/****************************************************************/
+/* FILE: runtime\core\context.py
+/****************************************************************/
+
+from dataclasses import dataclass, field
+from typing import Dict, Any, Optional
+
+@dataclass
+class ExecutionContext:
+    """
+    Immutable or standard execution context passed through the executor pipeline.
+    Ensures strict typing and prevents Field descriptor leakage.
+    """
+    trace_id: str
+    tool_name: str
+    arguments: Dict[str, Any] = field(default_factory=dict)
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+/****************************************************************/
+/* FILE: runtime\execution\decorators.py
+/****************************************************************/
+
+from functools import wraps
+from typing import Type, Any
+from runtime.core.context import ExecutionContext
+
+def executor(cls: Type) -> Type:
+    """
+    Decorator to register and validate execution classes.
+    Ensures the target class exposes the required TOOL_NAME attribute and execute method.
+    """
+    if not hasattr(cls, "TOOL_NAME") or not isinstance(cls.TOOL_NAME, str):
+        raise TypeError(f"Executor class '{cls.__name__}' must define a valid string 'TOOL_NAME' attribute.")
+    
+    if not hasattr(cls, "execute") or not callable(getattr(cls, "execute")):
+        raise TypeError(f"Executor class '{cls.__name__}' must implement a callable 'execute' method.")
+    
+    return cls
+
+/****************************************************************/
+/* FILE: runtime\execution\registry.py
+/****************************************************************/
+
+import importlib
+import pkgutil
+import runtime.tools.executors
+
+class ExecutorRegistry:
+    """Registre technique agnostique des exécuteurs du runtime."""
+    
+    def __init__(self):
+        self._registry = {}
+        self._discover_executors()
+
+    def _discover_executors(self):
+        package = runtime.tools.executors
+        for _, module_name, _ in pkgutil.walk_packages(package.__path__, package.__name__ + "."):
+            try:
+                module = importlib.import_module(module_name)
+            except Exception as e:
+                print(f"[REGISTRY WARNING] Impossible de charger {module_name}: {e}")
+                continue
+                
+            for attr_name in dir(module):
+                obj = getattr(module, attr_name)
+                if getattr(obj, "__is_executor__", False) and hasattr(obj, "TOOL_NAME"):
+                    self._registry[obj.TOOL_NAME] = obj
+
+    def get_class(self, tool_name: str):
+        """Récupère la classe d'exécuteur brute pour un nom canonique donné."""
+        return self._registry.get(tool_name)
+
+[!] FILE NOT FOUND: runtime\execution\supervisor.py
+
+/****************************************************************/
+/* FILE: runtime\tools\executors\powershell.py
+/****************************************************************/
+
+import subprocess
+import logging
+from typing import Dict, Any
+from dataclasses import dataclass, field
+from runtime.core.context import ExecutionContext
+from runtime.execution.decorators import executor
+
+logger = logging.getLogger("Ezzio.PowerShellExecutor")
+
+@dataclass
+class ToolResult:
+    success: bool
+    output: str = ""
+    error: str = ""
+    exit_code: int = 0
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+@executor
+class PowerShellExecutor:
+    TOOL_NAME = "system.powershell"
+
+    def execute(self, context: ExecutionContext) -> ToolResult:
+        arguments = context.arguments or {}
+        script = arguments.get("script") or arguments.get("command")
+
+        if not script:
+            return ToolResult(
+                success=False,
+                output="",
+                error="Missing required 'script' or 'command' argument in ExecutionContext.",
+                exit_code=-1
+            )
+
+        try:
+            logger.info(f"Executing PowerShell script [Trace ID: {context.trace_id}]")
+            result = subprocess.run(
+                ["powershell", "-NoProfile", "-NonInteractive", "-Command", script],
+                capture_output=True,
+                text=True,
+                timeout=60
+            )
+
+            success = result.returncode == 0
+            return ToolResult(
+                success=success,
+                output=result.stdout.strip(),
+                error=result.stderr.strip() if not success else "",
+                exit_code=result.returncode
+            )
+
+        except subprocess.TimeoutExpired:
+            logger.error(f"PowerShell execution timed out [Trace ID: {context.trace_id}]")
+            return ToolResult(
+                success=False,
+                output="",
+                error="Execution timed out after 60 seconds.",
+                exit_code=-124
+            )
+        except Exception as e:
+            logger.exception(f"Unexpected error during PowerShell execution: {e}")
+            return ToolResult(
+                success=False,
+                output="",
+                error=str(e),
+                exit_code=-1
+            )
+
+/****************************************************************/
+/* FILE: runtime\security\guard.py
+/****************************************************************/
+
+from runtime.security.permissions import SecurityPolicy
+
+class SecurityDecision:
+    def __init__(self, allowed: bool, reason: str):
+        self.allowed = allowed
+        self.reason = reason
+
+    def to_dict(self) -> dict:
+        return {
+            "allowed": self.allowed,
+            "reason": self.reason
+        }
+
+class SecurityGuard:
+    """Garde-fou matériel doté d'une traçabilité des décisions de sécurité."""
+    @staticmethod
+    def inspect(tool_name: str, allowed_runtime_level: int) -> SecurityDecision:
+        level = SecurityPolicy.get_level(tool_name)
+        
+        if level == SecurityPolicy.LEVEL_UNKNOWN:
+            return SecurityDecision(False, "UNKNOWN_TOOL_BLOCKED")
+            
+        if level > allowed_runtime_level:
+            return SecurityDecision(False, f"PRIVILEGE_ELEVATION_REQUIRED (Outil requiert niveau {level}, max autorisé {allowed_runtime_level})")
+            
+        return SecurityDecision(True, "AUTHORIZED")
+
+class OutputGuard:
+    """
+    Protection des sorties massives des executors.
+    Empêche les explosions mémoire/log.
+    """
+    MAX_OUTPUT_SIZE = 10000
+
+    @classmethod
+    def check(cls, output: str):
+        if not output:
+            return "", False
+
+        if len(output) > cls.MAX_OUTPUT_SIZE:
+            return (
+                output[:cls.MAX_OUTPUT_SIZE] +
+                "\n...[OUTPUT TRUNCATED BY GUARD]...",
+                True
+            )
+
+        return output, False
+
+/****************************************************************/
+/* FILE: runtime\tools\manifest_loader.py
+/****************************************************************/
+
+from runtime.tools.manifest_provider import ManifestProvider
+
+class ManifestLoader:
+    """Shim de compatibilité ascendante liant l'ancien ManifestLoader au nouveau ManifestProvider."""
+    _provider = None
+
+    @classmethod
+    def get_tools(cls):
+        if cls._provider is None:
+            cls._provider = ManifestProvider()
+        return cls._provider.get_tools()
+
+/****************************************************************/
+/* FILE: runtime\tools\manifest_provider.py
+/****************************************************************/
+
+import json
+import hashlib
+import threading
+import copy
+from pathlib import Path
+from typing import Dict, Any
+
+class ManifestProvider:
+    """Fournisseur d'état du manifest, garantissant l'intégrité via SHA-256 du contenu."""
+    SUPPORTED_VERSION = 2
+
+    def __init__(self, path: str = None):
+        self.path = Path(path or Path(__file__).resolve().parents[1] / "tools" / "manifest.json")
+        self._cache = {}
+        self._cache_hash = "unknown"
+        self._lock = threading.Lock()
+
+    def get_manifest_hash(self) -> str:
+        self.get_tools()
+        return self._cache_hash
+
+    def get_tools(self) -> Dict[str, Any]:
+        if not self.path.exists():
+            return {}
+
+        with self._lock:
+            try:
+                content = self.path.read_bytes()
+                current_hash = hashlib.sha256(content).hexdigest()[:12]
+                
+                # Invalidation parfaite basée sur le contenu réel
+                if self._cache and current_hash == self._cache_hash:
+                    return copy.deepcopy(self._cache)
+
+                data = json.loads(content.decode("utf-8"))
+                if data.get("manifest_version") != self.SUPPORTED_VERSION:
+                    raise ValueError(f"Version non supportée: {data.get('manifest_version')}")
+
+                self._cache = data.get("tools", {})
+                self._cache_hash = current_hash
+                return copy.deepcopy(self._cache)
+            except Exception:
+                self._cache = {}
+                return {}
+
+/****************************************************************/
+/* FILE: runtime\tools\tool_schema.py
+/****************************************************************/
+
+import uuid
+from typing import Dict, Any, Optional
+
+class ToolResult:
+    def __init__(self, success: bool, output: str, error: Optional[str] = None):
+        self.success = success
+        self.output = output
+        self.error = error or ""
+
+    def to_dict(self) -> dict:
+        return {
+            "success": self.success,
+            "output": self.output,
+            "error": self.error
+        }
+
+    def __repr__(self):
+        status = "SUCCESS" if self.success else "FAILED"
+        return f"<ToolResult [{status}]: {self.output[:60]}...>"
+
+class ToolRequest:
+    def __init__(self, name: str, arguments: dict, requester: str = "llm"):
+        self.request_id = uuid.uuid4().hex[:12]
+        self.name = name
+        self.arguments = arguments
+        self.requester = requester
+
+    def to_dict(self) -> dict:
+        return {
+            "request_id": self.request_id,
+            "name": self.name,
+            "arguments": self.arguments,
+            "requester": self.requester
+        }
+
+    def __repr__(self):
+        return f"<ToolRequest [{self.request_id}] {self.name}({self.arguments})>"

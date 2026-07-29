@@ -47,5 +47,10 @@ class AgentPipeline:
             formatted = f"📂 [Exécution Outil ID:{request.request_id} | {request.name}]\n{(result.get('output', '') if isinstance(result, dict) else getattr(result, 'output', ''))}"
             return AgentResult(step=AgentStep.TOOL_REQUEST, text=formatted, tool_request=request, tool_result=result)
         else:
-            formatted = f"❌ [Erreur Outil ID:{request.request_id}] {(result.get("error", "") if isinstance(result, dict) else getattr(result, "error", ""))}"
+            error_msg = (
+                result.get("error", "")
+                if isinstance(result, dict)
+                else getattr(result, "error", "")
+            )
+            formatted = f"❌ [Erreur Outil ID:{request.request_id}] {error_msg}"
             return AgentResult(step=AgentStep.ERROR, text=formatted, tool_request=request, tool_result=result)
