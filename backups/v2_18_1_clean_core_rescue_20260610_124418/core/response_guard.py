@@ -1,0 +1,108 @@
+from __future__ import annotations
+
+import re
+from typing import Optional
+
+OFFICIAL_IDENTITY = (
+    "Je suis l'ami IA local d'Enrik sur PC, optimisé CPU/RAM only, "
+    "sans publicité, sans tracking, sans sponsor, fiable, sobre et professionnel."
+)
+
+FAST_LOCAL_TRUTH = (
+    "Le cœur PC d'E-ZZIO fonctionne localement en CPU/RAM only, sans pub ni tracking. "
+    "Les connecteurs externes comme Discord, Messenger ou certaines API publiques nécessitent Internet seulement s'ils sont configurés."
+)
+
+POWERSHELL_RULE = (
+    "Règle E-ZZIO PowerShell : commence par param() si paramètres, écris un backup daté, "
+    "des logs, un rapport JSON, une validation d'endpoint, et prévois un rollback avant toute modification risquée."
+)
+
+def _clean(text: str) -> str:
+    text = text or ""
+    text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL | re.IGNORECASE)
+    text = text.replace("\x00", "").strip()
+    return text
+
+def deterministic_reply(prompt: str, task: str) -> Optional[str]:
+    low = (prompt or "").lower()
+    task = (task or "auto").lower().strip()
+
+    if task == "identity" and any(x in low for x in ["qui es", "ton rôle", "identité", "e-zzio", "ezzio"]):
+        return OFFICIAL_IDENTITY
+
+    if task == "fast" and ("cpu" in low or "ram" in low or "only" in low or "local" in low):
+        return FAST_LOCAL_TRUTH
+
+    if task == "powershell" and any(x in low for x in ["règle", "propre", "script", "powershell"]):
+        return POWERSHELL_RULE
+
+    return None
+
+def sanitize_ezzio_reply(reply: str, task: str = "auto") -> str:
+    text = _clean(reply)
+    task = (task or "auto").lower().strip()
+
+    replacements = {
+        "E-ZZZIO": "E-ZZIO",
+        "EZZZIO": "EZZIO",
+        "E-ZZIOO": "E-ZZIO",
+        "BrotherEye": "E-ZZIO",
+    }
+
+    for old, new in replacements.items():
+        text = text.replace(old, new)
+
+    low = text.lower()
+
+    risky_internet_claims = [
+        "sans nécessiter de connexion internet",
+        "ne nécessite pas de connexion internet",
+        "sans connexion internet pour fonctionner",
+        "fonctionner sans connexion internet",
+        "conçu pour fonctionner sans connexion internet",
+        "pas besoin d'internet",
+        "n'a pas besoin d'internet",
+    ]
+
+    if any(x in low for x in risky_internet_claims):
+        text = FAST_LOCAL_TRUTH
+
+    if task == "powershell":
+        low2 = text.lower()
+        vague = any(x in low2 for x in [
+            "noms de variables explicites",
+            "commentaires clairs",
+            "try-catch",
+            "gestion des erreurs",
+        ])
+        concrete = any(x in low2 for x in [
+            "backup",
+            "logs",
+            "rapport json",
+            "rollback",
+            "validation d'endpoint",
+            "param()",
+            "convertto-json",
+        ])
+        if vague and not concrete:
+            text = POWERSHELL_RULE
+
+    if task == "identity":
+        if "publicité" not in text.lower() and "tracking" not in text.lower():
+            text = OFFICIAL_IDENTITY
+
+    if task == "fast":
+        sentences = []
+        current = ""
+        for char in text:
+            current += char
+            if char in ".!?":
+                if current.strip():
+                    sentences.append(current.strip())
+                current = ""
+        if current.strip():
+            sentences.append(current.strip())
+        text = " ".join(sentences[:2]).strip()
+
+    return text

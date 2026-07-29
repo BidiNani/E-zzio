@@ -1,0 +1,1 @@
+import{G as e,N as t,_ as n,f as r,y as i}from"../chunks/DIq1ZEfh.js";import"../chunks/xihTtKlq.js";var a=i(`<div class="shell"><!></div>`);function o(i,o){var s=a();r(t(s),()=>o.children),e(s),n(i,s)}export{o as component};

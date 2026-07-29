@@ -308,3 +308,12 @@ class RuntimeBuilder:
         )
 
 
+
+
+# ============================================================
+# E-ZZIO COMPATIBILITY BRIDGE
+# Legacy API compatibility
+# ============================================================
+
+MicroKernel = EzzioRuntime
+
