@@ -1,38 +1,101 @@
-# ==========================================
-# E-ZZIO RUNTIME & FORENSIC ARTIFACTS
-# ==========================================
-
-# Artefacts d'exécution
-/logs/
-/backups/
-/_snapshots/
-/recovery/
-/quarantine/
-/reports/
-
-# Sources explicites autorisées
-!runtime/recovery/
-!runtime/recovery/**
-
-# Cache Python
-**/__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# BDD & Registres
-registry/telemetry/
-registry/cloud_cache/
-data/*.db
-data/*.sqlite
-data/*.sqlite3
+# ================================
+# E-ZZIO GENERATED DATA
+# ================================
 
 *.db
-*.sqlite
-*.sqlite3
-.pytest_cache/
-.coverage
+*.db-shm
+*.db-wal
 
-# Configurations & Secrets
+runtime/memory/sqlite/*.db
+
+runtime/memory/logs/
+runtime/memory/journal/
+runtime/memory/backups/
+runtime/memory/snapshots/
+
+runtime/audit/*.jsonl
+
+
+# ================================
+# BACKUPS
+# ================================
+
+*.bak
+*.backup
+
+
+# ================================
+# PYTHON
+# ================================
+
+__pycache__/
+*.pyc
+*.pyo
+
+.pytest_cache/
+
+
+# ================================
+# TEMP
+# ================================
+
+*.tmp
+*.temp
+
+
+# ================================
+# LOCAL AI DATA
+# ================================
+
+data/
+_harvested_assets/
+
+
+# ================================
+# ARCHIVE
+# ================================
+
+archive/
+
+# ================================
+# SECRETS
+# ================================
+
 .env
+.env.*
 secrets/
+*.key
+*.pem
+
+
+# ================================
+# RUNTIME GENERATED
+# ================================
+
+runtime/memory/database/
+runtime/memory/sqlite/*.db
+runtime/memory/sqlite/*.db-*
+runtime/memory/logs/
+runtime/memory/journal/
+runtime/memory/backups/
+runtime/memory/snapshots/
+
+logs/
+reports/
+
+
+# ================================
+# CACHE
+# ================================
+
+registry/cloud_cache/
+registry/telemetry/
+_snapshots/
+
+
+# SECURITY KEYS
+*.pem
+*.key
+*.p12
+*.pfx
+

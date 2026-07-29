@@ -19,8 +19,9 @@ class SQLiteEventStore:
             
         self.db_path = db_path
         self._local = threading.local()
+        self._connections = []
         self._closed = False
-        self._lock = threading.Lock()
+        self._lock = threading.RLock()
         self._init_db()
 
     def _get_connection(self) -> sqlite3.Connection:
@@ -29,8 +30,16 @@ class SQLiteEventStore:
         
         if not hasattr(self._local, "connection") or self._local.connection is None:
             db_target = ":memory:" if str(self.db_path) == ":memory:" else str(self.db_path)
-            conn = sqlite3.connect(db_target)
+            conn = sqlite3.connect(
+                db_target,
+                check_same_thread=False
+            )
+
             conn.row_factory = sqlite3.Row
+
+            with self._lock:
+                self._connections.append(conn)
+
             self._local.connection = conn
             
         return self._local.connection
@@ -107,16 +116,34 @@ class SQLiteEventStore:
             conn.commit()
 
     def close(self):
-        """Fermeture propre et idempotente de toutes les connexions thread-local."""
+        """
+        Fermeture globale SQLite.
+        Ferme toutes les connexions créées par tous les threads.
+        """
+
         with self._lock:
-            if not self._closed:
+
+            if self._closed:
+                return
+
+            for conn in list(self._connections):
                 try:
-                    if hasattr(self._local, "connection") and self._local.connection:
-                        self._local.connection.commit()
-                        self._local.connection.close()
-                        self._local.connection = None
-                finally:
-                    self._closed = True
+                    conn.commit()
+                except Exception:
+                    pass
+
+                try:
+                    conn.close()
+                except Exception:
+                    pass
+
+
+            self._connections.clear()
+
+            if hasattr(self._local,"connection"):
+                self._local.connection = None
+
+            self._closed=True
 
     def _row_to_dict(self, row: sqlite3.Row) -> Dict[str, Any]:
         return {

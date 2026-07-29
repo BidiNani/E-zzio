@@ -1,131 +1,705 @@
 {
-    "version": "3.1-SemanticCore",
-    "last_sync": "2026-07-29 03:48:48",
+    "version": "4.0-IndustrialCore",
+    "last_sync": "2026-07-29 16:59:44",
     "interactions": [
         {
-            "timestamp": "2026-07-29 01:37:12",
-            "user_id": "186035306418405376",
-            "action": "USER_QUERY",
-            "details": "t'es là",
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_41",
             "sentiment": "neutral"
         },
         {
-            "timestamp": "2026-07-29 01:37:12",
-            "user_id": "186035306418405376",
-            "action": "USER_QUERY",
-            "details": "t'es là",
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_42",
             "sentiment": "neutral"
         },
         {
-            "timestamp": "2026-07-29 01:39:07",
-            "user_id": "186035306418405376",
-            "action": "USER_QUERY",
-            "details": "t'es là?",
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_43",
             "sentiment": "neutral"
         },
         {
-            "timestamp": "2026-07-29 01:39:07",
-            "user_id": "186035306418405376",
-            "action": "USER_QUERY",
-            "details": "t'es là?",
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_44",
             "sentiment": "neutral"
         },
         {
-            "timestamp": "2026-07-29 01:43:20",
-            "user_id": "186035306418405376",
-            "action": "USER_QUERY",
-            "details": "test",
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_45",
             "sentiment": "neutral"
         },
         {
-            "timestamp": "2026-07-29 01:43:20",
-            "user_id": "186035306418405376",
-            "action": "USER_QUERY",
-            "details": "test",
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_46",
             "sentiment": "neutral"
         },
         {
-            "timestamp": "2026-07-29 02:22:50",
-            "user_id": "186035306418405376",
-            "action": "USER_QUERY",
-            "details": "test",
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_47",
             "sentiment": "neutral"
         },
         {
-            "timestamp": "2026-07-29 02:22:50",
-            "user_id": "186035306418405376",
-            "action": "AGENT_REPLY",
-            "details": "⚠️ Quota Gemini épuisé et aucune clé Groq configurée !",
-            "sentiment": "positive"
-        },
-        {
-            "timestamp": "2026-07-29 03:19:13",
-            "user_id": "186035306418405376",
-            "action": "USER_QUERY",
-            "details": "test",
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_48",
             "sentiment": "neutral"
         },
         {
-            "timestamp": "2026-07-29 03:19:18",
-            "user_id": "186035306418405376",
-            "action": "AGENT_REPLY",
-            "details": "C'est un test ! Tout fonctionne normalement. Je suis prêt à répondre à vos questions et à vous aider dans la mesure de mes possibilités. Que puis-je faire pour vous aujourd'hui ?\n\n*(⚡ Réponse routée v",
-            "sentiment": "positive"
-        },
-        {
-            "timestamp": "2026-07-29 03:28:14",
-            "user_id": "186035306418405376",
-            "action": "USER_QUERY",
-            "details": "ca va?",
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_49",
             "sentiment": "neutral"
         },
         {
-            "timestamp": "2026-07-29 03:28:19",
-            "user_id": "186035306418405376",
-            "action": "AGENT_REPLY",
-            "details": "Ça va bien, merci ! Je suis prêt à discuter et à vous aider si vous avez des questions ou des problèmes à résoudre. Qu'est-ce que je peux faire pour vous aujourd'hui ?\n\n*(⚡ Réponse routée via le secou",
-            "sentiment": "positive"
-        },
-        {
-            "timestamp": "2026-07-29 03:39:23",
-            "user_id": "186035306418405376",
-            "action": "USER_QUERY",
-            "details": "ok",
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_50",
             "sentiment": "neutral"
         },
         {
-            "timestamp": "2026-07-29 03:39:29",
-            "user_id": "186035306418405376",
-            "action": "AGENT_REPLY",
-            "details": "Bien ! En tant qu'agent autonome technique et direct, je suis là pour vous aider et vous fournir des informations précises et concises. N'hésitez pas à me poser vos questions ou à me demander de l'aid",
-            "sentiment": "positive"
-        },
-        {
-            "timestamp": "2026-07-29 03:45:41",
-            "user_id": "186035306418405376",
-            "action": "USER_QUERY",
-            "details": "ça va?",
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_51",
             "sentiment": "neutral"
         },
         {
-            "timestamp": "2026-07-29 03:48:05",
-            "user_id": "186035306418405376",
-            "action": "AGENT_REPLY",
-            "details": "Oui, tout va bien ! Je suis prêt à discuter et à vous aider si vous avez besoin de quelque chose. Comment puis-je vous aider aujourd'hui ?\n\n*(⚡ Réponse routée via le secours Groq)*",
-            "sentiment": "positive"
-        },
-        {
-            "timestamp": "2026-07-29 03:48:44",
-            "user_id": "186035306418405376",
-            "action": "USER_QUERY",
-            "details": "ça va?",
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_52",
             "sentiment": "neutral"
         },
         {
-            "timestamp": "2026-07-29 03:48:48",
-            "user_id": "186035306418405376",
-            "action": "AGENT_REPLY",
-            "details": "Oui, ça va bien ! Je suis prêt à discuter et à vous aider sur tout sujet qui vous intéresse. Qu'est-ce que vous avez envie de parler ou de faire aujourd'hui ?\n\n*(⚡ Réponse routée via le secours Groq)*",
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_53",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_54",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_55",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_2",
+            "action": "stress_test",
+            "details": "msg_93",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_56",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_2",
+            "action": "stress_test",
+            "details": "msg_94",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_57",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_2",
+            "action": "stress_test",
+            "details": "msg_95",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_59",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_2",
+            "action": "stress_test",
+            "details": "msg_96",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_60",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_2",
+            "action": "stress_test",
+            "details": "msg_97",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_61",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_2",
+            "action": "stress_test",
+            "details": "msg_98",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_62",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_2",
+            "action": "stress_test",
+            "details": "msg_99",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_63",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_64",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_65",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_66",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_67",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_68",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_65",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_69",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_67",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_70",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_68",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_71",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_69",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_72",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_70",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_73",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_71",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_74",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_72",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_75",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_73",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_76",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_74",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_78",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_75",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_79",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_76",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_80",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_77",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_81",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_78",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_82",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_79",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_83",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_80",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_84",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_81",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_85",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_84",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_86",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_85",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_87",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_86",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_88",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_87",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_89",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_88",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_90",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_89",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_91",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_90",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_93",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_91",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_94",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_92",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_95",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_93",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_96",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_94",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_97",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_95",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_98",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_96",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_5",
+            "action": "stress_test",
+            "details": "msg_99",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_98",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "stress_test",
+            "details": "msg_99",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_0",
+            "action": "ledger_action",
+            "details": "detail_0",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_1",
+            "action": "ledger_action",
+            "details": "detail_1",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_2",
+            "action": "ledger_action",
+            "details": "detail_2",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_3",
+            "action": "ledger_action",
+            "details": "detail_3",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "user_4",
+            "action": "ledger_action",
+            "details": "detail_4",
+            "sentiment": "neutral"
+        },
+        {
+            "timestamp": "2026-07-29 16:59:44",
+            "user_id": "admin",
+            "action": "secure_action",
+            "details": "Vérification des droits",
             "sentiment": "positive"
         }
     ]

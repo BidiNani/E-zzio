@@ -8,7 +8,30 @@ class ReflectionProposalStore:
     def __init__(self, store: SQLiteEventStore, event_bus: EventBus):
         self.store = store
         self.event_bus = event_bus
+
+        self._init_schema()
         self.event_bus.subscribe("ReflectionProposalGenerated", self.save_proposals)
+
+
+    def _init_schema(self):
+        """
+        Initialise automatiquement la table des propositions réflexives.
+        Auto-healing SQLite.
+        """
+
+        with self.store._lock:
+            with sqlite3.connect(self.store.db_path) as conn:
+                conn.execute("""
+                CREATE TABLE IF NOT EXISTS reflection_proposals (
+                    proposal_id TEXT PRIMARY KEY,
+                    type TEXT NOT NULL,
+                    statement TEXT NOT NULL,
+                    confidence REAL NOT NULL,
+                    evidence TEXT NOT NULL,
+                    status TEXT NOT NULL,
+                    created_at TEXT NOT NULL
+                )
+                """)
 
     def save_proposals(self, envelope: dict):
         # Supporte l'enveloppe versionnée ou une liste brute par rétrocompatibilité
@@ -23,3 +46,4 @@ class ReflectionProposalStore:
                         (prop["proposal_id"], prop["type"], prop["statement"], prop["confidence"], json.dumps(prop["evidence"]), "PENDING")
                     )
         self.event_bus.emit("AuditLog", {"message": f"ReflectionProposalStore : {len(proposals)} propositions (contrat v{envelope.get('version', 'unknown')}) persistées.", "level": "INFO"})
+

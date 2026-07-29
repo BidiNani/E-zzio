@@ -10,7 +10,7 @@ load_dotenv(dotenv_path=ENV_PATH)
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 GATEWAY_SECRET = os.getenv("EZZIO_GATEWAY_SECRET", "ezzio-local-secure-token-2026")
-API_BASE_URL = "http://127.0.0.1:8000"
+API_BASE_URL = "http://127.0.0.1:8001"
 
 if not DISCORD_TOKEN or DISCORD_TOKEN == "ton_token_ici":
     print("⚠️ Avertissement : DISCORD_TOKEN non configuré. Le bot ne pourra pas se connecter.")
@@ -79,3 +79,11 @@ async def on_message(message):
             
             for i in range(0, len(reponse), 2000):
                 await message.channel.send(reponse[i:i+2000])
+
+
+if __name__ == "__main__":
+    if DISCORD_TOKEN and DISCORD_TOKEN != "ton_token_ici":
+        bot.run(DISCORD_TOKEN)
+    else:
+        print("❌ ERREUR FATALE : DISCORD_TOKEN invalide ou non configuré dans secrets/.env")
+

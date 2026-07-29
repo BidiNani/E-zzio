@@ -18,6 +18,9 @@ from runtime.core.version import RUNTIME_VERSION
 from runtime.memory.gateway import MemoryGateway
 from runtime.memory.sleep.consolidator import Consolidator
 from runtime.memory.dream.engine import DreamEngine
+from runtime.memory.reflection.validator import PromotionController
+from runtime.memory.semantic.memory_orchestrator import MemoryOrchestrator
+from runtime.memory.semantic.self_healing_core import SelfHealingMemory
 
 class EzzioRuntime:
     def __init__(self, event_bus, key_manager, budget, policy, registry, auditor, memory_gateway):
@@ -33,10 +36,53 @@ class EzzioRuntime:
 
         # Instanciation explicite des organes de sommeil et de rêve connectés au Store
         self.consolidator = Consolidator(self.event_bus, self.memory_gateway.store)
-        self.dream_engine = DreamEngine(self.event_bus, self.memory_gateway.store)
+        self.dream_engine = DreamEngine(
+            self.event_bus,
+            self.memory_gateway.store
+        )
+
+        self.promotion_controller = PromotionController(
+            self.memory_gateway.store,
+            self.event_bus
+        )
+
+        self.memory_orchestrator = MemoryOrchestrator()
+
+        self.self_healing_memory = SelfHealingMemory()
 
         # Écoute les requêtes autonomes du système (ex: Dream Engine)
-        self.event_bus.subscribe("SystemActionRequested", self._handle_system_action)
+        self.event_bus.subscribe(
+            "SystemActionRequested",
+            self._handle_system_action
+        )
+
+        self.event_bus.subscribe(
+            "ReflectionProposalGenerated",
+            self._handle_reflection_proposals
+        )
+
+    def _handle_reflection_proposals(self, payload: dict):
+        try:
+            self.promotion_controller.evaluate_pending_proposals()
+
+            self.event_bus.emit(
+                "AuditLog",
+                {
+                    "message":
+                    "PromotionController evaluation completed",
+                    "level": "INFO"
+                }
+            )
+
+        except Exception as exc:
+            self.event_bus.emit(
+                "AuditLog",
+                {
+                    "message":
+                    f"Promotion failure: {exc}",
+                    "level": "ERROR"
+                }
+            )
 
     def _handle_system_action(self, payload: dict):
         tool_name = payload.get("tool_name")
@@ -260,4 +306,5 @@ class RuntimeBuilder:
             auditor=self.auditor,
             memory_gateway=self.memory_gateway
         )
+
 
