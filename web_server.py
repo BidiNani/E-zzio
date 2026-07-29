@@ -125,8 +125,22 @@ def health_check():
         "status": "ONLINE",
         "runtime": "v4.0-DynamicModel",
         "model_actif": DEFAULT_MODEL,
-        "gemini_pool_size": len(gemini_keys),
-        "groq_pool_size": len(groq_keys)
+
+        "providers": {
+            "gemini": {
+                "status": "HEALTHY" if len(gemini_keys) > 0 else "DISABLED",
+                "pool_size": len(gemini_keys),
+                "active_index": gemini_manager.current_index
+            },
+
+            "groq": {
+                "status": "READY" if len(groq_keys) > 0 else "DISABLED",
+                "pool_size": len(groq_keys),
+                "active_index": groq_manager.current_index
+            }
+        },
+
+        "fallback_enabled": len(groq_keys) > 0
     }
 
 @app.post("/master/chat")
@@ -225,7 +239,18 @@ Tu es E-ZZIO, un agent autonome de pointe, intelligent, technique et profondéme
                     gemini_manager.rotate_key()
                     await asyncio.sleep(0.5)
                     continue
-                print(f"[!] Erreur Gemini (Tentative {attempt + 1}): {err_str[:100]}")
+                print(
+                    f"[!] ERREUR GEMINI BRUTE "
+                    f"(Tentative {attempt + 1} | Index {gemini_manager.current_index}) : "
+                    f"{err_str}"
+                )
+
+                if attempt < max_retries - 1:
+                    gemini_manager.rotate_key()
+                    await asyncio.sleep(0.5)
+                    continue
+
+                print("[!] Toutes les clés Gemini ont échoué.")
                 break
 
         if not success:
