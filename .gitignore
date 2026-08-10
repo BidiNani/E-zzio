@@ -107,3 +107,13 @@ archive/
 backups/
 quarantine/
 runtime/guardian/
+
+# Ignorer les trous noirs et les sauvegardes lourdes
+_archive/
+_archive_memoire_morte/
+_a_verifier/
+_backups_auto/
+archive/
+backups/
+quarantine/
+runtime/guardian/
