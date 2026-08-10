@@ -334,7 +334,7 @@ def run_action_logic(action: str, params: Optional[Dict[str, Any]] = None) -> Di
         from core.pc_model_router import router_status
         return router_status()
 
-        if action == "scan_ai_ecosystem":
+    if action == "scan_ai_ecosystem":
         import subprocess
         scanner_script = "G:/AI/Bidi_Scanner_v2.ps1"
         if Path(scanner_script).exists():
