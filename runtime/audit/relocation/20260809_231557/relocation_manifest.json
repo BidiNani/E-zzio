@@ -1,0 +1,588 @@
+{
+  "EngineVersion": "6.0",
+  "Timestamp": "2026-08-09T23:16:39.8946793+02:00",
+  "ProjectRoot": "G:\\AI\\E-zzio\\",
+  "SearchRoot": "C:\\Users\\enrik\\",
+  "Mode": "DRY-RUN",
+  "Environment": "UNCHANGED",
+  "ScannedCount": 444410,
+  "CandidateCount": 82,
+  "EffectiveCount": 82,
+  "EntryCount": 82,
+  "Entries": [
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\EZZIO_AUDIT",
+      "Category": "TEMP",
+      "IsDirectory": true,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260803_170043.json",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260803_170043.json",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260803_170043.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260803_170043.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260803_171644.json",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260803_171644.json",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260803_171644.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260803_171644.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260803_172327.json",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260803_172327.json",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260803_172327.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260803_172327.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260803_173434.json",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260803_173434.json",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260803_173434.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260803_173434.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260803_173851.json",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260803_173851.json",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260803_173851.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260803_173851.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260803_183407.json",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260803_183407.json",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260803_183407.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260803_183407.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260803_185652.json",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260803_185652.json",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260803_185652.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260803_185652.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260804_042405.json",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260804_042405.json",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260804_042405.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260804_042405.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260804_151514.json",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260804_151514.json",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260804_151514.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260804_151514.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260804_152021.json",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260804_152021.json",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_AUDIT\\Audit_20260804_152021.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Audit_20260804_152021.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_CHIRURGICAL_VALIDATION",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\EZZIO_CHIRURGICAL_VALIDATION",
+      "Category": "TEMP",
+      "IsDirectory": true,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_CHIRURGICAL_VALIDATION\\EZZIO_CHIRURGICAL_VALIDATION.json",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\EZZIO_CHIRURGICAL_VALIDATION.json",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_FORENSIC_CLEAN",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\EZZIO_FORENSIC_CLEAN",
+      "Category": "TEMP",
+      "IsDirectory": true,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_172452.json",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\forensic_20260809_172452.json",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_172452.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\forensic_20260809_172452.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_174857.json",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\forensic_20260809_174857.json",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_174857.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\forensic_20260809_174857.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_175451.json",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\forensic_20260809_175451.json",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_175451.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\forensic_20260809_175451.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_175840.json",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\forensic_20260809_175840.json",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_175840.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\forensic_20260809_175840.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_183851.json",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\forensic_20260809_183851.json",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_184626.json",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\forensic_20260809_184626.json",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_184626.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\forensic_20260809_184626.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_185850.json",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\forensic_20260809_185850.json",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_185850.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\forensic_20260809_185850.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_GUARDIAN",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\EZZIO_GUARDIAN",
+      "Category": "TEMP",
+      "IsDirectory": true,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_GUARDIAN\\Assainissement_20260806_003842.log",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Assainissement_20260806_003842.log",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_GUARDIAN\\Candidates_20260804_222638.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Candidates_20260804_222638.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_GUARDIAN\\Candidates_20260804_224313.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Candidates_20260804_224313.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_GUARDIAN\\Candidates_Large_20260805_121740.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Candidates_Large_20260805_121740.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_GUARDIAN\\CleanEpure_20260806_000244.log",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\CleanEpure_20260806_000244.log",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_GUARDIAN\\CleanLarge_20260805_121740.log",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\CleanLarge_20260805_121740.log",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_GUARDIAN\\Guardian_20260804_212910.log",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Guardian_20260804_212910.log",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_GUARDIAN\\Guardian_20260804_222638.log",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Guardian_20260804_222638.log",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_GUARDIAN\\GuardianFull_20260804_224313.log",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\GuardianFull_20260804_224313.log",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_GUARDIAN\\Report_20260804_224313.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Report_20260804_224313.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_GUARDIAN\\Report_Large_20260805_121740.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\Report_Large_20260805_121740.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_MEMORY_FORENSIC_20260809_222237",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\EZZIO_MEMORY_FORENSIC_20260809_222237",
+      "Category": "TEMP",
+      "IsDirectory": true,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_MEMORY_FORENSIC_20260809_222237\\01_database_autopsy.py",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\01_database_autopsy.py",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_MEMORY_FORENSIC_20260809_222237\\02_direct_store_test.py",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\02_direct_store_test.py",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_MEMORY_FORENSIC_20260809_222237\\03_message_event_store.py",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\03_message_event_store.py",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_MEMORY_FORENSIC_20260809_222237\\04_working_memory.py",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\04_working_memory.py",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_MEMORY_FORENSIC_20260809_222237\\05_persistence_write.py",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\05_persistence_write.py",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_MEMORY_FORENSIC_20260809_222237\\06_persistence_read.py",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\06_persistence_read.py",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_MEMORY_FORENSIC_20260809_222237\\07_imports.py",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\07_imports.py",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_MEMORY_FORENSIC_20260809_222237\\memory_forensic.txt",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\memory_forensic.txt",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_MEMORY_FORENSIC_20260809_222237\\syntax_runtime_core_message_py.py",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\syntax_runtime_core_message_py.py",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_MEMORY_FORENSIC_20260809_222237\\syntax_runtime_memory___init___py.py",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\syntax_runtime_memory___init___py.py",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_MEMORY_FORENSIC_20260809_222237\\syntax_runtime_memory_events_py.py",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\syntax_runtime_memory_events_py.py",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_MEMORY_FORENSIC_20260809_222237\\syntax_runtime_memory_session_py.py",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\syntax_runtime_memory_session_py.py",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Local\\Temp\\EZZIO_MEMORY_FORENSIC_20260809_222237\\syntax_runtime_memory_sqlite_store_py.py",
+      "Target": "G:\\AI\\E-zzio\\runtime\\temp\\syntax_runtime_memory_sqlite_store_py.py",
+      "Category": "TEMP",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\E-zzio (2).lnk",
+      "Target": "G:\\AI\\E-zzio\\runtime\\external\\ezzio\\E-zzio (2).lnk",
+      "Category": "EXTERNAL",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\E-zzio.lnk",
+      "Target": "G:\\AI\\E-zzio\\runtime\\external\\ezzio\\E-zzio.lnk",
+      "Category": "EXTERNAL",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\EZZIO_CORE_DUMP.txt.lnk",
+      "Target": "G:\\AI\\E-zzio\\runtime\\external\\ezzio\\EZZIO_CORE_DUMP.txt.lnk",
+      "Category": "EXTERNAL",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\EZZIO_Forensic_Clean_v1.ps1.lnk",
+      "Target": "G:\\AI\\E-zzio\\runtime\\external\\ezzio\\EZZIO_Forensic_Clean_v1.ps1.lnk",
+      "Category": "EXTERNAL",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\EZZIO_Forensic_Clean_v2.ps1.lnk",
+      "Target": "G:\\AI\\E-zzio\\runtime\\external\\ezzio\\EZZIO_Forensic_Clean_v2.ps1.lnk",
+      "Category": "EXTERNAL",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\EZZIO_Forensic_Clean_v3.ps1.lnk",
+      "Target": "G:\\AI\\E-zzio\\runtime\\external\\ezzio\\EZZIO_Forensic_Clean_v3.ps1.lnk",
+      "Category": "EXTERNAL",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\EZZIO_Full_Reuse_Audit_v11.ps1.lnk",
+      "Target": "G:\\AI\\E-zzio\\runtime\\external\\ezzio\\EZZIO_Full_Reuse_Audit_v11.ps1.lnk",
+      "Category": "EXTERNAL",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\EZZIO_Full_Reuse_Audit_v12.ps1.lnk",
+      "Target": "G:\\AI\\E-zzio\\runtime\\external\\ezzio\\EZZIO_Full_Reuse_Audit_v12.ps1.lnk",
+      "Category": "EXTERNAL",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\EZZIO_Full_Reuse_Audit_v13.ps1.lnk",
+      "Target": "G:\\AI\\E-zzio\\runtime\\external\\ezzio\\EZZIO_Full_Reuse_Audit_v13.ps1.lnk",
+      "Category": "EXTERNAL",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\EZZIO_FULL_REUSE_AUDIT.ps1.lnk",
+      "Target": "G:\\AI\\E-zzio\\runtime\\external\\ezzio\\EZZIO_FULL_REUSE_AUDIT.ps1.lnk",
+      "Category": "EXTERNAL",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\ezzio_health.ps1.lnk",
+      "Target": "G:\\AI\\E-zzio\\runtime\\external\\ezzio\\ezzio_health.ps1.lnk",
+      "Category": "EXTERNAL",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\ezzio_perfection.py.lnk",
+      "Target": "G:\\AI\\E-zzio\\runtime\\external\\ezzio\\ezzio_perfection.py.lnk",
+      "Category": "EXTERNAL",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\ezzio_tree.txt.lnk",
+      "Target": "G:\\AI\\E-zzio\\runtime\\external\\ezzio\\ezzio_tree.txt.lnk",
+      "Category": "EXTERNAL",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\EZZIO-CodeRelocation.ps1.lnk",
+      "Target": "G:\\AI\\E-zzio\\runtime\\external\\ezzio\\EZZIO-CodeRelocation.ps1.lnk",
+      "Category": "EXTERNAL",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\start_ezzio_daemon_v2.ps1.lnk",
+      "Target": "G:\\AI\\E-zzio\\runtime\\external\\ezzio\\start_ezzio_daemon_v2.ps1.lnk",
+      "Category": "EXTERNAL",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\start_ezzio_daemon.ps1.lnk",
+      "Target": "G:\\AI\\E-zzio\\runtime\\external\\ezzio\\start_ezzio_daemon.ps1.lnk",
+      "Category": "EXTERNAL",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\Start-EzzioBackground.ps1.lnk",
+      "Target": "G:\\AI\\E-zzio\\runtime\\external\\ezzio\\Start-EzzioBackground.ps1.lnk",
+      "Category": "EXTERNAL",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\stop_ezzio.ps1.lnk",
+      "Target": "G:\\AI\\E-zzio\\runtime\\external\\ezzio\\stop_ezzio.ps1.lnk",
+      "Category": "EXTERNAL",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    },
+    {
+      "Source": "C:\\Users\\enrik\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\Sentinelle_Ezzio.lnk",
+      "Target": "G:\\AI\\E-zzio\\runtime\\external\\ezzio\\Sentinelle_Ezzio.lnk",
+      "Category": "EXTERNAL",
+      "IsDirectory": false,
+      "Status": "PLANNED"
+    }
+  ]
+}

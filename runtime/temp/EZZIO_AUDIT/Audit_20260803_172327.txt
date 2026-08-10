@@ -1,0 +1,19 @@
+E-ZZIO STORAGE AUDIT v3.1
+==========================================
+Date        : 08/03/2026 17:17:36
+Root        : G:\
+Durée       : 350,65 sec
+
+Fichiers    : 0
+Dossiers    : 0
+Volume      : 0 B
+
+===== TOP DOSSIERS =====
+
+===== TOP FICHIERS =====
+
+===== DÉTAIL G:\AI =====
+
+===== DOUBLONS (fichiers > 8 Mo) =====
+===== ERREURS =====
+Aucune erreur.

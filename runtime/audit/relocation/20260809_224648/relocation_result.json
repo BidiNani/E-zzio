@@ -1,0 +1,26 @@
+{
+  "EngineVersion": "2.0",
+  "Timestamp": "2026-08-09T22:48:42.6269001+02:00",
+  "ProjectRoot": "G:\\AI\\E-zzio",
+  "UserRoot": "C:\\Users\\enrik",
+  "Execute": false,
+  "EnvironmentConfigured": false,
+  "Candidates": 0,
+  "ValidCandidates": 0,
+  "Moved": 0,
+  "Failed": 0,
+  "Skipped": 0,
+  "Residual": 0,
+  "OverallStatus": "CLEAN",
+  "Manifest": "G:\\AI\\E-zzio\\runtime\\audit\\relocation\\20260809_224648\\relocation_manifest.json",
+  "Log": "G:\\AI\\E-zzio\\runtime\\audit\\relocation\\20260809_224648\\relocation.log",
+  "DestinationMap": {
+    "CODE": "G:\\AI\\E-zzio\\runtime\\external\\ezzio",
+    "CACHE": "G:\\AI\\E-zzio\\runtime\\cache",
+    "PIP_CACHE": "G:\\AI\\E-zzio\\runtime\\cache\\pip",
+    "PYCACHE": "G:\\AI\\E-zzio\\runtime\\cache\\pycache",
+    "TEMP": "G:\\AI\\E-zzio\\runtime\\temp",
+    "VENV": "G:\\AI\\E-zzio\\runtime\\python\\.venv"
+  },
+  "ResidualItems": []
+}

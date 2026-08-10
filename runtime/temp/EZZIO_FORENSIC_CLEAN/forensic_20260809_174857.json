@@ -1,0 +1,94 @@
+{
+  "Validation": "E-ZZIO FORENSIC CLEAN v3",
+  "Mode": "READ_ONLY",
+  "Project": "G:\\AI\\E-zzio",
+  "Python": "G:\\Python312\\python.exe",
+  "MemoryCore": "G:\\AI\\E-zzio\\core\\memory_core.py",
+  "WebServer": null,
+  "MemoryDb": "G:\\AI\\E-zzio\\runtime\\memory\\database\\memory.sqlite3",
+  "Overall": "PASS_WITH_WARNINGS",
+  "Statistics": {
+    "PASS": 10,
+    "FAIL": 0,
+    "WARN": 2,
+    "INFO": 0,
+    "Total": 12
+  },
+  "Started": "2026-08-09T17:48:58.0018158+02:00",
+  "Finished": "2026-08-09T18:11:02.2466366+02:00",
+  "Duration": "00:22:04.2448208",
+  "Results": [
+    {
+      "Id": "ENV-001",
+      "Status": "PASS",
+      "Message": "Projet accessible : G:\\AI\\E-zzio",
+      "Data": null
+    },
+    {
+      "Id": "ENV-002",
+      "Status": "PASS",
+      "Message": "Python 3.12.10",
+      "Data": null
+    },
+    {
+      "Id": "FILE-MEM",
+      "Status": "PASS",
+      "Message": "memory_core.py présent : G:\\AI\\E-zzio\\core\\memory_core.py (2492 octets)",
+      "Data": null
+    },
+    {
+      "Id": "SQLITE",
+      "Status": "PASS",
+      "Message": "Base SQLite retenue : G:\\AI\\E-zzio\\runtime\\memory\\database\\memory.sqlite3 (307200 octets)",
+      "Data": null
+    },
+    {
+      "Id": "PY-MEM",
+      "Status": "PASS",
+      "Message": "memory_core.py : syntaxe Python OK",
+      "Data": null
+    },
+    {
+      "Id": "GUARDIAN",
+      "Status": "PASS",
+      "Message": "Aucun guardian.backup-* dans runtime.",
+      "Data": null
+    },
+    {
+      "Id": "PS-SYNTAX",
+      "Status": "PASS",
+      "Message": "Syntaxe PowerShell valide.",
+      "Data": null
+    },
+    {
+      "Id": "PY-MEM",
+      "Status": "PASS",
+      "Message": "memory_core.py : syntaxe Python OK",
+      "Data": null
+    },
+    {
+      "Id": "PY-WEB",
+      "Status": "WARN",
+      "Message": "Contrôle syntaxique web_server.py ignoré : fichier absent.",
+      "Data": null
+    },
+    {
+      "Id": "HEALTH",
+      "Status": "WARN",
+      "Message": "Démon non joignable sur 127.0.0.1:8001.",
+      "Data": null
+    },
+    {
+      "Id": "GUARDIAN",
+      "Status": "PASS",
+      "Message": "Aucun guardian.backup-* dans runtime.",
+      "Data": null
+    },
+    {
+      "Id": "PS-SYNTAX",
+      "Status": "PASS",
+      "Message": "Syntaxe PowerShell valide.",
+      "Data": null
+    }
+  ]
+}

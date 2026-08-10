@@ -1,0 +1,17 @@
+E-ZZIO FORENSIC CLEAN v3
+MODE : READ_ONLY
+Overall : PASS
+PASS=11 FAIL=0 WARN=0 INFO=1
+Total=12
+[PASS] ENV-001 - Projet accessible : G:\AI\E-zzio
+[PASS] ENV-002 - Python 3.12.10
+[PASS] FILE-MEM - memory_core.py présent : G:\AI\E-zzio\core\memory_core.py (2492 octets)
+[PASS] FILE-WEB-DISCOVERY - web_server.py trouvé : G:\AI\E-zzio\web_server.py (4862 octets)
+[INFO] FILE-WEB-ACTIVE - web_server.py retenu : G:\AI\E-zzio\web_server.py
+[PASS] SQLITE - Base SQLite retenue : G:\AI\E-zzio\runtime\memory\database\memory.sqlite3 (307200 octets)
+[PASS] PY-MEM - memory_core.py : syntaxe Python OK
+[PASS] PY-WEB - web_server.py : syntaxe Python OK
+[PASS] HEALTH - /health HTTP 200
+[PASS] GUARDIAN - Aucun guardian.backup-* dans runtime.
+[PASS] RO-001 - Aucune operation destructive ciblee vers le projet detectee.
+[PASS] PS-SYNTAX - Syntaxe PowerShell valide.

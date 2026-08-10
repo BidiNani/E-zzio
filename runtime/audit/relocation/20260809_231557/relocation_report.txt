@@ -1,0 +1,109 @@
+============================================================
+ E-ZZIO CODE RELOCATION ENGINE v6.0
+============================================================
+
+Timestamp        : 2026-08-09T23:17:55.6610757+02:00
+ProjectRoot      : G:\AI\E-zzio\
+SearchRoot       : C:\Users\enrik\
+Execute          : False
+Environment      : False
+Scanned          : 444410
+Candidates       : 82
+Effective        : 82
+Valid            : 82
+Preflight Fail   : 0
+Moved            : 0
+Failed           : 0
+Skipped          : 0
+Residual         : 82
+Overall Status   : DRY_RUN_READY
+
+-------------------- MOVED --------------------
+
+-------------------- FAILED -------------------
+
+-------------------- SKIPPED ------------------
+
+-------------------- RESIDUAL -----------------
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_170043.json
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_170043.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_171644.json
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_171644.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_172327.json
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_172327.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_173434.json
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_173434.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_173851.json
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_173851.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_183407.json
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_183407.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_185652.json
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_185652.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260804_042405.json
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260804_042405.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260804_151514.json
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260804_151514.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260804_152021.json
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260804_152021.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_CHIRURGICAL_VALIDATION
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_CHIRURGICAL_VALIDATION\EZZIO_CHIRURGICAL_VALIDATION.json
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_172452.json
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_172452.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_174857.json
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_174857.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_175451.json
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_175451.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_175840.json
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_175840.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_183851.json
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_184626.json
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_184626.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_185850.json
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_185850.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\Assainissement_20260806_003842.log
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\Candidates_20260804_222638.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\Candidates_20260804_224313.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\Candidates_Large_20260805_121740.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\CleanEpure_20260806_000244.log
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\CleanLarge_20260805_121740.log
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\Guardian_20260804_212910.log
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\Guardian_20260804_222638.log
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\GuardianFull_20260804_224313.log
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\Report_20260804_224313.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\Report_Large_20260805_121740.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\01_database_autopsy.py
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\02_direct_store_test.py
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\03_message_event_store.py
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\04_working_memory.py
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\05_persistence_write.py
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\06_persistence_read.py
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\07_imports.py
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\memory_forensic.txt
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\syntax_runtime_core_message_py.py
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\syntax_runtime_memory___init___py.py
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\syntax_runtime_memory_events_py.py
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\syntax_runtime_memory_session_py.py
+RESIDUAL | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\syntax_runtime_memory_sqlite_store_py.py
+RESIDUAL | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\E-zzio (2).lnk
+RESIDUAL | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\E-zzio.lnk
+RESIDUAL | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\EZZIO_CORE_DUMP.txt.lnk
+RESIDUAL | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\EZZIO_Forensic_Clean_v1.ps1.lnk
+RESIDUAL | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\EZZIO_Forensic_Clean_v2.ps1.lnk
+RESIDUAL | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\EZZIO_Forensic_Clean_v3.ps1.lnk
+RESIDUAL | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\EZZIO_Full_Reuse_Audit_v11.ps1.lnk
+RESIDUAL | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\EZZIO_Full_Reuse_Audit_v12.ps1.lnk
+RESIDUAL | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\EZZIO_Full_Reuse_Audit_v13.ps1.lnk
+RESIDUAL | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\EZZIO_FULL_REUSE_AUDIT.ps1.lnk
+RESIDUAL | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\ezzio_health.ps1.lnk
+RESIDUAL | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\ezzio_perfection.py.lnk
+RESIDUAL | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\ezzio_tree.txt.lnk
+RESIDUAL | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\EZZIO-CodeRelocation.ps1.lnk
+RESIDUAL | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\start_ezzio_daemon_v2.ps1.lnk
+RESIDUAL | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\start_ezzio_daemon.ps1.lnk
+RESIDUAL | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\Start-EzzioBackground.ps1.lnk
+RESIDUAL | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\stop_ezzio.ps1.lnk
+RESIDUAL | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\Sentinelle_Ezzio.lnk

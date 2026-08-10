@@ -1,0 +1,16 @@
+{
+  "EngineVersion": "2.0",
+  "Timestamp": "2026-08-09T22:48:42.3465154+02:00",
+  "ProjectRoot": "G:\\AI\\E-zzio",
+  "UserRoot": "C:\\Users\\enrik",
+  "Execute": false,
+  "EnvironmentConfigured": false,
+  "DestinationMap": {
+    "CODE": "G:\\AI\\E-zzio\\runtime\\external\\ezzio",
+    "CACHE": "G:\\AI\\E-zzio\\runtime\\cache",
+    "PIP_CACHE": "G:\\AI\\E-zzio\\runtime\\cache\\pip",
+    "PYCACHE": "G:\\AI\\E-zzio\\runtime\\cache\\pycache",
+    "TEMP": "G:\\AI\\E-zzio\\runtime\\temp",
+    "VENV": "G:\\AI\\E-zzio\\runtime\\python\\.venv"
+  }
+}

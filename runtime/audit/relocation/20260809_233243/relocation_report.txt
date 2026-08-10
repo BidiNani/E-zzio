@@ -1,0 +1,34 @@
+============================================================
+ E-ZZIO CODE RELOCATION ENGINE v7.0
+============================================================
+
+STATUS              : CLEAN
+PROJECT ROOT        : G:\AI\E-zzio
+SEARCH ROOT         : C:\Users\enrik
+EXECUTE             : True
+ENVIRONMENT         : True
+ELEMENTS SCANNED    : 444334
+CANDIDATES          : 0
+EFFECTIVE           : 0
+PREFLIGHT FAIL      : 0
+MOVED               : 0
+FAILED              : 0
+SKIPPED             : 0
+RESIDUAL            : 0
+
+-------------------- MOVES --------------------
+
+-------------------- FAILURES --------------------
+
+-------------------- PREFLIGHT --------------------
+
+-------------------- RESIDUAL --------------------
+
+-------------------- DESTINATIONS --------------------
+PYTHON = G:\AI\E-zzio\runtime\python
+EXTERNAL = G:\AI\E-zzio\runtime\external\ezzio
+TOOLS = G:\AI\E-zzio\runtime\tools
+DATA = G:\AI\E-zzio\runtime\data
+CACHE = G:\AI\E-zzio\runtime\cache
+TEMP = G:\AI\E-zzio\runtime\temp
+AUDIT = G:\AI\E-zzio\runtime\audit\relocation

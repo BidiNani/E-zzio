@@ -1,0 +1,681 @@
+{
+  "AuditDate": "2026-08-04T15:13:38.6772237+02:00",
+  "Root": "G:\\",
+  "TotalFiles": 12326,
+  "TotalFolders": 0,
+  "TotalBytes": 2177916059,
+  "RootFolders": [
+    {
+      "Name": "AI",
+      "Path": "G:\\AI",
+      "SizeBytes": 2177908922,
+      "Size": "2,03 GB",
+      "Marker": " <-- contient E-zzio"
+    },
+    {
+      "Name": "Bidi_Context_Report",
+      "Path": "G:\\Bidi_Context_Report",
+      "SizeBytes": 0,
+      "Size": "0 B",
+      "Marker": ""
+    },
+    {
+      "Name": "control",
+      "Path": "G:\\control",
+      "SizeBytes": 0,
+      "Size": "0 B",
+      "Marker": ""
+    },
+    {
+      "Name": "Downloads",
+      "Path": "G:\\Downloads",
+      "SizeBytes": 0,
+      "Size": "0 B",
+      "Marker": ""
+    },
+    {
+      "Name": "Godot",
+      "Path": "G:\\Godot",
+      "SizeBytes": 0,
+      "Size": "0 B",
+      "Marker": ""
+    },
+    {
+      "Name": "Kimi",
+      "Path": "G:\\Kimi",
+      "SizeBytes": 0,
+      "Size": "0 B",
+      "Marker": ""
+    },
+    {
+      "Name": "KimiData",
+      "Path": "G:\\KimiData",
+      "SizeBytes": 0,
+      "Size": "0 B",
+      "Marker": ""
+    },
+    {
+      "Name": "npm-global",
+      "Path": "G:\\npm-global",
+      "SizeBytes": 0,
+      "Size": "0 B",
+      "Marker": ""
+    },
+    {
+      "Name": "Ollama",
+      "Path": "G:\\Ollama",
+      "SizeBytes": 0,
+      "Size": "0 B",
+      "Marker": ""
+    },
+    {
+      "Name": "Python312",
+      "Path": "G:\\Python312",
+      "SizeBytes": 0,
+      "Size": "0 B",
+      "Marker": ""
+    },
+    {
+      "Name": "semantic",
+      "Path": "G:\\semantic",
+      "SizeBytes": 0,
+      "Size": "0 B",
+      "Marker": ""
+    }
+  ],
+  "LargestFolders": [
+    {
+      "Folder": "G:\\",
+      "SizeBytes": 2177915770,
+      "Size": "2,03 GB",
+      "Files": 12325
+    },
+    {
+      "Folder": "G:\\AI",
+      "SizeBytes": 2177908922,
+      "Size": "2,03 GB",
+      "Files": 12316
+    },
+    {
+      "Folder": "G:\\AI\\E-zzio",
+      "SizeBytes": 2177904277,
+      "Size": "2,03 GB",
+      "Files": 12312
+    },
+    {
+      "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15",
+      "SizeBytes": 1152448391,
+      "Size": "1,07 GB",
+      "Files": 12066
+    },
+    {
+      "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups",
+      "SizeBytes": 1138537790,
+      "Size": "1,06 GB",
+      "Files": 7902
+    },
+    {
+      "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309",
+      "SizeBytes": 1119236970,
+      "Size": "1,04 GB",
+      "Files": 7553
+    },
+    {
+      "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\.git",
+      "SizeBytes": 1021202905,
+      "Size": "973,89 MB",
+      "Files": 63
+    },
+    {
+      "Folder": "G:\\AI\\E-zzio\\.git",
+      "SizeBytes": 1021202905,
+      "Size": "973,89 MB",
+      "Files": 63
+    },
+    {
+      "Folder": "G:\\AI\\E-zzio\\.git\\objects",
+      "SizeBytes": 1020884933,
+      "Size": "973,59 MB",
+      "Files": 26
+    },
+    {
+      "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\.git\\objects",
+      "SizeBytes": 1020884933,
+      "Size": "973,59 MB",
+      "Files": 26
+    },
+    {
+      "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\.git\\objects\\pack",
+      "SizeBytes": 1020868314,
+      "Size": "973,58 MB",
+      "Files": 8
+    },
+    {
+      "Folder": "G:\\AI\\E-zzio\\.git\\objects\\pack",
+      "SizeBytes": 1020868314,
+      "Size": "973,58 MB",
+      "Files": 8
+    },
+    {
+      "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui",
+      "SizeBytes": 82401138,
+      "Size": "78,58 MB",
+      "Files": 5324
+    },
+    {
+      "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules",
+      "SizeBytes": 81779923,
+      "Size": "77,99 MB",
+      "Files": 5255
+    },
+    {
+      "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\@rolldown",
+      "SizeBytes": 23498199,
+      "Size": "22,41 MB",
+      "Files": 11
+    },
+    {
+      "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\@rolldown\\binding-win32-x64-msvc",
+      "SizeBytes": 23472506,
+      "Size": "22,39 MB",
+      "Files": 3
+    },
+    {
+      "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\guardian.snapshot.SAFE_COPY.v4.5.0.0",
+      "SizeBytes": 11023257,
+      "Size": "10,51 MB",
+      "Files": 3909
+    },
+    {
+      "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\guardian.snapshot.SAFE_COPY.v4.5.0.0\\backups",
+      "SizeBytes": 10466119,
+      "Size": "9,98 MB",
+      "Files": 3794
+    },
+    {
+      "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\lightningcss-win32-x64-msvc",
+      "SizeBytes": 9514088,
+      "Size": "9,07 MB",
+      "Files": 4
+    },
+    {
+      "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\prettier",
+      "SizeBytes": 8604556,
+      "Size": "8,21 MB",
+      "Files": 56
+    }
+  ],
+  "LargestFiles": [
+    {
+      "File": "G:\\AI\\E-zzio\\.git\\objects\\pack\\pack-fb48d6bb34963a7016b00d3037fd819a857ec34c.pack",
+      "Size": "973,37 MB",
+      "Bytes": 1020647437
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\.git\\objects\\pack\\pack-fb48d6bb34963a7016b00d3037fd819a857ec34c.pack",
+      "Size": "973,37 MB",
+      "Bytes": 1020647437
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\@rolldown\\binding-win32-x64-msvc\\rolldown-binding.win32-x64-msvc.node",
+      "Size": "22,38 MB",
+      "Bytes": 23471616
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\lightningcss-win32-x64-msvc\\lightningcss.win32-x64-msvc.node",
+      "Size": "9,06 MB",
+      "Bytes": 9497600
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\guardian.snapshot.SAFE_COPY.v4.5.0.0\\backups\\robocopy.v4.5.0.0.20260730_184147.log",
+      "Size": "6,18 MB",
+      "Bytes": 6482333
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\robocopy.v4.5.0.0.20260730_184147.log",
+      "Size": "6,18 MB",
+      "Bytes": 6482333
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.v4.5.0.0.20260730_184405\\backups\\robocopy.v4.5.0.0.20260730_184147.log",
+      "Size": "6,18 MB",
+      "Bytes": 6482333
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\.vite\\deps_ssr\\svelte_compiler.js.map",
+      "Size": "2,93 MB",
+      "Bytes": 3070090
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\archive\\final_hardening\\20260729_184004\\current_diff.txt",
+      "Size": "2,58 MB",
+      "Bytes": 2705025
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\archive\\final_hardening\\20260729_184004\\current_diff.txt",
+      "Size": "2,58 MB",
+      "Bytes": 2705025
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\guardian.snapshot.SAFE_COPY.v4.5.0.0\\backups\\robocopy.v4.5.0.0.20260730_184405.log",
+      "Size": "2,47 MB",
+      "Bytes": 2591601
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\robocopy.v4.5.0.0.20260730_184405.log",
+      "Size": "2,47 MB",
+      "Bytes": 2591601
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\guardian_snapshot_certification_v1.json",
+      "Size": "1,65 MB",
+      "Bytes": 1733934
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\.vite\\deps_ssr\\svelte_compiler.js",
+      "Size": "1,57 MB",
+      "Bytes": 1647207
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\data\\action_registry.db",
+      "Size": "1,34 MB",
+      "Bytes": 1409024
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\vite\\dist\\node\\chunks\\node.js",
+      "Size": "1,22 MB",
+      "Bytes": 1274847
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\audit\\filesystem.json",
+      "Size": "1,20 MB",
+      "Bytes": 1256540
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.pre.normalization.20260730_231309\\reports\\cleanup.v1.0.20260730_201815.json",
+      "Size": "1,15 MB",
+      "Bytes": 1200930
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\forge\\outputs\\image_hd\\EZZIO_HD_1920x1080_20260610_011625.png",
+      "Size": "971,80 KB",
+      "Bytes": 995123
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\forge\\outputs\\image_hd\\EZZIO_HD_1920x1080_20260610_011554.png",
+      "Size": "971,80 KB",
+      "Bytes": 995123
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.pre.normalization.20260730_231309\\reports\\guardian.v5.6.1.certification.json",
+      "Size": "900,85 KB",
+      "Bytes": 922471
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\guardian_backups\\guardian_state_20260730_145047\\runtime\\guardian\\repair\\snapshots\\latest\\reports\\guardian.v5.6.1.certification.json",
+      "Size": "900,85 KB",
+      "Bytes": 922471
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\prettier\\plugins\\typescript.js",
+      "Size": "874,24 KB",
+      "Bytes": 895226
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\prettier\\plugins\\typescript.mjs",
+      "Size": "873,56 KB",
+      "Bytes": 894530
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\svelte\\compiler\\index.js",
+      "Size": "828,98 KB",
+      "Bytes": 848876
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\prettier\\plugins\\flow.js",
+      "Size": "676,95 KB",
+      "Bytes": 693192
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\prettier\\plugins\\flow.mjs",
+      "Size": "676,55 KB",
+      "Bytes": 692787
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\prettier\\index.mjs",
+      "Size": "617,00 KB",
+      "Bytes": 631807
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.pre.normalization.20260730_231309\\reports\\hygiene\\guardian.hygiene.fast.20260730_195603.json",
+      "Size": "548,84 KB",
+      "Bytes": 562013
+    },
+    {
+      "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\guardian.snapshot.SAFE_COPY.v4.5.0.0\\heartbeat.log",
+      "Size": "488,73 KB",
+      "Bytes": 500462
+    }
+  ],
+  "AI_Detail": {
+    "Path": "G:\\AI",
+    "TotalFiles": 12317,
+    "TotalBytes": 2177909211,
+    "TotalSize": "2,03 GB",
+    "TopSubFolders": [
+      {
+        "Folder": "G:\\AI\\E-zzio",
+        "SizeBytes": 2177904277,
+        "Size": "2,03 GB",
+        "Files": 12312,
+        "Marker": " <-- PROJET PRINCIPAL (E-zzio)"
+      },
+      {
+        "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15",
+        "SizeBytes": 1152448391,
+        "Size": "1,07 GB",
+        "Files": 12066,
+        "Marker": ""
+      },
+      {
+        "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups",
+        "SizeBytes": 1138537790,
+        "Size": "1,06 GB",
+        "Files": 7902,
+        "Marker": ""
+      },
+      {
+        "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309",
+        "SizeBytes": 1119236970,
+        "Size": "1,04 GB",
+        "Files": 7553,
+        "Marker": ""
+      },
+      {
+        "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\.git",
+        "SizeBytes": 1021202905,
+        "Size": "973,89 MB",
+        "Files": 63,
+        "Marker": ""
+      },
+      {
+        "Folder": "G:\\AI\\E-zzio\\.git",
+        "SizeBytes": 1021202905,
+        "Size": "973,89 MB",
+        "Files": 63,
+        "Marker": ""
+      },
+      {
+        "Folder": "G:\\AI\\E-zzio\\.git\\objects",
+        "SizeBytes": 1020884933,
+        "Size": "973,59 MB",
+        "Files": 26,
+        "Marker": ""
+      },
+      {
+        "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\.git\\objects",
+        "SizeBytes": 1020884933,
+        "Size": "973,59 MB",
+        "Files": 26,
+        "Marker": ""
+      },
+      {
+        "Folder": "G:\\AI\\E-zzio\\.git\\objects\\pack",
+        "SizeBytes": 1020868314,
+        "Size": "973,58 MB",
+        "Files": 8,
+        "Marker": ""
+      },
+      {
+        "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\.git\\objects\\pack",
+        "SizeBytes": 1020868314,
+        "Size": "973,58 MB",
+        "Files": 8,
+        "Marker": ""
+      },
+      {
+        "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui",
+        "SizeBytes": 82401138,
+        "Size": "78,58 MB",
+        "Files": 5324,
+        "Marker": ""
+      },
+      {
+        "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules",
+        "SizeBytes": 81779923,
+        "Size": "77,99 MB",
+        "Files": 5255,
+        "Marker": ""
+      },
+      {
+        "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\@rolldown",
+        "SizeBytes": 23498199,
+        "Size": "22,41 MB",
+        "Files": 11,
+        "Marker": ""
+      },
+      {
+        "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\@rolldown\\binding-win32-x64-msvc",
+        "SizeBytes": 23472506,
+        "Size": "22,39 MB",
+        "Files": 3,
+        "Marker": ""
+      },
+      {
+        "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\guardian.snapshot.SAFE_COPY.v4.5.0.0",
+        "SizeBytes": 11023257,
+        "Size": "10,51 MB",
+        "Files": 3909,
+        "Marker": ""
+      },
+      {
+        "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\guardian.snapshot.SAFE_COPY.v4.5.0.0\\backups",
+        "SizeBytes": 10466119,
+        "Size": "9,98 MB",
+        "Files": 3794,
+        "Marker": ""
+      },
+      {
+        "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\lightningcss-win32-x64-msvc",
+        "SizeBytes": 9514088,
+        "Size": "9,07 MB",
+        "Files": 4,
+        "Marker": ""
+      },
+      {
+        "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\prettier",
+        "SizeBytes": 8604556,
+        "Size": "8,21 MB",
+        "Files": 56,
+        "Marker": ""
+      },
+      {
+        "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\.vite",
+        "SizeBytes": 7302745,
+        "Size": "6,96 MB",
+        "Files": 110,
+        "Marker": ""
+      },
+      {
+        "Folder": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.v4.5.0.0.20260730_184405",
+        "SizeBytes": 7052493,
+        "Size": "6,73 MB",
+        "Files": 117,
+        "Marker": ""
+      }
+    ],
+    "TopFiles": [
+      {
+        "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\.git\\objects\\pack\\pack-fb48d6bb34963a7016b00d3037fd819a857ec34c.pack",
+        "Size": "973,37 MB",
+        "Bytes": 1020647437
+      },
+      {
+        "File": "G:\\AI\\E-zzio\\.git\\objects\\pack\\pack-fb48d6bb34963a7016b00d3037fd819a857ec34c.pack",
+        "Size": "973,37 MB",
+        "Bytes": 1020647437
+      },
+      {
+        "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\@rolldown\\binding-win32-x64-msvc\\rolldown-binding.win32-x64-msvc.node",
+        "Size": "22,38 MB",
+        "Bytes": 23471616
+      },
+      {
+        "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\lightningcss-win32-x64-msvc\\lightningcss.win32-x64-msvc.node",
+        "Size": "9,06 MB",
+        "Bytes": 9497600
+      },
+      {
+        "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\robocopy.v4.5.0.0.20260730_184147.log",
+        "Size": "6,18 MB",
+        "Bytes": 6482333
+      },
+      {
+        "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\guardian.snapshot.SAFE_COPY.v4.5.0.0\\backups\\robocopy.v4.5.0.0.20260730_184147.log",
+        "Size": "6,18 MB",
+        "Bytes": 6482333
+      },
+      {
+        "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.v4.5.0.0.20260730_184405\\backups\\robocopy.v4.5.0.0.20260730_184147.log",
+        "Size": "6,18 MB",
+        "Bytes": 6482333
+      },
+      {
+        "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\.vite\\deps_ssr\\svelte_compiler.js.map",
+        "Size": "2,93 MB",
+        "Bytes": 3070090
+      },
+      {
+        "File": "G:\\AI\\E-zzio\\archive\\final_hardening\\20260729_184004\\current_diff.txt",
+        "Size": "2,58 MB",
+        "Bytes": 2705025
+      },
+      {
+        "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\archive\\final_hardening\\20260729_184004\\current_diff.txt",
+        "Size": "2,58 MB",
+        "Bytes": 2705025
+      },
+      {
+        "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\robocopy.v4.5.0.0.20260730_184405.log",
+        "Size": "2,47 MB",
+        "Bytes": 2591601
+      },
+      {
+        "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\guardian.snapshot.SAFE_COPY.v4.5.0.0\\backups\\robocopy.v4.5.0.0.20260730_184405.log",
+        "Size": "2,47 MB",
+        "Bytes": 2591601
+      },
+      {
+        "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\guardian_snapshot_certification_v1.json",
+        "Size": "1,65 MB",
+        "Bytes": 1733934
+      },
+      {
+        "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\ezzio-ui\\node_modules\\.vite\\deps_ssr\\svelte_compiler.js",
+        "Size": "1,57 MB",
+        "Bytes": 1647207
+      },
+      {
+        "File": "G:\\AI\\E-zzio\\ARCHIVE_CLEANUP_v1.15\\backups\\guardian.snapshot.clean.20260730_231309\\data\\action_registry.db",
+        "Size": "1,34 MB",
+        "Bytes": 1409024
+      }
+    ]
+  },
+  "Extensions": [
+    {
+      "Extension": ".pack",
+      "Count": 4,
+      "SizeBytes": 2041435612,
+      "Size": "1,90 GB"
+    },
+    {
+      "Extension": ".node",
+      "Count": 2,
+      "SizeBytes": 32969216,
+      "Size": "31,44 MB"
+    },
+    {
+      "Extension": ".log",
+      "Count": 102,
+      "SizeBytes": 27900356,
+      "Size": "26,61 MB"
+    },
+    {
+      "Extension": ".js",
+      "Count": 3381,
+      "SizeBytes": 25053950,
+      "Size": "23,89 MB"
+    },
+    {
+      "Extension": ".json",
+      "Count": 4980,
+      "SizeBytes": 9566937,
+      "Size": "9,12 MB"
+    },
+    {
+      "Extension": ".map",
+      "Count": 176,
+      "SizeBytes": 7660356,
+      "Size": "7,31 MB"
+    },
+    {
+      "Extension": ".mjs",
+      "Count": 91,
+      "SizeBytes": 6228181,
+      "Size": "5,94 MB"
+    },
+    {
+      "Extension": ".txt",
+      "Count": 64,
+      "SizeBytes": 5972844,
+      "Size": "5,70 MB"
+    },
+    {
+      "Extension": ".ts",
+      "Count": 739,
+      "SizeBytes": 5050409,
+      "Size": "4,82 MB"
+    },
+    {
+      "Extension": ".db",
+      "Count": 15,
+      "SizeBytes": 2547712,
+      "Size": "2,43 MB"
+    },
+    {
+      "Extension": ".png",
+      "Count": 8,
+      "SizeBytes": 2213475,
+      "Size": "2,11 MB"
+    },
+    {
+      "Extension": ".pyc",
+      "Count": 339,
+      "SizeBytes": 2201469,
+      "Size": "2,10 MB"
+    },
+    {
+      "Extension": ".md",
+      "Count": 234,
+      "SizeBytes": 1964107,
+      "Size": "1,87 MB"
+    },
+    {
+      "Extension": ".py",
+      "Count": 368,
+      "SizeBytes": 1684150,
+      "Size": "1,61 MB"
+    },
+    {
+      "Extension": "(sans extension)",
+      "Count": 247,
+      "SizeBytes": 1154099,
+      "Size": "1,10 MB"
+    }
+  ],
+  "DuplicateFiles": [],
+  "Errors": [],
+  "AccessDenied": [],
+  "IgnoredFolders": []
+}

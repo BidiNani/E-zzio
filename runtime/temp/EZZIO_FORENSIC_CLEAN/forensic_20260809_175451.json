@@ -1,0 +1,94 @@
+{
+  "Validation": "E-ZZIO FORENSIC CLEAN v3.1",
+  "Mode": "READ_ONLY",
+  "Project": "G:\\AI\\E-zzio",
+  "Python": "G:\\Python312\\python.exe",
+  "MemoryCore": "G:\\AI\\E-zzio\\core\\memory_core.py",
+  "WebServer": "G:\\AI\\E-zzio\\web_server.py",
+  "MemoryDb": "G:\\AI\\E-zzio\\runtime\\memory\\database\\memory.sqlite3",
+  "Overall": "FAIL",
+  "Statistics": {
+    "PASS": 9,
+    "FAIL": 1,
+    "WARN": 1,
+    "INFO": 1,
+    "Total": 12
+  },
+  "Started": "2026-08-09T17:54:51.5642985+02:00",
+  "Finished": "2026-08-09T17:57:03.4632269+02:00",
+  "Duration": "00:02:11.8989284",
+  "Results": [
+    {
+      "Id": "ENV-001",
+      "Status": "PASS",
+      "Message": "Projet accessible : G:\\AI\\E-zzio",
+      "Data": null
+    },
+    {
+      "Id": "ENV-002",
+      "Status": "PASS",
+      "Message": "Python 3.12.10",
+      "Data": null
+    },
+    {
+      "Id": "FILE-MEM",
+      "Status": "PASS",
+      "Message": "memory_core.py présent : G:\\AI\\E-zzio\\core\\memory_core.py (2492 octets)",
+      "Data": null
+    },
+    {
+      "Id": "FILE-WEB-DISCOVERY",
+      "Status": "PASS",
+      "Message": "web_server.py trouvé : G:\\AI\\E-zzio\\web_server.py (5058 octets)",
+      "Data": null
+    },
+    {
+      "Id": "FILE-WEB-ACTIVE",
+      "Status": "INFO",
+      "Message": "web_server.py retenu : G:\\AI\\E-zzio\\web_server.py",
+      "Data": null
+    },
+    {
+      "Id": "SQLITE",
+      "Status": "PASS",
+      "Message": "Base SQLite retenue : G:\\AI\\E-zzio\\runtime\\memory\\database\\memory.sqlite3 (307200 octets)",
+      "Data": null
+    },
+    {
+      "Id": "PY-MEM",
+      "Status": "PASS",
+      "Message": "memory_core.py : syntaxe Python OK",
+      "Data": null
+    },
+    {
+      "Id": "PY-WEB",
+      "Status": "FAIL",
+      "Message": "web_server.py : syntaxe invalide. G:\\AI\\E-zzio\\web_server.py:132: SyntaxWarning: invalid escape sequence '\\A'   Get-ChildItem -LiteralPath 'G:\\AI\\E-zzio' -File -Recurse -Force -ErrorAction SilentlyContinue | Traceback (most recent call last):   File \"C:\\Users\\enrik\\AppData\\Local\\Temp\\ezzio_ast_031c90ee282b45ad97a59bc0f5c0c666.py\", line 5, in <module>     ast.parse(source, filename=path)   File \"G:\\Python312\\Lib\\ast.py\", line 52, in parse     return compile(source, filename, mode, flags,            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File \"G:\\AI\\E-zzio\\web_server.py\", line 132     Get-ChildItem -LiteralPath 'G:\\AI\\E-zzio' -File -Recurse -Force -ErrorAction SilentlyContinue |                                ^^^^^^^^^^^^^^ SyntaxError: invalid syntax",
+      "Data": null
+    },
+    {
+      "Id": "HEALTH",
+      "Status": "WARN",
+      "Message": "Démon non joignable sur 127.0.0.1:8001.",
+      "Data": null
+    },
+    {
+      "Id": "GUARDIAN",
+      "Status": "PASS",
+      "Message": "Aucun guardian.backup-* dans runtime.",
+      "Data": null
+    },
+    {
+      "Id": "RO-001",
+      "Status": "PASS",
+      "Message": "Rapports et scripts temporaires uniquement dans TEMP. Projet non modifié.",
+      "Data": null
+    },
+    {
+      "Id": "PS-SYNTAX",
+      "Status": "PASS",
+      "Message": "Syntaxe PowerShell valide.",
+      "Data": null
+    }
+  ]
+}

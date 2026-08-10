@@ -1,0 +1,18 @@
+E-ZZIO FORENSIC CLEAN v1
+Overall : PASS_WITH_WARNINGS
+PASS=9 FAIL=0 WARN=1 INFO=1
+MemoryCore : G:\AI\E-zzio\core\memory_core.py
+WebServer  : G:\AI\E-zzio\web_server.py
+MemoryDb   : G:\AI\E-zzio\runtime\memory\database\memory.sqlite3
+
+[PASS] ENV-001 - Projet OK : G:\AI\E-zzio
+[PASS] ENV-002 - Python 3.12.10
+[PASS] FILE-MEM - memory_core.py présent (2492 octets)
+[PASS] FILE-WEB - Trouvé : G:\AI\E-zzio\web_server.py (4862 octets)
+[PASS] FILE-WEB - Trouvé : G:\AI\E-zzio\archive\backups\web_server_backup_20260806_171245.py (14180 octets)
+[INFO] FILE-WEB-ACTIVE - Fichier retenu : G:\AI\E-zzio\web_server.py
+[PASS] SQLITE - Base : G:\AI\E-zzio\runtime\memory\database\memory.sqlite3 (307200 octets)
+[PASS] PY-MEM - memory_core.py : syntaxe OK
+[PASS] PY-WEB - web_server : syntaxe OK
+[WARN] HEALTH - Démon non joignable sur :8001
+[PASS] GUARDIAN - Aucun guardian.backup-* dans runtime

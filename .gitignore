@@ -99,3 +99,11 @@ _snapshots/
 *.p12
 *.pfx
 
+_archive/
+_archive_memoire_morte/
+_a_verifier/
+_backups_auto/
+archive/
+backups/
+quarantine/
+runtime/guardian/

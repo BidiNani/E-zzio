@@ -1,0 +1,155 @@
+2026-08-09T23:18:37.4830800+02:00 | SECTION | E-ZZIO CODE RELOCATION ENGINE v6.0
+2026-08-09T23:18:37.4836423+02:00 | INFO | PROJECT ROOT : G:\AI\E-zzio\
+2026-08-09T23:18:37.4842013+02:00 | INFO | SEARCH ROOT  : C:\Users\enrik\
+2026-08-09T23:18:37.4848158+02:00 | INFO | MODE         : EXECUTE
+2026-08-09T23:18:37.4853904+02:00 | INFO | ENVIRONMENT  : UNCHANGED
+2026-08-09T23:18:37.4858894+02:00 | INFO | AUDIT ROOT   : G:\AI\E-zzio\runtime\audit\relocation\20260809_231837
+2026-08-09T23:18:37.4863907+02:00 | INFO | LOG          : G:\AI\E-zzio\runtime\audit\relocation\20260809_231837\relocation.log
+2026-08-09T23:18:37.4874426+02:00 | SECTION | 01 — GARANTIES DE SECURITE
+2026-08-09T23:18:37.4888579+02:00 | OK | Projet E-ZZIO protégé contre toute relocalisation interne.
+2026-08-09T23:18:37.4895900+02:00 | OK | Dry-run actif par défaut.
+2026-08-09T23:18:37.4902163+02:00 | INFO | Aucune suppression automatique.
+2026-08-09T23:18:37.4908575+02:00 | INFO | Aucun écrasement automatique.
+2026-08-09T23:18:37.4914339+02:00 | INFO | Aucune modification du contenu du projet.
+2026-08-09T23:18:37.4920589+02:00 | INFO | Toute destination existante est ignorée.
+2026-08-09T23:18:37.4926190+02:00 | INFO | Les déplacements sont validés après opération.
+2026-08-09T23:18:37.4940826+02:00 | SECTION | 02 — RECHERCHE DES ARTEFACTS
+2026-08-09T23:18:37.4946084+02:00 | INFO | SCAN ROOT : C:\Users\enrik\
+2026-08-09T23:18:50.5624796+02:00 | OK | ELEMENTS SCANNES : 444410
+2026-08-09T23:19:21.9520560+02:00 | OK | CANDIDATS DETECTES : 82
+2026-08-09T23:19:21.9538050+02:00 | SECTION | 03 — NORMALISATION DES CANDIDATS
+2026-08-09T23:19:22.0060571+02:00 | OK | CANDIDATS EFFECTIFS : 82
+2026-08-09T23:19:22.0075043+02:00 | SECTION | 04 — CLASSIFICATION
+2026-08-09T23:19:22.0098218+02:00 | OK | CANDIDATS VALIDES : 82
+2026-08-09T23:19:22.0114074+02:00 | SECTION | 05 — CONSTRUCTION DU MANIFESTE
+2026-08-09T23:19:22.0192983+02:00 | OK | MANIFEST : G:\AI\E-zzio\runtime\audit\relocation\20260809_231837\relocation_manifest.json
+2026-08-09T23:19:22.0208898+02:00 | SECTION | 06 — PREFLIGHT
+2026-08-09T23:19:22.0818741+02:00 | OK | PREFLIGHT FAILURES : 0
+2026-08-09T23:19:22.0835947+02:00 | SECTION | 07 — PLAN D'EXECUTION
+2026-08-09T23:19:22.1668264+02:00 | SECTION | 08 — PREPARATION DES DESTINATIONS
+2026-08-09T23:19:22.1704854+02:00 | INFO | EXISTE | G:\AI\E-zzio\runtime\python
+2026-08-09T23:19:22.1718810+02:00 | INFO | EXISTE | G:\AI\E-zzio\runtime\external\ezzio
+2026-08-09T23:19:22.1728962+02:00 | INFO | EXISTE | G:\AI\E-zzio\runtime\tools
+2026-08-09T23:19:22.1740925+02:00 | OK | CREATE | G:\AI\E-zzio\runtime\data
+2026-08-09T23:19:22.1754523+02:00 | INFO | EXISTE | G:\AI\E-zzio\runtime\cache
+2026-08-09T23:19:22.1767065+02:00 | INFO | EXISTE | G:\AI\E-zzio\runtime\temp
+2026-08-09T23:19:22.1779593+02:00 | INFO | EXISTE | G:\AI\E-zzio\runtime\audit\relocation
+2026-08-09T23:19:22.1793024+02:00 | SECTION | 09 — RELOCALISATION
+2026-08-09T23:19:22.2124101+02:00 | OK | MOVE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT -> G:\AI\E-zzio\runtime\temp\EZZIO_AUDIT
+2026-08-09T23:19:22.2136259+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_170043.json
+2026-08-09T23:19:22.2147395+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_170043.txt
+2026-08-09T23:19:22.2158848+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_171644.json
+2026-08-09T23:19:22.2172190+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_171644.txt
+2026-08-09T23:19:22.2182630+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_172327.json
+2026-08-09T23:19:22.2193065+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_172327.txt
+2026-08-09T23:19:22.2204528+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_173434.json
+2026-08-09T23:19:22.2216661+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_173434.txt
+2026-08-09T23:19:22.2226594+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_173851.json
+2026-08-09T23:19:22.2239992+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_173851.txt
+2026-08-09T23:19:22.2252194+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_183407.json
+2026-08-09T23:19:22.2264374+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_183407.txt
+2026-08-09T23:19:22.2275750+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_185652.json
+2026-08-09T23:19:22.2285822+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260803_185652.txt
+2026-08-09T23:19:22.2296258+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260804_042405.json
+2026-08-09T23:19:22.2307189+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260804_042405.txt
+2026-08-09T23:19:22.2324076+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260804_151514.json
+2026-08-09T23:19:22.2335531+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260804_151514.txt
+2026-08-09T23:19:22.2347660+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260804_152021.json
+2026-08-09T23:19:22.2358445+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_AUDIT\Audit_20260804_152021.txt
+2026-08-09T23:19:22.2424934+02:00 | OK | MOVE | C:\Users\enrik\AppData\Local\Temp\EZZIO_CHIRURGICAL_VALIDATION -> G:\AI\E-zzio\runtime\temp\EZZIO_CHIRURGICAL_VALIDATION
+2026-08-09T23:19:22.2728935+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_CHIRURGICAL_VALIDATION\EZZIO_CHIRURGICAL_VALIDATION.json
+2026-08-09T23:19:22.2865093+02:00 | OK | MOVE | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN -> G:\AI\E-zzio\runtime\temp\EZZIO_FORENSIC_CLEAN
+2026-08-09T23:19:22.2878256+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_172452.json
+2026-08-09T23:19:22.2889445+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_172452.txt
+2026-08-09T23:19:22.2899618+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_174857.json
+2026-08-09T23:19:22.2911175+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_174857.txt
+2026-08-09T23:19:22.2930377+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_175451.json
+2026-08-09T23:19:22.2940051+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_175451.txt
+2026-08-09T23:19:22.2950767+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_175840.json
+2026-08-09T23:19:22.2961707+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_175840.txt
+2026-08-09T23:19:22.2971189+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_183851.json
+2026-08-09T23:19:22.2980710+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_184626.json
+2026-08-09T23:19:22.2990426+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_184626.txt
+2026-08-09T23:19:22.3003563+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_185850.json
+2026-08-09T23:19:22.3014945+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_FORENSIC_CLEAN\forensic_20260809_185850.txt
+2026-08-09T23:19:22.3986023+02:00 | OK | MOVE | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN -> G:\AI\E-zzio\runtime\temp\EZZIO_GUARDIAN
+2026-08-09T23:19:22.3999158+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\Assainissement_20260806_003842.log
+2026-08-09T23:19:22.4011248+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\Candidates_20260804_222638.txt
+2026-08-09T23:19:22.4021665+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\Candidates_20260804_224313.txt
+2026-08-09T23:19:22.4034318+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\Candidates_Large_20260805_121740.txt
+2026-08-09T23:19:22.4045653+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\CleanEpure_20260806_000244.log
+2026-08-09T23:19:22.4056111+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\CleanLarge_20260805_121740.log
+2026-08-09T23:19:22.4068171+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\Guardian_20260804_212910.log
+2026-08-09T23:19:22.4078682+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\Guardian_20260804_222638.log
+2026-08-09T23:19:22.4089813+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\GuardianFull_20260804_224313.log
+2026-08-09T23:19:22.4101302+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\Report_20260804_224313.txt
+2026-08-09T23:19:22.4111882+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_GUARDIAN\Report_Large_20260805_121740.txt
+2026-08-09T23:19:22.4236268+02:00 | OK | MOVE | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237 -> G:\AI\E-zzio\runtime\temp\EZZIO_MEMORY_FORENSIC_20260809_222237
+2026-08-09T23:19:22.4246773+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\01_database_autopsy.py
+2026-08-09T23:19:22.4260666+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\02_direct_store_test.py
+2026-08-09T23:19:22.4270316+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\03_message_event_store.py
+2026-08-09T23:19:22.4281542+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\04_working_memory.py
+2026-08-09T23:19:22.4292228+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\05_persistence_write.py
+2026-08-09T23:19:22.4302291+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\06_persistence_read.py
+2026-08-09T23:19:22.4317997+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\07_imports.py
+2026-08-09T23:19:22.4328071+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\memory_forensic.txt
+2026-08-09T23:19:22.4337216+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\syntax_runtime_core_message_py.py
+2026-08-09T23:19:22.4346263+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\syntax_runtime_memory___init___py.py
+2026-08-09T23:19:22.4355691+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\syntax_runtime_memory_events_py.py
+2026-08-09T23:19:22.4365026+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\syntax_runtime_memory_session_py.py
+2026-08-09T23:19:22.4375780+02:00 | FAIL | SOURCE ABSENTE | C:\Users\enrik\AppData\Local\Temp\EZZIO_MEMORY_FORENSIC_20260809_222237\syntax_runtime_memory_sqlite_store_py.py
+2026-08-09T23:19:22.4458616+02:00 | OK | MOVE | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\E-zzio (2).lnk -> G:\AI\E-zzio\runtime\external\ezzio\E-zzio (2).lnk
+2026-08-09T23:19:22.4511443+02:00 | OK | MOVE | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\E-zzio.lnk -> G:\AI\E-zzio\runtime\external\ezzio\E-zzio.lnk
+2026-08-09T23:19:22.4569153+02:00 | OK | MOVE | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\EZZIO_CORE_DUMP.txt.lnk -> G:\AI\E-zzio\runtime\external\ezzio\EZZIO_CORE_DUMP.txt.lnk
+2026-08-09T23:19:22.4625603+02:00 | OK | MOVE | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\EZZIO_Forensic_Clean_v1.ps1.lnk -> G:\AI\E-zzio\runtime\external\ezzio\EZZIO_Forensic_Clean_v1.ps1.lnk
+2026-08-09T23:19:22.4679829+02:00 | OK | MOVE | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\EZZIO_Forensic_Clean_v2.ps1.lnk -> G:\AI\E-zzio\runtime\external\ezzio\EZZIO_Forensic_Clean_v2.ps1.lnk
+2026-08-09T23:19:22.4743862+02:00 | OK | MOVE | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\EZZIO_Forensic_Clean_v3.ps1.lnk -> G:\AI\E-zzio\runtime\external\ezzio\EZZIO_Forensic_Clean_v3.ps1.lnk
+2026-08-09T23:19:22.4801666+02:00 | OK | MOVE | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\EZZIO_Full_Reuse_Audit_v11.ps1.lnk -> G:\AI\E-zzio\runtime\external\ezzio\EZZIO_Full_Reuse_Audit_v11.ps1.lnk
+2026-08-09T23:19:22.4863206+02:00 | OK | MOVE | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\EZZIO_Full_Reuse_Audit_v12.ps1.lnk -> G:\AI\E-zzio\runtime\external\ezzio\EZZIO_Full_Reuse_Audit_v12.ps1.lnk
+2026-08-09T23:19:22.4921842+02:00 | OK | MOVE | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\EZZIO_Full_Reuse_Audit_v13.ps1.lnk -> G:\AI\E-zzio\runtime\external\ezzio\EZZIO_Full_Reuse_Audit_v13.ps1.lnk
+2026-08-09T23:19:22.4986735+02:00 | OK | MOVE | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\EZZIO_FULL_REUSE_AUDIT.ps1.lnk -> G:\AI\E-zzio\runtime\external\ezzio\EZZIO_FULL_REUSE_AUDIT.ps1.lnk
+2026-08-09T23:19:22.5336906+02:00 | OK | MOVE | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\ezzio_health.ps1.lnk -> G:\AI\E-zzio\runtime\external\ezzio\ezzio_health.ps1.lnk
+2026-08-09T23:19:22.5387711+02:00 | OK | MOVE | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\ezzio_perfection.py.lnk -> G:\AI\E-zzio\runtime\external\ezzio\ezzio_perfection.py.lnk
+2026-08-09T23:19:22.5439322+02:00 | OK | MOVE | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\ezzio_tree.txt.lnk -> G:\AI\E-zzio\runtime\external\ezzio\ezzio_tree.txt.lnk
+2026-08-09T23:19:22.5489311+02:00 | OK | MOVE | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\EZZIO-CodeRelocation.ps1.lnk -> G:\AI\E-zzio\runtime\external\ezzio\EZZIO-CodeRelocation.ps1.lnk
+2026-08-09T23:19:22.5534903+02:00 | OK | MOVE | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\start_ezzio_daemon_v2.ps1.lnk -> G:\AI\E-zzio\runtime\external\ezzio\start_ezzio_daemon_v2.ps1.lnk
+2026-08-09T23:19:22.5584845+02:00 | OK | MOVE | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\start_ezzio_daemon.ps1.lnk -> G:\AI\E-zzio\runtime\external\ezzio\start_ezzio_daemon.ps1.lnk
+2026-08-09T23:19:22.5642324+02:00 | OK | MOVE | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\Start-EzzioBackground.ps1.lnk -> G:\AI\E-zzio\runtime\external\ezzio\Start-EzzioBackground.ps1.lnk
+2026-08-09T23:19:22.5708406+02:00 | OK | MOVE | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Recent\stop_ezzio.ps1.lnk -> G:\AI\E-zzio\runtime\external\ezzio\stop_ezzio.ps1.lnk
+2026-08-09T23:19:22.5766923+02:00 | OK | MOVE | C:\Users\enrik\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\Sentinelle_Ezzio.lnk -> G:\AI\E-zzio\runtime\external\ezzio\Sentinelle_Ezzio.lnk
+2026-08-09T23:19:22.5780144+02:00 | SECTION | 10 — ENVIRONNEMENT PYTHON
+2026-08-09T23:19:22.5786498+02:00 | INFO | Configuration environnement désactivée.
+2026-08-09T23:19:22.5800023+02:00 | SECTION | 11 — VALIDATION POST-OPERATION
+2026-08-09T23:19:22.5813993+02:00 | OK | PASS | G:\AI\E-zzio\runtime\temp\EZZIO_AUDIT
+2026-08-09T23:19:22.5827410+02:00 | OK | PASS | G:\AI\E-zzio\runtime\temp\EZZIO_CHIRURGICAL_VALIDATION
+2026-08-09T23:19:22.5838856+02:00 | OK | PASS | G:\AI\E-zzio\runtime\temp\EZZIO_FORENSIC_CLEAN
+2026-08-09T23:19:22.5849382+02:00 | OK | PASS | G:\AI\E-zzio\runtime\temp\EZZIO_GUARDIAN
+2026-08-09T23:19:22.5864412+02:00 | OK | PASS | G:\AI\E-zzio\runtime\temp\EZZIO_MEMORY_FORENSIC_20260809_222237
+2026-08-09T23:19:22.5872833+02:00 | OK | PASS | G:\AI\E-zzio\runtime\external\ezzio\E-zzio (2).lnk
+2026-08-09T23:19:22.5881423+02:00 | OK | PASS | G:\AI\E-zzio\runtime\external\ezzio\E-zzio.lnk
+2026-08-09T23:19:22.5889755+02:00 | OK | PASS | G:\AI\E-zzio\runtime\external\ezzio\EZZIO_CORE_DUMP.txt.lnk
+2026-08-09T23:19:22.5899064+02:00 | OK | PASS | G:\AI\E-zzio\runtime\external\ezzio\EZZIO_Forensic_Clean_v1.ps1.lnk
+2026-08-09T23:19:22.5907542+02:00 | OK | PASS | G:\AI\E-zzio\runtime\external\ezzio\EZZIO_Forensic_Clean_v2.ps1.lnk
+2026-08-09T23:19:22.5916049+02:00 | OK | PASS | G:\AI\E-zzio\runtime\external\ezzio\EZZIO_Forensic_Clean_v3.ps1.lnk
+2026-08-09T23:19:22.5924145+02:00 | OK | PASS | G:\AI\E-zzio\runtime\external\ezzio\EZZIO_Full_Reuse_Audit_v11.ps1.lnk
+2026-08-09T23:19:22.5932776+02:00 | OK | PASS | G:\AI\E-zzio\runtime\external\ezzio\EZZIO_Full_Reuse_Audit_v12.ps1.lnk
+2026-08-09T23:19:22.5941124+02:00 | OK | PASS | G:\AI\E-zzio\runtime\external\ezzio\EZZIO_Full_Reuse_Audit_v13.ps1.lnk
+2026-08-09T23:19:22.5949716+02:00 | OK | PASS | G:\AI\E-zzio\runtime\external\ezzio\EZZIO_FULL_REUSE_AUDIT.ps1.lnk
+2026-08-09T23:19:22.5957953+02:00 | OK | PASS | G:\AI\E-zzio\runtime\external\ezzio\ezzio_health.ps1.lnk
+2026-08-09T23:19:22.5967256+02:00 | OK | PASS | G:\AI\E-zzio\runtime\external\ezzio\ezzio_perfection.py.lnk
+2026-08-09T23:19:22.5976542+02:00 | OK | PASS | G:\AI\E-zzio\runtime\external\ezzio\ezzio_tree.txt.lnk
+2026-08-09T23:19:22.5987379+02:00 | OK | PASS | G:\AI\E-zzio\runtime\external\ezzio\EZZIO-CodeRelocation.ps1.lnk
+2026-08-09T23:19:22.5997407+02:00 | OK | PASS | G:\AI\E-zzio\runtime\external\ezzio\start_ezzio_daemon_v2.ps1.lnk
+2026-08-09T23:19:22.6006844+02:00 | OK | PASS | G:\AI\E-zzio\runtime\external\ezzio\start_ezzio_daemon.ps1.lnk
+2026-08-09T23:19:22.6026501+02:00 | OK | PASS | G:\AI\E-zzio\runtime\external\ezzio\Start-EzzioBackground.ps1.lnk
+2026-08-09T23:19:22.6038541+02:00 | OK | PASS | G:\AI\E-zzio\runtime\external\ezzio\stop_ezzio.ps1.lnk
+2026-08-09T23:19:22.6048796+02:00 | OK | PASS | G:\AI\E-zzio\runtime\external\ezzio\Sentinelle_Ezzio.lnk
+2026-08-09T23:19:22.6062938+02:00 | SECTION | 12 — VERIFICATION ENVIRONNEMENT
+2026-08-09T23:19:22.6068741+02:00 | INFO | ENVIRONMENT CHECK : non demandé.
+2026-08-09T23:19:22.6081352+02:00 | SECTION | 13 — RECHERCHE RESIDUELLE
+2026-08-09T23:20:43.7221766+02:00 | OK | AUCUN ARTEFACT RESIDUEL DETECTE.
+2026-08-09T23:20:43.7240358+02:00 | SECTION | 14 — RESULTAT FINAL
+2026-08-09T23:20:43.7260378+02:00 | OK | RESULT : G:\AI\E-zzio\runtime\audit\relocation\20260809_231837\relocation_result.json
+2026-08-09T23:20:43.7302354+02:00 | OK | REPORT : G:\AI\E-zzio\runtime\audit\relocation\20260809_231837\relocation_report.txt
+2026-08-09T23:20:43.7364184+02:00 | FINAL STATUS | FAILURES_PRESENT
+2026-08-09T23:20:43.7368499+02:00 | SCANNED=444410 CANDIDATES=82 EFFECTIVE=82 VALID=82 PREFLIGHT_FAIL=0 MOVED=24 FAILED=58 SKIPPED=0 RESIDUAL=0

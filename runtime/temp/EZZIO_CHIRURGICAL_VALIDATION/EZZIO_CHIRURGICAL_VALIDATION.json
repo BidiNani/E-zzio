@@ -1,0 +1,191 @@
+{
+  "Validation": "E-ZZIO CHIRURGICAL FORENSIC VALIDATION v1.0",
+  "Mode": "READ_ONLY",
+  "ModificationPerformed": false,
+  "Project": "G:\\AI\\E-zzio",
+  "Started": "2026-08-09T17:09:39.2483040+02:00",
+  "Finished": "2026-08-09T17:11:04.4389567+02:00",
+  "DurationMs": 85190.65,
+  "Summary": {
+    "Overall": "FAIL",
+    "PASS": 14,
+    "FAIL": 2,
+    "WARN": 0,
+    "INFO": 3,
+    "Total": 19
+  },
+  "Hashes": {
+    "G:\\AI\\E-zzio\\core\\memory_core.py": "1729B84E1B9E40D4873A17C28F0D996E9E4D622A92735C2291B5C1369BC40329"
+  },
+  "Results": [
+    {
+      "Id": "ENV-001",
+      "Category": "Environment",
+      "Status": "PASS",
+      "Message": "Projet accessible.",
+      "Data": null
+    },
+    {
+      "Id": "ENV-002",
+      "Category": "Environment",
+      "Status": "PASS",
+      "Message": "Python 3.12 présent.",
+      "Data": null
+    },
+    {
+      "Id": "ENV-004",
+      "Category": "Environment",
+      "Status": "PASS",
+      "Message": "Python 3.12.10",
+      "Data": null
+    },
+    {
+      "Id": "FILE-1",
+      "Category": "Files",
+      "Status": "PASS",
+      "Message": "Présent : G:\\AI\\E-zzio\\core\\memory_core.py (2492 octets)",
+      "Data": null
+    },
+    {
+      "Id": "FILE-2",
+      "Category": "Files",
+      "Status": "FAIL",
+      "Message": "Fichier absent : G:\\AI\\E-zzio\\web\\web_server.py",
+      "Data": null
+    },
+    {
+      "Id": "HASH",
+      "Category": "Integrity",
+      "Status": "PASS",
+      "Message": "SHA256 G:\\AI\\E-zzio\\core\\memory_core.py = 1729B84E1B9E40D4873A17C28F0D996E9E4D622A92735C2291B5C1369BC40329",
+      "Data": "1729B84E1B9E40D4873A17C28F0D996E9E4D622A92735C2291B5C1369BC40329"
+    },
+    {
+      "Id": "PY-COMPILE",
+      "Category": "PythonSyntax",
+      "Status": "PASS",
+      "Message": "Syntaxe valide : G:\\AI\\E-zzio\\core\\memory_core.py",
+      "Data": null
+    },
+    {
+      "Id": "AST",
+      "Category": "PythonAST",
+      "Status": "PASS",
+      "Message": "G:\\AI\\E-zzio\\core\\memory_core.py : AST valide",
+      "Data": "AST_OK\r\nNODES=257"
+    },
+    {
+      "Id": "MEM-STRUCT",
+      "Category": "MemoryCore",
+      "Status": "PASS",
+      "Message": "Classe et méthodes MemoryCore présentes.",
+      "Data": "CLASS=MemoryCore\r\nMETHODS=__init__,_verify_connection,extraire_contexte_recent,injecter_interaction\r\nREQUIRED_METHODS_OK\r\nCALLS=Path,_verify_connection,append,commit,connect,cursor,execute,exists,fetchall,isoformat,utcnow\r\nINSERT_INTERACTIONS=True\r\nSELECT_INTERACTIONS=True\r\nUSER_MESSAGE=True\r\nASSISTANT_RESPONSE=True"
+    },
+    {
+      "Id": "IMPORTS",
+      "Category": "Dependencies",
+      "Status": "PASS",
+      "Message": "Dépendances Python principales disponibles.",
+      "Data": "OK=sqlite3\r\nOK=pathlib\r\nOK=datetime\r\nOK=fastapi\r\nOK=pydantic\r\nOK=google.genai\r\nOK=dotenv\r\nOK=aiohttp"
+    },
+    {
+      "Id": "SQLITE-001",
+      "Category": "SQLite",
+      "Status": "PASS",
+      "Message": "Base présente : 307200 octets",
+      "Data": null
+    },
+    {
+      "Id": "SQLITE-002",
+      "Category": "SQLite",
+      "Status": "PASS",
+      "Message": "SQLite accessible en mode READ ONLY.",
+      "Data": "TABLES=[\"interactions\", \"ledger_audit\", \"sqlite_sequence\"]\r\nINTERACTIONS_COLUMNS=[{\"cid\": 0, \"name\": \"id\", \"type\": \"INTEGER\", \"notnull\": 0, \"default\": null, \"pk\": 1}, {\"cid\": 1, \"name\": \"timestamp\", \"type\": \"TEXT\", \"notnull\": 0, \"default\": null, \"pk\": 0}, {\"cid\": 2, \"name\": \"user_id\", \"type\": \"TEXT\", \"notnull\": 0, \"default\": null, \"pk\": 0}, {\"cid\": 3, \"name\": \"action\", \"type\": \"TEXT\", \"notnull\": 0, \"default\": null, \"pk\": 0}, {\"cid\": 4, \"name\": \"details\", \"type\": \"TEXT\", \"notnull\": 0, \"default\": null, \"pk\": 0}, {\"cid\": 5, \"name\": \"sentiment\", \"type\": \"TEXT\", \"notnull\": 0, \"default\": null, \"pk\": 0}]\r\nSQLITE_READONLY_OK"
+    },
+    {
+      "Id": "SQLITE-COMPAT",
+      "Category": "SQLiteCompatibility",
+      "Status": "PASS",
+      "Message": "Schéma SQLite compatible avec les colonnes utilisées par MemoryCore.",
+      "Data": "DB_COLUMNS=action,details,id,sentiment,timestamp,user_id\r\nCODE_TIMESTAMP=True\r\nCODE_USER_ID=True\r\nCODE_ACTION=True\r\nCODE_DETAILS=True\r\nCODE_SENTIMENT=True\r\nCODE_INTERACTIONS=True\r\nSCHEMA_COMPAT_OK"
+    },
+    {
+      "Id": "REUSE-001",
+      "Category": "FullReuse",
+      "Status": "INFO",
+      "Message": "Répertoires full_reuse : 0",
+      "Data": null
+    },
+    {
+      "Id": "REUSE-002",
+      "Category": "FullReuse",
+      "Status": "INFO",
+      "Message": "Fichiers EZZIO_FULL_REUSE : 7",
+      "Data": [
+        {
+          "Path": "G:\\AI\\E-zzio\\runtime\\audit\\full_reuse\\EZZIO_FULL_REUSE_v13_20260809_164021.json",
+          "Bytes": 153565784,
+          "SHA256": "16345846C96AA6CE108BC8CEC2794C153C4BF4ED23D04F27445D29D4D2828281"
+        },
+        {
+          "Path": "G:\\AI\\E-zzio\\runtime\\audit\\full_reuse\\EZZIO_FULL_REUSE_FILES_v13_20260809_164021.csv",
+          "Bytes": 134796745,
+          "SHA256": "601DA910208664800607C8EF61D1D7E6F1629C53F92983F9B9AEEBC7AACF8AEF"
+        },
+        {
+          "Path": "G:\\AI\\E-zzio\\runtime\\audit\\full_reuse\\EZZIO_FULL_REUSE_v13_20260809_164021.txt",
+          "Bytes": 18928413,
+          "SHA256": "A19C8EA1C378E0A8D8EEBBA09F95208637424EC6152FD572EBD115BD7A2B7108"
+        },
+        {
+          "Path": "G:\\AI\\E-zzio\\tools\\EZZIO_Full_Reuse_Audit_v13.ps1",
+          "Bytes": 31299,
+          "SHA256": "CE4993DB1F15AE964668052091F20713280E9589B5F0E682CECDEC5CE681D0CA"
+        },
+        {
+          "Path": "G:\\AI\\E-zzio\\EZZIO_FULL_REUSE_AUDIT.ps1",
+          "Bytes": 27126,
+          "SHA256": "5672A4D2C78CFF096FC669678447B786672AE2714421336EFB3D0A4BE19BF193"
+        },
+        {
+          "Path": "G:\\AI\\E-zzio\\tools\\EZZIO_Full_Reuse_Audit_v11.ps1",
+          "Bytes": 17036,
+          "SHA256": "F0052711355339DE81576053E8F8BFEEFCB97009AEE6ED078FC32D52C371F474"
+        },
+        {
+          "Path": "G:\\AI\\E-zzio\\tools\\EZZIO_Full_Reuse_Audit_v12.ps1",
+          "Bytes": 15516,
+          "SHA256": "D558B411B3757B520F4577EFD89B961AF4FBAFD84A56D2482F6DB51A0B9085B3"
+        }
+      ]
+    },
+    {
+      "Id": "GUARDIAN-001",
+      "Category": "Guardian",
+      "Status": "PASS",
+      "Message": "Aucun guardian.backup-* dans runtime.",
+      "Data": null
+    },
+    {
+      "Id": "GUARDIAN-002",
+      "Category": "Guardian",
+      "Status": "INFO",
+      "Message": "Archives Guardian présentes : 1",
+      "Data": "G:\\AI\\E-zzio_archive\\guardian_history\\guardian.backup-v1.15-stable-20260801-200603"
+    },
+    {
+      "Id": "HEALTH-001",
+      "Category": "Runtime",
+      "Status": "PASS",
+      "Message": "/health répond HTTP 200.",
+      "Data": "{\"status\":\"online\",\"core\":\"E-zzio Sovereign Master\",\"persona\":\"True E-zzio Active\"}"
+    },
+    {
+      "Id": "RUNTIME-IMPORT",
+      "Category": "RuntimeImport",
+      "Status": "FAIL",
+      "Message": "Échec de l'import réel de web.web_server.",
+      "Data": "Traceback (most recent call last):\r\n  File \"C:\\Users\\enrik\\AppData\\Local\\Temp\\ezzio_runtime_import_891cf1fcdb64424dae625dd4dc7151a7.py\", line 10, in <module>\r\n    import web.web_server as ws\r\nModuleNotFoundError: No module named 'web'"
+    }
+  ]
+}

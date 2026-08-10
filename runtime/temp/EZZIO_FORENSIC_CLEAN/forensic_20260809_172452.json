@@ -1,0 +1,81 @@
+{
+  "Validation": "E-ZZIO FORENSIC CLEAN v1",
+  "Project": "G:\\AI\\E-zzio",
+  "MemoryCore": "G:\\AI\\E-zzio\\core\\memory_core.py",
+  "WebServer": "G:\\AI\\E-zzio\\web_server.py",
+  "MemoryDb": "G:\\AI\\E-zzio\\runtime\\memory\\database\\memory.sqlite3",
+  "Overall": "PASS_WITH_WARNINGS",
+  "PASS": 9,
+  "FAIL": 0,
+  "WARN": 1,
+  "INFO": 1,
+  "Results": [
+    {
+      "Id": "ENV-001",
+      "Status": "PASS",
+      "Message": "Projet OK : G:\\AI\\E-zzio",
+      "Data": null
+    },
+    {
+      "Id": "ENV-002",
+      "Status": "PASS",
+      "Message": "Python 3.12.10",
+      "Data": null
+    },
+    {
+      "Id": "FILE-MEM",
+      "Status": "PASS",
+      "Message": "memory_core.py présent (2492 octets)",
+      "Data": null
+    },
+    {
+      "Id": "FILE-WEB",
+      "Status": "PASS",
+      "Message": "Trouvé : G:\\AI\\E-zzio\\web_server.py (4862 octets)",
+      "Data": null
+    },
+    {
+      "Id": "FILE-WEB",
+      "Status": "PASS",
+      "Message": "Trouvé : G:\\AI\\E-zzio\\archive\\backups\\web_server_backup_20260806_171245.py (14180 octets)",
+      "Data": null
+    },
+    {
+      "Id": "FILE-WEB-ACTIVE",
+      "Status": "INFO",
+      "Message": "Fichier retenu : G:\\AI\\E-zzio\\web_server.py",
+      "Data": null
+    },
+    {
+      "Id": "SQLITE",
+      "Status": "PASS",
+      "Message": "Base : G:\\AI\\E-zzio\\runtime\\memory\\database\\memory.sqlite3 (307200 octets)",
+      "Data": null
+    },
+    {
+      "Id": "PY-MEM",
+      "Status": "PASS",
+      "Message": "memory_core.py : syntaxe OK",
+      "Data": null
+    },
+    {
+      "Id": "PY-WEB",
+      "Status": "PASS",
+      "Message": "web_server : syntaxe OK",
+      "Data": null
+    },
+    {
+      "Id": "HEALTH",
+      "Status": "WARN",
+      "Message": "Démon non joignable sur :8001",
+      "Data": null
+    },
+    {
+      "Id": "GUARDIAN",
+      "Status": "PASS",
+      "Message": "Aucun guardian.backup-* dans runtime",
+      "Data": null
+    }
+  ],
+  "Finished": "2026-08-09T17:26:18.6077570+02:00"
+}
