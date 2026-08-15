@@ -117,3 +117,38 @@ archive/
 backups/
 quarantine/
 runtime/guardian/
+
+# E-ZZIO local/runtime exclusions added 20260815_190845
+# --- E-ZZIO runtime artefacts: never commit ---
+.venv/
+*.py[cod]
+# SQLite runtime databases and sidecar files
+*.sqlite
+*-wal
+*-shm
+# Logs, traces, generated audit outputs
+*.log
+*.jsonl
+runtime/temp/
+runtime/cache/
+runtime/snapshots/
+runtime/audit/telemetry/
+runtime/audit/archive_traces/
+runtime/audit/relocation/
+runtime/audit/post-relocation/
+# Generated backups
+*.bak.*
+*.backup_*
+*_backup.*
+# Local state and message outbox
+runtime/state/
+state/snapshots/
+state/watchdog_last.json
+bridge/outbox/
+# Secrets and local security material
+runtime/security/dpapi_keys/
+runtime/security/dpapi_vault.json
+# Temporary test artifacts
+test_events.jsonl
+test_audio.wav
+concurrency_test.db
