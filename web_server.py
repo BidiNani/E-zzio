@@ -33,6 +33,17 @@ async def lifespan(app: FastAPI):
 # 4. Initialisation de l'API
 app = FastAPI(title="E-ZZIO Sovereign API", version="v2.6-autonomic-tactical-core", lifespan=lifespan)
 
+import uuid
+from fastapi import Request
+
+@app.middleware("http")
+async def correlation_id_middleware(request: Request, call_next):
+    corr_id = request.headers.get("X-Correlation-ID", f"req_{uuid.uuid4().hex[:12]}")
+    request.state.correlation_id = corr_id
+    response = await call_next(request)
+    response.headers["X-Correlation-ID"] = corr_id
+    return response
+
 @app.get("/health")
 async def health_check():
     return {
