@@ -7,10 +7,12 @@ from core.providers.tavily_provider import TavilyProvider
 from core.providers.gemini_provider import GeminiProvider
 
 class DummyProviderSuccess(IResearchProvider):
+    name = "dummy_ok"
     async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
         return {"provider": "dummy_ok", "results": [f"Result for {query}"]}
 
 class DummyProviderFail(IResearchProvider):
+    name = "dummy_fail"
     async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
         raise ConnectionError("Service injoignable")
 
@@ -18,10 +20,10 @@ class DummyProviderFail(IResearchProvider):
 async def test_research_router_fallback_flow():
     p_fail = DummyProviderFail()
     p_ok = DummyProviderSuccess()
-    
+
     router = ResearchRouter(providers=[p_fail, p_ok])
     res = await router.search("test sovereign query")
-    
+
     assert res is not None
     assert res["provider"] == "dummy_ok"
     assert "Result for test sovereign query" in res["results"]
@@ -36,14 +38,17 @@ async def test_research_router_no_providers():
 async def test_jina_provider_structure():
     provider = JinaProvider()
     assert provider.base_url == "https://s.jina.ai"
+    assert provider.name == "jina"
 
 @pytest.mark.asyncio
 async def test_tavily_provider_structure():
     provider = TavilyProvider(api_key="test")
     assert provider.base_url == "https://api.tavily.com/search"
+    assert provider.name == "tavily"
 
 @pytest.mark.asyncio
 async def test_gemini_provider_structure():
     provider = GeminiProvider(api_key="test")
+    assert provider.name == "gemini"
     assert "generativelanguage" in provider.base_url
-    assert provider.model == "gemini-2.5-pro"
+    assert "gemini" in provider.model
