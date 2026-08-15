@@ -1,8 +1,22 @@
-from core.llm_engine import query_model
-from talents.base_talent import BaseTalent
+from typing import Any
+
+from core.llm_engine import query_model_async
+from core.talents.base_talent import BaseTalent
+
 
 class Analyser(BaseTalent):
-    def run(self, data):
-        print(f"--- Analyse en cours via Qwen2.5-Coder ---")
-        prompt = f"Analyse ce contenu de manière concise et utile : {data}"
-        return query_model(prompt, model='qwen2.5-coder:7b')
+    def __init__(self, name: str = "analyser") -> None:
+        super().__init__(name)
+
+    async def run(self, data: Any) -> Any:
+        prompt = (
+            "Analyse le contenu suivant de manière concise, factuelle "
+            "et utile. Signale explicitement les incertitudes.\n\n"
+            f"{data}"
+        )
+
+        return await query_model_async(
+            prompt,
+            organ_key="analysis",
+            speed="normal",
+        )

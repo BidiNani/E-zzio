@@ -152,3 +152,5 @@ runtime/security/dpapi_vault.json
 test_events.jsonl
 test_audio.wav
 concurrency_test.db
+
+tools/voice_converter/.venv/
