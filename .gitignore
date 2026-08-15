@@ -154,3 +154,6 @@ test_audio.wav
 concurrency_test.db
 
 tools/voice_converter/.venv/
+
+runtime/evidence/*.db
+runtime/state/*.db
