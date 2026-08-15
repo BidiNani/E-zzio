@@ -245,9 +245,9 @@ def watchdog_once():
 def mobile_home_html():
     ips = lan_ips()
     local_urls = "".join(
-        f"<li><a href='http://{ip}:8000/status'>http://{ip}:8000/status</a></li>"
-        f"<li><a href='http://{ip}:8000/omni-bridge/mobile/config'>Mobile config {ip}</a></li>"
-        f"<li><a href='http://{ip}:8000/supervisor/mobile-home'>Mobile home {ip}</a></li>"
+        f"<li><a href='http://{ip}:8001/status'>http://{ip}:8001/status</a></li>"
+        f"<li><a href='http://{ip}:8001/omni-bridge/mobile/config'>Mobile config {ip}</a></li>"
+        f"<li><a href='http://{ip}:8001/supervisor/mobile-home'>Mobile home {ip}</a></li>"
         for ip in ips
     )
 
@@ -325,3 +325,4 @@ code {{
 </body>
 </html>
 """.strip()
+

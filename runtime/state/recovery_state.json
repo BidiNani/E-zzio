@@ -1,0 +1,13 @@
+{
+  "failure_window": {
+    "last_failure": null,
+    "first_failure": null,
+    "count": 0
+  },
+  "policy": {
+    "escalation_triggered": false,
+    "cooldown_seconds": 300,
+    "max_failures": 3
+  },
+  "service": "ezzio-api"
+}

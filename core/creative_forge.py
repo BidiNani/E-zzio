@@ -227,7 +227,7 @@ def write_mobile_manifest(app_name: str = "E-ZZIO", app_id: str = "com.ezzio.loc
         "app_name": app_name,
         "app_id": app_id,
         "frontend": "G:/AI/E-zzio/ezzio-ui",
-        "backend": "http://127.0.0.1:8000",
+        "backend": "http://127.0.0.1:8001",
         "cpu_ram_only": True,
         "strategy": "SvelteKit static adapter + Capacitor Android",
         "warning": "L'APK local ne contient pas Ollama + modèles. Il sert d'interface mobile vers l'API E-ZZIO.",
@@ -235,3 +235,4 @@ def write_mobile_manifest(app_name: str = "E-ZZIO", app_id: str = "com.ezzio.loc
     path = MOBILE_ROOT / "mobile_manifest.json"
     path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     return {"ok": True, "path": str(path), "manifest": manifest}
+

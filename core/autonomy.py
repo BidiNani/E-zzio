@@ -14,7 +14,7 @@ REGISTRY_ROOT = PROJECT_ROOT / "registry"
 LOG_ROOT = PROJECT_ROOT / "logs"
 WORKSPACE_ROOT = PROJECT_ROOT / "workspace"
 
-def check_port(host="127.0.0.1", port=8000):
+def check_port(host="127.0.0.1", PORT=8001):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(1)
     try:
@@ -118,7 +118,7 @@ def doctor():
         recommendations.append("Restaurer depuis backups ou relancer le patch global.")
 
     if not port:
-        warnings.append("L'API E-ZZIO ne semble pas écouter sur 127.0.0.1:8000.")
+        warnings.append("L'API E-ZZIO ne semble pas écouter sur 127.0.0.1:8001.")
         recommendations.append("Relancer scripts/start_ezzio.ps1.")
 
     return {
@@ -131,3 +131,5 @@ def doctor():
         "project": project,
         "processes": processes,
     }
+
+

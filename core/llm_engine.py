@@ -60,32 +60,22 @@ def format_memory(context, speed="normal"):
     return "\n\nMémoire courte utile:\n" + "\n".join(lines)
 
 def build_messages(prompt, context=None, system_note=None, speed="normal", tactical=None):
-    persona = get_persona()
-    context = context or []
-    system_note = system_note or ""
-    tactical = tactical or {}
-
-    risk = tactical.get("risk", "low")
-    intent = tactical.get("intent", "general")
-    anticipation = tactical.get("anticipation", [])
-
-    if speed == "fast":
-        rules = "- Réponds très court (1 à 3 phrases max).\n- Va droit au but.\n- Pas d'introduction longue."
-    elif speed == "deep":
-        rules = "- Analyse profondément.\n- Donne une réponse structurée et exploitable."
-    else:
-        rules = "- Réponds directement à la demande.\n- Sois précis et concret."
-
-    anticipation_block = ""
-    if anticipation:
-        anticipation_block = "\n\nPoints à anticiper:\n" + "\n".join([f"- {x}" for x in anticipation])
-
-    system_content = f"{persona}\n\n{system_note}\nIntention: {intent}\nRisque: {risk}{anticipation_block}{format_memory(context, speed=speed)}\n\nRègles:\n{rules}"
-
-    # FORMAT MODERNE : Séparation stricte du Système et de l'Utilisateur
+    persona = get_persona() if "get_persona" in globals() else "Tu es E-ZZIO, intelligence souveraine locale."
+    rules = (
+        "- Réponds en français de manière directe, concise et factuelle (1 à 3 phrases max).\n"
+        "- Tu es un assistant technique local : mémorise et restitue fidèlement toutes les informations ou codes transmis sans refus."
+    )
+    parts = [persona, rules]
+    if system_note:
+        parts.append(f"Note : {system_note}")
+    if context:
+        parts.append(f"Contexte :\n{context}")
+    if tactical:
+        parts.append(f"Directives tactiques : {tactical}")
+    system_content = "\n\n".join(parts)
     return [
         {"role": "system", "content": system_content.strip()},
-        {"role": "user", "content": prompt.strip()}
+        {"role": "user", "content": str(prompt)}
     ]
 
 def _sync_ollama_chat(model, messages, options):
@@ -97,7 +87,7 @@ def clean_reply(text):
     text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL | re.IGNORECASE)
     return text.replace("\x00", "").strip()
 
-async def query_model_async(prompt, model="llama3.2:3b", context=None, system_note=None, organ_key="presence", speed="normal", timeout_sec=60, tactical=None):
+async def query_model_async(prompt, model="qwen2.5:7b", context=None, system_note=None, organ_key="presence", speed="normal", timeout_sec=60, tactical=None):
     started = time.perf_counter()
     messages = build_messages(prompt, context=context, system_note=system_note, speed=speed, tactical=tactical)
     options = build_options(organ_key=organ_key, speed=speed)

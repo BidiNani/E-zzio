@@ -52,7 +52,7 @@ DEFAULTS = {
     "OPENROUTER_API_KEY": "",
     "OPENROUTER_MODEL": "",
     "OPENROUTER_DAILY_LIMIT": "45",
-    "OPENROUTER_SITE_URL": "http://127.0.0.1:8000",
+    "OPENROUTER_SITE_URL": "http://127.0.0.1:8001",
     "OPENROUTER_APP_NAME": "E-ZZIO",
 }
 
@@ -347,7 +347,7 @@ def call_openai_compatible(provider: str, base_url: str, text: str, system: str,
     }
 
     if provider == "openrouter":
-        headers["HTTP-Referer"] = config.get("OPENROUTER_SITE_URL", "http://127.0.0.1:8000")
+        headers["HTTP-Referer"] = config.get("OPENROUTER_SITE_URL", "http://127.0.0.1:8001")
         headers["X-Title"] = config.get("OPENROUTER_APP_NAME", "E-ZZIO")
 
     payload = {
@@ -510,3 +510,4 @@ def route(text: str, provider: str = "auto") -> Dict[str, Any]:
         "providers": providers().get("providers", []),
         "policy": {"local_first": True, "cloud_optional": True, "secret_redaction": True, "no_ads": True, "gpu": "untouched"},
     }
+

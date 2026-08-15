@@ -1,0 +1,6 @@
+{
+  "severity": "WARNING",
+  "count_as_crash": false,
+  "event": "PORT_ALREADY_USED",
+  "timestamp": "2026-08-12T21:02:59Z"
+}

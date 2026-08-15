@@ -1,0 +1,8 @@
+{
+  "version": "v2.6-autonomic-tactical-core",
+  "status": "ONLINE",
+  "service": "ezzio-api",
+  "port": 8001,
+  "pid": 21128,
+  "last_heartbeat": "2026-08-13T17:51:12Z"
+}

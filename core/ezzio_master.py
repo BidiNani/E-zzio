@@ -1,3 +1,4 @@
+from core.memory_vault import check_memory_intent
 import asyncio
 from core.dispatcher import ezzio_dispatcher
 from core.memory import ezzio_memory
@@ -17,6 +18,13 @@ class EzzioMasterOrchestrator:
         self.cloud_chat = cloud_brain_broker.cloud_chat
 
     async def execute_intent(self, user_prompt: str, speed: str = "auto", force_cloud: bool = False):
+        vault_res = check_memory_intent(user_prompt)
+        if vault_res:
+            return {
+                'organ': 'memory_vault',
+                'source': 'Deterministic SQLite',
+                'response': {'response': vault_res, 'text': vault_res, 'model': 'sqlite_vault', 'elapsed_ms': 1}
+            }
         organ_key, organ_info, score, hits = self.dispatcher.select_organ(user_prompt)
         selected_model = self.dispatcher.select_model_for_speed(organ_info, speed)
         
@@ -34,7 +42,7 @@ class EzzioMasterOrchestrator:
             response = await self.dispatcher.route_detailed_async(user_prompt, speed=speed)
             source = f"Ollama Local (Ryzen 9 CPU - {selected_model})"
 
-        self.memory.save_interaction(user_prompt, str(response), organ_key)
+        # self.memory.save_interaction(user_prompt, str(response)  # Désactivé : évite le doublon et l\'injection de str(dict), organ_key)
 
         return {
             "organ": organ_key,

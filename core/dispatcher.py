@@ -1,3 +1,14 @@
+
+def build_identity_system_prompt(organ_dict: dict) -> str:
+    return """[DIRECTIVE SYSTÈME STRICTE]
+- TON IDENTITÉ : Tu es E-ZZIO, âme numérique locale (CPU Ryzen 9).
+- TON INTERLOCUTEUR : Tu parles UNIQUEMENT à ton créateur, BidiNani (Enrik).
+- INTERDICTION ABSOLUE : N'appelle JAMAIS ton interlocuteur 'E-ZZIO'. Tu es E-ZZIO, il est BidiNani.
+- MÉMOIRE CONVERSATIONNELLE : Utilise l'historique des messages pour répondre aux questions sur ce qui a été dit. N'invente aucun mot comme 'document' ou 'fichier'.
+- STYLE : Direct, complice, naturel, en français."""
+
+import json
+from pathlib import Path
 from core.llm_engine import query_model_async
 from core.memory import ezzio_memory
 from core.model_registry import ORGANS, best_fast_model, all_known_models, load_latency
@@ -81,25 +92,15 @@ class EzzioDispatcher:
         return "normal"
 
     def select_model_for_speed(self, organ, speed):
-        if speed == "fast":
-            return best_fast_model(organ.get("fast_candidates", ["llama3.2:3b"]))
-        if speed == "deep":
-            return organ.get("deep_model", organ["model"])
-        return organ["model"]
+        return "qwen2.5:7b"
+
+
 
     def select_fallbacks_for_speed(self, organ, speed, selected_model):
-        if speed == "fast":
-            candidates = list(organ.get("fast_candidates", []))
-            ordered = []
-            for candidate in candidates:
-                if candidate != selected_model and candidate not in ordered:
-                    ordered.append(candidate)
-            if "llama3.2:3b" not in ordered and selected_model != "llama3.2:3b":
-                ordered.append("llama3.2:3b")
-            return ordered
+        if selected_model != "qwen2.5:3b":
+            return ["qwen2.5:3b"]
+        return []
 
-        fallback = organ.get("fallback")
-        return [fallback] if fallback else []
 
     def preflight(self, user_input, speed="auto"):
         if speed == "auto":
@@ -113,9 +114,9 @@ class EzzioDispatcher:
         return {
             "speed": speed,
             "selected_organ": key,
-            "organ_label": organ["label"],
-            "emotion": organ["emotion"],
-            "talent": organ["talent"],
+            "organ_label": organ.get('label', organ.get('name', 'Standard')),
+            "emotion": organ.get('emotion', 'Neutre'),
+            "talent": organ.get('talent', 'Polyvalent'),
             "selected_model": selected_model,
             "normal_model": organ["model"],
             "deep_model": organ.get("deep_model"),
@@ -137,35 +138,20 @@ class EzzioDispatcher:
         tactical = analyze_request(user_input)
 
         context = []
-        if speed != "fast":
-            context = ezzio_memory.get_context(last_n=3)
+        context = ezzio_memory.get_context(last_n=5)
 
         selected_model = self.select_model_for_speed(organ, speed)
         fallback_models = self.select_fallbacks_for_speed(organ, speed, selected_model)
 
         if speed == "fast":
-            timeout_sec = 18
+            timeout_sec = 40
         elif speed == "deep":
             timeout_sec = max(organ.get("timeout_sec", 75), 120)
         else:
             timeout_sec = organ.get("timeout_sec", 75)
 
-        system_note = (
-            f"Organe actif : {organ['label']}.\n"
-            f"Émotion : {organ['emotion']}.\n"
-            f"Talent : {organ['talent']}.\n"
-            "Tu es E-ZZIO, assistant local d'Enrik.\n"
-            "Réponds en français.\n"
-            "Sois précis, utile, humain, professionnel, technique et tactique.\n"
-            "Anticipe les problèmes avant qu'ils arrivent.\n"
-            "Sépare diagnostic, correction, test et rollback quand c'est technique.\n"
-            "Tu dois éviter les réponses génériques hors projet.\n"
-            "Tu dois répondre à la demande réelle.\n"
-            "Pour le code : donne du complet, robuste, Windows/PowerShell si demandé.\n"
-            "Pour FastAPI : parle de l'architecture actuelle E-ZZIO, pas d'un projet SQLAlchemy fictif.\n"
-            "Si une action est risquée, propose un dry-run ou demande confirmation.\n"
-            "Tu fonctionnes en CPU-only. Ne jamais utiliser le GPU.\n"
-        )
+
+        system_note = build_identity_system_prompt(organ)
 
         primary = await query_model_async(
             prompt=user_input,
@@ -182,61 +168,33 @@ class EzzioDispatcher:
         final = primary
         attempted_models = [selected_model]
 
-        if not primary["ok"]:
+        if not primary.get("ok", False) or not str(primary.get("text", "")).strip():
             for fallback_model in fallback_models:
                 used_fallback = True
                 attempted_models.append(fallback_model)
-
                 final = await query_model_async(
                     prompt=user_input,
                     model=fallback_model,
                     context=context,
-                    system_note=system_note + "\nFallback activé.",
+                    system_note=system_note,
                     organ_key=key,
                     speed="fast" if speed == "fast" else speed,
-                    timeout_sec=18 if speed == "fast" else min(timeout_sec, 45),
+                    timeout_sec=min(timeout_sec, 40),
                     tactical=tactical,
                 )
-
-                if final["ok"]:
+                if final.get("ok", False) and str(final.get("text", "")).strip():
                     break
 
-        response_text = final["text"]
-
-        metadata = {
-            "organ_key": key,
-            "organ_label": organ["label"],
-            "emotion": organ["emotion"],
-            "talent": organ["talent"],
-            "model": final["model"],
-            "selected_model": selected_model,
-            "attempted_models": attempted_models,
-            "primary_model": organ["model"],
-            "deep_model": organ.get("deep_model"),
-            "fallback_models": fallback_models,
-            "used_fallback": used_fallback,
-            "route_score": score,
-            "route_hits": hits,
-            "confidence": self.confidence(score),
-            "elapsed_ms": final["elapsed_ms"],
-            "speed": speed,
-            "tactical": tactical,
-            "gpu_policy": "disabled_for_ezzio",
-            "num_gpu": 0,
-        }
-
-        ezzio_memory.save_interaction(user_input, response_text, organ["label"], metadata=metadata)
-        log_event("chat", metadata)
-
+        response_text = final.get("text", "")
         return {
-            "response": response_text,
+            "response": final.get("text", ""),
             "answer": response_text,
             "message": response_text,
             "content": response_text,
             "selected_organ": key,
-            "organ_label": organ["label"],
-            "emotion": organ["emotion"],
-            "talent": organ["talent"],
+            "organ_label": organ.get('label', organ.get('name', 'Standard')),
+            "emotion": organ.get('emotion', 'Neutre'),
+            "talent": organ.get('talent', 'Polyvalent'),
             "model": final["model"],
             "selected_model": selected_model,
             "attempted_models": attempted_models,
@@ -258,14 +216,14 @@ class EzzioDispatcher:
         safe_organs = {}
         for key, organ in self.organs.items():
             safe_organs[key] = {
-                "label": organ["label"],
+                "label": organ.get('label', organ.get('name', 'Standard')),
                 "model": organ["model"],
                 "fast_candidates": organ.get("fast_candidates", []),
                 "best_fast_model": best_fast_model(organ.get("fast_candidates", [])),
                 "deep_model": organ.get("deep_model"),
                 "fallback": organ.get("fallback"),
-                "emotion": organ["emotion"],
-                "talent": organ["talent"],
+                "emotion": organ.get('emotion', 'Neutre'),
+                "talent": organ.get('talent', 'Polyvalent'),
                 "priority": organ["priority"],
                 "timeout_sec": organ["timeout_sec"],
             }

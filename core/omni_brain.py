@@ -39,7 +39,7 @@ for key, value in CPU_ONLY_ENV.items():
 
 FAST_MODEL = "qwen3:1.7b"
 COMPANION_MODEL = "hermes3:8b"
-LOCAL_BASE = "http://127.0.0.1:8000"
+LOCAL_BASE = "http://127.0.0.1:8001"
 
 PROJECT_LEXICON = """
 Lexique E-ZZIO :
@@ -157,15 +157,15 @@ def mobile_config():
     for ip in ips:
         urls.append({
             "host": ip,
-            "base_url": f"http://{ip}:8000",
-            "status": f"http://{ip}:8000/status",
-            "router_status": f"http://{ip}:8000/router-status",
-            "mobile_pull": f"http://{ip}:8000/omni/mobile/pull",
-            "mobile_inbox": f"http://{ip}:8000/omni/mobile/inbox",
-            "omni_reply": f"http://{ip}:8000/omni-bridge/reply",
-            "mobile_reply": f"http://{ip}:8000/omni-bridge/mobile/reply",
-            "commands": f"http://{ip}:8000/omni-bridge/commands",
-            "truth": f"http://{ip}:8000/omni-bridge/truth",
+            "base_url": f"http://{ip}:8001",
+            "status": f"http://{ip}:8001/status",
+            "router_status": f"http://{ip}:8001/router-status",
+            "mobile_pull": f"http://{ip}:8001/omni/mobile/pull",
+            "mobile_inbox": f"http://{ip}:8001/omni/mobile/inbox",
+            "omni_reply": f"http://{ip}:8001/omni-bridge/reply",
+            "mobile_reply": f"http://{ip}:8001/omni-bridge/mobile/reply",
+            "commands": f"http://{ip}:8001/omni-bridge/commands",
+            "truth": f"http://{ip}:8001/omni-bridge/truth",
         })
 
     return {
@@ -278,7 +278,7 @@ def local_vision_status_payload():
 
 def _get_json(path: str, timeout: int = 8):
     """
-    v2.11.5 : évite les appels HTTP internes à 127.0.0.1:8000 depuis une requête API,
+    v2.11.5 : évite les appels HTTP internes à 127.0.0.1:8001 depuis une requête API,
     car un seul worker peut provoquer un auto-deadlock/timeout.
     """
     if path == "/status":
@@ -612,4 +612,6 @@ def bridge_status():
             "secrets": str(SECRETS_FILE),
         },
     }
+
+
 
