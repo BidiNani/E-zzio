@@ -4,6 +4,8 @@ from typing import Any, Dict, List, Optional
 from core.router.intent_router import IntentRouter, IntentType
 from core.memory.unified_gateway import UnifiedMemoryGateway
 from core.decision_router import DecisionRouter, SearchMode
+from core.security.guardrail import PromptGuard, SecurityViolationError
+from core.security.quota_manager import QuotaManager, QuotaExceededError
 from core.providers.ollama_provider import OllamaProvider
 from core.providers.tavily_provider import TavilyProvider
 from core.providers.jina_provider import JinaProvider
@@ -22,7 +24,7 @@ class EzzioPersona:
         )
 
 class EzzioCore:
-    """Noyau central universel d'E-ZZIO avec pipeline cognitif autonome."""
+    """Noyau central universel d'E-ZZIO avec sécurité micro-noyau et repli souverain."""
 
     def __init__(
         self,
@@ -30,13 +32,17 @@ class EzzioCore:
         recovery: Optional[Any] = None,
         memory_gateway: Optional[UnifiedMemoryGateway] = None,
         intent_router: Optional[IntentRouter] = None,
-        decision_router: Optional[DecisionRouter] = None
+        decision_router: Optional[DecisionRouter] = None,
+        prompt_guard: Optional[PromptGuard] = None,
+        quota_manager: Optional[QuotaManager] = None
     ):
         self.telemetry = telemetry
         self.recovery = recovery
         self.persona = EzzioPersona()
         self.memory = memory_gateway or UnifiedMemoryGateway("runtime/evidence/evidence.db")
         self.intent_router = intent_router or IntentRouter()
+        self.guard = prompt_guard or PromptGuard()
+        self.quota_manager = quota_manager or QuotaManager("runtime/evidence/evidence.db")
 
         if decision_router:
             self.decision_router = decision_router
@@ -49,22 +55,25 @@ class EzzioCore:
             ])
 
     async def init(self) -> None:
-        """Initialise la base de mémoire et de preuves (WAL)."""
+        """Initialise la mémoire persistante et le registre de quotas."""
         await self.memory.init()
+        await self.quota_manager.init()
 
     async def think(self, user_id: str, message: str, session_id: Optional[str] = None) -> Dict[str, Any]:
-        """Pipeline cognitif autonome complet."""
+        """Pipeline cognitif autonome sécurisé avec repli local déterministe."""
+        # 1. Filtrage et assainissement anti-injection
+        sanitized_message = self.guard.sanitize(message)
         effective_session = session_id or f"sess_{user_id}"
 
-        # 1. Persistance message utilisateur
-        await self.memory.record_message(effective_session, "user", message)
+        # 2. Enregistrement du message utilisateur
+        await self.memory.record_message(effective_session, "user", sanitized_message)
 
-        # 2. Récupération contexte récent
+        # 3. Récupération du contexte récent
         history = await self.memory.get_session_history(effective_session, limit=6)
         history_text = "\n".join([f"{m['role']}: {m['content']}" for m in history[:-1]])
 
-        # 3. Détection d'intention
-        classification = self.intent_router.classify(message)
+        # 4. Classification d'intention
+        classification = self.intent_router.classify(sanitized_message)
         intent = classification.get("intent", IntentType.LOCAL_CHAT)
 
         system_prompt = self.persona.get_system_prompt()
@@ -73,9 +82,9 @@ class EzzioCore:
         mode_used = "local"
         extra_data = {}
 
-        # 4. Branchement d'exécution selon l'intention
+        # 5. Routage gouverné avec contrôle de quotas et repli local
         if intent == IntentType.MEMORY_QUERY:
-            mem_results = await self.memory.search_memory(message, limit=5)
+            mem_results = await self.memory.search_memory(sanitized_message, limit=5)
             extra_data = mem_results
             evidences = mem_results.get("evidences", [])
             chat_hist = mem_results.get("chat_history", [])
@@ -89,7 +98,7 @@ class EzzioCore:
 
             synth_prompt = (
                 f"{system_prompt}\n\n"
-                f"Question mémoire:\n'{message}'\n\n"
+                f"Question mémoire:\n'{sanitized_message}'\n\n"
                 f"Données mémoire:\n{context_summary}\n\n"
                 "Synthétise les faits retrouvés."
             )
@@ -99,41 +108,60 @@ class EzzioCore:
             mode_used = "memory_recall"
 
         elif intent == IntentType.WEB_SEARCH:
-            search_res = await self.decision_router.search(message, mode=SearchMode.FAST)
+            try:
+                await self.quota_manager.check_and_increment(user_id, "tavily")
+                search_res = await self.decision_router.search(sanitized_message, mode=SearchMode.FAST)
+                used_provider = search_res.get("provider", "tavily")
+                mode_used = "web_search"
+            except QuotaExceededError:
+                # Repli local si quota web dépassé
+                search_res = await self.decision_router.search(sanitized_message, mode=SearchMode.LOCAL)
+                used_provider = search_res.get("provider", "ollama")
+                mode_used = "local_search_fallback"
+
             results = search_res.get("data", {}).get("results", [])
-            used_provider = search_res.get("provider", "tavily")
-            mode_used = "web_search"
             extra_data = search_res.get("data", {})
 
             context_web = "\n".join([f"- {r.get('title')}: {r.get('url')} | {r.get('content', '')[:120]}" for r in results[:4]])
             synth_prompt = (
                 f"{system_prompt}\n\n"
-                f"Question: {message}\n\n"
-                f"Résultats Web ({used_provider}):\n{context_web}\n\n"
+                f"Question: {sanitized_message}\n\n"
+                f"Données de contexte ({used_provider}):\n{context_web}\n\n"
                 "Synthétise une réponse directe."
             )
             synth_res = await self.decision_router.search(synth_prompt, mode=SearchMode.LOCAL)
             response_text = synth_res.get("data", {}).get("text", "")
             if not response_text:
-                response_text = f"Recherche complétée ({len(results)} résultats trouvés via {used_provider})."
+                response_text = f"Recherche terminée via {used_provider}."
 
         elif intent == IntentType.DEEP_REASONING:
-            full_prompt = f"{system_prompt}\n\nHistorique:\n{history_text}\n\nDemande:\n{message}"
-            res = await self.decision_router.search(full_prompt, mode=SearchMode.GOOGLE)
-            response_text = res.get("data", {}).get("text", "")
-            used_provider = res.get("provider", "gemini")
-            mode_used = "deep_reasoning"
-            extra_data = res.get("data", {})
+            try:
+                await self.quota_manager.check_and_increment(user_id, "gemini")
+                full_prompt = f"{system_prompt}\n\nHistorique:\n{history_text}\n\nDemande:\n{sanitized_message}"
+                res = await self.decision_router.search(full_prompt, mode=SearchMode.GOOGLE)
+                response_text = res.get("data", {}).get("text", "")
+                used_provider = res.get("provider", "gemini")
+                mode_used = "deep_reasoning"
+                extra_data = res.get("data", {})
+            except QuotaExceededError:
+                # Repli souverain TIER-1 en cas d'épuisement du quota Cloud
+                full_prompt = f"{system_prompt}\n\nHistorique:\n{history_text}\n\nDemande:\n{sanitized_message}"
+                res = await self.decision_router.search(full_prompt, mode=SearchMode.LOCAL)
+                response_text = res.get("data", {}).get("text", "")
+                used_provider = res.get("provider", "ollama")
+                mode_used = "local_fallback"
+                extra_data = res.get("data", {})
 
         else:  # LOCAL_CHAT
-            full_prompt = f"{system_prompt}\n\nHistorique:\n{history_text}\n\nMessage:\n{message}"
+            await self.quota_manager.check_and_increment(user_id, "ollama")
+            full_prompt = f"{system_prompt}\n\nHistorique:\n{history_text}\n\nMessage:\n{sanitized_message}"
             res = await self.decision_router.search(full_prompt, mode=SearchMode.LOCAL)
             response_text = res.get("data", {}).get("text", "")
             used_provider = res.get("provider", "ollama")
             mode_used = "local_chat"
             extra_data = res.get("data", {})
 
-        # 5. Persistance de la réponse générée
+        # 6. Persistance de la réponse générée avec métadonnées d'audit
         await self.memory.record_message(
             effective_session,
             "assistant",
