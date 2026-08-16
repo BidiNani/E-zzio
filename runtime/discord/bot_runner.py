@@ -1,22 +1,31 @@
-import sys
-import os
-from pathlib import Path
-
-# Résolution garantie de la racine du projet quel que soit le dossier de lancement
-ROOT_DIR = Path(__file__).resolve().parent.parent.parent
-if str(ROOT_DIR) not in sys.path:
-    sys.path.insert(0, str(ROOT_DIR))
-
 import asyncio
+import os
+import sys
+import logging
+from pathlib import Path
+from dotenv import load_dotenv
 import discord
 from discord.ext import commands
+
+sys.path.insert(0, os.getcwd())
+
 from core.secrets import load_secrets
 
-load_secrets()
-token = os.getenv("DISCORD_BOT_TOKEN") or os.getenv("DISCORD_TOKEN")
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
+logger = logging.getLogger("ezzio.discord")
 
-if not token:
-    raise RuntimeError("DISCORD_BOT_TOKEN absent de secrets/.env ou variables d'environnement")
+# 1. Chargement standardisé + fallback direct sur secrets/.env et .env
+load_secrets()
+env_path = Path("secrets/.env")
+if env_path.exists():
+    load_dotenv(dotenv_path=env_path, override=True)
+load_dotenv(dotenv_path=".env", override=False)
+
+TOKEN = os.getenv("DISCORD_BOT_TOKEN") or os.getenv("DISCORD_TOKEN")
+
+if not TOKEN:
+    logger.error("Aucun token Discord trouvé (vérifie DISCORD_BOT_TOKEN ou DISCORD_TOKEN dans secrets/.env).")
+    sys.exit(1)
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -25,36 +34,21 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
 async def on_ready():
-    print("==================================================")
-    print(f"[OK] Bot Discord connecté : {bot.user.name} (ID: {bot.user.id})")
-    print("[*] Chargement dynamique des cogs...")
-    
-    cogs_dir = ROOT_DIR / "runtime" / "discord" / "cogs"
-    if cogs_dir.exists():
-        for file in cogs_dir.glob("*.py"):
-            if not file.name.startswith("__"):
-                extension_name = f"runtime.discord.cogs.{file.stem}"
-                try:
-                    await bot.load_extension(extension_name)
-                    print(f"     [+] Cog chargé : {file.stem}")
-                except Exception as e:
-                    print(f"     [-] Erreur sur {file.stem} : {e}")
-
-    # Synchronisation des commandes slash
-    print("[*] Synchronisation de l'arbre des commandes slash (/)...")
+    logger.info(f"Connecté en tant que {bot.user} (ID: {bot.user.id})")
     try:
-        synced = await bot.tree.sync()
-        print(f"[OK] {len(synced)} commande(s) slash enregistrée(s) :")
-        for cmd in synced:
-            print(f"     - /{cmd.name} : {cmd.description}")
-    except Exception as e:
-        print(f"[ERREUR] Échec de la synchronisation slash : {e}")
+        # Chargement des Cogs
+        await bot.load_extension("runtime.discord.cogs.chat")
+        await bot.load_extension("runtime.discord.cogs.research")
         
-    print("==================================================")
+        # Synchronisation globale de l'arbre slash commands (/chat, /research, /recall)
+        synced = await bot.tree.sync()
+        logger.info(f"[OK] Arbre synchronisé : {len(synced)} commande(s) active(s) -> {[c.name for c in synced]}")
+    except Exception as e:
+        logger.error(f"[ERREUR] Échec chargement/sync : {e}", exc_info=True)
 
 async def main():
     async with bot:
-        await bot.start(token)
+        await bot.start(TOKEN)
 
 if __name__ == "__main__":
     asyncio.run(main())

@@ -16,14 +16,14 @@ class UnifiedMemoryGateway:
         self.evidence_store = EvidenceStore(db_path)
 
     async def init(self):
-        """Initialisation des tables relationnelles, virtuelles FTS5 et triggers."""
+        """Initialisation et migration automatique des tables et index FTS5."""
         await self.evidence_store.init()
         
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute("PRAGMA journal_mode = WAL;")
             await db.execute("PRAGMA synchronous = NORMAL;")
             
-            # Table relationnelle des messages
+            # 1. Création de base de la table si absente
             await db.execute("""
                 CREATE TABLE IF NOT EXISTS session_messages (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -34,9 +34,23 @@ class UnifiedMemoryGateway:
                     timestamp TEXT NOT NULL
                 );
             """)
+
+            # 2. Migration automatique si la table existe sans metadata ou timestamp
+            cursor = await db.execute("PRAGMA table_info(session_messages);")
+            columns = [row[1] for row in await cursor.fetchall()]
+            
+            if "metadata" not in columns:
+                await db.execute("ALTER TABLE session_messages ADD COLUMN metadata TEXT;")
+                logger.info("[MIGRATION] Colonne 'metadata' ajoutée à session_messages.")
+                
+            if "timestamp" not in columns:
+                now_fallback = datetime.now(timezone.utc).isoformat()
+                await db.execute(f"ALTER TABLE session_messages ADD COLUMN timestamp TEXT DEFAULT '{now_fallback}';")
+                logger.info("[MIGRATION] Colonne 'timestamp' ajoutée à session_messages.")
+
             await db.execute("CREATE INDEX IF NOT EXISTS idx_sess_id ON session_messages(session_id);")
 
-            # Table virtuelle FTS5 pour recherche plein texte BM25
+            # 3. Table virtuelle FTS5 BM25
             await db.execute("""
                 CREATE VIRTUAL TABLE IF NOT EXISTS session_messages_fts USING fts5(
                     content,
@@ -45,7 +59,7 @@ class UnifiedMemoryGateway:
                 );
             """)
 
-            # Triggers de synchronisation FTS5
+            # 4. Triggers de synchronisation FTS5
             await db.execute("""
                 CREATE TRIGGER IF NOT EXISTS trg_msg_insert AFTER INSERT ON session_messages BEGIN
                     INSERT INTO session_messages_fts(rowid, content) VALUES (new.id, new.content);
@@ -57,7 +71,7 @@ class UnifiedMemoryGateway:
                 END;
             """)
 
-            # Synchronisation initiale de l'index FTS5 si vide
+            # Synchronisation de l'index FTS5 si nécessaire
             cur = await db.execute("SELECT COUNT(*) FROM session_messages_fts;")
             fts_count = (await cur.fetchone())[0]
             cur_real = await db.execute("SELECT COUNT(*) FROM session_messages;")
@@ -106,14 +120,12 @@ class UnifiedMemoryGateway:
             return results
 
     async def search_memory(self, query: str, limit: int = 5) -> Dict[str, List[Dict[str, Any]]]:
-        """Recherche plein texte FTS5 optimisée (avec fallback LIKE pour la robustesse)."""
         clean_q = re.sub(r'[^\w\s]', ' ', query).strip()
         fts_query = " OR ".join([f'"{word}"*' for word in clean_q.split() if len(word) > 1])
         
         async with aiosqlite.connect(self.db_path) as db:
             db.row_factory = aiosqlite.Row
             
-            # Recherche dans Evidence
             pattern = f"%{query}%"
             cur_ev = await db.execute(
                 "SELECT id, provider, mode, query, task_id, created_at FROM evidence WHERE query LIKE ? ORDER BY id DESC LIMIT ?;",
@@ -121,7 +133,6 @@ class UnifiedMemoryGateway:
             )
             evidences = [dict(r) for r in await cur_ev.fetchall()]
 
-            # Recherche plein texte FTS5 sur Messages
             messages = []
             if fts_query:
                 try:
@@ -137,7 +148,6 @@ class UnifiedMemoryGateway:
                 except Exception:
                     messages = []
 
-            # Repli déterministe LIKE si FTS5 ne remonte rien
             if not messages:
                 cur_msg = await db.execute(
                     "SELECT id, session_id, role, content, metadata, timestamp FROM session_messages WHERE content LIKE ? ORDER BY id DESC LIMIT ?;",
