@@ -1,47 +1,76 @@
+import json
 import aiosqlite
-from pathlib import Path
 from typing import Any, Dict, List, Optional
-from datetime import datetime, timezone
 
 class EvidenceStore:
     def __init__(self, db_path: str = "runtime/evidence/evidence.db"):
-        self.db_path = Path(db_path)
-        self.db_path.parent.mkdir(parents=True, exist_ok=True)
-    
-    async def init(self):
+        self.db_path = db_path
+
+    async def init(self) -> None:
         async with aiosqlite.connect(self.db_path) as db:
+            await db.execute("PRAGMA journal_mode=WAL;")
             await db.execute("""
                 CREATE TABLE IF NOT EXISTS evidence (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     query TEXT NOT NULL,
                     provider TEXT NOT NULL,
                     mode TEXT NOT NULL,
-                    data TEXT NOT NULL,
-                    created_at TEXT NOT NULL,
+                    data JSON NOT NULL,
                     task_id TEXT,
                     user_id TEXT,
-                    channel_id TEXT
-                )
+                    channel_id TEXT,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
             """)
+            await db.execute("CREATE INDEX IF NOT EXISTS idx_query ON evidence(query);")
             await db.commit()
-    
-    async def store(self, query: str, provider: str, mode: str, data: Any, 
-                    task_id: str = None, user_id: str = None, channel_id: str = None):
+
+    async def store(self, query: str, provider: str, mode: str, data: Dict[str, Any],
+                    task_id: Optional[str] = None, user_id: Optional[str] = None,
+                    channel_id: Optional[str] = None) -> int:
         async with aiosqlite.connect(self.db_path) as db:
-            await db.execute(
-                """INSERT INTO evidence (query, provider, mode, data, created_at, task_id, user_id, channel_id)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
-                (query, provider, mode, str(data), datetime.now(timezone.utc).isoformat(), 
-                 task_id, user_id, channel_id)
+            cursor = await db.execute(
+                """
+                INSERT INTO evidence (query, provider, mode, data, task_id, user_id, channel_id)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                """,
+                (query, provider, mode, json.dumps(data), task_id, user_id, channel_id)
             )
             await db.commit()
-    
+            return cursor.lastrowid
+
     async def get_by_task(self, task_id: str) -> List[Dict[str, Any]]:
         async with aiosqlite.connect(self.db_path) as db:
             db.row_factory = aiosqlite.Row
+            cursor = await db.execute("SELECT * FROM evidence WHERE task_id = ? ORDER BY id DESC", (task_id,))
+            rows = await cursor.fetchall()
+            results = []
+            for r in rows:
+                item = dict(r)
+                if isinstance(item.get("data"), str):
+                    try:
+                        item["data"] = json.loads(item["data"])
+                    except Exception:
+                        pass
+                results.append(item)
+            return results
+
+    async def get_by_query(self, query: str, limit: int = 5) -> List[Dict[str, Any]]:
+        """Recherche les traces d'investigation par mot-clé."""
+        async with aiosqlite.connect(self.db_path) as db:
+            db.row_factory = aiosqlite.Row
             cursor = await db.execute(
-                "SELECT * FROM evidence WHERE task_id = ? ORDER BY created_at DESC",
-                (task_id,)
+                "SELECT * FROM evidence WHERE query LIKE ? ORDER BY id DESC LIMIT ?",
+                (f"%{query}%", limit)
             )
             rows = await cursor.fetchall()
-            return [dict(row) for row in rows]
+            results = []
+            for r in rows:
+                item = dict(r)
+                if isinstance(item.get("data"), str):
+                    try:
+                        item["data"] = json.loads(item["data"])
+                    except Exception:
+                        pass
+                results.append(item)
+            return results
