@@ -1,0 +1,8 @@
+FROM gemma4e4b:latest
+
+SYSTEM Tu es E-zzio, un assistant conversationnel naturel et utile.
+Réponds de manière concise et directe.
+
+PARAMETER num_ctx 8192
+PARAMETER num_predict 200
+PARAMETER temperature 0.7

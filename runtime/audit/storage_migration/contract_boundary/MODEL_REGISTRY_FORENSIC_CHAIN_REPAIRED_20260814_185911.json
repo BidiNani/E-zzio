@@ -1,0 +1,145 @@
+{
+  "component": "MODEL_REGISTRY",
+  "mode": "FAST_FORENSIC_AUTO_REPAIR",
+  "source": "MODEL_REGISTRY_MIGRATION_IMPACT_ANALYSIS_V47_5_REPAIRED_20260814_185636.json",
+  "timestamp": "2026-08-14T18:59:11.3697763+02:00",
+  "chain_count": 17,
+  "migration_chain": [
+    {
+      "Rank": 1,
+      "Method": "admit",
+      "Consumers": 18,
+      "Risk": "CRITICAL",
+      "Priority": "P1_CRITICAL",
+      "DependencyScore": 280
+    },
+    {
+      "Rank": 2,
+      "Method": "is_model_authorized",
+      "Consumers": 4,
+      "Risk": "HIGH",
+      "Priority": "P2_HIGH",
+      "DependencyScore": 90
+    },
+    {
+      "Rank": 3,
+      "Method": "route_inference",
+      "Consumers": 3,
+      "Risk": "HIGH",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 80
+    },
+    {
+      "Rank": 4,
+      "Method": "get_registry_version",
+      "Consumers": 3,
+      "Risk": "HIGH",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 80
+    },
+    {
+      "Rank": 5,
+      "Method": "get_hash_prefix",
+      "Consumers": 2,
+      "Risk": "MEDIUM",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 45
+    },
+    {
+      "Rank": 6,
+      "Method": "get_registry_epoch",
+      "Consumers": 2,
+      "Risk": "MEDIUM",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 45
+    },
+    {
+      "Rank": 7,
+      "Method": "enforce_budget",
+      "Consumers": 2,
+      "Risk": "MEDIUM",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 45
+    },
+    {
+      "Rank": 8,
+      "Method": "resolve_resources",
+      "Consumers": 2,
+      "Risk": "MEDIUM",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 45
+    },
+    {
+      "Rank": 9,
+      "Method": "resolve_contract",
+      "Consumers": 2,
+      "Risk": "MEDIUM",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 45
+    },
+    {
+      "Rank": 10,
+      "Method": "resolve_security",
+      "Consumers": 1,
+      "Risk": "LOW",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 15
+    },
+    {
+      "Rank": 11,
+      "Method": "_sign_grant",
+      "Consumers": 1,
+      "Risk": "LOW",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 15
+    },
+    {
+      "Rank": 12,
+      "Method": "get_local_weights",
+      "Consumers": 1,
+      "Risk": "LOW",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 15
+    },
+    {
+      "Rank": 13,
+      "Method": "get_external_providers",
+      "Consumers": 1,
+      "Risk": "LOW",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 15
+    },
+    {
+      "Rank": 14,
+      "Method": "_log_decision",
+      "Consumers": 1,
+      "Risk": "LOW",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 15
+    },
+    {
+      "Rank": 15,
+      "Method": "_verify_contract",
+      "Consumers": 1,
+      "Risk": "LOW",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 15
+    },
+    {
+      "Rank": 16,
+      "Method": "_verify_and_load",
+      "Consumers": 1,
+      "Risk": "LOW",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 15
+    },
+    {
+      "Rank": 17,
+      "Method": "_load_all_contracts",
+      "Consumers": 1,
+      "Risk": "LOW",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 15
+    }
+  ]
+}

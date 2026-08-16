@@ -1,0 +1,394 @@
+[
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cleanup_audit\\inventory.json",
+    "Line": 1595,
+    "Match": "\"Path\": \"core\\\\model_registry.py\",",
+    "ContextBefore": "    \"Size\": 2168,     \"LastModified\": \"2026-06-09T22:18:32Z\",     \"SHA256\": \"DE4C510F93A7F15C8C7DB6A146C713A9BC7E4341DEF05B93281BA78BEA075533\"   },   {",
+    "ContextAfter": "    \"Name\": \"model_registry.py\",     \"Extension\": \".py\",     \"Size\": 4369,     \"LastModified\": \"2026-08-12T20:54:30Z\",     \"SHA256\": \"8A18D87CF56D79B4F5DD350218F3036FEF24E9C2ECCB9106EB4279FB878B6B1C\"",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cleanup_audit\\inventory.json",
+    "Line": 1596,
+    "Match": "\"Name\": \"model_registry.py\",",
+    "ContextBefore": "    \"LastModified\": \"2026-06-09T22:18:32Z\",     \"SHA256\": \"DE4C510F93A7F15C8C7DB6A146C713A9BC7E4341DEF05B93281BA78BEA075533\"   },   {     \"Path\": \"core\\\\model_registry.py\",",
+    "ContextAfter": "    \"Extension\": \".py\",     \"Size\": 4369,     \"LastModified\": \"2026-08-12T20:54:30Z\",     \"SHA256\": \"8A18D87CF56D79B4F5DD350218F3036FEF24E9C2ECCB9106EB4279FB878B6B1C\"   },",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cleanup_audit\\inventory.json",
+    "Line": 6387,
+    "Match": "\"Path\": \"runtime\\\\audit\\\\intelligence_scan\\\\V7_REGISTRY\\\\model_registry_autopsy.json\",",
+    "ContextBefore": "    \"Size\": 676,     \"LastModified\": \"2026-08-11T16:55:34Z\",     \"SHA256\": \"C3FF80927DB0B1617FCCE32BD9F62AEEA40FA19CFDBAE01C5E7FD7BD09286CBF\"   },   {",
+    "ContextAfter": "    \"Name\": \"model_registry_autopsy.json\",     \"Extension\": \".json\",     \"Size\": 268,     \"LastModified\": \"2026-08-11T13:46:14Z\",     \"SHA256\": \"A7448AB157BE01FD38E67D4C3330B90459544CF661E2EB50FFC97FBB7E06B2FA\"",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cleanup_audit\\inventory.json",
+    "Line": 6388,
+    "Match": "\"Name\": \"model_registry_autopsy.json\",",
+    "ContextBefore": "    \"LastModified\": \"2026-08-11T16:55:34Z\",     \"SHA256\": \"C3FF80927DB0B1617FCCE32BD9F62AEEA40FA19CFDBAE01C5E7FD7BD09286CBF\"   },   {     \"Path\": \"runtime\\\\audit\\\\intelligence_scan\\\\V7_REGISTRY\\\\model_registry_autopsy.json\",",
+    "ContextAfter": "    \"Extension\": \".json\",     \"Size\": 268,     \"LastModified\": \"2026-08-11T13:46:14Z\",     \"SHA256\": \"A7448AB157BE01FD38E67D4C3330B90459544CF661E2EB50FFC97FBB7E06B2FA\"   },",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cleanup_audit\\inventory.json",
+    "Line": 6995,
+    "Match": "\"Path\": \"runtime\\\\audit\\\\intelligence_scan\\\\V7_REGISTRY\\\\V712_MODEL_REGISTRY_REPORT.md\",",
+    "ContextBefore": "    \"Size\": 911,     \"LastModified\": \"2026-08-11T16:08:59Z\",     \"SHA256\": \"A5A668841B762335586FDB543FBDF7136A5366583857A2C02D00889BC36C17CB\"   },   {",
+    "ContextAfter": "    \"Name\": \"V712_MODEL_REGISTRY_REPORT.md\",     \"Extension\": \".md\",     \"Size\": 8900,     \"LastModified\": \"2026-08-11T16:24:34Z\",     \"SHA256\": \"11F237886C6E6682F09B29F02863B2E302E90DED430765BEC4235E6871AC1077\"",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cleanup_audit\\inventory.json",
+    "Line": 6996,
+    "Match": "\"Name\": \"V712_MODEL_REGISTRY_REPORT.md\",",
+    "ContextBefore": "    \"LastModified\": \"2026-08-11T16:08:59Z\",     \"SHA256\": \"A5A668841B762335586FDB543FBDF7136A5366583857A2C02D00889BC36C17CB\"   },   {     \"Path\": \"runtime\\\\audit\\\\intelligence_scan\\\\V7_REGISTRY\\\\V712_MODEL_REGISTRY_REPORT.md\",",
+    "ContextAfter": "    \"Extension\": \".md\",     \"Size\": 8900,     \"LastModified\": \"2026-08-11T16:24:34Z\",     \"SHA256\": \"11F237886C6E6682F09B29F02863B2E302E90DED430765BEC4235E6871AC1077\"   },",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cleanup_audit\\inventory.json",
+    "Line": 7043,
+    "Match": "\"Path\": \"runtime\\\\audit\\\\intelligence_scan\\\\V7_REGISTRY\\\\V712\\\\MODEL_REGISTRY_V1.json\",",
+    "ContextBefore": "    \"Size\": 1874,     \"LastModified\": \"2026-08-11T16:42:25Z\",     \"SHA256\": \"A2952E0ECDB5A04BBC247E0A2F48C70B5CFD08B5A3A9A94B6AC18A860F43C52D\"   },   {",
+    "ContextAfter": "    \"Name\": \"MODEL_REGISTRY_V1.json\",     \"Extension\": \".json\",     \"Size\": 20075,     \"LastModified\": \"2026-08-11T16:34:58Z\",     \"SHA256\": \"5651D152E9285919CF393FB4FB1A69BEA9FF49F69BDAEB5E8BCABD6D5E1E0970\"",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cleanup_audit\\inventory.json",
+    "Line": 7044,
+    "Match": "\"Name\": \"MODEL_REGISTRY_V1.json\",",
+    "ContextBefore": "    \"LastModified\": \"2026-08-11T16:42:25Z\",     \"SHA256\": \"A2952E0ECDB5A04BBC247E0A2F48C70B5CFD08B5A3A9A94B6AC18A860F43C52D\"   },   {     \"Path\": \"runtime\\\\audit\\\\intelligence_scan\\\\V7_REGISTRY\\\\V712\\\\MODEL_REGISTRY_V1.json\",",
+    "ContextAfter": "    \"Extension\": \".json\",     \"Size\": 20075,     \"LastModified\": \"2026-08-11T16:34:58Z\",     \"SHA256\": \"5651D152E9285919CF393FB4FB1A69BEA9FF49F69BDAEB5E8BCABD6D5E1E0970\"   },",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cleanup_audit\\orphan_classification.json",
+    "Line": 577,
+    "Match": "\"Path\": \"core\\\\model_registry.py\",",
+    "ContextBefore": "    \"Reason\": \"Cited or imported by at least one other component\",     \"Size\": 501,     \"LastModified\": \"2026-08-11T12:34:20Z\"   },   {",
+    "ContextAfter": "    \"Status\": \"REFERENCED\",     \"Reason\": \"Cited or imported by at least one other component\",     \"Size\": 4369,     \"LastModified\": \"2026-08-12T20:54:30Z\"   },",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cleanup_audit\\orphan_classification.json",
+    "Line": 1739,
+    "Match": "\"Path\": \"runtime\\\\contracts\\\\MODEL_REGISTRY_V1.json\",",
+    "ContextBefore": "    \"Reason\": \"Located in runtime state, logs or audit trace directory\",     \"Size\": 6058,     \"LastModified\": \"2026-08-11T14:07:46Z\"   },   {",
+    "ContextAfter": "    \"Status\": \"REFERENCED\",     \"Reason\": \"Cited or imported by at least one other component\",     \"Size\": 20075,     \"LastModified\": \"2026-08-11T16:34:58Z\"   },",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cleanup_audit\\orphan_classification.json",
+    "Line": 2257,
+    "Match": "\"Path\": \"runtime\\\\hardware\\\\trust\\\\models_governance\\\\model_registry.py\",",
+    "ContextBefore": "    \"Reason\": \"Cited or imported by at least one other component\",     \"Size\": 1039,     \"LastModified\": \"2026-06-09T22:23:32Z\"   },   {",
+    "ContextAfter": "    \"Status\": \"REFERENCED\",     \"Reason\": \"Cited or imported by at least one other component\",     \"Size\": 1477,     \"LastModified\": \"2026-08-11T12:33:17Z\"   },",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cleanup_audit\\orphan_classification.json",
+    "Line": 2649,
+    "Match": "\"Path\": \"runtime\\\\audit\\\\intelligence_scan\\\\V7_REGISTRY\\\\V712_MODEL_REGISTRY_REPORT.md\",",
+    "ContextBefore": "    \"Reason\": \"Located in runtime state, logs or audit trace directory\",     \"Size\": 275557,     \"LastModified\": \"2026-08-12T12:01:04Z\"   },   {",
+    "ContextAfter": "    \"Status\": \"GENERATED\",     \"Reason\": \"Located in runtime state, logs or audit trace directory\",     \"Size\": 8900,     \"LastModified\": \"2026-08-11T16:24:34Z\"   },",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cleanup_audit\\orphan_classification.json",
+    "Line": 3727,
+    "Match": "\"Path\": \"runtime\\\\audit\\\\intelligence_scan\\\\V7_REGISTRY\\\\model_registry_autopsy.json\",",
+    "ContextBefore": "    \"Reason\": \"Cited or imported by at least one other component\",     \"Size\": 2925,     \"LastModified\": \"2026-08-10T22:21:45Z\"   },   {",
+    "ContextAfter": "    \"Status\": \"GENERATED\",     \"Reason\": \"Located in runtime state, logs or audit trace directory\",     \"Size\": 268,     \"LastModified\": \"2026-08-11T13:46:14Z\"   },",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cleanup_audit\\orphan_classification.json",
+    "Line": 4686,
+    "Match": "\"Path\": \"runtime\\\\audit\\\\intelligence_scan\\\\V7_REGISTRY\\\\V712\\\\MODEL_REGISTRY_V1.json\",",
+    "ContextBefore": "    \"Reason\": \"Cited or imported by at least one other component\",     \"Size\": 148,     \"LastModified\": \"2026-06-10T13:51:59Z\"   },   {",
+    "ContextAfter": "    \"Status\": \"GENERATED\",     \"Reason\": \"Located in runtime state, logs or audit trace directory\",     \"Size\": 20075,     \"LastModified\": \"2026-08-11T16:34:58Z\"   },",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cleanup_audit\\orphan_classification.json",
+    "Line": 9670,
+    "Match": "\"Path\": \"runtime\\\\models\\\\model_registry.json\",",
+    "ContextBefore": "    \"Reason\": \"Cited or imported by at least one other component\",     \"Size\": 444,     \"LastModified\": \"2026-06-09T22:18:32Z\"   },   {",
+    "ContextAfter": "    \"Status\": \"REFERENCED\",     \"Reason\": \"Cited or imported by at least one other component\",     \"Size\": 902,     \"LastModified\": \"2026-08-11T19:55:01Z\"   },",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cognitive\\index\\index_build_manifest.json",
+    "Line": 419,
+    "Match": "\"runtime/audit/intelligence_scan/V7_REGISTRY/model_registry_autopsy.json\",",
+    "ContextBefore": "    \"runtime/audit/intelligence_scan/V7_REGISTRY/FORENSIC_SIGNATURE_REPLAY.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/harness_migration_certification.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/HMAC_CAPABILITY_MATRIX.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/MODEL_DEPENDENCY_TRUTH_REPORT.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/model_reconciliation_report.json\",",
+    "ContextAfter": "    \"runtime/audit/intelligence_scan/V7_REGISTRY/negative_regression_gate_report.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/quarantine_discovery_report.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/quarantine_path_resolution.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/real_contract_compatibility_result.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/recovery_restore_plan.json\",",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cognitive\\index\\index_build_manifest.json",
+    "Line": 444,
+    "Match": "\"runtime/audit/intelligence_scan/V7_REGISTRY/V712_MODEL_REGISTRY_REPORT.md\",",
+    "ContextBefore": "    \"runtime/audit/intelligence_scan/V7_REGISTRY/truth_resolution_audit.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V7.4_REGISTRY_AUTHORITY_FINAL.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V7.7_TRUST_CONSOLIDATION_REPORT.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/v712_certification_token.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712_ENTRY_GATE_REPORT.md\",",
+    "ContextAfter": "    \"runtime/audit/intelligence_scan/V7_REGISTRY/V716_MODEL_FORENSIC_REPORT.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V7_10_1_CONTRACT_EMISSION_CHAIN_REPORT.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V7_10_2_EMISSION_EVENT_REPORT.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V7_10_3_PROVENANCE_GRAPH_REPORT.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V7_10_4_TRUST_REPLAY_REPORT.md\",",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cognitive\\index\\index_build_manifest.json",
+    "Line": 501,
+    "Match": "\"runtime/audit/intelligence_scan/V7_REGISTRY/V712/MODEL_REGISTRY_V1.json\",",
+    "ContextBefore": "    \"runtime/audit/intelligence_scan/V7_REGISTRY/V7_SIGNATURE_PROVENANCE_REPORT.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/API_CONTRACT_V3.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/architecture_baseline_v3.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/boot_integrity_verification_report.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/governance_freeze_manifest.json\",",
+    "ContextAfter": "    \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/physical_attestation_verification_report.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/V712_BOOT_INTEGRITY_REPORT.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/v712_certification_token.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/V712_ENTRY_GATE_REPORT.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/V712_GOVERNANCE_FREEZE_REPORT.md\",",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cognitive\\index\\index_build_manifest.json",
+    "Line": 524,
+    "Match": "\"runtime/contracts/MODEL_REGISTRY_V1.json\",",
+    "ContextBefore": "    \"runtime/cognitive/index/memory_index.sqlite\",     \"runtime/config/security/discord_acl.json\",     \"runtime/config/security/discord_policy.json\",     \"runtime/constitution/invariants.json\",     \"runtime/contracts/API_CONTRACT_V3.json\",",
+    "ContextAfter": "    \"runtime/contracts/V3_CONTRACT_VERSION.json\",     \"runtime/decisions/router_decisions.jsonl\",     \"runtime/decisions/archive/ledger_000001.jsonl\",     \"runtime/decisions/archive/ledger_000001.meta.json\",     \"runtime/evolution/authority_policy.json\",",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cognitive\\index\\index_build_manifest.json",
+    "Line": 614,
+    "Match": "\"runtime/models/model_registry.json\",",
+    "ContextBefore": "    \"runtime/memory/sqlite/ezzio_events.db\",     \"runtime/metrics/model_performance.json\",     \"runtime/metrics/provider_health_status.json\",     \"runtime/metrics/provider_performance.json\",     \"runtime/models/model_capabilities.json\",",
+    "ContextAfter": "    \"runtime/models/provider_capabilities.json\",     \"runtime/policy/protected_identity_registry.json\",     \"runtime/quarantine/V7.11.1.2/runtime/experiments/v611_topology/hardware_report.json\",     \"runtime/quarantine/V7.11.1.2/runtime/hardware/state/production_v661_state.json\",     \"runtime/quarantine/V7.11.1.2/runtime/hardware/state/state/production_v661_state.json\",",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cognitive\\snapshots\\V7.58\\cognitive_provenance_matrix.json",
+    "Line": 1172,
+    "Match": "\"runtime/audit/intelligence_scan/V7_REGISTRY/model_registry_autopsy.json\": {",
+    "ContextBefore": "    },     \"runtime/audit/intelligence_scan/V7_REGISTRY/model_reconciliation_report.json\": {       \"tier\": \"SECURITY\",       \"count\": 1     },",
+    "ContextAfter": "      \"tier\": \"SECURITY\",       \"count\": 1     },     \"runtime/audit/intelligence_scan/V7_REGISTRY/negative_regression_gate_report.json\": {       \"tier\": \"SECURITY\",",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cognitive\\snapshots\\V7.58\\cognitive_provenance_matrix.json",
+    "Line": 1272,
+    "Match": "\"runtime/audit/intelligence_scan/V7_REGISTRY/V712_MODEL_REGISTRY_REPORT.md\": {",
+    "ContextBefore": "    },     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712_ENTRY_GATE_REPORT.md\": {       \"tier\": \"SECURITY\",       \"count\": 1     },",
+    "ContextAfter": "      \"tier\": \"SECURITY\",       \"count\": 1     },     \"runtime/audit/intelligence_scan/V7_REGISTRY/V716_MODEL_FORENSIC_REPORT.md\": {       \"tier\": \"SECURITY\",",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cognitive\\snapshots\\V7.58\\cognitive_provenance_matrix.json",
+    "Line": 1500,
+    "Match": "\"runtime/audit/intelligence_scan/V7_REGISTRY/V712/MODEL_REGISTRY_V1.json\": {",
+    "ContextBefore": "    },     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/governance_freeze_manifest.json\": {       \"tier\": \"SECURITY\",       \"count\": 1     },",
+    "ContextAfter": "      \"tier\": \"SECURITY\",       \"count\": 1     },     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/physical_attestation_verification_report.json\": {       \"tier\": \"SECURITY\",",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cognitive\\snapshots\\V7.58\\cognitive_provenance_matrix.json",
+    "Line": 1592,
+    "Match": "\"runtime/contracts/MODEL_REGISTRY_V1.json\": {",
+    "ContextBefore": "    },     \"runtime/contracts/API_CONTRACT_V3.json\": {       \"tier\": \"OPERATIONAL\",       \"count\": 1     },",
+    "ContextAfter": "      \"tier\": \"OPERATIONAL\",       \"count\": 1     },     \"runtime/contracts/V3_CONTRACT_VERSION.json\": {       \"tier\": \"OPERATIONAL\",",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cognitive\\snapshots\\V7.58\\cognitive_provenance_matrix.json",
+    "Line": 1952,
+    "Match": "\"runtime/models/model_registry.json\": {",
+    "ContextBefore": "    },     \"runtime/models/model_capabilities.json\": {       \"tier\": \"OPERATIONAL\",       \"count\": 1     },",
+    "ContextAfter": "      \"tier\": \"OPERATIONAL\",       \"count\": 1     },     \"runtime/models/provider_capabilities.json\": {       \"tier\": \"OPERATIONAL\",",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cognitive\\snapshots\\V7.58\\index_build_manifest.json",
+    "Line": 419,
+    "Match": "\"runtime/audit/intelligence_scan/V7_REGISTRY/model_registry_autopsy.json\",",
+    "ContextBefore": "    \"runtime/audit/intelligence_scan/V7_REGISTRY/FORENSIC_SIGNATURE_REPLAY.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/harness_migration_certification.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/HMAC_CAPABILITY_MATRIX.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/MODEL_DEPENDENCY_TRUTH_REPORT.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/model_reconciliation_report.json\",",
+    "ContextAfter": "    \"runtime/audit/intelligence_scan/V7_REGISTRY/negative_regression_gate_report.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/quarantine_discovery_report.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/quarantine_path_resolution.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/real_contract_compatibility_result.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/recovery_restore_plan.json\",",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cognitive\\snapshots\\V7.58\\index_build_manifest.json",
+    "Line": 444,
+    "Match": "\"runtime/audit/intelligence_scan/V7_REGISTRY/V712_MODEL_REGISTRY_REPORT.md\",",
+    "ContextBefore": "    \"runtime/audit/intelligence_scan/V7_REGISTRY/truth_resolution_audit.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V7.4_REGISTRY_AUTHORITY_FINAL.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V7.7_TRUST_CONSOLIDATION_REPORT.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/v712_certification_token.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712_ENTRY_GATE_REPORT.md\",",
+    "ContextAfter": "    \"runtime/audit/intelligence_scan/V7_REGISTRY/V716_MODEL_FORENSIC_REPORT.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V7_10_1_CONTRACT_EMISSION_CHAIN_REPORT.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V7_10_2_EMISSION_EVENT_REPORT.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V7_10_3_PROVENANCE_GRAPH_REPORT.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V7_10_4_TRUST_REPLAY_REPORT.md\",",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cognitive\\snapshots\\V7.58\\index_build_manifest.json",
+    "Line": 501,
+    "Match": "\"runtime/audit/intelligence_scan/V7_REGISTRY/V712/MODEL_REGISTRY_V1.json\",",
+    "ContextBefore": "    \"runtime/audit/intelligence_scan/V7_REGISTRY/V7_SIGNATURE_PROVENANCE_REPORT.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/API_CONTRACT_V3.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/architecture_baseline_v3.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/boot_integrity_verification_report.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/governance_freeze_manifest.json\",",
+    "ContextAfter": "    \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/physical_attestation_verification_report.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/V712_BOOT_INTEGRITY_REPORT.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/v712_certification_token.json\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/V712_ENTRY_GATE_REPORT.md\",     \"runtime/audit/intelligence_scan/V7_REGISTRY/V712/V712_GOVERNANCE_FREEZE_REPORT.md\",",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cognitive\\snapshots\\V7.58\\index_build_manifest.json",
+    "Line": 524,
+    "Match": "\"runtime/contracts/MODEL_REGISTRY_V1.json\",",
+    "ContextBefore": "    \"runtime/cognitive/index/memory_index.sqlite\",     \"runtime/config/security/discord_acl.json\",     \"runtime/config/security/discord_policy.json\",     \"runtime/constitution/invariants.json\",     \"runtime/contracts/API_CONTRACT_V3.json\",",
+    "ContextAfter": "    \"runtime/contracts/V3_CONTRACT_VERSION.json\",     \"runtime/decisions/router_decisions.jsonl\",     \"runtime/decisions/archive/ledger_000001.jsonl\",     \"runtime/decisions/archive/ledger_000001.meta.json\",     \"runtime/evolution/authority_policy.json\",",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cognitive\\snapshots\\V7.58\\index_build_manifest.json",
+    "Line": 614,
+    "Match": "\"runtime/models/model_registry.json\",",
+    "ContextBefore": "    \"runtime/memory/sqlite/ezzio_events.db\",     \"runtime/metrics/model_performance.json\",     \"runtime/metrics/provider_health_status.json\",     \"runtime/metrics/provider_performance.json\",     \"runtime/models/model_capabilities.json\",",
+    "ContextAfter": "    \"runtime/models/provider_capabilities.json\",     \"runtime/policy/protected_identity_registry.json\",     \"runtime/quarantine/V7.11.1.2/runtime/experiments/v611_topology/hardware_report.json\",     \"runtime/quarantine/V7.11.1.2/runtime/hardware/state/production_v661_state.json\",     \"runtime/quarantine/V7.11.1.2/runtime/hardware/state/state/production_v661_state.json\",",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\contracts\\authority.py",
+    "Line": 19,
+    "Match": "self.registry_path = self.root_dir / \"runtime\" / \"contracts\" / \"MODEL_REGISTRY_V1.json\"",
+    "ContextBefore": "    \"\"\"     def __init__(self, root_dir: str = None, min_epoch: int = 1):         self.root_dir = Path(root_dir) if root_dir else Path(\"G:/AI/E-zzio\").resolve()         self.v712_registry = self.root_dir / \"runtime\" / \"audit\" / \"intelligence_scan\" / \"V7_REGISTRY\" / \"V712\"         self.manifest_path = self.v712_registry / \"governance_freeze_manifest.json\"",
+    "ContextAfter": "        self.min_epoch = min_epoch                  self._cache = None         self._hash_prefix = \"UNKNOWN\"         self._verify_and_load()",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\contracts\\authority.py",
+    "Line": 34,
+    "Match": "model_meta = sealed_artifacts.get(\"model_registry\")",
+    "ContextBefore": "        if not self.registry_path.exists():             raise RegistryIntegrityError(\"Registre des modèles introuvable.\")          manifest = json.loads(self.manifest_path.read_text(encoding=\"utf-8\"))         sealed_artifacts = manifest.get(\"sealed_artifacts\", {})",
+    "ContextAfter": "         if not model_meta:             raise RegistryIntegrityError(\"Entrée 'model_registry' absente du manifeste de gel.\")          expected_hash = model_meta[\"sha256\"]",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\contracts\\authority.py",
+    "Line": 37,
+    "Match": "raise RegistryIntegrityError(\"Entrée 'model_registry' absente du manifeste de gel.\")",
+    "ContextBefore": "        manifest = json.loads(self.manifest_path.read_text(encoding=\"utf-8\"))         sealed_artifacts = manifest.get(\"sealed_artifacts\", {})         model_meta = sealed_artifacts.get(\"model_registry\")          if not model_meta:",
+    "ContextAfter": "         expected_hash = model_meta[\"sha256\"]         expected_size = model_meta[\"size_bytes\"]          file_bytes = self.registry_path.read_bytes()",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\contracts\\MODEL_REGISTRY_V1.json",
+    "Line": 44,
+    "Match": "\"name\": \"model_registry.py\",",
+    "ContextBefore": "      }     ]   },   \"local_weights_discovered\": [     {",
+    "ContextAfter": "      \"path\": \"core/model_registry.py\",       \"size_bytes\": 4154,       \"size_mb\": 0.0,       \"sha256\": \"5a6e48010e03360f6f910bbfa65ca2b519763f7478c76683c744b4937460c280\",       \"last_modified\": \"2026-07-26T00:14:32Z\"",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\contracts\\MODEL_REGISTRY_V1.json",
+    "Line": 45,
+    "Match": "\"path\": \"core/model_registry.py\",",
+    "ContextBefore": "    ]   },   \"local_weights_discovered\": [     {       \"name\": \"model_registry.py\",",
+    "ContextAfter": "      \"size_bytes\": 4154,       \"size_mb\": 0.0,       \"sha256\": \"5a6e48010e03360f6f910bbfa65ca2b519763f7478c76683c744b4937460c280\",       \"last_modified\": \"2026-07-26T00:14:32Z\"     },",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\contracts\\MODEL_REGISTRY_V1.json",
+    "Line": 76,
+    "Match": "\"name\": \"model_registry_autopsy.json\",",
+    "ContextBefore": "      \"size_mb\": 0.0,       \"sha256\": \"48d29859c67e182f9c4f8d92775ee7d1f02f92c3904ea65be429fd185bd950d7\",       \"last_modified\": \"2026-06-10T00:18:32Z\"     },     {",
+    "ContextAfter": "      \"path\": \"runtime/audit/intelligence_scan/V7_REGISTRY/model_registry_autopsy.json\",       \"size_bytes\": 268,       \"size_mb\": 0.0,       \"sha256\": \"a7448ab157be01fd38e67d4c3330b90459544cf661e2eb50ffc97fbb7e06b2fa\",       \"last_modified\": \"2026-08-11T15:46:14Z\"",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\contracts\\MODEL_REGISTRY_V1.json",
+    "Line": 77,
+    "Match": "\"path\": \"runtime/audit/intelligence_scan/V7_REGISTRY/model_registry_autopsy.json\",",
+    "ContextBefore": "      \"sha256\": \"48d29859c67e182f9c4f8d92775ee7d1f02f92c3904ea65be429fd185bd950d7\",       \"last_modified\": \"2026-06-10T00:18:32Z\"     },     {       \"name\": \"model_registry_autopsy.json\",",
+    "ContextAfter": "      \"size_bytes\": 268,       \"size_mb\": 0.0,       \"sha256\": \"a7448ab157be01fd38e67d4c3330b90459544cf661e2eb50ffc97fbb7e06b2fa\",       \"last_modified\": \"2026-08-11T15:46:14Z\"     },",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\contracts\\MODEL_REGISTRY_V1.json",
+    "Line": 92,
+    "Match": "\"name\": \"model_registry.cpython-311.pyc\",",
+    "ContextBefore": "      \"size_mb\": 0.0,       \"sha256\": \"c8497fee1e0e202ad8b34b3654813fb0c858194767cd7b0d4f9ac44f5e8e5727\",       \"last_modified\": \"2026-08-11T14:40:26Z\"     },     {",
+    "ContextAfter": "      \"path\": \"runtime/cache/pycache/AI/E-zzio/runtime/hardware/trust/models_governance/model_registry.cpython-311.pyc\",       \"size_bytes\": 2401,       \"size_mb\": 0.0,       \"sha256\": \"53e2b949c34f25261a59f79f4bd1771b6b8fdae95f3a98b57875aefbe74d1a23\",       \"last_modified\": \"2026-08-11T14:33:47Z\"",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\contracts\\MODEL_REGISTRY_V1.json",
+    "Line": 93,
+    "Match": "\"path\": \"runtime/cache/pycache/AI/E-zzio/runtime/hardware/trust/models_governance/model_registry.cpython-311.pyc\",",
+    "ContextBefore": "      \"sha256\": \"c8497fee1e0e202ad8b34b3654813fb0c858194767cd7b0d4f9ac44f5e8e5727\",       \"last_modified\": \"2026-08-11T14:40:26Z\"     },     {       \"name\": \"model_registry.cpython-311.pyc\",",
+    "ContextAfter": "      \"size_bytes\": 2401,       \"size_mb\": 0.0,       \"sha256\": \"53e2b949c34f25261a59f79f4bd1771b6b8fdae95f3a98b57875aefbe74d1a23\",       \"last_modified\": \"2026-08-11T14:33:47Z\"     },",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\contracts\\MODEL_REGISTRY_V1.json",
+    "Line": 276,
+    "Match": "\"name\": \"model_registry.py\",",
+    "ContextBefore": "      \"size_mb\": 0.0,       \"sha256\": \"2a70b80180835a023e3d7f2e8966a1f1a1abee74a9cf343ec12f3426953868d9\",       \"last_modified\": \"2026-08-11T14:39:46Z\"     },     {",
+    "ContextAfter": "      \"path\": \"runtime/hardware/trust/models_governance/model_registry.py\",       \"size_bytes\": 1477,       \"size_mb\": 0.0,       \"sha256\": \"3877064687fd07dcc46fc9f5a0f805e59ba4419ffddd4d7bf86faca4217e1317\",       \"last_modified\": \"2026-08-11T14:33:17Z\"",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\contracts\\MODEL_REGISTRY_V1.json",
+    "Line": 277,
+    "Match": "\"path\": \"runtime/hardware/trust/models_governance/model_registry.py\",",
+    "ContextBefore": "      \"sha256\": \"2a70b80180835a023e3d7f2e8966a1f1a1abee74a9cf343ec12f3426953868d9\",       \"last_modified\": \"2026-08-11T14:39:46Z\"     },     {       \"name\": \"model_registry.py\",",
+    "ContextAfter": "      \"size_bytes\": 1477,       \"size_mb\": 0.0,       \"sha256\": \"3877064687fd07dcc46fc9f5a0f805e59ba4419ffddd4d7bf86faca4217e1317\",       \"last_modified\": \"2026-08-11T14:33:17Z\"     },",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\guardian\\test_v615_3_models.py",
+    "Line": 10,
+    "Match": "from runtime.hardware.trust.models_governance.model_registry import ModelTrustRegistry",
+    "ContextBefore": "from runtime.hardware.trust.revocation.registry import CapabilityRevocationRegistry from runtime.hardware.trust.envelope.envelope import EnvelopeIssuer from runtime.hardware.trust.policy.registry import TrustPolicyRegistry from runtime.hardware.trust.execution.admission.models import ExecutionRequest, ModelIdentity from runtime.hardware.trust.execution.admission.controller import ExecutionAdmissionController",
+    "ContextAfter": "from runtime.hardware.trust.models_governance.budget import ModelBudgetGovernor  def test_v615_3_model_governance():     print(\"\\n--- TEST : V6.15.3 Model Trust Registry & Budgets ---\", flush=True)     ",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\models_governance\\budget.py",
+    "Line": 2,
+    "Match": "from runtime.hardware.trust.models_governance.model_registry import ModelTrustRegistry",
+    "ContextBefore": "from dataclasses import dataclass",
+    "ContextAfter": "from runtime.hardware.trust.execution.admission.models import ModelIdentity  @dataclass(frozen=True) class ModelBudgetAllocation:     model_id: str",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\models\\ollama_sync.py",
+    "Line": 32,
+    "Match": "# Chargement du registre statique actuel (core/model_registry.py ou équivalent)",
+    "ContextBefore": "    print(\"[*] -----------------------------------------------------------------\")      installed_models = fetch_ollama_models()     print(f\"  [OK] Modèles Ollama détectés en direct : {installed_models}\") ",
+    "ContextAfter": "    # Pour l'instant, on audite les pools déclarés connus     static_declared = {         \"fast\": [\"llama3.2:3b\", \"phi4-mini:latest\"],         \"normal\": [\"hermes3:8b\", \"qwen2.5-coder:7b\"],         \"deep\": [\"qwen2.5-coder:7b\"]",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\core\\cognitive_engine\\ecol_integration_audit.py",
+    "Line": 23,
+    "Match": "r\"model_registry\"",
+    "ContextBefore": "    r\"anthropic\",     r\"client\\.chat\",     r\"requests\\.post\",     r\"router_decisions\",     r\"experience_ledger\",",
+    "ContextAfter": "]  def audit_integration():     print(\"[*] Lancement de l'audit d'intégration ECOL...\")     findings = []",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\core\\dispatcher.py",
+    "Line": 3,
+    "Match": "from core.model_registry import ORGANS, best_fast_model, all_known_models, load_latency",
+    "ContextBefore": "from core.llm_engine import query_model_async from core.memory import ezzio_memory",
+    "ContextAfter": "from core.governor import analyze_request, tactical_plan from core.telemetry import log_event   class EzzioDispatcher:",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\core\\intelligence_router.py",
+    "Line": 20,
+    "Match": "LOCAL_REGISTRY_PATH = ROOT_DIR / \"runtime\" / \"models\" / \"model_registry.json\"",
+    "ContextBefore": "from providers.provider_response import ProviderResponse from ollama.adaptive_governor import ollama_governor from ollama.windows_telemetry import windows_memory  ROOT_DIR = Path(__file__).resolve().parent.parent",
+    "ContextAfter": "LEDGER_PATH = ROOT_DIR / \"runtime\" / \"decisions\" / \"router_decisions.jsonl\"  class IntelligenceRouter:     def __init__(self):         self.local_models = self._load_local_registry()",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\core\\model_registry.py",
+    "Line": 2,
+    "Match": "core/model_registry.py — Adaptive Model Governor V7.21",
+    "ContextBefore": "\"\"\"",
+    "ContextAfter": "Intègre la hiérarchie des vitesses, les paliers de fallback multi-niveaux et l'exploitation directe des métadonnées du registre de capacités. \"\"\" import json from pathlib import Path",
+    "DirectTarget": true
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\core\\supervisor.py",
+    "Line": 144,
+    "Match": "from core.model_registry import status as registry_status",
+    "ContextBefore": "    except Exception as exc:         return {\"ok\": False, \"error\": str(exc)}  def model_status():     try:",
+    "ContextAfter": "        return registry_status()     except Exception as exc:         return {\"ok\": False, \"error\": str(exc)}  def no_ads_policy():",
+    "DirectTarget": true
+  }
+]

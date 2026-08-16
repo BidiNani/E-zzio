@@ -1,0 +1,14 @@
+{
+  "active_segment_id": 2,
+  "max_segment_size_bytes": 10485760,
+  "segments": [
+    {
+      "id": 1,
+      "file": "segment_000001.jsonl",
+      "size": 10466810,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "1f5335ccf19b6aa035104fbf577d00a11b9fc0368fb86d96cd8c49b5ef4fdadf"
+    }
+  ]
+}

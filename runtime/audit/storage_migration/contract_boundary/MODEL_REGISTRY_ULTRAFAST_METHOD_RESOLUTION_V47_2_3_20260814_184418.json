@@ -1,0 +1,278 @@
+{
+  "component": "MODEL_REGISTRY",
+  "version": "V47.2.3",
+  "scan_mode": "READ_ONLY_ULTRAFAST_HASH_INDEX",
+  "timestamp": "2026-08-14T18:46:28.2221972+02:00",
+  "python_files_scanned": 19065,
+  "methods_indexed": 198422,
+  "contracts_resolved": 17,
+  "results": [
+    {
+      "Method": "_load_all_contracts",
+      "DefinedIn": "runtime\\hardware\\trust\\models\\registry.py",
+      "DefinedLine": 12,
+      "CandidateMatches": 1,
+      "RiskLevel": "ACTIVE_CONTRACT",
+      "Candidates": [
+        {
+          "File": "runtime\\hardware\\trust\\models\\registry.py",
+          "Line": 12,
+          "Class": "CoreModelRegistry",
+          "Content": "def _load_all_contracts(self):"
+        }
+      ]
+    },
+    {
+      "Method": "_verify_contract",
+      "DefinedIn": "runtime\\hardware\\trust\\models\\registry.py",
+      "DefinedLine": 21,
+      "CandidateMatches": 1,
+      "RiskLevel": "ACTIVE_CONTRACT",
+      "Candidates": [
+        {
+          "File": "runtime\\hardware\\trust\\models\\registry.py",
+          "Line": 21,
+          "Class": "CoreModelRegistry",
+          "Content": "def _verify_contract(self, contract: dict) -> bool:"
+        }
+      ]
+    },
+    {
+      "Method": "resolve_contract",
+      "DefinedIn": "runtime\\hardware\\trust\\models\\registry.py",
+      "DefinedLine": 29,
+      "CandidateMatches": 1,
+      "RiskLevel": "ACTIVE_CONTRACT",
+      "Candidates": [
+        {
+          "File": "runtime\\hardware\\trust\\models\\registry.py",
+          "Line": 29,
+          "Class": "CoreModelRegistry",
+          "Content": "def resolve_contract(self, model_id: str) -> dict:"
+        }
+      ]
+    },
+    {
+      "Method": "resolve_resources",
+      "DefinedIn": "runtime\\hardware\\trust\\models\\resolver.py",
+      "DefinedLine": 11,
+      "CandidateMatches": 1,
+      "RiskLevel": "ACTIVE_CONTRACT",
+      "Candidates": [
+        {
+          "File": "runtime\\hardware\\trust\\models\\resolver.py",
+          "Line": 11,
+          "Class": "ContractResolver",
+          "Content": "def resolve_resources(self, model_id: str) -> dict:"
+        }
+      ]
+    },
+    {
+      "Method": "resolve_security",
+      "DefinedIn": "runtime\\hardware\\trust\\models\\resolver.py",
+      "DefinedLine": 25,
+      "CandidateMatches": 1,
+      "RiskLevel": "ACTIVE_CONTRACT",
+      "Candidates": [
+        {
+          "File": "runtime\\hardware\\trust\\models\\resolver.py",
+          "Line": 25,
+          "Class": "ContractResolver",
+          "Content": "def resolve_security(self, model_id: str) -> dict:"
+        }
+      ]
+    },
+    {
+      "Method": "_verify_and_load",
+      "DefinedIn": "runtime\\contracts\\authority.py",
+      "DefinedLine": 26,
+      "CandidateMatches": 1,
+      "RiskLevel": "ACTIVE_CONTRACT",
+      "Candidates": [
+        {
+          "File": "runtime\\contracts\\authority.py",
+          "Line": 26,
+          "Class": "ModelRegistryAuthority",
+          "Content": "def _verify_and_load(self):"
+        }
+      ]
+    },
+    {
+      "Method": "get_registry_version",
+      "DefinedIn": "runtime\\contracts\\authority.py",
+      "DefinedLine": 63,
+      "CandidateMatches": 1,
+      "RiskLevel": "ACTIVE_CONTRACT",
+      "Candidates": [
+        {
+          "File": "runtime\\contracts\\authority.py",
+          "Line": 63,
+          "Class": "ModelRegistryAuthority",
+          "Content": "def get_registry_version(self) -> str:"
+        }
+      ]
+    },
+    {
+      "Method": "get_registry_epoch",
+      "DefinedIn": "runtime\\contracts\\authority.py",
+      "DefinedLine": 66,
+      "CandidateMatches": 1,
+      "RiskLevel": "ACTIVE_CONTRACT",
+      "Candidates": [
+        {
+          "File": "runtime\\contracts\\authority.py",
+          "Line": 66,
+          "Class": "ModelRegistryAuthority",
+          "Content": "def get_registry_epoch(self) -> int:"
+        }
+      ]
+    },
+    {
+      "Method": "get_hash_prefix",
+      "DefinedIn": "runtime\\contracts\\authority.py",
+      "DefinedLine": 69,
+      "CandidateMatches": 1,
+      "RiskLevel": "ACTIVE_CONTRACT",
+      "Candidates": [
+        {
+          "File": "runtime\\contracts\\authority.py",
+          "Line": 69,
+          "Class": "ModelRegistryAuthority",
+          "Content": "def get_hash_prefix(self) -> str:"
+        }
+      ]
+    },
+    {
+      "Method": "get_local_weights",
+      "DefinedIn": "runtime\\contracts\\authority.py",
+      "DefinedLine": 72,
+      "CandidateMatches": 1,
+      "RiskLevel": "ACTIVE_CONTRACT",
+      "Candidates": [
+        {
+          "File": "runtime\\contracts\\authority.py",
+          "Line": 72,
+          "Class": "ModelRegistryAuthority",
+          "Content": "def get_local_weights(self) -> list:"
+        }
+      ]
+    },
+    {
+      "Method": "get_external_providers",
+      "DefinedIn": "runtime\\contracts\\authority.py",
+      "DefinedLine": 75,
+      "CandidateMatches": 1,
+      "RiskLevel": "ACTIVE_CONTRACT",
+      "Candidates": [
+        {
+          "File": "runtime\\contracts\\authority.py",
+          "Line": 75,
+          "Class": "ModelRegistryAuthority",
+          "Content": "def get_external_providers(self) -> dict:"
+        }
+      ]
+    },
+    {
+      "Method": "is_model_authorized",
+      "DefinedIn": "runtime\\contracts\\authority.py",
+      "DefinedLine": 78,
+      "CandidateMatches": 1,
+      "RiskLevel": "ACTIVE_CONTRACT",
+      "Candidates": [
+        {
+          "File": "runtime\\contracts\\authority.py",
+          "Line": 78,
+          "Class": "ModelRegistryAuthority",
+          "Content": "def is_model_authorized(self, model_id: str, provider: str = \"ollama\") -> bool:"
+        }
+      ]
+    },
+    {
+      "Method": "_log_decision",
+      "DefinedIn": "runtime\\contracts\\enforcer.py",
+      "DefinedLine": 21,
+      "CandidateMatches": 1,
+      "RiskLevel": "ACTIVE_CONTRACT",
+      "Candidates": [
+        {
+          "File": "runtime\\contracts\\enforcer.py",
+          "Line": 21,
+          "Class": "EnforcedModelRouter",
+          "Content": "def _log_decision(self, model: str, provider: str, decision: str, reason: str = None):"
+        }
+      ]
+    },
+    {
+      "Method": "route_inference",
+      "DefinedIn": "runtime\\contracts\\enforcer.py",
+      "DefinedLine": 37,
+      "CandidateMatches": 1,
+      "RiskLevel": "ACTIVE_CONTRACT",
+      "Candidates": [
+        {
+          "File": "runtime\\contracts\\enforcer.py",
+          "Line": 37,
+          "Class": "EnforcedModelRouter",
+          "Content": "def route_inference(self, requested_model: str, provider: str = \"ollama\", payload: dict = None):"
+        }
+      ]
+    },
+    {
+      "Method": "admit",
+      "DefinedIn": "runtime\\hardware\\trust\\execution\\admission\\controller.py",
+      "DefinedLine": 17,
+      "CandidateMatches": 3,
+      "RiskLevel": "ACTIVE_CONTRACT",
+      "Candidates": [
+        {
+          "File": ".venv\\Lib\\site-packages\\packaging\\ranges.py",
+          "Line": 1608,
+          "Class": "VersionRange",
+          "Content": "def admit(item: Any) -> tuple[bool, Version | None, bool]:  # noqa: ANN401"
+        },
+        {
+          "File": "runtime\\hardware\\trust\\execution\\admission\\controller.py",
+          "Line": 17,
+          "Class": "ExecutionAdmissionController",
+          "Content": "def admit(self, request: ExecutionRequest, current_trust_context: dict) -> AdmissionGrant:"
+        },
+        {
+          "File": "tools\\voice_converter\\.venv\\Lib\\site-packages\\packaging\\ranges.py",
+          "Line": 1608,
+          "Class": "VersionRange",
+          "Content": "def admit(item: Any) -> tuple[bool, Version | None, bool]:  # noqa: ANN401"
+        }
+      ]
+    },
+    {
+      "Method": "_sign_grant",
+      "DefinedIn": "runtime\\hardware\\trust\\execution\\admission\\controller.py",
+      "DefinedLine": 107,
+      "CandidateMatches": 1,
+      "RiskLevel": "ACTIVE_CONTRACT",
+      "Candidates": [
+        {
+          "File": "runtime\\hardware\\trust\\execution\\admission\\controller.py",
+          "Line": 107,
+          "Class": "ExecutionAdmissionController",
+          "Content": "def _sign_grant(self, payload: dict) -> str:"
+        }
+      ]
+    },
+    {
+      "Method": "enforce_budget",
+      "DefinedIn": "runtime\\hardware\\trust\\models_governance\\budget.py",
+      "DefinedLine": 17,
+      "CandidateMatches": 1,
+      "RiskLevel": "ACTIVE_CONTRACT",
+      "Candidates": [
+        {
+          "File": "runtime\\hardware\\trust\\models_governance\\budget.py",
+          "Line": 17,
+          "Class": "ModelBudgetGovernor",
+          "Content": "def enforce_budget(self, model_identity: ModelIdentity, requested_workers: int) -> ModelBudgetAllocation:"
+        }
+      ]
+    }
+  ]
+}

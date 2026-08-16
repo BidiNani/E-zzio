@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-$BaseUrl = "http://127.0.0.1:8000"
+$BaseUrl = "http://127.0.0.1:8001"
 
 Write-Host "=== E-ZZIO Omni Command Test v2.11.5 ===" -ForegroundColor Cyan
 
@@ -30,3 +30,4 @@ foreach ($cmd in $commands) {
     Write-Host "Elapsed: $elapsed ms" -ForegroundColor DarkGray
     $res.reply
 }
+

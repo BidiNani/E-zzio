@@ -1,0 +1,42 @@
+[
+  {
+    "Source": "G:\\AI\\E-zzio\\core\\memory_core.py",
+    "Target": "G:\\AI\\E-zzio\\runtime\\memory\\sqlite\\store.py",
+    "Current": "CORE -> RUNTIME",
+    "Severity": "CRITICAL",
+    "Proposed_Strategy": "CAPABILITY_INTERFACE",
+    "Mutation": "NONE"
+  },
+  {
+    "Source": "G:\\AI\\E-zzio\\runtime\\core\\ezzio_core.py",
+    "Target": "G:\\AI\\E-zzio\\runtime\\identity\\persona.py",
+    "Current": "CORE -> RUNTIME",
+    "Severity": "CRITICAL",
+    "Proposed_Strategy": "ADAPTER_LAYER",
+    "Mutation": "NONE"
+  },
+  {
+    "Source": "G:\\AI\\E-zzio\\runtime\\core\\ezzio_core.py",
+    "Target": "G:\\AI\\E-zzio\\runtime\\cognition\\router.py",
+    "Current": "CORE -> RUNTIME",
+    "Severity": "CRITICAL",
+    "Proposed_Strategy": "ADAPTER_LAYER",
+    "Mutation": "NONE"
+  },
+  {
+    "Source": "G:\\AI\\E-zzio\\runtime\\core\\ezzio_core.py",
+    "Target": "G:\\AI\\E-zzio\\runtime\\telemetry\\collector.py",
+    "Current": "CORE -> RUNTIME",
+    "Severity": "CRITICAL",
+    "Proposed_Strategy": "ADAPTER_LAYER",
+    "Mutation": "NONE"
+  },
+  {
+    "Source": "G:\\AI\\E-zzio\\runtime\\core\\ezzio_core.py",
+    "Target": "G:\\AI\\E-zzio\\runtime\\recovery\\queue\\bus.py",
+    "Current": "CORE -> RUNTIME",
+    "Severity": "CRITICAL",
+    "Proposed_Strategy": "ADAPTER_LAYER",
+    "Mutation": "NONE"
+  }
+]

@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-$res = Invoke-RestMethod "http://127.0.0.1:8000/human/status" -Method GET -TimeoutSec 90
+$res = Invoke-RestMethod "http://127.0.0.1:8001/human/status" -Method GET -TimeoutSec 90
 
 Write-Host "=== E-ZZIO HUMAN STATUS ===" -ForegroundColor Cyan
 [pscustomobject]@{
@@ -22,3 +22,4 @@ Write-Host "=== E-ZZIO HUMAN STATUS ===" -ForegroundColor Cyan
     safe_only = $res.policy.safe_only
     journal = $res.journal_path
 }
+

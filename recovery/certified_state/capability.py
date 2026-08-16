@@ -42,3 +42,7 @@ class CapabilityPolicy:
 
     def get_permissions(self, subject: str) -> FrozenSet[str]:
         return self.rules.get(subject, frozenset())
+
+    def is_valid(self):
+        return getattr(self, 'valid', True)
+

@@ -13,7 +13,7 @@ $body = @{
     execute = (-not [bool]$PlanOnly)
 } | ConvertTo-Json -Depth 20
 
-$res = Invoke-RestMethod "http://127.0.0.1:8000/human/tick" `
+$res = Invoke-RestMethod "http://127.0.0.1:8001/human/tick" `
     -Method POST `
     -ContentType "application/json" `
     -TimeoutSec 180 `
@@ -54,3 +54,4 @@ $res.results | ForEach-Object {
         bad_count = $_.bad_count
     }
 }
+

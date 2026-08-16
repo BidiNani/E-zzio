@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-$res = Invoke-RestMethod "http://127.0.0.1:8000/human-chat/brief" -Method GET -TimeoutSec 120
+$res = Invoke-RestMethod "http://127.0.0.1:8001/human-chat/brief" -Method GET -TimeoutSec 120
 
 Write-Host "=== E-ZZIO HUMAN CHAT BRIEF ===" -ForegroundColor Cyan
 [pscustomobject]@{
@@ -15,3 +15,4 @@ Write-Host "=== E-ZZIO HUMAN CHAT BRIEF ===" -ForegroundColor Cyan
     installed_models = $res.brain.installed_count
     last_tick = $res.human.rhythm.last_tick
 }
+

@@ -1,0 +1,10 @@
+{
+  "component": "E-ZZIO_MODULE_VITALITY_ENGINE",
+  "version": "V48.8",
+  "mode": "READ_ONLY_FORENSIC",
+  "analyzed_modules": 377,
+  "core_critical": 1,
+  "active": 123,
+  "dynamic_or_dormant": 253,
+  "unknown": 0
+}

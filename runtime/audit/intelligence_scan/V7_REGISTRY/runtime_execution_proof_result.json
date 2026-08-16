@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-08-11T16:30:46.352730",
+  "runtime_discovery": {
+    "contracts_found": 1,
+    "ledger_records_parsed": 3
+  },
+  "verdicts": {
+    "Contract Integrity": "PASS",
+    "Ledger Correlation": "PASS",
+    "CPU Alignment": "FAIL",
+    "Memory Alignment": "PASS",
+    "Policy Alignment": "PASS",
+    "Capability Alignment": "PASS",
+    "Sandbox Alignment": "PASS",
+    "GLOBAL STATUS": "FAIL"
+  }
+}

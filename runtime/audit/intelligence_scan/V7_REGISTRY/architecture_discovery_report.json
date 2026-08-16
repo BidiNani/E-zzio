@@ -1,0 +1,177 @@
+{
+  "timestamp": "2026-08-11T16:41:14.162747",
+  "inventory": {
+    "folders": 670,
+    "files": 3520,
+    "extensions": {
+      "": 15,
+      ".ps1": 114,
+      ".json": 305,
+      ".py": 635,
+      ".md": 61,
+      ".db": 10,
+      ".ini": 1,
+      ".jsonl": 148,
+      ".TAG": 1,
+      ".txt": 25,
+      ".js": 43,
+      ".ts": 3,
+      ".svelte": 3,
+      ".css": 3,
+      ".html": 2,
+      ".svg": 1,
+      ".png": 7,
+      ".backup_before_cleanrepair": 1,
+      ".log": 16,
+      ".bak_v1923": 1,
+      ".bak": 35,
+      ".bak_before_memory_wiring": 1,
+      ".bak_memory_wiring_20260729_180359": 1,
+      ".bak_v4254": 1,
+      ".bak_v4255": 1,
+      ".bak_v4256": 1,
+      ".bak_v4257": 1,
+      ".bak_v4258_pidfix": 1,
+      ".bak_v4259_before_repair": 1,
+      ".bak_v426_forensic_20260810_203808": 1,
+      ".bak_before_schema_fix": 1,
+      ".bak_schema_repair_v2": 1,
+      ".bak_before_close_patch": 1,
+      ".bak_before_threadsafe_fix": 1,
+      ".bak_SQLITE_V556_FINAL": 1,
+      ".bak_v556_REAL": 1,
+      ".bak_v554": 1,
+      ".bak_v555": 1,
+      ".bak_v556": 1,
+      ".csv": 1,
+      ".body": 1,
+      ".pyc": 2020,
+      ".sig": 1,
+      ".pub": 1,
+      ".lnk": 19,
+      ".hash": 2,
+      ".key": 2,
+      ".lock": 1,
+      ".sqlite3": 1,
+      ".pending": 4,
+      ".sha256": 11,
+      ".example": 3,
+      ".env": 2,
+      ".pid": 2,
+      ".zip": 1
+    },
+    "obsolete": []
+  },
+  "tech_debt": {
+    "todo": 657,
+    "fixme": 13,
+    "pass": 2400
+  },
+  "secrets_risk": [
+    ".env",
+    ".gitignore",
+    "discord_agent_v2.py",
+    "E-zzio_Cartographie_Self_Awareness.md",
+    "web_server.py",
+    ".pytest_cache\\v\\cache\\nodeids",
+    "audit\\filesystem.json",
+    "bridge\\brain\\20260610_112625_e650db26b0.json",
+    "bridge\\brain\\20260610_112635_fb02474825.json",
+    "bridge\\mobile\\20260610_112625_564283920f.json",
+    "bridge\\mobile\\20260610_112635_b6b70c7695.json",
+    "bridge\\mobile\\20260610_112655_5fe1514146.json",
+    "bridge\\mobile\\20260610_112655_70e60fab2b.json",
+    "bridge\\outbox\\20260610_112128_98a6c02eed.json",
+    "bridge\\outbox\\20260610_112625_b74dcc7791.json",
+    "bridge\\outbox\\20260610_112635_cb43fbe161.json",
+    "bridge\\outbox\\20260610_112655_c1f8f7432b.json",
+    "bridge\\outbox\\20260610_112655_c26e9b9dc8.json",
+    "bridge\\outbox\\20260610_112655_cd6f05333d.json",
+    "bridge\\outbox\\20260610_112655_d3eea67df4.json"
+  ],
+  "contracts_detected": [
+    "runtime\\hardware\\trust\\models\\contracts\\qwen2.5-7b.contract.json"
+  ],
+  "top_dependencies": [
+    [
+      "pathlib",
+      307
+    ],
+    [
+      "json",
+      203
+    ],
+    [
+      "os",
+      161
+    ],
+    [
+      "time",
+      146
+    ],
+    [
+      "sys",
+      137
+    ],
+    [
+      "typing",
+      113
+    ],
+    [
+      "datetime",
+      74
+    ],
+    [
+      "hashlib",
+      63
+    ],
+    [
+      "threading",
+      56
+    ],
+    [
+      "re",
+      52
+    ],
+    [
+      "dataclasses",
+      47
+    ],
+    [
+      "uuid",
+      44
+    ],
+    [
+      "psutil",
+      37
+    ],
+    [
+      "__future__",
+      35
+    ],
+    [
+      "fastapi",
+      31
+    ],
+    [
+      "enum",
+      25
+    ],
+    [
+      "shutil",
+      24
+    ],
+    [
+      "subprocess",
+      23
+    ],
+    [
+      "sqlite3",
+      22
+    ],
+    [
+      "ast",
+      22
+    ]
+  ]
+}

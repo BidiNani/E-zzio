@@ -1,0 +1,28 @@
+{
+  "schema_version": "V1.0-GRANULAR-HEALTH",
+  "timestamp": "2026-08-11T19:10:47.296560+00:00",
+  "providers": {
+    "gemini": {
+      "provider": "gemini",
+      "healthy": true,
+      "health_score": 1.0,
+      "availability": 1.0,
+      "quota_state": "available",
+      "success_rate": 1.0,
+      "pool_size": 5,
+      "last_error": null,
+      "checked_at": "2026-08-11T19:10:47.371720+00:00"
+    },
+    "groq": {
+      "provider": "groq",
+      "healthy": true,
+      "health_score": 1.0,
+      "availability": 1.0,
+      "quota_state": "available",
+      "success_rate": 1.0,
+      "pool_size": 2,
+      "last_error": null,
+      "checked_at": "2026-08-11T19:10:47.371720+00:00"
+    }
+  }
+}

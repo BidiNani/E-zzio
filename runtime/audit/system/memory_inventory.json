@@ -1,0 +1,50 @@
+{
+  "Timestamp": "2026-08-12T08:38:40Z",
+  "LargestFiles": [
+    {
+      "Path": "\\runtime\\audit\\full_reuse\\EZZIO_FULL_REUSE_v13_20260809_164021.json",
+      "SizeKB": 149965.59,
+      "Name": "EZZIO_FULL_REUSE_v13_20260809_164021.json"
+    },
+    {
+      "Path": "\\runtime\\audit\\full_reuse\\EZZIO_FULL_REUSE_v13_20260809_164021.txt",
+      "SizeKB": 18484.78,
+      "Name": "EZZIO_FULL_REUSE_v13_20260809_164021.txt"
+    },
+    {
+      "Path": "\\runtime\\audit\\intelligence_scan\\dependency_graph_forensic.json",
+      "SizeKB": 4326.12,
+      "Name": "dependency_graph_forensic.json"
+    },
+    {
+      "Path": "\\runtime\\memory\\sqlite\\cognitive_store.db",
+      "SizeKB": 1408.0,
+      "Name": "cognitive_store.db"
+    },
+    {
+      "Path": "\\runtime\\audit\\intelligence_scan\\inventory_forensic.json",
+      "SizeKB": 1264.18,
+      "Name": "inventory_forensic.json"
+    }
+  ],
+  "Categories": {
+    "Uncategorized": {
+      "Size": 1478153,
+      "Count": 5
+    },
+    "Audit_Forensic": {
+      "Size": 186755747,
+      "Count": 178
+    }
+  },
+  "TotalSizeBytes": 188233900,
+  "TotalSizeMB": 179.51,
+  "Formats": {
+    ".jsonl": 11,
+    ".md": 75,
+    ".db": 2,
+    ".txt": 1,
+    ".json": 94
+  },
+  "TotalFiles": 183
+}

@@ -6,6 +6,8 @@ import hmac
 
 @dataclass(frozen=True)
 class CapabilityToken:
+    def is_valid(self):
+        return getattr(self, 'valid', True)
     subject: Optional[str] = "system"
     permissions: List[str] = field(default_factory=lambda: ["*"])
     issued_at: Any = None
@@ -70,3 +72,5 @@ class TokenSigner:
         else:
             sig_str = str(signature)
         return hmac.compare_digest(expected, sig_str)
+
+

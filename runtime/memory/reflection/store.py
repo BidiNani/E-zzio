@@ -47,3 +47,9 @@ class ReflectionProposalStore:
                     )
         self.event_bus.emit("AuditLog", {"message": f"ReflectionProposalStore : {len(proposals)} propositions (contrat v{envelope.get('version', 'unknown')}) persistées.", "level": "INFO"})
 
+
+
+class ReflectionStore:
+    def __init__(self, *args, **kwargs):
+        pass
+

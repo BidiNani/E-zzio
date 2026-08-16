@@ -5,7 +5,7 @@ $ErrorActionPreference = "Stop"
 # E-ZZIO - Stop API
 # ============================================================
 
-$Port = 8000
+$PORT=8001
 
 Get-NetTCPConnection -LocalPort $Port -ErrorAction SilentlyContinue |
     Where-Object { $_.State -eq "Listen" } |
@@ -23,3 +23,4 @@ Get-NetTCPConnection -LocalPort $Port -ErrorAction SilentlyContinue |
 
 Start-Sleep -Seconds 2
 Write-Host "✅ API arrêtée si elle tournait." -ForegroundColor Green
+

@@ -1,0 +1,318 @@
+import os
+import sys
+import json
+import hashlib
+import queue
+import threading
+import time
+from pathlib import Path
+
+class ConcurrentSegmentedEngineV46:
+    def __init__(self, store_root: str, max_segment_size: int = 50 * 1024 * 1024, max_batch_size: int = 2000, max_batch_delay: float = 0.02):
+        self.store_root = Path(store_root)
+        self.segments_dir = self.store_root / "segments"
+        self.segments_dir.mkdir(parents=True, exist_ok=True)
+        self.manifest_path = self.store_root / "manifest.json"
+        self.manifest_sha_path = self.store_root / "manifest.json.sha256"
+        self.max_segment_size = max_segment_size
+        
+        self.max_batch_size = max_batch_size
+        self.max_batch_delay = max_batch_delay
+        
+        self.queue = queue.Queue(maxsize=100000)
+        self._stop_event = threading.Event()
+        self.accepting = True
+        self._fatal_error = None
+        
+        self._purge_orphaned_temps()
+        self.manifest = self._load_and_validate_manifest()
+        
+        self.commit_thread = threading.Thread(target=self._commit_loop, daemon=True)
+        self.commit_thread.start()
+
+    def _purge_orphaned_temps(self):
+        for tmp_file in self.store_root.glob("*.tmp"):
+            try:
+                tmp_file.unlink()
+            except Exception:
+                pass
+
+    def _verify_manifest_checksum(self) -> bool:
+        if not self.manifest_path.exists() or not self.manifest_sha_path.exists():
+            return False
+        try:
+            expected_sha = self.manifest_sha_path.read_text(encoding="utf-8").strip()
+            sha = hashlib.sha256()
+            with open(self.manifest_path, "rb") as f:
+                while chunk := f.read(8192):
+                    sha.update(chunk)
+            return sha.hexdigest() == expected_sha
+        except Exception:
+            return False
+
+    def _load_and_validate_manifest(self) -> dict:
+        if self._verify_manifest_checksum():
+            try:
+                with open(self.manifest_path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    manifest_seg_files = {s["file"] for s in data.get("segments", [])}
+                    if active_seg_id := data.get("active_segment_id"):
+                        manifest_seg_files.add(f"segment_{active_seg_id:06d}.jsonl")
+                    
+                    physical_seg_files = {p.name for p in self.segments_dir.glob("segment_*.jsonl")}
+                    if not physical_seg_files.issubset(manifest_seg_files):
+                        return self._reconstruct_manifest_from_disk()
+                    return data
+            except Exception:
+                pass
+        return self._reconstruct_manifest_from_disk()
+
+    def _reconstruct_manifest_from_disk(self) -> dict:
+        """Reconstruction basée sur la détection explicite du FOOTER de scellement."""
+        sealed_segments = []
+        active_candidates = []
+        max_id = 0
+
+        if self.segments_dir.exists():
+            for p in sorted(self.segments_dir.glob("segment_*.jsonl")):
+                try:
+                    seg_id = int(p.stem.split("_")[1])
+                    max_id = max(max_id, seg_id)
+                except Exception:
+                    continue
+
+                self._sanitize_segment_eof(p)
+                file_size = p.stat().st_size
+                if file_size == 0:
+                    continue
+
+                # Inspecte la dernière ligne pour détecter le Footer
+                is_sealed, footer_info = self._inspect_segment_footer(p)
+
+                sha = hashlib.sha256()
+                with open(p, "rb") as f:
+                    while chunk := f.read(8192):
+                        sha.update(chunk)
+
+                if is_sealed:
+                    sealed_segments.append({
+                        "id": seg_id,
+                        "file": p.name,
+                        "size": file_size,
+                        "state": "SEALED",
+                        "sealed": True,
+                        "sha256": sha.hexdigest()
+                    })
+                else:
+                    active_candidates.append(seg_id)
+
+        # Détermination stricte du segment actif
+        if active_candidates:
+            active_id = max(active_candidates)
+        elif max_id > 0:
+            active_id = max_id + 1
+        else:
+            active_id = 1
+
+        new_manifest = {
+            "active_segment_id": active_id,
+            "max_segment_size_bytes": self.max_segment_size,
+            "segments": sealed_segments
+        }
+        
+        self.manifest = new_manifest
+        self._save_manifest_atomic()
+        print(f"[RECOVERY V4.6] Manifeste reconstruit via Footers. Active ID: {active_id}, Segments Scellés: {len(sealed_segments)}", flush=True)
+        return new_manifest
+
+    def _inspect_segment_footer(self, file_path: Path) -> tuple[bool, dict]:
+        """Vérifie la présence d'une ligne FOOTER valide à la fin du fichier."""
+        try:
+            with open(file_path, "rb") as f:
+                f.seek(0, os.SEEK_END)
+                size = f.tell()
+                if size == 0:
+                    return False, {}
+                
+                # Lit les 2048 derniers octets
+                seek_pos = max(0, size - 2048)
+                f.seek(seek_pos)
+                lines = f.read().split(b"\n")
+                
+                for raw_line in reversed(lines):
+                    stripped = raw_line.strip()
+                    if not stripped:
+                        continue
+                    try:
+                        data = json.loads(stripped.decode("utf-8"))
+                        if isinstance(data, dict) and data.get("__type__") == "SEGMENT_FOOTER":
+                            return True, data
+                    except Exception:
+                        pass
+                    break # La dernière ligne non vide n'est pas un footer
+        except Exception:
+            pass
+        return False, {}
+
+    def seal_active_segment(self):
+        """Scelle le segment actif en écrivant le footer cryptographique avant fsync."""
+        active_path = self.get_active_segment_path()
+        if not active_path.exists():
+            return
+
+        seg_id = self.manifest["active_segment_id"]
+        
+        # 1. Calcul du SHA partiel
+        sha = hashlib.sha256()
+        with open(active_path, "rb") as f:
+            while chunk := f.read(8192):
+                sha.update(chunk)
+
+        # 2. Écriture du Footer physique
+        footer_obj = {
+            "__type__": "SEGMENT_FOOTER",
+            "segment_id": seg_id,
+            "state": "SEALED",
+            "timestamp": time.time(),
+            "payload_sha256_pre_footer": sha.hexdigest()
+        }
+        footer_line = json.dumps(footer_obj, ensure_ascii=False) + "\n"
+        
+        with open(active_path, "a", encoding="utf-8") as f:
+            f.write(footer_line)
+            f.flush()
+            os.fsync(f.fileno())
+
+        # 3. Calcul du SHA256 complet final avec le footer inclus
+        final_sha = hashlib.sha256()
+        with open(active_path, "rb") as f:
+            while chunk := f.read(8192):
+                final_sha.update(chunk)
+
+        self.manifest["segments"].append({
+            "id": seg_id,
+            "file": active_path.name,
+            "size": active_path.stat().st_size,
+            "state": "SEALED",
+            "sealed": True,
+            "sha256": final_sha.hexdigest()
+        })
+
+        self.manifest["active_segment_id"] += 1
+        self._save_manifest_atomic()
+        print(f"[ENGINE V4.6] Segment {active_path.name} scellé avec FOOTER. Nouvel ID actif : {self.manifest['active_segment_id']}", flush=True)
+
+    def _sanitize_segment_eof(self, file_path: Path):
+        if not file_path.exists() or file_path.stat().st_size == 0:
+            return
+        valid_lines = []
+        try:
+            with open(file_path, "rb") as f:
+                raw = f.read()
+            for index, raw_line in enumerate(raw.split(b"\n")):
+                stripped = raw_line.strip()
+                if not stripped:
+                    continue
+                try:
+                    decoded = stripped.decode("utf-8")
+                    json.loads(decoded)
+                    valid_lines.append(decoded)
+                except Exception:
+                    if index == len(raw.split(b"\n")) - 1:
+                        break
+                    else:
+                        raise RuntimeError()
+        except Exception:
+            return
+
+        with open(file_path, "w", encoding="utf-8") as f:
+            for line in valid_lines:
+                f.write(line + "\n")
+            f.flush()
+            os.fsync(f.fileno())
+
+    def _save_manifest_atomic(self):
+        temp_manifest = self.manifest_path.with_suffix(".json.tmp")
+        temp_sha = self.manifest_sha_path.with_suffix(".sha256.tmp")
+        manifest_data = json.dumps(self.manifest, indent=2)
+        
+        with open(temp_manifest, "w", encoding="utf-8") as f:
+            f.write(manifest_data)
+            f.flush()
+            os.fsync(f.fileno())
+
+        sha = hashlib.sha256()
+        sha.update(manifest_data.encode("utf-8"))
+        
+        with open(temp_sha, "w", encoding="utf-8") as f:
+            f.write(sha.hexdigest())
+            f.flush()
+            os.fsync(f.fileno())
+
+        os.replace(temp_manifest, self.manifest_path)
+        os.replace(temp_sha, self.manifest_sha_path)
+
+    def get_active_segment_path(self) -> Path:
+        return self.segments_dir / f"segment_{self.manifest['active_segment_id']:06d}.jsonl"
+
+    def write_event(self, event_data: dict):
+        if not self.accepting or self._fatal_error:
+            raise RuntimeError(f"Engine indisponible: {self._fatal_error}")
+        self.queue.put(event_data)
+
+    def _commit_loop(self):
+        try:
+            while not self._stop_event.is_set() or not self.queue.empty():
+                batch = []
+                start_time = time.time()
+                while len(batch) < self.max_batch_size:
+                    timeout = self.max_batch_delay - (time.time() - start_time)
+                    if timeout <= 0:
+                        break
+                    try:
+                        item = self.queue.get(timeout=max(0.001, timeout))
+                        batch.append(item)
+                    except queue.Empty:
+                        break
+                
+                if not batch:
+                    continue
+
+                batch_lines = [json.dumps(ev, ensure_ascii=False) + "\n" for ev in batch]
+                batch_bytes = sum(len(line.encode("utf-8")) for line in batch_lines)
+                active_path = self.get_active_segment_path()
+                
+                if active_path.exists() and (active_path.stat().st_size + batch_bytes) > self.max_segment_size:
+                    self.seal_active_segment()
+                    active_path = self.get_active_segment_path()
+
+                with open(active_path, "a", encoding="utf-8") as f:
+                    f.writelines(batch_lines)
+                    f.flush()
+                    os.fsync(f.fileno())
+
+                for _ in batch:
+                    self.queue.task_done()
+        except Exception as e:
+            self._fatal_error = e
+            self._stop_event.set()
+            while not self.queue.empty():
+                try:
+                    self.queue.get_nowait()
+                    self.queue.task_done()
+                except Exception:
+                    break
+            raise
+
+    def close(self):
+        self.accepting = False
+        while self.commit_thread.is_alive() and not self._fatal_error and not self.queue.empty():
+            time.sleep(0.01)
+
+        if self._fatal_error:
+            raise RuntimeError(f"Engine fatal error: {self._fatal_error}")
+
+        self.queue.join()
+        self._stop_event.set()
+        if self.commit_thread.is_alive():
+            self.commit_thread.join(timeout=2.0)

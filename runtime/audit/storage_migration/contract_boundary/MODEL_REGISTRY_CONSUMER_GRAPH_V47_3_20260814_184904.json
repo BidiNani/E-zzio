@@ -1,0 +1,342 @@
+{
+  "component": "MODEL_REGISTRY",
+  "version": "V47.3",
+  "scan_mode": "READ_ONLY_CONSUMER_GRAPH",
+  "timestamp": "2026-08-14T18:49:32.2233970+02:00",
+  "python_files_scanned": 19065,
+  "contracts_analyzed": 17,
+  "consumers": [
+    {
+      "ContractMethod": "_load_all_contracts",
+      "ConsumerCount": 1,
+      "Consumers": [
+        {
+          "Method": "_load_all_contracts",
+          "ConsumerFile": "runtime\\hardware\\trust\\models\\registry.py",
+          "UsageType": "REFERENCE_FOUND"
+        }
+      ]
+    },
+    {
+      "ContractMethod": "_verify_contract",
+      "ConsumerCount": 1,
+      "Consumers": [
+        {
+          "Method": "_verify_contract",
+          "ConsumerFile": "runtime\\hardware\\trust\\models\\registry.py",
+          "UsageType": "REFERENCE_FOUND"
+        }
+      ]
+    },
+    {
+      "ContractMethod": "resolve_contract",
+      "ConsumerCount": 2,
+      "Consumers": [
+        {
+          "Method": "resolve_contract",
+          "ConsumerFile": "runtime\\hardware\\trust\\models\\registry.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "resolve_contract",
+          "ConsumerFile": "runtime\\hardware\\trust\\models\\resolver.py",
+          "UsageType": "REFERENCE_FOUND"
+        }
+      ]
+    },
+    {
+      "ContractMethod": "resolve_resources",
+      "ConsumerCount": 2,
+      "Consumers": [
+        {
+          "Method": "resolve_resources",
+          "ConsumerFile": "runtime\\guardian\\test_v617_2_resolver.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "resolve_resources",
+          "ConsumerFile": "runtime\\hardware\\trust\\models\\resolver.py",
+          "UsageType": "REFERENCE_FOUND"
+        }
+      ]
+    },
+    {
+      "ContractMethod": "resolve_security",
+      "ConsumerCount": 1,
+      "Consumers": [
+        {
+          "Method": "resolve_security",
+          "ConsumerFile": "runtime\\hardware\\trust\\models\\resolver.py",
+          "UsageType": "REFERENCE_FOUND"
+        }
+      ]
+    },
+    {
+      "ContractMethod": "_verify_and_load",
+      "ConsumerCount": 1,
+      "Consumers": [
+        {
+          "Method": "_verify_and_load",
+          "ConsumerFile": "runtime\\contracts\\authority.py",
+          "UsageType": "REFERENCE_FOUND"
+        }
+      ]
+    },
+    {
+      "ContractMethod": "get_registry_version",
+      "ConsumerCount": 3,
+      "Consumers": [
+        {
+          "Method": "get_registry_version",
+          "ConsumerFile": "runtime\\audit\\v712_9_test_authority.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "get_registry_version",
+          "ConsumerFile": "runtime\\contracts\\authority.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "get_registry_version",
+          "ConsumerFile": "runtime\\contracts\\enforcer.py",
+          "UsageType": "REFERENCE_FOUND"
+        }
+      ]
+    },
+    {
+      "ContractMethod": "get_registry_epoch",
+      "ConsumerCount": 2,
+      "Consumers": [
+        {
+          "Method": "get_registry_epoch",
+          "ConsumerFile": "runtime\\contracts\\authority.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "get_registry_epoch",
+          "ConsumerFile": "runtime\\contracts\\enforcer.py",
+          "UsageType": "REFERENCE_FOUND"
+        }
+      ]
+    },
+    {
+      "ContractMethod": "get_hash_prefix",
+      "ConsumerCount": 2,
+      "Consumers": [
+        {
+          "Method": "get_hash_prefix",
+          "ConsumerFile": "runtime\\contracts\\authority.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "get_hash_prefix",
+          "ConsumerFile": "runtime\\contracts\\enforcer.py",
+          "UsageType": "REFERENCE_FOUND"
+        }
+      ]
+    },
+    {
+      "ContractMethod": "get_local_weights",
+      "ConsumerCount": 1,
+      "Consumers": [
+        {
+          "Method": "get_local_weights",
+          "ConsumerFile": "runtime\\contracts\\authority.py",
+          "UsageType": "REFERENCE_FOUND"
+        }
+      ]
+    },
+    {
+      "ContractMethod": "get_external_providers",
+      "ConsumerCount": 1,
+      "Consumers": [
+        {
+          "Method": "get_external_providers",
+          "ConsumerFile": "runtime\\contracts\\authority.py",
+          "UsageType": "REFERENCE_FOUND"
+        }
+      ]
+    },
+    {
+      "ContractMethod": "is_model_authorized",
+      "ConsumerCount": 4,
+      "Consumers": [
+        {
+          "Method": "is_model_authorized",
+          "ConsumerFile": "runtime\\audit\\v712_9_test_authority.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "is_model_authorized",
+          "ConsumerFile": "runtime\\audit\\v713_negative_authority_test.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "is_model_authorized",
+          "ConsumerFile": "runtime\\contracts\\authority.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "is_model_authorized",
+          "ConsumerFile": "runtime\\contracts\\enforcer.py",
+          "UsageType": "REFERENCE_FOUND"
+        }
+      ]
+    },
+    {
+      "ContractMethod": "_log_decision",
+      "ConsumerCount": 1,
+      "Consumers": [
+        {
+          "Method": "_log_decision",
+          "ConsumerFile": "runtime\\contracts\\enforcer.py",
+          "UsageType": "REFERENCE_FOUND"
+        }
+      ]
+    },
+    {
+      "ContractMethod": "route_inference",
+      "ConsumerCount": 3,
+      "Consumers": [
+        {
+          "Method": "route_inference",
+          "ConsumerFile": "runtime\\audit\\v713_1_ledger_test.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "route_inference",
+          "ConsumerFile": "runtime\\audit\\v713_enforcement_simulation.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "route_inference",
+          "ConsumerFile": "runtime\\contracts\\enforcer.py",
+          "UsageType": "REFERENCE_FOUND"
+        }
+      ]
+    },
+    {
+      "ContractMethod": "admit",
+      "ConsumerCount": 18,
+      "Consumers": [
+        {
+          "Method": "admit",
+          "ConsumerFile": ".venv\\Lib\\site-packages\\dateutil\\parser\\_parser.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "admit",
+          "ConsumerFile": ".venv\\Lib\\site-packages\\mpmath\\calculus\\differentiation.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "admit",
+          "ConsumerFile": ".venv\\Lib\\site-packages\\nltk\\tokenize\\legality_principle.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "admit",
+          "ConsumerFile": ".venv\\Lib\\site-packages\\packaging\\ranges.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "admit",
+          "ConsumerFile": ".venv\\Lib\\site-packages\\pygments\\lexers\\lean.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "admit",
+          "ConsumerFile": ".venv\\Lib\\site-packages\\pygments\\lexers\\ml.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "admit",
+          "ConsumerFile": ".venv\\Lib\\site-packages\\pygments\\lexers\\theorem.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "admit",
+          "ConsumerFile": ".venv\\Lib\\site-packages\\sympy\\solvers\\ode\\lie_group.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "admit",
+          "ConsumerFile": "runtime\\guardian\\test_v615_0_admission.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "admit",
+          "ConsumerFile": "runtime\\guardian\\test_v615_3_models.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "admit",
+          "ConsumerFile": "runtime\\guardian\\test_v615_governor.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "admit",
+          "ConsumerFile": "runtime\\hardware\\trust\\execution\\admission\\controller.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "admit",
+          "ConsumerFile": "tools\\voice_converter\\.venv\\Lib\\site-packages\\mpmath\\calculus\\differentiation.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "admit",
+          "ConsumerFile": "tools\\voice_converter\\.venv\\Lib\\site-packages\\packaging\\ranges.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "admit",
+          "ConsumerFile": "tools\\voice_converter\\.venv\\Lib\\site-packages\\sympy\\solvers\\ode\\lie_group.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "admit",
+          "ConsumerFile": "tools\\voice_converter\\.venv\\Lib\\site-packages\\torch\\distributed\\elastic\\rendezvous\\api.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "admit",
+          "ConsumerFile": "tools\\voice_converter\\.venv\\Lib\\site-packages\\torch\\distributed\\elastic\\rendezvous\\dynamic_rendezvous.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "admit",
+          "ConsumerFile": "tools\\voice_converter\\.venv\\Lib\\site-packages\\torch\\distributed\\elastic\\rendezvous\\etcd_rendezvous.py",
+          "UsageType": "REFERENCE_FOUND"
+        }
+      ]
+    },
+    {
+      "ContractMethod": "_sign_grant",
+      "ConsumerCount": 1,
+      "Consumers": [
+        {
+          "Method": "_sign_grant",
+          "ConsumerFile": "runtime\\hardware\\trust\\execution\\admission\\controller.py",
+          "UsageType": "REFERENCE_FOUND"
+        }
+      ]
+    },
+    {
+      "ContractMethod": "enforce_budget",
+      "ConsumerCount": 2,
+      "Consumers": [
+        {
+          "Method": "enforce_budget",
+          "ConsumerFile": "runtime\\hardware\\trust\\execution\\admission\\controller.py",
+          "UsageType": "REFERENCE_FOUND"
+        },
+        {
+          "Method": "enforce_budget",
+          "ConsumerFile": "runtime\\hardware\\trust\\models_governance\\budget.py",
+          "UsageType": "REFERENCE_FOUND"
+        }
+      ]
+    }
+  ]
+}

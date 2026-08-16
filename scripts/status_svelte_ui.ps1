@@ -6,7 +6,7 @@ $frontend = $false
 $frontendPid = $null
 
 try {
-    $api = Invoke-RestMethod "http://127.0.0.1:8000/status" -Method GET -TimeoutSec 5
+    $api = Invoke-RestMethod "http://127.0.0.1:8001/status" -Method GET -TimeoutSec 5
     $backend = $true
 } catch {}
 
@@ -30,6 +30,7 @@ Write-Host "=== E-ZZIO SVELTE UI STATUS ===" -ForegroundColor Cyan
     backend_online = $backend
     frontend_online = $frontend
     frontend_pid = $frontendPid
-    backend_url = "http://127.0.0.1:8000/status"
+    backend_url = "http://127.0.0.1:8001/status"
     frontend_url = "http://127.0.0.1:5173"
 }
+

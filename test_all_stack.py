@@ -15,6 +15,7 @@ from core.providers.tavily_provider import TavilyProvider
 from runtime.core.ezzio_core import EzzioCore
 from interfaces.api.server import app
 from routers.research import _evidence_store
+from routers.chat import _core as chat_core
 import httpx
 
 async def run_master_check():
@@ -102,21 +103,22 @@ async def run_master_check():
 
     # --- 5. ENDPOINTS FASTAPI EN TRANSPORT ASGI DIRECT ---
     print("[5/5] TEST ENDPOINTS HTTP API (Transport Direct ASGI)...")
-    # Initialisation explicite du store de l'API
+    # Initialisation explicite des magasins de la couche API
     await _evidence_store.init()
-    
+    await chat_core.init()
+
     transport = httpx.ASGITransport(app=app)
     async with httpx.AsyncClient(transport=transport, base_url="http://testserver", timeout=120.0) as client:
         # Health check
         h_resp = await client.get("/health")
         assert h_resp.status_code == 200, f"Health check failed: {h_resp.text}"
-        
+
         # Route Research (Google Mode)
         r_resp = await client.post("/api/v1/research/search", json={"query": "Microkernel IPC", "mode": "google"})
         if r_resp.status_code != 200:
             print(f"      [ERREUR DETAIL] /api/v1/research/search HTTP {r_resp.status_code} : {r_resp.text}")
         assert r_resp.status_code == 200, "Research route failed"
-        
+
         # Route Chat Autonome
         c_resp = await client.post("/api/v1/chat", json={"message": "Explique SQLite WAL en 1 phrase.", "user_id": "root"})
         if c_resp.status_code != 200:

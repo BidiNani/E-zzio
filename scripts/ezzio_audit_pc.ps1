@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-$api = Invoke-RestMethod "http://127.0.0.1:8000/maintenance/audit" -Method GET -TimeoutSec 180
+$api = Invoke-RestMethod "http://127.0.0.1:8001/maintenance/audit" -Method GET -TimeoutSec 180
 
 $scriptErrors = @()
 
@@ -30,3 +30,4 @@ Get-ChildItem "G:\AI\E-zzio\scripts" -Filter "*.ps1" -File -ErrorAction Silently
     bad = $api.bad
     ps_errors = $scriptErrors
 }
+

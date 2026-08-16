@@ -9,7 +9,7 @@ $body = @{
     note = $Note
 } | ConvertTo-Json -Depth 10
 
-$res = Invoke-RestMethod "http://127.0.0.1:8000/human/reflect" `
+$res = Invoke-RestMethod "http://127.0.0.1:8001/human/reflect" `
     -Method POST `
     -ContentType "application/json" `
     -TimeoutSec 90 `
@@ -25,3 +25,4 @@ Write-Host "=== E-ZZIO HUMAN REFLECTION ===" -ForegroundColor Cyan
     recent_event_count = $res.recent_event_count
     reflection = $res.reflection
 }
+

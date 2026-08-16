@@ -1,0 +1,95 @@
+import asyncio
+import time
+import numpy as np
+from .vad import VADController
+
+class AsyncAudioRecorder:
+    def __init__(self, vad_model_path: str, sample_rate: int = 16000, chunk_samples: int = 512, virtual_mode: bool = False):
+        self.sample_rate = sample_rate
+        self.chunk_samples = chunk_samples
+        self.virtual_mode = virtual_mode
+        
+        self.queue = asyncio.Queue(maxsize=5)
+        self._stream = None
+        self._is_recording = False
+        self.vad = VADController(model_path=vad_model_path)
+        
+        self.loop = None
+        self.overflow_count = 0
+
+    def feed_virtual_chunk(self, chunk: np.ndarray, t1_timestamp: float):
+        """Injection déterministe pour tests sans appel C++ PortAudio."""
+        try:
+            self.queue.put_nowait((chunk, t1_timestamp))
+        except asyncio.QueueFull:
+            self.overflow_count += 1
+            try:
+                self.queue.get_nowait()
+            except asyncio.QueueEmpty:
+                pass
+            self.queue.put_nowait((chunk, t1_timestamp))
+
+    def _callback(self, indata, frames, ctime, status):
+        t1_callback = time.perf_counter()
+        chunk = indata.copy()
+        
+        def _put():
+            self.feed_virtual_chunk(chunk, t1_callback)
+
+        if self.loop and self.loop.is_running():
+            self.loop.call_soon_threadsafe(_put)
+
+    def _start_portaudio(self):
+        if self.virtual_mode:
+            return
+        import sounddevice as sd
+        self._stream = sd.InputStream(
+            samplerate=self.sample_rate,
+            channels=1,
+            dtype='float32',
+            blocksize=self.chunk_samples,
+            callback=self._callback
+        )
+        self._stream.start()
+
+    async def listen_stream(self):
+        if self._is_recording:
+            return
+            
+        self.loop = asyncio.get_running_loop()
+        self._is_recording = True
+        self.vad.reset()
+        self._start_portaudio()
+
+        try:
+            while self._is_recording:
+                try:
+                    chunk, t1_timestamp = await self.queue.get()
+                except asyncio.CancelledError:
+                    break
+                    
+                t2_dequeue = time.perf_counter()
+                vad_result = self.vad.process_chunk(chunk, t2_dequeue)
+                vad_result["metrics"]["t1_callback"] = t1_timestamp
+                vad_result["metrics"]["t2_dequeue"] = t2_dequeue
+                vad_result["metrics"]["t0_est"] = t1_timestamp
+                
+                yield vad_result
+        finally:
+            self.stop()
+
+    def stop(self):
+        self._is_recording = False
+        if self._stream:
+            try:
+                self._stream.stop()
+                self._stream.close()
+            except Exception:
+                pass
+            self._stream = None
+            
+        while not self.queue.empty():
+            try:
+                self.queue.get_nowait()
+            except asyncio.QueueEmpty:
+                break

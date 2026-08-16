@@ -1,10 +1,10 @@
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-$url = "http://127.0.0.1:8000/ui"
+$url = "http://127.0.0.1:8001/ui"
 
 try {
-    $status = Invoke-RestMethod "http://127.0.0.1:8000/status" -Method GET -TimeoutSec 5
+    $status = Invoke-RestMethod "http://127.0.0.1:8001/status" -Method GET -TimeoutSec 5
     Write-Host "E-ZZIO API OK : $($status.version)" -ForegroundColor Green
 }
 catch {
@@ -14,3 +14,4 @@ catch {
 
 Write-Host "Ouverture : $url" -ForegroundColor Cyan
 Start-Process $url
+

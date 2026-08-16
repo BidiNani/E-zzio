@@ -1,0 +1,66 @@
+{
+  "routes": {
+    "code": "qwen2.5-coder:7b",
+    "fast_reply": "gemma4e4b:latest",
+    "chat": "gemma4e4b:latest",
+    "embeddings": "nomic-embed-text:latest",
+    "analysis": "qwen3:8b",
+    "general": "gemma4e4b:latest",
+    "reasoning": "qwen3:8b"
+  },
+  "catalog": {
+    "nomic-embed-text:latest": {
+      "provider": "ollama",
+      "type": "embedding",
+      "capabilities": [
+        "embeddings",
+        "memory"
+      ]
+    },
+    "qwen3:8b": {
+      "max_complexity": "high",
+      "provider": "ollama",
+      "options": {
+        "num_ctx": 4096,
+        "temperature": 0.3,
+        "num_predict": 1024
+      },
+      "keep_alive": "10m",
+      "capabilities": [
+        "reasoning",
+        "code",
+        "analysis"
+      ]
+    },
+    "qwen2.5-coder:7b": {
+      "max_complexity": "high",
+      "provider": "ollama",
+      "options": {
+        "num_ctx": 4096,
+        "temperature": 0.3,
+        "num_predict": 1024
+      },
+      "keep_alive": "10m",
+      "capabilities": [
+        "code",
+        "engineering"
+      ]
+    },
+    "gemma4e4b:latest": {
+      "max_complexity": "low",
+      "provider": "ollama",
+      "options": {
+        "num_ctx": 4096,
+        "temperature": 0.7,
+        "num_predict": 200
+      },
+      "keep_alive": "30m",
+      "capabilities": [
+        "chat",
+        "general",
+        "fast_reply"
+      ]
+    }
+  },
+  "default_model": "gemma4e4b:latest"
+}

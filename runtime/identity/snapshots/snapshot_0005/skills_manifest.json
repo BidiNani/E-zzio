@@ -1,0 +1,9 @@
+{
+  "manifest_version": "1.0.0",
+  "skills": [
+    "intelligence_router",
+    "fault_tolerant_core",
+    "immutable_ledger",
+    "disaster_recovery"
+  ]
+}

@@ -28,7 +28,7 @@ foreach ($test in $tests) {
 
     $body = $test | ConvertTo-Json -Depth 10
 
-    $res = Invoke-RestMethod "http://127.0.0.1:8000/brain/chat" `
+    $res = Invoke-RestMethod "http://127.0.0.1:8001/brain/chat" `
         -Method POST `
         -ContentType "application/json" `
         -TimeoutSec 240 `
@@ -42,3 +42,4 @@ foreach ($test in $tests) {
         reply = $res.reply
     }
 }
+

@@ -1,0 +1,57 @@
+{
+  "organism": "E-ZZIO",
+  "framework_version": "V7.70.2",
+  "constitution_version": "1.0-IMMUTABLE",
+  "timestamp_utc": "2026-08-12T14:12:34.515582+00:00",
+  "domains": {
+    "IDENTITY_CONTINUITY": {
+      "score": "10/10",
+      "status": "PASS",
+      "attestation": "Core initialized with mentor link"
+    },
+    "CONSTITUTION": {
+      "score": "10/10",
+      "status": "PASS",
+      "attestation": "Invariants locked and enforced"
+    },
+    "ECOL_GOVERNANCE": {
+      "score": "10/10",
+      "status": "PASS",
+      "attestation": "Baseline V7.65 mathematically verified"
+    },
+    "UNIVERSAL_GATEWAY": {
+      "score": "10/10",
+      "status": "PASS",
+      "attestation": "No-bypass enforcement active"
+    },
+    "SECURITY_DPAPI": {
+      "score": "10/10",
+      "status": "PASS",
+      "attestation": "OS-bound secret isolation verified"
+    },
+    "MEMORY_GOVERNANCE": {
+      "score": "10/10",
+      "status": "PASS",
+      "attestation": "Context and writes governed"
+    },
+    "EVOLUTION_ENGINE": {
+      "score": "10/10",
+      "status": "PASS",
+      "attestation": "Skills quarantined and audited"
+    },
+    "PROVENANCE_TRACE": {
+      "score": "10/10",
+      "status": "PASS",
+      "attestation": "Ledger hash chaining active"
+    }
+  },
+  "global_status": "10/10 ABSOLUTE CERTIFIED",
+  "metrics": {
+    "drift": "ZERO_DRIFT",
+    "bypass_attempts": 0,
+    "unverified_skills": 0,
+    "uncertified_changes": 0,
+    "critical_incidents": 0
+  },
+  "certificate_signature_hmac": "eff4911735f5c4b106b259cc278effae38cd65f4b20f8f99e0ff881ebc01894d"
+}

@@ -1,0 +1,64 @@
+{
+  "target_file": "runtime/recovery/decision/engine.py",
+  "exists": true,
+  "import_found": true,
+  "analysis": [
+    {
+      "module": "runtime.recovery.contracts",
+      "lineno": 8,
+      "type": "ImportFrom"
+    },
+    {
+      "module": "runtime.recovery.decision.policies",
+      "lineno": 9,
+      "type": "ImportFrom"
+    },
+    {
+      "module": "runtime.recovery.decision.governor",
+      "lineno": 10,
+      "type": "ImportFrom"
+    },
+    {
+      "module": "runtime.recovery.rollback.manager",
+      "lineno": 11,
+      "type": "ImportFrom"
+    },
+    {
+      "module": "runtime.recovery.ledger",
+      "lineno": 12,
+      "type": "ImportFrom"
+    },
+    {
+      "module": "runtime.recovery.executor.quarantine",
+      "lineno": 13,
+      "type": "ImportFrom"
+    },
+    {
+      "module": "runtime.recovery.executor.scaling",
+      "lineno": 14,
+      "type": "ImportFrom"
+    },
+    {
+      "module": "runtime.recovery.executor.retry",
+      "lineno": 15,
+      "type": "ImportFrom"
+    }
+  ],
+  "available_active_modules": [
+    "runtime/action/executor.py",
+    "runtime/agent/executor.py",
+    "runtime/governance/rollback.py",
+    "runtime/hardware/router/executor.py",
+    "runtime/recovery/executor/base.py",
+    "runtime/recovery/executor/retry.py",
+    "runtime/recovery/executor/scaling.py",
+    "runtime/recovery/executor/__init__.py",
+    "runtime/recovery/rollback/manager.py",
+    "runtime/recovery/rollback/__init__.py",
+    "runtime/tools/executors/filesystem.py",
+    "runtime/tools/executors/git.py",
+    "runtime/tools/executors/powershell.py",
+    "runtime/tools/executors/reflector.py",
+    "runtime/tools/executors/__init__.py"
+  ]
+}

@@ -1,0 +1,11 @@
+class EventTypes:
+    EXECUTION_REQUESTED = "ExecutionRequested"
+    EXECUTION_AUTHORIZED = "ExecutionAuthorized"
+    EXECUTION_DENIED = "ExecutionDenied"
+    WORKER_STARTED = "WorkerStarted"
+    WORKER_COMPLETED = "WorkerCompleted"
+    WORKER_TIMEOUT = "WorkerTimeout"
+    WORKER_KILLED = "WorkerKilled"
+    LEDGER_COMMITTED = "LedgerCommitted"
+    CONSTITUTION_LOADED = "ConstitutionLoaded"
+    RUNTIME_READY = "RuntimeReady"

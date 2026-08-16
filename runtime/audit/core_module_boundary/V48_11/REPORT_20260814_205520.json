@@ -1,0 +1,14 @@
+{
+  "component": "E-ZZIO_ARCHITECTURE_COUPLING_ANALYZER",
+  "version": "V48.11",
+  "mode": "READ_ONLY_FORENSIC",
+  "modules": 647,
+  "average_score": 9.98,
+  "critical": 0,
+  "safety": [
+    "READ_ONLY",
+    "NO_DELETE",
+    "NO_MOVE",
+    "NO_MUTATION"
+  ]
+}

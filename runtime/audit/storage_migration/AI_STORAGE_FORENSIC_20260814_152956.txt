@@ -1,0 +1,388 @@
+E-ZZIO — AI STORAGE FORENSIC AUDIT
+Timestamp : 2026-08-14 15:31:49
+Mode      : READ-ONLY
+
+=== DRIVES ===
+
+
+=== AI PATHS / FILES ===
+
+Drive Path
+----- ----                                                                                                                
+G     G:\AI\E-zzio\tools\voice_converter\.venv\Lib\site-packages\distutils-precedence.pth                                 
+G     G:\AI\E-zzio\.venv\Lib\site-packages\distutils-precedence.pth                                                       
+G     G:\AI\E-zzio\runtime\cache\pip\wheels\1a\b0\8c\4b75c4116c31f83c8f9f047231251e13cc74481cca4a78a9ce\docopt-0.6.2-py2.…
+G     G:\AI\E-zzio\.venv\Lib\site-packages\scipy-1.17.1-cp311-cp311-win_amd64.whl                                         
+G     G:\AI\E-zzio\runtime\realtime\models\kokoro\current\kokoro-v0_19.onnx                                               
+G     G:\AI\E-zzio\runtime\realtime\audio\voices\fr_FR-siwis-medium.onnx                                                  
+G     G:\AI\E-zzio\.venv\Lib\site-packages\pipecat\audio\turn\smart_turn\data\smart-turn-v3.2-cpu.onnx                    
+G     G:\AI\E-zzio\runtime\realtime\models\vad\silero_vad.onnx                                                            
+G     G:\AI\E-zzio\runtime\realtime\models\silero_vad.onnx                                                                
+G     G:\AI\E-zzio\.venv\Lib\site-packages\pipecat\audio\vad\data\silero_vad.onnx                                         
+G     G:\AI\E-zzio\.venv\Lib\site-packages\faster_whisper\assets\silero_vad_v6.onnx                                       
+G     G:\AI\E-zzio\.venv\Lib\site-packages\onnxruntime\datasets\logreg_iris.onnx                                          
+G     G:\AI\E-zzio\.venv\Lib\site-packages\onnxruntime\datasets\sigmoid.onnx                                              
+G     G:\AI\E-zzio\.venv\Lib\site-packages\onnxruntime\datasets\mul_1.onnx                                                
+G     G:\AI\E-zzio\runtime\realtime\models\kokoro\current\voices.bin                                                      
+G     G:\Ollama\Models\manifests\registry.ollama.ai\library\gemma-4-E4B-it-Q4_K_M.gguf                                    
+G     G:\AI\E-zzio\runtime\realtime\audio\voices\fr_FR-siwis-medium.onnx.json                                             
+C     C:\Users\enrik\AppData\Local\hermes\hermes-agent\venv\Lib\site-packages\distutils-precedence.pth                    
+C     C:\Users\enrik\AppData\Local\hermes\hermes-agent\venv\Lib\site-packages\_virtualenv.pth                             
+C     C:\Users\enrik\AppData\Local\hermes\hermes-agent\venv\Lib\site-packages\__editable__.hermes_agent-0.18.2.pth        
+C     C:\Users\enrik\AppData\Local\FortniteGame\Intermediate\PipInstall\Lib\site-packages\learning_agents.pth             
+C     C:\Users\enrik\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\site-packages\distutils-preceden…
+C     C:\Users\enrik\.cache\huggingface\hub\models--hexgrad--Kokoro-82M\snapshots\f3ff3571791e39611d31c381e3a41a3af07b498…
+C     C:\Users\enrik\AppData\Local\uv\cache\archive-v0\KTY55-bOFPDUZYqo\__editable__.hermes_agent-0.18.2.pth              
+C     C:\Users\enrik\AppData\Local\uv\cache\archive-v0\sx7BjHkbJPbjYW_c\pywin32.pth                                       
+C     C:\Users\enrik\AppData\Local\uv\cache\archive-v0\T9yQXqrMKKRAEI9v\distutils-precedence.pth                          
+C     C:\Users\enrik\AppData\Roaming\uv\python\cpython-3.11.15-windows-x86_64-none\Lib\site-packages\distutils-precedence…
+C     C:\Users\enrik\lib\oracle-cli\Lib\site-packages\distutils-precedence.pth                                            
+C     C:\Users\enrik\AppData\Local\hermes\hermes-agent\venv\Lib\site-packages\google_generativeai-0.8.6-py3.13-nspkg.pth  
+C     C:\Users\enrik\AppData\Local\hermes\hermes-agent\venv\Lib\site-packages\pywin32.pth                                 
+C     C:\Users\enrik\AppData\Roaming\uv\python\cpython-3.11.15-windows-x86_64-none\Lib\ensurepip\_bundled\pip-24.0-py3-no…
+C     C:\Users\enrik\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\ensurepip\_bundled\pip-25.0.1-py…
+C     C:\Users\enrik\AppData\Roaming\uv\python\cpython-3.14.5-windows-x86_64-none\Lib\ensurepip\_bundled\pip-26.1.1-py3-n…
+C     C:\Users\enrik\AppData\Roaming\uv\python\cpython-3.11.15-windows-x86_64-none\Lib\ensurepip\_bundled\setuptools-79.0…
+C     C:\Users\enrik\AppData\Local\uv\cache\sdists-v9\editable\5f1b90d7dff4884f\tNCA1-J7jrw8IJgB\hermes_agent-0.18.2-0.ed…
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\20317442\files\160_E658700.bin                                       
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\20317696\files\160_E658700.bin                                       
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\20317440\files\160_E658700.bin                                       
+C     C:\ProgramData\NVIDIA\NGX\models\dlssd\versions\20316928\files\160_E658700.bin                                      
+C     C:\ProgramData\NVIDIA\NGX\models\dlssd\versions\20317442\files\160_E658700.bin                                      
+C     C:\ProgramData\NVIDIA\NGX\models\dlssd\versions\20317440\files\160_E658700.bin                                      
+C     C:\ProgramData\NVIDIA\NGX\models\dlssd\versions\20317696\files\160_E658700.bin                                      
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\20316928\files\160_E658700.bin                                       
+C     C:\Users\enrik\AppData\Local\Ubisoft\Rainbow Six - Siege\ekshadersPCDX12_cache.bin                                  
+C     C:\ProgramData\Microsoft\Windows Defender\Scans\mpcache-4115FABF84F9EC04AA50BCD085F3FA4164073629.bin                
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\131529\files\160_B9FACDC.bin                                         
+C     C:\Users\enrik\AppData\Local\zen\Profiles\45jchyg8.Default (release)\startupCache\scriptCache-current.bin           
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\131529\files\160_B9C3560.bin                                         
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\131529\files\160_B9BF564.bin                                         
+C     C:\Users\enrik\AppData\Local\zen\Profiles\45jchyg8.Default (release)\startupCache\scriptCache.bin                   
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\131599\files\160_B9CF688.bin                                         
+C     C:\Users\enrik\AppData\Local\librewolf\Profiles\v46y8z83.default-default\startupCache\scriptCache-current.bin       
+C     C:\Users\enrik\AppData\Local\librewolf\Profiles\v46y8z83.default-default\startupCache\scriptCache.bin               
+C     C:\Users\enrik\AppData\Local\NVIDIA\GLCache\770f4fef79200de23d313865e4691c0d\186620256eaaf137\c6e976b0770384dd.bin  
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\66157\files\160_B9DAE68.bin                                          
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\131356\files\160_B9D3EF0.bin                                         
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\66157\files\160_B9D8C54.bin                                          
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\131356\files\160_B9B0430.bin                                         
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\66157\files\160_E99B5EC.bin                                          
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\131357\files\160_B9F5618.bin                                         
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\131356\files\160_F7361DC.bin                                         
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\131356\files\160_B9E26B0.bin                                         
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\66158\files\160_B9D2F5C.bin                                          
+C     C:\ProgramData\NVIDIA\NGX\models\dlssg\versions\20317442\files\160_E658700.bin                                      
+C     C:\Users\enrik\AppData\Roaming\Netease\Mpay\MWSlocalStorage\ngwebview_x20_steam\OnDeviceHeadSuggestModel\20251024.8…
+C     C:\Users\enrik\AppData\Local\BraveSoftware\Brave-Browser\User Data\OnDeviceHeadSuggestModel\20251024.824731831.14\c…
+C     C:\ProgramData\NVIDIA\NGX\models\dlssg\versions\20317440\files\160_E658700.bin                                      
+C     C:\ProgramData\NVIDIA\NGX\models\dlssg\versions\20316928\files\160_E658700.bin                                      
+C     C:\ProgramData\NVIDIA\NGX\models\dlssg\versions\20317696\files\160_E658700.bin                                      
+C     C:\Users\enrik\AppData\Local\Epic Games\EOSOverlay\BrowserCache\0\OnDeviceHeadSuggestModel\20251024.824731831.14\cr…
+C     C:\Users\enrik\AppData\Local\Epic Games\EOSOverlay\BrowserCache\1\OnDeviceHeadSuggestModel\20251024.824731831.14\cr…
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\66410\files\160_B9DF510.bin                                          
+C     C:\ProgramData\NVIDIA\NGX\models\dlisp\versions\66405\files\160_B9DF510.bin                                         
+C     C:\ProgramData\Microsoft\Windows Defender\Support\MpWppTracing-20260813-150935-00000003-fffffffeffffffff.bin        
+C     C:\ProgramData\NVIDIA\NGX\models\dlisp\versions\20316160\files\160_E658703.bin                                      
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\65644\files\160_B9FF4BC.bin                                          
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\65644\files\160_B9FEB50.bin                                          
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\65644\files\160_B9FD6C0.bin                                          
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\65644\files\160_B9FD524.bin                                          
+C     C:\ProgramData\Microsoft\Windows Defender\Scans\History\CacheManager\4DFA38B3-8A46-47A1-BBD4-AAAE337F8EDE-0.bin     
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\65644\files\160_B9DB4F4.bin                                          
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\65644\files\160_B9CB0B8.bin                                          
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\65644\files\160_B9DFA64.bin                                          
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\65644\files\160_B9D48D0.bin                                          
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\65644\files\160_B9D7388.bin                                          
+C     C:\ProgramData\NVIDIA\NGX\models\dlss\versions\65644\files\160_B9D6F08.bin                                          
+C     C:\Users\enrik\AppData\Roaming\zen\Profiles\45jchyg8.Default (release)\security_state\data.safe.bin                 
+C     C:\Users\enrik\AppData\Local\Microsoft\SSMS\22.0_59da8ebd\privateregistry.bin                                       
+C     C:\ProgramData\Epic\EpicGamesLauncher\Data\Catalog\catcache.bin                                                     
+C     C:\Users\enrik\AppData\Roaming\librewolf\Profiles\v46y8z83.default-default\security_state\data.safe.bin             
+C     C:\Users\enrik\AppData\Local\NVIDIA\GLCache\c30d67effd5a80bf51a0817799acf3c8\96df249bb179d595\946278c574973d09.bin  
+C     C:\Users\enrik\AppData\Local\Microsoft\GameDVR\KnownGameList.bin                                                    
+C     C:\ProgramData\NVIDIA Corporation\Drs\nvdrsdb1.bin                                                                  
+C     C:\ProgramData\NVIDIA\NGX\models\dlisp\versions\66154\files\160_B9D8C54.bin                                         
+C     C:\ProgramData\NVIDIA\NGX\models\dlisp\versions\66154\files\160_B9D2F5C.bin                                         
+C     C:\Users\enrik\AppData\Local\NVIDIA\GLCache\c30d67effd5a80bf51a0817799acf3c8\96df249bb179d595\946278c574973d08.bin  
+C     C:\ProgramData\NVIDIA\NGX\models\dlisp\versions\66154\files\160_B9DAE68.bin                                         
+C     C:\ProgramData\NVIDIA Corporation\Drs\nvdrsdb0.bin                                                                  
+C     C:\ProgramData\LGHUB\depots\824196\core\LGHUB\v8_context_snapshot.bin                                               
+C     C:\Users\enrik\AppData\Local\Amazon Games\App\Amazon Games UI\v8_context_snapshot.bin                               
+C     C:\Users\enrik\AppData\Local\TopHeroes\packages\workDir\TopHeroes_Data\Plugins\x86_64\VuplexWebViewChromium\v8_cont…
+C     C:\Users\enrik\AppData\Local\zen\Profiles\45jchyg8.Default (release)\startupCache\scriptCache-child.bin             
+C     C:\Users\enrik\AppData\Local\VortxEngine\app-2.5.74\Signal-x64\resources\v8_context_snapshot.bin                    
+C     C:\Users\enrik\AppData\Local\VortxEngine\app-2.5.72\Signal-x64\resources\v8_context_snapshot.bin                    
+C     C:\ProgramData\Packer\catcache4.bin                                                                                 
+C     C:\ProgramData\GOG.com\Galaxy\redists\overlay\v8_context_snapshot.bin                                               
+C     C:\Users\enrik\AppData\Local\Programs\Archon App\v8_context_snapshot.bin                                            
+C     C:\Users\enrik\AppData\Local\Programs\ReviewTool.gg\v8_context_snapshot.bin                                         
+C     C:\Users\enrik\AppData\Local\Discord\app-1.0.9252\v8_context_snapshot.bin                                           
+C     C:\Users\enrik\AppData\Local\hermes\hermes-agent\apps\desktop\release\win-unpacked\v8_context_snapshot.bin          
+C     C:\Users\enrik\AppData\Local\hermes\hermes-agent\node_modules\electron\dist\v8_context_snapshot.bin                 
+C     C:\Users\enrik\AppData\Local\librewolf\Profiles\v46y8z83.default-default\startupCache\scriptCache-child-current.bin 
+C     C:\Users\enrik\AppData\Local\ms-playwright\chromium-1228\chrome-win64\v8_context_snapshot.bin                       
+C     C:\Users\enrik\AppData\Local\ms-playwright\chromium_headless_shell-1228\chrome-headless-shell-win64\v8_context_snap…
+C     C:\Users\enrik\AppData\Local\NVIDIA\GLCache\3f3bca284cd30839f8421d1bb8e25cc8\96df249bb179d595\5ea7f2c6cd35d8a4.bin  
+C     C:\Users\enrik\AppData\Local\NVIDIA\GLCache\3f3bca284cd30839f8421d1bb8e25cc8\96df249bb179d595\946278c574973d08.bin  
+C     C:\Users\enrik\AppData\Local\NVIDIA\GLCache\3f3bca284cd30839f8421d1bb8e25cc8\96df249bb179d595\aaa39bdd34d1ef89.bin  
+C     C:\Users\enrik\AppData\Local\NVIDIA\GLCache\c30d67effd5a80bf51a0817799acf3c8\96df249bb179d595\946278c574973d0a.bin  
+C     C:\Users\enrik\AppData\Local\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\TempState\TileCache_1…
+C     C:\Users\enrik\AppData\Local\TopHeroes\app-1.115.11\TopHeroes_Data\Plugins\x86_64\VuplexWebViewChromium\v8_context_…
+C     C:\ProgramData\NVIDIA\NGX\models\dlisp\versions\66150\files\160_E99B5EC.bin                                         
+C     C:\Users\enrik\AppData\Local\Programs\wago-app\v8_context_snapshot.bin                                              
+C     C:\Users\enrik\AppData\Local\NVIDIA\GLCache\c30d67effd5a80bf51a0817799acf3c8\96df249bb179d595\5ea7f2c6cd35d8a4.bin  
+C     C:\Users\enrik\AppData\Local\Programs\Warperia\v8_context_snapshot.bin                                              
+C     C:\Users\enrik\AppData\Local\TopHeroes\app-1.113.11\TopHeroes_Data\Plugins\x86_64\VuplexWebViewChromium\v8_context_…
+C     C:\ProgramData\NVIDIA\NGX\models\dlisp\versions\131343\files\160_B9CF688.bin                                        
+C     C:\Users\enrik\AppData\Local\Programs\wowup\v8_context_snapshot.bin                                                 
+C     C:\ProgramData\Packer\bhcache.988ea65960d72f79.bin                                                                  
+C     C:\ProgramData\Packer\bhcache.23613789814f0ebe.bin                                                                  
+C     C:\ProgramData\Packer\bhcache.160a1fa040f059f9.bin                                                                  
+C     C:\ProgramData\Packer\bhcache.07d01897d114dd6f.bin                                                                  
+C     C:\ProgramData\NVIDIA Corporation\Drs\update.bin                                                                    
+C     C:\ProgramData\Microsoft\Windows Defender\Scans\History\CacheManager\DF0A7DF8-62A1-46E9-A64F-ED04425AFC1D-0.bin     
+C     C:\ProgramData\NVIDIA Corporation\Drs\nvdrssel.bin                                                                  
+C     C:\ProgramData\Microsoft\Windows Defender\Scans\History\CacheManager\0379E791-20F7-4EF8-B6B8-12C793D0E6FA-0.bin     
+C     C:\ProgramData\Microsoft\Windows Defender\Scans\History\CacheManager\EB888070-67C3-4640-BBA2-4D0464C380E5-0.bin     
+C     C:\ProgramData\Microsoft\Windows Defender\Support\MpWppCoreTracing-20260813-170935-00000003-100000000.bin           
+C     C:\ProgramData\Microsoft\Windows Defender\Scans\MpDiag.bin                                                          
+C     C:\ProgramData\Microsoft\Windows Defender\Support\MpWppCoreTracing-20260814-101836-00000003-100000000.bin           
+C     C:\ProgramData\Microsoft\Windows Defender\Support\MpWppTracing-20260814-081836-00000003-fffffffeffffffff.bin        
+C     C:\ProgramData\Microsoft\Windows Defender\Support\MpWppUpdateLogging-20260813-170936.bin                            
+C     C:\ProgramData\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\updates\F0DC299D809B9700\backgroundupdate\datareporting…
+C     C:\ProgramData\LGHUB\depots\824196\core\LGHUB\snapshot_blob.bin                                                     
+C     C:\ProgramData\GOG.com\Galaxy\redists\overlay\natives_blob.bin                                                      
+C     C:\ProgramData\GOG.com\Galaxy\redists\overlay\snapshot_blob.bin                                                     
+C     C:\ProgramData\Microsoft\Windows Defender\Scans\History\CacheManager\73AAE224-BCE8-480E-BF75-8F8F2D6C56D8-0.bin     
+C     C:\Users\enrik\AppData\Roaming\librewolf\Profiles\v46y8z83.default-default\extension-store\data.safe.bin            
+C     C:\Users\enrik\Documents\Oracle Launcher v2\oracle_oauth_iv.bin                                                     
+C     C:\Users\enrik\AppData\Local\Microsoft\IdentityCache\1\UD\u_JRN7PUU2A1SE7ISK\e_C2GK9UTC67FSUCG3\AT\r_74DB6FURNR2TGP…
+C     C:\Users\enrik\AppData\Local\Microsoft\IdentityCache\1\UD\u_JRN7PUU2A1SE7ISK\e_C2GK9UTC67FSUCG3\AT\r_74DB6FURNR2TGP…
+C     C:\Users\enrik\AppData\Local\Microsoft\IdentityCache\1\UD\u_JRN7PUU2A1SE7ISK\e_C2GK9UTC67FSUCG3\AT\r_74DB6FURNR2TGP…
+C     C:\Users\enrik\AppData\Local\Microsoft\IdentityCache\1\UD\u_JRN7PUU2A1SE7ISK\e_C2GK9UTC67FSUCG3\AT\r_74DB6FURNR2TGP…
+C     C:\Users\enrik\AppData\Local\Microsoft\IdentityCache\1\UD\u_JRN7PUU2A1SE7ISK\e_C2GK9UTC67FSUCG3\ID\r_74DB6FURNR2TGP…
+C     C:\Users\enrik\AppData\Local\Microsoft\IdentityCache\1\UD\u_JRN7PUU2A1SE7ISK\e_C2GK9UTC67FSUCG3\ID\r_74DB6FURNR2TGP…
+C     C:\Users\enrik\AppData\Local\Microsoft\IdentityCache\1\UD\u_JRN7PUU2A1SE7ISK\e_C2GK9UTC67FSUCG3\ID\r_74DB6FURNR2TGP…
+C     C:\Users\enrik\AppData\Local\Microsoft\IdentityCache\1\UD\u_JRN7PUU2A1SE7ISK\e_C2GK9UTC67FSUCG3\AT\r_74DB6FURNR2TGP…
+C     C:\Users\enrik\AppData\Local\Microsoft\IdentityCache\1\UD\u_JRN7PUU2A1SE7ISK\e_C2GK9UTC67FSUCG3\ID\r_74DB6FURNR2TGP…
+C     C:\Users\enrik\Documents\Oracle Launcher v2\oracle_oauth_key.bin                                                    
+C     C:\Users\enrik\AppData\Local\Microsoft\SSMS\22.0_59da8ebd\VTC\3038cb9bbc2efe7dd368eae759500eac\~IC\Templates\cache.…
+C     C:\Users\enrik\AppData\Local\Microsoft\Windows\1036\StructuredQuerySchema.bin                                       
+C     C:\Users\enrik\AppData\Local\NVIDIA\GLCache\3f3bca284cd30839f8421d1bb8e25cc8\96df249bb179d595\86e909d6565bbf04.bin  
+C     C:\Users\enrik\AppData\Local\NVIDIA\GLCache\3f3bca284cd30839f8421d1bb8e25cc8\96df249bb179d595\cc8b4fd92f230ece.bin  
+C     C:\Users\enrik\AppData\Local\NVIDIA\GLCache\3f3bca284cd30839f8421d1bb8e25cc8\96df249bb179d595\fbd1bf6ce3876606.bin  
+C     C:\Users\enrik\AppData\Local\NVIDIA\GLCache\c30d67effd5a80bf51a0817799acf3c8\96df249bb179d595\217aa088a73fbc65.bin  
+C     C:\Users\enrik\AppData\Local\Microsoft\IdentityCache\1\UD\u_JRN7PUU2A1SE7ISK\e_C2GK9UTC67FSUCG3\ID\r_74DB6FURNR2TGP…
+C     C:\Users\enrik\AppData\Local\NVIDIA\GLCache\c30d67effd5a80bf51a0817799acf3c8\96df249bb179d595\cc8b4fd92f230ece.bin  
+C     C:\Users\enrik\AppData\Local\Microsoft\IdentityCache\1\UD\u_JRN7PUU2A1SE7ISK\e_C2GK9UTC67FSUCG3\AT\r_74DB6FURNR2TGP…
+C     C:\Users\enrik\AppData\Local\Microsoft\Edge\User Data\Default\Sync Data\Nigori.bin                                  
+C     C:\Users\enrik\.cache\huggingface\hub\models--Systran--faster-whisper-base\snapshots\ebe41f70d5b6dfa9166e2c581c45c9…
+C     C:\Users\enrik\.cache\huggingface\hub\models--Systran--faster-whisper-tiny\snapshots\d90ca5fe260221311c53c58e660288…
+C     C:\Users\enrik\AppData\Local\Amazon Games\App\Amazon Games UI\natives_blob.bin                                      
+C     C:\Users\enrik\AppData\Local\Amazon Games\App\Amazon Games UI\snapshot_blob.bin                                     
+C     C:\Users\enrik\AppData\Local\Amazon Games\App\App\Amazon Games UI\._natives_blob.bin                                
+C     C:\Users\enrik\AppData\Local\Amazon Games\App\App\Amazon Games UI\._snapshot_blob.bin                               
+C     C:\Users\enrik\AppData\Local\Amazon Games\App\App\Amazon Games UI\._v8_context_snapshot.bin                         
+C     C:\Users\enrik\AppData\Local\Microsoft\IdentityCache\1\UD\u_JRN7PUU2A1SE7ISK\e_C2GK9UTC67FSUCG3\Accounts\r_74DB6FUR…
+C     C:\Users\enrik\AppData\Local\BraveSoftware\Brave-Browser\User Data\Default\Sync Data\Nigori.bin                     
+C     C:\Users\enrik\AppData\Local\devin\cli\team_settings.bin                                                            
+C     C:\Users\enrik\AppData\Local\Discord\app-1.0.9252\snapshot_blob.bin                                                 
+C     C:\Users\enrik\AppData\Local\FortniteGame\Saved\PersistentDownloadDir\ConfigRules\configrules.bin                   
+C     C:\Users\enrik\AppData\Local\hermes\hermes-agent\apps\desktop\release\win-unpacked\snapshot_blob.bin                
+C     C:\Users\enrik\AppData\Local\hermes\hermes-agent\node_modules\electron\dist\snapshot_blob.bin                       
+C     C:\Users\enrik\AppData\Local\librewolf\Profiles\v46y8z83.default-default\startupCache\urlCache-current.bin          
+C     C:\Users\enrik\AppData\Local\librewolf\Profiles\v46y8z83.default-default\startupCache\urlCache.bin                  
+C     C:\Users\enrik\AppData\Local\devin\cli\model_configs_v2.bin                                                         
+C     C:\Users\enrik\AppData\Local\NVIDIA\GLCache\c30d67effd5a80bf51a0817799acf3c8\96df249bb179d595\fbd1bf6ce3876606.bin  
+C     C:\Users\enrik\AppData\Local\Microsoft\IdentityCache\1\UD\u_JRN7PUU2A1SE7ISK\e_C2GK9UTC67FSUCG3\ID\r_74DB6FURNR2TGP…
+C     C:\Users\enrik\AppData\Local\NVIDIA\GLCache\f02193a4f061fe68a169768ca516ac07\186620256eaaf137\603c510b695647d8.bin  
+C     C:\Users\enrik\AppData\Local\zen\Profiles\45jchyg8.Default (release)\startupCache\scriptCache-child-current.bin     
+C     C:\Users\enrik\AppData\Local\zen\Profiles\45jchyg8.Default (release)\startupCache\urlCache-current.bin              
+C     C:\Users\enrik\AppData\Local\zen\Profiles\45jchyg8.Default (release)\startupCache\urlCache.bin                      
+C     C:\Users\enrik\AppData\Roaming\librewolf\Profiles\v46y8z83.default-default\AlternateServices.bin                    
+C     C:\Users\enrik\AppData\Roaming\librewolf\Profiles\v46y8z83.default-default\datareporting\glean\db\data.safe.bin     
+C     C:\Users\enrik\AppData\Roaming\librewolf\Profiles\v46y8z83.default-default\extension-store-menus\data.safe.bin      
+C     C:\Users\enrik\AppData\Local\NVIDIA\GLCache\f02193a4f061fe68a169768ca516ac07\186620256eaaf137\3b89d526f44602c6.bin  
+C     C:\Users\enrik\AppData\Local\Ubisoft Game Launcher\cache\ulcf\cfCache.bin                                           
+C     C:\Users\enrik\AppData\Roaming\Opera Software\Opera GX Stable\Default\Sync Data\Nigori.bin                          
+C     C:\Users\enrik\AppData\Roaming\zen\Background Tasks Profiles\yjwjj20s.MozillaBackgroundTask-F0DC299D809B9700-backgr…
+C     C:\Users\enrik\AppData\Roaming\zen\Profiles\45jchyg8.Default (release)\AlternateServices.bin                        
+C     C:\Users\enrik\AppData\Roaming\zen\Profiles\45jchyg8.Default (release)\SiteSecurityServiceState.bin                 
+C     C:\Users\enrik\AppData\Roaming\zen\Profiles\45jchyg8.Default (release)\datareporting\glean\db\data.safe.bin         
+C     C:\Users\enrik\AppData\Roaming\zen\Profiles\45jchyg8.Default (release)\extension-store\data.safe.bin                
+C     C:\Users\enrik\AppData\Roaming\zen\Profiles\45jchyg8.Default (release)\settings\data.safe.bin                       
+C     C:\Users\enrik\Documents\My Games\Tom Clancy's The Division 2\proxy_v1.bin                                          
+C     C:\Users\enrik\AppData\Roaming\zen\Background Tasks Profiles\r32bnnv9.MozillaBackgroundTask-F0DC299D809B9700-defaul…
+C     C:\Users\enrik\AppData\Local\TopHeroes\packages\workDir\TopHeroes_Data\Plugins\x86_64\VuplexWebViewChromium\snapsho…
+C     C:\Users\enrik\AppData\Roaming\librewolf\Profiles\v46y8z83.default-default\settings\data.safe.bin                   
+C     C:\Users\enrik\AppData\Local\TopHeroes\app-1.113.11\TopHeroes_Data\Plugins\x86_64\VuplexWebViewChromium\snapshot_bl…
+C     C:\Users\enrik\AppData\Local\TopHeroes\app-1.115.11\TopHeroes_Data\Plugins\x86_64\VuplexWebViewChromium\snapshot_bl…
+C     C:\Users\enrik\AppData\Local\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState\start2.bin 
+C     C:\Users\enrik\AppData\Local\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\TempState\TileCache_1…
+C     C:\Users\enrik\AppData\Local\Packages\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\AC\Microsoft\IdentityCache\1\UD\u_J…
+C     C:\Users\enrik\AppData\Local\Packages\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\TempState\TileCache_100_3_PNGEncode…
+C     C:\Users\enrik\AppData\Local\Programs\Archon App\snapshot_blob.bin                                                  
+C     C:\Users\enrik\AppData\Local\Programs\ReviewTool.gg\snapshot_blob.bin                                               
+C     C:\Users\enrik\AppData\Local\Programs\wago-app\snapshot_blob.bin                                                    
+C     C:\Users\enrik\AppData\Local\Packages\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\TempState\TileCache_100_3_PNGEncode…
+C     C:\Users\enrik\AppData\Local\Programs\wowup\snapshot_blob.bin                                                       
+C     C:\Users\enrik\AppData\Local\Programs\Warperia\snapshot_blob.bin                                                    
+C     C:\Users\enrik\AppData\Local\Soulframe\Downloaded\Test\Tools\CEF3_1\V7\v8_context_snapshot.bin                      
+C     C:\Users\enrik\AppData\Local\Soulframe\Downloaded\Test\Tools\CEF3_1\V7\snapshot_blob.bin                            
+C     C:\Users\enrik\AppData\Local\Soulframe\Downloaded\Public\Tools\CEF3_1\V7\v8_context_snapshot.bin                    
+C     C:\Users\enrik\AppData\Local\Temp\ecache.bin                                                                        
+C     C:\Users\enrik\AppData\Local\Soulframe\Downloaded\Dev\Tools\CEF3_1\V7\v8_context_snapshot.bin                       
+C     C:\Users\enrik\AppData\Local\Soulframe\Downloaded\Dev\Tools\CEF3_1\V7\snapshot_blob.bin                             
+C     C:\Users\enrik\AppData\Local\Soulframe\Downloaded\Public\Tools\CEF3_1\V7\snapshot_blob.bin                          
+C     C:\Users\enrik\AppData\Local\OpenAI                                                                                 
+C     C:\Users\enrik\AppData\Local\Blizzard Entertainment                                                                 
+C     C:\Users\enrik\AppData\Local\BloodstainedRotN                                                                       
+C     C:\Users\enrik\AppData\Local\com.nousresearch.hermes.setup                                                          
+C     C:\Users\enrik\AppData\Local\CrewAI                                                                                 
+C     C:\Users\enrik\AppData\Local\hermes                                                                                 
+C     C:\Users\enrik\AppData\Local\Ollama                                                                                 
+C     C:\Users\enrik\AppData\Roaming\Hermes                                                                               
+C     C:\Program Files (x86)\Windows Mail                                                                                 
+C     C:\Users\enrik\AppData\Roaming\Python                                                                               
+C     C:\Users\enrik\AppData\Roaming\VoiceAccess                                                                          
+C     C:\Users\enrik\.cache\huggingface                                                                                   
+C     C:\ProgramData\Blizzard Entertainment                                                                               
+C     C:\Program Files\Windows Mail                                                                                       
+C     C:\Program Files (x86)\LibreOffice Maintenance Service                                                              
+C     C:\Program Files (x86)\Mozilla Maintenance Service                                                                  
+C     C:\Users\enrik\AppData\Roaming\ollama app.exe                                                                       
+C     C:\Users\enrik\AppData\Local\Programs\Python                                                                        
+
+
+
+=== PYTHON ENVIRONMENTS ===
+
+Path                                                                                                               Name
+----                                                                                                               ----   
+C:\Users\enrik\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\venv                            venv   
+C:\Users\enrik\AppData\Local\hermes\hermes-agent                                                                   hermes…
+C:\Users\enrik\AppData\Local\hermes\hermes-agent\node_modules\@simple-git\argv-parser\dist\src\env                 env    
+C:\Users\enrik\AppData\Local\hermes\hermes-agent\node_modules\axios\lib\env                                        env    
+C:\Users\enrik\AppData\Local\hermes\hermes-agent\skills\autonomous-ai-agents\hermes-agent                          hermes…
+C:\Users\enrik\AppData\Local\hermes\hermes-agent\venv                                                              venv   
+C:\Users\enrik\AppData\Local\hermes\skills\autonomous-ai-agents\hermes-agent                                       hermes…
+C:\Users\enrik\AppData\Roaming\uv\python\cpython-3.11.15-windows-x86_64-none\Lib\venv                              venv   
+C:\Users\enrik\AppData\Roaming\uv\python\cpython-3.14.5-windows-x86_64-none\Lib\venv                               venv   
+G:\AI\E-zzio_PRE_PURGE_244\quarantine\g_drive_cleaner_20260610_174857\AI\external\ComfyUI\.venv                    .venv  
+G:\AI\E-zzio_PRE_PURGE_244\quarantine\g_drive_cleaner_20260610_174857\Python312\Lib\venv                           venv   
+G:\AI\E-zzio\.venv                                                                                                 .venv  
+G:\AI\E-zzio\runtime\cache\pycache\AI\E-zzio\.venv                                                                 .venv  
+G:\AI\E-zzio\runtime\cache\pycache\AI\E-zzio\tools\voice_converter\.venv                                           .venv  
+G:\AI\E-zzio\runtime\cache\pycache\Users\enrik\AppData\Local\hermes\hermes-agent                                   hermes…
+G:\AI\E-zzio\runtime\cache\pycache\Users\enrik\AppData\Local\hermes\hermes-agent\venv                              venv   
+G:\AI\E-zzio\runtime\cache\pycache\Users\enrik\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\venv venv   
+G:\AI\E-zzio\tools\voice_converter\.venv                                                                           .venv  
+
+
+
+=== ENVIRONMENT VARIABLES ===
+
+Variable              Value
+--------              -----                                                                                               
+OLLAMA_MODELS         G:\Ollama\Models
+HF_HOME               
+HUGGINGFACE_HUB_CACHE 
+TRANSFORMERS_CACHE    
+TORCH_HOME            
+PIP_CACHE_DIR         G:\AI\E-zzio\runtime\cache\pip
+npm_config_prefix     
+XDG_CACHE_HOME        
+TEMP                  C:\Users\enrik\AppData\Local\Temp
+TMP                   C:\Users\enrik\AppData\Local\Temp
+PATH                  C:\Users\enrik\bin;C:\Users\enrik\AppData\Local\hermes\hermes-agent\venv\Scripts;C:\Users\enrik\AppD
+                      ata\Local\hermes\bin;C:\Users\enrik\AppData\Local\Programs\Python\Launcher\;G:\Python312;C:\Users\en
+                      rik\AppData\Local\Programs\Ollama;G:\Ollama;G:\Python312\Scripts;C:\tools\mysql\current\bin;C:\Users
+                      \enrik\AppData\Local\Microsoft\WindowsApps;C:\Users\enrik\AppData\Local\Microsoft\WinGet\Links;C:\Us
+                      ers\enrik\AppData\Local\Microsoft\WinGet\Packages\Google.PlatformTools_Microsoft.Winget.Source_8weky
+                      b3d8bbwe\platform-tools;C:\Users\enrik\AppData\Roaming\npm
+
+
+
+=== INSTALLED AI SOFTWARE ===
+
+Name                                          Version      Publisher                   Install              Uninstall
+----                                          -------      ---------                   -------              ---------
+Anniversaire de Burning Crusade                            Blizzard Entertainment      F:\World of Warcraft "C:\ProgramDat
+                                                                                                            a\Battle.net\A
+                                                                                                            gent\Blizzard
+                                                                                                            Uninstaller.ex
+                                                                                                            e"
+                                                                                                            --lang=frFR --
+                                                                                                            uid=wow_classi
+                                                                                                            c_anniversary
+                                                                                                            --displayname=
+                                                                                                            "Anniversaire
+                                                                                                            de Burning
+                                                                                                            Crusade"
+Google AI Studio                              1.0          BraveSoftware\Brave-Browser                      "C:\Program Fi
+                                                                                                            les\BraveSoftw
+                                                                                                            are\Brave-Brow
+                                                                                                            ser\Applicatio
+                                                                                                            n\brave.exe" -
+                                                                                                            -profile-direc
+                                                                                                            tory=Default -
+                                                                                                            -uninstall-app
+                                                                                                            -id=bcmmjkglic
+                                                                                                            liekcndffbfgcf
+                                                                                                            opnidllp
+Mozilla Maintenance Service                   1.21.14b     Mozilla                                          "C:\Program
+                                                                                                            Files
+                                                                                                            (x86)\Mozilla
+                                                                                                            Maintenance Se
+                                                                                                            rvice\uninstal
+                                                                                                            l.exe"
+Node.js                                       22.23.2      Node.js Foundation                               MsiExec.exe /I
+                                                                                                            {D9606E8F-44C3
+                                                                                                            -4F42-9165-0F6
+                                                                                                            2294FDD4B}
+Ollama version 0.32.11                        0.32.11      Ollama                      G:\Ollama\           "G:\Ollama\uni
+                                                                                                            ns000.exe"
+Python 3.12.10 (64-bit)                       3.12.10150.0 Python Software Foundation                       "C:\Users\enri
+                                                                                                            k\AppData\Loca
+                                                                                                            l\Package Cach
+                                                                                                            e\{b6ce88eb-2c
+                                                                                                            e3-4d91-8efc-4
+                                                                                                            25ae1f48caf}\p
+                                                                                                            ython-3.12.10-
+                                                                                                            amd64.exe"
+                                                                                                            /uninstall
+Python 3.12.10 Core Interpreter (64-bit)      3.12.10150.0 Python Software Foundation                       MsiExec.exe /I
+                                                                                                            {9D09C9EF-A57C
+                                                                                                            -422A-B79A-CC9
+                                                                                                            22079653A}
+Python 3.12.10 Development Libraries (64-bit) 3.12.10150.0 Python Software Foundation                       MsiExec.exe /I
+                                                                                                            {EF4A3D60-9A53
+                                                                                                            -4697-A18D-D33
+                                                                                                            53F8554E6}
+Python 3.12.10 Executables (64-bit)           3.12.10150.0 Python Software Foundation                       MsiExec.exe /I
+                                                                                                            {0158093D-F809
+                                                                                                            -455B-9429-6D1
+                                                                                                            6A4B5D118}
+Python 3.12.10 pip Bootstrap (64-bit)         3.12.10150.0 Python Software Foundation                       MsiExec.exe /I
+                                                                                                            {CD0A1663-DC2D
+                                                                                                            -41BD-89AF-E10
+                                                                                                            89E841822}
+Python 3.12.10 Standard Library (64-bit)      3.12.10150.0 Python Software Foundation                       MsiExec.exe /I
+                                                                                                            {DE12B597-D4BF
+                                                                                                            -4B1B-BF5F-C5C
+                                                                                                            E41AFBDFC}
+Python 3.12.10 Tcl/Tk Support (64-bit)        3.12.10150.0 Python Software Foundation                       MsiExec.exe /I
+                                                                                                            {75485683-EF03
+                                                                                                            -41E6-BF21-D14
+                                                                                                            91694548C}
+Python 3.12.10 Test Suite (64-bit)            3.12.10150.0 Python Software Foundation                       MsiExec.exe /I
+                                                                                                            {01F171AF-1F21
+                                                                                                            -435E-BEE4-FCC
+                                                                                                            4360C896C}
+Python Launcher                               3.13.5150.0  Python Software Foundation                       MsiExec.exe /X
+                                                                                                            {69012533-AE90
+                                                                                                            -48A1-B7E5-712
+                                                                                                            4E81C4B40}
+
+

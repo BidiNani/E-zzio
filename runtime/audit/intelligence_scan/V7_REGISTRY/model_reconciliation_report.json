@@ -1,0 +1,32 @@
+{
+  "timestamp": "2026-08-11T16:55:34.912902+00:00",
+  "ollama_live_models": [
+    "gemma4e4b:latest",
+    "qwen3:8b",
+    "qwen2.5vl:3b",
+    "hermes3:8b",
+    "qwen2.5-coder:7b",
+    "nomic-embed-text:latest"
+  ],
+  "statically_declared": [
+    "qwen2.5-coder:7b",
+    "phi4-mini:latest",
+    "llama3.2:3b",
+    "hermes3:8b"
+  ],
+  "matched_and_ready": [
+    "qwen2.5-coder:7b",
+    "hermes3:8b"
+  ],
+  "phantom_models_risk": [
+    "phi4-mini:latest",
+    "llama3.2:3b"
+  ],
+  "unregistered_discovered": [
+    "qwen3:8b",
+    "gemma4e4b:latest",
+    "nomic-embed-text:latest",
+    "qwen2.5vl:3b"
+  ],
+  "sync_status": "ALIGNED_WITH_WARNINGS"
+}

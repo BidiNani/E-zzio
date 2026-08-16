@@ -1,0 +1,7 @@
+{
+    "name": "python_analyzer",
+    "version": "1.0.0",
+    "description": "Analyse syntaxique et structurelle de scripts Python via AST.",
+    "capabilities": ["code.analyze"],
+    "permissions": ["read_local_disk"]
+}

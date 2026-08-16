@@ -1,0 +1,68 @@
+{
+  "organism": "E-ZZIO",
+  "framework_version": "V7.75",
+  "tick_id": 3,
+  "timestamp_utc": "2026-08-12T14:41:47.407623+00:00",
+  "domains": {
+    "01_CONSTITUTION": {
+      "score": "10/10",
+      "status": "PASS"
+    },
+    "02_ECOL_GOVERNANCE": {
+      "score": "10/10",
+      "status": "PASS"
+    },
+    "03_UNIVERSAL_GATEWAY": {
+      "score": "10/10",
+      "status": "PASS"
+    },
+    "04_HARDWARE_COEXISTENCE": {
+      "score": "10/10",
+      "status": "PASS"
+    },
+    "05_MODEL_TOKEN_GOV": {
+      "score": "10/10",
+      "status": "PASS"
+    },
+    "06_SECURITY_DPAPI": {
+      "score": "10/10",
+      "status": "PASS"
+    },
+    "07_MEMORY_GOVERNANCE": {
+      "score": "10/10",
+      "status": "PASS"
+    },
+    "08_STORAGE_INTELLIGENCE": {
+      "score": "10/10",
+      "status": "PASS"
+    },
+    "09_SELF_RECOVERY": {
+      "score": "10/10",
+      "status": "PASS"
+    },
+    "10_EVOLUTION_QUARANTINE": {
+      "score": "10/10",
+      "status": "PASS"
+    },
+    "11_SELF_OBSERVABILITY": {
+      "score": "10/10",
+      "status": "PASS"
+    },
+    "12_USER_INTENT_ALIGNMENT": {
+      "score": "10/10",
+      "status": "PASS",
+      "detail": "Priorité absolue accordée à l'expérience utilisateur et au gaming"
+    },
+    "13_CONTINUITY_OF_EXISTENCE": {
+      "score": "10/10",
+      "status": "PASS",
+      "detail": "Mémoire de vie intacte, état de l'organisme cohérent avec le tick précédent"
+    }
+  },
+  "metrics": {
+    "drift_count": 0,
+    "uptime_ticks": 3
+  },
+  "global_status": "10/10 CONTINUOUSLY CERTIFIED",
+  "signature": "7921d79bb61ad106b023fa4da8dff4c5cf8515ba68766d787055f7efa3c821b2"
+}

@@ -1,0 +1,213 @@
+[
+  {
+    "module_missing": "runtime.security.secrets",
+    "imported_by": "recovery/certified_state/microkernel.py",
+    "line_number": 9,
+    "symbols_imported": [
+      "SecretKeyManager"
+    ],
+    "category": "SECURITY",
+    "severity": "CRITICAL"
+  },
+  {
+    "module_missing": "runtime.audit.logger",
+    "imported_by": "recovery/certified_state/microkernel.py",
+    "line_number": 12,
+    "symbols_imported": [
+      "AuditLogger"
+    ],
+    "category": "AUDIT_OBSERVABILITY",
+    "severity": "CRITICAL"
+  },
+  {
+    "module_missing": "runtime.observability.traces",
+    "imported_by": "recovery/certified_state/microkernel.py",
+    "line_number": 16,
+    "symbols_imported": [
+      "ExecutionTrace"
+    ],
+    "category": "AUDIT_OBSERVABILITY",
+    "severity": "CRITICAL"
+  },
+  {
+    "module_missing": "runtime.memory.gateway",
+    "imported_by": "recovery/certified_state/microkernel.py",
+    "line_number": 18,
+    "symbols_imported": [
+      "MemoryGateway"
+    ],
+    "category": "MEMORY_SKILLS",
+    "severity": "HIGH"
+  },
+  {
+    "module_missing": "skill_manager",
+    "imported_by": "routers/skills.py",
+    "line_number": 7,
+    "symbols_imported": [
+      "EzzioSkillManager"
+    ],
+    "category": "MEMORY_SKILLS",
+    "severity": "HIGH"
+  },
+  {
+    "module_missing": "runtime.audit.logger",
+    "imported_by": "runtime/agent/controller.py",
+    "line_number": 4,
+    "symbols_imported": [
+      "AuditLogger"
+    ],
+    "category": "AUDIT_OBSERVABILITY",
+    "severity": "HIGH"
+  },
+  {
+    "module_missing": "runtime.audit",
+    "imported_by": "runtime/capabilities/service.py",
+    "line_number": 8,
+    "symbols_imported": [
+      "AuditAction",
+      "AuditBridge"
+    ],
+    "category": "AUDIT_OBSERVABILITY",
+    "severity": "HIGH"
+  },
+  {
+    "module_missing": "runtime.cognition.core",
+    "imported_by": "runtime/cognition/__init__.py",
+    "line_number": 2,
+    "symbols_imported": [
+      "EzzioBrain"
+    ],
+    "category": "HARDWARE_EXPERIMENTAL",
+    "severity": "MEDIUM"
+  },
+  {
+    "module_missing": "tools.index_api",
+    "imported_by": "runtime/governor/controller.py",
+    "line_number": 8,
+    "symbols_imported": [
+      "index_api"
+    ],
+    "category": "MEMORY_SKILLS",
+    "severity": "HIGH"
+  },
+  {
+    "module_missing": "runtime.security.secrets",
+    "imported_by": "runtime/governor/gemini_bridge.py",
+    "line_number": 4,
+    "symbols_imported": [
+      "secret_provider"
+    ],
+    "category": "SECURITY",
+    "severity": "CRITICAL"
+  },
+  {
+    "module_missing": "runtime.experiments.v611_topology.discovery_hardened",
+    "imported_by": "runtime/hardware/evidence/validator.py",
+    "line_number": 4,
+    "symbols_imported": [
+      "HardenedDiscovery"
+    ],
+    "category": "HARDWARE_EXPERIMENTAL",
+    "severity": "MEDIUM"
+  },
+  {
+    "module_missing": "runtime.security.trust",
+    "imported_by": "runtime/kernel/boot.py",
+    "line_number": 10,
+    "symbols_imported": [
+      "TrustRegistry"
+    ],
+    "category": "SECURITY",
+    "severity": "CRITICAL"
+  },
+  {
+    "module_missing": "runtime.security.trust",
+    "imported_by": "runtime/kernel/context.py",
+    "line_number": 9,
+    "symbols_imported": [
+      "TrustRegistry"
+    ],
+    "category": "SECURITY",
+    "severity": "CRITICAL"
+  },
+  {
+    "module_missing": "runtime.audit.skill_audit",
+    "imported_by": "runtime/memory/bridge.py",
+    "line_number": 2,
+    "symbols_imported": [
+      "SkillAudit"
+    ],
+    "category": "AUDIT_OBSERVABILITY",
+    "severity": "HIGH"
+  },
+  {
+    "module_missing": "runtime.memory.episode_store",
+    "imported_by": "runtime/memory/episodic/episode_recovery.py",
+    "line_number": 4,
+    "symbols_imported": [
+      "EpisodeStore"
+    ],
+    "category": "MEMORY_SKILLS",
+    "severity": "HIGH"
+  },
+  {
+    "module_missing": "runtime.memory.episode_extractor",
+    "imported_by": "runtime/memory/episodic/episode_recovery.py",
+    "line_number": 5,
+    "symbols_imported": [
+      "EpisodeExtractor"
+    ],
+    "category": "MEMORY_SKILLS",
+    "severity": "HIGH"
+  },
+  {
+    "module_missing": "runtime.security.permissions",
+    "imported_by": "runtime/tools/parser.py",
+    "line_number": 4,
+    "symbols_imported": [
+      "SecurityPolicy"
+    ],
+    "category": "SECURITY",
+    "severity": "CRITICAL"
+  },
+  {
+    "module_missing": "runtime.audit.logger",
+    "imported_by": "runtime/tools/pipeline.py",
+    "line_number": 4,
+    "symbols_imported": [
+      "AuditLogger"
+    ],
+    "category": "AUDIT_OBSERVABILITY",
+    "severity": "HIGH"
+  },
+  {
+    "module_missing": "runtime.security.permissions",
+    "imported_by": "runtime/tools/pipeline.py",
+    "line_number": 5,
+    "symbols_imported": [
+      "SecurityPolicy"
+    ],
+    "category": "SECURITY",
+    "severity": "CRITICAL"
+  },
+  {
+    "module_missing": "runtime.security.guard",
+    "imported_by": "runtime/tools/pipeline.py",
+    "line_number": 6,
+    "symbols_imported": [
+      "SecurityGuard"
+    ],
+    "category": "SECURITY",
+    "severity": "CRITICAL"
+  },
+  {
+    "module_missing": "runtime.security.permissions",
+    "imported_by": "runtime/tools/tool_registry.py",
+    "line_number": 4,
+    "symbols_imported": [
+      "SecurityPolicy"
+    ],
+    "category": "SECURITY",
+    "severity": "CRITICAL"
+  }
+]

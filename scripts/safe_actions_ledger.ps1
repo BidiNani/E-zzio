@@ -5,8 +5,8 @@ param(
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-$status = Invoke-RestMethod "http://127.0.0.1:8000/safe-actions/status" -Method GET -TimeoutSec 90
-$res = Invoke-RestMethod "http://127.0.0.1:8000/safe-actions/queue?limit=$Limit" -Method GET -TimeoutSec 90
+$status = Invoke-RestMethod "http://127.0.0.1:8001/safe-actions/status" -Method GET -TimeoutSec 90
+$res = Invoke-RestMethod "http://127.0.0.1:8001/safe-actions/queue?limit=$Limit" -Method GET -TimeoutSec 90
 
 Write-Host "=== E-ZZIO SAFE ACTION LEDGER ===" -ForegroundColor Cyan
 
@@ -33,3 +33,4 @@ $res.items | ForEach-Object {
         requires_confirmation = $_.requires_confirmation
     }
 }
+

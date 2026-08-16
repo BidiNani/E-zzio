@@ -1,0 +1,516 @@
+{
+  "scan_timestamp": "2026-08-14T16:04:37.0024109+02:00",
+  "registry_target": "G:\\AI\\E-zzio\\runtime\\contracts\\MODEL_REGISTRY_V1.json",
+  "total_references": 70,
+  "classification": [
+    {
+      "Name": "ACTIVE_RUNTIME",
+      "Count": 11
+    },
+    {
+      "Name": "AUDIT_ARTIFACT",
+      "Count": 57
+    },
+    {
+      "Name": "TEST_ISOLATION",
+      "Count": 2
+    }
+  ],
+  "consumers": [
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\dev\\v720_integration_test.py",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 1222,
+      "Modified": "2026-08-11T19:10:51.6208731+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\dev\\v721_governor_test.py",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 1166,
+      "Modified": "2026-08-11T19:15:13.0933573+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\integrity\\sha256_baseline_v1.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 131121,
+      "Modified": "2026-08-13T18:44:41.4383374+02:00",
+      "Matches": 3
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_0_5_ISOLATION_MAP\\refactoring_map.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 6479,
+      "Modified": "2026-08-11T16:49:06.7896312+02:00",
+      "Matches": 2
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_0_7_ACTIVE_ARCH\\active_architecture_map.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 53945,
+      "Modified": "2026-08-11T16:51:44.4071968+02:00",
+      "Matches": 6
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\architecture_baseline_v3.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 63826,
+      "Modified": "2026-08-11T17:28:32.8456899+02:00",
+      "Matches": 2
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\governance_freeze_manifest.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 1874,
+      "Modified": "2026-08-11T18:42:25.2310577+02:00",
+      "Matches": 3
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\MODEL_REGISTRY_V1.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 20075,
+      "Modified": "2026-08-11T18:34:58.8060063+02:00",
+      "Matches": 8
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\physical_attestation_verification_report.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 1748,
+      "Modified": "2026-08-11T18:42:31.6057563+02:00",
+      "Matches": 2
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\active_dependency_integrity_v2.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 20412,
+      "Modified": "2026-08-11T17:15:41.2199011+02:00",
+      "Matches": 2
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\affinity_drift_investigation.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 2857,
+      "Modified": "2026-08-11T16:32:03.745369+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\architecture_baseline_v3.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 63826,
+      "Modified": "2026-08-11T17:28:32.8456899+02:00",
+      "Matches": 2
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\architecture_baseline.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 299950,
+      "Modified": "2026-08-11T16:50:28.000913+02:00",
+      "Matches": 4
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\cleanup_validation_result.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 512562,
+      "Modified": "2026-08-11T16:55:11.2363283+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\contract_birth_trace.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 3720,
+      "Modified": "2026-08-11T16:16:19.2312373+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\contract_emission_event_forensics.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 84800,
+      "Modified": "2026-08-11T16:22:22.8194095+02:00",
+      "Matches": 3
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\contract_generation_trace.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 2795,
+      "Modified": "2026-08-11T16:17:36.1735076+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\model_registry_autopsy.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 268,
+      "Modified": "2026-08-11T15:46:14.0295379+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_0_7_CLEANUP_PLAN.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 156366,
+      "Modified": "2026-08-11T16:55:10.9998173+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\authority_conflicts.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 713,
+      "Modified": "2026-08-11T15:18:25.3337671+02:00",
+      "Matches": 3
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\dependency_graph_forensic.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 4429942,
+      "Modified": "2026-08-11T15:29:48.719435+02:00",
+      "Matches": 8
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\dependency_graph.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 75858,
+      "Modified": "2026-08-11T15:18:25.332753+02:00",
+      "Matches": 8
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\duplicate_candidates.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 25877,
+      "Modified": "2026-08-11T15:18:25.3337671+02:00",
+      "Matches": 3
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\EZZIO_MASTER_ARCHITECTURE_V7.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 442,
+      "Modified": "2026-08-11T15:20:01.0109839+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\inventory_forensic.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 1294519,
+      "Modified": "2026-08-11T15:29:45.4402681+02:00",
+      "Matches": 22
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\inventory.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 330940,
+      "Modified": "2026-08-11T15:18:25.330807+02:00",
+      "Matches": 2
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\merge_candidates.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 1019,
+      "Modified": "2026-08-11T15:18:25.3353386+02:00",
+      "Matches": 3
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\REAL_EXECUTION_MATRIX_V7.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 539656,
+      "Modified": "2026-08-11T15:34:38.7205927+02:00",
+      "Matches": 2
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_RUNTIME_DEPENDENCIES.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 2050,
+      "Modified": "2026-08-11T15:40:52.8794508+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_TARGETED_AUTOPSY.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 17665,
+      "Modified": "2026-08-11T15:42:42.7143176+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\refactor_plan\\critical_duplicates.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 152591,
+      "Modified": "2026-08-11T15:10:14.4001607+02:00",
+      "Matches": 3
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\reliability\\broken_references.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 3910999,
+      "Modified": "2026-08-13T00:19:33.4513736+02:00",
+      "Matches": 92
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\reliability\\dependency_graph_v2.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 123506,
+      "Modified": "2026-08-13T00:36:06.8081554+02:00",
+      "Matches": 6
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\reliability\\dependency_graph_v3.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 116396,
+      "Modified": "2026-08-13T00:38:04.4171661+02:00",
+      "Matches": 6
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\reliability\\dependency_graph.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 30822015,
+      "Modified": "2026-08-13T00:19:33.3662693+02:00",
+      "Matches": 304
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration\\active_code_paths\\ACTIVE_CODE_PATHS_20260814_155219.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 164162452,
+      "Modified": "2026-08-14T15:52:53.6807601+02:00",
+      "Matches": 54
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration\\active_python_dependency\\ACTIVE_PYTHON_DEPENDENCY_20260814_154837.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 55108458,
+      "Modified": "2026-08-14T15:48:55.3113563+02:00",
+      "Matches": 34
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration\\baseline\\ACTIVE_FILES_BASELINE_20260814_160013.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 1523596,
+      "Modified": "2026-08-14T16:00:23.860587+02:00",
+      "Matches": 3
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration\\baseline\\MODEL_REGISTRY_FORENSIC_REFERENCES_20260814_160013.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 9765,
+      "Modified": "2026-08-14T16:00:23.8979068+02:00",
+      "Matches": 38
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration\\hard_path_reference\\HARD_PATH_REFERENCE_20260814_154921.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 90739349,
+      "Modified": "2026-08-14T15:49:52.3412583+02:00",
+      "Matches": 83
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\system\\cognitive_provenance_matrix.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 63717,
+      "Modified": "2026-08-12T11:38:46.6355242+02:00",
+      "Matches": 5
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\system\\ecol_integration_audit_report.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 13528,
+      "Modified": "2026-08-12T14:37:53.109894+02:00",
+      "Matches": 16
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\system\\extraction_dry_run_report.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 131218,
+      "Modified": "2026-08-12T11:32:34.8582859+02:00",
+      "Matches": 5
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\system\\founding_kernel.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 247035,
+      "Modified": "2026-08-12T13:34:27.8552987+02:00",
+      "Matches": 3
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\system\\full_cognitive_inventory.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 1245658,
+      "Modified": "2026-08-12T10:41:20.5674455+02:00",
+      "Matches": 30
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\system\\mutation_event_graph.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 2708970,
+      "Modified": "2026-08-12T13:29:21.1583071+02:00",
+      "Matches": 16
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\system\\runtime_convergence_report.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 36856,
+      "Modified": "2026-08-12T13:45:03.874274+02:00",
+      "Matches": 2
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\system\\temporal_archaeology_report.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 20267,
+      "Modified": "2026-08-12T13:04:59.620725+02:00",
+      "Matches": 2
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\system\\timeline_birth_mutation_report.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 222408,
+      "Modified": "2026-08-12T13:24:07.5618197+02:00",
+      "Matches": 2
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\dependency_impact.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 4355,
+      "Modified": "2026-08-11T15:12:19.1123902+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\dependency_scanner.py",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 2800,
+      "Modified": "2026-08-11T15:12:17.407214+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\V7_CLEANUP_PLAN.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 156366,
+      "Modified": "2026-08-11T16:53:58.6152183+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\v7_registry_audit.py",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 7043,
+      "Modified": "2026-08-11T15:46:12.4088665+02:00",
+      "Matches": 8
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\audit\\v7_target_autopsy.py",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 4024,
+      "Modified": "2026-08-11T15:42:41.0673489+02:00",
+      "Matches": 7
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\cleanup_audit\\inventory.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 268907,
+      "Modified": "2026-08-12T23:42:27.6018402+02:00",
+      "Matches": 8
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\cleanup_audit\\orphan_classification.json",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 406168,
+      "Modified": "2026-08-12T23:49:08.1920699+02:00",
+      "Matches": 7
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\cognitive\\index\\index_build_manifest.json",
+      "Category": "ACTIVE_RUNTIME",
+      "SizeBytes": 37383,
+      "Modified": "2026-08-12T11:34:48.3197377+02:00",
+      "Matches": 5
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\cognitive\\snapshots\\V7.58\\cognitive_provenance_matrix.json",
+      "Category": "TEST_ISOLATION",
+      "SizeBytes": 63717,
+      "Modified": "2026-08-12T11:38:46.6355242+02:00",
+      "Matches": 5
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\cognitive\\snapshots\\V7.58\\index_build_manifest.json",
+      "Category": "TEST_ISOLATION",
+      "SizeBytes": 37383,
+      "Modified": "2026-08-12T11:34:48.3197377+02:00",
+      "Matches": 5
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\contracts\\authority.py",
+      "Category": "ACTIVE_RUNTIME",
+      "SizeBytes": 3558,
+      "Modified": "2026-08-11T18:34:58.9562036+02:00",
+      "Matches": 3
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\contracts\\MODEL_REGISTRY_V1.json",
+      "Category": "ACTIVE_RUNTIME",
+      "SizeBytes": 20075,
+      "Modified": "2026-08-11T18:34:58.8060063+02:00",
+      "Matches": 8
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\guardian\\test_v615_3_models.py",
+      "Category": "ACTIVE_RUNTIME",
+      "SizeBytes": 4598,
+      "Modified": "2026-08-11T14:34:18.1956311+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\models_governance\\budget.py",
+      "Category": "ACTIVE_RUNTIME",
+      "SizeBytes": 1671,
+      "Modified": "2026-08-11T14:33:17.502799+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\models\\ollama_sync.py",
+      "Category": "ACTIVE_RUNTIME",
+      "SizeBytes": 3158,
+      "Modified": "2026-08-11T18:55:33.3437318+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\v7_runtime_dependency_tracer.py",
+      "Category": "AUDIT_ARTIFACT",
+      "SizeBytes": 5729,
+      "Modified": "2026-08-11T15:40:50.257519+02:00",
+      "Matches": 3
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\core\\cognitive_engine\\ecol_integration_audit.py",
+      "Category": "ACTIVE_RUNTIME",
+      "SizeBytes": 2673,
+      "Modified": "2026-08-12T14:37:51.0792545+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\core\\dispatcher.py",
+      "Category": "ACTIVE_RUNTIME",
+      "SizeBytes": 11041,
+      "Modified": "2026-07-26T00:14:32.2484032+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\core\\intelligence_router.py",
+      "Category": "ACTIVE_RUNTIME",
+      "SizeBytes": 11282,
+      "Modified": "2026-08-11T22:11:39.6901134+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\core\\model_registry.py",
+      "Category": "ACTIVE_RUNTIME",
+      "SizeBytes": 4369,
+      "Modified": "2026-08-12T22:54:30.7862776+02:00",
+      "Matches": 1
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\core\\supervisor.py",
+      "Category": "ACTIVE_RUNTIME",
+      "SizeBytes": 9577,
+      "Modified": "2026-08-12T22:11:15.8491215+02:00",
+      "Matches": 1
+    }
+  ],
+  "integrity": {
+    "readonly": true,
+    "deleted": false,
+    "modified": false
+  }
+}

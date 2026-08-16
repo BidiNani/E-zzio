@@ -1,0 +1,78 @@
+{
+  "organism": "E-ZZIO",
+  "framework_version": "V7.74",
+  "timestamp_utc": "2026-08-12T14:39:36.652641+00:00",
+  "hardware_telemetry": {
+    "profile": "GAMING_COEXISTENCE_MODE",
+    "gaming_detected": true,
+    "cpu_system_usage_percent": 0.6,
+    "ram_available_gb": 19.45,
+    "ram_usage_percent": 39.1,
+    "allocated_ezzio_threads": 4,
+    "gpu_policy": "ISOLATED_GAMING_ONLY (GTX 1650 Untouched)"
+  },
+  "domains": {
+    "CONSTITUTION": {
+      "score": "10/10",
+      "status": "PASS",
+      "detail": "Invariants locked"
+    },
+    "ECOL_GOVERNANCE": {
+      "score": "10/10",
+      "status": "PASS",
+      "detail": "Baseline cryptographique vérifiée"
+    },
+    "UNIVERSAL_GATEWAY": {
+      "score": "10/10",
+      "status": "PASS",
+      "detail": "No-bypass enforcement actif"
+    },
+    "HARDWARE_COEXISTENCE": {
+      "score": "10/10",
+      "status": "PASS",
+      "detail": "GAMING_COEXISTENCE_MODE"
+    },
+    "MODEL_TOKEN_GOVERNANCE": {
+      "score": "10/10",
+      "status": "PASS",
+      "detail": "Gaming-aware routing actif"
+    },
+    "SECURITY_DPAPI": {
+      "score": "10/10",
+      "status": "PASS",
+      "detail": "OS-bound secret isolation vérifié"
+    },
+    "MEMORY_GOVERNANCE": {
+      "score": "10/10",
+      "status": "PASS",
+      "detail": "RAM Usage: 39.1% | Compression & Context Compaction Active"
+    },
+    "STORAGE_INTELLIGENCE": {
+      "score": "10/10",
+      "status": "PASS",
+      "detail": "NVMe G:\\ Free: 81.01 GB | No swap contention"
+    },
+    "SELF_RECOVERY": {
+      "score": "10/10",
+      "status": "PASS",
+      "detail": "Component isolation & runtime rollback ready"
+    },
+    "EVOLUTION_QUARANTINE": {
+      "score": "10/10",
+      "status": "PASS",
+      "detail": "Skills pipeline: Quarantine -> Sandbox -> ECOL -> Promotion"
+    },
+    "SELF_AWARENESS_OBSERVABILITY": {
+      "score": "10/10",
+      "status": "PASS",
+      "detail": "Unified audit logs & explainable decision trails active"
+    }
+  },
+  "global_status": "10/10 FULL-SPECTRUM ORGANISM CERTIFIED",
+  "metrics": {
+    "total_certified_domains": 11,
+    "drift": "ZERO_DRIFT",
+    "gaming_mode": true
+  },
+  "certificate_signature_hmac": "3ac2a6f88eee5b171627db65cf9da4d1d10910556cb8e59a1f9d6f30d2820e60"
+}

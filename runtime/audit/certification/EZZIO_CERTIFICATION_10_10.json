@@ -1,0 +1,16 @@
+{
+  "score": "4/10",
+  "status": "PARTIAL",
+  "checks": {
+    "Axe2_AntiDuplicate": false,
+    "Axe7_WatchdogChaos": false,
+    "Axe1_BootIntegrity": false,
+    "Axe8_StorageIntegrity": true,
+    "Axe9_IdentityContinuity": false,
+    "Axe6_MemoryCore": true,
+    "Axe4_RouteIntegrity": false,
+    "Axe3_CrashRecovery": true,
+    "Axe5_DependencyLock": true
+  },
+  "timestamp": "2026-08-12T21:03:05Z"
+}

@@ -1,0 +1,15 @@
+{
+  "certificate_id": "CERT_30D_20260812",
+  "milestone": "30D",
+  "birth_timestamp": "2026-06-09T18:19:57",
+  "operational_age_days": 63,
+  "certified_utc": "2026-08-12T15:41:18.805655+00:00",
+  "metrics": {
+    "integrity_drift": "UNCHANGED",
+    "critical_incidents": 0,
+    "recovery_failures": 0,
+    "ram_usage_percent": 40.7,
+    "storage_growth": "CONTROLLED"
+  },
+  "status": "OPERATIONAL_MATURITY_CERTIFIED"
+}

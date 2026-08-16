@@ -17,7 +17,7 @@ $proposeBody = @{
     reason = "propose+run automatique avec confirmation explicite"
 } | ConvertTo-Json -Depth 50
 
-$proposal = Invoke-RestMethod "http://127.0.0.1:8000/safe-actions/propose" `
+$proposal = Invoke-RestMethod "http://127.0.0.1:8001/safe-actions/propose" `
     -Method POST `
     -ContentType "application/json" `
     -TimeoutSec 120 `
@@ -43,7 +43,7 @@ $runBody = @{
     confirmation = "CONFIRME"
 } | ConvertTo-Json -Depth 20
 
-$run = Invoke-RestMethod "http://127.0.0.1:8000/safe-actions/run" `
+$run = Invoke-RestMethod "http://127.0.0.1:8001/safe-actions/run" `
     -Method POST `
     -ContentType "application/json" `
     -TimeoutSec 180 `
@@ -60,3 +60,4 @@ Write-Host "Exécution :" -ForegroundColor Yellow
     summary = $run.result.summary
     error = $run.error
 }
+

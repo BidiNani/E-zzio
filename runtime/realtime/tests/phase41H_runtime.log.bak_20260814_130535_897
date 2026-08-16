@@ -1,0 +1,13 @@
+
+================================================================================
+ E-ZZIO V7 ù PHASE 4.1-H RESULT
+================================================================================
+STATUS : FAILED
+SCORE  : 0/10
+REPORT : G:\AI\E-zzio\runtime\realtime\tests\reports\phase41H_report.json
+================================================================================
+
+ERROR:
+WAV doit Ûtre 16 kHz pour cette certification : G:\AI\E-zzio\runtime\realtime\audio\output_speech.wav -> 22050 Hz
+
+IMPORTANT : 10/10 REFUSE tant que les preuves rÚelles ne sont pas prÚsentes.

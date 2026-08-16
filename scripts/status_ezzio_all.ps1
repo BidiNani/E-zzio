@@ -2,7 +2,7 @@ $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 $ProjectRoot = "G:\AI\E-zzio"
-$ApiUrl = "http://127.0.0.1:8000"
+$ApiUrl = "http://127.0.0.1:8001"
 $ComfyUrl = "http://127.0.0.1:8188"
 
 function Test-Url {
@@ -66,7 +66,7 @@ function Get-PortProcesses {
 $Identity = Test-Url "$ApiUrl/ezzio/identity"
 $Manifest = Test-Url "$ApiUrl/ezzio/manifest"
 $Policy = Test-Url "$ApiUrl/ezzio/policy"
-$RouterStatus = Test-Url "$ApiUrl/router-status"
+$RouterStatus = Test-Url "$ApiUrl/supervisor/status"
 $SupervisorStatus = Test-Url "$ApiUrl/supervisor/status" 10
 $Watchdog = Test-Url "$ApiUrl/supervisor/watchdog" 15
 $ComfyStatus = Test-Url "$ComfyUrl/system_stats"
@@ -89,3 +89,5 @@ $ComfyStatus = Test-Url "$ComfyUrl/system_stats"
     Policy = $Policy.Data
     ManifestModules = if ($Manifest.Ok) { $Manifest.Data.modules } else { $null }
 }
+
+

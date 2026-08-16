@@ -1,0 +1,54 @@
+{
+  "organism": "E-ZZIO",
+  "framework_version": "V7.73",
+  "timestamp_utc": "2026-08-12T14:37:42.408920+00:00",
+  "hardware_telemetry": {
+    "profile": "GAMING_COEXISTENCE_MODE",
+    "gaming_detected": true,
+    "cpu_system_usage_percent": 2.1,
+    "ram_available_gb": 19.16,
+    "ram_usage_percent": 40.0,
+    "allocated_ezzio_threads": 4,
+    "gpu_policy": "ISOLATED_GAMING_ONLY (GTX 1650 Untouched)"
+  },
+  "domains": {
+    "CONSTITUTION": {
+      "score": "10/10",
+      "status": "PASS",
+      "detail": "Invariants locked"
+    },
+    "ECOL_GOVERNANCE": {
+      "score": "10/10",
+      "status": "PASS",
+      "detail": "Baseline cryptographique vérifiée"
+    },
+    "UNIVERSAL_GATEWAY": {
+      "score": "10/10",
+      "status": "PASS",
+      "detail": "No-bypass enforcement actif"
+    },
+    "HARDWARE_COEXISTENCE": {
+      "score": "10/10",
+      "status": "PASS",
+      "detail": "GAMING_COEXISTENCE_MODE"
+    },
+    "MODEL_TOKEN_GOVERNANCE": {
+      "score": "10/10",
+      "status": "PASS",
+      "detail": "Gaming-aware routing actif"
+    },
+    "SECURITY_DPAPI": {
+      "score": "10/10",
+      "status": "PASS",
+      "detail": "OS-bound secret isolation vérifié"
+    }
+  },
+  "global_status": "10/10 ABSOLUTE CERTIFIED (LIVE)",
+  "metrics": {
+    "drift": "ZERO_DRIFT",
+    "bypass_attempts": 0,
+    "unverified_skills": 0,
+    "gaming_mode": true
+  },
+  "certificate_signature_hmac": "e91715f88abcdce916e505f9222be28a61fbca577930b831f097c7a8717b665a"
+}

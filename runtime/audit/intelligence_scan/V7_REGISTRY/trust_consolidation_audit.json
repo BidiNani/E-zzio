@@ -1,0 +1,54 @@
+{
+  "timestamp": "2026-08-11T15:56:42.218185",
+  "trust_components_audit": {
+    "runtime/hardware/trust/models/registry.py": {
+      "exists": true,
+      "lines": 30,
+      "loads_contracts": true,
+      "uses_hmac": false,
+      "uses_sha256": true,
+      "uses_concat_hashing": true,
+      "functions": [
+        "__init__",
+        "_load_all_contracts",
+        "_verify_contract",
+        "resolve_contract"
+      ],
+      "classes": [
+        "CoreModelRegistry"
+      ]
+    },
+    "runtime/hardware/trust/models/contract_signer.py": {
+      "exists": true,
+      "lines": 35,
+      "loads_contracts": true,
+      "uses_hmac": true,
+      "uses_sha256": true,
+      "uses_concat_hashing": true,
+      "functions": [
+        "__init__",
+        "sign_file"
+      ],
+      "classes": [
+        "ContractSigner"
+      ]
+    },
+    "runtime/hardware/trust/execution/attestation/verifier.py": {
+      "exists": true,
+      "lines": 158,
+      "loads_contracts": true,
+      "uses_hmac": false,
+      "uses_sha256": true,
+      "uses_concat_hashing": false,
+      "functions": [
+        "__init__",
+        "attest_and_record",
+        "_sign_receipt",
+        "verify_receipt_signature"
+      ],
+      "classes": [
+        "ExecutionAttestor"
+      ]
+    }
+  }
+}

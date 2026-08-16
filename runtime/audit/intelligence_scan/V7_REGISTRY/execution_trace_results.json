@@ -1,0 +1,53 @@
+{
+  "timestamp": "2026-08-11T16:18:50.102634",
+  "signer_internals": {
+    "file": "runtime/hardware/trust/models/contract_signer.py",
+    "methods": [
+      "__init__",
+      "sign_file"
+    ],
+    "secret_seed_default": null,
+    "code_snippets": [
+      "def __init__(self, secret_seed: str = \"EZZIO_CORE_ROOT_KEY\"):",
+      "self.secret_seed = secret_seed",
+      "encoded = json.dumps(payload, sort_keys=True).encode(\"utf-8\")",
+      "# Calcul du HMAC-SHA256 (via hash avec secret)",
+      "signature = hashlib.sha256(encoded + self.secret_seed.encode(\"utf-8\")).hexdigest()",
+      "json.dump(data, f, indent=4, sort_keys=True)"
+    ]
+  },
+  "contract_signer_callers": [
+    {
+      "file": "runtime/audit/v7_contract_birth_trace.py",
+      "matches": [
+        "search_terms = [\"qwen2.5-7b\", \"contract.json\", \"ContractSigner\", \"max_allowed_workers\"]"
+      ]
+    },
+    {
+      "file": "runtime/audit/v7_contract_generation_trace.py",
+      "matches": [
+        "has_signer = \"ContractSigner\" in content or \"contract\" in content.lower()",
+        "\"uses_signer\": \"ContractSigner\" in content",
+        "lines.append(f\"- `{w['file']}` (Utilise ContractSigner: `{w['uses_signer']}`)\")"
+      ]
+    },
+    {
+      "file": "runtime/audit/v7_execution_trace.py",
+      "matches": [
+        "\"\"\"Recherche tous les fichiers qui instancient ContractSigner ou appellent .sign_file\"\"\"",
+        "if \"ContractSigner\" in content or \"sign_file\" in content:",
+        "matching_lines = [line.strip() for line in content.splitlines() if \"ContractSigner\" in line or \"sign_file\" in line]",
+        "\"## 2. Appelants (`Callers`) de ContractSigner dans le Dépôt\","
+      ]
+    },
+    {
+      "file": "runtime/hardware/trust/models/contract_signer.py",
+      "matches": [
+        "class ContractSigner:",
+        "def sign_file(self, file_path: Path):",
+        "signer = ContractSigner()",
+        "signer.sign_file(Path(sys.argv[1]))"
+      ]
+    }
+  ]
+}

@@ -173,13 +173,13 @@ $ApiProcess = Start-Process `
 
 $ApiProcess.Id | Set-Content -LiteralPath (Join-Path $RunRoot "api.pid") -Encoding ASCII
 
-if (-not (Wait-Url "http://127.0.0.1:8000/router-status" 90)) {
+if (-not (Wait-Url "http://127.0.0.1:8001/router-status" 90)) {
     Write-Host "❌ API non prête. stderr :" -ForegroundColor Red
     Get-Content -LiteralPath $ApiStderr -Tail 120 -ErrorAction SilentlyContinue
     throw "API non prête."
 }
 
-Write-Host "✅ API E-ZZIO prête : http://127.0.0.1:8000" -ForegroundColor Green
+Write-Host "✅ API E-ZZIO prête : http://127.0.0.1:8001" -ForegroundColor Green
 
 if ($StartComfy) {
     if (Test-Url "http://127.0.0.1:8188/system_stats" 3) {
@@ -214,7 +214,7 @@ if ($StartComfy) {
     }
 }
 
-$status = Invoke-RestMethod "http://127.0.0.1:8000/supervisor/watchdog" -Method GET -TimeoutSec 90
+$status = Invoke-RestMethod "http://127.0.0.1:8001/supervisor/watchdog" -Method GET -TimeoutSec 90
 
 Write-Host ""
 Write-Host "Watchdog :" -ForegroundColor Cyan
@@ -228,16 +228,18 @@ if ($Lan) {
 
     if ($ips.Count -eq 0) {
         Write-Warning "Aucune IP LAN détectée."
-        Write-Host "Essaie manuellement : http://192.168.1.10:8000/supervisor/mobile-home" -ForegroundColor Yellow
+        Write-Host "Essaie manuellement : http://192.168.1.10:8001/supervisor/mobile-home" -ForegroundColor Yellow
     }
     else {
         foreach ($ip in $ips) {
             if ($ip -and $ip.Trim().Length -gt 0) {
-                Write-Host "http://$ip:8000/supervisor/mobile-home"
-                Write-Host "http://$ip:8000/status"
-                Write-Host "http://$ip:8000/omni-bridge/mobile/config"
+                Write-Host "http://$ip:8001/supervisor/mobile-home"
+                Write-Host "http://$ip:8001/status"
+                Write-Host "http://$ip:8001/omni-bridge/mobile/config"
                 Write-Host ""
             }
         }
     }
 }
+
+

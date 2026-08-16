@@ -1,0 +1,10 @@
+{
+  "boot_session_id": "sess-9717084b28c7",
+  "timestamp": "2026-08-11T22:42:34.182009+00:00",
+  "identity_root_hash": "54c48e4bbd0f230c4b1e9e1c97a0bb0febcc1e13b1fd6c8fa48d2707b4e98426",
+  "signature": "a06e04c5695279c66ca27fc2c4d8f5c68ea1d347ebd5abcf559ea635bd7f9ffe",
+  "guardian_status": "VERIFIED",
+  "chain_status": "VERIFIED",
+  "chain_block_count": 4,
+  "attestation_status": "CERTIFIED_10_10"
+}

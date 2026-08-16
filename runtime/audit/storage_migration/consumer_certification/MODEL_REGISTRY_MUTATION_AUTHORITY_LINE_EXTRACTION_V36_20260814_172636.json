@@ -1,0 +1,65 @@
+[
+  {
+    "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "Line": 19,
+    "WriteCall": "self.registry_file.write_text(json.dumps(default_data, indent=4), encoding=\"utf-8\")",
+    "RegistryReference": false,
+    "TargetJson": "",
+    "Verdict": "UNKNOWN",
+    "Context": "                \"qwen2.5-3b\": {\"status\": \"TRUSTED\", \"max_allowed_workers\": 4, \"max_ram_mb\": 4096},\n                \"gemini-pro\": {\"status\": \"TRUSTED_REMOTE\", \"max_allowed_workers\": 2, \"max_ram_mb\": 1024},\n                \"unknown-model\": {\"status\": \"QUARANTINE\", \"max_allowed_workers\": 0, \"max_ram_mb\": 0}\n            }\n            self.registry_file.parent.mkdir(parents=True, exist_ok=True)\n            self.registry_file.write_text(json.dumps(default_data, indent=4), encoding=\"utf-8\")\n            self.data = default_data\n        else:\n            try:\n                self.data = json.loads(self.registry_file.read_text(encoding=\"utf-8\"))\n            except (json.JSONDecodeError, OSError):"
+  },
+  {
+    "File": "runtime\\models\\ollama_sync.py",
+    "Line": 60,
+    "WriteCall": "report_path.write_text(json.dumps(matrix_report, indent=2, ensure_ascii=False), encoding=\"utf-8\")",
+    "RegistryReference": false,
+    "TargetJson": "model_reconciliation_report.json",
+    "Verdict": "SAFE_REPORT_WRITE",
+    "Context": "        \"unregistered_discovered\": list(unregistered_installed),\n        \"sync_status\": \"ALIGNED_WITH_WARNINGS\" if phantom_models else \"PERFECT_SYNCHRONIZATION\"\n    }\n\n    report_path = REGISTRY_OUT / \"model_reconciliation_report.json\"\n    report_path.write_text(json.dumps(matrix_report, indent=2, ensure_ascii=False), encoding=\"utf-8\")\n    \n    print(f\"  [OK] Rapport de réconciliation généré : {report_path.name}\")\n    print(f\"  [STATUS] Statut de synchro : {matrix_report['sync_status']}\")\n    if phantom_models:\n        print(f\"  [!] Modèles fantômes détectés (nécessitent un fallback) : {phantom_models}\")"
+  },
+  {
+    "File": "core\\intelligence_router.py",
+    "Line": 66,
+    "WriteCall": "raw_string = json.dumps(temp_payload, sort_keys=True, ensure_ascii=False)",
+    "RegistryReference": false,
+    "TargetJson": "",
+    "Verdict": "UNKNOWN",
+    "Context": "        }\n        \n        # Calcul du hash immuable chaîné (SHA-256 strict avec previous_hash)\n        temp_payload = dict(payload)\n        temp_payload.pop(\"hash\", None)\n        raw_string = json.dumps(temp_payload, sort_keys=True, ensure_ascii=False)\n        current_hash = hashlib.sha256(raw_string.encode(\"utf-8\")).hexdigest()\n        payload[\"hash\"] = current_hash\n        raw_string = json.dumps(payload, sort_keys=True, ensure_ascii=False)\n        current_hash = hashlib.sha256(raw_string.encode(\"utf-8\")).hexdigest()\n        payload[\"hash\"] = current_hash"
+  },
+  {
+    "File": "core\\intelligence_router.py",
+    "Line": 69,
+    "WriteCall": "raw_string = json.dumps(payload, sort_keys=True, ensure_ascii=False)",
+    "RegistryReference": false,
+    "TargetJson": "",
+    "Verdict": "UNKNOWN",
+    "Context": "        temp_payload = dict(payload)\n        temp_payload.pop(\"hash\", None)\n        raw_string = json.dumps(temp_payload, sort_keys=True, ensure_ascii=False)\n        current_hash = hashlib.sha256(raw_string.encode(\"utf-8\")).hexdigest()\n        payload[\"hash\"] = current_hash\n        raw_string = json.dumps(payload, sort_keys=True, ensure_ascii=False)\n        current_hash = hashlib.sha256(raw_string.encode(\"utf-8\")).hexdigest()\n        payload[\"hash\"] = current_hash\n\n        with open(LEDGER_PATH, \"a\", encoding=\"utf-8\") as f:\n            f.write(json.dumps(payload, ensure_ascii=False) + \"\\n\")"
+  },
+  {
+    "File": "core\\intelligence_router.py",
+    "Line": 74,
+    "WriteCall": "f.write(json.dumps(payload, ensure_ascii=False) + \"\\n\")",
+    "RegistryReference": false,
+    "TargetJson": "",
+    "Verdict": "UNKNOWN",
+    "Context": "        raw_string = json.dumps(payload, sort_keys=True, ensure_ascii=False)\n        current_hash = hashlib.sha256(raw_string.encode(\"utf-8\")).hexdigest()\n        payload[\"hash\"] = current_hash\n\n        with open(LEDGER_PATH, \"a\", encoding=\"utf-8\") as f:\n            f.write(json.dumps(payload, ensure_ascii=False) + \"\\n\")\n\n    async def route(self, task_intent: str, prompt: str, constraints: RouteConstraints) -> ExecutionDecision:\n        candidates = []\n        os_mem = windows_memory.get_system_memory_pressure()\n        "
+  },
+  {
+    "File": "core\\supervisor.py",
+    "Line": 190,
+    "WriteCall": "path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding=\"utf-8\")",
+    "RegistryReference": false,
+    "TargetJson": "",
+    "Verdict": "SAFE_REPORT_WRITE",
+    "Context": "\ndef write_snapshot():\n    data = supervisor_status()\n    stamp = time.strftime(\"%Y%m%d_%H%M%S\")\n    path = SNAPSHOT_ROOT / f\"ezzio_snapshot_{stamp}.json\"\n    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding=\"utf-8\")\n    return {\n        \"ok\": True,\n        \"path\": str(path),\n        \"snapshot\": data,\n    }"
+  },
+  {
+    "File": "core\\supervisor.py",
+    "Line": 241,
+    "WriteCall": "path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding=\"utf-8\")",
+    "RegistryReference": false,
+    "TargetJson": "watchdog_last.json",
+    "Verdict": "SAFE_REPORT_WRITE",
+    "Context": "        \"actions\": actions,\n        \"status\": data,\n    }\n\n    path = STATE_ROOT / \"watchdog_last.json\"\n    path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding=\"utf-8\")\n\n    return report\n\ndef mobile_home_html():\n    ips = lan_ips()"
+  }
+]

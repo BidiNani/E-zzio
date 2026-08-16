@@ -1,0 +1,18 @@
+{
+  "snapshot_index": 5,
+  "created_at": "2026-08-11T22:46:38.882053+00:00",
+  "backed_up_count": 9,
+  "file_hashes": {
+    "identity.json": "bc07535198691e1e3a8b6a3c752c03f9707f40c12e8266f493b8ab00c967ed9e",
+    "identity_authority.json": "469b9ca88d5a7ce389e023b5ff6e0f25f42303deafcf6f989cd0d90a80858cab",
+    "identity_root.hash": "ed29168113c98a94b910a7c3c07848694fbf389f22f4c0c92ba831a5c070e065",
+    "identity_signature.sig": "f86c6a5e042e4e7dffa224c1871f470ac3731966bb6ab2bae4b8786fc65ee5fa",
+    "constitution.json": "40356e7d23faebf76ea58d55d0a687739c1efe27fb986798bee954557fc5ac9a",
+    "persona.json": "d5241d49846879783697e44b20228c40e3aee3968275d74acf12fd9f270195a4",
+    "lore.md": "c2a43a4f6717d0bac00233583f262c382c91b758579fd86af4000076c4a35fe3",
+    "skills_manifest.json": "334e5f5b88d3810287558c5780088c8c870ee05482ec6a1b0e92ad49dc2a2895",
+    "memory_graph.json": "4dc01685d19f4d0375d3c650c1454bbc3c5da6ca17ceaabf961f9f7032d93439"
+  },
+  "snapshot_root_hash": "d5dd5fe5bbbaadde39c606071cbb6f28cb13003e55ba825fd6f6616f183e5c94",
+  "signature": "4eeda17767405218da64d4292f5724e1cc7147ee4639eca558831eb6511df185"
+}

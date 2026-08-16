@@ -1,0 +1,11 @@
+{
+  "skill_id": "autonomous_vision_addon",
+  "version": "1.0",
+  "permissions": [
+    "network",
+    "filesystem_read"
+  ],
+  "memory_cost_mb": 120,
+  "gpu_required": false,
+  "rollback_available": true
+}

@@ -16,7 +16,7 @@ $body = @{
     force_cloud = [bool]$ForceCloud
 } | ConvertTo-Json -Depth 20
 
-$res = Invoke-RestMethod "http://127.0.0.1:8000/api/chat/hybrid" `
+$res = Invoke-RestMethod "http://127.0.0.1:8001/api/chat/hybrid" `
     -Method POST `
     -ContentType "application/json" `
     -TimeoutSec 240 `
@@ -31,3 +31,4 @@ $res = Invoke-RestMethod "http://127.0.0.1:8000/api/chat/hybrid" `
     elapsed_ms = $res.elapsed_ms
     reply = $res.reply
 }
+

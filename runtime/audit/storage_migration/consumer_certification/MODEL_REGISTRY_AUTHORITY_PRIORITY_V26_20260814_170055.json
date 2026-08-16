@@ -1,0 +1,83 @@
+[
+  {
+    "File": "runtime\\contracts\\authority.py",
+    "AuthorityScore": 90,
+    "Authority": true,
+    "RegistryContract": true,
+    "RuntimeLoad": true,
+    "Mutation": false,
+    "Classification": "AUTHORITY_CANDIDATE"
+  },
+  {
+    "File": "runtime\\contracts\\MODEL_REGISTRY_V1.json",
+    "AuthorityScore": 40,
+    "Authority": true,
+    "RegistryContract": false,
+    "RuntimeLoad": false,
+    "Mutation": false,
+    "Classification": "CONSUMER"
+  },
+  {
+    "File": "core\\model_registry.py",
+    "AuthorityScore": 20,
+    "Authority": false,
+    "RegistryContract": false,
+    "RuntimeLoad": true,
+    "Mutation": false,
+    "Classification": "CONSUMER"
+  },
+  {
+    "File": "core\\intelligence_router.py",
+    "AuthorityScore": 30,
+    "Authority": false,
+    "RegistryContract": false,
+    "RuntimeLoad": true,
+    "Mutation": true,
+    "Classification": "CONSUMER"
+  },
+  {
+    "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "AuthorityScore": 0,
+    "Authority": false,
+    "RegistryContract": false,
+    "RuntimeLoad": true,
+    "Mutation": true,
+    "Classification": "LEGACY_OR_PASSIVE"
+  },
+  {
+    "File": "runtime\\models\\ollama_sync.py",
+    "AuthorityScore": 0,
+    "Authority": false,
+    "RegistryContract": false,
+    "RuntimeLoad": true,
+    "Mutation": true,
+    "Classification": "LEGACY_OR_PASSIVE"
+  },
+  {
+    "File": "core\\supervisor.py",
+    "AuthorityScore": -20,
+    "Authority": false,
+    "RegistryContract": false,
+    "RuntimeLoad": false,
+    "Mutation": true,
+    "Classification": "LEGACY_OR_PASSIVE"
+  },
+  {
+    "File": "core\\dispatcher.py",
+    "AuthorityScore": 0,
+    "Authority": false,
+    "RegistryContract": false,
+    "RuntimeLoad": false,
+    "Mutation": false,
+    "Classification": "LEGACY_OR_PASSIVE"
+  },
+  {
+    "File": "runtime\\models\\model_registry.json",
+    "AuthorityScore": 0,
+    "Authority": false,
+    "RegistryContract": false,
+    "RuntimeLoad": false,
+    "Mutation": false,
+    "Classification": "LEGACY_OR_PASSIVE"
+  }
+]

@@ -1,0 +1,75 @@
+{
+  "core_to_runtime_links": {
+    "core/memory_core.py": [
+      "runtime.memory.sqlite.store"
+    ]
+  },
+  "runtime_to_core_links": {
+    "runtime/kernel_legacy_v2.py": [
+      "runtime.core.message"
+    ],
+    "runtime/agent/controller.py": [
+      "runtime.core.microkernel"
+    ],
+    "runtime/agent/executor.py": [
+      "runtime.core.microkernel"
+    ],
+    "runtime/audit/microkernel_history/microkernel_after_2442.py": [
+      "runtime.core.events",
+      "runtime.core.version"
+    ],
+    "runtime/audit/microkernel_history/microkernel_after_final_cert.py": [
+      "runtime.core.events",
+      "runtime.core.version"
+    ],
+    "runtime/audit/microkernel_history/microkernel_before_2442.py": [
+      "runtime.core.events",
+      "runtime.core.version"
+    ],
+    "runtime/audit/microkernel_history/microkernel_before_certification.py": [
+      "runtime.core.events",
+      "runtime.core.version"
+    ],
+    "runtime/audit/microkernel_history/microkernel_before_final_cert.py": [
+      "runtime.core.events",
+      "runtime.core.version"
+    ],
+    "runtime/cognition/__init__.py": [
+      "runtime.cognition.core"
+    ],
+    "runtime/gateway/adapter.py": [
+      "runtime.core.ezzio_core"
+    ],
+    "runtime/memory/session.py": [
+      "runtime.core.message"
+    ],
+    "runtime/memory/cortex/episodic.py": [
+      "runtime.core.events"
+    ],
+    "runtime/memory/dream/engine.py": [
+      "runtime.core.events"
+    ],
+    "runtime/memory/reflection/store.py": [
+      "runtime.core.events"
+    ],
+    "runtime/memory/reflection/validator.py": [
+      "runtime.core.events"
+    ],
+    "runtime/memory/semantic/contracts.py": [
+      "core.memory_core"
+    ],
+    "runtime/memory/sleep/scheduler.py": [
+      "runtime.core.events"
+    ]
+  },
+  "core_model_registry_io_inspection": {
+    "file_paths_referenced": [
+      "G:/AI/E-zzio/registry/model_latency.json"
+    ],
+    "open_calls": [
+      "read_text"
+    ],
+    "json_loads": true,
+    "glob_calls": []
+  }
+}

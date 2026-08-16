@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-08-11T16:14:22.182535",
+  "target_contract_metadata": {
+    "path": "runtime/hardware/trust/models/contracts/qwen2.5-7b.contract.json",
+    "size_bytes": 549,
+    "created_at": "2026-08-11T14:51:12.959465",
+    "modified_at": "2026-08-11T14:56:31.647431"
+  },
+  "signature_exact_matches_in_other_files": [
+    "runtime/audit/v7_signature_archaeology.py",
+    "runtime/audit/intelligence_scan/V7_REGISTRY/contracts_deep_inspection.json",
+    "runtime/audit/intelligence_scan/V7_REGISTRY/contracts_inventory.json",
+    "runtime/audit/intelligence_scan/V7_REGISTRY/cryptographic_evidence_bundle.json",
+    "runtime/audit/intelligence_scan/V7_REGISTRY/evidence_reconciliation_result.json",
+    "runtime/audit/intelligence_scan/V7_REGISTRY/forensic_signature_replay.json",
+    "runtime/audit/intelligence_scan/V7_REGISTRY/FORENSIC_SIGNATURE_REPLAY.md",
+    "runtime/audit/intelligence_scan/V7_REGISTRY/real_contract_compatibility_result.json",
+    "runtime/audit/intelligence_scan/V7_REGISTRY/signature_origin_discovery.json",
+    "runtime/audit/intelligence_scan/V7_REGISTRY/signature_provenance_result.json",
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_CRYPTOGRAPHIC_EVIDENCE_REPORT.md",
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_REAL_CONTRACT_COMPATIBILITY_REPORT.md",
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_SIGNATURE_ORIGIN_REPORT.md",
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_SIGNATURE_PROVENANCE_REPORT.md"
+  ],
+  "archive_references_to_signing_keys": []
+}

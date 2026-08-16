@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-$res = Invoke-RestMethod "http://127.0.0.1:8000/safe-actions/registry" -Method GET -TimeoutSec 90
+$res = Invoke-RestMethod "http://127.0.0.1:8001/safe-actions/registry" -Method GET -TimeoutSec 90
 
 Write-Host "=== E-ZZIO SAFE ACTIONS REGISTRY ===" -ForegroundColor Cyan
 
@@ -17,3 +17,4 @@ $res.actions.PSObject.Properties | ForEach-Object {
         kind = $spec.kind
     }
 }
+

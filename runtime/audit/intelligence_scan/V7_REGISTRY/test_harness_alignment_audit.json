@@ -1,0 +1,381 @@
+{
+  "timestamp": "2026-08-11T17:47:12.926110",
+  "harness_audit_findings": [
+    {
+      "file": "runtime/audit/v7_api_compatibility_audit.py",
+      "legacy_calls_found": [
+        {
+          "line": 26,
+          "issue": "Potentially incomplete IncidentBundle instantiation in test harness"
+        },
+        {
+          "line": 42,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 52,
+          "issue": "Potentially incomplete IncidentBundle instantiation in test harness"
+        }
+      ]
+    },
+    {
+      "file": "runtime/audit/v7_behavioral_adapter_test.py",
+      "legacy_calls_found": [
+        {
+          "line": 30,
+          "issue": "Potentially incomplete IncidentBundle instantiation in test harness"
+        },
+        {
+          "line": 58,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 72,
+          "issue": "Potentially incomplete IncidentBundle instantiation in test harness"
+        }
+      ]
+    },
+    {
+      "file": "runtime/audit/v7_runtime_behavioral_certification.py",
+      "legacy_calls_found": [
+        {
+          "line": 30,
+          "issue": "Potentially incomplete IncidentBundle instantiation in test harness"
+        },
+        {
+          "line": 58,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 72,
+          "issue": "Outdated method call: .get_active_policies()"
+        }
+      ]
+    },
+    {
+      "file": "runtime/audit/microkernel_history/microkernel_after_2442.py",
+      "legacy_calls_found": [
+        {
+          "line": 54,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 61,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 68,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 92,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 99,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 113,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 124,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 137,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 138,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 153,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 168,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 215,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 180,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 183,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 186,
+          "issue": "Outdated method call: .emit()"
+        }
+      ]
+    },
+    {
+      "file": "runtime/audit/microkernel_history/microkernel_after_final_cert.py",
+      "legacy_calls_found": [
+        {
+          "line": 54,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 61,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 68,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 92,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 99,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 113,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 124,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 137,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 138,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 153,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 168,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 215,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 180,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 183,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 186,
+          "issue": "Outdated method call: .emit()"
+        }
+      ]
+    },
+    {
+      "file": "runtime/audit/microkernel_history/microkernel_before_2442.py",
+      "legacy_calls_found": [
+        {
+          "line": 54,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 61,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 68,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 92,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 99,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 113,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 124,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 137,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 138,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 153,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 168,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 215,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 180,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 183,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 186,
+          "issue": "Outdated method call: .emit()"
+        }
+      ]
+    },
+    {
+      "file": "runtime/audit/microkernel_history/microkernel_before_certification.py",
+      "legacy_calls_found": [
+        {
+          "line": 54,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 61,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 68,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 92,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 99,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 113,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 124,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 137,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 138,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 153,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 168,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 215,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 180,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 183,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 186,
+          "issue": "Outdated method call: .emit()"
+        }
+      ]
+    },
+    {
+      "file": "runtime/audit/microkernel_history/microkernel_before_final_cert.py",
+      "legacy_calls_found": [
+        {
+          "line": 54,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 61,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 68,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 92,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 99,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 113,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 124,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 137,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 138,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 153,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 168,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 215,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 180,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 183,
+          "issue": "Outdated method call: .emit()"
+        },
+        {
+          "line": 186,
+          "issue": "Outdated method call: .emit()"
+        }
+      ]
+    }
+  ]
+}

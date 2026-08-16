@@ -1,0 +1,98 @@
+[
+  {
+    "File": "\\core\\intelligence_router.py",
+    "RegistryReference": true,
+    "ReadOperation": true,
+    "WriteOperation": true,
+    "AuthorityMarker": false,
+    "Classification": "MUTATION_CAPABLE"
+  },
+  {
+    "File": "\\runtime\\autonomy\\policy_engine.py",
+    "RegistryReference": true,
+    "ReadOperation": true,
+    "WriteOperation": false,
+    "AuthorityMarker": false,
+    "Classification": "CONSUMER"
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry\\registry_core.py",
+    "RegistryReference": true,
+    "ReadOperation": true,
+    "WriteOperation": true,
+    "AuthorityMarker": false,
+    "Classification": "MUTATION_CAPABLE"
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry.py",
+    "RegistryReference": true,
+    "ReadOperation": true,
+    "WriteOperation": true,
+    "AuthorityMarker": true,
+    "Classification": "MUTATION_CAPABLE"
+  },
+  {
+    "File": "\\runtime\\cleanup_audit\\inventory.json",
+    "RegistryReference": true,
+    "ReadOperation": false,
+    "WriteOperation": false,
+    "AuthorityMarker": true,
+    "Classification": "AUTHORITY"
+  },
+  {
+    "File": "\\runtime\\cleanup_audit\\orphan_classification.json",
+    "RegistryReference": true,
+    "ReadOperation": false,
+    "WriteOperation": true,
+    "AuthorityMarker": true,
+    "Classification": "MUTATION_CAPABLE"
+  },
+  {
+    "File": "\\runtime\\cognitive\\index\\index_build_manifest.json",
+    "RegistryReference": true,
+    "ReadOperation": false,
+    "WriteOperation": false,
+    "AuthorityMarker": true,
+    "Classification": "AUTHORITY"
+  },
+  {
+    "File": "\\runtime\\cognitive\\snapshots\\V7.58\\cognitive_provenance_matrix.json",
+    "RegistryReference": true,
+    "ReadOperation": false,
+    "WriteOperation": false,
+    "AuthorityMarker": true,
+    "Classification": "AUTHORITY"
+  },
+  {
+    "File": "\\runtime\\cognitive\\snapshots\\V7.58\\index_build_manifest.json",
+    "RegistryReference": true,
+    "ReadOperation": false,
+    "WriteOperation": false,
+    "AuthorityMarker": true,
+    "Classification": "AUTHORITY"
+  },
+  {
+    "File": "\\runtime\\contracts\\authority.py",
+    "RegistryReference": true,
+    "ReadOperation": true,
+    "WriteOperation": false,
+    "AuthorityMarker": true,
+    "Classification": "AUTHORITY"
+  },
+  {
+    "File": "\\tools\\voice_converter\\.venv\\Lib\\site-packages\\torch\\_dynamo\\exc.py",
+    "RegistryReference": true,
+    "ReadOperation": true,
+    "WriteOperation": true,
+    "AuthorityMarker": false,
+    "Classification": "MUTATION_CAPABLE"
+  },
+  {
+    "File": "\\EZZIO_STRUCTURE_AUDIT_V810.json",
+    "RegistryReference": true,
+    "ReadOperation": false,
+    "WriteOperation": true,
+    "AuthorityMarker": true,
+    "Classification": "MUTATION_CAPABLE"
+  }
+]

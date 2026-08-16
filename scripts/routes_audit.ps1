@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-$BaseUrl = "http://127.0.0.1:8000"
+$BaseUrl = "http://127.0.0.1:8001"
 
 $routes = Invoke-RestMethod "$BaseUrl/ezzio/routes" -Method GET -TimeoutSec 30
 
@@ -15,3 +15,4 @@ $routes.routes |
     Select-Object path, methods, endpoint |
     Sort-Object path |
     Format-Table -AutoSize
+

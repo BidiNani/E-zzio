@@ -1,0 +1,602 @@
+import asyncio
+import json
+import statistics
+import time
+import traceback
+import wave
+from pathlib import Path
+
+import numpy as np
+
+import bootstrap
+
+from runtime.realtime.audio.recorder import AsyncAudioRecorder
+
+
+ROOT = Path(r"G:\AI\E-zzio")
+
+MODEL = (
+    ROOT
+    / "runtime"
+    / "realtime"
+    / "models"
+    / "vad"
+    / "silero_vad.onnx"
+)
+
+REPORT = (
+    ROOT
+    / "runtime"
+    / "realtime"
+    / "tests"
+    / "reports"
+    / "phase41H_report.json"
+)
+
+
+def now_utc():
+    return time.strftime(
+        "%Y-%m-%dT%H:%M:%SZ",
+        time.gmtime(),
+    )
+
+
+def percentile(values, p):
+    if not values:
+        return None
+
+    values = sorted(float(x) for x in values)
+
+    if len(values) == 1:
+        return values[0]
+
+    index = (len(values) - 1) * (p / 100.0)
+    lower = int(index)
+    upper = min(lower + 1, len(values) - 1)
+
+    if lower == upper:
+        return values[lower]
+
+    fraction = index - lower
+
+    return (
+        values[lower]
+        + (
+            values[upper]
+            - values[lower]
+        ) * fraction
+    )
+
+
+def discover_wav_files():
+    candidates = []
+
+    roots = [
+        ROOT / "runtime" / "realtime",
+        ROOT / "runtime" / "realtime" / "tests",
+        ROOT / "runtime" / "realtime" / "audio",
+    ]
+
+    for root in roots:
+        if not root.exists():
+            continue
+
+        for path in root.rglob("*.wav"):
+            try:
+                if path.stat().st_size > 4096:
+                    candidates.append(path)
+            except OSError:
+                pass
+
+    return candidates
+
+
+def read_wav_mono_16k(path):
+    with wave.open(str(path), "rb") as wav:
+
+        channels = wav.getnchannels()
+        sample_width = wav.getsampwidth()
+        sample_rate = wav.getframerate()
+        frames = wav.getnframes()
+
+        if sample_width != 2:
+            raise RuntimeError(
+                f"WAV non PCM16 : {path}"
+            )
+
+        raw = wav.readframes(frames)
+
+    data = np.frombuffer(
+        raw,
+        dtype=np.int16,
+    ).astype(np.float32) / 32768.0
+
+    if channels > 1:
+        data = data.reshape(-1, channels).mean(axis=1)
+
+    if sample_rate != 16000:
+        raise RuntimeError(
+            f"WAV doit être 16 kHz pour cette certification : "
+            f"{path} -> {sample_rate} Hz"
+        )
+
+    return data
+
+
+async def run_audit():
+
+    started = time.perf_counter()
+
+    report = {
+        "component": "E-ZZIO V7 Phase 4.1-H",
+        "status": "FAILED",
+        "score": 0,
+        "timestamp_utc": now_utc(),
+        "model": str(MODEL),
+        "checks": {},
+        "metrics": {},
+        "errors": [],
+        "evidence": {},
+    }
+
+    recorder = None
+
+    try:
+
+        if not MODEL.exists():
+            raise FileNotFoundError(
+                f"ONNX model missing: {MODEL}"
+            )
+
+        recorder = AsyncAudioRecorder(
+            vad_model_path=str(MODEL),
+            chunk_samples=512,
+            virtual_mode=True,
+        )
+
+        signature = recorder.vad.engine.signature()
+
+        report["evidence"]["onnx_signature"] = signature
+
+        # ------------------------------------------------------------------
+        # SILENCE CONTRACT TEST
+        # ------------------------------------------------------------------
+
+        silence = np.zeros(
+            (512, 1),
+            dtype=np.float32,
+        )
+
+        silence_result = recorder.vad.process_chunk(
+            silence,
+            time.perf_counter(),
+        )
+
+        silence_probability = float(
+            silence_result["probability"]
+        )
+
+        silence_valid = (
+            0.0 <= silence_probability <= 1.0
+            and silence_result["event"] == "SILENCE"
+        )
+
+        # ------------------------------------------------------------------
+        # PERFORMANCE TEST
+        # ------------------------------------------------------------------
+
+        inference_times = []
+
+        recorder.vad.reset()
+
+        for _ in range(100):
+
+            t0 = time.perf_counter()
+
+            recorder.vad.process_chunk(
+                silence,
+                t0,
+            )
+
+            inference_times.append(
+                (
+                    time.perf_counter()
+                    - t0
+                ) * 1000.0
+            )
+
+        p50 = percentile(inference_times, 50)
+        p95 = percentile(inference_times, 95)
+        p99 = percentile(inference_times, 99)
+        max_ms = max(inference_times)
+
+        # ------------------------------------------------------------------
+        # REAL SPEECH EVIDENCE
+        # ------------------------------------------------------------------
+
+        wav_files = discover_wav_files()
+
+        speech_fixture = None
+        speech_probability_max = None
+        speech_events = []
+
+        if wav_files:
+
+            speech_fixture = wav_files[0]
+
+            audio = read_wav_mono_16k(
+                speech_fixture
+            )
+
+            # Limit fixture to 10 seconds.
+            audio = audio[:16000 * 10]
+
+            recorder.vad.reset()
+
+            chunk_size = 512
+
+            for offset in range(
+                0,
+                len(audio) - chunk_size + 1,
+                chunk_size,
+            ):
+
+                chunk = audio[
+                    offset:
+                    offset + chunk_size
+                ]
+
+                frame = recorder.vad.process_chunk(
+                    chunk,
+                    time.perf_counter(),
+                )
+
+                speech_events.append(
+                    frame["event"]
+                )
+
+                prob = float(
+                    frame["probability"]
+                )
+
+                if (
+                    speech_probability_max is None
+                    or prob > speech_probability_max
+                ):
+                    speech_probability_max = prob
+
+        # ------------------------------------------------------------------
+        # ASYNC PIPELINE
+        # ------------------------------------------------------------------
+
+        events = []
+
+        recorder = AsyncAudioRecorder(
+            vad_model_path=str(MODEL),
+            chunk_samples=512,
+            virtual_mode=True,
+        )
+
+        async def consumer():
+
+            async for frame in recorder.listen_stream():
+
+                events.append(
+                    frame["event"]
+                )
+
+        consumer_task = asyncio.create_task(
+            consumer()
+        )
+
+        for _ in range(20):
+
+            recorder.feed_virtual_chunk(
+                silence,
+                time.perf_counter(),
+            )
+
+            await asyncio.sleep(0.002)
+
+        recorder.stop()
+
+        try:
+
+            await asyncio.wait_for(
+                consumer_task,
+                timeout=2.0,
+            )
+
+        except asyncio.TimeoutError:
+
+            consumer_task.cancel()
+
+            try:
+                await consumer_task
+            except BaseException:
+                pass
+
+        async_pipeline_valid = (
+            len(events) > 0
+        )
+
+        # ------------------------------------------------------------------
+        # CANCELLATION TEST
+        # ------------------------------------------------------------------
+
+        cancel_recorder = AsyncAudioRecorder(
+            vad_model_path=str(MODEL),
+            chunk_samples=512,
+            virtual_mode=True,
+        )
+
+        cancel_task = asyncio.create_task(
+            cancel_recorder.listen_stream().__anext__()
+        )
+
+        await asyncio.sleep(0.02)
+
+        cancel_task.cancel()
+
+        cancellation_valid = False
+
+        try:
+            await cancel_task
+        except BaseException:
+            cancellation_valid = True
+
+        cancel_recorder.stop()
+
+        # ------------------------------------------------------------------
+        # QUEUE OVERFLOW TEST
+        # ------------------------------------------------------------------
+
+        overflow_recorder = AsyncAudioRecorder(
+            vad_model_path=str(MODEL),
+            chunk_samples=512,
+            virtual_mode=True,
+        )
+
+        for _ in range(100):
+
+            overflow_recorder.feed_virtual_chunk(
+                silence,
+                time.perf_counter(),
+            )
+
+        overflow_valid = (
+            overflow_recorder.queue.qsize()
+            <= overflow_recorder.queue.maxsize
+        )
+
+        overflow_count = (
+            overflow_recorder.overflow_count
+        )
+
+        overflow_recorder.stop()
+
+        # ------------------------------------------------------------------
+        # CRITICAL CHECKS
+        # ------------------------------------------------------------------
+
+        checks = {
+            "model_exists":
+                MODEL.exists(),
+
+            "onnx_signature_detected":
+                len(signature["inputs"]) > 0,
+
+            "onnx_state_contract":
+                any(
+                    "state" in x["name"].lower()
+                    for x in signature["inputs"]
+                ),
+
+            "silence_contract":
+                silence_valid,
+
+            "async_pipeline":
+                async_pipeline_valid,
+
+            "bounded_queue":
+                overflow_recorder.queue.maxsize > 0,
+
+            "queue_overflow_isolated":
+                overflow_valid,
+
+            "cancellation_handled":
+                cancellation_valid,
+
+            "inference_p50_sla":
+                p50 < 15.0,
+
+            "inference_p95_sla":
+                p95 < 15.0,
+
+            "inference_p99_sla":
+                p99 < 15.0,
+
+            "inference_max_sla":
+                max_ms < 15.0,
+
+            # IMPORTANT:
+            # Speech detection is certified ONLY with real speech evidence.
+            "real_speech_fixture_present":
+                speech_fixture is not None,
+
+            "real_speech_detected":
+                (
+                    speech_fixture is not None
+                    and "SPEECH_STARTED"
+                    in speech_events
+                ),
+
+            "real_speech_ended":
+                (
+                    speech_fixture is not None
+                    and "SPEECH_ENDED"
+                    in speech_events
+                ),
+        }
+
+        report["checks"] = checks
+
+        report["metrics"] = {
+            "silence_probability":
+                round(
+                    silence_probability,
+                    8,
+                ),
+
+            "vad_inference_p50_ms":
+                round(p50, 4),
+
+            "vad_inference_p95_ms":
+                round(p95, 4),
+
+            "vad_inference_p99_ms":
+                round(p99, 4),
+
+            "vad_inference_max_ms":
+                round(max_ms, 4),
+
+            "async_event_count":
+                len(events),
+
+            "queue_maxsize":
+                overflow_recorder.queue.maxsize,
+
+            "overflow_count":
+                overflow_count,
+
+            "speech_fixture":
+                str(speech_fixture)
+                if speech_fixture
+                else None,
+
+            "speech_probability_max":
+                (
+                    round(
+                        speech_probability_max,
+                        8,
+                    )
+                    if speech_probability_max is not None
+                    else None
+                ),
+
+            "speech_events":
+                speech_events,
+
+            "total_runtime_ms":
+                round(
+                    (
+                        time.perf_counter()
+                        - started
+                    ) * 1000.0,
+                    3,
+                ),
+        }
+
+        # ------------------------------------------------------------------
+        # CERTIFICATION DECISION
+        # ------------------------------------------------------------------
+
+        failed = [
+            key
+            for key, value
+            in checks.items()
+            if not value
+        ]
+
+        if failed:
+
+            report["status"] = "FAILED"
+            report["score"] = 0
+
+            report["errors"].append({
+                "type":
+                    "CertificationFailure",
+
+                "message":
+                    "CRITICAL CHECKS FAILED: "
+                    + ", ".join(failed),
+
+                "failed_checks":
+                    failed,
+            })
+
+        else:
+
+            report["status"] = "CERTIFIED"
+            report["score"] = 10
+
+    except BaseException as exc:
+
+        report["status"] = "FAILED"
+        report["score"] = 0
+
+        report["errors"].append({
+            "type":
+                type(exc).__name__,
+
+            "message":
+                str(exc),
+
+            "traceback":
+                traceback.format_exc(),
+        })
+
+    finally:
+
+        REPORT.parent.mkdir(
+            parents=True,
+            exist_ok=True,
+        )
+
+        REPORT.write_text(
+            json.dumps(
+                report,
+                indent=2,
+                ensure_ascii=False,
+            ),
+            encoding="utf-8",
+        )
+
+        print()
+        print("=" * 80)
+        print(" E-ZZIO V7 — PHASE 4.1-H RESULT")
+        print("=" * 80)
+        print(
+            f"STATUS : {report['status']}"
+        )
+        print(
+            f"SCORE  : {report['score']}/10"
+        )
+        print(
+            f"REPORT : {REPORT}"
+        )
+        print("=" * 80)
+
+        if report["errors"]:
+
+            print()
+            print("ERROR:")
+            print(
+                report["errors"][-1]["message"]
+            )
+
+        if report["status"] != "CERTIFIED":
+
+            print()
+            print(
+                "IMPORTANT : "
+                "10/10 REFUSE tant que les preuves réelles "
+                "ne sont pas présentes."
+            )
+
+
+if __name__ == "__main__":
+
+    asyncio.run(
+        run_audit()
+    )

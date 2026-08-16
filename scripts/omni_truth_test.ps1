@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-$BaseUrl = "http://127.0.0.1:8000"
+$BaseUrl = "http://127.0.0.1:8001"
 
 Write-Host "=== E-ZZIO Truth Guard Test v2.11.5 ===" -ForegroundColor Cyan
 
@@ -34,3 +34,4 @@ foreach ($text in $tests) {
 
     $res.reply
 }
+

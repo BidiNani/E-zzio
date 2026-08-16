@@ -1,0 +1,29 @@
+{
+  "Operations": [
+    {
+      "File": "audit_reliability.py",
+      "Action": "MOVED",
+      "Source": "G:\\AI\\E-zzio\\scripts\\audit_reliability.py",
+      "Destination": "G:\\AI\\E-zzio\\scripts\\audit\\audit_reliability.py",
+      "Timestamp": "2026-08-12T23:00:32Z"
+    },
+    {
+      "File": "Certify-EzzioHardened.ps1",
+      "Action": "MOVED",
+      "Source": "G:\\AI\\E-zzio\\scripts\\Certify-EzzioHardened.ps1",
+      "Destination": "G:\\AI\\E-zzio\\scripts\\audit\\Certify-EzzioHardened.ps1",
+      "Timestamp": "2026-08-12T23:00:32Z"
+    },
+    {
+      "File": "Certify-EzzioPostCleanup.ps1",
+      "Action": "MOVED",
+      "Source": "G:\\AI\\E-zzio\\scripts\\Certify-EzzioPostCleanup.ps1",
+      "Destination": "G:\\AI\\E-zzio\\scripts\\audit\\Certify-EzzioPostCleanup.ps1",
+      "Timestamp": "2026-08-12T23:00:32Z"
+    }
+  ],
+  "Root": "G:\\AI\\E-zzio",
+  "Timestamp": "2026-08-12T23:00:32Z",
+  "Destination": "G:\\AI\\E-zzio\\scripts\\audit",
+  "Count": 3
+}

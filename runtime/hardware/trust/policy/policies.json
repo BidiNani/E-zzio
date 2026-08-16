@@ -1,0 +1,20 @@
+{
+    "version": "1.0",
+    "profiles": {
+        "CRITICAL": {
+            "minimum_score": 95,
+            "allowed_states": ["TRUSTED"]
+        },
+        "NORMAL": {
+            "minimum_score": 75,
+            "allowed_states": ["TRUSTED", "DEGRADED"]
+        },
+        "BACKGROUND": {
+            "minimum_score": 50,
+            "allowed_states": ["TRUSTED", "DEGRADED", "RECOVERY"],
+            "constraints": {
+                "max_workers": 4
+            }
+        }
+    }
+}

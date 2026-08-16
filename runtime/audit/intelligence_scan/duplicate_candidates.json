@@ -1,0 +1,869 @@
+[
+  {
+    "filename": "persona.full.md",
+    "count": 3,
+    "paths": [
+      "persona.full.md",
+      "registry/build/persona.full.md",
+      "runtime/identity/persona.full.md"
+    ]
+  },
+  {
+    "filename": "readme.md",
+    "count": 2,
+    "paths": [
+      ".pytest_cache/README.md",
+      "ezzio-ui/README.md"
+    ]
+  },
+  {
+    "filename": "actions.py",
+    "count": 3,
+    "paths": [
+      "core/actions.py",
+      "routers/actions.py",
+      "runtime/recovery/actions.py"
+    ]
+  },
+  {
+    "filename": "autonomy.py",
+    "count": 2,
+    "paths": [
+      "core/autonomy.py",
+      "routers/autonomy.py"
+    ]
+  },
+  {
+    "filename": "ezzio_identity.py",
+    "count": 2,
+    "paths": [
+      "core/ezzio_identity.py",
+      "routers/ezzio_identity.py"
+    ]
+  },
+  {
+    "filename": "governor.py",
+    "count": 4,
+    "paths": [
+      "core/governor.py",
+      "runtime/execution/governor.py",
+      "runtime/hardware/ryzen_optimizer/governor.py",
+      "runtime/recovery/decision/governor.py"
+    ]
+  },
+  {
+    "filename": "human_chat.py",
+    "count": 2,
+    "paths": [
+      "core/human_chat.py",
+      "routers/human_chat.py"
+    ]
+  },
+  {
+    "filename": "human_loop.py",
+    "count": 2,
+    "paths": [
+      "core/human_loop.py",
+      "routers/human_loop.py"
+    ]
+  },
+  {
+    "filename": "memory.py",
+    "count": 2,
+    "paths": [
+      "core/memory.py",
+      "routers/memory.py"
+    ]
+  },
+  {
+    "filename": "model_registry.py",
+    "count": 2,
+    "paths": [
+      "core/model_registry.py",
+      "runtime/hardware/trust/models_governance/model_registry.py"
+    ]
+  },
+  {
+    "filename": "omnipresence.py",
+    "count": 2,
+    "paths": [
+      "core/omnipresence.py",
+      "routers/omnipresence.py"
+    ]
+  },
+  {
+    "filename": "pc_commander.py",
+    "count": 2,
+    "paths": [
+      "core/pc_commander.py",
+      "routers/pc_commander.py"
+    ]
+  },
+  {
+    "filename": "persona.py",
+    "count": 2,
+    "paths": [
+      "core/persona.py",
+      "runtime/identity/persona.py"
+    ]
+  },
+  {
+    "filename": "safe_actions.py",
+    "count": 2,
+    "paths": [
+      "core/safe_actions.py",
+      "routers/safe_actions.py"
+    ]
+  },
+  {
+    "filename": "supervisor.py",
+    "count": 4,
+    "paths": [
+      "core/supervisor.py",
+      "routers/supervisor.py",
+      "runtime/execution/supervisor.py",
+      "runtime/external/supervisor.py"
+    ]
+  },
+  {
+    "filename": "token_compressor.py",
+    "count": 2,
+    "paths": [
+      "core/token_compressor.py",
+      "runtime/optimization/token_compressor.py"
+    ]
+  },
+  {
+    "filename": "manifest.json",
+    "count": 21,
+    "paths": [
+      "data/manifest.json",
+      "ezzio-ui/.svelte-kit/output/client/.vite/manifest.json",
+      "ezzio-ui/.svelte-kit/output/server/.vite/manifest.json",
+      "registry/compiler/manifest.json",
+      "runtime/skills/active/filesystem_search/manifest.json",
+      "runtime/skills/active/git_manager/manifest.json",
+      "runtime/skills/active/python_analyzer/manifest.json",
+      "runtime/test_isolation/v456/sandbox_chaos/manifest.json",
+      "runtime/test_isolation/v456/sandbox_checksum/manifest.json",
+      "runtime/test_isolation/v456/store/manifest.json",
+      "runtime/test_isolation/v457/sandbox_bench/manifest.json",
+      "runtime/test_isolation/v458/manifest.json",
+      "runtime/test_isolation/v459/manifest.json",
+      "runtime/test_isolation/v4598/sandbox_chaos/manifest.json",
+      "runtime/test_isolation/v4599/sandbox_soak/manifest.json",
+      "runtime/test_isolation/v460/sandbox_scale/manifest.json",
+      "runtime/test_isolation/v470/sandbox_1m/manifest.json",
+      "runtime/test_isolation/v480/sandbox_governor/manifest.json",
+      "runtime/test_isolation/v540/sandbox_real_engine/manifest.json",
+      "runtime/test_isolation/v610/sandbox_e2e_real/manifest.json",
+      "runtime/tools/manifest.json"
+    ]
+  },
+  {
+    "filename": "capability.py",
+    "count": 2,
+    "paths": [
+      "recovery/certified_state/capability.py",
+      "runtime/contracts/capability.py"
+    ]
+  },
+  {
+    "filename": "microkernel.py",
+    "count": 2,
+    "paths": [
+      "recovery/certified_state/microkernel.py",
+      "runtime/core/microkernel.py"
+    ]
+  },
+  {
+    "filename": "lore.md",
+    "count": 2,
+    "paths": [
+      "registry/personality/lore.md",
+      "runtime/identity/lore.md"
+    ]
+  },
+  {
+    "filename": "events.jsonl",
+    "count": 2,
+    "paths": [
+      "registry/telemetry/events.jsonl",
+      "runtime/memory/events.jsonl"
+    ]
+  },
+  {
+    "filename": "models.py",
+    "count": 7,
+    "paths": [
+      "routers/models.py",
+      "runtime/capabilities/models.py",
+      "runtime/hardware/trust/execution/admission/models.py",
+      "runtime/hardware/trust/execution/attestation/models.py",
+      "runtime/hardware/trust/policy/models.py",
+      "runtime/knowledge/models.py",
+      "runtime/memory/models.py"
+    ]
+  },
+  {
+    "filename": "vision.py",
+    "count": 2,
+    "paths": [
+      "routers/vision.py",
+      "tools/legacy_root_scripts/vision.py"
+    ]
+  },
+  {
+    "filename": "context.py",
+    "count": 4,
+    "paths": [
+      "runtime/action/context.py",
+      "runtime/core/context.py",
+      "runtime/execution/context.py",
+      "runtime/kernel/context.py"
+    ]
+  },
+  {
+    "filename": "contracts.py",
+    "count": 4,
+    "paths": [
+      "runtime/action/contracts.py",
+      "runtime/agent/contracts.py",
+      "runtime/memory/semantic/contracts.py",
+      "runtime/recovery/contracts.py"
+    ]
+  },
+  {
+    "filename": "executor.py",
+    "count": 3,
+    "paths": [
+      "runtime/action/executor.py",
+      "runtime/agent/executor.py",
+      "runtime/hardware/router/executor.py"
+    ]
+  },
+  {
+    "filename": "registry.py",
+    "count": 11,
+    "paths": [
+      "runtime/action/registry.py",
+      "runtime/agent/capability/registry.py",
+      "runtime/audit/registry.py",
+      "runtime/capabilities/registry.py",
+      "runtime/execution/registry.py",
+      "runtime/hardware/cartography/registry/registry.py",
+      "runtime/hardware/trust/models/registry.py",
+      "runtime/hardware/trust/policy/registry.py",
+      "runtime/hardware/trust/revocation/registry.py",
+      "runtime/incidents/registry.py",
+      "runtime/skills/registry.py"
+    ]
+  },
+  {
+    "filename": "state.py",
+    "count": 5,
+    "paths": [
+      "runtime/action/state.py",
+      "runtime/cognition/state.py",
+      "runtime/execution/state.py",
+      "runtime/kernel/state.py",
+      "runtime/memory/sleep/state.py"
+    ]
+  },
+  {
+    "filename": "store.py",
+    "count": 5,
+    "paths": [
+      "runtime/action/store.py",
+      "runtime/knowledge/store.py",
+      "runtime/memory/reflection/store.py",
+      "runtime/memory/sqlite/store.py",
+      "runtime/recovery/store.py"
+    ]
+  },
+  {
+    "filename": "controller.py",
+    "count": 4,
+    "paths": [
+      "runtime/agent/controller.py",
+      "runtime/governor/controller.py",
+      "runtime/hardware/trust/execution/admission/controller.py",
+      "runtime/recovery/controller.py"
+    ]
+  },
+  {
+    "filename": "loop.py",
+    "count": 2,
+    "paths": [
+      "runtime/agent/loop.py",
+      "runtime/cognition/loop.py"
+    ]
+  },
+  {
+    "filename": "planner.py",
+    "count": 3,
+    "paths": [
+      "runtime/agent/planner.py",
+      "runtime/audit/planner.py",
+      "runtime/reasoning/planner.py"
+    ]
+  },
+  {
+    "filename": "retry.py",
+    "count": 2,
+    "paths": [
+      "runtime/agent/retry.py",
+      "runtime/recovery/executor/retry.py"
+    ]
+  },
+  {
+    "filename": "verifier.py",
+    "count": 2,
+    "paths": [
+      "runtime/agent/verifier.py",
+      "runtime/hardware/trust/execution/attestation/verifier.py"
+    ]
+  },
+  {
+    "filename": "base.py",
+    "count": 5,
+    "paths": [
+      "runtime/agent/capability/base.py",
+      "runtime/external/base.py",
+      "runtime/recovery/analyzers/base.py",
+      "runtime/recovery/executor/base.py",
+      "runtime/tools/base.py"
+    ]
+  },
+  {
+    "filename": "vector_store.py",
+    "count": 2,
+    "paths": [
+      "runtime/agent/ledger/vector_store.py",
+      "runtime/memory/semantic/vector_store.py"
+    ]
+  },
+  {
+    "filename": "analyzer.py",
+    "count": 2,
+    "paths": [
+      "runtime/audit/analyzer.py",
+      "runtime/cognition/analyzer.py"
+    ]
+  },
+  {
+    "filename": "bridge.py",
+    "count": 2,
+    "paths": [
+      "runtime/audit/bridge.py",
+      "runtime/memory/bridge.py"
+    ]
+  },
+  {
+    "filename": "events.py",
+    "count": 5,
+    "paths": [
+      "runtime/audit/events.py",
+      "runtime/cognition/events.py",
+      "runtime/core/events.py",
+      "runtime/memory/events.py",
+      "runtime/telemetry/events.py"
+    ]
+  },
+  {
+    "filename": "security_events.jsonl",
+    "count": 2,
+    "paths": [
+      "runtime/audit/security_events.jsonl",
+      "runtime/memory/security_events.jsonl"
+    ]
+  },
+  {
+    "filename": "relocation_manifest.json",
+    "count": 8,
+    "paths": [
+      "runtime/audit/archive_traces/relocation/20260809_224648/relocation_manifest.json",
+      "runtime/audit/archive_traces/relocation/20260809_224911/relocation_manifest.json",
+      "runtime/audit/archive_traces/relocation/20260809_231043/relocation_manifest.json",
+      "runtime/audit/archive_traces/relocation/20260809_231557/relocation_manifest.json",
+      "runtime/audit/archive_traces/relocation/20260809_231837/relocation_manifest.json",
+      "runtime/audit/archive_traces/relocation/20260809_232734/relocation_manifest.json",
+      "runtime/audit/archive_traces/relocation/20260809_233102/relocation_manifest.json",
+      "runtime/audit/archive_traces/relocation/20260809_233243/relocation_manifest.json"
+    ]
+  },
+  {
+    "filename": "relocation_result.json",
+    "count": 7,
+    "paths": [
+      "runtime/audit/archive_traces/relocation/20260809_224648/relocation_result.json",
+      "runtime/audit/archive_traces/relocation/20260809_231043/relocation_result.json",
+      "runtime/audit/archive_traces/relocation/20260809_231557/relocation_result.json",
+      "runtime/audit/archive_traces/relocation/20260809_231837/relocation_result.json",
+      "runtime/audit/archive_traces/relocation/20260809_233102/relocation_result.json",
+      "runtime/audit/archive_traces/relocation/20260809_233243/relocation_result.json",
+      "runtime/audit/archive_traces/relocation_20260809_224021/relocation_result.json"
+    ]
+  },
+  {
+    "filename": "manager.py",
+    "count": 2,
+    "paths": [
+      "runtime/budget/manager.py",
+      "runtime/recovery/rollback/manager.py"
+    ]
+  },
+  {
+    "filename": "audit.py",
+    "count": 2,
+    "paths": [
+      "runtime/capabilities/audit.py",
+      "runtime/security/audit.py"
+    ]
+  },
+  {
+    "filename": "lifecycle.py",
+    "count": 2,
+    "paths": [
+      "runtime/capabilities/lifecycle.py",
+      "runtime/execution/lifecycle.py"
+    ]
+  },
+  {
+    "filename": "validator.py",
+    "count": 4,
+    "paths": [
+      "runtime/capabilities/validator.py",
+      "runtime/hardware/evidence/validator.py",
+      "runtime/memory/reflection/validator.py",
+      "runtime/skills/validator.py"
+    ]
+  },
+  {
+    "filename": "session.py",
+    "count": 3,
+    "paths": [
+      "runtime/cli/session.py",
+      "runtime/gateway/session.py",
+      "runtime/memory/session.py"
+    ]
+  },
+  {
+    "filename": "router.py",
+    "count": 4,
+    "paths": [
+      "runtime/cognition/router.py",
+      "runtime/execution/router.py",
+      "runtime/hardware/router/router.py",
+      "runtime/reasoning/router.py"
+    ]
+  },
+  {
+    "filename": "bus.py",
+    "count": 2,
+    "paths": [
+      "runtime/events/bus.py",
+      "runtime/recovery/queue/bus.py"
+    ]
+  },
+  {
+    "filename": "ledger.py",
+    "count": 3,
+    "paths": [
+      "runtime/execution/ledger.py",
+      "runtime/hardware/evidence/ledger.py",
+      "runtime/recovery/ledger.py"
+    ]
+  },
+  {
+    "filename": "resolver.py",
+    "count": 2,
+    "paths": [
+      "runtime/execution/resolver.py",
+      "runtime/hardware/trust/models/resolver.py"
+    ]
+  },
+  {
+    "filename": "resource.py",
+    "count": 2,
+    "paths": [
+      "runtime/execution/resource.py",
+      "runtime/hardware/trust/execution/governor/resource.py"
+    ]
+  },
+  {
+    "filename": "sandbox.py",
+    "count": 2,
+    "paths": [
+      "runtime/execution/sandbox.py",
+      "runtime/security/sandbox.py"
+    ]
+  },
+  {
+    "filename": "scheduler.py",
+    "count": 2,
+    "paths": [
+      "runtime/execution/scheduler.py",
+      "runtime/memory/sleep/scheduler.py"
+    ]
+  },
+  {
+    "filename": "health.py",
+    "count": 3,
+    "paths": [
+      "runtime/gateway/health.py",
+      "runtime/sensors/health.py",
+      "runtime/telemetry/health.py"
+    ]
+  },
+  {
+    "filename": "state.json",
+    "count": 2,
+    "paths": [
+      "runtime/hardware/state.json",
+      "runtime/state/state.json"
+    ]
+  },
+  {
+    "filename": "hmac.key",
+    "count": 2,
+    "paths": [
+      "runtime/hardware/security/hmac.key",
+      "runtime/security/hmac.key"
+    ]
+  },
+  {
+    "filename": "production_v661_state.json",
+    "count": 2,
+    "paths": [
+      "runtime/hardware/state/production_v661_state.json",
+      "runtime/hardware/state/state/production_v661_state.json"
+    ]
+  },
+  {
+    "filename": "engine.py",
+    "count": 4,
+    "paths": [
+      "runtime/hardware/trust/engine.py",
+      "runtime/memory/dream/engine.py",
+      "runtime/policy/engine.py",
+      "runtime/recovery/decision/engine.py"
+    ]
+  },
+  {
+    "filename": "collector.py",
+    "count": 4,
+    "paths": [
+      "runtime/hardware/trust/execution/attestation/collector.py",
+      "runtime/incidents/collector.py",
+      "runtime/rss/collector.py",
+      "runtime/telemetry/collector.py"
+    ]
+  },
+  {
+    "filename": "consumed_tokens.json",
+    "count": 4,
+    "paths": [
+      "runtime/hardware/trust/revocation/storage/consumed_tokens.json",
+      "runtime/hardware/trust/revocation/storage_admission_test/consumed_tokens.json",
+      "runtime/hardware/trust/revocation/storage_gov_test/consumed_tokens.json",
+      "runtime/hardware/trust/revocation/storage_model_test/consumed_tokens.json"
+    ]
+  },
+  {
+    "filename": "atomic_writer.py",
+    "count": 2,
+    "paths": [
+      "runtime/memory/atomic_writer.py",
+      "runtime/test_isolation/v453/atomic_writer.py"
+    ]
+  },
+  {
+    "filename": "guard.py",
+    "count": 2,
+    "paths": [
+      "runtime/security/guard.py",
+      "tools/guard.py"
+    ]
+  },
+  {
+    "filename": "skill.py",
+    "count": 3,
+    "paths": [
+      "runtime/skills/active/filesystem_search/skill.py",
+      "runtime/skills/active/git_manager/skill.py",
+      "runtime/skills/active/python_analyzer/skill.py"
+    ]
+  },
+  {
+    "filename": "segment_000001.jsonl",
+    "count": 10,
+    "paths": [
+      "runtime/test_isolation/v456/sandbox_chaos/segments/segment_000001.jsonl",
+      "runtime/test_isolation/v456/sandbox_checksum/segments/segment_000001.jsonl",
+      "runtime/test_isolation/v456/store/segments/segment_000001.jsonl",
+      "runtime/test_isolation/v457/sandbox_bench/segments/segment_000001.jsonl",
+      "runtime/test_isolation/v458/segments/segment_000001.jsonl",
+      "runtime/test_isolation/v459/segments/segment_000001.jsonl",
+      "runtime/test_isolation/v4599/sandbox_soak/segments/segment_000001.jsonl",
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000001.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000001.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000001.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000002.jsonl",
+    "count": 9,
+    "paths": [
+      "runtime/test_isolation/v456/sandbox_chaos/segments/segment_000002.jsonl",
+      "runtime/test_isolation/v456/sandbox_checksum/segments/segment_000002.jsonl",
+      "runtime/test_isolation/v457/sandbox_bench/segments/segment_000002.jsonl",
+      "runtime/test_isolation/v458/segments/segment_000002.jsonl",
+      "runtime/test_isolation/v459/segments/segment_000002.jsonl",
+      "runtime/test_isolation/v4599/sandbox_soak/segments/segment_000002.jsonl",
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000002.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000002.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000002.jsonl"
+    ]
+  },
+  {
+    "filename": "concurrent_segmented_engine.py",
+    "count": 2,
+    "paths": [
+      "runtime/test_isolation/v457/concurrent_segmented_engine.py",
+      "runtime/test_isolation/v458/concurrent_segmented_engine.py"
+    ]
+  },
+  {
+    "filename": "segment_000003.jsonl",
+    "count": 5,
+    "paths": [
+      "runtime/test_isolation/v458/segments/segment_000003.jsonl",
+      "runtime/test_isolation/v4599/sandbox_soak/segments/segment_000003.jsonl",
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000003.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000003.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000003.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000004.jsonl",
+    "count": 5,
+    "paths": [
+      "runtime/test_isolation/v458/segments/segment_000004.jsonl",
+      "runtime/test_isolation/v4599/sandbox_soak/segments/segment_000004.jsonl",
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000004.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000004.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000004.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000005.jsonl",
+    "count": 4,
+    "paths": [
+      "runtime/test_isolation/v4599/sandbox_soak/segments/segment_000005.jsonl",
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000005.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000005.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000005.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000006.jsonl",
+    "count": 4,
+    "paths": [
+      "runtime/test_isolation/v4599/sandbox_soak/segments/segment_000006.jsonl",
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000006.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000006.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000006.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000007.jsonl",
+    "count": 4,
+    "paths": [
+      "runtime/test_isolation/v4599/sandbox_soak/segments/segment_000007.jsonl",
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000007.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000007.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000007.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000008.jsonl",
+    "count": 4,
+    "paths": [
+      "runtime/test_isolation/v4599/sandbox_soak/segments/segment_000008.jsonl",
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000008.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000008.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000008.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000009.jsonl",
+    "count": 4,
+    "paths": [
+      "runtime/test_isolation/v4599/sandbox_soak/segments/segment_000009.jsonl",
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000009.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000009.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000009.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000010.jsonl",
+    "count": 4,
+    "paths": [
+      "runtime/test_isolation/v4599/sandbox_soak/segments/segment_000010.jsonl",
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000010.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000010.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000010.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000011.jsonl",
+    "count": 4,
+    "paths": [
+      "runtime/test_isolation/v4599/sandbox_soak/segments/segment_000011.jsonl",
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000011.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000011.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000011.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000012.jsonl",
+    "count": 4,
+    "paths": [
+      "runtime/test_isolation/v4599/sandbox_soak/segments/segment_000012.jsonl",
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000012.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000012.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000012.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000013.jsonl",
+    "count": 3,
+    "paths": [
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000013.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000013.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000013.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000014.jsonl",
+    "count": 3,
+    "paths": [
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000014.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000014.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000014.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000015.jsonl",
+    "count": 3,
+    "paths": [
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000015.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000015.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000015.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000016.jsonl",
+    "count": 3,
+    "paths": [
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000016.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000016.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000016.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000017.jsonl",
+    "count": 3,
+    "paths": [
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000017.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000017.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000017.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000018.jsonl",
+    "count": 3,
+    "paths": [
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000018.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000018.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000018.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000019.jsonl",
+    "count": 3,
+    "paths": [
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000019.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000019.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000019.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000020.jsonl",
+    "count": 3,
+    "paths": [
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000020.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000020.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000020.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000021.jsonl",
+    "count": 3,
+    "paths": [
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000021.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000021.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000021.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000022.jsonl",
+    "count": 3,
+    "paths": [
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000022.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000022.jsonl",
+      "runtime/test_isolation/v480/sandbox_governor/segments/segment_000022.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000023.jsonl",
+    "count": 2,
+    "paths": [
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000023.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000023.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000024.jsonl",
+    "count": 2,
+    "paths": [
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000024.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000024.jsonl"
+    ]
+  },
+  {
+    "filename": "segment_000025.jsonl",
+    "count": 2,
+    "paths": [
+      "runtime/test_isolation/v460/sandbox_scale/segments/segment_000025.jsonl",
+      "runtime/test_isolation/v470/sandbox_1m/segments/segment_000025.jsonl"
+    ]
+  },
+  {
+    "filename": "stop_ezzio.ps1",
+    "count": 2,
+    "paths": [
+      "scripts/stop_ezzio.ps1",
+      "tools/legacy_root_scripts/stop_ezzio.ps1"
+    ]
+  },
+  {
+    "filename": "journal.jsonl",
+    "count": 2,
+    "paths": [
+      "state/human_loop/journal.jsonl",
+      "state/pc_commander/journal.jsonl"
+    ]
+  }
+]

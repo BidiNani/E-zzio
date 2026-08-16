@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-$BaseUrl = "http://127.0.0.1:8000"
+$BaseUrl = "http://127.0.0.1:8001"
 
 $tests = @(
     "Le bridge E-ZZIO est-il réparé ?",
@@ -29,3 +29,4 @@ foreach ($text in $tests) {
 
     $res.reply
 }
+

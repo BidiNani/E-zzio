@@ -6,7 +6,7 @@
     "target": "powershell",
     "user": "enrik",
     "input": "/routers",
-    "answer": "{\n  \"ok\": false,\n  \"error\": \"HTTPConnectionPool(host='127.0.0.1', port=8000): Read timed out. (read timeout=8)\"\n}",
+    "answer": "{\n  \"ok\": false,\n  \"error\": \"HTTPConnectionPool(host='127.0.0.1', PORT=8001): Read timed out. (read timeout=8)\"\n}",
     "model": "command-router",
     "ok": true
   }

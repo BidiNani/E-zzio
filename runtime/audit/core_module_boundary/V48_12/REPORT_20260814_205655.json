@@ -1,0 +1,14 @@
+{
+  "component": "E-ZZIO_LAYER_VIOLATION_MATRIX",
+  "version": "V48.12",
+  "mode": "READ_ONLY_FORENSIC",
+  "edges": 4448,
+  "violations": 112,
+  "architecture_score": 5,
+  "safety": [
+    "READ_ONLY",
+    "NO_DELETE",
+    "NO_MOVE",
+    "NO_MUTATION"
+  ]
+}

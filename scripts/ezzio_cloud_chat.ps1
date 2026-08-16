@@ -17,7 +17,7 @@ $body = @{
     use_cache = -not $NoCache
 } | ConvertTo-Json -Depth 20
 
-$res = Invoke-RestMethod "http://127.0.0.1:8000/api/chat/cloud" `
+$res = Invoke-RestMethod "http://127.0.0.1:8001/api/chat/cloud" `
     -Method POST `
     -ContentType "application/json" `
     -TimeoutSec 240 `
@@ -31,3 +31,4 @@ $res = Invoke-RestMethod "http://127.0.0.1:8000/api/chat/cloud" `
     elapsed_ms = $res.elapsed_ms
     reply = $res.reply
 }
+

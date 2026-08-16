@@ -1,0 +1,65 @@
+[
+  {
+    "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "Line": 5,
+    "Trigger": "def __init__(self, registry_file: Path):",
+    "RegistryPathMatch": "registry_file,self.registry_file,registry_file,self._load_registry,_load_registry,self.registry_file.exists",
+    "Context": "import json\nfrom pathlib import Path\n\nclass ModelTrustRegistry:\n    def __init__(self, registry_file: Path):\n        self.registry_file = registry_file\n        self._load_registry()\n\n    def _load_registry(self):\n        if not self.registry_file.exists():\n            # Registre par défaut intégrant les modèles connus\n            default_data = {\n                \"qwen2.5-7b\": {\"status\": \"TRUSTED\", \"max_allowed_workers\": 8, \"max_ram_mb\": 8192},\n                \"qwen2.5-3b\": {\"status\": \"TRUSTED\", \"max_allowed_workers\": 4, \"max_ram_mb\": 4096},\n                \"gemini-pro\": {\"status\": \"TRUSTED_REMOTE\", \"max_allowed_workers\": 2, \"max_ram_mb\": 1024},"
+  },
+  {
+    "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "Line": 6,
+    "Trigger": "self.registry_file = registry_file",
+    "RegistryPathMatch": "registry_file,self.registry_file,registry_file,self._load_registry,_load_registry,self.registry_file.exists",
+    "Context": "import json\nfrom pathlib import Path\n\nclass ModelTrustRegistry:\n    def __init__(self, registry_file: Path):\n        self.registry_file = registry_file\n        self._load_registry()\n\n    def _load_registry(self):\n        if not self.registry_file.exists():\n            # Registre par défaut intégrant les modèles connus\n            default_data = {\n                \"qwen2.5-7b\": {\"status\": \"TRUSTED\", \"max_allowed_workers\": 8, \"max_ram_mb\": 8192},\n                \"qwen2.5-3b\": {\"status\": \"TRUSTED\", \"max_allowed_workers\": 4, \"max_ram_mb\": 4096},\n                \"gemini-pro\": {\"status\": \"TRUSTED_REMOTE\", \"max_allowed_workers\": 2, \"max_ram_mb\": 1024},\n                \"unknown-model\": {\"status\": \"QUARANTINE\", \"max_allowed_workers\": 0, \"max_ram_mb\": 0}"
+  },
+  {
+    "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "Line": 10,
+    "Trigger": "if not self.registry_file.exists():",
+    "RegistryPathMatch": "registry_file,self.registry_file,registry_file,self._load_registry,_load_registry,self.registry_file.exists,self.registry_file.parent.mkdir,self.registry_file.write_text",
+    "Context": "import json\nfrom pathlib import Path\n\nclass ModelTrustRegistry:\n    def __init__(self, registry_file: Path):\n        self.registry_file = registry_file\n        self._load_registry()\n\n    def _load_registry(self):\n        if not self.registry_file.exists():\n            # Registre par défaut intégrant les modèles connus\n            default_data = {\n                \"qwen2.5-7b\": {\"status\": \"TRUSTED\", \"max_allowed_workers\": 8, \"max_ram_mb\": 8192},\n                \"qwen2.5-3b\": {\"status\": \"TRUSTED\", \"max_allowed_workers\": 4, \"max_ram_mb\": 4096},\n                \"gemini-pro\": {\"status\": \"TRUSTED_REMOTE\", \"max_allowed_workers\": 2, \"max_ram_mb\": 1024},\n                \"unknown-model\": {\"status\": \"QUARANTINE\", \"max_allowed_workers\": 0, \"max_ram_mb\": 0}\n            }\n            self.registry_file.parent.mkdir(parents=True, exist_ok=True)\n            self.registry_file.write_text(json.dumps(default_data, indent=4), encoding=\"utf-8\")\n            self.data = default_data"
+  },
+  {
+    "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "Line": 18,
+    "Trigger": "self.registry_file.parent.mkdir(parents=True, exist_ok=True)",
+    "RegistryPathMatch": "_load_registry,self.registry_file.exists,self.registry_file.parent.mkdir,self.registry_file.write_text,self.registry_file.read_text",
+    "Context": "\n    def _load_registry(self):\n        if not self.registry_file.exists():\n            # Registre par défaut intégrant les modèles connus\n            default_data = {\n                \"qwen2.5-7b\": {\"status\": \"TRUSTED\", \"max_allowed_workers\": 8, \"max_ram_mb\": 8192},\n                \"qwen2.5-3b\": {\"status\": \"TRUSTED\", \"max_allowed_workers\": 4, \"max_ram_mb\": 4096},\n                \"gemini-pro\": {\"status\": \"TRUSTED_REMOTE\", \"max_allowed_workers\": 2, \"max_ram_mb\": 1024},\n                \"unknown-model\": {\"status\": \"QUARANTINE\", \"max_allowed_workers\": 0, \"max_ram_mb\": 0}\n            }\n            self.registry_file.parent.mkdir(parents=True, exist_ok=True)\n            self.registry_file.write_text(json.dumps(default_data, indent=4), encoding=\"utf-8\")\n            self.data = default_data\n        else:\n            try:\n                self.data = json.loads(self.registry_file.read_text(encoding=\"utf-8\"))\n            except (json.JSONDecodeError, OSError):\n                self.data = {}\n\n    def get_model_status(self, model_id: str) -> dict:\n        \"\"\"Retourne le statut de confiance et les budgets alloués au modèle.\"\"\""
+  },
+  {
+    "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "Line": 19,
+    "Trigger": "self.registry_file.write_text(json.dumps(default_data, indent=4), encoding=\"utf-8\")",
+    "RegistryPathMatch": "_load_registry,self.registry_file.exists,self.registry_file.parent.mkdir,self.registry_file.write_text,self.registry_file.read_text",
+    "Context": "    def _load_registry(self):\n        if not self.registry_file.exists():\n            # Registre par défaut intégrant les modèles connus\n            default_data = {\n                \"qwen2.5-7b\": {\"status\": \"TRUSTED\", \"max_allowed_workers\": 8, \"max_ram_mb\": 8192},\n                \"qwen2.5-3b\": {\"status\": \"TRUSTED\", \"max_allowed_workers\": 4, \"max_ram_mb\": 4096},\n                \"gemini-pro\": {\"status\": \"TRUSTED_REMOTE\", \"max_allowed_workers\": 2, \"max_ram_mb\": 1024},\n                \"unknown-model\": {\"status\": \"QUARANTINE\", \"max_allowed_workers\": 0, \"max_ram_mb\": 0}\n            }\n            self.registry_file.parent.mkdir(parents=True, exist_ok=True)\n            self.registry_file.write_text(json.dumps(default_data, indent=4), encoding=\"utf-8\")\n            self.data = default_data\n        else:\n            try:\n                self.data = json.loads(self.registry_file.read_text(encoding=\"utf-8\"))\n            except (json.JSONDecodeError, OSError):\n                self.data = {}\n\n    def get_model_status(self, model_id: str) -> dict:\n        \"\"\"Retourne le statut de confiance et les budgets alloués au modèle.\"\"\"\n        if model_id not in self.data:"
+  },
+  {
+    "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "Line": 23,
+    "Trigger": "self.data = json.loads(self.registry_file.read_text(encoding=\"utf-8\"))",
+    "RegistryPathMatch": "self.registry_file.parent.mkdir,self.registry_file.write_text,self.registry_file.read_text",
+    "Context": "                \"qwen2.5-7b\": {\"status\": \"TRUSTED\", \"max_allowed_workers\": 8, \"max_ram_mb\": 8192},\n                \"qwen2.5-3b\": {\"status\": \"TRUSTED\", \"max_allowed_workers\": 4, \"max_ram_mb\": 4096},\n                \"gemini-pro\": {\"status\": \"TRUSTED_REMOTE\", \"max_allowed_workers\": 2, \"max_ram_mb\": 1024},\n                \"unknown-model\": {\"status\": \"QUARANTINE\", \"max_allowed_workers\": 0, \"max_ram_mb\": 0}\n            }\n            self.registry_file.parent.mkdir(parents=True, exist_ok=True)\n            self.registry_file.write_text(json.dumps(default_data, indent=4), encoding=\"utf-8\")\n            self.data = default_data\n        else:\n            try:\n                self.data = json.loads(self.registry_file.read_text(encoding=\"utf-8\"))\n            except (json.JSONDecodeError, OSError):\n                self.data = {}\n\n    def get_model_status(self, model_id: str) -> dict:\n        \"\"\"Retourne le statut de confiance et les budgets alloués au modèle.\"\"\"\n        if model_id not in self.data:\n            return {\"status\": \"QUARANTINE\", \"max_allowed_workers\": 0, \"max_ram_mb\": 0}\n        return self.data[model_id]"
+  },
+  {
+    "File": "core\\intelligence_router.py",
+    "Line": 66,
+    "Trigger": "raw_string = json.dumps(temp_payload, sort_keys=True, ensure_ascii=False)",
+    "RegistryPathMatch": "",
+    "Context": "            \"candidates\": candidates,\n            \"selected\": selected,\n            \"transaction_state\": state, # DECISION_MADE, EXECUTION_STARTED, RECOVERY_SUCCESS, FAILED\n            \"execution_details\": execution_details or {},\n            \"previous_hash\": previous_hash\n        }\n        \n        # Calcul du hash immuable chaîné (SHA-256 strict avec previous_hash)\n        temp_payload = dict(payload)\n        temp_payload.pop(\"hash\", None)\n        raw_string = json.dumps(temp_payload, sort_keys=True, ensure_ascii=False)\n        current_hash = hashlib.sha256(raw_string.encode(\"utf-8\")).hexdigest()\n        payload[\"hash\"] = current_hash\n        raw_string = json.dumps(payload, sort_keys=True, ensure_ascii=False)\n        current_hash = hashlib.sha256(raw_string.encode(\"utf-8\")).hexdigest()\n        payload[\"hash\"] = current_hash\n\n        with open(LEDGER_PATH, \"a\", encoding=\"utf-8\") as f:\n            f.write(json.dumps(payload, ensure_ascii=False) + \"\\n\")\n\n    async def route(self, task_intent: str, prompt: str, constraints: RouteConstraints) -> ExecutionDecision:"
+  },
+  {
+    "File": "core\\intelligence_router.py",
+    "Line": 69,
+    "Trigger": "raw_string = json.dumps(payload, sort_keys=True, ensure_ascii=False)",
+    "RegistryPathMatch": "",
+    "Context": "            \"execution_details\": execution_details or {},\n            \"previous_hash\": previous_hash\n        }\n        \n        # Calcul du hash immuable chaîné (SHA-256 strict avec previous_hash)\n        temp_payload = dict(payload)\n        temp_payload.pop(\"hash\", None)\n        raw_string = json.dumps(temp_payload, sort_keys=True, ensure_ascii=False)\n        current_hash = hashlib.sha256(raw_string.encode(\"utf-8\")).hexdigest()\n        payload[\"hash\"] = current_hash\n        raw_string = json.dumps(payload, sort_keys=True, ensure_ascii=False)\n        current_hash = hashlib.sha256(raw_string.encode(\"utf-8\")).hexdigest()\n        payload[\"hash\"] = current_hash\n\n        with open(LEDGER_PATH, \"a\", encoding=\"utf-8\") as f:\n            f.write(json.dumps(payload, ensure_ascii=False) + \"\\n\")\n\n    async def route(self, task_intent: str, prompt: str, constraints: RouteConstraints) -> ExecutionDecision:\n        candidates = []\n        os_mem = windows_memory.get_system_memory_pressure()\n        "
+  },
+  {
+    "File": "core\\intelligence_router.py",
+    "Line": 74,
+    "Trigger": "f.write(json.dumps(payload, ensure_ascii=False) + \"\\n\")",
+    "RegistryPathMatch": "",
+    "Context": "        temp_payload = dict(payload)\n        temp_payload.pop(\"hash\", None)\n        raw_string = json.dumps(temp_payload, sort_keys=True, ensure_ascii=False)\n        current_hash = hashlib.sha256(raw_string.encode(\"utf-8\")).hexdigest()\n        payload[\"hash\"] = current_hash\n        raw_string = json.dumps(payload, sort_keys=True, ensure_ascii=False)\n        current_hash = hashlib.sha256(raw_string.encode(\"utf-8\")).hexdigest()\n        payload[\"hash\"] = current_hash\n\n        with open(LEDGER_PATH, \"a\", encoding=\"utf-8\") as f:\n            f.write(json.dumps(payload, ensure_ascii=False) + \"\\n\")\n\n    async def route(self, task_intent: str, prompt: str, constraints: RouteConstraints) -> ExecutionDecision:\n        candidates = []\n        os_mem = windows_memory.get_system_memory_pressure()\n        \n        # 1. Évaluation LOCALE (Vérification Circuit Breaker & Pression Windows)\n        cb_ollama_open = circuit_breaker.is_open(\"ollama\")\n        \n        if not cb_ollama_open:\n            for model_name, meta in self.local_models.items():"
+  }
+]

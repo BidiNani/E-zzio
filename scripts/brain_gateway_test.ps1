@@ -3,7 +3,7 @@ $ErrorActionPreference = "Stop"
 
 $tests = @(
     @{
-        endpoint = "http://127.0.0.1:8000/api/brain/chat"
+        endpoint = "http://127.0.0.1:8001/api/brain/chat"
         body = @{
             text = "Qui es-tu E-ZZIO ? Réponds en une phrase."
             task = "identity"
@@ -12,7 +12,7 @@ $tests = @(
         }
     },
     @{
-        endpoint = "http://127.0.0.1:8000/api/chat/pc"
+        endpoint = "http://127.0.0.1:8001/api/chat/pc"
         body = @{
             text = "Donne-moi une règle PowerShell E-ZZIO courte et concrète."
             task = "powershell"
@@ -21,7 +21,7 @@ $tests = @(
         }
     },
     @{
-        endpoint = "http://127.0.0.1:8000/api/chat/router"
+        endpoint = "http://127.0.0.1:8001/api/chat/router"
         body = @{
             text = "Réponds vite : E-ZZIO est-il CPU/RAM only ?"
             task = "fast"
@@ -52,3 +52,4 @@ foreach ($test in $tests) {
         reply = $res.reply
     }
 }
+

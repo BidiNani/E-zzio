@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-$BaseUrl = "http://127.0.0.1:8000"
+$BaseUrl = "http://127.0.0.1:8001"
 
 $result = Invoke-RestMethod "$BaseUrl/forge/image/upscale-latest-1080p" `
     -Method POST `
@@ -16,3 +16,4 @@ if ($result.ok) {
 else {
     Write-Warning $result.error
 }
+

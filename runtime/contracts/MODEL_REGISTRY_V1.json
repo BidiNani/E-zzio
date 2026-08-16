@@ -1,0 +1,484 @@
+{
+  "external_providers_detected": {
+    "ollama_models": [
+      {
+        "provider": "ollama",
+        "model_id": "gemma4e4b:latest",
+        "id": "669410cd0bdb",
+        "size": "5.3 GB"
+      },
+      {
+        "provider": "ollama",
+        "model_id": "qwen3:8b",
+        "id": "500a1f067a9f",
+        "size": "5.2 GB"
+      },
+      {
+        "provider": "ollama",
+        "model_id": "qwen2.5vl:3b",
+        "id": "fb90415cde1e",
+        "size": "3.2 GB"
+      },
+      {
+        "provider": "ollama",
+        "model_id": "hermes3:8b",
+        "id": "4f6b83f30b62",
+        "size": "4.7 GB"
+      },
+      {
+        "provider": "ollama",
+        "model_id": "qwen2.5-coder:7b",
+        "id": "dae161e27b0e",
+        "size": "4.7 GB"
+      },
+      {
+        "provider": "ollama",
+        "model_id": "nomic-embed-text:latest",
+        "id": "0a109f422b47",
+        "size": "274 MB"
+      }
+    ]
+  },
+  "local_weights_discovered": [
+    {
+      "name": "model_registry.py",
+      "path": "core/model_registry.py",
+      "size_bytes": 4154,
+      "size_mb": 0.0,
+      "sha256": "5a6e48010e03360f6f910bbfa65ca2b519763f7478c76683c744b4937460c280",
+      "last_modified": "2026-07-26T00:14:32Z"
+    },
+    {
+      "name": "pc_model_router.py",
+      "path": "core/pc_model_router.py",
+      "size_bytes": 14593,
+      "size_mb": 0.01,
+      "sha256": "7f13e9148e219afdd5b3435a0a177d1268b7e3c58b8f1d2a6cd50677526557e5",
+      "last_modified": "2026-06-10T12:42:21Z"
+    },
+    {
+      "name": "model_latency.json",
+      "path": "registry/model_latency.json",
+      "size_bytes": 623,
+      "size_mb": 0.0,
+      "sha256": "9daf175058f3f7f3222e29735bb384f0463cd1eeb6113ad8add6c0aebc917223",
+      "last_modified": "2026-06-10T00:18:43Z"
+    },
+    {
+      "name": "models.py",
+      "path": "routers/models.py",
+      "size_bytes": 1674,
+      "size_mb": 0.0,
+      "sha256": "48d29859c67e182f9c4f8d92775ee7d1f02f92c3904ea65be429fd185bd950d7",
+      "last_modified": "2026-06-10T00:18:32Z"
+    },
+    {
+      "name": "model_registry_autopsy.json",
+      "path": "runtime/audit/intelligence_scan/V7_REGISTRY/model_registry_autopsy.json",
+      "size_bytes": 268,
+      "size_mb": 0.0,
+      "sha256": "a7448ab157be01fd38e67d4c3330b90459544cf661e2eb50ffc97fbb7e06b2fa",
+      "last_modified": "2026-08-11T15:46:14Z"
+    },
+    {
+      "name": "models.cpython-311.pyc",
+      "path": "runtime/cache/pycache/AI/E-zzio/runtime/hardware/trust/execution/attestation/models.cpython-311.pyc",
+      "size_bytes": 2470,
+      "size_mb": 0.0,
+      "sha256": "c8497fee1e0e202ad8b34b3654813fb0c858194767cd7b0d4f9ac44f5e8e5727",
+      "last_modified": "2026-08-11T14:40:26Z"
+    },
+    {
+      "name": "model_registry.cpython-311.pyc",
+      "path": "runtime/cache/pycache/AI/E-zzio/runtime/hardware/trust/models_governance/model_registry.cpython-311.pyc",
+      "size_bytes": 2401,
+      "size_mb": 0.0,
+      "sha256": "53e2b949c34f25261a59f79f4bd1771b6b8fdae95f3a98b57875aefbe74d1a23",
+      "last_modified": "2026-08-11T14:33:47Z"
+    },
+    {
+      "name": "models.cpython-311.pyc",
+      "path": "runtime/cache/pycache/Users/enrik/AppData/Local/hermes/hermes-agent/venv/Lib/site-packages/aiohttp/_websocket/models.cpython-311.pyc",
+      "size_bytes": 4787,
+      "size_mb": 0.0,
+      "sha256": "e49b64f7fd1fda498aa370df9d49094e9fab48d5daa4d334b2309228059f7dfb",
+      "last_modified": "2026-08-10T14:16:04Z"
+    },
+    {
+      "name": "models.cpython-311.pyc",
+      "path": "runtime/cache/pycache/Users/enrik/AppData/Local/hermes/hermes-agent/venv/Lib/site-packages/charset_normalizer/models.cpython-311.pyc",
+      "size_bytes": 18578,
+      "size_mb": 0.02,
+      "sha256": "7d1f04b9c9c0bb98925201a57d5a8308857f7c4659c05944c7372b115c55fdaf",
+      "last_modified": "2026-08-10T14:16:06Z"
+    },
+    {
+      "name": "models.cpython-311.pyc",
+      "path": "runtime/cache/pycache/Users/enrik/AppData/Local/hermes/hermes-agent/venv/Lib/site-packages/fastapi/dependencies/models.cpython-311.pyc",
+      "size_bytes": 10395,
+      "size_mb": 0.01,
+      "sha256": "971f391e0867c35af036ad05c466394b2c1d84b870b8a6940cbf4a2613952bd2",
+      "last_modified": "2026-08-10T14:16:04Z"
+    },
+    {
+      "name": "models.cpython-311.pyc",
+      "path": "runtime/cache/pycache/Users/enrik/AppData/Local/hermes/hermes-agent/venv/Lib/site-packages/fastapi/openapi/models.cpython-311.pyc",
+      "size_bytes": 27054,
+      "size_mb": 0.03,
+      "sha256": "41ccf6530cc11a40fdbd3a0c8dd5311ce831bdf804fb61fb458187551305e8e6",
+      "last_modified": "2026-08-10T14:16:04Z"
+    },
+    {
+      "name": "models.cpython-311.pyc",
+      "path": "runtime/cache/pycache/Users/enrik/AppData/Local/hermes/hermes-agent/venv/Lib/site-packages/google/genai/models.cpython-311.pyc",
+      "size_bytes": 329597,
+      "size_mb": 0.31,
+      "sha256": "1d4f91fa11f56cabaa5ccd3a1201c43336b6c3a72bf7d0b26ee503536925c548",
+      "last_modified": "2026-08-10T14:16:07Z"
+    },
+    {
+      "name": "basemodel.cpython-311.pyc",
+      "path": "runtime/cache/pycache/Users/enrik/AppData/Local/hermes/hermes-agent/venv/Lib/site-packages/google/genai/_gaos/types/basemodel.cpython-311.pyc",
+      "size_bytes": 8656,
+      "size_mb": 0.01,
+      "sha256": "dc3bc5f1cbc2f84e4c776c09103dc6eaebaa2fd6c349eff3ec8fbfe3a9247865",
+      "last_modified": "2026-08-10T14:16:04Z"
+    },
+    {
+      "name": "createmodelinteraction.cpython-311.pyc",
+      "path": "runtime/cache/pycache/Users/enrik/AppData/Local/hermes/hermes-agent/venv/Lib/site-packages/google/genai/_gaos/types/interactions/createmodelinteraction.cpython-311.pyc",
+      "size_bytes": 6106,
+      "size_mb": 0.01,
+      "sha256": "b6caad2942d527bdb65710f6a77f7487ee5739d45b28697a5d5c881d806a9246",
+      "last_modified": "2026-08-10T14:16:05Z"
+    },
+    {
+      "name": "model.cpython-311.pyc",
+      "path": "runtime/cache/pycache/Users/enrik/AppData/Local/hermes/hermes-agent/venv/Lib/site-packages/google/genai/_gaos/types/interactions/model.cpython-311.pyc",
+      "size_bytes": 1068,
+      "size_mb": 0.0,
+      "sha256": "5e7e611be25821ff872fb884829bc0ccd8e599272502355884318883491627a2",
+      "last_modified": "2026-08-10T14:16:05Z"
+    },
+    {
+      "name": "modeloutputstep.cpython-311.pyc",
+      "path": "runtime/cache/pycache/Users/enrik/AppData/Local/hermes/hermes-agent/venv/Lib/site-packages/google/genai/_gaos/types/interactions/modeloutputstep.cpython-311.pyc",
+      "size_bytes": 3118,
+      "size_mb": 0.0,
+      "sha256": "8a4726a0b8cdb2b0524d8bcc19c34c88f4ea3e300ccc150cf9f1ce3c2fad76d1",
+      "last_modified": "2026-08-10T14:16:05Z"
+    },
+    {
+      "name": "_models.cpython-311.pyc",
+      "path": "runtime/cache/pycache/Users/enrik/AppData/Local/hermes/hermes-agent/venv/Lib/site-packages/httpx/_models.cpython-311.pyc",
+      "size_bytes": 66384,
+      "size_mb": 0.06,
+      "sha256": "f69dabe0bf0033e3caf0444c0dace734cbcd7c037b7d72650f370df747e82dc1",
+      "last_modified": "2026-08-10T14:16:04Z"
+    },
+    {
+      "name": "_model_construction.cpython-311.pyc",
+      "path": "runtime/cache/pycache/Users/enrik/AppData/Local/hermes/hermes-agent/venv/Lib/site-packages/pydantic/_internal/_model_construction.cpython-311.pyc",
+      "size_bytes": 40365,
+      "size_mb": 0.04,
+      "sha256": "22fa3a5f4cb74a8cdf436c22e6033c856d34555d98eb52b65915dd90c0a37909",
+      "last_modified": "2026-08-10T14:16:04Z"
+    },
+    {
+      "name": "modeline.cpython-311.pyc",
+      "path": "runtime/cache/pycache/Users/enrik/AppData/Local/hermes/hermes-agent/venv/Lib/site-packages/pygments/modeline.cpython-311.pyc",
+      "size_bytes": 1726,
+      "size_mb": 0.0,
+      "sha256": "64e55ac587981ccff8ba138bb6d8188fada66ebaee2ecde6093a57cf6deccbc2",
+      "last_modified": "2026-08-10T14:16:05Z"
+    },
+    {
+      "name": "models.cpython-311.pyc",
+      "path": "runtime/cache/pycache/Users/enrik/AppData/Local/hermes/hermes-agent/venv/Lib/site-packages/requests/models.cpython-311.pyc",
+      "size_bytes": 38788,
+      "size_mb": 0.04,
+      "sha256": "d9675a8c4a4ac9649b9b1fd50852962c19200ed2b203614a737e2049bca0af3e",
+      "last_modified": "2026-08-10T14:16:06Z"
+    },
+    {
+      "name": "models.cpython-312.pyc",
+      "path": "runtime/cache/pycache/Users/enrik/AppData/Roaming/Python/Python312/site-packages/charset_normalizer/models.cpython-312.pyc",
+      "size_bytes": 17255,
+      "size_mb": 0.02,
+      "sha256": "8ba25c94893ed22c2ce607e7b2bec89ca70e7a85da24b4fc832c129e861fdebb",
+      "last_modified": "2026-08-10T21:06:35Z"
+    },
+    {
+      "name": "_models.cpython-312.pyc",
+      "path": "runtime/cache/pycache/Users/enrik/AppData/Roaming/Python/Python312/site-packages/httpcore/_models.cpython-312.pyc",
+      "size_bytes": 23122,
+      "size_mb": 0.02,
+      "sha256": "a11ac219992b27ace4fd32f87feaab831a812ee41145ac00d98c28579c7b9c3d",
+      "last_modified": "2026-08-10T21:06:36Z"
+    },
+    {
+      "name": "_models.cpython-312.pyc",
+      "path": "runtime/cache/pycache/Users/enrik/AppData/Roaming/Python/Python312/site-packages/httpx/_models.cpython-312.pyc",
+      "size_bytes": 58240,
+      "size_mb": 0.06,
+      "sha256": "3e70768c90ecf1539de900dbb1aa16e4ca6459c77bc8b0180d1c713f8230b5ac",
+      "last_modified": "2026-08-10T21:06:34Z"
+    },
+    {
+      "name": "_model_construction.cpython-312.pyc",
+      "path": "runtime/cache/pycache/Users/enrik/AppData/Roaming/Python/Python312/site-packages/pydantic/_internal/_model_construction.cpython-312.pyc",
+      "size_bytes": 35990,
+      "size_mb": 0.03,
+      "sha256": "e4bc6b4f11653eece70ba9bb83e24361e4c3b6fbf93e73b3e79b5951e8ad6a74",
+      "last_modified": "2026-08-10T21:06:33Z"
+    },
+    {
+      "name": "models.cpython-312.pyc",
+      "path": "runtime/cache/pycache/Users/enrik/AppData/Roaming/Python/Python312/site-packages/requests/models.cpython-312.pyc",
+      "size_bytes": 41898,
+      "size_mb": 0.04,
+      "sha256": "fbf42cd4fb627205420226c4b0ba4ac638f261da969100d41466ac1db3b85a0c",
+      "last_modified": "2026-08-10T21:06:36Z"
+    },
+    {
+      "name": "models.py",
+      "path": "runtime/capabilities/models.py",
+      "size_bytes": 332,
+      "size_mb": 0.0,
+      "sha256": "771f562d6d2fa550d107f39903493ad7c851d4fb32a093af102eab38962280af",
+      "last_modified": "2026-07-27T00:54:01Z"
+    },
+    {
+      "name": "test_v615_3_models.py",
+      "path": "runtime/guardian/test_v615_3_models.py",
+      "size_bytes": 4598,
+      "size_mb": 0.0,
+      "sha256": "6a5e757362c2cbde508757505c58752ce6445e167faa8c5ee23ad842cdc70d80",
+      "last_modified": "2026-08-11T14:34:18Z"
+    },
+    {
+      "name": "models.py",
+      "path": "runtime/hardware/trust/execution/admission/models.py",
+      "size_bytes": 686,
+      "size_mb": 0.0,
+      "sha256": "12931dd24f0d2f125c90c1656975e4d4663f70cbae21c745d9ac0239a3fce4a8",
+      "last_modified": "2026-08-11T14:25:13Z"
+    },
+    {
+      "name": "models.py",
+      "path": "runtime/hardware/trust/execution/attestation/models.py",
+      "size_bytes": 1165,
+      "size_mb": 0.0,
+      "sha256": "2a70b80180835a023e3d7f2e8966a1f1a1abee74a9cf343ec12f3426953868d9",
+      "last_modified": "2026-08-11T14:39:46Z"
+    },
+    {
+      "name": "model_registry.py",
+      "path": "runtime/hardware/trust/models_governance/model_registry.py",
+      "size_bytes": 1477,
+      "size_mb": 0.0,
+      "sha256": "3877064687fd07dcc46fc9f5a0f805e59ba4419ffddd4d7bf86faca4217e1317",
+      "last_modified": "2026-08-11T14:33:17Z"
+    },
+    {
+      "name": "model_trust_registry.json",
+      "path": "runtime/hardware/trust/models_governance/model_trust_registry.json",
+      "size_bytes": 501,
+      "size_mb": 0.0,
+      "sha256": "468b680d61618ad135bf8627a3df5c72fd295d408e889b34b47b1d72eb79994e",
+      "last_modified": "2026-08-11T14:34:20Z"
+    },
+    {
+      "name": "models.py",
+      "path": "runtime/hardware/trust/policy/models.py",
+      "size_bytes": 455,
+      "size_mb": 0.0,
+      "sha256": "f21831a6b058628d52d485e01b339d78a9781db32d644b011bcd39d56d288329",
+      "last_modified": "2026-08-11T14:16:07Z"
+    },
+    {
+      "name": "model.py",
+      "path": "runtime/incidents/model.py",
+      "size_bytes": 2471,
+      "size_mb": 0.0,
+      "sha256": "35de822cb8cbd74574baaaa6d5a1a573e34bb43b341d811118bbbefb94920da4",
+      "last_modified": "2026-08-10T17:40:11Z"
+    },
+    {
+      "name": "models.py",
+      "path": "runtime/knowledge/models.py",
+      "size_bytes": 720,
+      "size_mb": 0.0,
+      "sha256": "7130a3a123ea24a69ff038602768f62118bc9b5b3f3d7cb694e7ffe7dcbcbfc9",
+      "last_modified": "2026-07-27T01:08:54Z"
+    },
+    {
+      "name": "models.py",
+      "path": "runtime/memory/models.py",
+      "size_bytes": 400,
+      "size_mb": 0.0,
+      "sha256": "2116e78478a8701c4f3b06c18b6dc55002340c842f44c16ae3e31dcc0d6a2c0a",
+      "last_modified": "2026-08-10T14:20:56Z"
+    },
+    {
+      "name": "models.cpython-312.pyc",
+      "path": "runtime/quarantine/V7.11.1.2/runtime/cache/pycache/Python312/Lib/site-packages/aiohttp/_websocket/models.cpython-312.pyc",
+      "size_bytes": 4130,
+      "size_mb": 0.0,
+      "sha256": "2974bdd6530c083f30133077f5111c042cfab94f013adf3914094900e3afb8a2",
+      "last_modified": "2026-08-10T21:06:35Z"
+    },
+    {
+      "name": "models.cpython-312.pyc",
+      "path": "runtime/quarantine/V7.11.1.2/runtime/cache/pycache/Python312/Lib/site-packages/google/genai/models.cpython-312.pyc",
+      "size_bytes": 288696,
+      "size_mb": 0.28,
+      "sha256": "417dab1f055704a1d6610c1596a3fd03038cd11cf05c8219ba9879a2c5a862f1",
+      "last_modified": "2026-08-10T21:06:36Z"
+    },
+    {
+      "name": "basemodel.cpython-312.pyc",
+      "path": "runtime/quarantine/V7.11.1.2/runtime/cache/pycache/Python312/Lib/site-packages/google/genai/_gaos/types/basemodel.cpython-312.pyc",
+      "size_bytes": 7644,
+      "size_mb": 0.01,
+      "sha256": "6c09ec8141893f6b0729c754bf687d35a2b158103bc1961a4c859303ac8dd28f",
+      "last_modified": "2026-08-10T21:06:33Z"
+    },
+    {
+      "name": "createmodelinteraction.cpython-312.pyc",
+      "path": "runtime/quarantine/V7.11.1.2/runtime/cache/pycache/Python312/Lib/site-packages/google/genai/_gaos/types/interactions/createmodelinteraction.cpython-312.pyc",
+      "size_bytes": 5233,
+      "size_mb": 0.0,
+      "sha256": "ce4f99a09f1034ff18474cce1861182b6646f276391080a13f21bd3a1f51e4d8",
+      "last_modified": "2026-08-10T21:06:34Z"
+    },
+    {
+      "name": "model.cpython-312.pyc",
+      "path": "runtime/quarantine/V7.11.1.2/runtime/cache/pycache/Python312/Lib/site-packages/google/genai/_gaos/types/interactions/model.cpython-312.pyc",
+      "size_bytes": 953,
+      "size_mb": 0.0,
+      "sha256": "269ae71b1d3f9e49032c298f9d1fd3c792a6cfdbcc997de4851a7b703022c895",
+      "last_modified": "2026-08-10T21:06:34Z"
+    },
+    {
+      "name": "modeloutputstep.cpython-312.pyc",
+      "path": "runtime/quarantine/V7.11.1.2/runtime/cache/pycache/Python312/Lib/site-packages/google/genai/_gaos/types/interactions/modeloutputstep.cpython-312.pyc",
+      "size_bytes": 2629,
+      "size_mb": 0.0,
+      "sha256": "badbacbdbe879af3a83009b01f657855c5f5c5972cf1fa76fc12483142609e2f",
+      "last_modified": "2026-08-10T21:06:34Z"
+    },
+    {
+      "name": "modeline.cpython-312.pyc",
+      "path": "runtime/quarantine/V7.11.1.2/runtime/cache/pycache/Python312/Lib/site-packages/pip/_vendor/pygments/modeline.cpython-312.pyc",
+      "size_bytes": 1528,
+      "size_mb": 0.0,
+      "sha256": "1b78c8fff6bbef85e520be6760e2b561ac5741e7ddfd6c9c5bf6e2560f70a349",
+      "last_modified": "2026-08-10T21:04:41Z"
+    },
+    {
+      "name": "models.cpython-312.pyc",
+      "path": "runtime/quarantine/V7.11.1.2/runtime/cache/pycache/Python312/Lib/site-packages/pip/_vendor/requests/models.cpython-312.pyc",
+      "size_bytes": 35455,
+      "size_mb": 0.03,
+      "sha256": "b817f5dd6116f6e1be0d6887deed6fdccabde9f34803bb3d5ba7b4761ccb2f0b",
+      "last_modified": "2026-08-10T21:04:41Z"
+    },
+    {
+      "name": "modeline.cpython-312.pyc",
+      "path": "runtime/quarantine/V7.11.1.2/runtime/cache/pycache/Python312/Lib/site-packages/pygments/modeline.cpython-312.pyc",
+      "size_bytes": 1519,
+      "size_mb": 0.0,
+      "sha256": "2ccf8d76249b28b6651d746c299131526ac81c2c9ef02cb2e2c20f67d90a7957",
+      "last_modified": "2026-08-10T21:06:34Z"
+    },
+    {
+      "name": "models.cpython-312.pyc",
+      "path": "runtime/quarantine/V7.11.1.2/runtime/capabilities/models.cpython-312.pyc",
+      "size_bytes": 928,
+      "size_mb": 0.0,
+      "sha256": "35b986d751a9ba821f580a24dc89adaa9d15113ccd9cf55d76702ae5ac341be3",
+      "last_modified": "2026-08-10T23:30:00Z"
+    },
+    {
+      "name": "models.cpython-311.pyc",
+      "path": "runtime/quarantine/V7.11.1.2/runtime/hardware/trust/execution/admission/models.cpython-311.pyc",
+      "size_bytes": 1901,
+      "size_mb": 0.0,
+      "sha256": "43388d39e8eeecbc945bde7efbda74f82df970ab7b824a93b3089050f977a437",
+      "last_modified": "2026-08-11T14:25:37Z"
+    },
+    {
+      "name": "models.cpython-311.pyc",
+      "path": "runtime/quarantine/V7.11.1.2/runtime/hardware/trust/policy/models.cpython-311.pyc",
+      "size_bytes": 1083,
+      "size_mb": 0.0,
+      "sha256": "f0313541f3d65c1eac2914e6509d702869db60f3a23e1a037711c670f3d3ea23",
+      "last_modified": "2026-08-11T14:16:59Z"
+    },
+    {
+      "name": "model.cpython-312.pyc",
+      "path": "runtime/quarantine/V7.11.1.2/runtime/incidents/model.cpython-312.pyc",
+      "size_bytes": 4240,
+      "size_mb": 0.0,
+      "sha256": "d3543342ec6cd234c090a856c26921f4e11ce76aaab402788d07c37aef75c3ee",
+      "last_modified": "2026-08-10T23:30:00Z"
+    },
+    {
+      "name": "models.cpython-312.pyc",
+      "path": "runtime/quarantine/V7.11.1.2/runtime/knowledge/models.cpython-312.pyc",
+      "size_bytes": 1975,
+      "size_mb": 0.0,
+      "sha256": "e6c7e0c95bb600845843a42c16daf40f8dabcb22e1829260fa6ce37052e09096",
+      "last_modified": "2026-08-10T23:30:00Z"
+    },
+    {
+      "name": "models.cpython-311.pyc",
+      "path": "runtime/quarantine/V7.11.1.2/runtime/memory/models.cpython-311.pyc",
+      "size_bytes": 1259,
+      "size_mb": 0.0,
+      "sha256": "f43a5f63a40588919198aaf5ff8bc18f8629118580a94fb983e5377c54840d39",
+      "last_modified": "2026-08-10T14:21:12Z"
+    },
+    {
+      "name": "models.cpython-312.pyc",
+      "path": "runtime/quarantine/V7.11.1.2/runtime/memory/models.cpython-312.pyc",
+      "size_bytes": 1022,
+      "size_mb": 0.0,
+      "sha256": "d8c6de7390d0e8a7c8f0cbe9d3e787e1c0fb8e42bde0c45393721625cc64ebf4",
+      "last_modified": "2026-08-10T23:30:00Z"
+    },
+    {
+      "name": "list_models.py",
+      "path": "runtime/quarantine/V7.11.1.2/tools/legacy_root_scripts/list_models.py",
+      "size_bytes": 729,
+      "size_mb": 0.0,
+      "sha256": "9e0d369907a8dcb69c1a8b2ccdd3aacc1030cd2c2bdb48d31509773de5ad3fec",
+      "last_modified": "2026-07-29T04:09:38Z"
+    },
+    {
+      "name": "status_model_vault.ps1",
+      "path": "scripts/status_model_vault.ps1",
+      "size_bytes": 1113,
+      "size_mb": 0.0,
+      "sha256": "dcce11a05470c9d55602343bed63f3a1bf9ea4c3543d2e3b122f4be1f0a14c3f",
+      "last_modified": "2026-06-10T01:10:50Z"
+    },
+    {
+      "name": "model_policy.json",
+      "path": "state/performance/model_policy.json",
+      "size_bytes": 1177,
+      "size_mb": 0.0,
+      "sha256": "cfff1af2be4f98ca955e9f498ed8dbd9b5b50d638e9d96a5babe562b56ddd849",
+      "last_modified": "2026-06-10T12:21:36Z"
+    }
+  ],
+  "registry_version": "V1.0.0-CERTIFIED",
+  "timestamp": "2026-08-11T18:14:17Z",
+  "governance_rules": {
+    "integrity_enforcement": "STRICT_SHA256_MATCH",
+    "unregistered_models_allowed": false
+  },
+  "registry_epoch": 1,
+  "sealed": true
+}

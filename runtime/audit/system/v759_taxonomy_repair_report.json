@@ -1,0 +1,12 @@
+{
+  "total_audited": 2926,
+  "simulated_taxonomy": {
+    "OPERATIONAL": 654,
+    "identity_core": 19,
+    "SYNTHETIC_NOISE": 8,
+    "security_audit": 2128,
+    "RPG_MEMORY": 62,
+    "experience_ledger": 55
+  },
+  "synthetic_noise_intercepted": 8
+}

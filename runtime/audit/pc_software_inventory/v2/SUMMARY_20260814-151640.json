@@ -1,0 +1,14 @@
+{
+  "Timestamp": "20260814-151640",
+  "RegistryApps": 262,
+  "ToolsChecked": 35,
+  "ToolsFound": 20,
+  "ToolsMissing": 15,
+  "GPUs": 1,
+  "Services": 2,
+  "ReportDirectory": "G:\\AI\\E-zzio\\runtime\\audit\\pc_software_inventory\\v2",
+  "Execution": "READ_ONLY",
+  "Installation": "NONE",
+  "Modification": "NONE",
+  "Download": "NONE"
+}

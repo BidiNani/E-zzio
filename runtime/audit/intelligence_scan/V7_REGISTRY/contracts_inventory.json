@@ -1,0 +1,24 @@
+[
+  {
+    "path": "runtime/hardware/trust/models/contracts/qwen2.5-7b.contract.json",
+    "size_bytes": 549,
+    "modified_at": "2026-08-11T14:56:31.647431",
+    "sha256": "58252efa268b35f697b3ad4f137f6da35a30fbafb0e822b45556f78e0d930fd0",
+    "model_id": "qwen2.5-7b",
+    "contract_version": "1.0",
+    "provider": {
+      "execution_type": "LOCAL",
+      "name": "ollama"
+    },
+    "has_signature": true,
+    "signature_value": "8376e7b8ad74e8b6f80fc086d6ca59b583c31c81ea68bf90c5e6f4bb007fac9c",
+    "schema_fields": {
+      "model_id": true,
+      "provider": true,
+      "capabilities": true,
+      "permissions": true,
+      "hardware": true,
+      "signature": true
+    }
+  }
+]

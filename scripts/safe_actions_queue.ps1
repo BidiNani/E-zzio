@@ -5,7 +5,7 @@ param(
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-$res = Invoke-RestMethod "http://127.0.0.1:8000/safe-actions/queue?limit=$Limit" -Method GET -TimeoutSec 90
+$res = Invoke-RestMethod "http://127.0.0.1:8001/safe-actions/queue?limit=$Limit" -Method GET -TimeoutSec 90
 
 Write-Host "=== E-ZZIO SAFE ACTIONS QUEUE ===" -ForegroundColor Cyan
 Write-Host "Items : $($res.count)"
@@ -25,3 +25,4 @@ $res.items | ForEach-Object {
         reason = $_.reason
     }
 }
+

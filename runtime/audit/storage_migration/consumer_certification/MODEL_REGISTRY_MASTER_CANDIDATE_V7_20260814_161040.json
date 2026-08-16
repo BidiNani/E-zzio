@@ -1,0 +1,47 @@
+[
+  {
+    "File": "runtime\\contracts\\authority.py",
+    "AuthorityScore": 55,
+    "Indicators": "REFERENCES_CERTIFIED_REGISTRY,REGISTRY_REFERENCE,GOVERNANCE_AUTHORITY,MUTATION_CAPABILITY,LOAD_CAPABILITY"
+  },
+  {
+    "File": "core\\intelligence_router.py",
+    "AuthorityScore": 45,
+    "Indicators": "REGISTRY_REFERENCE,GOVERNANCE_AUTHORITY,MUTATION_CAPABILITY,LOAD_CAPABILITY"
+  },
+  {
+    "File": "runtime\\contracts\\enforcer.py",
+    "AuthorityScore": 40,
+    "Indicators": "GOVERNANCE_AUTHORITY,MUTATION_CAPABILITY,LOAD_CAPABILITY"
+  },
+  {
+    "File": "runtime\\contracts\\MODEL_REGISTRY_V1.json",
+    "AuthorityScore": 30,
+    "Indicators": "REGISTRY_REFERENCE,GOVERNANCE_AUTHORITY,LOAD_CAPABILITY"
+  },
+  {
+    "File": "core\\model_registry.py",
+    "AuthorityScore": 25,
+    "Indicators": "REGISTRY_REFERENCE,MUTATION_CAPABILITY,LOAD_CAPABILITY"
+  },
+  {
+    "File": "runtime\\models\\ollama_sync.py",
+    "AuthorityScore": 25,
+    "Indicators": "REGISTRY_REFERENCE,MUTATION_CAPABILITY,LOAD_CAPABILITY"
+  },
+  {
+    "File": "core\\dispatcher.py",
+    "AuthorityScore": 25,
+    "Indicators": "REGISTRY_REFERENCE,MUTATION_CAPABILITY,LOAD_CAPABILITY"
+  },
+  {
+    "File": "core\\supervisor.py",
+    "AuthorityScore": 25,
+    "Indicators": "REGISTRY_REFERENCE,MUTATION_CAPABILITY,LOAD_CAPABILITY"
+  },
+  {
+    "File": "runtime\\models\\model_registry.json",
+    "AuthorityScore": 15,
+    "Indicators": "MUTATION_CAPABILITY"
+  }
+]

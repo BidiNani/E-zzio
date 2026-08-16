@@ -1,0 +1,17 @@
+{
+  "certificate_id": "CERT-EZZIO-V7-20260811",
+  "timestamp": "2026-08-11T16:33:17.785860",
+  "model_scope": "qwen2.5-7b",
+  "trust_level": "VERIFIED_GOVERNED",
+  "evaluations": {
+    "contract_integrity": "PASS",
+    "cryptographic_replay": "PASS",
+    "ledger_integrity": "PASS",
+    "runtime_proof_engine": "PASS",
+    "negative_test_validation": "PASS",
+    "policy_alignment": "PASS",
+    "sandbox_enforcement": "PASS"
+  },
+  "governance_status": "CERTIFIED_FOR_V7.11_TRANSITION",
+  "auditor_mode": "READ_ONLY"
+}

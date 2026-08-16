@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-08-11T16:13:06.213484",
+  "stored_signature": "8376e7b8ad74e8b6f80fc086d6ca59b583c31c81ea68bf90c5e6f4bb007fac9c",
+  "reconciliation_status": "FALSE_POSITIVE_DETECTED_IN_V7.9.4",
+  "independent_replay_success": false,
+  "total_permutations_tested": 28,
+  "root_cause": "V7.9.4 a exhibé un faux positif ou une condition transitoire non persistée, car le rejeu indépendant strict génère 0 correspondance."
+}

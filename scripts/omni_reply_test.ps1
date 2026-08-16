@@ -5,7 +5,7 @@ param(
     [string]$Text = "Salut E-ZZIO, réponds comme si j'étais sur mon smartphone."
 )
 
-$BaseUrl = "http://127.0.0.1:8000"
+$BaseUrl = "http://127.0.0.1:8001"
 
 $body = @{
     text = $Text
@@ -19,3 +19,4 @@ Invoke-RestMethod "$BaseUrl/omni-bridge/reply" `
     -ContentType "application/json" `
     -TimeoutSec 180 `
     -Body $body
+

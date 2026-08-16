@@ -1,0 +1,50 @@
+{
+  "timestamp": "2026-08-11T17:21:50.774721",
+  "quarantine_scanned_dir": "runtime/quarantine/V7.11.1.1",
+  "found_count": 0,
+  "missing_count": 10,
+  "found_in_quarantine": [],
+  "missing_from_quarantine": [
+    {
+      "module": "runtime.recovery.contracts",
+      "expected_path": "runtime/recovery/contracts.py"
+    },
+    {
+      "module": "runtime.recovery.decision.policies",
+      "expected_path": "runtime/recovery/decision/policies.py"
+    },
+    {
+      "module": "runtime.recovery.decision.governor",
+      "expected_path": "runtime/recovery/decision/governor.py"
+    },
+    {
+      "module": "runtime.recovery.rollback.manager",
+      "expected_path": "runtime/recovery/rollback/manager.py"
+    },
+    {
+      "module": "runtime.recovery.ledger",
+      "expected_path": "runtime/recovery/ledger.py"
+    },
+    {
+      "module": "runtime.recovery.executor.quarantine",
+      "expected_path": "runtime/recovery/executor/quarantine.py"
+    },
+    {
+      "module": "runtime.recovery.executor.scaling",
+      "expected_path": "runtime/recovery/executor/scaling.py"
+    },
+    {
+      "module": "runtime.recovery.executor.retry",
+      "expected_path": "runtime/recovery/executor/retry.py"
+    },
+    {
+      "module": "runtime.telemetry.collector",
+      "expected_path": "runtime/telemetry/collector.py"
+    },
+    {
+      "module": "runtime.telemetry.events",
+      "expected_path": "runtime/telemetry/events.py"
+    }
+  ],
+  "path_mapping": {}
+}

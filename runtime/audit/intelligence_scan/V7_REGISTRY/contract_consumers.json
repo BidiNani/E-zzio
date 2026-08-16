@@ -1,0 +1,1061 @@
+[
+  {
+    "path": "core/cloud_brain_broker.py",
+    "matched_keywords": [
+      "secret"
+    ]
+  },
+  {
+    "path": "core/cloud_connectors.py",
+    "matched_keywords": [
+      "secret"
+    ]
+  },
+  {
+    "path": "core/cloud_guard.py",
+    "matched_keywords": [
+      "secret"
+    ]
+  },
+  {
+    "path": "core/gemini_pro_provider.py",
+    "matched_keywords": [
+      "secret"
+    ]
+  },
+  {
+    "path": "core/human_loop.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "core/knowledge_connectors.py",
+    "matched_keywords": [
+      "secret"
+    ]
+  },
+  {
+    "path": "core/omnipresence.py",
+    "matched_keywords": [
+      "verify",
+      "secret"
+    ]
+  },
+  {
+    "path": "core/omni_brain.py",
+    "matched_keywords": [
+      "verify",
+      "secret"
+    ]
+  },
+  {
+    "path": "runtime/doctor.py",
+    "matched_keywords": [
+      "contract",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/action/context.py",
+    "matched_keywords": [
+      "signature",
+      "hmac",
+      "verify",
+      "secret"
+    ]
+  },
+  {
+    "path": "runtime/action/contracts.py",
+    "matched_keywords": [
+      "contract"
+    ]
+  },
+  {
+    "path": "runtime/action/registry.py",
+    "matched_keywords": [
+      "contract",
+      "signature",
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/action/store.py",
+    "matched_keywords": [
+      "contract"
+    ]
+  },
+  {
+    "path": "runtime/action/__init__.py",
+    "matched_keywords": [
+      "contract"
+    ]
+  },
+  {
+    "path": "runtime/agent/capability_guard.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/agent/contracts.py",
+    "matched_keywords": [
+      "verify",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/agent/executor.py",
+    "matched_keywords": [
+      "contract",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/agent/loop.py",
+    "matched_keywords": [
+      "contract",
+      "verify",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/agent/planner.py",
+    "matched_keywords": [
+      "contract",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/agent/policy.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/agent/state_machine.py",
+    "matched_keywords": [
+      "contract",
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/agent/verifier.py",
+    "matched_keywords": [
+      "contract",
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/agent/capability/base.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/agent/capability/embedder.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/agent/capability/registry.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/agent/capability/sandbox_exec.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/audit/analyzer.py",
+    "matched_keywords": [
+      "contract"
+    ]
+  },
+  {
+    "path": "runtime/audit/bridge.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/audit/events.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/audit/registry.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/audit/schema.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/audit/v7_registry_audit.py",
+    "matched_keywords": [
+      "contract",
+      ".contract.json",
+      "signature",
+      "hmac",
+      "verify",
+      "secret",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/audit/v7_runtime_dependency_tracer.py",
+    "matched_keywords": [
+      "contract"
+    ]
+  },
+  {
+    "path": "runtime/audit/v7_target_autopsy.py",
+    "matched_keywords": [
+      "contract",
+      "signature",
+      "hmac"
+    ]
+  },
+  {
+    "path": "runtime/audit/archive_patches/patch_history/apply_v1945.py",
+    "matched_keywords": [
+      "contract",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/audit/archive_patches/patch_history/apply_v1946.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/audit/archive_patches/patch_history/apply_v1947.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/audit/archive_patches/patch_history/apply_v1948.py",
+    "matched_keywords": [
+      "signature",
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/audit/archive_patches/patch_history/fix_executor_signature.py",
+    "matched_keywords": [
+      "signature"
+    ]
+  },
+  {
+    "path": "runtime/audit/archive_patches/patch_history/fix_final_5.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/audit/archive_patches/patch_history/make_bootstrap.py",
+    "matched_keywords": [
+      "contract",
+      "signature"
+    ]
+  },
+  {
+    "path": "runtime/audit/archive_patches/patch_history/master_fix.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/audit/archive_patches/patch_history/patch_router.py",
+    "matched_keywords": [
+      "contract"
+    ]
+  },
+  {
+    "path": "runtime/audit/archive_patches/patch_history/polish_warnings.py",
+    "matched_keywords": [
+      "contract"
+    ]
+  },
+  {
+    "path": "runtime/audit/archive_patches/patch_history/rewrite_supervisor.py",
+    "matched_keywords": [
+      "contract"
+    ]
+  },
+  {
+    "path": "runtime/audit/archive_patches/patch_history/v1906_premium_fix.py",
+    "matched_keywords": [
+      "signature"
+    ]
+  },
+  {
+    "path": "runtime/audit/archive_patches/patch_history/v1911_apex_fix.py",
+    "matched_keywords": [
+      "signature"
+    ]
+  },
+  {
+    "path": "runtime/audit/archive_patches/patch_history/v1913_syntax_fix.py",
+    "matched_keywords": [
+      "signature"
+    ]
+  },
+  {
+    "path": "runtime/audit/archive_patches/patch_history/v1914_absolute_fix.py",
+    "matched_keywords": [
+      "signature"
+    ]
+  },
+  {
+    "path": "runtime/audit/microkernel_history/microkernel_after_2442.py",
+    "matched_keywords": [
+      "contract",
+      "verify",
+      "secret",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/audit/microkernel_history/microkernel_after_final_cert.py",
+    "matched_keywords": [
+      "contract",
+      "verify",
+      "secret",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/audit/microkernel_history/microkernel_before_2442.py",
+    "matched_keywords": [
+      "contract",
+      "verify",
+      "secret",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/audit/microkernel_history/microkernel_before_certification.py",
+    "matched_keywords": [
+      "contract",
+      "verify",
+      "secret",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/audit/microkernel_history/microkernel_before_final_cert.py",
+    "matched_keywords": [
+      "contract",
+      "verify",
+      "secret",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/capabilities/audit.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/capabilities/expiry.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/capabilities/lifecycle.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/capabilities/models.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/capabilities/registry.py",
+    "matched_keywords": [
+      "signature",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/capabilities/revocation.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/capabilities/service.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/capabilities/validator.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/capabilities/__init__.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/cognition/router.py",
+    "matched_keywords": [
+      "secret"
+    ]
+  },
+  {
+    "path": "runtime/contracts/capability.py",
+    "matched_keywords": [
+      "signature",
+      "hmac",
+      "verify",
+      "secret",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/contracts/execution_context.py",
+    "matched_keywords": [
+      "contract",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/contracts/__init__.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/core/context.py",
+    "matched_keywords": [
+      "contract",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/execution/audit_compliance.py",
+    "matched_keywords": [
+      "contract",
+      "signature"
+    ]
+  },
+  {
+    "path": "runtime/execution/context.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/execution/decorators.py",
+    "matched_keywords": [
+      "contract"
+    ]
+  },
+  {
+    "path": "runtime/execution/ledger.py",
+    "matched_keywords": [
+      "signature",
+      "verify",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/execution/loop_manager.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/execution/resource.py",
+    "matched_keywords": [
+      "contract",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/execution/router.py",
+    "matched_keywords": [
+      "contract"
+    ]
+  },
+  {
+    "path": "runtime/execution/sandbox.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/execution/supervisor.py",
+    "matched_keywords": [
+      "contract"
+    ]
+  },
+  {
+    "path": "runtime/experiments/v611_topology/discovery_hardened.py",
+    "matched_keywords": [
+      "signature"
+    ]
+  },
+  {
+    "path": "runtime/external/supervisor.py",
+    "matched_keywords": [
+      "contract"
+    ]
+  },
+  {
+    "path": "runtime/gateway/adapter.py",
+    "matched_keywords": [
+      "contract",
+      "signature"
+    ]
+  },
+  {
+    "path": "runtime/governor/gemini_bridge.py",
+    "matched_keywords": [
+      "secret"
+    ]
+  },
+  {
+    "path": "runtime/guardian/test_v611_hardening.py",
+    "matched_keywords": [
+      "signature"
+    ]
+  },
+  {
+    "path": "runtime/guardian/test_v611_ledger_integrity.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/guardian/test_v614_2_envelope.py",
+    "matched_keywords": [
+      "signature",
+      "verify",
+      "secret",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/guardian/test_v614_3_revocation.py",
+    "matched_keywords": [
+      "verify",
+      "secret",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/guardian/test_v615_0_admission.py",
+    "matched_keywords": [
+      "signature",
+      "secret",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/guardian/test_v615_3_models.py",
+    "matched_keywords": [
+      "secret",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/guardian/test_v615_governor.py",
+    "matched_keywords": [
+      "secret",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/guardian/test_v616_attestation.py",
+    "matched_keywords": [
+      "contract",
+      "signature",
+      "verify",
+      "secret",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/guardian/test_v617_2_resolver.py",
+    "matched_keywords": [
+      "contract",
+      "secret"
+    ]
+  },
+  {
+    "path": "runtime/guardian/test_v661_production.py",
+    "matched_keywords": [
+      "signature",
+      "hmac"
+    ]
+  },
+  {
+    "path": "runtime/guardian/test_v66_production.py",
+    "matched_keywords": [
+      "signature",
+      "hmac"
+    ]
+  },
+  {
+    "path": "runtime/guardian/test_v67_operational.py",
+    "matched_keywords": [
+      "hmac",
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/hardware/operational_governor_v67.py",
+    "matched_keywords": [
+      "signature",
+      "hmac",
+      "verify",
+      "secret"
+    ]
+  },
+  {
+    "path": "runtime/hardware/production_kernel_v66.py",
+    "matched_keywords": [
+      "signature",
+      "hmac",
+      "secret"
+    ]
+  },
+  {
+    "path": "runtime/hardware/production_kernel_v661.py",
+    "matched_keywords": [
+      "signature",
+      "hmac",
+      "secret"
+    ]
+  },
+  {
+    "path": "runtime/hardware/evidence/ledger.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/hardware/evidence/validator.py",
+    "matched_keywords": [
+      "signature",
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/hardware/router/executor.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/hardware/router/router.py",
+    "matched_keywords": [
+      "signature"
+    ]
+  },
+  {
+    "path": "runtime/hardware/router/transaction.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/hardware/trust/envelope/envelope.py",
+    "matched_keywords": [
+      "signature",
+      "verify",
+      "secret",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/hardware/trust/execution/admission/controller.py",
+    "matched_keywords": [
+      "signature",
+      "verify",
+      "secret",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/hardware/trust/execution/admission/models.py",
+    "matched_keywords": [
+      "signature",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/hardware/trust/execution/attestation/models.py",
+    "matched_keywords": [
+      "contract",
+      "signature",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/hardware/trust/execution/attestation/verifier.py",
+    "matched_keywords": [
+      "contract",
+      "signature",
+      "verify",
+      "secret",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/hardware/trust/execution/ledger/hashchain.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/hardware/trust/models/contract_signer.py",
+    "matched_keywords": [
+      "contract",
+      ".contract.json",
+      "signature",
+      "hmac",
+      "secret"
+    ]
+  },
+  {
+    "path": "runtime/hardware/trust/models/registry.py",
+    "matched_keywords": [
+      "contract",
+      ".contract.json",
+      "signature",
+      "verify",
+      "secret"
+    ]
+  },
+  {
+    "path": "runtime/hardware/trust/models/resolver.py",
+    "matched_keywords": [
+      "contract"
+    ]
+  },
+  {
+    "path": "runtime/hardware/trust/revocation/registry.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/incidents/classifier.py",
+    "matched_keywords": [
+      "signature",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/incidents/evidence.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/incidents/model.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/kernel/boot.py",
+    "matched_keywords": [
+      "signature",
+      "verify",
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/kernel/context.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/memory/cortex/episodic.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/memory/episodic/episode_extractor.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/memory/semantic/contracts.py",
+    "matched_keywords": [
+      "contract"
+    ]
+  },
+  {
+    "path": "runtime/observability/traces.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/recovery/contracts.py",
+    "matched_keywords": [
+      "signature",
+      "hmac",
+      "verify",
+      "secret"
+    ]
+  },
+  {
+    "path": "runtime/recovery/incident_bundle.py",
+    "matched_keywords": [
+      "contract",
+      "signature"
+    ]
+  },
+  {
+    "path": "runtime/recovery/ledger.py",
+    "matched_keywords": [
+      "signature"
+    ]
+  },
+  {
+    "path": "runtime/recovery/store.py",
+    "matched_keywords": [
+      "contract",
+      "signature"
+    ]
+  },
+  {
+    "path": "runtime/recovery/__init__.py",
+    "matched_keywords": [
+      "contract",
+      "secret"
+    ]
+  },
+  {
+    "path": "runtime/recovery/analyzers/base.py",
+    "matched_keywords": [
+      "contract"
+    ]
+  },
+  {
+    "path": "runtime/recovery/analyzers/queue_analyzer.py",
+    "matched_keywords": [
+      "contract"
+    ]
+  },
+  {
+    "path": "runtime/recovery/analyzers/security_analyzer.py",
+    "matched_keywords": [
+      "contract",
+      "signature",
+      "hmac"
+    ]
+  },
+  {
+    "path": "runtime/recovery/analyzers/timeout_analyzer.py",
+    "matched_keywords": [
+      "contract"
+    ]
+  },
+  {
+    "path": "runtime/recovery/decision/engine.py",
+    "matched_keywords": [
+      "contract",
+      "signature",
+      "hmac",
+      "secret"
+    ]
+  },
+  {
+    "path": "runtime/recovery/decision/policies.py",
+    "matched_keywords": [
+      "hmac"
+    ]
+  },
+  {
+    "path": "runtime/recovery/queue/bus.py",
+    "matched_keywords": [
+      "contract",
+      "signature"
+    ]
+  },
+  {
+    "path": "runtime/recovery/rollback/manager.py",
+    "matched_keywords": [
+      "capability"
+    ]
+  },
+  {
+    "path": "runtime/router/cognitive_router.py",
+    "matched_keywords": [
+      "secret"
+    ]
+  },
+  {
+    "path": "runtime/security/guard.py",
+    "matched_keywords": [
+      "secret"
+    ]
+  },
+  {
+    "path": "runtime/security/secrets.py",
+    "matched_keywords": [
+      "hmac",
+      "secret"
+    ]
+  },
+  {
+    "path": "runtime/security/trust.py",
+    "matched_keywords": [
+      "signature",
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/skills/skill_manager.py",
+    "matched_keywords": [
+      "hmac",
+      "secret"
+    ]
+  },
+  {
+    "path": "runtime/test_isolation/v453/test_recovery_verify.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/test_isolation/v456/segmented_recovery.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/test_isolation/v457/concurrent_segmented_engine.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/test_isolation/v458/concurrent_segmented_engine.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/test_isolation/v4598/concurrent_segmented_engine_faulty.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/test_isolation/v4599/concurrent_segmented_engine_soak.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/test_isolation/v460/concurrent_segmented_engine_v46.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/test_isolation/v470/concurrent_segmented_engine_v47.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/test_isolation/v480/concurrent_segmented_engine_v48.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "runtime/tools/executors/reflector.py",
+    "matched_keywords": [
+      "contract"
+    ]
+  },
+  {
+    "path": "tools/guard.py",
+    "matched_keywords": [
+      "secret"
+    ]
+  },
+  {
+    "path": "tools/legacy_root_scripts/inspect_routes.py",
+    "matched_keywords": [
+      "contract"
+    ]
+  },
+  {
+    "path": "tools/legacy_root_scripts/list_models.py",
+    "matched_keywords": [
+      "secret"
+    ]
+  },
+  {
+    "path": "tools/legacy_root_scripts/safe_fix.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "tools/legacy_root_scripts/self_analysis.py",
+    "matched_keywords": [
+      "secret"
+    ]
+  },
+  {
+    "path": "tools/legacy_root_scripts/sweeper.py",
+    "matched_keywords": [
+      "secret"
+    ]
+  },
+  {
+    "path": "tools/legacy_root_scripts/vision.py",
+    "matched_keywords": [
+      "secret"
+    ]
+  },
+  {
+    "path": "routers/omnipresence.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  },
+  {
+    "path": "routers/omni_bridge.py",
+    "matched_keywords": [
+      "verify"
+    ]
+  }
+]

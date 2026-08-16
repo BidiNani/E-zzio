@@ -1,0 +1,61 @@
+{
+  "registered_capabilities": [
+    {
+      "skill_id": "proprioception_sense",
+      "version": "1.0",
+      "permissions": [
+        "system_read"
+      ],
+      "memory_cost_mb": 15,
+      "gpu_required": false,
+      "rollback_available": true,
+      "ecol_compliance": "VERIFIED"
+    },
+    {
+      "skill_id": "evolution_observer",
+      "version": "1.0",
+      "permissions": [
+        "ledger_read"
+      ],
+      "memory_cost_mb": 25,
+      "gpu_required": false,
+      "rollback_available": true,
+      "ecol_compliance": "VERIFIED"
+    },
+    {
+      "skill_id": "vision_creator",
+      "version": "1.0",
+      "permissions": [
+        "network",
+        "filesystem_read"
+      ],
+      "memory_cost_mb": 150,
+      "gpu_required": false,
+      "rollback_available": true,
+      "ecol_compliance": "VERIFIED"
+    },
+    {
+      "skill_id": "analytics_dashboard_addon",
+      "version": "1.0",
+      "permissions": [
+        "filesystem_read"
+      ],
+      "memory_cost_mb": 60,
+      "gpu_required": false,
+      "rollback_available": true,
+      "ecol_compliance": "VERIFIED"
+    },
+    {
+      "skill_id": "autonomous_vision_addon",
+      "version": "1.0",
+      "permissions": [
+        "network",
+        "filesystem_read"
+      ],
+      "memory_cost_mb": 120,
+      "gpu_required": false,
+      "rollback_available": true,
+      "ecol_compliance": "VERIFIED"
+    }
+  ]
+}

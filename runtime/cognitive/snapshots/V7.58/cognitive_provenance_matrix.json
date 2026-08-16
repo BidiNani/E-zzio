@@ -1,0 +1,2169 @@
+{
+  "total_records_audited": 2926,
+  "taxonomy_breakdown": {
+    "IDENTITY": 26,
+    "RPG_MEMORY": 17,
+    "EXPERIENCE": 875,
+    "SECURITY": 1325,
+    "OPERATIONAL": 673,
+    "SYNTHETIC_NOISE": 10
+  },
+  "source_mapping": {
+    "config.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "E-ZZIO — IDENTITY FORGE QUESTIONNAI.txt": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "E-zzio_Cartographie_Self_Awareness.md": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "memory.db": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "persona.full.md": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "test_events.jsonl": {
+      "tier": "SYNTHETIC_NOISE",
+      "count": 3
+    },
+    ".pytest_cache/README.md": {
+      "tier": "SYNTHETIC_NOISE",
+      "count": 1
+    },
+    "audit/bad_capability_imports.txt": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "audit/filesystem.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "audit/python_compile_failures.txt": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "bridge/brain/20260610_111729_b5d6a1d737.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/brain/20260610_111823_04709b37aa.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/brain/20260610_112027_e238b6ac28.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/brain/20260610_112143_c55f709a7b.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/brain/20260610_112153_2ebc400d14.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/brain/20260610_112207_b1aff27a93.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/brain/20260610_112221_bfc1d7562a.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/brain/20260610_112526_84c2de63c7.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/brain/20260610_112539_0b249401ba.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/brain/20260610_112613_eeb5fa1537.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/brain/20260610_112625_e650db26b0.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/brain/20260610_112635_fb02474825.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/brain/20260610_112643_b1d590a678.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/brain/20260610_112655_2c1f382d69.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_012849_7efef2b884.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_111710_31a0aba4f0.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_111808_ffb5f3338d.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112012_afc3ac7330.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112027_da037a43e4.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112104_1fcd7605f9.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112104_7adabbdacc.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112104_9b28000e2b.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112112_ff1de9fa19.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112120_bf95530d08.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112128_3c92edfc67.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112128_fe815b5ee1.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112143_c2fd6be30a.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112153_1b802f2346.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112207_6e74e7c533.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112513_25dfeedab3.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112526_742bf59e29.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112601_5057010a27.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112613_2ac2c528dd.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112625_e5c71d5c8e.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112635_02e0e2f6e4.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112643_a2bc8f04a6.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112655_076deed2b9.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112655_1217f4371b.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112655_1e8724d213.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112655_1eedc8421d.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112655_25f0b374de.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112655_6d133ac9a0.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112655_919197fdfa.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112655_a6052f7a19.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112655_c58ab35f51.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112655_e1e29b55f7.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112655_fd867c5c22.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112908_0ce6191a1f.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112908_37583502bf.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112908_47a353d1d3.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112908_c250f569ae.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112908_eb84076541.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112955_084db5ef2e.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112955_0997df25d1.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112955_3bcfc5c351.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112955_7d3a9fb7a8.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112955_b1c2a287e0.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112955_d4359ee042.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112955_ee24985f80.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/inbox/20260610_112955_f00edda99c.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/mobile/20260610_012849_7aa3ec662f.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/mobile/20260610_112143_98b187f378.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/mobile/20260610_112153_d3c118c064.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/mobile/20260610_112207_e437cd1ac1.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/mobile/20260610_112221_9ca3261b22.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/mobile/20260610_112526_f4272bd2b3.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/mobile/20260610_112613_58cd8ef6c3.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/mobile/20260610_112625_564283920f.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/mobile/20260610_112635_b6b70c7695.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/mobile/20260610_112643_53d49c38b0.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/mobile/20260610_112655_5fe1514146.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/mobile/20260610_112655_6b4d1d75eb.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/mobile/20260610_112655_70b95d47c0.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/mobile/20260610_112655_70e60fab2b.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_012849_ca7350564a.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_012849_cbf1ca91d5.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_111729_3bb2bf29d6.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_111823_5912ae2821.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112027_36e8115e68.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112027_46d31da4ac.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112104_04efc668a0.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112104_214b8e3f45.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112112_2a827290a6.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112120_8e3bcf6ee3.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112128_0d06704d81.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112128_98a6c02eed.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112143_3198d2a203.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112153_b961f63bca.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112207_e96bfd2b77.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112221_31c6383137.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112526_3ed1c95f40.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112539_80d6f6ef9a.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112613_81e13b1958.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112625_b74dcc7791.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112635_cb43fbe161.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112643_b371b073d1.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112655_647c377aac.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112655_854d7832b1.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112655_8d55b38d11.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112655_8dc43c1e45.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112655_c1f8f7432b.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112655_c26e9b9dc8.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112655_cd6f05333d.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112655_d3eea67df4.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112655_e36fc211c5.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112655_e67ffd76fb.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112655_f171536749.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112703_e3452f1b65.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112908_1fc696c22d.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112908_21d8629637.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112908_54ab89ce60.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112908_78b7d04e29.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112908_d6c7a48d6f.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112955_26f08c500d.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112955_343e05e9d8.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112955_54c967d713.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112955_639ed8c545.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112955_7a1906a8b8.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112955_8f0b6993e6.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112955_c68fb132ba.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "bridge/outbox/20260610_112955_f371219372.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "certifications/guardian-runtime-certification-v1.17.1.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "certifications/guardian-runtime-certification-v1.17.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "certifications/ULTIMATE_GUARDIAN_v8.7_RESILIENCE_20260730_145047.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "config/constitution.json": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "config/indexer_config.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "config/intentions.md": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "config/lore.md": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "config/memory_graph.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "config/persona.json": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "config/recovery_policy.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "config/skills_manifest.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "data/action_registry.db": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "data/incidents.db": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "data/index_engine_v5.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "data/manifest.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "data/rss_cache.db": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "data/telemetry.db": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "data/test_telemetry.db": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "ezzio-ui/jsconfig.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "ezzio-ui/package-lock.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "ezzio-ui/package.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "ezzio-ui/README.md": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "ezzio-ui/.svelte-kit/tsconfig.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "ezzio-ui/.svelte-kit/output/client/robots.txt": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "ezzio-ui/.svelte-kit/output/client/.vite/manifest.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "ezzio-ui/.svelte-kit/output/client/_app/version.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "ezzio-ui/.svelte-kit/output/server/.vite/manifest.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "ezzio-ui/.vscode/extensions.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "ezzio-ui/static/robots.txt": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "forge/mobile/mobile_manifest.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "forge/outputs/image/prompt_20260610_004156.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "forge/outputs/image_hd/EZZIO_HD_1920x1080_20260610_011554.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "forge/outputs/image_hd/EZZIO_HD_1920x1080_20260610_011625.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "forge/outputs/video/video_plan_20260610_004156.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "forge/vision/outputs/vision_analysis_20260610_004540.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "forge/vision/outputs/vision_analysis_20260610_004642.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "forge/vision/outputs/vision_analysis_20260610_004904.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "forge/vision/outputs/vision_analysis_20260610_005145.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "forge/vision/outputs/vision_analysis_20260610_235048.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "forge/vision/outputs/vision_analysis_20260610_235458.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "forge/workflows/ezzio_sd15_cpu_basic.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "memory/context.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "memory/g_drive_analysis.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "memory/user_186035306418405376.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "memory/user_186035306418405376_local.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "registry/cloud_audit.jsonl": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "registry/cloud_rate_state.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "registry/history.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "registry/model_latency.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "registry/persona.txt": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "registry/roles.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "registry/audit/report.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "registry/build/build_manifest.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "registry/build/persona.coding.md": {
+      "tier": "RPG_MEMORY",
+      "count": 1
+    },
+    "registry/build/persona.discord.md": {
+      "tier": "RPG_MEMORY",
+      "count": 1
+    },
+    "registry/build/persona.full.md": {
+      "tier": "RPG_MEMORY",
+      "count": 1
+    },
+    "registry/build/persona.production.md": {
+      "tier": "RPG_MEMORY",
+      "count": 1
+    },
+    "registry/build/persona.terminal.md": {
+      "tier": "RPG_MEMORY",
+      "count": 1
+    },
+    "registry/capabilities/quality.md": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "registry/capabilities/skills.md": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "registry/cloud_cache/c7d575537c1b9a593bd01e6f58cdf6b62b780ec0ff02e2fad1110c652ce03fea.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "registry/compiler/cache.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "registry/compiler/manifest.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "registry/core/constitution.md": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "registry/core/decision_policy.md": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "registry/core/limitations.md": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "registry/core/priorities.md": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "registry/core/reasoning.md": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "registry/core/uncertainty.md": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "registry/core/values.md": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "registry/personality/identity.md": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "registry/personality/lore.md": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "registry/personality/speech.md": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "registry/personality/traits.md": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "registry/platforms/cli.md": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "registry/platforms/discord.md": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "registry/telemetry/events.jsonl": {
+      "tier": "OPERATIONAL",
+      "count": 62
+    },
+    "registry/workflows/coding.md": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/last_health.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/test_sqlite.db": {
+      "tier": "SYNTHETIC_NOISE",
+      "count": 1
+    },
+    "runtime/test_sqlite_v557.db": {
+      "tier": "SYNTHETIC_NOISE",
+      "count": 1
+    },
+    "runtime/audit/decisions.jsonl": {
+      "tier": "EXPERIENCE",
+      "count": 1
+    },
+    "runtime/audit/dependency_impact.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/model_authority_events.jsonl": {
+      "tier": "SECURITY",
+      "count": 2
+    },
+    "runtime/audit/security_events.jsonl": {
+      "tier": "SECURITY",
+      "count": 414
+    },
+    "runtime/audit/tool_calls.jsonl": {
+      "tier": "SECURITY",
+      "count": 683
+    },
+    "runtime/audit/V7_CLEANUP_PLAN.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/discord/access_denied.jsonl": {
+      "tier": "SECURITY",
+      "count": 3
+    },
+    "runtime/audit/discord/access_granted.jsonl": {
+      "tier": "SECURITY",
+      "count": 3
+    },
+    "runtime/audit/full_reuse/EZZIO_FULL_REUSE_v13_20260809_164021.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/full_reuse/EZZIO_FULL_REUSE_v13_20260809_164021.txt": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/full_scan/classification.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/full_scan/configs_inventory.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/full_scan/duplicate_candidates.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/full_scan/imports_graph.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/full_scan/inventory.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/full_scan/python_symbols.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/ARCHITECTURE_DIRECTIONAL_MAP_V7.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/ARCHITECTURE_PATHWAYS_V7.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/ARCHITECTURE_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/authority_conflicts.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/dependency_graph.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/dependency_graph_forensic.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/duplicate_candidates.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/EZZIO_MASTER_ARCHITECTURE_V7.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/FORENSIC_SUMMARY.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/inventory.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/inventory_forensic.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/merge_candidates.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/obsolete_modules.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/REAL_EXECUTION_MATRIX_V7.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_FORENSIC_ANALYSIS.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_RUNTIME_DEPENDENCIES.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_RUNTIME_DEPENDENCIES_SUMMARY.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_TARGETED_AUTOPSY.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_TARGETED_AUTOPSY_SUMMARY.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/active_dependency_integrity_v2.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/affinity_drift_investigation.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/aligned_behavioral_report.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/api_compatibility_audit.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/api_surface_inspection.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/architecture_baseline.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/architecture_baseline_v2.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/architecture_baseline_v3.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/architecture_discovery_report.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/baseline_drift_report.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/behavioral_certification_report.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/behavioral_symbols.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/BLOCKED_AFTER_APPROVAL.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/cleanup_approval_manifest.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/cleanup_transaction_log.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/cleanup_validation_result.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/consumer_alignment_audit.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/consumer_migration_plan.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/contracts_deep_inspection.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/contracts_inventory.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/contracts_schema_report.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/contract_birth_trace.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/contract_consumers.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/CONTRACT_DEEP_INSPECTION.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/contract_emission_chain.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/contract_emission_event_forensics.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/CONTRACT_FLOW.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/contract_generation_trace.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/contract_provenance_graph.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/contract_simulation_result.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/cryptographic_evidence_bundle.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/decision_governor_surface.json": {
+      "tier": "EXPERIENCE",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/dependency_graph.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/dependency_repair_audit.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/evidence_reconciliation_result.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/execution_trace_results.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/final_harness_certification.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/forensic_signature_replay.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/FORENSIC_SIGNATURE_REPLAY.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/harness_migration_certification.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/HMAC_CAPABILITY_MATRIX.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/MODEL_DEPENDENCY_TRUTH_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/model_reconciliation_report.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/model_registry_autopsy.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/negative_regression_gate_report.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/quarantine_discovery_report.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/quarantine_path_resolution.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/real_contract_compatibility_result.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/recovery_restore_plan.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/runtime_execution_proof_result.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/secret_forensic_results.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/signature_archaeology_results.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/signature_audit_results.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/signature_normalization_audit.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/signature_origin_discovery.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/signature_provenance_result.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/source_locator_results.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/symbol_usage_analysis.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/test_harness_alignment_audit.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/true_quarantine_divergence_report.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/trust_consolidation_audit.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/trust_governance_certificate.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/trust_replay_verification.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/truth_resolution_audit.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7.4_REGISTRY_AUTHORITY_FINAL.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7.7_TRUST_CONSOLIDATION_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/v712_certification_token.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V712_ENTRY_GATE_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V712_MODEL_REGISTRY_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V716_MODEL_FORENSIC_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_10_1_CONTRACT_EMISSION_CHAIN_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_10_2_EMISSION_EVENT_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_10_3_PROVENANCE_GRAPH_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_10_4_TRUST_REPLAY_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_10_5_1_AFFINITY_DRIFT_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_10_5_RUNTIME_EXECUTION_PROOF_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_10_6_TRUST_GOVERNANCE_CERTIFICATE.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_0_2_FULL_ARCHITECTURE_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_0_3_SECRET_FORENSIC_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_0_4_DEPENDENCY_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_0_6_BASELINE_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_0_7_CLEANUP_PLAN.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_0_8_CLEANUP_VALIDATION_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_0_9_CLEANUP_EXECUTION_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_1_0_APPROVAL_GATE_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_1_3_POST_CLEANUP_AUDIT_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_2_1_REPAIR_AUDIT_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_2_2_SYMBOL_USAGE_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_2_3_BIS_RESOLVER_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_2_3_RESTORE_PLAN_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_2_4_SOURCE_LOCATOR_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_2_5_TRUTH_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_2_6_BIS_DISCOVERY_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_2_7_FINAL_DIVERGENCE_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_2_INTEGRITY_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_3_CERTIFICATION_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_4_BASELINE_DRIFT_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_5_10_FINAL_CERTIFICATION_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_5_1_CONTRACT_DIFF_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_5_2_ALIGNED_CERTIFICATION_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_5_3_API_COMPATIBILITY_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_5_4_API_SURFACE_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_5_5_MIGRATION_PLAN_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_5_6_ALIGNMENT_AUDIT_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_5_7_HARNESS_AUDIT_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_5_8_HARNESS_CERTIFICATION_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_5_9_GOVERNOR_SURFACE_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_5_BEHAVIORAL_CERTIFICATION_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_6_NEGATIVE_GATE_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_CONTRACT_AUTHORITY_SIMULATION.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_CONTRACT_BIRTH_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_CONTRACT_GENERATION_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_CRYPTOGRAPHIC_EVIDENCE_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_EVIDENCE_RECONCILIATION_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_EXECUTION_TRACE_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_REAL_CONTRACT_COMPATIBILITY_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_SIGNATURE_ARCHAEOLOGY_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_SIGNATURE_AUTHORITY_MATRIX.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_SIGNATURE_AUTHORITY_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_SIGNATURE_ORIGIN_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_SIGNATURE_PROVENANCE_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V712/API_CONTRACT_V3.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V712/architecture_baseline_v3.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V712/boot_integrity_verification_report.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V712/governance_freeze_manifest.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V712/MODEL_REGISTRY_V1.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V712/physical_attestation_verification_report.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V712/V712_BOOT_INTEGRITY_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V712/v712_certification_token.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V712/V712_ENTRY_GATE_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V712/V712_GOVERNANCE_FREEZE_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V712/V712_PHYSICAL_ATTESTATION_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_0_5_ISOLATION_MAP/refactoring_map.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_0_5_ISOLATION_MAP/V7_11_0_5_REFACTORING_MAP_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_0_7_ACTIVE_ARCH/active_architecture_map.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/intelligence_scan/V7_REGISTRY/V7_11_0_7_ACTIVE_ARCH/V7_11_0_7_ACTIVE_ARCH_REPORT.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/refactor_plan/critical_duplicates.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/refactor_plan/MERGE.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/refactor_plan/V7_MERGE_PLAN.md": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/system/extraction_dry_run_report.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/system/full_cognitive_inventory.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/system/identity_genesis_manifest.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/audit/system/memory_inventory.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/cognitive/index/memory_index.sqlite": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/config/security/discord_acl.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/config/security/discord_policy.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/constitution/invariants.json": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "runtime/contracts/API_CONTRACT_V3.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/contracts/MODEL_REGISTRY_V1.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/contracts/V3_CONTRACT_VERSION.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/decisions/router_decisions.jsonl": {
+      "tier": "EXPERIENCE",
+      "count": 2
+    },
+    "runtime/decisions/archive/ledger_000001.jsonl": {
+      "tier": "EXPERIENCE",
+      "count": 50
+    },
+    "runtime/decisions/archive/ledger_000001.meta.json": {
+      "tier": "EXPERIENCE",
+      "count": 1
+    },
+    "runtime/evolution/authority_policy.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/evolution/experience/experience_registry.jsonl": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/evolution/ledger/evolution_ledger.jsonl": {
+      "tier": "EXPERIENCE",
+      "count": 2
+    },
+    "runtime/evolution/requests/EVOL-2D5B63.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/evolution/requests/EVOL-73B188.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/external/ezzio_tree.txt": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/governance/ledger.jsonl": {
+      "tier": "EXPERIENCE",
+      "count": 6
+    },
+    "runtime/governance/trust/history.jsonl": {
+      "tier": "OPERATIONAL",
+      "count": 2
+    },
+    "runtime/governance/trust/scores.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/hardware/guardian_actuator_audit.jsonl": {
+      "tier": "SECURITY",
+      "count": 4
+    },
+    "runtime/hardware/state.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/hardware/cartography/registry/hardware_registry.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/hardware/cartography/registry/snapshots/initial_baseline_20260811_140804.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/hardware/cartography/snapshots/certified_baseline_20260811_140625.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/hardware/trust/trust_state.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/hardware/trust/execution/ledger/execution_ledger.jsonl": {
+      "tier": "EXPERIENCE",
+      "count": 3
+    },
+    "runtime/hardware/trust/ledger/policy_audit.jsonl": {
+      "tier": "EXPERIENCE",
+      "count": 3
+    },
+    "runtime/hardware/trust/models/contracts/qwen2.5-7b.contract.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/hardware/trust/models_governance/model_trust_registry.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/hardware/trust/policy/policies.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/hardware/trust/revocation/storage/consumed_tokens.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/hardware/trust/revocation/storage/revoked_tokens.jsonl": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/hardware/trust/revocation/storage_admission_test/consumed_tokens.json": {
+      "tier": "SYNTHETIC_NOISE",
+      "count": 1
+    },
+    "runtime/hardware/trust/revocation/storage_gov_test/consumed_tokens.json": {
+      "tier": "SYNTHETIC_NOISE",
+      "count": 1
+    },
+    "runtime/hardware/trust/revocation/storage_model_test/consumed_tokens.json": {
+      "tier": "SYNTHETIC_NOISE",
+      "count": 1
+    },
+    "runtime/identity/boot_attestation.json": {
+      "tier": "SYNTHETIC_NOISE",
+      "count": 1
+    },
+    "runtime/identity/identity.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/identity_authority.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/identity_chain.jsonl": {
+      "tier": "OPERATIONAL",
+      "count": 4
+    },
+    "runtime/identity/identity_events.jsonl": {
+      "tier": "RPG_MEMORY",
+      "count": 1
+    },
+    "runtime/identity/lore.md": {
+      "tier": "RPG_MEMORY",
+      "count": 1
+    },
+    "runtime/identity/persona.full.md": {
+      "tier": "RPG_MEMORY",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0001/constitution.json": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0001/identity.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0001/identity_authority.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0001/persona.json": {
+      "tier": "RPG_MEMORY",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0001/snapshot_meta.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0002/constitution.json": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0002/identity.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0002/identity_authority.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0002/persona.json": {
+      "tier": "RPG_MEMORY",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0002/skills_manifest.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0002/snapshot_meta.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0003/constitution.json": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0003/identity.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0003/identity_authority.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0003/memory_graph.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0003/persona.json": {
+      "tier": "RPG_MEMORY",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0003/skills_manifest.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0003/snapshot_meta.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0004/constitution.json": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0004/identity.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0004/identity_authority.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0004/lore.md": {
+      "tier": "RPG_MEMORY",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0004/memory_graph.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0004/persona.json": {
+      "tier": "RPG_MEMORY",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0004/skills_manifest.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0004/snapshot_meta.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0005/constitution.json": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0005/identity.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0005/identity_authority.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0005/lore.md": {
+      "tier": "RPG_MEMORY",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0005/memory_graph.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0005/persona.json": {
+      "tier": "RPG_MEMORY",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0005/skills_manifest.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0005/snapshot_meta.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0006/constitution.json": {
+      "tier": "IDENTITY",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0006/identity.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0006/identity_authority.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0006/lore.md": {
+      "tier": "RPG_MEMORY",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0006/memory_graph.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0006/persona.json": {
+      "tier": "RPG_MEMORY",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0006/skills_manifest.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/identity/snapshots/snapshot_0006/snapshot_meta.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/incidents/incidents.jsonl": {
+      "tier": "OPERATIONAL",
+      "count": 2
+    },
+    "runtime/memory/action_audit.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "runtime/memory/events.jsonl": {
+      "tier": "OPERATIONAL",
+      "count": 4
+    },
+    "runtime/memory/security_events.jsonl": {
+      "tier": "SECURITY",
+      "count": 8
+    },
+    "runtime/memory/working_memory.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/memory/sqlite/cognitive_store.db": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/memory/sqlite/ezzio_events.db": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/metrics/model_performance.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/metrics/provider_health_status.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/metrics/provider_performance.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/models/model_capabilities.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/models/model_registry.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/models/provider_capabilities.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/policy/protected_identity_registry.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/quarantine/V7.11.1.2/runtime/experiments/v611_topology/hardware_report.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/quarantine/V7.11.1.2/runtime/hardware/state/production_v661_state.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/quarantine/V7.11.1.2/runtime/hardware/state/state/production_v661_state.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/security/incidents.jsonl": {
+      "tier": "SECURITY",
+      "count": 13
+    },
+    "runtime/security/audit/kernel_events.jsonl": {
+      "tier": "SECURITY",
+      "count": 8
+    },
+    "runtime/security/forensic/ledger_forensic_backup_20260811_203058_277637.jsonl": {
+      "tier": "EXPERIENCE",
+      "count": 801
+    },
+    "runtime/skills/active/filesystem_search/manifest.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/skills/active/git_manager/manifest.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/skills/active/python_analyzer/manifest.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/state/circuit_breakers.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/state/state.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/state/world_state.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/telemetry/provider_events.db": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "runtime/tools/action_ledger.jsonl": {
+      "tier": "EXPERIENCE",
+      "count": 5
+    },
+    "runtime/tools/manifest.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/watchdog_last.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/baselines/v4_0_0_20260810_204914/audit_certification_report.json": {
+      "tier": "SECURITY",
+      "count": 1
+    },
+    "state/baselines/v4_0_0_20260810_204914/runtime_manifest_sha256.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/cloud_brain/audit.jsonl": {
+      "tier": "SECURITY",
+      "count": 6
+    },
+    "state/cloud_brain/usage.jsonl": {
+      "tier": "OPERATIONAL",
+      "count": 6
+    },
+    "state/human_chat/sessions/functional-cockpit.jsonl": {
+      "tier": "OPERATIONAL",
+      "count": 4
+    },
+    "state/human_chat/sessions/living-cockpit.jsonl": {
+      "tier": "OPERATIONAL",
+      "count": 4
+    },
+    "state/human_chat/sessions/pc.jsonl": {
+      "tier": "OPERATIONAL",
+      "count": 54
+    },
+    "state/human_loop/current_intent.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/human_loop/journal.jsonl": {
+      "tier": "OPERATIONAL",
+      "count": 79
+    },
+    "state/human_loop/last_perception.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/human_loop/memory.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/pc_commander/journal.jsonl": {
+      "tier": "OPERATIONAL",
+      "count": 88
+    },
+    "state/pc_commander/sessions/living-cockpit.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/pc_commander/sessions/pc.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/pc_commander/sessions/svelte-ui.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/pc_commander/sessions/ui.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/performance/bench_20260610_115336.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/performance/bench_guarded_20260610_120036.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/performance/bench_guarded_20260610_120135.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/performance/bench_guarded_20260610_120537.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/performance/bench_guarded_20260610_120626.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/performance/model_policy.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/performance/warmup_fast_20260610_115233.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/performance/warmup_fast_20260610_115244.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/performance/warmup_fast_20260610_115939.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/safe_actions/cancellations.jsonl": {
+      "tier": "OPERATIONAL",
+      "count": 4
+    },
+    "state/safe_actions/queue.jsonl": {
+      "tier": "OPERATIONAL",
+      "count": 46
+    },
+    "state/safe_actions/runs.jsonl": {
+      "tier": "OPERATIONAL",
+      "count": 42
+    },
+    "state/snapshots/ezzio_snapshot_20260610_113159.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/snapshots/ezzio_snapshot_20260610_113242.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "state/snapshots/ezzio_snapshot_20260610_123200.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "tools/learning_db.json": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "tools/maintenance/logs/dump_complet.txt": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "tools/maintenance/logs/EZZIO_CORE_DUMP.txt": {
+      "tier": "OPERATIONAL",
+      "count": 1
+    },
+    "tools/maintenance/logs/EZZIO_RUNTIME_AUDIT_REPORT.txt": {
+      "tier": "SECURITY",
+      "count": 1
+    }
+  }
+}

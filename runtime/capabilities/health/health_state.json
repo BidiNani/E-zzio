@@ -1,0 +1,12 @@
+{
+  "capability": "WEB_RESEARCHER",
+  "health": {
+    "calls": 100,
+    "success": 100,
+    "errors": 0,
+    "avg_latency_ms": 10.5,
+    "ram_baseline_mb": 150.0,
+    "ram_current_mb": 150.0,
+    "status": "GREEN"
+  }
+}

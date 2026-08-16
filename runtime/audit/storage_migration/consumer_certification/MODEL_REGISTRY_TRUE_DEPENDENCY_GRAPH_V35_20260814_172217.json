@@ -1,0 +1,478 @@
+[
+  {
+    "File": "\\core\\authority\\evolution_request.py",
+    "Line": 9,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "from core.authority.authority_policy import authority_policy_engine",
+    "Context": "from pathlib import Path\nfrom datetime import datetime, timezone\nfrom core.authority.authority_policy import authority_policy_engine\n\nROOT_DIR = Path(__file__).resolve().parent.parent.parent"
+  },
+  {
+    "File": "\\core\\authority\\evolution_request.py",
+    "Line": 21,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "policy_eval = authority_policy_engine.evaluate_target(target, evolution_type)",
+    "Context": "        request_id = f\"EVOL-{uuid.uuid4().hex[:6].upper()}\"\n        \n        policy_eval = authority_policy_engine.evaluate_target(target, evolution_type)\n        \n        status = \"PENDING_VALIDATION\" if policy_eval[\"requires_validation\"] else \"AUTO_APPROVED\""
+  },
+  {
+    "File": "\\core\\authority\\promotion_controller.py",
+    "Line": 10,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "from core.authority.evolution_ledger import evolution_ledger",
+    "Context": "from core.identity.identity_snapshot import identity_snapshot_engine\nfrom core.identity.identity_recovery import identity_recovery_engine\nfrom core.authority.evolution_ledger import evolution_ledger\n\nROOT_DIR = Path(__file__).resolve().parent.parent.parent"
+  },
+  {
+    "File": "\\core\\authority\\authority_policy.py",
+    "Line": 2,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "E-ZZIO V7.32 — Authority Policy Engine",
+    "Context": "\"\"\"\nE-ZZIO V7.32 — Authority Policy Engine\nDéfinit les domaines protégés, les exigences de validation et les autorisations automatiques.\n\"\"\""
+  },
+  {
+    "File": "\\core\\authority\\authority_policy.py",
+    "Line": 9,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "POLICY_FILE = ROOT_DIR / \"runtime\" / \"evolution\" / \"authority_policy.json\"",
+    "Context": "\nROOT_DIR = Path(__file__).resolve().parent.parent.parent\nPOLICY_FILE = ROOT_DIR / \"runtime\" / \"evolution\" / \"authority_policy.json\"\n\nDEFAULT_POLICY = {"
+  },
+  {
+    "File": "\\core\\authority\\authority_policy.py",
+    "Line": 17,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "class AuthorityPolicyEngine:",
+    "Context": "}\n\nclass AuthorityPolicyEngine:\n    def __init__(self):\n        POLICY_FILE.parent.mkdir(parents=True, exist_ok=True)"
+  },
+  {
+    "File": "\\core\\authority\\authority_policy.py",
+    "Line": 33,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "authority_policy_engine = AuthorityPolicyEngine()",
+    "Context": "        return {\"allowed\": False, \"requires_validation\": True, \"reason\": \"UNKNOWN_DOMAIN_REJECTED_BY_DEFAULT\"}\n\nauthority_policy_engine = AuthorityPolicyEngine()"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\ecol_integration_audit.py",
+    "Line": 23,
+    "Classification": "REFERENCE",
+    "Content": "r\"model_registry\"",
+    "Context": "    r\"router_decisions\",\n    r\"experience_ledger\",\n    r\"model_registry\"\n]\n"
+  },
+  {
+    "File": "\\core\\identity\\identity_recovery.py",
+    "Line": 83,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "\"identity_authority.json\": RUNTIME_IDENTITY_DIR / \"identity_authority.json\",",
+    "Context": "                target_map = {\n                    \"identity.json\": RUNTIME_IDENTITY_DIR / \"identity.json\",\n                    \"identity_authority.json\": RUNTIME_IDENTITY_DIR / \"identity_authority.json\",\n                    \"identity_root.hash\": RUNTIME_IDENTITY_DIR / \"identity_root.hash\",\n                    \"identity_signature.sig\": RUNTIME_IDENTITY_DIR / \"identity_signature.sig\","
+  },
+  {
+    "File": "\\core\\identity\\identity_snapshot.py",
+    "Line": 48,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "(RUNTIME_IDENTITY_DIR / \"identity_authority.json\", snap_dir / \"identity_authority.json\"),",
+    "Context": "        files_to_backup = [\n            (RUNTIME_IDENTITY_DIR / \"identity.json\", snap_dir / \"identity.json\"),\n            (RUNTIME_IDENTITY_DIR / \"identity_authority.json\", snap_dir / \"identity_authority.json\"),\n            (RUNTIME_IDENTITY_DIR / \"identity_root.hash\", snap_dir / \"identity_root.hash\"),\n            (RUNTIME_IDENTITY_DIR / \"identity_signature.sig\", snap_dir / \"identity_signature.sig\"),"
+  },
+  {
+    "File": "\\core\\dispatcher.py",
+    "Line": 3,
+    "Classification": "IMPORT",
+    "Content": "from core.model_registry import ORGANS, best_fast_model, all_known_models, load_latency",
+    "Context": "from core.llm_engine import query_model_async\nfrom core.memory import ezzio_memory\nfrom core.model_registry import ORGANS, best_fast_model, all_known_models, load_latency\nfrom core.governor import analyze_request, tactical_plan\nfrom core.telemetry import log_event"
+  },
+  {
+    "File": "\\core\\intelligence_router.py",
+    "Line": 20,
+    "Classification": "REFERENCE",
+    "Content": "LOCAL_REGISTRY_PATH = ROOT_DIR / \"runtime\" / \"models\" / \"model_registry.json\"",
+    "Context": "\nROOT_DIR = Path(__file__).resolve().parent.parent\nLOCAL_REGISTRY_PATH = ROOT_DIR / \"runtime\" / \"models\" / \"model_registry.json\"\nLEDGER_PATH = ROOT_DIR / \"runtime\" / \"decisions\" / \"router_decisions.jsonl\"\n"
+  },
+  {
+    "File": "\\core\\intelligence_router.py",
+    "Line": 25,
+    "Classification": "CONSUMER",
+    "Content": "self.local_models = self._load_local_registry()",
+    "Context": "class IntelligenceRouter:\n    def __init__(self):\n        self.local_models = self._load_local_registry()\n\n    def _load_local_registry(self) -> dict:"
+  },
+  {
+    "File": "\\core\\intelligence_router.py",
+    "Line": 27,
+    "Classification": "CONSUMER",
+    "Content": "def _load_local_registry(self) -> dict:",
+    "Context": "        self.local_models = self._load_local_registry()\n\n    def _load_local_registry(self) -> dict:\n        if LOCAL_REGISTRY_PATH.exists():\n            try:"
+  },
+  {
+    "File": "\\core\\intelligence_router.py",
+    "Line": 28,
+    "Classification": "REFERENCE",
+    "Content": "if LOCAL_REGISTRY_PATH.exists():",
+    "Context": "\n    def _load_local_registry(self) -> dict:\n        if LOCAL_REGISTRY_PATH.exists():\n            try:\n                return json.loads(LOCAL_REGISTRY_PATH.read_text(encoding=\"utf-8\")).get(\"models\", {})"
+  },
+  {
+    "File": "\\core\\intelligence_router.py",
+    "Line": 30,
+    "Classification": "CONSUMER",
+    "Content": "return json.loads(LOCAL_REGISTRY_PATH.read_text(encoding=\"utf-8\")).get(\"models\", {})",
+    "Context": "        if LOCAL_REGISTRY_PATH.exists():\n            try:\n                return json.loads(LOCAL_REGISTRY_PATH.read_text(encoding=\"utf-8\")).get(\"models\", {})\n            except Exception: pass\n        return {}"
+  },
+  {
+    "File": "\\core\\model_registry.py",
+    "Line": 2,
+    "Classification": "REFERENCE",
+    "Content": "core/model_registry.py — Adaptive Model Governor V7.21",
+    "Context": "\"\"\"\ncore/model_registry.py — Adaptive Model Governor V7.21\nIntègre la hiérarchie des vitesses, les paliers de fallback multi-niveaux\net l'exploitation directe des métadonnées du registre de capacités."
+  },
+  {
+    "File": "\\core\\supervisor.py",
+    "Line": 144,
+    "Classification": "IMPORT",
+    "Content": "from core.model_registry import status as registry_status",
+    "Context": "def model_status():\n    try:\n        from core.model_registry import status as registry_status\n        return registry_status()\n    except Exception as exc:"
+  },
+  {
+    "File": "\\routers\\models.py",
+    "Line": 6,
+    "Classification": "MUTATION",
+    "Content": "from core.model_registry import FAST_MODEL_POOL, load_latency, save_latency",
+    "Context": "import ollama\n\nfrom core.model_registry import FAST_MODEL_POOL, load_latency, save_latency\n\nrouter = APIRouter(prefix=\"/models\", tags=[\"models\"])"
+  },
+  {
+    "File": "\\routers\\system.py",
+    "Line": 3,
+    "Classification": "IMPORT",
+    "Content": "from core.model_registry import all_known_models, load_latency",
+    "Context": "from fastapi import APIRouter\nfrom core.dispatcher import ezzio_dispatcher\nfrom core.model_registry import all_known_models, load_latency\nfrom core.telemetry import read_events\n"
+  },
+  {
+    "File": "\\runtime\\autonomy\\policy_engine.py",
+    "Line": 9,
+    "Classification": "REFERENCE",
+    "Content": "REGISTRY_PATH = ROOT_DIR / \"runtime\" / \"autonomy\" / \"autonomy_registry.json\"",
+    "Context": "\nROOT_DIR = Path(r\"G:\\AI\\E-zzio\")\nREGISTRY_PATH = ROOT_DIR / \"runtime\" / \"autonomy\" / \"autonomy_registry.json\"\n\nclass ActionPolicyEngine:"
+  },
+  {
+    "File": "\\runtime\\autonomy\\policy_engine.py",
+    "Line": 13,
+    "Classification": "CONSUMER",
+    "Content": "self.registry = json.loads(REGISTRY_PATH.read_text(encoding=\"utf-8\"))",
+    "Context": "class ActionPolicyEngine:\n    def __init__(self):\n        self.registry = json.loads(REGISTRY_PATH.read_text(encoding=\"utf-8\"))\n\n    def evaluate_action(self, intent_type: str, confidence: float) -> dict:"
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry\\registry_core.py",
+    "Line": 9,
+    "Classification": "REFERENCE",
+    "Content": "REGISTRY_PATH = ROOT_DIR / \"runtime\" / \"capabilities\" / \"registry\" / \"capability_registry.json\"",
+    "Context": "\nROOT_DIR = Path(r\"G:\\AI\\E-zzio\")\nREGISTRY_PATH = ROOT_DIR / \"runtime\" / \"capabilities\" / \"registry\" / \"capability_registry.json\"\n\nclass RegistryCore:"
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry\\registry_core.py",
+    "Line": 13,
+    "Classification": "REFERENCE",
+    "Content": "self.registry_file = REGISTRY_PATH",
+    "Context": "class RegistryCore:\n    def __init__(self):\n        self.registry_file = REGISTRY_PATH\n        self._init_empty_registry()\n"
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry.py",
+    "Line": 10,
+    "Classification": "REFERENCE",
+    "Content": "REGISTRY_PATH = ROOT_DIR / \"runtime\" / \"capabilities\" / \"capability_registry.json\"",
+    "Context": "\nROOT_DIR = Path(r\"G:\\AI\\E-zzio\")\nREGISTRY_PATH = ROOT_DIR / \"runtime\" / \"capabilities\" / \"capability_registry.json\"\n\nclass CapabilityRegistry:"
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry.py",
+    "Line": 14,
+    "Classification": "REFERENCE",
+    "Content": "self.registry_file = REGISTRY_PATH",
+    "Context": "class CapabilityRegistry:\n    def __init__(self):\n        self.registry_file = REGISTRY_PATH\n        self._ensure_registry()\n"
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry.py",
+    "Line": 44,
+    "Classification": "CONSUMER",
+    "Content": "def load_registry(self) -> Dict[str, Any]:",
+    "Context": "            self.registry_file.write_text(json.dumps(initial_data, indent=2, ensure_ascii=False), encoding=\"utf-8\")\n\n    def load_registry(self) -> Dict[str, Any]:\n        try:\n            return json.loads(self.registry_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry.py",
+    "Line": 51,
+    "Classification": "CONSUMER",
+    "Content": "data = self.load_registry()",
+    "Context": "\n    def is_capability_active(self, skill_id: str) -> bool:\n        data = self.load_registry()\n        for cap in data.get(\"registered_capabilities\", []):\n            if cap.get(\"skill_id\") == skill_id:"
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry.py",
+    "Line": 63,
+    "Classification": "CONSUMER",
+    "Content": "data = self.load_registry()",
+    "Context": "                return False\n        \n        data = self.load_registry()\n        for cap in data[\"registered_capabilities\"]:\n            if cap[\"skill_id\"] == capability_manifest[\"skill_id\"]:"
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry.py",
+    "Line": 75,
+    "Classification": "MUTATION",
+    "Content": "print(json.dumps(registry.load_registry(), indent=2))",
+    "Context": "if __name__ == \"__main__\":\n    registry = CapabilityRegistry()\n    print(json.dumps(registry.load_registry(), indent=2))"
+  },
+  {
+    "File": "\\runtime\\contracts\\authority.py",
+    "Line": 10,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "class ModelRegistryAuthority:",
+    "Context": "    pass\n\nclass ModelRegistryAuthority:\n    \"\"\"\n    Autorité d'accès contrôlé au registre des modèles IA."
+  },
+  {
+    "File": "\\runtime\\contracts\\authority.py",
+    "Line": 19,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "self.registry_path = self.root_dir / \"runtime\" / \"contracts\" / \"MODEL_REGISTRY_V1.json\"",
+    "Context": "        self.v712_registry = self.root_dir / \"runtime\" / \"audit\" / \"intelligence_scan\" / \"V7_REGISTRY\" / \"V712\"\n        self.manifest_path = self.v712_registry / \"governance_freeze_manifest.json\"\n        self.registry_path = self.root_dir / \"runtime\" / \"contracts\" / \"MODEL_REGISTRY_V1.json\"\n        self.min_epoch = min_epoch\n        "
+  },
+  {
+    "File": "\\runtime\\contracts\\authority.py",
+    "Line": 29,
+    "Classification": "REFERENCE",
+    "Content": "if not self.registry_path.exists():",
+    "Context": "        if not self.manifest_path.exists():\n            raise RegistryIntegrityError(\"Manifeste de gel V712 introuvable.\")\n        if not self.registry_path.exists():\n            raise RegistryIntegrityError(\"Registre des modèles introuvable.\")\n"
+  },
+  {
+    "File": "\\runtime\\contracts\\authority.py",
+    "Line": 34,
+    "Classification": "REFERENCE",
+    "Content": "model_meta = sealed_artifacts.get(\"model_registry\")",
+    "Context": "        manifest = json.loads(self.manifest_path.read_text(encoding=\"utf-8\"))\n        sealed_artifacts = manifest.get(\"sealed_artifacts\", {})\n        model_meta = sealed_artifacts.get(\"model_registry\")\n\n        if not model_meta:"
+  },
+  {
+    "File": "\\runtime\\contracts\\authority.py",
+    "Line": 37,
+    "Classification": "REFERENCE",
+    "Content": "raise RegistryIntegrityError(\"Entrée 'model_registry' absente du manifeste de gel.\")",
+    "Context": "\n        if not model_meta:\n            raise RegistryIntegrityError(\"Entrée 'model_registry' absente du manifeste de gel.\")\n\n        expected_hash = model_meta[\"sha256\"]"
+  },
+  {
+    "File": "\\runtime\\contracts\\authority.py",
+    "Line": 42,
+    "Classification": "REFERENCE",
+    "Content": "file_bytes = self.registry_path.read_bytes()",
+    "Context": "        expected_size = model_meta[\"size_bytes\"]\n\n        file_bytes = self.registry_path.read_bytes()\n        if len(file_bytes) != expected_size:\n            raise RegistryIntegrityError(f\"Taille du registre non conforme ({len(file_bytes)} vs {expected_size})\")"
+  },
+  {
+    "File": "\\runtime\\contracts\\authority.py",
+    "Line": 61,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "print(f\"[AUTHORITY] Modèle d'Autorité validé (Epoch: {current_epoch}, Hash Prefix: {self._hash_prefix})\")",
+    "Context": "            raise RegistryIntegrityError(f\"REGISTRY_DOWNGRADE_BLOCKED : Epoch détecté ({current_epoch}) inférieur au minimum requis ({self.min_epoch}).\")\n\n        print(f\"[AUTHORITY] Modèle d'Autorité validé (Epoch: {current_epoch}, Hash Prefix: {self._hash_prefix})\")\n\n    def get_registry_version(self) -> str:"
+  },
+  {
+    "File": "\\runtime\\contracts\\enforcer.py",
+    "Line": 4,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "from runtime.contracts.authority import ModelRegistryAuthority, RegistryIntegrityError",
+    "Context": "from datetime import datetime, timezone\nfrom pathlib import Path\nfrom runtime.contracts.authority import ModelRegistryAuthority, RegistryIntegrityError\n\nclass UnauthorizedModelError(Exception):"
+  },
+  {
+    "File": "\\runtime\\contracts\\enforcer.py",
+    "Line": 15,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "def __init__(self, authority: ModelRegistryAuthority = None, root_dir: str = None):",
+    "Context": "    Génère un journal d'audit immuable (JSONL) pour chaque décision ALLOW / DENY.\n    \"\"\"\n    def __init__(self, authority: ModelRegistryAuthority = None, root_dir: str = None):\n        self.authority = authority if authority else ModelRegistryAuthority()\n        self.root_dir = Path(root_dir) if root_dir else Path(\"G:/AI/E-zzio\").resolve()"
+  },
+  {
+    "File": "\\runtime\\contracts\\enforcer.py",
+    "Line": 16,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "self.authority = authority if authority else ModelRegistryAuthority()",
+    "Context": "    \"\"\"\n    def __init__(self, authority: ModelRegistryAuthority = None, root_dir: str = None):\n        self.authority = authority if authority else ModelRegistryAuthority()\n        self.root_dir = Path(root_dir) if root_dir else Path(\"G:/AI/E-zzio\").resolve()\n        self.audit_log_path = self.root_dir / \"runtime\" / \"audit\" / \"model_authority_events.jsonl\""
+  },
+  {
+    "File": "\\runtime\\contracts\\enforcer.py",
+    "Line": 18,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "self.audit_log_path = self.root_dir / \"runtime\" / \"audit\" / \"model_authority_events.jsonl\"",
+    "Context": "        self.authority = authority if authority else ModelRegistryAuthority()\n        self.root_dir = Path(root_dir) if root_dir else Path(\"G:/AI/E-zzio\").resolve()\n        self.audit_log_path = self.root_dir / \"runtime\" / \"audit\" / \"model_authority_events.jsonl\"\n        self.audit_log_path.parent.mkdir(parents=True, exist_ok=True)\n"
+  },
+  {
+    "File": "\\runtime\\contracts\\enforcer.py",
+    "Line": 27,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "\"registry_version\": self.authority.get_registry_version(),",
+    "Context": "            \"provider\": provider,\n            \"decision\": decision,\n            \"registry_version\": self.authority.get_registry_version(),\n            \"registry_epoch\": self.authority.get_registry_epoch(),\n            \"hash_prefix\": self.authority.get_hash_prefix()"
+  },
+  {
+    "File": "\\runtime\\contracts\\enforcer.py",
+    "Line": 28,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "\"registry_epoch\": self.authority.get_registry_epoch(),",
+    "Context": "            \"decision\": decision,\n            \"registry_version\": self.authority.get_registry_version(),\n            \"registry_epoch\": self.authority.get_registry_epoch(),\n            \"hash_prefix\": self.authority.get_hash_prefix()\n        }"
+  },
+  {
+    "File": "\\runtime\\contracts\\enforcer.py",
+    "Line": 29,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "\"hash_prefix\": self.authority.get_hash_prefix()",
+    "Context": "            \"registry_version\": self.authority.get_registry_version(),\n            \"registry_epoch\": self.authority.get_registry_epoch(),\n            \"hash_prefix\": self.authority.get_hash_prefix()\n        }\n        if reason:"
+  },
+  {
+    "File": "\\runtime\\contracts\\enforcer.py",
+    "Line": 40,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "if not self.authority.is_model_authorized(requested_model, provider):",
+    "Context": "        print(f\"[ENFORCER] Interception de la requête pour le modèle : '{requested_model}' (Provider: {provider})\")\n        \n        if not self.authority.is_model_authorized(requested_model, provider):\n            reason_msg = f\"Modèle '{requested_model}' non enregistré ou inactif dans le registre V7.12.\"\n            self._log_decision(requested_model, provider, \"DENY\", reason=\"NOT_REGISTERED\")"
+  },
+  {
+    "File": "\\runtime\\guardian\\test_v615_3_models.py",
+    "Line": 10,
+    "Classification": "IMPORT",
+    "Content": "from runtime.hardware.trust.models_governance.model_registry import ModelTrustRegistry",
+    "Context": "from runtime.hardware.trust.execution.admission.models import ExecutionRequest, ModelIdentity\nfrom runtime.hardware.trust.execution.admission.controller import ExecutionAdmissionController\nfrom runtime.hardware.trust.models_governance.model_registry import ModelTrustRegistry\nfrom runtime.hardware.trust.models_governance.budget import ModelBudgetGovernor\n"
+  },
+  {
+    "File": "\\runtime\\hardware\\cartography\\registry\\registry.py",
+    "Line": 14,
+    "Classification": "CONSUMER",
+    "Content": "def load_registry(self) -> dict:",
+    "Context": "        self.snapshot_engine = CartographySnapshotEngine(self.snapshots_dir)\n\n    def load_registry(self) -> dict:\n        if not self.registry_file.exists():\n            return {\"baseline\": None, \"history\": []}"
+  },
+  {
+    "File": "\\runtime\\hardware\\cartography\\registry\\registry.py",
+    "Line": 31,
+    "Classification": "CONSUMER",
+    "Content": "registry = self.load_registry()",
+    "Context": "        et historicise les événements.\n        \"\"\"\n        registry = self.load_registry()\n        baseline = registry.get(\"baseline\")\n"
+  },
+  {
+    "File": "\\runtime\\hardware\\trust\\models_governance\\budget.py",
+    "Line": 2,
+    "Classification": "IMPORT",
+    "Content": "from runtime.hardware.trust.models_governance.model_registry import ModelTrustRegistry",
+    "Context": "from dataclasses import dataclass\nfrom runtime.hardware.trust.models_governance.model_registry import ModelTrustRegistry\nfrom runtime.hardware.trust.execution.admission.models import ModelIdentity\n"
+  },
+  {
+    "File": "\\runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "Line": 7,
+    "Classification": "CONSUMER",
+    "Content": "self._load_registry()",
+    "Context": "    def __init__(self, registry_file: Path):\n        self.registry_file = registry_file\n        self._load_registry()\n\n    def _load_registry(self):"
+  },
+  {
+    "File": "\\runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "Line": 9,
+    "Classification": "CONSUMER",
+    "Content": "def _load_registry(self):",
+    "Context": "        self._load_registry()\n\n    def _load_registry(self):\n        if not self.registry_file.exists():\n            # Registre par défaut intégrant les modèles connus"
+  },
+  {
+    "File": "\\runtime\\lab\\test_v92_certification.py",
+    "Line": 33,
+    "Classification": "CONSUMER",
+    "Content": "full_reg = registry.load_registry()",
+    "Context": "\n    result = promoter.promote(manifest)\n    full_reg = registry.load_registry()\n\n    print(f\" Skill Discovery          : PASS\")"
+  },
+  {
+    "File": "\\runtime\\lab\\test_v921_registry.py",
+    "Line": 35,
+    "Classification": "CONSUMER",
+    "Content": "full_registry = registry.load_registry()",
+    "Context": "    print(f\" Enregistrement de 'vision_creator' : {'[SUCCESS]' if success else '[ALREADY_EXISTS]'}\")\n\n    full_registry = registry.load_registry()\n    print(json.dumps(full_registry, indent=2))\n    print(\"-\" * 60)"
+  },
+  {
+    "File": "\\runtime\\models\\ollama_sync.py",
+    "Line": 32,
+    "Classification": "REFERENCE",
+    "Content": "# Chargement du registre statique actuel (core/model_registry.py ou équivalent)",
+    "Context": "    print(f\"  [OK] Modèles Ollama détectés en direct : {installed_models}\")\n\n    # Chargement du registre statique actuel (core/model_registry.py ou équivalent)\n    # Pour l'instant, on audite les pools déclarés connus\n    static_declared = {"
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "Line": 2,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "E-ZZIO V7.32 — Certification Test Suite (Authority & Evolution Governance)",
+    "Context": "\"\"\"\nE-ZZIO V7.32 — Certification Test Suite (Authority & Evolution Governance)\nValide les 6 critères de gouvernance d'évolution.\n\"\"\""
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "Line": 12,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "from core.authority.evolution_request import evolution_request_engine",
+    "Context": "    sys.path.insert(0, str(ROOT_DIR))\n\nfrom core.authority.evolution_request import evolution_request_engine\nfrom core.authority.promotion_controller import promotion_controller\nfrom core.authority.evolution_ledger import evolution_ledger"
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "Line": 13,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "from core.authority.promotion_controller import promotion_controller",
+    "Context": "\nfrom core.authority.evolution_request import evolution_request_engine\nfrom core.authority.promotion_controller import promotion_controller\nfrom core.authority.evolution_ledger import evolution_ledger\nfrom core.authority.authority_policy import authority_policy_engine"
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "Line": 14,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "from core.authority.evolution_ledger import evolution_ledger",
+    "Context": "from core.authority.evolution_request import evolution_request_engine\nfrom core.authority.promotion_controller import promotion_controller\nfrom core.authority.evolution_ledger import evolution_ledger\nfrom core.authority.authority_policy import authority_policy_engine\n"
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "Line": 15,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "from core.authority.authority_policy import authority_policy_engine",
+    "Context": "from core.authority.promotion_controller import promotion_controller\nfrom core.authority.evolution_ledger import evolution_ledger\nfrom core.authority.authority_policy import authority_policy_engine\n\ndef run_authority_certification():"
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "Line": 17,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "def run_authority_certification():",
+    "Context": "from core.authority.authority_policy import authority_policy_engine\n\ndef run_authority_certification():\n    print(\"============================================================\")\n    print(\" E-ZZIO V7.32 — AUTHORITY & GOVERNANCE CERTIFICATION\")"
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "Line": 19,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "print(\" E-ZZIO V7.32 — AUTHORITY & GOVERNANCE CERTIFICATION\")",
+    "Context": "def run_authority_certification():\n    print(\"============================================================\")\n    print(\" E-ZZIO V7.32 — AUTHORITY & GOVERNANCE CERTIFICATION\")\n    print(\"============================================================\\n\")\n"
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "Line": 42,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "eval_res = authority_policy_engine.evaluate_target(\"skills\", \"UPGRADE\")",
+    "Context": "\n    # [3/6] Validation Policy Engine\n    eval_res = authority_policy_engine.evaluate_target(\"skills\", \"UPGRADE\")\n    assert eval_res[\"requires_validation\"] is True, \"Politique de validation non respectée !\"\n    print(\" [3/6] Validation Policy Engine : OK\")"
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "Line": 66,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "print(\" V7.32 CERTIFIÉ : AUTHORITY & EVOLUTION GOVERNANCE ACTIF\")",
+    "Context": "\n    print(\"\\n============================================================\")\n    print(\" V7.32 CERTIFIÉ : AUTHORITY & EVOLUTION GOVERNANCE ACTIF\")\n    print(\"============================================================\\n\")\n"
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "Line": 70,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "run_authority_certification()",
+    "Context": "\nif __name__ == \"__main__\":\n    run_authority_certification()"
+  },
+  {
+    "File": "\\runtime\\tests\\identity\\test_v730_identity_survival.py",
+    "Line": 24,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "authority_file = ROOT_DIR / \"runtime\" / \"identity\" / \"identity_authority.json\"",
+    "Context": "\n    identity_file = ROOT_DIR / \"runtime\" / \"identity\" / \"identity.json\"\n    authority_file = ROOT_DIR / \"runtime\" / \"identity\" / \"identity_authority.json\"\n\n    # 1. Génération de l'ancre et du Snapshot #1"
+  },
+  {
+    "File": "\\runtime\\tests\\identity\\test_v730_identity_survival.py",
+    "Line": 62,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "auth_data = json.loads(authority_file.read_text(encoding=\"utf-8\"))",
+    "Context": "    # ------------------------------------------------------------------\n    print(\"\\n[TEST B] Contrôle de la gouvernance et de l'autorité BidiNani...\")\n    auth_data = json.loads(authority_file.read_text(encoding=\"utf-8\"))\n    \n    assert auth_data[\"authority\"][\"creator\"] == \"BidiNani\", \"Créateur non conforme !\""
+  },
+  {
+    "File": "\\runtime\\tests\\identity\\test_v730_identity_survival.py",
+    "Line": 64,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "assert auth_data[\"authority\"][\"creator\"] == \"BidiNani\", \"Créateur non conforme !\"",
+    "Context": "    auth_data = json.loads(authority_file.read_text(encoding=\"utf-8\"))\n    \n    assert auth_data[\"authority\"][\"creator\"] == \"BidiNani\", \"Créateur non conforme !\"\n    assert auth_data[\"authority\"][\"core_values_modification\"] == \"forbidden\", \"Règle de modification invalide !\"\n    print(\" -> [OK] Test B validé : Directives d'autorité et rôle du Mentor verrouillés.\")"
+  },
+  {
+    "File": "\\runtime\\tests\\identity\\test_v730_identity_survival.py",
+    "Line": 65,
+    "Classification": "AUTHORITY_LINK",
+    "Content": "assert auth_data[\"authority\"][\"core_values_modification\"] == \"forbidden\", \"Règle de modification invalide !\"",
+    "Context": "    \n    assert auth_data[\"authority\"][\"creator\"] == \"BidiNani\", \"Créateur non conforme !\"\n    assert auth_data[\"authority\"][\"core_values_modification\"] == \"forbidden\", \"Règle de modification invalide !\"\n    print(\" -> [OK] Test B validé : Directives d'autorité et rôle du Mentor verrouillés.\")\n"
+  }
+]

@@ -1,0 +1,22 @@
+{
+    "qwen2.5-7b": {
+        "status": "TRUSTED",
+        "max_allowed_workers": 8,
+        "max_ram_mb": 8192
+    },
+    "qwen2.5-3b": {
+        "status": "TRUSTED",
+        "max_allowed_workers": 4,
+        "max_ram_mb": 4096
+    },
+    "gemini-pro": {
+        "status": "TRUSTED_REMOTE",
+        "max_allowed_workers": 2,
+        "max_ram_mb": 1024
+    },
+    "unknown-model": {
+        "status": "QUARANTINE",
+        "max_allowed_workers": 0,
+        "max_ram_mb": 0
+    }
+}

@@ -1,0 +1,28 @@
+{
+  "component": "E-ZZIO_LAYER_REMEDIATION_PLANNER",
+  "version": "V48.14",
+  "mode": "READ_ONLY_FORENSIC",
+  "violations": 112,
+  "critical_remaining": 5,
+  "projected_score": 10,
+  "actions": [
+    {
+      "Name": "ADAPTER_REQUIRED",
+      "Count": 5
+    },
+    {
+      "Name": "DEPENDENCY_REVIEW",
+      "Count": 26
+    },
+    {
+      "Name": "TEST_EXCEPTION",
+      "Count": 81
+    }
+  ],
+  "safety": [
+    "READ_ONLY",
+    "NO_DELETE",
+    "NO_MOVE",
+    "NO_MUTATION"
+  ]
+}

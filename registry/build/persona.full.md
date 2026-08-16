@@ -197,7 +197,7 @@ MODULE: SKILLS
 ---
 module: capabilities/quality.md
 priority: 95
-sha256: 49FD5C0A8EAB61107DFCD7BD8AEB60924B8F91400DD178BAA921B5B6FFC0FBD4
+
 ---
 
 ==================================

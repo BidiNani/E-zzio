@@ -1,13 +1,13 @@
 {
   "ok": true,
-  "created_at": "2026-06-11T00:19:00",
+  "created_at": "2026-08-12T22:59:02",
   "actions": [
     "Aucune action critique. E-ZZIO est stable."
   ],
   "status": {
     "ok": true,
     "version": "v2.12-supervisor-watchdog-mobile-home",
-    "created_at": "2026-06-11T00:19:00",
+    "created_at": "2026-08-12T22:59:02",
     "summary": {
       "checks_total": 7,
       "checks_failed": 0,
@@ -19,29 +19,28 @@
         "ok": true,
         "name": "system",
         "data": {
-          "time": "2026-06-11T00:19:00",
-          "python": "3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]",
+          "time": "2026-08-12T22:58:59",
+          "python": "3.11.15 (main, Jun 23 2026, 15:20:37) [MSC v.1944 64 bit (AMD64)]",
           "project_root": "G:\\AI\\E-zzio",
           "cpu": {
             "physical_cores": 12,
             "logical_cores": 24,
-            "percent": 7.3
+            "percent": 3.8
           },
           "ram": {
             "total_gb": 31.93,
-            "available_gb": 8.31,
-            "used_percent": 74.0
+            "available_gb": 15.67,
+            "used_percent": 50.9
           },
           "disk": {
             "root": "G:\\",
             "total_gb": 119.23,
-            "free_gb": 42.74,
-            "used_percent": 64.2
+            "free_gb": 80.94,
+            "used_percent": 32.1
           },
           "lan_ips": [
-            "192.168.1.10",
-            "172.30.192.1",
-            "172.30.176.1"
+            "192.168.1.19",
+            "172.27.96.1"
           ],
           "env_policy": {
             "OLLAMA_NUM_GPU": "0",
@@ -58,38 +57,7 @@
         "ok": true,
         "name": "routers",
         "data": {
-          "loaded_count": 27,
-          "failed_count": 0,
-          "loaded": [
-            "routers.ezzio_identity",
-            "routers.system",
-            "routers.chat",
-            "routers.memory",
-            "routers.actions",
-            "routers.models",
-            "routers.autonomy",
-            "routers.cloud",
-            "routers.knowledge",
-            "routers.compress",
-            "routers.forge",
-            "routers.vision",
-            "routers.vision_smart",
-            "routers.ezzio_unified",
-            "routers.omnipresence",
-            "routers.omni_bridge",
-            "routers.supervisor",
-            "routers.performance",
-            "routers.brain",
-            "routers.brain_gateway",
-            "routers.admin_maintenance",
-            "routers.human_loop",
-            "routers.human_chat",
-            "routers.safe_actions",
-            "routers.pc_commander",
-            "routers.cloud_brain",
-            "routers.ui_dashboard"
-          ],
-          "failed": {}
+          "error": "router_load_report indisponible"
         }
       },
       "forge": {
@@ -123,8 +91,8 @@
           },
           "availability": {
             "comfyui_installed": true,
-            "comfyui_online": true,
-            "ffmpeg": true,
+            "comfyui_online": false,
+            "ffmpeg": false,
             "node": true,
             "npm": true,
             "java": true,
@@ -245,9 +213,9 @@
               ]
             },
             "discord": {
-              "state": "ready_not_configured",
+              "state": "configured",
               "webhook_configured": false,
-              "bot_configured": false,
+              "bot_configured": true,
               "send_enabled": false,
               "detail": "Connecteur officiel prêt. Envoi réel verrouillé par EZZIO_BRIDGE_ALLOW_SEND."
             },
@@ -280,43 +248,31 @@
             },
             "urls": [
               {
-                "host": "192.168.1.10",
-                "base_url": "http://192.168.1.10:8000",
-                "status": "http://192.168.1.10:8000/status",
-                "router_status": "http://192.168.1.10:8000/router-status",
-                "mobile_pull": "http://192.168.1.10:8000/omni/mobile/pull",
-                "mobile_inbox": "http://192.168.1.10:8000/omni/mobile/inbox",
-                "omni_reply": "http://192.168.1.10:8000/omni-bridge/reply",
-                "mobile_reply": "http://192.168.1.10:8000/omni-bridge/mobile/reply",
-                "commands": "http://192.168.1.10:8000/omni-bridge/commands",
-                "truth": "http://192.168.1.10:8000/omni-bridge/truth"
+                "host": "192.168.1.19",
+                "base_url": "http://192.168.1.19:8001",
+                "status": "http://192.168.1.19:8001/status",
+                "router_status": "http://192.168.1.19:8001/router-status",
+                "mobile_pull": "http://192.168.1.19:8001/omni/mobile/pull",
+                "mobile_inbox": "http://192.168.1.19:8001/omni/mobile/inbox",
+                "omni_reply": "http://192.168.1.19:8001/omni-bridge/reply",
+                "mobile_reply": "http://192.168.1.19:8001/omni-bridge/mobile/reply",
+                "commands": "http://192.168.1.19:8001/omni-bridge/commands",
+                "truth": "http://192.168.1.19:8001/omni-bridge/truth"
               },
               {
-                "host": "172.30.192.1",
-                "base_url": "http://172.30.192.1:8000",
-                "status": "http://172.30.192.1:8000/status",
-                "router_status": "http://172.30.192.1:8000/router-status",
-                "mobile_pull": "http://172.30.192.1:8000/omni/mobile/pull",
-                "mobile_inbox": "http://172.30.192.1:8000/omni/mobile/inbox",
-                "omni_reply": "http://172.30.192.1:8000/omni-bridge/reply",
-                "mobile_reply": "http://172.30.192.1:8000/omni-bridge/mobile/reply",
-                "commands": "http://172.30.192.1:8000/omni-bridge/commands",
-                "truth": "http://172.30.192.1:8000/omni-bridge/truth"
-              },
-              {
-                "host": "172.30.176.1",
-                "base_url": "http://172.30.176.1:8000",
-                "status": "http://172.30.176.1:8000/status",
-                "router_status": "http://172.30.176.1:8000/router-status",
-                "mobile_pull": "http://172.30.176.1:8000/omni/mobile/pull",
-                "mobile_inbox": "http://172.30.176.1:8000/omni/mobile/inbox",
-                "omni_reply": "http://172.30.176.1:8000/omni-bridge/reply",
-                "mobile_reply": "http://172.30.176.1:8000/omni-bridge/mobile/reply",
-                "commands": "http://172.30.176.1:8000/omni-bridge/commands",
-                "truth": "http://172.30.176.1:8000/omni-bridge/truth"
+                "host": "172.27.96.1",
+                "base_url": "http://172.27.96.1:8001",
+                "status": "http://172.27.96.1:8001/status",
+                "router_status": "http://172.27.96.1:8001/router-status",
+                "mobile_pull": "http://172.27.96.1:8001/omni/mobile/pull",
+                "mobile_inbox": "http://172.27.96.1:8001/omni/mobile/inbox",
+                "omni_reply": "http://172.27.96.1:8001/omni-bridge/reply",
+                "mobile_reply": "http://172.27.96.1:8001/omni-bridge/mobile/reply",
+                "commands": "http://172.27.96.1:8001/omni-bridge/commands",
+                "truth": "http://172.27.96.1:8001/omni-bridge/truth"
               }
             ],
-            "token_preview": "05c73...e4db0",
+            "token_preview": "",
             "headers": {
               "X-EZZIO-Mobile-Token": "<token dans secrets/omnipresence.env>"
             },
@@ -380,8 +336,8 @@
             }
           },
           "security": {
-            "mobile_token_configured": true,
-            "mobile_token_preview": "05c73...e4db0",
+            "mobile_token_configured": false,
+            "mobile_token_preview": "",
             "send_enabled": false
           },
           "policy": {

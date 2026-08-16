@@ -1,0 +1,47 @@
+[
+  {
+    "Source": "G:\\AI\\E-zzio\\core\\memory_core.py",
+    "Forbidden_Dependency": "G:\\AI\\E-zzio\\runtime\\memory\\sqlite\\store.py",
+    "New_Boundary": "runtime/contracts/memory_interface.py",
+    "Migration": "WRAPPER_ONLY",
+    "Delete": "NO",
+    "Move": "NO",
+    "Mutation": "NOT_EXECUTED"
+  },
+  {
+    "Source": "G:\\AI\\E-zzio\\runtime\\core\\ezzio_core.py",
+    "Forbidden_Dependency": "G:\\AI\\E-zzio\\runtime\\identity\\persona.py",
+    "New_Boundary": "runtime/adapters/identity_adapter.py",
+    "Migration": "WRAPPER_ONLY",
+    "Delete": "NO",
+    "Move": "NO",
+    "Mutation": "NOT_EXECUTED"
+  },
+  {
+    "Source": "G:\\AI\\E-zzio\\runtime\\core\\ezzio_core.py",
+    "Forbidden_Dependency": "G:\\AI\\E-zzio\\runtime\\cognition\\router.py",
+    "New_Boundary": "runtime/adapters/cognition_adapter.py",
+    "Migration": "WRAPPER_ONLY",
+    "Delete": "NO",
+    "Move": "NO",
+    "Mutation": "NOT_EXECUTED"
+  },
+  {
+    "Source": "G:\\AI\\E-zzio\\runtime\\core\\ezzio_core.py",
+    "Forbidden_Dependency": "G:\\AI\\E-zzio\\runtime\\telemetry\\collector.py",
+    "New_Boundary": "runtime/adapters/telemetry_adapter.py",
+    "Migration": "WRAPPER_ONLY",
+    "Delete": "NO",
+    "Move": "NO",
+    "Mutation": "NOT_EXECUTED"
+  },
+  {
+    "Source": "G:\\AI\\E-zzio\\runtime\\core\\ezzio_core.py",
+    "Forbidden_Dependency": "G:\\AI\\E-zzio\\runtime\\recovery\\queue\\bus.py",
+    "New_Boundary": "runtime/adapters/recovery_adapter.py",
+    "Migration": "WRAPPER_ONLY",
+    "Delete": "NO",
+    "Move": "NO",
+    "Mutation": "NOT_EXECUTED"
+  }
+]

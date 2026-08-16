@@ -7,7 +7,7 @@ param(
 
 # ============================================================
 # E-ZZIO - Start LAN for smartphone
-# Lance E-ZZIO sur 0.0.0.0:8000 pour accès Wi-Fi local.
+# Lance E-ZZIO sur 0.0.0.0:8001 pour accès Wi-Fi local.
 # Token requis sur endpoints mobile sensibles.
 # ============================================================
 
@@ -85,8 +85,9 @@ Write-Host "stderr : $stderr"
 Write-Host ""
 Write-Host "URLs possibles smartphone même Wi-Fi :" -ForegroundColor Cyan
 foreach ($ip in $ips) {
-    Write-Host "http://$ip:8000/status"
-    Write-Host "http://$ip:8000/omni-bridge/mobile/config"
+    Write-Host "http://$ip:8001/status"
+    Write-Host "http://$ip:8001/omni-bridge/mobile/config"
 }
 Write-Host ""
 Write-Host "Si ton téléphone ne se connecte pas : relance avec -OpenFirewall."
+

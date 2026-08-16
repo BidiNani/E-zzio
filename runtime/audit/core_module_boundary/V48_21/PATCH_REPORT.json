@@ -1,0 +1,15 @@
+{
+  "Version": "V48.21",
+  "Mode": "CONTROLLED_PATCH",
+  "FilesModified": 5,
+  "ModifiedFiles": [
+    "G:\\AI\\E-zzio\\core\\memory_core.py",
+    "G:\\AI\\E-zzio\\runtime\\core\\ezzio_core.py",
+    "G:\\AI\\E-zzio\\runtime\\core\\ezzio_core.py",
+    "G:\\AI\\E-zzio\\runtime\\core\\ezzio_core.py",
+    "G:\\AI\\E-zzio\\runtime\\core\\ezzio_core.py"
+  ],
+  "Mutation": "AUTHORIZED",
+  "Delete": "NONE",
+  "Move": "NONE"
+}

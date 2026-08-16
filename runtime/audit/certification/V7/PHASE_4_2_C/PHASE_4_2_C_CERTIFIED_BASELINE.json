@@ -1,0 +1,50 @@
+{
+  "project": "E-ZZIO",
+  "version": "V7",
+  "phase": "4.2-C",
+  "component": "Real Local STT Provider",
+  "certification": {
+    "status": "CERTIFIED",
+    "score": 10,
+    "checks_passed": 13,
+    "checks_failed": 0,
+    "final_forensic_gate": "PASS"
+  },
+  "backend": {
+    "provider": "WhisperSttProvider",
+    "interface": "ISttProvider",
+    "backend": "faster-whisper",
+    "model_size": "tiny",
+    "device": "cpu",
+    "compute_type": "int8",
+    "beam_size": 1,
+    "call_count": 1,
+    "sample_rate": 16000,
+    "samples": 16000,
+    "no_mock_fallback": true
+  },
+  "artifacts": {
+    "provider": {
+      "path": "G:\\AI\\E-zzio\\runtime\\realtime\\stt\\whisper_provider.py",
+      "sha256": "AFD1396FAE095122252A7839DA301103233A7125D036B59A739B292C842EB917"
+    },
+    "test": {
+      "path": "G:\\AI\\E-zzio\\runtime\\realtime\\tests\\test_phase42C_real_stt_provider.py",
+      "sha256": "3B9AE3651BE3799D5C19CA2E0161E63626CA66DF41F111B73E69588CA480046D"
+    },
+    "report": {
+      "path": "G:\\AI\\E-zzio\\runtime\\realtime\\tests\\reports\\phase42C_report.json",
+      "sha256": "6115BC7CBCDC5FA411BA68848696A20FF80F51AFC5A2C41921ADE95B4A488E68"
+    }
+  },
+  "integrity": {
+    "provider_unchanged_during_final_gate": true,
+    "test_unchanged_during_final_gate": true,
+    "report_unchanged_during_final_gate": true,
+    "drill_writes": 0
+  },
+  "provenance": {
+    "source": "E-ZZIO V7 Phase 4.2-C Final Forensic Gate",
+    "certification_date": "2026-08-14T14:20:55.9074778+02:00"
+  }
+}

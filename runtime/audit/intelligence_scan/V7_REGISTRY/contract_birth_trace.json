@@ -1,0 +1,156 @@
+{
+  "timestamp": "2026-08-11T16:16:19.231237",
+  "target_file": "runtime/hardware/trust/models/contracts/qwen2.5-7b.contract.json",
+  "git_forensic": {
+    "git_status": "?? runtime/hardware/trust/models/contracts/qwen2.5-7b.contract.json"
+  },
+  "code_generators_or_references": [
+    {
+      "file": "runtime/audit/v7_contract_birth_trace.py",
+      "matched_terms": [
+        "qwen2.5-7b",
+        "contract.json",
+        "ContractSigner",
+        "max_allowed_workers"
+      ]
+    },
+    {
+      "file": "runtime/audit/v7_contract_inspector.py",
+      "matched_terms": [
+        "contract.json",
+        "max_allowed_workers"
+      ]
+    },
+    {
+      "file": "runtime/audit/v7_contract_simulation.py",
+      "matched_terms": [
+        "qwen2.5-7b",
+        "contract.json",
+        "max_allowed_workers"
+      ]
+    },
+    {
+      "file": "runtime/audit/v7_cryptographic_evidence_bundle.py",
+      "matched_terms": [
+        "qwen2.5-7b",
+        "contract.json"
+      ]
+    },
+    {
+      "file": "runtime/audit/v7_evidence_reconciliation.py",
+      "matched_terms": [
+        "qwen2.5-7b",
+        "contract.json"
+      ]
+    },
+    {
+      "file": "runtime/audit/v7_forensic_signature_replay.py",
+      "matched_terms": [
+        "qwen2.5-7b",
+        "contract.json"
+      ]
+    },
+    {
+      "file": "runtime/audit/v7_real_contract_compatibility_test.py",
+      "matched_terms": [
+        "qwen2.5-7b",
+        "contract.json"
+      ]
+    },
+    {
+      "file": "runtime/audit/v7_registry_audit.py",
+      "matched_terms": [
+        "contract.json"
+      ]
+    },
+    {
+      "file": "runtime/audit/v7_signature_archaeology.py",
+      "matched_terms": [
+        "qwen2.5-7b",
+        "contract.json"
+      ]
+    },
+    {
+      "file": "runtime/audit/v7_signature_origin_audit.py",
+      "matched_terms": [
+        "qwen2.5-7b",
+        "contract.json"
+      ]
+    },
+    {
+      "file": "runtime/audit/v7_signature_provenance_audit.py",
+      "matched_terms": [
+        "qwen2.5-7b",
+        "contract.json"
+      ]
+    },
+    {
+      "file": "runtime/audit/v7_trust_consolidation_audit.py",
+      "matched_terms": [
+        "contract.json"
+      ]
+    },
+    {
+      "file": "runtime/audit/intelligence_scan/V7_REGISTRY/hmac_authority_spec.py",
+      "matched_terms": [
+        "qwen2.5-7b"
+      ]
+    },
+    {
+      "file": "runtime/guardian/test_v615_3_models.py",
+      "matched_terms": [
+        "qwen2.5-7b"
+      ]
+    },
+    {
+      "file": "runtime/guardian/test_v615_governor.py",
+      "matched_terms": [
+        "qwen2.5-7b"
+      ]
+    },
+    {
+      "file": "runtime/guardian/test_v616_attestation.py",
+      "matched_terms": [
+        "qwen2.5-7b"
+      ]
+    },
+    {
+      "file": "runtime/guardian/test_v617_2_resolver.py",
+      "matched_terms": [
+        "qwen2.5-7b"
+      ]
+    },
+    {
+      "file": "runtime/hardware/trust/models/contract_signer.py",
+      "matched_terms": [
+        "contract.json",
+        "ContractSigner"
+      ]
+    },
+    {
+      "file": "runtime/hardware/trust/models/registry.py",
+      "matched_terms": [
+        "contract.json"
+      ]
+    },
+    {
+      "file": "runtime/hardware/trust/models/resolver.py",
+      "matched_terms": [
+        "max_allowed_workers"
+      ]
+    },
+    {
+      "file": "runtime/hardware/trust/models_governance/budget.py",
+      "matched_terms": [
+        "max_allowed_workers"
+      ]
+    },
+    {
+      "file": "runtime/hardware/trust/models_governance/model_registry.py",
+      "matched_terms": [
+        "qwen2.5-7b",
+        "max_allowed_workers"
+      ]
+    }
+  ]
+}

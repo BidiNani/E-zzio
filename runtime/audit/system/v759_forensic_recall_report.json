@@ -1,0 +1,130 @@
+{
+  "rpg_memory_autopsy": [],
+  "security_sample": [
+    {
+      "source_path": "runtime/security/forensic/ledger_forensic_backup_20260811_203058_277637.jsonl",
+      "count": 801,
+      "memory_type": "generic"
+    },
+    {
+      "source_path": "runtime/audit/tool_calls.jsonl",
+      "count": 683,
+      "memory_type": "security_audit"
+    },
+    {
+      "source_path": "runtime/audit/security_events.jsonl",
+      "count": 414,
+      "memory_type": "security_audit"
+    },
+    {
+      "source_path": "runtime/security/incidents.jsonl",
+      "count": 13,
+      "memory_type": "generic"
+    },
+    {
+      "source_path": "runtime/security/audit/kernel_events.jsonl",
+      "count": 8,
+      "memory_type": "security_audit"
+    },
+    {
+      "source_path": "runtime/memory/security_events.jsonl",
+      "count": 8,
+      "memory_type": "generic"
+    },
+    {
+      "source_path": "state/cloud_brain/audit.jsonl",
+      "count": 6,
+      "memory_type": "generic"
+    },
+    {
+      "source_path": "runtime/hardware/guardian_actuator_audit.jsonl",
+      "count": 4,
+      "memory_type": "generic"
+    },
+    {
+      "source_path": "runtime/hardware/trust/ledger/policy_audit.jsonl",
+      "count": 3,
+      "memory_type": "generic"
+    },
+    {
+      "source_path": "runtime/audit/discord/access_granted.jsonl",
+      "count": 3,
+      "memory_type": "security_audit"
+    }
+  ],
+  "noise_inspection": [
+    {
+      "source_path": "test_events.jsonl",
+      "content_preview": "{\"schema\": \"4.5.2\", \"timestamp\": 1786399751.6378117, \"type\": \"SYSTEM_EVENT\", \"payload\": {\"seq\": 999}",
+      "memory_type": "generic"
+    },
+    {
+      "source_path": "test_events.jsonl",
+      "content_preview": "{\"schema\": \"4.5.2\", \"timestamp\": 1786399751.6388118, \"type\": \"SYSTEM_EVENT\", \"payload\": {\"seq\": 2}, ",
+      "memory_type": "generic"
+    },
+    {
+      "source_path": "test_events.jsonl",
+      "content_preview": "{\"schema\": \"4.5.2\", \"timestamp\": 1786399751.6388118, \"type\": \"SYSTEM_EVENT\", \"payload\": {\"seq\": 3}, ",
+      "memory_type": "generic"
+    },
+    {
+      "source_path": ".pytest_cache/README.md",
+      "content_preview": "Fichier documenté : .pytest_cache/README.md [Type: generic]",
+      "memory_type": "generic"
+    },
+    {
+      "source_path": "data/test_telemetry.db",
+      "content_preview": "Fichier documenté : data/test_telemetry.db [Type: generic]",
+      "memory_type": "generic"
+    },
+    {
+      "source_path": "runtime/test_sqlite.db",
+      "content_preview": "Fichier documenté : runtime/test_sqlite.db [Type: generic]",
+      "memory_type": "generic"
+    },
+    {
+      "source_path": "runtime/test_sqlite_v557.db",
+      "content_preview": "Fichier documenté : runtime/test_sqlite_v557.db [Type: generic]",
+      "memory_type": "generic"
+    },
+    {
+      "source_path": "runtime/audit/intelligence_scan/V7_REGISTRY/test_harness_alignment_audit.json",
+      "content_preview": "Fichier documenté : runtime/audit/intelligence_scan/V7_REGISTRY/test_harness_alignment_audit.json [T",
+      "memory_type": "security_audit"
+    },
+    {
+      "source_path": "runtime/audit/intelligence_scan/V7_REGISTRY/V712/physical_attestation_verification_report.json",
+      "content_preview": "Fichier documenté : runtime/audit/intelligence_scan/V7_REGISTRY/V712/physical_attestation_verificati",
+      "memory_type": "security_audit"
+    },
+    {
+      "source_path": "runtime/audit/intelligence_scan/V7_REGISTRY/V712/V712_PHYSICAL_ATTESTATION_REPORT.md",
+      "content_preview": "Fichier documenté : runtime/audit/intelligence_scan/V7_REGISTRY/V712/V712_PHYSICAL_ATTESTATION_REPOR",
+      "memory_type": "security_audit"
+    },
+    {
+      "source_path": "runtime/hardware/trust/revocation/storage_admission_test/consumed_tokens.json",
+      "content_preview": "Fichier documenté : runtime/hardware/trust/revocation/storage_admission_test/consumed_tokens.json [T",
+      "memory_type": "generic"
+    },
+    {
+      "source_path": "runtime/hardware/trust/revocation/storage_gov_test/consumed_tokens.json",
+      "content_preview": "Fichier documenté : runtime/hardware/trust/revocation/storage_gov_test/consumed_tokens.json [Type: g",
+      "memory_type": "generic"
+    },
+    {
+      "source_path": "runtime/hardware/trust/revocation/storage_model_test/consumed_tokens.json",
+      "content_preview": "Fichier documenté : runtime/hardware/trust/revocation/storage_model_test/consumed_tokens.json [Type:",
+      "memory_type": "generic"
+    },
+    {
+      "source_path": "runtime/identity/boot_attestation.json",
+      "content_preview": "Fichier documenté : runtime/identity/boot_attestation.json [Type: generic]",
+      "memory_type": "generic"
+    }
+  ],
+  "statistics": {
+    "total_records": 2926
+  }
+}

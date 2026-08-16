@@ -72,15 +72,16 @@ Write-Host "=== E-ZZIO LAN URLs ===" -ForegroundColor Cyan
 
 if ($ips.Count -eq 0) {
     Write-Warning "Aucune IP LAN détectée."
-    Write-Host "Essaie manuellement l'IP déjà vue : http://192.168.1.10:8000/supervisor/mobile-home" -ForegroundColor Yellow
+    Write-Host "Essaie manuellement l'IP déjà vue : http://192.168.1.10:8001/supervisor/mobile-home" -ForegroundColor Yellow
     return
 }
 
 foreach ($ip in $ips) {
     if ($ip -and $ip.Trim().Length -gt 0) {
-        Write-Host "http://$ip:8000/supervisor/mobile-home"
-        Write-Host "http://$ip:8000/status"
-        Write-Host "http://$ip:8000/omni-bridge/mobile/config"
+        Write-Host "http://$ip:8001/supervisor/mobile-home"
+        Write-Host "http://$ip:8001/status"
+        Write-Host "http://$ip:8001/omni-bridge/mobile/config"
         Write-Host ""
     }
 }
+

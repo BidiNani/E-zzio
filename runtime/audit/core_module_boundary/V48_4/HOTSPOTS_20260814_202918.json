@@ -1,0 +1,82 @@
+[
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\contracts.py",
+    "UsedBy": 20
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\tools\\tool_schema.py",
+    "UsedBy": 15
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\telemetry\\collector.py",
+    "UsedBy": 15
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\sqlite\\store.py",
+    "UsedBy": 15
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\cognition\\ecol_universal_enforcement.py",
+    "UsedBy": 13
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\telemetry\\events.py",
+    "UsedBy": 12
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\experiments\\v611_topology\\discovery_hardened.py",
+    "UsedBy": 11
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\core\\events.py",
+    "UsedBy": 11
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\contracts\\execution_context.py",
+    "UsedBy": 10
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\decision\\policies.py",
+    "UsedBy": 10
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\project_janitor.py",
+    "UsedBy": 10
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\contracts\\capability.py",
+    "UsedBy": 9
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\decision\\governor.py",
+    "UsedBy": 9
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\constitution\\hardware_resource_governor.py",
+    "UsedBy": 9
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\__init__.py",
+    "UsedBy": 9
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\schemas.py",
+    "UsedBy": 9
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\atomic_writer.py",
+    "UsedBy": 8
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\evidence\\ledger.py",
+    "UsedBy": 8
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\pc_model_router.py",
+    "UsedBy": 8
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\policy\\engine.py",
+    "UsedBy": 8
+  }
+]

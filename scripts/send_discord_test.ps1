@@ -6,7 +6,7 @@ param(
     [switch]$Send
 )
 
-$BaseUrl = "http://127.0.0.1:8000"
+$BaseUrl = "http://127.0.0.1:8001"
 
 $body = @{
     content = $Message
@@ -18,3 +18,4 @@ Invoke-RestMethod "$BaseUrl/omni/discord/webhook" `
   -Method POST `
   -ContentType "application/json" `
   -Body $body
+

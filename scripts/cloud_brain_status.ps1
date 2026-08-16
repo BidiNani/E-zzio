@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-$res = Invoke-RestMethod "http://127.0.0.1:8000/cloud-brain/status" -Method GET -TimeoutSec 90
+$res = Invoke-RestMethod "http://127.0.0.1:8001/cloud-brain/status" -Method GET -TimeoutSec 90
 
 Write-Host "=== E-ZZIO CLOUD BRAIN STATUS ===" -ForegroundColor Cyan
 [pscustomobject]@{
@@ -30,3 +30,4 @@ $res.providers | ForEach-Object {
         usable = $_.usable
     }
 }
+

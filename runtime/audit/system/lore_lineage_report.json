@@ -1,0 +1,74 @@
+{
+  "file": "registry/personality/lore.md",
+  "sha256": "87b089137dc496160dba56319bbbf2d45504e2011109994bd7697c0e1e1e5b95",
+  "size_bytes": 182,
+  "dates": {
+    "created": "2026-07-26T00:47:31.856821+00:00",
+    "modified": "2026-07-26T00:48:45.728750+00:00"
+  },
+  "semantic_analysis": {
+    "identity": {
+      "count": 3,
+      "matched_keywords": [
+        "bidi",
+        "h3stiana",
+        "fils"
+      ]
+    },
+    "persona": {
+      "count": 2,
+      "matched_keywords": [
+        "arts visuel",
+        "passion"
+      ]
+    },
+    "rpg": {
+      "count": 0,
+      "matched_keywords": []
+    },
+    "gameplay": {
+      "count": 1,
+      "matched_keywords": [
+        "spec"
+      ]
+    }
+  },
+  "provenance_references": [
+    "audit\\filesystem.json",
+    "registry\\persona.txt",
+    "registry\\build\\persona.coding.md",
+    "registry\\build\\persona.discord.md",
+    "registry\\build\\persona.full.md",
+    "registry\\build\\persona.terminal.md",
+    "registry\\compiler\\manifest.json",
+    "runtime\\audit\\full_scan\\classification.json",
+    "runtime\\audit\\full_scan\\duplicate_candidates.json",
+    "runtime\\audit\\full_scan\\inventory.json",
+    "runtime\\audit\\intelligence_scan\\duplicate_candidates.json",
+    "runtime\\audit\\intelligence_scan\\inventory.json",
+    "runtime\\audit\\intelligence_scan\\inventory_forensic.json",
+    "runtime\\audit\\intelligence_scan\\REAL_EXECUTION_MATRIX_V7.json",
+    "runtime\\audit\\intelligence_scan\\V7_FORENSIC_ANALYSIS.md",
+    "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\architecture_baseline.json",
+    "runtime\\audit\\refactor_plan\\critical_duplicates.json",
+    "runtime\\audit\\system\\cognitive_provenance_matrix.json",
+    "runtime\\audit\\system\\extraction_dry_run_report.json",
+    "runtime\\audit\\system\\full_cognitive_inventory.json",
+    "runtime\\audit\\system\\full_corpus_dry_run.json",
+    "runtime\\audit\\system\\identity_genesis_manifest.json",
+    "runtime\\audit\\system\\lore_lineage_report.json",
+    "runtime\\cognitive\\index\\index_build_manifest.json",
+    "runtime\\cognitive\\snapshots\\V7.58\\cognitive_provenance_matrix.json",
+    "runtime\\cognitive\\snapshots\\V7.58\\index_build_manifest.json",
+    "runtime\\identity\\persona.full.md",
+    "runtime\\identity\\snapshots\\snapshot_0004\\snapshot_meta.json",
+    "runtime\\identity\\snapshots\\snapshot_0005\\snapshot_meta.json",
+    "runtime\\identity\\snapshots\\snapshot_0006\\snapshot_meta.json",
+    "runtime\\policy\\protected_identity_registry.json",
+    "state\\baselines\\v4_0_0_20260810_204914\\runtime_manifest_sha256.json"
+  ],
+  "verdict": "PERSONA",
+  "indexable": true,
+  "confidence": 0.9,
+  "content_preview": "# LORE & PASSIONS\n- Fils de BidiNani et H3stiana (Hestiana), respectés avec affection.\n- Arts visuels et dessin (rêve d'être tatoueur).\n- Musique : rock, grunge, hard rock, metal."
+}

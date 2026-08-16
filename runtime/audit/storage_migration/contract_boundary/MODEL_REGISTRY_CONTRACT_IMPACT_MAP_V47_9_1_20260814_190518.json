@@ -1,0 +1,226 @@
+{
+  "component": "MODEL_REGISTRY",
+  "version": "V47.9.1",
+  "mode": "FAST_FORENSIC_IMPACT_MAP_REPAIRED",
+  "source": "MODEL_REGISTRY_FORENSIC_CHAIN_REPAIRED_20260814_185911.json",
+  "timestamp": "2026-08-14T19:05:18.9769057+02:00",
+  "methods_scanned": 17,
+  "impact_map": [
+    {
+      "Rank": 1,
+      "Method": "admit",
+      "Risk": "CRITICAL",
+      "Priority": "P1_CRITICAL",
+      "DependencyScore": 280,
+      "ConsumerFiles": 18,
+      "Files": [
+        "G:\\AI\\E-zzio\\.venv\\Lib\\site-packages\\dateutil\\parser\\_parser.py",
+        "G:\\AI\\E-zzio\\.venv\\Lib\\site-packages\\mpmath\\calculus\\differentiation.py",
+        "G:\\AI\\E-zzio\\.venv\\Lib\\site-packages\\nltk\\tokenize\\legality_principle.py",
+        "G:\\AI\\E-zzio\\.venv\\Lib\\site-packages\\packaging\\ranges.py",
+        "G:\\AI\\E-zzio\\.venv\\Lib\\site-packages\\pygments\\lexers\\lean.py",
+        "G:\\AI\\E-zzio\\.venv\\Lib\\site-packages\\pygments\\lexers\\ml.py",
+        "G:\\AI\\E-zzio\\.venv\\Lib\\site-packages\\pygments\\lexers\\theorem.py",
+        "G:\\AI\\E-zzio\\.venv\\Lib\\site-packages\\sympy\\solvers\\ode\\lie_group.py",
+        "G:\\AI\\E-zzio\\runtime\\guardian\\test_v615_0_admission.py",
+        "G:\\AI\\E-zzio\\runtime\\guardian\\test_v615_3_models.py",
+        "G:\\AI\\E-zzio\\runtime\\guardian\\test_v615_governor.py",
+        "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\execution\\admission\\controller.py",
+        "G:\\AI\\E-zzio\\tools\\voice_converter\\.venv\\Lib\\site-packages\\mpmath\\calculus\\differentiation.py",
+        "G:\\AI\\E-zzio\\tools\\voice_converter\\.venv\\Lib\\site-packages\\packaging\\ranges.py",
+        "G:\\AI\\E-zzio\\tools\\voice_converter\\.venv\\Lib\\site-packages\\sympy\\solvers\\ode\\lie_group.py",
+        "G:\\AI\\E-zzio\\tools\\voice_converter\\.venv\\Lib\\site-packages\\torch\\distributed\\elastic\\rendezvous\\api.py",
+        "G:\\AI\\E-zzio\\tools\\voice_converter\\.venv\\Lib\\site-packages\\torch\\distributed\\elastic\\rendezvous\\dynamic_rendezvous.py",
+        "G:\\AI\\E-zzio\\tools\\voice_converter\\.venv\\Lib\\site-packages\\torch\\distributed\\elastic\\rendezvous\\etcd_rendezvous.py"
+      ]
+    },
+    {
+      "Rank": 2,
+      "Method": "is_model_authorized",
+      "Risk": "HIGH",
+      "Priority": "P2_HIGH",
+      "DependencyScore": 90,
+      "ConsumerFiles": 4,
+      "Files": [
+        "G:\\AI\\E-zzio\\runtime\\audit\\v712_9_test_authority.py",
+        "G:\\AI\\E-zzio\\runtime\\audit\\v713_negative_authority_test.py",
+        "G:\\AI\\E-zzio\\runtime\\contracts\\authority.py",
+        "G:\\AI\\E-zzio\\runtime\\contracts\\enforcer.py"
+      ]
+    },
+    {
+      "Rank": 3,
+      "Method": "route_inference",
+      "Risk": "HIGH",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 80,
+      "ConsumerFiles": 3,
+      "Files": [
+        "G:\\AI\\E-zzio\\runtime\\audit\\v713_1_ledger_test.py",
+        "G:\\AI\\E-zzio\\runtime\\audit\\v713_enforcement_simulation.py",
+        "G:\\AI\\E-zzio\\runtime\\contracts\\enforcer.py"
+      ]
+    },
+    {
+      "Rank": 4,
+      "Method": "get_registry_version",
+      "Risk": "HIGH",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 80,
+      "ConsumerFiles": 3,
+      "Files": [
+        "G:\\AI\\E-zzio\\runtime\\audit\\v712_9_test_authority.py",
+        "G:\\AI\\E-zzio\\runtime\\contracts\\authority.py",
+        "G:\\AI\\E-zzio\\runtime\\contracts\\enforcer.py"
+      ]
+    },
+    {
+      "Rank": 5,
+      "Method": "get_hash_prefix",
+      "Risk": "MEDIUM",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 45,
+      "ConsumerFiles": 2,
+      "Files": [
+        "G:\\AI\\E-zzio\\runtime\\contracts\\authority.py",
+        "G:\\AI\\E-zzio\\runtime\\contracts\\enforcer.py"
+      ]
+    },
+    {
+      "Rank": 6,
+      "Method": "get_registry_epoch",
+      "Risk": "MEDIUM",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 45,
+      "ConsumerFiles": 2,
+      "Files": [
+        "G:\\AI\\E-zzio\\runtime\\contracts\\authority.py",
+        "G:\\AI\\E-zzio\\runtime\\contracts\\enforcer.py"
+      ]
+    },
+    {
+      "Rank": 7,
+      "Method": "enforce_budget",
+      "Risk": "MEDIUM",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 45,
+      "ConsumerFiles": 2,
+      "Files": [
+        "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\execution\\admission\\controller.py",
+        "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\models_governance\\budget.py"
+      ]
+    },
+    {
+      "Rank": 8,
+      "Method": "resolve_resources",
+      "Risk": "MEDIUM",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 45,
+      "ConsumerFiles": 2,
+      "Files": [
+        "G:\\AI\\E-zzio\\runtime\\guardian\\test_v617_2_resolver.py",
+        "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\models\\resolver.py"
+      ]
+    },
+    {
+      "Rank": 9,
+      "Method": "resolve_contract",
+      "Risk": "MEDIUM",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 45,
+      "ConsumerFiles": 2,
+      "Files": [
+        "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\models\\registry.py",
+        "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\models\\resolver.py"
+      ]
+    },
+    {
+      "Rank": 10,
+      "Method": "resolve_security",
+      "Risk": "LOW",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 15,
+      "ConsumerFiles": 1,
+      "Files": [
+        "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\models\\resolver.py"
+      ]
+    },
+    {
+      "Rank": 11,
+      "Method": "_sign_grant",
+      "Risk": "LOW",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 15,
+      "ConsumerFiles": 1,
+      "Files": [
+        "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\execution\\admission\\controller.py"
+      ]
+    },
+    {
+      "Rank": 12,
+      "Method": "get_local_weights",
+      "Risk": "LOW",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 15,
+      "ConsumerFiles": 1,
+      "Files": [
+        "G:\\AI\\E-zzio\\runtime\\contracts\\authority.py"
+      ]
+    },
+    {
+      "Rank": 13,
+      "Method": "get_external_providers",
+      "Risk": "LOW",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 15,
+      "ConsumerFiles": 1,
+      "Files": [
+        "G:\\AI\\E-zzio\\runtime\\contracts\\authority.py"
+      ]
+    },
+    {
+      "Rank": 14,
+      "Method": "_log_decision",
+      "Risk": "LOW",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 15,
+      "ConsumerFiles": 1,
+      "Files": [
+        "G:\\AI\\E-zzio\\runtime\\contracts\\enforcer.py"
+      ]
+    },
+    {
+      "Rank": 15,
+      "Method": "_verify_contract",
+      "Risk": "LOW",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 15,
+      "ConsumerFiles": 1,
+      "Files": [
+        "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\models\\registry.py"
+      ]
+    },
+    {
+      "Rank": 16,
+      "Method": "_verify_and_load",
+      "Risk": "LOW",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 15,
+      "ConsumerFiles": 1,
+      "Files": [
+        "G:\\AI\\E-zzio\\runtime\\contracts\\authority.py"
+      ]
+    },
+    {
+      "Rank": 17,
+      "Method": "_load_all_contracts",
+      "Risk": "LOW",
+      "Priority": "P3_NORMAL",
+      "DependencyScore": 15,
+      "ConsumerFiles": 1,
+      "Files": [
+        "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\models\\registry.py"
+      ]
+    }
+  ]
+}

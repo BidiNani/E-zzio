@@ -1,0 +1,174 @@
+{
+  "active_segment_id": 22,
+  "max_segment_size_bytes": 20971520,
+  "segments": [
+    {
+      "id": 1,
+      "file": "segment_000001.jsonl",
+      "size": 19346898,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "7375660f3043a561b1429e35362bf7e34aa234e644849a99098ffe5abeee3b15"
+    },
+    {
+      "id": 2,
+      "file": "segment_000002.jsonl",
+      "size": 18218310,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "e893a6997e8c57101165a2b5ff6ed0bdef8ef5c86c3370e8d88508c64f82b166"
+    },
+    {
+      "id": 3,
+      "file": "segment_000003.jsonl",
+      "size": 18217920,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "57fc3815c08cc522885f62e9edab64a66bee98b002e4a86e2bc752416c47b72d"
+    },
+    {
+      "id": 4,
+      "file": "segment_000004.jsonl",
+      "size": 18204870,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "b716c9523aa47db3e0d74584607fc95f5411424efc1499e430dcee7d6d55d43d"
+    },
+    {
+      "id": 5,
+      "file": "segment_000005.jsonl",
+      "size": 18208358,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "d9b97d3f6df3a3b20c1f90c799c66506477baf61ec6d5472043913196ff0d367"
+    },
+    {
+      "id": 6,
+      "file": "segment_000006.jsonl",
+      "size": 18214574,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "6a5a22d28e1151e5b0fbe8be5d875f9849628fff05bbb0d1c1be3a68d6f8d8a3"
+    },
+    {
+      "id": 7,
+      "file": "segment_000007.jsonl",
+      "size": 18217003,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "b776463651436ae6fbc800b77276b691cd03b8250bf82d3618e6b1bdee993b4b"
+    },
+    {
+      "id": 8,
+      "file": "segment_000008.jsonl",
+      "size": 18212606,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "70cd707d15775157e916004923f5731890ecb67753d5c4e30f133027af953fcf"
+    },
+    {
+      "id": 9,
+      "file": "segment_000009.jsonl",
+      "size": 18221481,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "10244823db5866cbd40f4069d7e1dde34011db07085e0c2402b63547f4ae6b1d"
+    },
+    {
+      "id": 10,
+      "file": "segment_000010.jsonl",
+      "size": 18207964,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "2a7456493c1f8268eefaff2b3c7972f8890b9f14c40a9fa4198779a89c13c84d"
+    },
+    {
+      "id": 11,
+      "file": "segment_000011.jsonl",
+      "size": 18201966,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "bc00775964e8e6b09504f37bd1779ffc9343784257a8126fb9e4be15bb031561"
+    },
+    {
+      "id": 12,
+      "file": "segment_000012.jsonl",
+      "size": 18203992,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "57807578569cefbc673789a940ffc2f8abd99db75c269d4ebed5a9fb7562f3cf"
+    },
+    {
+      "id": 13,
+      "file": "segment_000013.jsonl",
+      "size": 18209503,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "aea6c2ec81f6fa5ca51a1b4f3d370edfd8a269728a0afac00721f831005b232b"
+    },
+    {
+      "id": 14,
+      "file": "segment_000014.jsonl",
+      "size": 18211436,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "54cc6b7170e66aad68173d2c9e28dab0f91ff2b8ed64e4b80cacbfbd2c8d0f6b"
+    },
+    {
+      "id": 15,
+      "file": "segment_000015.jsonl",
+      "size": 18212840,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "718a9ed41cc1f696a2676f68810de2d41bb510851a6212bca7f867b33fb2749a"
+    },
+    {
+      "id": 16,
+      "file": "segment_000016.jsonl",
+      "size": 18218398,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "57616b94108d3eadc9acbc9bd21edcc71bfead5a43f050e491b252441e6a6432"
+    },
+    {
+      "id": 17,
+      "file": "segment_000017.jsonl",
+      "size": 18215496,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "3e54a3416f8833d08c9d93e54fb7bbe2364959d4c72f591757ef77eab8cbdf4d"
+    },
+    {
+      "id": 18,
+      "file": "segment_000018.jsonl",
+      "size": 18216127,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "9666e82e41957a21790623ca291080209d3d96aade8cc22f09525efc74576c76"
+    },
+    {
+      "id": 19,
+      "file": "segment_000019.jsonl",
+      "size": 18221680,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "82cb649e791ea54f352aaf4c06953cf0c692ebfb68668655c85d0baa22121c40"
+    },
+    {
+      "id": 20,
+      "file": "segment_000020.jsonl",
+      "size": 18217663,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "5d4ba30eb2ab1adc995588d8eecbfbafb888d1d9daf8d59b3a8d4fbea1d3bf06"
+    },
+    {
+      "id": 21,
+      "file": "segment_000021.jsonl",
+      "size": 18218230,
+      "state": "SEALED",
+      "sealed": true,
+      "sha256": "285ce69529a33c57acb603ed5cd2ed3a351194665147da6b576ec765d3c3df8d"
+    }
+  ]
+}

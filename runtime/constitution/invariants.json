@@ -1,0 +1,28 @@
+{
+  "system": "E-ZZIO Cognitive Operating Runtime",
+  "version": "4.2.0",
+  "constitution_version": 2,
+  "kernel_lock": true,
+  "immutable_paths": [
+    "runtime/kernel",
+    "runtime/constitution",
+    "runtime/security",
+    "runtime/events"
+  ],
+  "require_human_approval": [
+    "policy_modification",
+    "secret_extraction",
+    "kernel_capability_grant"
+  ],
+  "allowed_evolution_scopes": [
+    "skills",
+    "agents",
+    "memory_schemas"
+  ],
+  "resource_hard_limits": {
+    "max_cpu_threads_per_worker": 8,
+    "max_ram_mb_per_sandbox": 4096,
+    "max_execution_time_sec": 300,
+    "max_parallel_workers": 8
+  }
+}

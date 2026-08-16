@@ -1,0 +1,30 @@
+{
+  "version": "V7.23.0.9",
+  "updated_at": "2026-08-11T00:00:00Z",
+  "providers": {
+    "gemini": {
+      "enabled": true,
+      "priority": 1,
+      "roles": ["reasoning", "architecture", "vision", "web_grounding", "deep_analysis"],
+      "default_model": "gemini-2.5-flash",
+      "trust": "high",
+      "tier": "cloud_primary"
+    },
+    "groq": {
+      "enabled": true,
+      "priority": 2,
+      "roles": ["fast_chat", "realtime_discord", "quick_response", "fallback"],
+      "default_model": "llama-3.3-70b-versatile",
+      "trust": "high",
+      "tier": "cloud_accelerator"
+    },
+    "openrouter": {
+      "enabled": false,
+      "priority": 99,
+      "roles": ["experimental_backup"],
+      "default_model": "auto",
+      "trust": "experimental",
+      "tier": "cloud_cold_backup"
+    }
+  }
+}

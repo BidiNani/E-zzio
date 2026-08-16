@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-08-11T17:33:24.841748",
+  "alignment_status": "ALIGNMENT_DEVIATION",
+  "test_results": [
+    {
+      "test_name": "Aligned Recovery Lifecycle",
+      "status": "FAILED",
+      "details": "Échec : IncidentBundle.__init__() missing 13 required positional arguments: 'timestamp', 'severity_score', 'execution_id', 'action_name', 'trace_id', 'span_id', 'state_trace', 'context_signature_valid', 'payload_hash', 'bundle_hash', 'telemetry_snapshot', 'findings', and 'root_candidates'"
+    },
+    {
+      "test_name": "Aligned Telemetry Pipeline",
+      "status": "FAILED",
+      "details": "Échec : 'TelemetryCollector' object has no attribute 'emit'"
+    },
+    {
+      "test_name": "Aligned Policy Engine Evaluation",
+      "status": "FAILED",
+      "details": "Échec : IncidentBundle.__init__() missing 13 required positional arguments: 'timestamp', 'severity_score', 'execution_id', 'action_name', 'trace_id', 'span_id', 'state_trace', 'context_signature_valid', 'payload_hash', 'bundle_hash', 'telemetry_snapshot', 'findings', and 'root_candidates'"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "protected_domains": [
+    "identity",
+    "constitution",
+    "security"
+  ],
+  "require_validation": [
+    "kernel",
+    "memory",
+    "skills"
+  ],
+  "automatic_allowed": [
+    "cache",
+    "telemetry",
+    "optimization"
+  ]
+}

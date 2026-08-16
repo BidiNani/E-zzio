@@ -20,7 +20,7 @@ $body = @{
     params = $paramsObject
 } | ConvertTo-Json -Depth 50
 
-$res = Invoke-RestMethod "http://127.0.0.1:8000/safe-actions/quick" `
+$res = Invoke-RestMethod "http://127.0.0.1:8001/safe-actions/quick" `
     -Method POST `
     -ContentType "application/json" `
     -TimeoutSec 180 `
@@ -37,3 +37,4 @@ Write-Host "=== E-ZZIO SAFE ACTION QUICK ===" -ForegroundColor Cyan
     message = $res.message
     result_ok = $res.result.ok
 }
+

@@ -1,0 +1,42 @@
+{
+  "version": "5.0.0-CPU",
+  "active_profile": "INITIALIZING",
+  "heartbeat": 1786405657.4729161,
+  "alive": true,
+  "pid": 652,
+  "cpu_topology": {
+    "total_logical": 24,
+    "total_physical": 12,
+    "is_ryzen_5900x": true,
+    "assigned_affinity_count": 24,
+    "affinity_mask": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  "win32_priority": "NORMAL",
+  "evolution_allowed": false,
+  "memory_rss_mb": 18.44
+}

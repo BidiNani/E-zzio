@@ -1,0 +1,66 @@
+[
+  {
+    "Count": 13443,
+    "File": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration\\c_reference_classifier\\C_REFERENCE_CLASSIFICATION_20260814_154621.txt",
+    "Extension": ".txt",
+    "Directory": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration\\c_reference_classifier",
+    "Category": "AUDIT",
+    "Example": "- Ligne 656 : `\"C:\\Users\\enrik\\AppData\\Roaming\\npm\\opencode.cmd\" run -m ollama/qwen2.5-coder:7b -i`"
+  },
+  {
+    "Count": 13259,
+    "File": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration\\parallel_forensic\\FORENSIC_MAPPING_20260814_154221.txt",
+    "Extension": ".txt",
+    "Directory": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration\\parallel_forensic",
+    "Category": "AUDIT",
+    "Example": "C:\\Users\\enrik\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\venv\\scripts\\nt\\python.exe No pyvenv.c…"
+  },
+  {
+    "Count": 166,
+    "File": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration\\AI_STORAGE_FORENSIC_20260814_152956.txt",
+    "Extension": ".txt",
+    "Directory": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration",
+    "Category": "AUDIT",
+    "Example": "C     C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\distutils-precedence.pth"
+  },
+  {
+    "Count": 7,
+    "File": "G:\\AI\\E-zzio\\runtime\\audit\\pc_software_inventory\\path_entries_20260814-151513.txt",
+    "Extension": ".txt",
+    "Directory": "G:\\AI\\E-zzio\\runtime\\audit\\pc_software_inventory",
+    "Category": "AUDIT",
+    "Example": "C:\\Users\\enrik\\AppData\\Local\\hermes\\bin"
+  },
+  {
+    "Count": 3,
+    "File": "G:\\AI\\E-zzio\\runtime\\audit\\pc_software_inventory\\v2\\software_locations_20260814-151640.txt",
+    "Extension": ".txt",
+    "Directory": "G:\\AI\\E-zzio\\runtime\\audit\\pc_software_inventory\\v2",
+    "Category": "AUDIT",
+    "Example": "C:\\Users\\enrik\\AppData\\Local"
+  },
+  {
+    "Count": 1,
+    "File": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_10_2_EMISSION_EVENT_REPORT.md",
+    "Extension": ".md",
+    "Directory": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY",
+    "Category": "AUDIT",
+    "Example": "- Ligne 656 : `\"C:\\Users\\enrik\\AppData\\Roaming\\npm\\opencode.cmd\" run -m ollama/qwen2.5-coder:7b -i`"
+  },
+  {
+    "Count": 1,
+    "File": "G:\\AI\\E-zzio\\runtime\\audit\\pc_software_inventory\\v2\\python_packages_20260814-151640.txt",
+    "Extension": ".txt",
+    "Directory": "G:\\AI\\E-zzio\\runtime\\audit\\pc_software_inventory\\v2",
+    "Category": "AUDIT",
+    "Example": "hermes-agent                 0.18.2      C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent"
+  },
+  {
+    "Count": 1,
+    "File": "G:\\AI\\E-zzio\\tools\\voice_converter\\.venv\\pyvenv.cfg",
+    "Extension": ".cfg",
+    "Directory": "G:\\AI\\E-zzio\\tools\\voice_converter\\.venv",
+    "Category": "OTHER",
+    "Example": "home = C:\\Users\\enrik\\AppData\\Roaming\\uv\\python\\cpython-3.11-windows-x86_64-none"
+  }
+]

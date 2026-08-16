@@ -1,0 +1,129 @@
+{
+  "timestamp": "2026-08-11T16:32:03.744369",
+  "target_execution_record": {
+    "admission_grant_hash": "grant-03",
+    "attestation_verdict": "VIOLATION_AFFINITY",
+    "capability_contract_hash": "1c9199ab827218a5b3429aa220455e3a36fa9eb7d9245c89bee6bbc04faa7969",
+    "capability_token_id": "token-03",
+    "contract": {
+      "allowed_affinity": [
+        999
+      ],
+      "max_ram_mb": 4096.0,
+      "requested_workers": 1
+    },
+    "execution_id": "exec-uuid-03",
+    "model_identity": {
+      "model_id": "qwen2.5-7b",
+      "version_hash": "sha256:111"
+    },
+    "observation": {
+      "active_threads": 4,
+      "actual_affinity_mask": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "is_alive": true,
+      "os_enforcement_verified": true,
+      "peak_ram_mb": 22.7,
+      "pid": 33776
+    },
+    "previous_receipt_hash": "75012ef19beedf9ada5025a7d259eaf9a30c448c3d4387b3d457df47f278fcb3",
+    "receipt_id": "95c60631-11df-4709-9b66-a18f9064a1a4",
+    "sequence_id": 3,
+    "signature": "fd81687cbbcaecc6a3c00e34dda0d034bcfba9d86ee77c3348c8ff85bc7295ed",
+    "timestamps": {
+      "duration_sec": 1.0,
+      "finished_at": 1786452098.4371984,
+      "started_at": 1786452097.4371984
+    },
+    "violations": [
+      "AFFINITY_DRIFT_DETECTED: Allowed [999], Got [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]"
+    ],
+    "workload_id": "task_drift_01"
+  },
+  "code_references_to_drift_terms": [
+    {
+      "file": "test_events.jsonl",
+      "matched_terms": [
+        "999"
+      ]
+    },
+    {
+      "file": "audit/filesystem.json",
+      "matched_terms": [
+        "999"
+      ]
+    },
+    {
+      "file": "core/autonomy.py",
+      "matched_terms": [
+        "999"
+      ]
+    },
+    {
+      "file": "core/dispatcher.py",
+      "matched_terms": [
+        "999"
+      ]
+    },
+    {
+      "file": "core/model_registry.py",
+      "matched_terms": [
+        "999"
+      ]
+    },
+    {
+      "file": "core/pc_optimizer.py",
+      "matched_terms": [
+        "999"
+      ]
+    },
+    {
+      "file": "core/supervisor.py",
+      "matched_terms": [
+        "999"
+      ]
+    },
+    {
+      "file": "data/action_registry.db",
+      "matched_terms": [
+        "999"
+      ]
+    },
+    {
+      "file": "ezzio-ui/package-lock.json",
+      "matched_terms": [
+        "999"
+      ]
+    },
+    {
+      "file": "ezzio-ui/.svelte-kit/output/client/_app/immutable/assets/0.B5E_xpHI.css",
+      "matched_terms": [
+        "999"
+      ]
+    }
+  ]
+}

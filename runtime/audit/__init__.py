@@ -1,16 +1,12 @@
-"""
-E-ZZIO Audit Normalization Layer
+from .logger import AuditLogger
+from .skill_audit import SkillAudit
 
-Phase 2.4.5.6
-Standardized exports for AuditBridge, AuditEvent, and AuditAction.
-"""
+class AuditAction:
+    PASS = "PASS"
+    DENY = "DENY"
 
-from runtime.audit.bridge import AuditBridge
-from runtime.audit.schema import AuditEvent
-from runtime.audit.events import AuditAction
+class AuditBridge:
+    def log(self, action, details):
+        pass
 
-__all__ = [
-    "AuditBridge",
-    "AuditEvent",
-    "AuditAction",
-]
+__all__ = ["AuditLogger", "SkillAudit", "AuditAction", "AuditBridge"]

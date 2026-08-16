@@ -1,0 +1,204 @@
+{
+  "component": "MODEL_REGISTRY",
+  "scan_mode": "READ_ONLY",
+  "timestamp": "2026-08-14T17:36:51.0986150+02:00",
+  "conflict_status": "MULTI_OWNER_CANDIDATE",
+  "migration_allowed": false,
+  "owners": [
+    {
+      "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+      "Line": 19,
+      "Role": "MODEL_REGISTRY_OWNER_CANDIDATE",
+      "Pattern": "registry_file",
+      "Content": "self.registry_file.write_text(json.dumps(default_data, indent=4), encoding=\"utf-8\")"
+    },
+    {
+      "File": "runtime\\hardware\\trust\\models\\registry.py",
+      "Line": 25,
+      "Role": "MODEL_REGISTRY_OWNER_CANDIDATE",
+      "Pattern": "json.dump",
+      "Content": "encoded = json.dumps(payload, sort_keys=True).encode(\"utf-8\")"
+    }
+  ],
+  "role_summary": [
+    {
+      "Name": "MODEL_REGISTRY_OWNER_CANDIDATE",
+      "Count": 2
+    },
+    {
+      "Name": "PERSISTENCE_WRITER",
+      "Count": 6
+    },
+    {
+      "Name": "REGISTRY_REFERENCE",
+      "Count": 6
+    },
+    {
+      "Name": "UNKNOWN_WRITER",
+      "Count": 9
+    }
+  ],
+  "findings": [
+    {
+      "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+      "Line": 5,
+      "Role": "UNKNOWN_WRITER",
+      "Pattern": "registry_file",
+      "Content": "def __init__(self, registry_file: Path):"
+    },
+    {
+      "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+      "Line": 6,
+      "Role": "UNKNOWN_WRITER",
+      "Pattern": "registry_file",
+      "Content": "self.registry_file = registry_file"
+    },
+    {
+      "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+      "Line": 10,
+      "Role": "UNKNOWN_WRITER",
+      "Pattern": "registry_file",
+      "Content": "if not self.registry_file.exists():"
+    },
+    {
+      "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+      "Line": 18,
+      "Role": "UNKNOWN_WRITER",
+      "Pattern": "registry_file",
+      "Content": "self.registry_file.parent.mkdir(parents=True, exist_ok=True)"
+    },
+    {
+      "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+      "Line": 19,
+      "Role": "MODEL_REGISTRY_OWNER_CANDIDATE",
+      "Pattern": "registry_file",
+      "Content": "self.registry_file.write_text(json.dumps(default_data, indent=4), encoding=\"utf-8\")"
+    },
+    {
+      "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+      "Line": 23,
+      "Role": "UNKNOWN_WRITER",
+      "Pattern": "registry_file",
+      "Content": "self.data = json.loads(self.registry_file.read_text(encoding=\"utf-8\"))"
+    },
+    {
+      "File": "core\\model_registry.py",
+      "Line": 2,
+      "Role": "REGISTRY_REFERENCE",
+      "Pattern": "MODEL_REGISTRY",
+      "Content": "core/model_registry.py — Adaptive Model Governor V7.21"
+    },
+    {
+      "File": "core\\model_registry.py",
+      "Line": 9,
+      "Role": "UNKNOWN_WRITER",
+      "Pattern": "Path\\(",
+      "Content": "ROOT_DIR = Path(\"G:/AI/E-zzio\").resolve()"
+    },
+    {
+      "File": "routers\\models.py",
+      "Line": 6,
+      "Role": "REGISTRY_REFERENCE",
+      "Pattern": "MODEL_REGISTRY",
+      "Content": "from core.model_registry import FAST_MODEL_POOL, load_latency, save_latency"
+    },
+    {
+      "File": "core\\intelligence_router.py",
+      "Line": 19,
+      "Role": "UNKNOWN_WRITER",
+      "Pattern": "Path\\(",
+      "Content": "ROOT_DIR = Path(__file__).resolve().parent.parent"
+    },
+    {
+      "File": "core\\intelligence_router.py",
+      "Line": 20,
+      "Role": "REGISTRY_REFERENCE",
+      "Pattern": "MODEL_REGISTRY",
+      "Content": "LOCAL_REGISTRY_PATH = ROOT_DIR / \"runtime\" / \"models\" / \"model_registry.json\""
+    },
+    {
+      "File": "core\\intelligence_router.py",
+      "Line": 66,
+      "Role": "PERSISTENCE_WRITER",
+      "Pattern": "json.dump",
+      "Content": "raw_string = json.dumps(temp_payload, sort_keys=True, ensure_ascii=False)"
+    },
+    {
+      "File": "core\\intelligence_router.py",
+      "Line": 69,
+      "Role": "PERSISTENCE_WRITER",
+      "Pattern": "json.dump",
+      "Content": "raw_string = json.dumps(payload, sort_keys=True, ensure_ascii=False)"
+    },
+    {
+      "File": "core\\intelligence_router.py",
+      "Line": 74,
+      "Role": "PERSISTENCE_WRITER",
+      "Pattern": "json.dump",
+      "Content": "f.write(json.dumps(payload, ensure_ascii=False) + \"\\n\")"
+    },
+    {
+      "File": "core\\supervisor.py",
+      "Line": 14,
+      "Role": "UNKNOWN_WRITER",
+      "Pattern": "Path\\(",
+      "Content": "PROJECT_ROOT = Path(\"G:/AI/E-zzio\")"
+    },
+    {
+      "File": "core\\supervisor.py",
+      "Line": 144,
+      "Role": "REGISTRY_REFERENCE",
+      "Pattern": "MODEL_REGISTRY",
+      "Content": "from core.model_registry import status as registry_status"
+    },
+    {
+      "File": "core\\supervisor.py",
+      "Line": 190,
+      "Role": "PERSISTENCE_WRITER",
+      "Pattern": "write_text",
+      "Content": "path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding=\"utf-8\")"
+    },
+    {
+      "File": "core\\supervisor.py",
+      "Line": 241,
+      "Role": "PERSISTENCE_WRITER",
+      "Pattern": "write_text",
+      "Content": "path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding=\"utf-8\")"
+    },
+    {
+      "File": "runtime\\models\\ollama_sync.py",
+      "Line": 8,
+      "Role": "UNKNOWN_WRITER",
+      "Pattern": "Path\\(",
+      "Content": "ROOT_DIR = Path(\"G:/AI/E-zzio\").resolve()"
+    },
+    {
+      "File": "runtime\\models\\ollama_sync.py",
+      "Line": 32,
+      "Role": "REGISTRY_REFERENCE",
+      "Pattern": "MODEL_REGISTRY",
+      "Content": "# Chargement du registre statique actuel (core/model_registry.py ou équivalent)"
+    },
+    {
+      "File": "runtime\\models\\ollama_sync.py",
+      "Line": 60,
+      "Role": "PERSISTENCE_WRITER",
+      "Pattern": "write_text",
+      "Content": "report_path.write_text(json.dumps(matrix_report, indent=2, ensure_ascii=False), encoding=\"utf-8\")"
+    },
+    {
+      "File": "runtime\\hardware\\trust\\models\\registry.py",
+      "Line": 5,
+      "Role": "REGISTRY_REFERENCE",
+      "Pattern": "ModelRegistry",
+      "Content": "class CoreModelRegistry:"
+    },
+    {
+      "File": "runtime\\hardware\\trust\\models\\registry.py",
+      "Line": 25,
+      "Role": "MODEL_REGISTRY_OWNER_CANDIDATE",
+      "Pattern": "json.dump",
+      "Content": "encoded = json.dumps(payload, sort_keys=True).encode(\"utf-8\")"
+    }
+  ]
+}

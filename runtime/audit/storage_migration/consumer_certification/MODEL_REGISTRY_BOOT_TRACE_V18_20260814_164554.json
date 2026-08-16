@@ -1,0 +1,2750 @@
+[
+  {
+    "File": "\\core\\agent\\writing_engine.py",
+    "LineNumber": 18,
+    "Pattern": "json.load",
+    "Line": "return json.loads(PERSONA_FILE.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\authority\\authority_policy.py",
+    "LineNumber": 2,
+    "Pattern": "authority",
+    "Line": "E-ZZIO V7.32 — Authority Policy Engine"
+  },
+  {
+    "File": "\\core\\authority\\authority_policy.py",
+    "LineNumber": 9,
+    "Pattern": "authority",
+    "Line": "POLICY_FILE = ROOT_DIR / \"runtime\" / \"evolution\" / \"authority_policy.json\""
+  },
+  {
+    "File": "\\core\\authority\\authority_policy.py",
+    "LineNumber": 17,
+    "Pattern": "authority",
+    "Line": "class AuthorityPolicyEngine:"
+  },
+  {
+    "File": "\\core\\authority\\authority_policy.py",
+    "LineNumber": 22,
+    "Pattern": "json.load",
+    "Line": "self.policy = json.loads(POLICY_FILE.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\authority\\authority_policy.py",
+    "LineNumber": 33,
+    "Pattern": "authority",
+    "Line": "authority_policy_engine = AuthorityPolicyEngine()"
+  },
+  {
+    "File": "\\core\\authority\\evolution_ledger.py",
+    "LineNumber": 20,
+    "Pattern": "read_text",
+    "Line": "lines = LEDGER_FILE.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\core\\authority\\evolution_ledger.py",
+    "LineNumber": 23,
+    "Pattern": "json.load",
+    "Line": "return json.loads(lines[-1])"
+  },
+  {
+    "File": "\\core\\authority\\evolution_request.py",
+    "LineNumber": 9,
+    "Pattern": "authority",
+    "Line": "from core.authority.authority_policy import authority_policy_engine"
+  },
+  {
+    "File": "\\core\\authority\\evolution_request.py",
+    "LineNumber": 21,
+    "Pattern": "authority",
+    "Line": "policy_eval = authority_policy_engine.evaluate_target(target, evolution_type)"
+  },
+  {
+    "File": "\\core\\authority\\promotion_controller.py",
+    "LineNumber": 10,
+    "Pattern": "authority",
+    "Line": "from core.authority.evolution_ledger import evolution_ledger"
+  },
+  {
+    "File": "\\core\\cognition\\cognitive_governor.py",
+    "LineNumber": 94,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(stripped)"
+  },
+  {
+    "File": "\\core\\cognition\\cognitive_governor.py",
+    "LineNumber": 122,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(stripped)"
+  },
+  {
+    "File": "\\core\\cognition\\cognitive_governor.py",
+    "LineNumber": 180,
+    "Pattern": "json.load",
+    "Line": "manifest = json.loads(self.manifest_path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\cognition\\cognitive_governor.py",
+    "LineNumber": 202,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(stripped)"
+  },
+  {
+    "File": "\\core\\cognition\\decision_ledger.py",
+    "LineNumber": 101,
+    "Pattern": "json.load",
+    "Line": "decisions.append(json.loads(line))"
+  },
+  {
+    "File": "\\core\\cognition\\ecol_universal_enforcement.py",
+    "LineNumber": 65,
+    "Pattern": "json.load",
+    "Line": "manifest = json.loads(manifest_path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\cognition\\explainability_engine.py",
+    "LineNumber": 39,
+    "Pattern": "read_text",
+    "Line": "lines = ledger_file.read_text(encoding=\"utf-8\").splitlines()"
+  },
+  {
+    "File": "\\core\\cognition\\explainability_engine.py",
+    "LineNumber": 42,
+    "Pattern": "json.load",
+    "Line": "record = json.loads(line)"
+  },
+  {
+    "File": "\\core\\cognition\\token_economy_governor.py",
+    "LineNumber": 59,
+    "Pattern": "json.load",
+    "Line": "ledger = json.loads(self.ledger_path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\active_runtime_convergence.py",
+    "LineNumber": 71,
+    "Pattern": "json.load",
+    "Line": "kernel_data = json.load(f)"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\cognitive_gatekeeper.py",
+    "LineNumber": 27,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\deploy_ecol_governor.py",
+    "LineNumber": 43,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line)"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\deploy_secret_sovereignty_v763.py",
+    "LineNumber": 82,
+    "Pattern": "json.load",
+    "Line": "return json.loads(self.vault_path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\deploy_secret_sovereignty.py",
+    "LineNumber": 73,
+    "Pattern": "json.load",
+    "Line": "return json.loads(self.vault_path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\ecol_baseline_exhaustive_audit.py",
+    "LineNumber": 30,
+    "Pattern": "json.load",
+    "Line": "manifest_data = json.loads(MANIFEST_PATH.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\ecol_baseline_verification_drill.py",
+    "LineNumber": 31,
+    "Pattern": "json.load",
+    "Line": "manifest_data = json.loads(MANIFEST_PATH.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\ecol_deep_forensic_audit.py",
+    "LineNumber": 99,
+    "Pattern": "json.load",
+    "Line": "json.loads(line)"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\ecol_dpapi_adversarial_drill.py",
+    "LineNumber": 81,
+    "Pattern": "json.load",
+    "Line": "vault = json.loads(self.vault_path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\ecol_dpapi_adversarial_drill.py",
+    "LineNumber": 94,
+    "Pattern": "json.load",
+    "Line": "vault = json.loads(self.vault_path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\ecol_dpapi_adversarial_drill.py",
+    "LineNumber": 172,
+    "Pattern": "json.load",
+    "Line": "vault = json.loads((sandbox / \"dpapi_vault.json\").read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\ecol_dpapi_vault.py",
+    "LineNumber": 112,
+    "Pattern": "json.load",
+    "Line": "vault = json.loads(self.vault_path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\ecol_final_industrial_certification.py",
+    "LineNumber": 85,
+    "Pattern": "json.load",
+    "Line": "vault = json.loads(self.vault_path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\ecol_integration_audit.py",
+    "LineNumber": 23,
+    "Pattern": "MODEL_REGISTRY",
+    "Line": "r\"model_registry\""
+  },
+  {
+    "File": "\\core\\cognitive_engine\\ecol_ledger_chaos_audit.py",
+    "LineNumber": 59,
+    "Pattern": "read_text",
+    "Line": "lines = sandbox_ledger.read_text(encoding=\"utf-8\").splitlines()"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\ecol_ledger_chaos_audit.py",
+    "LineNumber": 61,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(lines[0])"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\ecol_ledger_chaos_audit.py",
+    "LineNumber": 84,
+    "Pattern": "read_text",
+    "Line": "lines = sandbox_ledger.read_text(encoding=\"utf-8\").splitlines()"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\ecol_ledger_chaos_audit.py",
+    "LineNumber": 86,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(lines[1])"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\ecol_sovereignty_drill.py",
+    "LineNumber": 55,
+    "Pattern": "read_text",
+    "Line": "lines = sandbox_ledger.read_text(encoding=\"utf-8\").splitlines()"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\ecol_sovereignty_drill.py",
+    "LineNumber": 57,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(lines[0])"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\ecol_sovereignty_drill.py",
+    "LineNumber": 83,
+    "Pattern": "json.load",
+    "Line": "manifest_data = json.loads(sandbox_manifest.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\ecol_sovereignty_drill.py",
+    "LineNumber": 107,
+    "Pattern": "read_text",
+    "Line": "lines = sandbox_ledger.read_text(encoding=\"utf-8\").splitlines()"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\memory_validator.py",
+    "LineNumber": 23,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\migrate_and_harden_ledger.py",
+    "LineNumber": 64,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line)"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\migrate_and_harden_ledger.py",
+    "LineNumber": 84,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line)"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\migrate_and_harden_ledger.py",
+    "LineNumber": 127,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line)"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\migrate_and_harden_ledger.py",
+    "LineNumber": 201,
+    "Pattern": "json.load",
+    "Line": "raw_lines.append(json.loads(line))"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\runtime_telemetry_correlation.py",
+    "LineNumber": 50,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line_stripped)"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\taxonomy_repair.py",
+    "LineNumber": 35,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\upgrade_chained_ledger.py",
+    "LineNumber": 50,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line)"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\upgrade_chained_ledger.py",
+    "LineNumber": 70,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line)"
+  },
+  {
+    "File": "\\core\\cognitive_engine\\upgrade_chained_ledger.py",
+    "LineNumber": 114,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line)"
+  },
+  {
+    "File": "\\core\\constitution\\ezzio_disaster_recovery_test.py",
+    "LineNumber": 45,
+    "Pattern": "json.load",
+    "Line": "manifest_data = json.loads(manifest_path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\constitution\\ezzio_disaster_recovery_test.py",
+    "LineNumber": 93,
+    "Pattern": "json.load",
+    "Line": "genome_data = json.loads(test_genome.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\constitution\\organism_identity.py",
+    "LineNumber": 19,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(self.genome_path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\constitution\\snapshot_restore_engine.py",
+    "LineNumber": 101,
+    "Pattern": "json.load",
+    "Line": "manifest_data = json.loads(manifest_path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\constitution\\validate_mapping.py",
+    "LineNumber": 17,
+    "Pattern": "json.load",
+    "Line": "audit_data = json.loads(AUDIT_FILE.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\constitution\\validate_mapping.py",
+    "LineNumber": 18,
+    "Pattern": "json.load",
+    "Line": "registry_data = json.loads(REGISTRY_FILE.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\evolution_experience\\experience_ledger.py",
+    "LineNumber": 34,
+    "Pattern": "read_text",
+    "Line": "lines = EXPERIENCE_FILE.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\core\\evolution_experience\\experience_ledger.py",
+    "LineNumber": 41,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line)"
+  },
+  {
+    "File": "\\core\\evolution_experience\\experience_ledger.py",
+    "LineNumber": 54,
+    "Pattern": "json.load",
+    "Line": "return [json.loads(line) for line in EXPERIENCE_FILE.read_text(encoding=\"utf-8\").strip().splitlines() if line.strip()]"
+  },
+  {
+    "File": "\\core\\identity\\identity_chain_validator.py",
+    "LineNumber": 18,
+    "Pattern": "read_text",
+    "Line": "lines = CHAIN_FILE.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\core\\identity\\identity_chain_validator.py",
+    "LineNumber": 27,
+    "Pattern": "json.load",
+    "Line": "block = json.loads(line)"
+  },
+  {
+    "File": "\\core\\identity\\identity_chain.py",
+    "LineNumber": 20,
+    "Pattern": "read_text",
+    "Line": "lines = CHAIN_FILE.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\core\\identity\\identity_chain.py",
+    "LineNumber": 23,
+    "Pattern": "json.load",
+    "Line": "return json.loads(lines[-1])"
+  },
+  {
+    "File": "\\core\\identity\\identity_recovery.py",
+    "LineNumber": 43,
+    "Pattern": "json.load",
+    "Line": "meta = json.loads(meta_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\identity\\identity_recovery.py",
+    "LineNumber": 83,
+    "Pattern": "authority",
+    "Line": "\"identity_authority.json\": RUNTIME_IDENTITY_DIR / \"identity_authority.json\","
+  },
+  {
+    "File": "\\core\\identity\\identity_snapshot.py",
+    "LineNumber": 48,
+    "Pattern": "authority",
+    "Line": "(RUNTIME_IDENTITY_DIR / \"identity_authority.json\", snap_dir / \"identity_authority.json\"),"
+  },
+  {
+    "File": "\\core\\identity\\identity_validator.py",
+    "LineNumber": 29,
+    "Pattern": "read_text",
+    "Line": "stored_root = root_hash_path.read_text(encoding=\"utf-8\").strip()"
+  },
+  {
+    "File": "\\core\\identity\\identity_validator.py",
+    "LineNumber": 30,
+    "Pattern": "read_text",
+    "Line": "stored_sig = sig_path.read_text(encoding=\"utf-8\").strip()"
+  },
+  {
+    "File": "\\core\\identity\\intentions_reader.py",
+    "LineNumber": 13,
+    "Pattern": "read_text",
+    "Line": "return INTENTIONS_PATH.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\core\\integrations\\discord\\permission_guard.py",
+    "LineNumber": 20,
+    "Pattern": "json.load",
+    "Line": "return json.loads(POLICY_FILE.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\routing\\circuit_breaker.py",
+    "LineNumber": 22,
+    "Pattern": "json.load",
+    "Line": "return json.loads(STATE_PATH.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\runtime\\advanced_watchdog.py",
+    "LineNumber": 37,
+    "Pattern": "json.load",
+    "Line": "manifest = json.loads(PID_FILE.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\runtime\\advanced_watchdog.py",
+    "LineNumber": 80,
+    "Pattern": "json.load",
+    "Line": "payload = json.loads(req.read().decode(\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\runtime\\advanced_watchdog.py",
+    "LineNumber": 101,
+    "Pattern": "json.load",
+    "Line": "\"pid\": json.loads(PID_FILE.read_text()).get(\"pid\"),"
+  },
+  {
+    "File": "\\core\\runtime\\backend_supervisor.py",
+    "LineNumber": 29,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\core\\runtime\\cognitive_forensic_scan.py",
+    "LineNumber": 67,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line)"
+  },
+  {
+    "File": "\\core\\runtime\\cognitive_forensic_scan.py",
+    "LineNumber": 75,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\core\\security\\archive_engine.py",
+    "LineNumber": 34,
+    "Pattern": "json.load",
+    "Line": "last_meta = json.loads(metas[-1].read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\security\\archive_engine.py",
+    "LineNumber": 45,
+    "Pattern": "read_text",
+    "Line": "lines = LEDGER_PATH.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\core\\security\\archive_engine.py",
+    "LineNumber": 61,
+    "Pattern": "json.load",
+    "Line": "first_record = json.loads(lines[0])"
+  },
+  {
+    "File": "\\core\\security\\archive_engine.py",
+    "LineNumber": 62,
+    "Pattern": "json.load",
+    "Line": "last_record = json.loads(lines[-1])"
+  },
+  {
+    "File": "\\core\\security\\archive_validator.py",
+    "LineNumber": 29,
+    "Pattern": "json.load",
+    "Line": "meta = json.loads(meta_path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\security\\archive_validator.py",
+    "LineNumber": 30,
+    "Pattern": "read_text",
+    "Line": "lines = jsonl_path.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\core\\security\\archive_validator.py",
+    "LineNumber": 59,
+    "Pattern": "json.load",
+    "Line": "first_rec = json.loads(lines[0])"
+  },
+  {
+    "File": "\\core\\security\\archive_validator.py",
+    "LineNumber": 60,
+    "Pattern": "json.load",
+    "Line": "last_rec = json.loads(lines[-1])"
+  },
+  {
+    "File": "\\core\\security\\disaster_recovery.py",
+    "LineNumber": 44,
+    "Pattern": "json.load",
+    "Line": "last_meta = json.loads(metas[-1].read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\security\\disaster_recovery.py",
+    "LineNumber": 45,
+    "Pattern": "read_text",
+    "Line": "last_jsonl_lines = jsonls[-1].read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\core\\security\\disaster_recovery.py",
+    "LineNumber": 46,
+    "Pattern": "json.load",
+    "Line": "last_record = json.loads(last_jsonl_lines[-1])"
+  },
+  {
+    "File": "\\core\\security\\immutable_audit.py",
+    "LineNumber": 18,
+    "Pattern": "read_text",
+    "Line": "lines = [l.strip() for l in self.log_path.read_text(encoding=\"utf-8\").splitlines() if l.strip()]"
+  },
+  {
+    "File": "\\core\\security\\immutable_audit.py",
+    "LineNumber": 22,
+    "Pattern": "json.load",
+    "Line": "last_record = json.loads(lines[-1])"
+  },
+  {
+    "File": "\\core\\security\\immutable_audit.py",
+    "LineNumber": 50,
+    "Pattern": "read_text",
+    "Line": "lines = [l.strip() for l in self.log_path.read_text(encoding=\"utf-8\").splitlines() if l.strip()]"
+  },
+  {
+    "File": "\\core\\security\\immutable_audit.py",
+    "LineNumber": 55,
+    "Pattern": "json.load",
+    "Line": "record = json.loads(line)"
+  },
+  {
+    "File": "\\core\\security\\ledger_engine.py",
+    "LineNumber": 45,
+    "Pattern": "read_text",
+    "Line": "lines = LEDGER_PATH.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\core\\security\\ledger_engine.py",
+    "LineNumber": 49,
+    "Pattern": "json.load",
+    "Line": "entry = json.loads(line)"
+  },
+  {
+    "File": "\\core\\security\\ledger_validator.py",
+    "LineNumber": 27,
+    "Pattern": "read_text",
+    "Line": "raw_text = LEDGER_PATH.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\core\\security\\ledger_validator.py",
+    "LineNumber": 41,
+    "Pattern": "json.load",
+    "Line": "record = json.loads(line)"
+  },
+  {
+    "File": "\\core\\tool_gateway\\gateway_controller.py",
+    "LineNumber": 22,
+    "Pattern": "json.load",
+    "Line": "return json.loads(MANIFEST_FILE.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\tool_gateway\\google_bridge.py",
+    "LineNumber": 65,
+    "Pattern": "json.load",
+    "Line": "vault_data = json.loads(VAULT_FILE.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\tool_gateway\\google_bridge.py",
+    "LineNumber": 76,
+    "Pattern": "json.load",
+    "Line": "payload = json.loads(raw_json)"
+  },
+  {
+    "File": "\\core\\cloud_brain_broker.py",
+    "LineNumber": 80,
+    "Pattern": "read_text",
+    "Line": "for raw in path.read_text(encoding=\"utf-8\", errors=\"replace\").splitlines():"
+  },
+  {
+    "File": "\\core\\cloud_brain_broker.py",
+    "LineNumber": 107,
+    "Pattern": "read_text",
+    "Line": "lines = path.read_text(encoding=\"utf-8\", errors=\"replace\").splitlines()"
+  },
+  {
+    "File": "\\core\\cloud_brain_broker.py",
+    "LineNumber": 110,
+    "Pattern": "json.load",
+    "Line": "rows.append(json.loads(line))"
+  },
+  {
+    "File": "\\core\\cloud_brain_broker.py",
+    "LineNumber": 255,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\cloud_brain_broker.py",
+    "LineNumber": 300,
+    "Pattern": "json.load",
+    "Line": "return {\"ok\": True, \"status\": response.status, \"json\": json.loads(raw)}"
+  },
+  {
+    "File": "\\core\\cloud_connectors.py",
+    "LineNumber": 19,
+    "Pattern": "read_text",
+    "Line": "return __import__(\"json\").loads(TOKEN_STATE.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\cloud_guard.py",
+    "LineNumber": 88,
+    "Pattern": "json.load",
+    "Line": "return json.loads(path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\dispatcher.py",
+    "LineNumber": 3,
+    "Pattern": "MODEL_REGISTRY",
+    "Line": "from core.model_registry import ORGANS, best_fast_model, all_known_models, load_latency"
+  },
+  {
+    "File": "\\core\\ezzio_message_brain.py",
+    "LineNumber": 82,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(response.read().decode(\"utf-8\", errors=\"replace\"))"
+  },
+  {
+    "File": "\\core\\ezzio_message_brain.py",
+    "LineNumber": 106,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(response.read().decode(\"utf-8\", errors=\"replace\"))"
+  },
+  {
+    "File": "\\core\\gemini_pro_provider.py",
+    "LineNumber": 44,
+    "Pattern": "read_text",
+    "Line": "for line in path.read_text(encoding=\"utf-8\").splitlines():"
+  },
+  {
+    "File": "\\core\\human_chat.py",
+    "LineNumber": 77,
+    "Pattern": "read_text",
+    "Line": "lines = path.read_text(encoding=\"utf-8\", errors=\"replace\").splitlines()"
+  },
+  {
+    "File": "\\core\\human_chat.py",
+    "LineNumber": 82,
+    "Pattern": "json.load",
+    "Line": "events.append(json.loads(line))"
+  },
+  {
+    "File": "\\core\\human_chat.py",
+    "LineNumber": 93,
+    "Pattern": "read_text",
+    "Line": "lines = path.read_text(encoding=\"utf-8\", errors=\"replace\").splitlines()"
+  },
+  {
+    "File": "\\core\\human_chat.py",
+    "LineNumber": 95,
+    "Pattern": "json.load",
+    "Line": "last = json.loads(lines[-1]) if lines else None"
+  },
+  {
+    "File": "\\core\\human_loop.py",
+    "LineNumber": 71,
+    "Pattern": "json.load",
+    "Line": "return json.loads(path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\human_loop.py",
+    "LineNumber": 130,
+    "Pattern": "read_text",
+    "Line": "lines = JOURNAL_PATH.read_text(encoding=\"utf-8\", errors=\"replace\").splitlines()"
+  },
+  {
+    "File": "\\core\\human_loop.py",
+    "LineNumber": 135,
+    "Pattern": "json.load",
+    "Line": "events.append(json.loads(line))"
+  },
+  {
+    "File": "\\core\\intelligence_router.py",
+    "LineNumber": 20,
+    "Pattern": "model_registry.json",
+    "Line": "LOCAL_REGISTRY_PATH = ROOT_DIR / \"runtime\" / \"models\" / \"model_registry.json\""
+  },
+  {
+    "File": "\\core\\intelligence_router.py",
+    "LineNumber": 25,
+    "Pattern": "_load_local_registry",
+    "Line": "self.local_models = self._load_local_registry()"
+  },
+  {
+    "File": "\\core\\intelligence_router.py",
+    "LineNumber": 27,
+    "Pattern": "_load_local_registry",
+    "Line": "def _load_local_registry(self) -> dict:"
+  },
+  {
+    "File": "\\core\\intelligence_router.py",
+    "LineNumber": 28,
+    "Pattern": "registry_path",
+    "Line": "if LOCAL_REGISTRY_PATH.exists():"
+  },
+  {
+    "File": "\\core\\intelligence_router.py",
+    "LineNumber": 30,
+    "Pattern": "registry_path",
+    "Line": "return json.loads(LOCAL_REGISTRY_PATH.read_text(encoding=\"utf-8\")).get(\"models\", {})"
+  },
+  {
+    "File": "\\core\\intelligence_router.py",
+    "LineNumber": 39,
+    "Pattern": "read_text",
+    "Line": "lines = LEDGER_PATH.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\core\\intelligence_router.py",
+    "LineNumber": 42,
+    "Pattern": "json.load",
+    "Line": "last_entry = json.loads(lines[-1])"
+  },
+  {
+    "File": "\\core\\llm_engine.py",
+    "LineNumber": 40,
+    "Pattern": "read_text",
+    "Line": "return PERSONA_PATH.read_text(encoding=\"utf-8\").strip()"
+  },
+  {
+    "File": "\\core\\memory.py",
+    "LineNumber": 14,
+    "Pattern": "read_text",
+    "Line": "content = self.storage_path.read_text(encoding=\"utf-8\").strip()"
+  },
+  {
+    "File": "\\core\\memory.py",
+    "LineNumber": 17,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(content)"
+  },
+  {
+    "File": "\\core\\model_registry.py",
+    "LineNumber": 2,
+    "Pattern": "MODEL_REGISTRY",
+    "Line": "core/model_registry.py — Adaptive Model Governor V7.21"
+  },
+  {
+    "File": "\\core\\model_registry.py",
+    "LineNumber": 16,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(CAPABILITIES_PATH.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\model_registry.py",
+    "LineNumber": 96,
+    "Pattern": "json.load",
+    "Line": "return json.loads(LATENCY_LOG_PATH.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\omnipresence.py",
+    "LineNumber": 277,
+    "Pattern": "json.load",
+    "Line": "out.append(json.loads(p.read_text(encoding=\"utf-8\")))"
+  },
+  {
+    "File": "\\core\\pc_commander.py",
+    "LineNumber": 73,
+    "Pattern": "json.load",
+    "Line": "return json.loads(path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\pc_model_router.py",
+    "LineNumber": 201,
+    "Pattern": "json.load",
+    "Line": "policy = json.loads(POLICY_PATH.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\pc_model_router.py",
+    "LineNumber": 220,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\core\\persona.py",
+    "LineNumber": 11,
+    "Pattern": "read_text",
+    "Line": "return lore_path.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\core\\persona.py",
+    "LineNumber": 17,
+    "Pattern": "read_text",
+    "Line": "return persona_path.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\core\\project_janitor.py",
+    "LineNumber": 129,
+    "Pattern": "read_text",
+    "Line": "text = path.read_text(encoding=\"utf-8\", errors=\"replace\")"
+  },
+  {
+    "File": "\\core\\project_janitor.py",
+    "LineNumber": 157,
+    "Pattern": "read_text",
+    "Line": "text = path.read_text(encoding=\"utf-8\", errors=\"replace\")"
+  },
+  {
+    "File": "\\core\\safe_actions.py",
+    "LineNumber": 119,
+    "Pattern": "read_text",
+    "Line": "lines = path.read_text(encoding=\"utf-8\", errors=\"replace\").splitlines()"
+  },
+  {
+    "File": "\\core\\safe_actions.py",
+    "LineNumber": 124,
+    "Pattern": "json.load",
+    "Line": "output.append(json.loads(line))"
+  },
+  {
+    "File": "\\core\\smart_vision.py",
+    "LineNumber": 188,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(raw)"
+  },
+  {
+    "File": "\\core\\supervisor.py",
+    "LineNumber": 144,
+    "Pattern": "MODEL_REGISTRY",
+    "Line": "from core.model_registry import status as registry_status"
+  },
+  {
+    "File": "\\core\\telemetry.py",
+    "LineNumber": 26,
+    "Pattern": "read_text",
+    "Line": "lines = EVENTS_PATH.read_text(encoding=\"utf-8\", errors=\"ignore\").splitlines()"
+  },
+  {
+    "File": "\\core\\telemetry.py",
+    "LineNumber": 31,
+    "Pattern": "json.load",
+    "Line": "items.append(json.loads(line))"
+  },
+  {
+    "File": "\\runtime\\action\\store.py",
+    "LineNumber": 144,
+    "Pattern": "json.load",
+    "Line": "\"cost\": row[6], \"timeout\": row[7], \"risk_level\": row[8], \"schema\": json.loads(row[9])"
+  },
+  {
+    "File": "\\runtime\\action\\store.py",
+    "LineNumber": 250,
+    "Pattern": "json.load",
+    "Line": "\"payload\": json.loads(row[3]) if isinstance(row[3], str) else row[3],"
+  },
+  {
+    "File": "\\runtime\\action\\store.py",
+    "LineNumber": 251,
+    "Pattern": "json.load",
+    "Line": "\"result\": json.loads(row[4]) if isinstance(row[4], str) else row[4],"
+  },
+  {
+    "File": "\\runtime\\agent\\capability\\embedder.py",
+    "LineNumber": 14,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(resp.read().decode(\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\autonomy\\policy_engine.py",
+    "LineNumber": 9,
+    "Pattern": "registry_path",
+    "Line": "REGISTRY_PATH = ROOT_DIR / \"runtime\" / \"autonomy\" / \"autonomy_registry.json\""
+  },
+  {
+    "File": "\\runtime\\autonomy\\policy_engine.py",
+    "LineNumber": 13,
+    "Pattern": "registry_path",
+    "Line": "self.registry = json.loads(REGISTRY_PATH.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\capabilities\\health\\health_monitor.py",
+    "LineNumber": 34,
+    "Pattern": "json.load",
+    "Line": "return json.loads(self.state_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\capabilities\\lifecycle\\lifecycle_manager.py",
+    "LineNumber": 31,
+    "Pattern": "json.load",
+    "Line": "return json.loads(path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\capabilities\\lifecycle\\retire_engine.py",
+    "LineNumber": 21,
+    "Pattern": "json.load",
+    "Line": "manifest = json.loads(path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry\\registry_core.py",
+    "LineNumber": 9,
+    "Pattern": "registry_path",
+    "Line": "REGISTRY_PATH = ROOT_DIR / \"runtime\" / \"capabilities\" / \"registry\" / \"capability_registry.json\""
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry\\registry_core.py",
+    "LineNumber": 13,
+    "Pattern": "registry_path",
+    "Line": "self.registry_file = REGISTRY_PATH"
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry\\registry_core.py",
+    "LineNumber": 27,
+    "Pattern": "json.load",
+    "Line": "return json.loads(self.registry_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\capabilities\\security\\drift_detector.py",
+    "LineNumber": 22,
+    "Pattern": "json.load",
+    "Line": "original = json.loads(path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry.py",
+    "LineNumber": 10,
+    "Pattern": "registry_path",
+    "Line": "REGISTRY_PATH = ROOT_DIR / \"runtime\" / \"capabilities\" / \"capability_registry.json\""
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry.py",
+    "LineNumber": 14,
+    "Pattern": "registry_path",
+    "Line": "self.registry_file = REGISTRY_PATH"
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry.py",
+    "LineNumber": 44,
+    "Pattern": "load_registry",
+    "Line": "def load_registry(self) -> Dict[str, Any]:"
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry.py",
+    "LineNumber": 46,
+    "Pattern": "json.load",
+    "Line": "return json.loads(self.registry_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry.py",
+    "LineNumber": 51,
+    "Pattern": "load_registry",
+    "Line": "data = self.load_registry()"
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry.py",
+    "LineNumber": 63,
+    "Pattern": "load_registry",
+    "Line": "data = self.load_registry()"
+  },
+  {
+    "File": "\\runtime\\capabilities\\registry.py",
+    "LineNumber": 75,
+    "Pattern": "load_registry",
+    "Line": "print(json.dumps(registry.load_registry(), indent=2))"
+  },
+  {
+    "File": "\\runtime\\cli\\commands.py",
+    "LineNumber": 58,
+    "Pattern": "read_text",
+    "Line": "lines = ledger_path.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\runtime\\confidence\\engine.py",
+    "LineNumber": 14,
+    "Pattern": "json.load",
+    "Line": "self.policies = json.loads(POLICIES_PATH.read_text())"
+  },
+  {
+    "File": "\\runtime\\context\\builder.py",
+    "LineNumber": 17,
+    "Pattern": "read_text",
+    "Line": "return persona_file.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\runtime\\context\\builder.py",
+    "LineNumber": 21,
+    "Pattern": "read_text",
+    "Line": "return master_file.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\runtime\\contracts\\authority.py",
+    "LineNumber": 10,
+    "Pattern": "authority",
+    "Line": "class ModelRegistryAuthority:"
+  },
+  {
+    "File": "\\runtime\\contracts\\authority.py",
+    "LineNumber": 19,
+    "Pattern": "MODEL_REGISTRY_V1.json",
+    "Line": "self.registry_path = self.root_dir / \"runtime\" / \"contracts\" / \"MODEL_REGISTRY_V1.json\""
+  },
+  {
+    "File": "\\runtime\\contracts\\authority.py",
+    "LineNumber": 29,
+    "Pattern": "registry_path",
+    "Line": "if not self.registry_path.exists():"
+  },
+  {
+    "File": "\\runtime\\contracts\\authority.py",
+    "LineNumber": 32,
+    "Pattern": "json.load",
+    "Line": "manifest = json.loads(self.manifest_path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\contracts\\authority.py",
+    "LineNumber": 34,
+    "Pattern": "MODEL_REGISTRY",
+    "Line": "model_meta = sealed_artifacts.get(\"model_registry\")"
+  },
+  {
+    "File": "\\runtime\\contracts\\authority.py",
+    "LineNumber": 37,
+    "Pattern": "MODEL_REGISTRY",
+    "Line": "raise RegistryIntegrityError(\"Entrée 'model_registry' absente du manifeste de gel.\")"
+  },
+  {
+    "File": "\\runtime\\contracts\\authority.py",
+    "LineNumber": 42,
+    "Pattern": "registry_path",
+    "Line": "file_bytes = self.registry_path.read_bytes()"
+  },
+  {
+    "File": "\\runtime\\contracts\\authority.py",
+    "LineNumber": 54,
+    "Pattern": "json.load",
+    "Line": "self._cache = json.loads(file_bytes.decode(\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\contracts\\authority.py",
+    "LineNumber": 61,
+    "Pattern": "authority",
+    "Line": "print(f\"[AUTHORITY] Modèle d'Autorité validé (Epoch: {current_epoch}, Hash Prefix: {self._hash_prefix})\")"
+  },
+  {
+    "File": "\\runtime\\contracts\\enforcer.py",
+    "LineNumber": 4,
+    "Pattern": "authority",
+    "Line": "from runtime.contracts.authority import ModelRegistryAuthority, RegistryIntegrityError"
+  },
+  {
+    "File": "\\runtime\\contracts\\enforcer.py",
+    "LineNumber": 15,
+    "Pattern": "authority",
+    "Line": "def __init__(self, authority: ModelRegistryAuthority = None, root_dir: str = None):"
+  },
+  {
+    "File": "\\runtime\\contracts\\enforcer.py",
+    "LineNumber": 16,
+    "Pattern": "authority",
+    "Line": "self.authority = authority if authority else ModelRegistryAuthority()"
+  },
+  {
+    "File": "\\runtime\\contracts\\enforcer.py",
+    "LineNumber": 18,
+    "Pattern": "authority",
+    "Line": "self.audit_log_path = self.root_dir / \"runtime\" / \"audit\" / \"model_authority_events.jsonl\""
+  },
+  {
+    "File": "\\runtime\\contracts\\enforcer.py",
+    "LineNumber": 27,
+    "Pattern": "authority",
+    "Line": "\"registry_version\": self.authority.get_registry_version(),"
+  },
+  {
+    "File": "\\runtime\\contracts\\enforcer.py",
+    "LineNumber": 28,
+    "Pattern": "authority",
+    "Line": "\"registry_epoch\": self.authority.get_registry_epoch(),"
+  },
+  {
+    "File": "\\runtime\\contracts\\enforcer.py",
+    "LineNumber": 29,
+    "Pattern": "authority",
+    "Line": "\"hash_prefix\": self.authority.get_hash_prefix()"
+  },
+  {
+    "File": "\\runtime\\contracts\\enforcer.py",
+    "LineNumber": 40,
+    "Pattern": "authority",
+    "Line": "if not self.authority.is_model_authorized(requested_model, provider):"
+  },
+  {
+    "File": "\\runtime\\ecol_baseline_v7.65\\cognitive_governor.py",
+    "LineNumber": 94,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(stripped)"
+  },
+  {
+    "File": "\\runtime\\ecol_baseline_v7.65\\cognitive_governor.py",
+    "LineNumber": 122,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(stripped)"
+  },
+  {
+    "File": "\\runtime\\ecol_baseline_v7.65\\cognitive_governor.py",
+    "LineNumber": 180,
+    "Pattern": "json.load",
+    "Line": "manifest = json.loads(self.manifest_path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\ecol_baseline_v7.65\\cognitive_governor.py",
+    "LineNumber": 202,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(stripped)"
+  },
+  {
+    "File": "\\runtime\\execution\\ledger.py",
+    "LineNumber": 23,
+    "Pattern": "read_text",
+    "Line": "lines = self.ledger_file.read_text(encoding=\"utf-8\").splitlines()"
+  },
+  {
+    "File": "\\runtime\\execution\\ledger.py",
+    "LineNumber": 25,
+    "Pattern": "json.load",
+    "Line": "last_entry = json.loads(lines[-1])"
+  },
+  {
+    "File": "\\runtime\\execution\\ledger.py",
+    "LineNumber": 63,
+    "Pattern": "read_text",
+    "Line": "lines = self.ledger_file.read_text(encoding=\"utf-8\").splitlines()"
+  },
+  {
+    "File": "\\runtime\\execution\\ledger.py",
+    "LineNumber": 70,
+    "Pattern": "json.load",
+    "Line": "block = json.loads(line)"
+  },
+  {
+    "File": "\\runtime\\experience\\experience_ledger.py",
+    "LineNumber": 52,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\governance\\governance_ledger.py",
+    "LineNumber": 15,
+    "Pattern": "json.load",
+    "Line": "return json.loads(lines[-1]).get(\"current_hash\")"
+  },
+  {
+    "File": "\\runtime\\governance\\trust_scorer.py",
+    "LineNumber": 21,
+    "Pattern": "json.load",
+    "Line": "return json.loads(self.scores_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\guardian\\governor_bridge.py",
+    "LineNumber": 26,
+    "Pattern": "json.load",
+    "Line": "return json.load(f)"
+  },
+  {
+    "File": "\\runtime\\guardian\\test_v53_hysteresis.py",
+    "LineNumber": 71,
+    "Pattern": "read_text",
+    "Line": "lines = audit_file.read_text(encoding=\"utf-8\").strip().split(\"\\n\")"
+  },
+  {
+    "File": "\\runtime\\guardian\\test_v53_hysteresis.py",
+    "LineNumber": 74,
+    "Pattern": "json.load",
+    "Line": "entry = json.loads(l)"
+  },
+  {
+    "File": "\\runtime\\guardian\\test_v54_persistent_real_engine.py",
+    "LineNumber": 76,
+    "Pattern": "json.load",
+    "Line": "state_data = json.loads(state_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\guardian\\test_v56_cognitive.py",
+    "LineNumber": 76,
+    "Pattern": "json.load",
+    "Line": "state_data = json.loads(state_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\guardian\\test_v614_1_policy.py",
+    "LineNumber": 57,
+    "Pattern": "read_text",
+    "Line": "lines = [line.strip() for line in ledger_file.read_text(encoding=\"utf-8\").splitlines() if line.strip()]"
+  },
+  {
+    "File": "\\runtime\\guardian\\test_v614_3_revocation.py",
+    "LineNumber": 49,
+    "Pattern": "read_text",
+    "Line": "lines = (rev_dir / \"revoked_tokens.jsonl\").read_text(encoding=\"utf-8\").splitlines()"
+  },
+  {
+    "File": "\\runtime\\guardian\\test_v615_3_models.py",
+    "LineNumber": 10,
+    "Pattern": "MODEL_REGISTRY",
+    "Line": "from runtime.hardware.trust.models_governance.model_registry import ModelTrustRegistry"
+  },
+  {
+    "File": "\\runtime\\guardian\\test_v616_attestation.py",
+    "LineNumber": 61,
+    "Pattern": "read_text",
+    "Line": "lines = ledger_file.read_text(encoding=\"utf-8\").splitlines()"
+  },
+  {
+    "File": "\\runtime\\guardian\\test_v616_attestation.py",
+    "LineNumber": 62,
+    "Pattern": "json.load",
+    "Line": "raw_r1 = json.loads(lines[0])"
+  },
+  {
+    "File": "\\runtime\\guardian\\test_v616_attestation.py",
+    "LineNumber": 75,
+    "Pattern": "json.load",
+    "Line": "parsed_line_0 = json.loads(lines[0])"
+  },
+  {
+    "File": "\\runtime\\guardian\\test_v631_chaos_advanced.py",
+    "LineNumber": 77,
+    "Pattern": "json.load",
+    "Line": "incidents = json.loads(incident_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\guardian\\test_v66_production.py",
+    "LineNumber": 49,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(state_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\guardian\\test_v661_production.py",
+    "LineNumber": 48,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(state_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\guardian\\test_v67_operational.py",
+    "LineNumber": 94,
+    "Pattern": "read_text",
+    "Line": "lines = govD.audit_file.read_text(encoding=\"utf-8\").strip().split(\"\\n\")"
+  },
+  {
+    "File": "\\runtime\\guardian\\test_v67_operational.py",
+    "LineNumber": 95,
+    "Pattern": "json.load",
+    "Line": "corrupted_entry = json.loads(lines[1])"
+  },
+  {
+    "File": "\\runtime\\hardware\\cartography\\registry\\registry.py",
+    "LineNumber": 14,
+    "Pattern": "load_registry",
+    "Line": "def load_registry(self) -> dict:"
+  },
+  {
+    "File": "\\runtime\\hardware\\cartography\\registry\\registry.py",
+    "LineNumber": 18,
+    "Pattern": "json.load",
+    "Line": "return json.loads(self.registry_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\hardware\\cartography\\registry\\registry.py",
+    "LineNumber": 31,
+    "Pattern": "load_registry",
+    "Line": "registry = self.load_registry()"
+  },
+  {
+    "File": "\\runtime\\hardware\\evidence\\ledger.py",
+    "LineNumber": 46,
+    "Pattern": "json.load",
+    "Line": "return json.loads(lines[-1])[\"current_hash\"]"
+  },
+  {
+    "File": "\\runtime\\hardware\\evidence\\ledger.py",
+    "LineNumber": 59,
+    "Pattern": "json.load",
+    "Line": "entry = json.loads(line)"
+  },
+  {
+    "File": "\\runtime\\hardware\\evidence\\validator.py",
+    "LineNumber": 51,
+    "Pattern": "json.load",
+    "Line": "return json.loads(lines[-1]) if lines else None"
+  },
+  {
+    "File": "\\runtime\\hardware\\router\\router.py",
+    "LineNumber": 26,
+    "Pattern": "json.load",
+    "Line": "return json.loads(lines[-1]) if lines else None"
+  },
+  {
+    "File": "\\runtime\\hardware\\trust\\execution\\ledger\\hashchain.py",
+    "LineNumber": 28,
+    "Pattern": "json.load",
+    "Line": "record = json.loads(last_line)"
+  },
+  {
+    "File": "\\runtime\\hardware\\trust\\execution\\ledger\\hashchain.py",
+    "LineNumber": 57,
+    "Pattern": "read_text",
+    "Line": "lines = self.ledger_file.read_text(encoding=\"utf-8\").splitlines()"
+  },
+  {
+    "File": "\\runtime\\hardware\\trust\\execution\\ledger\\hashchain.py",
+    "LineNumber": 63,
+    "Pattern": "json.load",
+    "Line": "record = json.loads(line)"
+  },
+  {
+    "File": "\\runtime\\hardware\\trust\\models\\contract_signer.py",
+    "LineNumber": 12,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\hardware\\trust\\models\\registry.py",
+    "LineNumber": 15,
+    "Pattern": "json.load",
+    "Line": "contract = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\hardware\\trust\\models_governance\\budget.py",
+    "LineNumber": 2,
+    "Pattern": "MODEL_REGISTRY",
+    "Line": "from runtime.hardware.trust.models_governance.model_registry import ModelTrustRegistry"
+  },
+  {
+    "File": "\\runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "LineNumber": 7,
+    "Pattern": "load_registry",
+    "Line": "self._load_registry()"
+  },
+  {
+    "File": "\\runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "LineNumber": 9,
+    "Pattern": "load_registry",
+    "Line": "def _load_registry(self):"
+  },
+  {
+    "File": "\\runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "LineNumber": 23,
+    "Pattern": "json.load",
+    "Line": "self.data = json.loads(self.registry_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\hardware\\trust\\policy\\registry.py",
+    "LineNumber": 13,
+    "Pattern": "json.load",
+    "Line": "self.data = json.loads(self.policy_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\hardware\\trust\\revocation\\registry.py",
+    "LineNumber": 19,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(self.consumed_tokens_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\hardware\\trust\\revocation\\registry.py",
+    "LineNumber": 28,
+    "Pattern": "read_text",
+    "Line": "lines = self.revoked_tokens_file.read_text(encoding=\"utf-8\").splitlines()"
+  },
+  {
+    "File": "\\runtime\\hardware\\trust\\revocation\\registry.py",
+    "LineNumber": 31,
+    "Pattern": "json.load",
+    "Line": "entry = json.loads(line)"
+  },
+  {
+    "File": "\\runtime\\hardware\\trust\\engine.py",
+    "LineNumber": 19,
+    "Pattern": "json.load",
+    "Line": "return json.loads(self.state_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\hardware\\cognitive_memory_governor.py",
+    "LineNumber": 56,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\hardware\\governor_service.py",
+    "LineNumber": 134,
+    "Pattern": "json.load",
+    "Line": "return json.load(f)"
+  },
+  {
+    "File": "\\runtime\\hardware\\memory_actuator_v54.py",
+    "LineNumber": 51,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\hardware\\production_kernel_v66.py",
+    "LineNumber": 48,
+    "Pattern": "json.load",
+    "Line": "incidents = [json.loads(line) for line in f.read().strip().split(\"\\n\") if line]"
+  },
+  {
+    "File": "\\runtime\\hardware\\production_kernel_v66.py",
+    "LineNumber": 175,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\hardware\\production_kernel_v661.py",
+    "LineNumber": 51,
+    "Pattern": "json.load",
+    "Line": "incidents = [json.loads(line) for line in f.read().strip().split(\"\\n\") if line]"
+  },
+  {
+    "File": "\\runtime\\hardware\\production_kernel_v661.py",
+    "LineNumber": 191,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\incidents\\evidence.py",
+    "LineNumber": 43,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(last_line)"
+  },
+  {
+    "File": "\\runtime\\incidents\\evidence.py",
+    "LineNumber": 94,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line)"
+  },
+  {
+    "File": "\\runtime\\incidents\\registry.py",
+    "LineNumber": 37,
+    "Pattern": "read_text",
+    "Line": "for line in self.log_file.read_text(encoding=\"utf-8\").splitlines():"
+  },
+  {
+    "File": "\\runtime\\incidents\\registry.py",
+    "LineNumber": 41,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line)"
+  },
+  {
+    "File": "\\runtime\\kernel\\boot.py",
+    "LineNumber": 89,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\kernel\\boot.py",
+    "LineNumber": 159,
+    "Pattern": "json.load",
+    "Line": "constitution_data = json.loads(raw.decode(\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\knowledge\\knowledge_manager.py",
+    "LineNumber": 31,
+    "Pattern": "json.load",
+    "Line": "pending = json.loads(self.pending_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\knowledge\\knowledge_manager.py",
+    "LineNumber": 44,
+    "Pattern": "json.load",
+    "Line": "pending = json.loads(self.pending_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\knowledge\\knowledge_manager.py",
+    "LineNumber": 52,
+    "Pattern": "json.load",
+    "Line": "confirmed = json.loads(self.confirmed_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\knowledge\\knowledge_manager.py",
+    "LineNumber": 60,
+    "Pattern": "json.load",
+    "Line": "return json.loads(self.confirmed_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\lab\\check_global_health.py",
+    "LineNumber": 49,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(conf_pref.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\lab\\check_living_governance.py",
+    "LineNumber": 19,
+    "Pattern": "read_text",
+    "Line": "lines = [line.strip() for line in rejected_log.read_text(encoding=\"utf-8\").splitlines() if line.strip()]"
+  },
+  {
+    "File": "\\runtime\\lab\\test_governance_state.py",
+    "LineNumber": 36,
+    "Pattern": "json.load",
+    "Line": "rejected = json.loads(REJECTED_FILE.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\lab\\test_governance_state.py",
+    "LineNumber": 37,
+    "Pattern": "json.load",
+    "Line": "metrics = json.loads(METRICS_FILE.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\lab\\test_hardened_governance.py",
+    "LineNumber": 20,
+    "Pattern": "read_text",
+    "Line": "lines = [line.strip() for line in REJECTED_LOG.read_text(encoding=\"utf-8\").splitlines() if line.strip()]"
+  },
+  {
+    "File": "\\runtime\\lab\\test_hardened_governance.py",
+    "LineNumber": 23,
+    "Pattern": "json.load",
+    "Line": "last_entry = json.loads(lines[-1])"
+  },
+  {
+    "File": "\\runtime\\lab\\test_hardened_governance.py",
+    "LineNumber": 67,
+    "Pattern": "read_text",
+    "Line": "lines = [line.strip() for line in REJECTED_LOG.read_text(encoding=\"utf-8\").splitlines() if line.strip()]"
+  },
+  {
+    "File": "\\runtime\\lab\\test_hardened_governance.py",
+    "LineNumber": 68,
+    "Pattern": "json.load",
+    "Line": "metrics = json.loads(METRICS_FILE.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\lab\\test_v92_certification.py",
+    "LineNumber": 33,
+    "Pattern": "load_registry",
+    "Line": "full_reg = registry.load_registry()"
+  },
+  {
+    "File": "\\runtime\\lab\\test_v921_registry.py",
+    "LineNumber": 35,
+    "Pattern": "load_registry",
+    "Line": "full_registry = registry.load_registry()"
+  },
+  {
+    "File": "\\runtime\\memory\\dream\\engine.py",
+    "LineNumber": 51,
+    "Pattern": "json.load",
+    "Line": "proposals = json.loads(output)"
+  },
+  {
+    "File": "\\runtime\\memory\\episodic\\episode_store.py",
+    "LineNumber": 103,
+    "Pattern": "json.load",
+    "Line": "steps_raw = json.loads(row[\"steps_json\"])"
+  },
+  {
+    "File": "\\runtime\\memory\\reflection\\validator.py",
+    "LineNumber": 25,
+    "Pattern": "json.load",
+    "Line": "evidence = json.loads(prop[\"evidence\"])"
+  },
+  {
+    "File": "\\runtime\\memory\\semantic\\vector_store.py",
+    "LineNumber": 30,
+    "Pattern": "json.load",
+    "Line": "vec = json.loads(row[1])"
+  },
+  {
+    "File": "\\runtime\\memory\\sqlite\\store.py",
+    "LineNumber": 156,
+    "Pattern": "json.load",
+    "Line": "\"payload\": json.loads(row[\"payload\"]),"
+  },
+  {
+    "File": "\\runtime\\memory\\atomic_writer.py",
+    "LineNumber": 32,
+    "Pattern": "json.load",
+    "Line": "json.load(f)"
+  },
+  {
+    "File": "\\runtime\\memory\\batch_async_writer.py",
+    "LineNumber": 39,
+    "Pattern": "json.load",
+    "Line": "json.load(f)"
+  },
+  {
+    "File": "\\runtime\\memory\\event_store.py",
+    "LineNumber": 69,
+    "Pattern": "read_text",
+    "Line": "content = self.lock_path.read_text(encoding=\"utf-8\").strip()"
+  },
+  {
+    "File": "\\runtime\\memory\\event_store.py",
+    "LineNumber": 74,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(content)"
+  },
+  {
+    "File": "\\runtime\\memory\\event_store.py",
+    "LineNumber": 94,
+    "Pattern": "read_text",
+    "Line": "content = self.lock_path.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\runtime\\memory\\event_store.py",
+    "LineNumber": 95,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(content)"
+  },
+  {
+    "File": "\\runtime\\memory\\event_store.py",
+    "LineNumber": 165,
+    "Pattern": "read_text",
+    "Line": "raw_text = self.path.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\runtime\\memory\\event_store.py",
+    "LineNumber": 173,
+    "Pattern": "json.load",
+    "Line": "json.loads(line)"
+  },
+  {
+    "File": "\\runtime\\memory\\event_store.py",
+    "LineNumber": 225,
+    "Pattern": "read_text",
+    "Line": "lines = [l for l in self.path.read_text(encoding=\"utf-8\").splitlines() if l.strip()]"
+  },
+  {
+    "File": "\\runtime\\memory\\event_store.py",
+    "LineNumber": 228,
+    "Pattern": "json.load",
+    "Line": "last_event = json.loads(lines[-1])"
+  },
+  {
+    "File": "\\runtime\\memory\\event_store.py",
+    "LineNumber": 267,
+    "Pattern": "read_text",
+    "Line": "lines = [l for l in self.path.read_text(encoding=\"utf-8\").splitlines() if l.strip()]"
+  },
+  {
+    "File": "\\runtime\\memory\\event_store.py",
+    "LineNumber": 268,
+    "Pattern": "json.load",
+    "Line": "return [json.loads(x) for x in lines[-limit:] if x.strip()]"
+  },
+  {
+    "File": "\\runtime\\memory\\event_store.py",
+    "LineNumber": 274,
+    "Pattern": "read_text",
+    "Line": "lines = [l for l in self.path.read_text(encoding=\"utf-8\").splitlines() if l.strip()]"
+  },
+  {
+    "File": "\\runtime\\memory\\event_store.py",
+    "LineNumber": 282,
+    "Pattern": "json.load",
+    "Line": "event = json.loads(line)"
+  },
+  {
+    "File": "\\runtime\\memory\\replay.py",
+    "LineNumber": 11,
+    "Pattern": "read_text",
+    "Line": "lines = self.store_path.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\runtime\\memory\\replay.py",
+    "LineNumber": 12,
+    "Pattern": "json.load",
+    "Line": "return [json.loads(line) for line in lines if line.strip()]"
+  },
+  {
+    "File": "\\runtime\\memory\\session.py",
+    "LineNumber": 17,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(self.path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\model_router\\context.py",
+    "LineNumber": 15,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(self.health_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\model_router\\router.py",
+    "LineNumber": 12,
+    "Pattern": "json.load",
+    "Line": "self.config = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\models\\ollama_sync.py",
+    "LineNumber": 18,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(response.read().decode(\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\models\\ollama_sync.py",
+    "LineNumber": 32,
+    "Pattern": "MODEL_REGISTRY",
+    "Line": "# Chargement du registre statique actuel (core/model_registry.py ou équivalent)"
+  },
+  {
+    "File": "\\runtime\\quarantine\\V7.11.1.2\\runtime\\hardware\\autonomous_governor_v65.py",
+    "LineNumber": 36,
+    "Pattern": "json.load",
+    "Line": "incidents = [json.loads(line) for line in f.read().strip().split(\"\\n\") if line]"
+  },
+  {
+    "File": "\\runtime\\quarantine\\V7.11.1.2\\runtime\\hardware\\autonomous_governor_v65.py",
+    "LineNumber": 155,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\quarantine\\V7.11.1.2\\runtime\\hardware\\hardened_governor_v64.py",
+    "LineNumber": 143,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\quarantine\\V7.11.1.2\\runtime\\hardware\\operational_governor_v67.py",
+    "LineNumber": 33,
+    "Pattern": "json.load",
+    "Line": "last_entry = json.loads(lines[-1])"
+  },
+  {
+    "File": "\\runtime\\quarantine\\V7.11.1.2\\runtime\\hardware\\operational_governor_v67.py",
+    "LineNumber": 76,
+    "Pattern": "json.load",
+    "Line": "entry = json.loads(line)"
+  },
+  {
+    "File": "\\runtime\\quarantine\\V7.11.1.2\\runtime\\hardware\\predictive_governor_v63.py",
+    "LineNumber": 56,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\quarantine\\V7.11.1.2\\runtime\\hardware\\predictive_governor_v63.py",
+    "LineNumber": 85,
+    "Pattern": "json.load",
+    "Line": "with open(self.incident_memory_path, \"r\", encoding=\"utf-8\") as f: incidents = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\quarantine\\V7.11.1.2\\tools\\legacy_root_scripts\\deploy_fix.py",
+    "LineNumber": 130,
+    "Pattern": "read_text",
+    "Line": "return ToolResult(success=True, output=resolved.read_text(encoding=\"utf-8\"), error=\"\")"
+  },
+  {
+    "File": "\\runtime\\quarantine\\V7.11.1.2\\tools\\legacy_root_scripts\\ezzio_perfection.py",
+    "LineNumber": 12,
+    "Pattern": "read_text",
+    "Line": "content = p.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\runtime\\quarantine\\V7.11.1.2\\tools\\legacy_root_scripts\\file_tools.py",
+    "LineNumber": 175,
+    "Pattern": "read_text",
+    "Line": "return p.read_text(encoding=\"utf-8\")[:4000] if p.exists() else f\"Introuvable : {chemin}\""
+  },
+  {
+    "File": "\\runtime\\quarantine\\V7.11.1.2\\tools\\legacy_root_scripts\\inspect_exec.py",
+    "LineNumber": 12,
+    "Pattern": "read_text",
+    "Line": "txt=p.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\runtime\\quarantine\\V7.11.1.2\\tools\\legacy_root_scripts\\inspect_routes.py",
+    "LineNumber": 27,
+    "Pattern": "read_text",
+    "Line": "txt = p.read_text(encoding=\"utf-8\", errors=\"ignore\")"
+  },
+  {
+    "File": "\\runtime\\quarantine\\V7.11.1.2\\tools\\legacy_root_scripts\\safe_fix.py",
+    "LineNumber": 22,
+    "Pattern": "read_text",
+    "Line": "code = mk_path.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_phase41H_hardened.py",
+    "LineNumber": 832,
+    "Pattern": "json.load",
+    "Line": "final = json.loads("
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_phase41H_hardened.py",
+    "LineNumber": 833,
+    "Pattern": "read_text",
+    "Line": "REPORT.read_text("
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_v63_abc_benchmark.py",
+    "LineNumber": 54,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.decode('utf-8'))"
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_v63_cpu_pipeline_benchmark.py",
+    "LineNumber": 48,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.decode('utf-8'))"
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_v63_r1_forensic.py",
+    "LineNumber": 99,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.decode('utf-8'))"
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_v63_r10_final_certification.py",
+    "LineNumber": 105,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.decode('utf-8'))"
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_v63_r11_final_pipeline.py",
+    "LineNumber": 61,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.decode('utf-8'))"
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_v63_r13_benchmark.py",
+    "LineNumber": 108,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.decode('utf-8'))"
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_v63_r14_chunk_optimization.py",
+    "LineNumber": 107,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.decode('utf-8'))"
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_v63_r15_engine_validation.py",
+    "LineNumber": 115,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.decode('utf-8'))"
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_v63_r2_forensic_diagnostic.py",
+    "LineNumber": 83,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.decode('utf-8'))"
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_v63_r2_forensic_diagnostic.py",
+    "LineNumber": 107,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.decode('utf-8'))"
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_v63_r3_forensic.py",
+    "LineNumber": 84,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(chunk_str)"
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_v63_r3_forensic.py",
+    "LineNumber": 117,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.decode('utf-8'))"
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_v63_r4_dual_stream.py",
+    "LineNumber": 47,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(chunk_str)"
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_v63_r5_concurrent_pipeline.py",
+    "LineNumber": 57,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.decode('utf-8'))"
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_v63_r6_stream_inspector.py",
+    "LineNumber": 38,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(raw_str)"
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_v63_r7_fix_think.py",
+    "LineNumber": 55,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.decode('utf-8'))"
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_v63_r8_forensic.py",
+    "LineNumber": 53,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.decode('utf-8'))"
+  },
+  {
+    "File": "\\runtime\\realtime\\tests\\test_v63_r9_forensic.py",
+    "LineNumber": 37,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.decode('utf-8'))"
+  },
+  {
+    "File": "\\runtime\\recovery\\decision\\policies.py",
+    "LineNumber": 24,
+    "Pattern": "json.load",
+    "Line": "return json.load(f)"
+  },
+  {
+    "File": "\\runtime\\recovery\\queue\\bus.py",
+    "LineNumber": 96,
+    "Pattern": "json.load",
+    "Line": "raw = json.loads(bundle_json)"
+  },
+  {
+    "File": "\\runtime\\recovery\\rollback\\manager.py",
+    "LineNumber": 99,
+    "Pattern": "json.load",
+    "Line": "previous_state = json.loads(prev_state_json)"
+  },
+  {
+    "File": "\\runtime\\recovery\\ledger_boot_recovery.py",
+    "LineNumber": 54,
+    "Pattern": "read_text",
+    "Line": "raw_text = LEDGER_PATH.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\runtime\\recovery\\ledger_boot_recovery.py",
+    "LineNumber": 73,
+    "Pattern": "json.load",
+    "Line": "record = json.loads(line)"
+  },
+  {
+    "File": "\\runtime\\recovery\\snapshot.py",
+    "LineNumber": 44,
+    "Pattern": "json.load",
+    "Line": "manifest = json.loads(manifest_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\recovery\\store.py",
+    "LineNumber": 155,
+    "Pattern": "json.load",
+    "Line": "\"state_trace\": json.loads(row[10]),"
+  },
+  {
+    "File": "\\runtime\\recovery\\store.py",
+    "LineNumber": 156,
+    "Pattern": "json.load",
+    "Line": "\"telemetry_snapshot\": json.loads(row[11]),"
+  },
+  {
+    "File": "\\runtime\\recovery\\store.py",
+    "LineNumber": 157,
+    "Pattern": "json.load",
+    "Line": "\"root_candidates\": json.loads(row[12])"
+  },
+  {
+    "File": "\\runtime\\router\\cognitive_router.py",
+    "LineNumber": 61,
+    "Pattern": "json.load",
+    "Line": "result = json.loads(resp.read().decode(\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\router\\llm_router.py",
+    "LineNumber": 52,
+    "Pattern": "json.load",
+    "Line": "result = json.loads(response.read().decode(\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\router\\llm_router.py",
+    "LineNumber": 74,
+    "Pattern": "json.load",
+    "Line": "result = json.loads(response.read().decode(\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\routers\\mobile.py",
+    "LineNumber": 14,
+    "Pattern": "json.load",
+    "Line": "payload = json.loads(data)"
+  },
+  {
+    "File": "\\runtime\\sensors\\sensor_manager.py",
+    "LineNumber": 30,
+    "Pattern": "json.load",
+    "Line": "cached_data = json.loads(self.world_state_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\skills\\active\\python_analyzer\\skill.py",
+    "LineNumber": 12,
+    "Pattern": "read_text",
+    "Line": "source_code = file_path.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\runtime\\skills\\skill_manager.py",
+    "LineNumber": 15,
+    "Pattern": "read_text",
+    "Line": "self.forbidden_attributes = {\"environ\", \"getenv\", \"putenv\", \"system\", \"popen\", \"eval\", \"exec\", \"read_text\", \"read_bytes\"}"
+  },
+  {
+    "File": "\\runtime\\skills\\skill_manager.py",
+    "LineNumber": 98,
+    "Pattern": "read_text",
+    "Line": "source_code = file_path.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\runtime\\skills\\validator.py",
+    "LineNumber": 11,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\state\\state_manager.py",
+    "LineNumber": 15,
+    "Pattern": "json.load",
+    "Line": "self.data = json.loads(self.state_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v451\\simple_lock_v451.py",
+    "LineNumber": 68,
+    "Pattern": "read_text",
+    "Line": "content = self.lock_path.read_text(encoding=\"utf-8\").strip()"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v451\\simple_lock_v451.py",
+    "LineNumber": 73,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(content)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v451\\simple_lock_v451.py",
+    "LineNumber": 93,
+    "Pattern": "read_text",
+    "Line": "content = self.lock_path.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v451\\simple_lock_v451.py",
+    "LineNumber": 94,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(content)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v451\\test_lock_logic.py",
+    "LineNumber": 40,
+    "Pattern": "read_text",
+    "Line": "sec_logs = sec_file.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v452\\store_v452.py",
+    "LineNumber": 38,
+    "Pattern": "read_text",
+    "Line": "raw_text = self.path.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v452\\store_v452.py",
+    "LineNumber": 45,
+    "Pattern": "json.load",
+    "Line": "json.loads(line)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v452\\store_v452.py",
+    "LineNumber": 74,
+    "Pattern": "read_text",
+    "Line": "lines = [l for l in self.path.read_text(encoding=\"utf-8\").splitlines() if l.strip()]"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v452\\store_v452.py",
+    "LineNumber": 76,
+    "Pattern": "json.load",
+    "Line": "prev_hash = json.loads(lines[-1]).get(\"hash\", self.GENESIS_HASH)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v452\\store_v452.py",
+    "LineNumber": 94,
+    "Pattern": "read_text",
+    "Line": "lines = [l for l in self.path.read_text(encoding=\"utf-8\").splitlines() if l.strip()]"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v452\\store_v452.py",
+    "LineNumber": 99,
+    "Pattern": "json.load",
+    "Line": "event = json.loads(line)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v452\\test_crash_resilience.py",
+    "LineNumber": 37,
+    "Pattern": "read_text",
+    "Line": "q_lines = quarantine_file.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v452\\test_crash_resilience.py",
+    "LineNumber": 39,
+    "Pattern": "json.load",
+    "Line": "q_event = json.loads(q_lines[0])"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v452\\test_crash_resilience.py",
+    "LineNumber": 51,
+    "Pattern": "read_text",
+    "Line": "lines = store_file.read_text(encoding=\"utf-8\").splitlines()"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v452\\test_crash_resilience.py",
+    "LineNumber": 52,
+    "Pattern": "json.load",
+    "Line": "ev_mid = json.loads(lines[0])"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v453\\async_atomic_writer.py",
+    "LineNumber": 28,
+    "Pattern": "json.load",
+    "Line": "json.load(f)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v453\\atomic_writer.py",
+    "LineNumber": 32,
+    "Pattern": "json.load",
+    "Line": "json.load(f)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v453\\test_batch_benchmark.py",
+    "LineNumber": 70,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.strip())"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v453\\test_integration_v454_b.py",
+    "LineNumber": 51,
+    "Pattern": "json.load",
+    "Line": "lines.append(json.loads(line.strip()))"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v453\\test_integration_v454_c_async.py",
+    "LineNumber": 46,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.strip())"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v453\\test_integration_v454_c_hardened.py",
+    "LineNumber": 74,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.strip())"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v453\\test_integration_v454_c.py",
+    "LineNumber": 43,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.strip())"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v453\\test_integration_v454.py",
+    "LineNumber": 63,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line.strip())"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v453\\test_stress_chaos.py",
+    "LineNumber": 105,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(line_str)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v456\\segmented_manager.py",
+    "LineNumber": 20,
+    "Pattern": "json.load",
+    "Line": "return json.load(f)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v456\\segmented_recovery.py",
+    "LineNumber": 22,
+    "Pattern": "read_text",
+    "Line": "expected_sha = self.manifest_sha_path.read_text(encoding=\"utf-8\").strip()"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v456\\segmented_recovery.py",
+    "LineNumber": 36,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v456\\segmented_recovery.py",
+    "LineNumber": 121,
+    "Pattern": "json.load",
+    "Line": "json.loads(decoded)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v456\\test_manifest_checksum.py",
+    "LineNumber": 43,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(manifest_path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v456\\test_recovery_chaos.py",
+    "LineNumber": 36,
+    "Pattern": "read_text",
+    "Line": "lines = active_seg.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v456\\test_recovery_chaos.py",
+    "LineNumber": 38,
+    "Pattern": "json.load",
+    "Line": "assert json.loads(lines[0])[\"event\"] == 1"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v456\\test_recovery_chaos.py",
+    "LineNumber": 39,
+    "Pattern": "json.load",
+    "Line": "assert json.loads(lines[1])[\"event\"] == 2"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v457\\concurrent_segmented_engine.py",
+    "LineNumber": 37,
+    "Pattern": "read_text",
+    "Line": "expected_sha = self.manifest_sha_path.read_text(encoding=\"utf-8\").strip()"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v457\\concurrent_segmented_engine.py",
+    "LineNumber": 50,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v457\\concurrent_segmented_engine.py",
+    "LineNumber": 123,
+    "Pattern": "json.load",
+    "Line": "json.loads(decoded)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v457\\test_v457_benchmark.py",
+    "LineNumber": 87,
+    "Pattern": "json.load",
+    "Line": "json.loads(line.strip())"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v458\\concurrent_segmented_engine.py",
+    "LineNumber": 34,
+    "Pattern": "read_text",
+    "Line": "expected_sha = self.manifest_sha_path.read_text(encoding=\"utf-8\").strip()"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v458\\concurrent_segmented_engine.py",
+    "LineNumber": 47,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v458\\concurrent_segmented_engine.py",
+    "LineNumber": 103,
+    "Pattern": "json.load",
+    "Line": "json.loads(decoded)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v458\\test_v458_1_crash_hardening.py",
+    "LineNumber": 66,
+    "Pattern": "json.load",
+    "Line": "json.loads(line.strip())"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v458\\test_v458_profiler_chaos.py",
+    "LineNumber": 68,
+    "Pattern": "json.load",
+    "Line": "ev = json.loads(line.strip())"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v458\\test_v458_profiler_chaos.py",
+    "LineNumber": 97,
+    "Pattern": "json.load",
+    "Line": "json.loads(line.strip())"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v4598\\concurrent_segmented_engine_faulty.py",
+    "LineNumber": 54,
+    "Pattern": "read_text",
+    "Line": "expected_sha = self.manifest_sha_path.read_text(encoding=\"utf-8\").strip()"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v4598\\concurrent_segmented_engine_faulty.py",
+    "LineNumber": 67,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v4598\\concurrent_segmented_engine_faulty.py",
+    "LineNumber": 160,
+    "Pattern": "json.load",
+    "Line": "json.loads(decoded)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v4598\\test_v459_8_chaos_matrix.py",
+    "LineNumber": 39,
+    "Pattern": "json.load",
+    "Line": "json.loads(line.strip())"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v4599\\concurrent_segmented_engine_soak.py",
+    "LineNumber": 44,
+    "Pattern": "read_text",
+    "Line": "expected_sha = self.manifest_sha_path.read_text(encoding=\"utf-8\").strip()"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v4599\\concurrent_segmented_engine_soak.py",
+    "LineNumber": 57,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v4599\\concurrent_segmented_engine_soak.py",
+    "LineNumber": 150,
+    "Pattern": "json.load",
+    "Line": "json.loads(decoded)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v4599\\test_v459_9_soak_drill.py",
+    "LineNumber": 45,
+    "Pattern": "json.load",
+    "Line": "json.loads(line.strip())"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v460\\concurrent_segmented_engine_v46.py",
+    "LineNumber": 44,
+    "Pattern": "read_text",
+    "Line": "expected_sha = self.manifest_sha_path.read_text(encoding=\"utf-8\").strip()"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v460\\concurrent_segmented_engine_v46.py",
+    "LineNumber": 57,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v460\\concurrent_segmented_engine_v46.py",
+    "LineNumber": 147,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(stripped.decode(\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v460\\concurrent_segmented_engine_v46.py",
+    "LineNumber": 218,
+    "Pattern": "json.load",
+    "Line": "json.loads(decoded)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v460\\test_v46_scale_soak.py",
+    "LineNumber": 90,
+    "Pattern": "json.load",
+    "Line": "obj = json.loads(line.strip())"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v470\\concurrent_segmented_engine_v47.py",
+    "LineNumber": 84,
+    "Pattern": "read_text",
+    "Line": "expected_sha = self.manifest_sha_path.read_text(encoding=\"utf-8\").strip()"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v470\\concurrent_segmented_engine_v47.py",
+    "LineNumber": 97,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v470\\concurrent_segmented_engine_v47.py",
+    "LineNumber": 175,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(stripped.decode(\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v470\\concurrent_segmented_engine_v47.py",
+    "LineNumber": 241,
+    "Pattern": "json.load",
+    "Line": "json.loads(decoded)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v470\\test_v47_semantic_benchmark.py",
+    "LineNumber": 120,
+    "Pattern": "json.load",
+    "Line": "obj = json.loads(line.strip())"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v480\\concurrent_segmented_engine_v48.py",
+    "LineNumber": 162,
+    "Pattern": "read_text",
+    "Line": "expected_sha = self.manifest_sha_path.read_text(encoding=\"utf-8\").strip()"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v480\\concurrent_segmented_engine_v48.py",
+    "LineNumber": 175,
+    "Pattern": "json.load",
+    "Line": "data = json.load(f)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v480\\concurrent_segmented_engine_v48.py",
+    "LineNumber": 251,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(stripped.decode(\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v480\\concurrent_segmented_engine_v48.py",
+    "LineNumber": 316,
+    "Pattern": "json.load",
+    "Line": "json.loads(decoded)"
+  },
+  {
+    "File": "\\runtime\\test_isolation\\v480\\test_v48_governor_benchmark.py",
+    "LineNumber": 100,
+    "Pattern": "json.load",
+    "Line": "obj = json.loads(line.strip())"
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "LineNumber": 2,
+    "Pattern": "authority",
+    "Line": "E-ZZIO V7.32 — Certification Test Suite (Authority & Evolution Governance)"
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "LineNumber": 12,
+    "Pattern": "authority",
+    "Line": "from core.authority.evolution_request import evolution_request_engine"
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "LineNumber": 13,
+    "Pattern": "authority",
+    "Line": "from core.authority.promotion_controller import promotion_controller"
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "LineNumber": 14,
+    "Pattern": "authority",
+    "Line": "from core.authority.evolution_ledger import evolution_ledger"
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "LineNumber": 15,
+    "Pattern": "authority",
+    "Line": "from core.authority.authority_policy import authority_policy_engine"
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "LineNumber": 17,
+    "Pattern": "authority",
+    "Line": "def run_authority_certification():"
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "LineNumber": 19,
+    "Pattern": "authority",
+    "Line": "print(\" E-ZZIO V7.32 — AUTHORITY & GOVERNANCE CERTIFICATION\")"
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "LineNumber": 42,
+    "Pattern": "authority",
+    "Line": "eval_res = authority_policy_engine.evaluate_target(\"skills\", \"UPGRADE\")"
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "LineNumber": 66,
+    "Pattern": "authority",
+    "Line": "print(\" V7.32 CERTIFIÉ : AUTHORITY & EVOLUTION GOVERNANCE ACTIF\")"
+  },
+  {
+    "File": "\\runtime\\tests\\authority\\test_v732_authority.py",
+    "LineNumber": 70,
+    "Pattern": "authority",
+    "Line": "run_authority_certification()"
+  },
+  {
+    "File": "\\runtime\\tests\\identity\\test_v729_3_guardian.py",
+    "LineNumber": 24,
+    "Pattern": "read_text",
+    "Line": "orig_persona = persona_path.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\runtime\\tests\\identity\\test_v729_3_guardian.py",
+    "LineNumber": 43,
+    "Pattern": "json.load",
+    "Line": "persona_data = json.loads(orig_persona)"
+  },
+  {
+    "File": "\\runtime\\tests\\identity\\test_v730_identity_survival.py",
+    "LineNumber": 24,
+    "Pattern": "authority",
+    "Line": "authority_file = ROOT_DIR / \"runtime\" / \"identity\" / \"identity_authority.json\""
+  },
+  {
+    "File": "\\runtime\\tests\\identity\\test_v730_identity_survival.py",
+    "LineNumber": 45,
+    "Pattern": "read_text",
+    "Line": "saved_identity_content = identity_file.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\runtime\\tests\\identity\\test_v730_identity_survival.py",
+    "LineNumber": 62,
+    "Pattern": "authority",
+    "Line": "auth_data = json.loads(authority_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\tests\\identity\\test_v730_identity_survival.py",
+    "LineNumber": 64,
+    "Pattern": "authority",
+    "Line": "assert auth_data[\"authority\"][\"creator\"] == \"BidiNani\", \"Créateur non conforme !\""
+  },
+  {
+    "File": "\\runtime\\tests\\identity\\test_v730_identity_survival.py",
+    "LineNumber": 65,
+    "Pattern": "authority",
+    "Line": "assert auth_data[\"authority\"][\"core_values_modification\"] == \"forbidden\", \"Règle de modification invalide !\""
+  },
+  {
+    "File": "\\runtime\\tests\\integrations\\discord\\test_v744_drill.py",
+    "LineNumber": 32,
+    "Pattern": "json.load",
+    "Line": "vault_data = json.loads(vault_file.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\tests\\integrations\\discord\\test_v745_chaos.py",
+    "LineNumber": 51,
+    "Pattern": "read_text",
+    "Line": "content = chain_file.read_text(encoding=\"utf-8\").splitlines()"
+  },
+  {
+    "File": "\\runtime\\tests\\integrations\\discord\\test_v745_chaos.py",
+    "LineNumber": 52,
+    "Pattern": "json.load",
+    "Line": "first_record = json.loads(content[0])"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\identity_mirror.py",
+    "LineNumber": 15,
+    "Pattern": "json.load",
+    "Line": "constitution = json.loads(const_path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\identity_mirror.py",
+    "LineNumber": 16,
+    "Pattern": "json.load",
+    "Line": "persona = json.loads(persona_path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_chaos_resilience.py",
+    "LineNumber": 50,
+    "Pattern": "read_text",
+    "Line": "lines = ledger_path.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_chaos_resilience.py",
+    "LineNumber": 53,
+    "Pattern": "json.load",
+    "Line": "last_entry = json.loads(lines[-1])"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_fault_tolerant.py",
+    "LineNumber": 50,
+    "Pattern": "read_text",
+    "Line": "lines = ledger_path.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_fault_tolerant.py",
+    "LineNumber": 53,
+    "Pattern": "json.load",
+    "Line": "entry_1 = json.loads(lines[0])"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v726_chaos_full.py",
+    "LineNumber": 47,
+    "Pattern": "read_text",
+    "Line": "lines = ledger_path.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v726_chaos_full.py",
+    "LineNumber": 50,
+    "Pattern": "json.load",
+    "Line": "corrupted_record = json.loads(lines[0])"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v727_integrity_chaos.py",
+    "LineNumber": 43,
+    "Pattern": "read_text",
+    "Line": "lines = ledger_path.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v727_integrity_chaos.py",
+    "LineNumber": 47,
+    "Pattern": "json.load",
+    "Line": "rec = json.loads(lines[10])"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v728_archive_tamper.py",
+    "LineNumber": 54,
+    "Pattern": "read_text",
+    "Line": "lines = archive_1_jsonl.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v728_archive_tamper.py",
+    "LineNumber": 55,
+    "Pattern": "json.load",
+    "Line": "record = json.loads(lines[20]) # Ligne 21 de l'archive 1"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v728_archive.py",
+    "LineNumber": 53,
+    "Pattern": "json.load",
+    "Line": "meta_1 = json.loads(metas[0].read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v728_archive.py",
+    "LineNumber": 54,
+    "Pattern": "json.load",
+    "Line": "meta_2 = json.loads(metas[1].read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v728_disaster_recovery.py",
+    "LineNumber": 48,
+    "Pattern": "json.load",
+    "Line": "meta_before = json.loads(list(archive_dir.glob(\"ledger_*.meta.json\"))[0].read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v728_disaster_recovery.py",
+    "LineNumber": 77,
+    "Pattern": "json.load",
+    "Line": "restored_state = json.loads(state_path.read_text(encoding=\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v728_distributed_chaos.py",
+    "LineNumber": 66,
+    "Pattern": "read_text",
+    "Line": "lines = ledger_path.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v728_distributed_chaos.py",
+    "LineNumber": 78,
+    "Pattern": "read_text",
+    "Line": "healthy_content = ledger_path.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v728_distributed_chaos.py",
+    "LineNumber": 81,
+    "Pattern": "json.load",
+    "Line": "rec = json.loads(lines[10])"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v728_recovery_continuity.py",
+    "LineNumber": 54,
+    "Pattern": "read_text",
+    "Line": "lines_before = ledger_path.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v728_recovery_continuity.py",
+    "LineNumber": 55,
+    "Pattern": "json.load",
+    "Line": "last_tx_before = json.loads(lines_before[-1])"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v728_recovery_continuity.py",
+    "LineNumber": 101,
+    "Pattern": "read_text",
+    "Line": "final_lines = ledger_path.read_text(encoding=\"utf-8\").strip().splitlines()"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v728_recovery_continuity.py",
+    "LineNumber": 102,
+    "Pattern": "json.load",
+    "Line": "new_tx = json.loads(final_lines[-1])"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v729_ledger_binding.py",
+    "LineNumber": 29,
+    "Pattern": "read_text",
+    "Line": "orig_const = const_path.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v729_ledger_binding.py",
+    "LineNumber": 30,
+    "Pattern": "read_text",
+    "Line": "orig_persona = persona_path.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v729_ledger_binding.py",
+    "LineNumber": 50,
+    "Pattern": "json.load",
+    "Line": "last_line = json.loads(ledger_path.read_text(encoding=\"utf-8\").strip().splitlines()[-1])"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v729_ledger_binding.py",
+    "LineNumber": 56,
+    "Pattern": "json.load",
+    "Line": "const_data = json.loads(orig_const)"
+  },
+  {
+    "File": "\\runtime\\tests\\router\\test_v729_ledger_binding.py",
+    "LineNumber": 75,
+    "Pattern": "json.load",
+    "Line": "persona_data = json.loads(orig_persona)"
+  },
+  {
+    "File": "\\runtime\\tests\\tool_gateway\\test_v740_google_bridge.py",
+    "LineNumber": 32,
+    "Pattern": "read_text",
+    "Line": "vault_content = vault_file.read_text(encoding=\"utf-8\")"
+  },
+  {
+    "File": "\\runtime\\tests\\tool_gateway\\test_v740_google_bridge.py",
+    "LineNumber": 43,
+    "Pattern": "json.load",
+    "Line": "vault_data = json.loads(vault_content)"
+  },
+  {
+    "File": "\\runtime\\tools\\executors\\filesystem.py",
+    "LineNumber": 25,
+    "Pattern": "read_text",
+    "Line": "return ToolResult(success=True, output=c.read_text(encoding=\"utf-8\"), error=\"\")"
+  },
+  {
+    "File": "\\runtime\\tools\\manifest_provider.py",
+    "LineNumber": 35,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(content.decode(\"utf-8\"))"
+  },
+  {
+    "File": "\\runtime\\tools\\parser.py",
+    "LineNumber": 17,
+    "Pattern": "json.load",
+    "Line": "data = json.loads(clean_text)"
+  }
+]

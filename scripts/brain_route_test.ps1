@@ -15,9 +15,10 @@ foreach ($test in $tests) {
 
     $body = $test | ConvertTo-Json -Depth 10
 
-    Invoke-RestMethod "http://127.0.0.1:8000/brain/route" `
+    Invoke-RestMethod "http://127.0.0.1:8001/brain/route" `
         -Method POST `
         -ContentType "application/json" `
         -TimeoutSec 60 `
         -Body $body
 }
+

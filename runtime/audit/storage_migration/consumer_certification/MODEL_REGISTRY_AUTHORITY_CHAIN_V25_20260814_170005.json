@@ -1,0 +1,83 @@
+[
+  {
+    "File": "runtime\\contracts\\MODEL_REGISTRY_V1.json",
+    "Role": "AUTHORITY",
+    "Source": true,
+    "Authority": true,
+    "Consumer": true,
+    "Mutator": false,
+    "Legacy": false
+  },
+  {
+    "File": "runtime\\contracts\\authority.py",
+    "Role": "AUTHORITY",
+    "Source": false,
+    "Authority": true,
+    "Consumer": true,
+    "Mutator": false,
+    "Legacy": false
+  },
+  {
+    "File": "core\\intelligence_router.py",
+    "Role": "MUTATOR_CANDIDATE",
+    "Source": false,
+    "Authority": false,
+    "Consumer": true,
+    "Mutator": true,
+    "Legacy": false
+  },
+  {
+    "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "Role": "MUTATOR_CANDIDATE",
+    "Source": false,
+    "Authority": false,
+    "Consumer": true,
+    "Mutator": true,
+    "Legacy": false
+  },
+  {
+    "File": "runtime\\models\\ollama_sync.py",
+    "Role": "MUTATOR_CANDIDATE",
+    "Source": false,
+    "Authority": false,
+    "Consumer": true,
+    "Mutator": true,
+    "Legacy": false
+  },
+  {
+    "File": "core\\dispatcher.py",
+    "Role": "CONSUMER",
+    "Source": false,
+    "Authority": false,
+    "Consumer": true,
+    "Mutator": false,
+    "Legacy": false
+  },
+  {
+    "File": "core\\supervisor.py",
+    "Role": "MUTATOR_CANDIDATE",
+    "Source": false,
+    "Authority": false,
+    "Consumer": true,
+    "Mutator": true,
+    "Legacy": false
+  },
+  {
+    "File": "core\\model_registry.py",
+    "Role": "CONSUMER",
+    "Source": false,
+    "Authority": false,
+    "Consumer": true,
+    "Mutator": false,
+    "Legacy": true
+  },
+  {
+    "File": "runtime\\models\\model_registry.json",
+    "Role": "LEGACY",
+    "Source": false,
+    "Authority": false,
+    "Consumer": false,
+    "Mutator": false,
+    "Legacy": true
+  }
+]

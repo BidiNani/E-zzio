@@ -1,0 +1,14 @@
+{
+  "file": "core/model_registry.py",
+  "lines": 109,
+  "reads_model_latency": true,
+  "reads_contracts": false,
+  "inputs_detected": [
+    "model_latency.json"
+  ],
+  "outputs_detected": [
+    "best_fast_model",
+    "all_known_models",
+    "ORGANS"
+  ]
+}

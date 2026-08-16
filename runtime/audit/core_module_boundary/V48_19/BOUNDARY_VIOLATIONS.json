@@ -1,0 +1,32 @@
+[
+  {
+    "File": "G:\\AI\\E-zzio\\core\\memory_core.py",
+    "ForbiddenImport": "from runtime.memory.sqlite.store import SQLiteEventStore",
+    "Severity": "CRITICAL",
+    "Rule": "CORE_RUNTIME_DIRECT_ACCESS"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\core\\ezzio_core.py",
+    "ForbiddenImport": "from runtime.identity.persona import EzzioPersona",
+    "Severity": "CRITICAL",
+    "Rule": "CORE_RUNTIME_DIRECT_ACCESS"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\core\\ezzio_core.py",
+    "ForbiddenImport": "from runtime.cognition.router import HybridCognitiveRouter",
+    "Severity": "CRITICAL",
+    "Rule": "CORE_RUNTIME_DIRECT_ACCESS"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\core\\ezzio_core.py",
+    "ForbiddenImport": "from runtime.telemetry.collector import TelemetryCollector",
+    "Severity": "CRITICAL",
+    "Rule": "CORE_RUNTIME_DIRECT_ACCESS"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\core\\ezzio_core.py",
+    "ForbiddenImport": "from runtime.recovery.queue.bus import RecoveryEventBus",
+    "Severity": "CRITICAL",
+    "Rule": "CORE_RUNTIME_DIRECT_ACCESS"
+  }
+]

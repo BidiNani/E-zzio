@@ -1,0 +1,2 @@
+{"timestamp": "2026-08-11T23:29:47.712907+00:00", "event": "ACCESS_GRANTED", "data": {"user_id": "HACKED_USER_ID"}, "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000", "hash": "7285d423727ac3bfaf4ce6a985640c3960e4f80e85b326cb144f40f90dcaea56"}
+{"timestamp": "2026-08-11T23:29:47.712907+00:00", "event": "COMMAND_EXEC", "data": {"cmd": "!e health"}, "previous_hash": "7285d423727ac3bfaf4ce6a985640c3960e4f80e85b326cb144f40f90dcaea56", "hash": "3fa9e0cc6df6bb83f811db4add458bf3711a311189a23ef9f54e3d79c05e2207"}

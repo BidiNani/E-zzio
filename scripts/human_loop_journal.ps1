@@ -5,7 +5,7 @@ param(
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-$res = Invoke-RestMethod "http://127.0.0.1:8000/human/journal?limit=$Limit" -Method GET -TimeoutSec 90
+$res = Invoke-RestMethod "http://127.0.0.1:8001/human/journal?limit=$Limit" -Method GET -TimeoutSec 90
 
 Write-Host "=== E-ZZIO HUMAN JOURNAL ===" -ForegroundColor Cyan
 Write-Host "Journal : $($res.journal_path)"
@@ -21,3 +21,4 @@ $res.events | ForEach-Object {
         safe_only = $_.policy.safe_only
     }
 }
+

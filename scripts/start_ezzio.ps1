@@ -3,7 +3,7 @@ $ErrorActionPreference = "Stop"
 
 $ProjectRoot = "G:\AI\E-zzio"
 $PythonExe   = "G:\AI\Bidi_BrotherEye-env\Scripts\python.exe"
-$Port        = 8000
+$PORT=8001
 $HostName    = "127.0.0.1"
 $Stamp       = Get-Date -Format "yyyyMMdd_HHmmss"
 $LogRoot     = Join-Path $ProjectRoot "logs\manual_start_$Stamp"
@@ -36,6 +36,8 @@ $p = Start-Process `
     -WindowStyle Hidden `
     -PassThru
 
-Write-Host "E-ZZIO lancé : http://127.0.0.1:8000"
+Write-Host "E-ZZIO lancé : http://127.0.0.1:8001"
 Write-Host "PID : $($p.Id)"
 Write-Host "Logs : $LogRoot"
+
+

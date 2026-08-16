@@ -13,7 +13,7 @@ $body = @{
     confirmation = $Confirmation
 } | ConvertTo-Json -Depth 20
 
-$res = Invoke-RestMethod "http://127.0.0.1:8000/safe-actions/run" `
+$res = Invoke-RestMethod "http://127.0.0.1:8001/safe-actions/run" `
     -Method POST `
     -ContentType "application/json" `
     -TimeoutSec 180 `
@@ -28,3 +28,4 @@ Write-Host "=== E-ZZIO SAFE ACTION RUN ===" -ForegroundColor Cyan
     error = $res.error
     result_ok = $res.result.ok
 }
+

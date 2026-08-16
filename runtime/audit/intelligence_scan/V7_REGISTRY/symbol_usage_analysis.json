@@ -1,0 +1,174 @@
+{
+  "timestamp": "2026-08-11T17:19:21.027681",
+  "target_file": "runtime/recovery/decision/engine.py",
+  "symbol_analysis": [
+    {
+      "symbol": "json",
+      "module": "json",
+      "lineno": 1,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "sqlite3",
+      "module": "sqlite3",
+      "lineno": 2,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "threading",
+      "module": "threading",
+      "lineno": 3,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "uuid",
+      "module": "uuid",
+      "lineno": 4,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "Dict",
+      "module": "typing.Dict",
+      "lineno": 5,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "Any",
+      "module": "typing.Any",
+      "lineno": 5,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "Optional",
+      "module": "typing.Optional",
+      "lineno": 5,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "datetime",
+      "module": "datetime.datetime",
+      "lineno": 6,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "timezone",
+      "module": "datetime.timezone",
+      "lineno": 6,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "IncidentBundle",
+      "module": "runtime.recovery.contracts.IncidentBundle",
+      "lineno": 8,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "compute_decision_signature",
+      "module": "runtime.recovery.contracts.compute_decision_signature",
+      "lineno": 8,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "get_recovery_secret",
+      "module": "runtime.recovery.contracts.get_recovery_secret",
+      "lineno": 8,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "RecoveryPolicyEngine",
+      "module": "runtime.recovery.decision.policies.RecoveryPolicyEngine",
+      "lineno": 9,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "RemediationAction",
+      "module": "runtime.recovery.decision.policies.RemediationAction",
+      "lineno": 9,
+      "effectively_used_in_code": false,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "DecisionGovernor",
+      "module": "runtime.recovery.decision.governor.DecisionGovernor",
+      "lineno": 10,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "ExecutionApproval",
+      "module": "runtime.recovery.decision.governor.ExecutionApproval",
+      "lineno": 10,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "RollbackManager",
+      "module": "runtime.recovery.rollback.manager.RollbackManager",
+      "lineno": 11,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "RecoveryLedger",
+      "module": "runtime.recovery.ledger.RecoveryLedger",
+      "lineno": 12,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "QuarantineExecutor",
+      "module": "runtime.recovery.executor.quarantine.QuarantineExecutor",
+      "lineno": 13,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "ScalingExecutor",
+      "module": "runtime.recovery.executor.scaling.ScalingExecutor",
+      "lineno": 14,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "RetryExecutor",
+      "module": "runtime.recovery.executor.retry.RetryExecutor",
+      "lineno": 15,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "TelemetryCollector",
+      "module": "runtime.telemetry.collector.TelemetryCollector",
+      "lineno": 16,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "TelemetryEvent",
+      "module": "runtime.telemetry.events.TelemetryEvent",
+      "lineno": 17,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    },
+    {
+      "symbol": "EventType",
+      "module": "runtime.telemetry.events.EventType",
+      "lineno": 17,
+      "effectively_used_in_code": true,
+      "physical_file_exists": false
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-$BaseUrl = "http://127.0.0.1:8000"
+$BaseUrl = "http://127.0.0.1:8001"
 
 [pscustomobject]@{
     Status = Invoke-RestMethod "$BaseUrl/status" -Method GET
@@ -11,3 +11,4 @@ $BaseUrl = "http://127.0.0.1:8000"
     Commands = Invoke-RestMethod "$BaseUrl/omni-bridge/commands" -Method GET
     NoAds = Invoke-RestMethod "$BaseUrl/no-ads-policy" -Method GET
 }
+

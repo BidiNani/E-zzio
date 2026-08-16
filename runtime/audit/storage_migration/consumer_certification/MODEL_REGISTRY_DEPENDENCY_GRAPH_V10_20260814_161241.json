@@ -1,0 +1,74 @@
+[
+  {
+    "File": "runtime\\contracts\\MODEL_REGISTRY_V1.json",
+    "RegistryReferences": 1,
+    "HasAuthorityReference": false,
+    "HasLoadOperation": false,
+    "HasWriteOperation": false,
+    "HasImport": false
+  },
+  {
+    "File": "runtime\\models\\model_registry.json",
+    "RegistryReferences": 0,
+    "HasAuthorityReference": false,
+    "HasLoadOperation": false,
+    "HasWriteOperation": false,
+    "HasImport": false
+  },
+  {
+    "File": "core\\model_registry.py",
+    "RegistryReferences": 1,
+    "HasAuthorityReference": false,
+    "HasLoadOperation": true,
+    "HasWriteOperation": false,
+    "HasImport": false
+  },
+  {
+    "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "RegistryReferences": 1,
+    "HasAuthorityReference": false,
+    "HasLoadOperation": true,
+    "HasWriteOperation": true,
+    "HasImport": false
+  },
+  {
+    "File": "runtime\\contracts\\authority.py",
+    "RegistryReferences": 1,
+    "HasAuthorityReference": true,
+    "HasLoadOperation": true,
+    "HasWriteOperation": false,
+    "HasImport": false
+  },
+  {
+    "File": "core\\dispatcher.py",
+    "RegistryReferences": 1,
+    "HasAuthorityReference": false,
+    "HasLoadOperation": true,
+    "HasWriteOperation": false,
+    "HasImport": true
+  },
+  {
+    "File": "core\\intelligence_router.py",
+    "RegistryReferences": 1,
+    "HasAuthorityReference": false,
+    "HasLoadOperation": true,
+    "HasWriteOperation": true,
+    "HasImport": true
+  },
+  {
+    "File": "core\\supervisor.py",
+    "RegistryReferences": 1,
+    "HasAuthorityReference": false,
+    "HasLoadOperation": true,
+    "HasWriteOperation": true,
+    "HasImport": true
+  },
+  {
+    "File": "runtime\\models\\ollama_sync.py",
+    "RegistryReferences": 1,
+    "HasAuthorityReference": false,
+    "HasLoadOperation": true,
+    "HasWriteOperation": true,
+    "HasImport": false
+  }
+]

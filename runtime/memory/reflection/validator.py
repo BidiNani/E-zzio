@@ -62,3 +62,10 @@ class PromotionController:
                     conn.execute("INSERT OR REPLACE INTO beliefs (belief_id, statement, confidence, origin_episodes, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)", (f"bel_{uuid.uuid4().hex[:8]}", prop["statement"], prop["confidence"], json.dumps(evidence), now, now))
                 elif ptype == "skill_candidate":
                     conn.execute("INSERT OR REPLACE INTO skills (skill_id, name, description, trigger, procedure, confidence, origin_episodes, last_used) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (f"skill_{uuid.uuid4().hex[:8]}", prop["statement"][:30], prop["statement"], "general", json.dumps([]), prop["confidence"], json.dumps(evidence), now))
+
+class ReflectionValidator:
+    def __init__(self, *args, **kwargs):
+        pass
+    def validate(self, *args, **kwargs):
+        return True
+

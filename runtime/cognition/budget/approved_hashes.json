@@ -1,0 +1,8 @@
+{
+  "version": "V8.9.4.1",
+  "created_utc": "2026-08-12T15:21:50.743178+00:00",
+  "files": {
+    "core/constitution/ezzio_genome.json": "4b914fb994d1d715626ace5452fa08b502ec1df71ad162d905f4acc7a5a72693",
+    "core/constitution/ezzio_global_framework.py": "3afc41624b70a16c3582243059cda012dea31b44a9fddfeb4d90f481a05cdd25"
+  }
+}

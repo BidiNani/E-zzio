@@ -1,0 +1,83 @@
+[
+  {
+    "File": "runtime\\contracts\\authority.py",
+    "Score": 110,
+    "Authority": true,
+    "Contract": true,
+    "Load": true,
+    "Mutation": false,
+    "Consumer": true
+  },
+  {
+    "File": "runtime\\contracts\\MODEL_REGISTRY_V1.json",
+    "Score": 60,
+    "Authority": true,
+    "Contract": false,
+    "Load": false,
+    "Mutation": false,
+    "Consumer": true
+  },
+  {
+    "File": "core\\intelligence_router.py",
+    "Score": 10,
+    "Authority": false,
+    "Contract": false,
+    "Load": true,
+    "Mutation": true,
+    "Consumer": true
+  },
+  {
+    "File": "core\\model_registry.py",
+    "Score": 30,
+    "Authority": false,
+    "Contract": false,
+    "Load": true,
+    "Mutation": false,
+    "Consumer": true
+  },
+  {
+    "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "Score": 0,
+    "Authority": false,
+    "Contract": false,
+    "Load": true,
+    "Mutation": true,
+    "Consumer": false
+  },
+  {
+    "File": "runtime\\models\\ollama_sync.py",
+    "Score": 10,
+    "Authority": false,
+    "Contract": false,
+    "Load": true,
+    "Mutation": true,
+    "Consumer": true
+  },
+  {
+    "File": "core\\dispatcher.py",
+    "Score": 10,
+    "Authority": false,
+    "Contract": false,
+    "Load": false,
+    "Mutation": false,
+    "Consumer": true
+  },
+  {
+    "File": "core\\supervisor.py",
+    "Score": -10,
+    "Authority": false,
+    "Contract": false,
+    "Load": false,
+    "Mutation": true,
+    "Consumer": true
+  },
+  {
+    "File": "runtime\\models\\model_registry.json",
+    "Score": 0,
+    "Authority": false,
+    "Contract": false,
+    "Load": false,
+    "Mutation": false,
+    "Consumer": false
+  }
+]

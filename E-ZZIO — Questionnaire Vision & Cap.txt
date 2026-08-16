@@ -1,0 +1,304 @@
+E-ZZIO — Questionnaire Vision & Capacités Cibles
+0) Philosophie générale
+0.1 Rôle principal d'E-ZZIO
+
+x☐ Assistant personnel intelligent
+x☐ Agent autonome capable d'exécuter des tâches
+x☐ Copilote de création
+x☐ Assistant développeur
+x☐ Assistant sécurité informatique
+x☐ Assistant recherche/connaissance
+x☐ Compagnon vocal permanent
+x☐ Gestionnaire de vie numérique
+x☐ Plateforme IA portable (PC/mobile/USB/cloud)
+☐ Autre :
+
+1) Architecture Local / Cloud
+1.1 Où doit fonctionner E-ZZIO ?
+PC principal
+
+x☐ Tout le cœur E-ZZIO
+x☐ Modèles IA locaux
+x☐ Mémoire complète
+x☐ Création lourde
+x☐ Développement logiciel
+x☐ Analyse sécurité
+x☐ Génération multimédia
+
+Importance :
+ Indispensable ⬜ Important ⬜ Optionnel
+
+Smartphone
+
+⬜☐ Interface mobile
+⬜☐ Conversation vocale
+☐ Mémoire personnelle
+⬜☐ GPS/localisation
+⬜☐ Photo/caméra
+⬜☐ Notifications intelligentes
+⬜☐ Contrôle du PC distant
+⬜☐ Fonctionnement hors-ligne partiel
+
+Clé USB
+
+⬜☐ E-ZZIO portable
+⬜☐ Identité utilisateur
+⬜☐ Configuration personnelle
+⬜☐ Mémoire chiffrée
+⬜☐ Lancement automatique
+⬜☐ Mode secours/récupération
+⬜☐ Transport entre machines
+
+Cloud
+
+⬜☐ Gros modèles IA
+⬜☐ Calcul lourd
+⬜☐ Stockage distant
+⬜☐ Synchronisation multi-appareils
+⬜☐ Agents spécialisés
+⬜☐ Recherche internet permanente
+
+2) Intelligence & Modèles IA
+2.1 Types de modèles souhaités
+Texte / raisonnement
+
+⬜☐ Conversation générale
+⬜☐ Raisonnement complexe
+⬜☐ Analyse documents
+⬜☐ Résumé long
+⬜☐ Recherche scientifique
+⬜☐ Planification projet
+⬜☐ Analyse juridique
+⬜☐ Analyse médicale documentaire
+
+Code
+
+⬜☐ Python
+⬜☐ PowerShell
+⬜☐ JavaScript
+⬜☐ C/C++
+⬜☐ Rust
+⬜☐ GDScript Godot
+⬜☐ Création architecture logicielle
+⬜☐ Correction bugs
+⬜☐ Tests automatisés
+
+Vision
+
+⬜☐ Analyse images
+⬜☐ OCR documents
+⬜☐ Compréhension captures écran
+⬜☐ Analyse caméra
+⬜☐ Reconnaissance objets
+⬜☐ Analyse vidéo
+
+Audio
+
+⬜☐ Speech-to-text
+⬜☐ Text-to-speech réaliste
+⬜☐ Reconnaissance voix utilisateur
+⬜☐ Commandes vocales
+⬜☐ Conversation naturelle temps réel
+
+3) Création de contenu
+Guides / Documents
+
+⬜☐ Créer des guides complets
+⬜☐ Mise en page PDF
+⬜☐ Documentation technique
+⬜☐ Guides jeux vidéo
+⬜☐ Guides utilisateurs
+⬜☐ Articles web
+⬜☐ Présentations
+
+Images
+
+⬜☐ Génération images IA
+⬜☐ Retouche images
+⬜☐ Création personnages
+⬜☐ Assets jeux vidéo
+⬜☐ Logos
+⬜☐ Illustrations guides
+
+Vidéo
+
+⬜☐ Création scripts vidéo
+⬜☐ Montage automatique
+⬜☐ Génération voix
+⬜☐ Sous-titres
+⬜☐ Création vidéos YouTube
+⬜☐ Animation
+
+4) Développement logiciel
+Applications
+
+⬜☐ Créer applications desktop
+⬜☐ Créer applications web
+⬜☐ Créer API
+⬜☐ Créer applications mobiles
+⬜☐ Créer bases de données
+⬜☐ Déployer automatiquement
+
+Jeux Godot
+
+⬜☐ Game design
+⬜☐ Scénarios
+⬜☐ Quêtes
+⬜☐ Dialogues PNJ
+⬜☐ Scripts GDScript
+⬜☐ Génération assets
+⬜☐ Tests gameplay
+⬜☐ Build automatique
+
+5) Mémoire & Personnalité
+Mémoire
+
+⬜☐ Mémoire conversationnelle
+⬜☐ Mémoire long terme
+⬜☐ Préférences utilisateur
+⬜☐ Historique projets
+⬜☐ Journal d'expériences
+⬜☐ Apprentissage des habitudes
+⬜☐ Base documentaire personnelle
+
+Personnalité
+
+⬜☐ Voix/personnalité stable
+⬜☐ Adaptation au contexte
+⬜☐ Plusieurs profils utilisateurs
+⬜☐ Mode professionnel
+⬜☐ Mode créatif
+⬜☐ Mode jeu
+
+6) Automatisation
+
+E-ZZIO peut-il :
+
+⬜☐ Lire des fichiers
+⬜☐ Organiser fichiers
+⬜☐ Renommer fichiers
+⬜☐ Créer dossiers
+⬜☐ Lancer programmes
+⬜☐ Automatiser Windows
+⬜☐ Gérer scripts PowerShell
+⬜☐ Surveiller système
+⬜☐ Faire des sauvegardes
+⬜☐ Programmer des tâches
+
+Niveau d'autonomie :
+
+⬜ Toujours demander confirmation
+⬜ Demander seulement actions sensibles
+⬜ Mode autonome limité
+⬜ Mode autonome avancé
+
+7) Sécurité
+Protection
+
+⬜☐ Scan fichiers
+⬜☐ Analyse malware
+⬜☐ Vérification hash
+⬜☐ Détection comportements suspects
+⬜☐ Sandbox
+⬜☐ Isolation outils
+⬜☐ Gestion permissions
+⬜☐ Chiffrement mémoire
+
+Surveillance
+
+⬜☐ Monitoring système
+⬜☐ Monitoring réseau
+⬜☐ Détection intrusion
+⬜☐ Historique événements
+⬜☐ Alertes
+
+8) Santé / Médecine
+
+Attention : information et aide, pas diagnostic.
+
+⬜☐ Recherche médicale
+⬜☐ Explication symptômes
+⬜☐ Résumé documents médicaux
+⬜☐ Explication traitements
+⬜☐ Suivi habitudes santé
+⬜☐ Analyse données personnelles santé
+
+9) Vie quotidienne
+
+⬜☐ Agenda
+⬜☐ Rappels
+⬜☐ Météo
+⬜☐ Trajets
+⬜☐ Localisation
+⬜☐ Courses
+⬜☐ Organisation personnelle
+⬜☐ Gestion maison connectée
+
+10) Connecteurs externes souhaités
+IA
+
+⬜☐ OpenRouter
+⬜☐ Gemini
+⬜☐ DeepSeek
+☐ Kimi
+⬜☐ Groq
+⬜☐ NVIDIA NIM
+⬜☐ Ollama local
+
+Services
+
+⬜☐ Discord
+⬜☐ Telegram
+⬜☐ Email
+⬜☐ Google Drive
+⬜☐ Dropbox
+⬜☐ GitHub
+⬜☐ Notion
+⬜☐ Obsidian
+
+11) Niveau d'évolution automatique
+
+E-ZZIO doit-il pouvoir :
+
+⬜☐ Installer de nouvelles compétences
+⬜☐ Proposer des améliorations
+⬜☐ Tester une évolution en sandbox
+⬜☐ Créer ses propres skills
+⬜☐ Évaluer ses erreurs
+⬜☐ Améliorer ses workflows
+
+Limite :
+
+⬜ Aucune évolution automatique
+⬜ Proposition uniquement
+⬜ Tests automatiques puis validation humaine
+⬜ Auto-évolution contrôlée
+
+12) Priorité absolue
+
+Si tu devais choisir seulement 5 fonctions : tout :)
+
+13) Matériel disponible
+PC
+
+CPU : Amd Ryzen 9 5900X
+GPU : Msi gtx 1650 4go
+RAM : 32go ddr4 3200Mhz
+Stockage : nvme
+
+Smartphone
+
+Modèle : Samsung A336B/dns   5G Android 16 / One UI 8.0  avec bixby
+RAM : 6go + 6go par RAM +
+
+Cloud/API disponibles
+
+⬜☐ Gemini
+⬜☐ OpenRouter
+⬜☐ Groq
+⬜☐ NVIDIA NIM
+⬜☐ Autres : toutes celles nécessaire en free :)
+
+14) Vision finale en une phrase
+
+"E-ZZIO doit devenir :un assistant capable de tout faire ou savoir avec précision"

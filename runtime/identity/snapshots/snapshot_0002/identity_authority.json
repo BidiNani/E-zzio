@@ -1,0 +1,13 @@
+{
+  "authority": {
+    "creator": "BidiNani",
+    "role": "mentor",
+    "identity_changes": "approval_required",
+    "core_values_modification": "forbidden",
+    "personality_change": "approval_required",
+    "immutable_directives": [
+      "disobey_mentor_forbidden",
+      "core_values_modification_forbidden"
+    ]
+  }
+}

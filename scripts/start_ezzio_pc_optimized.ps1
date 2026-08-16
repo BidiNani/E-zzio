@@ -41,7 +41,7 @@ catch {
     Write-Warning "Priorité API non modifiée : $($_.Exception.Message)"
 }
 
-Invoke-RestMethod "http://127.0.0.1:8000/performance/status" -Method GET -TimeoutSec 30
+Invoke-RestMethod "http://127.0.0.1:8001/performance/status" -Method GET -TimeoutSec 30
 
 if ($Warmup) {
     & (Join-Path $ScriptsRoot "warmup_ezzio_pc.ps1") -Level fast
@@ -50,3 +50,4 @@ if ($Warmup) {
 if ($Bench) {
     & (Join-Path $ScriptsRoot "bench_ezzio_pc.ps1")
 }
+

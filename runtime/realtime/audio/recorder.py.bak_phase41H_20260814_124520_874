@@ -1,0 +1,183 @@
+import asyncio
+import time
+from typing import AsyncIterator, Optional, Tuple
+
+import numpy as np
+
+from .vad import VADController
+
+
+class AsyncAudioRecorder:
+    """
+    Capture asynchrone durcie.
+
+    Propriétés :
+      - bounded queue
+      - thread-safe callback PortAudio
+      - mode virtuel CI
+      - overflow comptabilisé
+      - arrêt déterministe
+      - aucune attente bloquante dans callback
+    """
+
+    def __init__(
+        self,
+        vad_model_path: str,
+        sample_rate: int = 16000,
+        chunk_samples: int = 512,
+        queue_size: int = 8,
+        virtual_mode: bool = False,
+    ):
+        self.sample_rate = int(sample_rate)
+        self.chunk_samples = int(chunk_samples)
+        self.virtual_mode = bool(virtual_mode)
+
+        if queue_size < 2:
+            raise ValueError(
+                "queue_size doit être >= 2"
+            )
+
+        self.queue = asyncio.Queue(
+            maxsize=queue_size
+        )
+
+        self._stream = None
+        self._is_recording = False
+        self._loop: Optional[asyncio.AbstractEventLoop] = None
+
+        self.overflow_count = 0
+        self.callback_count = 0
+
+        self.vad = VADController(
+            model_path=vad_model_path
+        )
+
+    def feed_virtual_chunk(
+        self,
+        chunk: np.ndarray,
+        t1_timestamp: Optional[float] = None,
+    ) -> None:
+        if t1_timestamp is None:
+            t1_timestamp = time.perf_counter()
+
+        item = (
+            np.ascontiguousarray(
+                chunk,
+                dtype=np.float32,
+            ),
+            float(t1_timestamp),
+        )
+
+        try:
+            self.queue.put_nowait(item)
+
+        except asyncio.QueueFull:
+            self.overflow_count += 1
+
+            try:
+                self.queue.get_nowait()
+            except asyncio.QueueEmpty:
+                pass
+
+            self.queue.put_nowait(item)
+
+    def _callback(
+        self,
+        indata,
+        frames,
+        ctime,
+        status,
+    ):
+        t1 = time.perf_counter()
+
+        self.callback_count += 1
+
+        chunk = np.array(
+            indata,
+            dtype=np.float32,
+            copy=True,
+        )
+
+        if self._loop is None:
+            return
+
+        if not self._loop.is_running():
+            return
+
+        self._loop.call_soon_threadsafe(
+            self.feed_virtual_chunk,
+            chunk,
+            t1,
+        )
+
+    def _start_portaudio(self) -> None:
+        if self.virtual_mode:
+            return
+
+        import sounddevice as sd
+
+        self._stream = sd.InputStream(
+            samplerate=self.sample_rate,
+            channels=1,
+            dtype="float32",
+            blocksize=self.chunk_samples,
+            callback=self._callback,
+        )
+
+        self._stream.start()
+
+    async def listen_stream(
+        self,
+    ) -> AsyncIterator[dict]:
+        if self._is_recording:
+            raise RuntimeError(
+                "AsyncAudioRecorder déjà actif."
+            )
+
+        self._loop = asyncio.get_running_loop()
+        self._is_recording = True
+
+        self.vad.reset()
+        self._start_portaudio()
+
+        try:
+            while self._is_recording:
+                try:
+                    chunk, t1 = await self.queue.get()
+                except asyncio.CancelledError:
+                    break
+
+                t2 = time.perf_counter()
+
+                result = self.vad.process_chunk(
+                    chunk,
+                    t2,
+                )
+
+                result["metrics"]["t1_callback"] = t1
+                result["metrics"]["t2_dequeue"] = t2
+                result["metrics"]["callback_to_dequeue_ms"] = (
+                    t2 - t1
+                ) * 1000.0
+
+                yield result
+
+        finally:
+            self.stop()
+
+    def stop(self) -> None:
+        self._is_recording = False
+
+        if self._stream is not None:
+            try:
+                self._stream.stop()
+            finally:
+                self._stream.close()
+
+            self._stream = None
+
+        while True:
+            try:
+                self.queue.get_nowait()
+            except asyncio.QueueEmpty:
+                break

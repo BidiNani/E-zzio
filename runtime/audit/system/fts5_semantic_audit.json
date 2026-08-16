@@ -1,0 +1,23 @@
+{
+  "total_records": 2926,
+  "memory_type_breakdown": {
+    "generic": 1564,
+    "security_audit": 1288,
+    "experience_ledger": 55,
+    "identity_core": 19
+  },
+  "low_confidence_count": 1564,
+  "top_content_duplicates": [],
+  "top_sources": {
+    "runtime/security/forensic/ledger_forensic_backup_20260811_203058_277637.jsonl": 801,
+    "runtime/audit/tool_calls.jsonl": 683,
+    "runtime/audit/security_events.jsonl": 414,
+    "state/pc_commander/journal.jsonl": 88,
+    "state/human_loop/journal.jsonl": 79,
+    "registry/telemetry/events.jsonl": 62,
+    "state/human_chat/sessions/pc.jsonl": 54,
+    "runtime/decisions/archive/ledger_000001.jsonl": 50,
+    "state/safe_actions/queue.jsonl": 46,
+    "state/safe_actions/runs.jsonl": 42
+  }
+}

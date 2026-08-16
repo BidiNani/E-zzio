@@ -1,0 +1,79 @@
+{
+  "routes": {
+    "code": "gemma2.5-coder:7b",
+    "fast_reply": "gemma4e4b:latest",
+    "chat": "gemma2:2b",
+    "embeddings": "nomic-embed-text:latest",
+    "analysis": "qwen3:8b",
+    "general": "gemma2:2b",
+    "reasoning": "qwen3:8b"
+  },
+  "catalog": {
+    "nomic-embed-text:latest": {
+      "provider": "ollama",
+      "type": "embedding",
+      "capabilities": [
+        "embeddings",
+        "memory"
+      ]
+    },
+    "qwen3:8b": {
+      "max_complexity": "high",
+      "provider": "ollama",
+      "options": {
+        "num_ctx": 4096,
+        "temperature": 0.3,
+        "num_predict": 1024
+      },
+      "keep_alive": "10m",
+      "capabilities": [
+        "reasoning",
+        "code",
+        "analysis"
+      ]
+    },
+    "qwen2.5-coder:7b": {
+      "max_complexity": "high",
+      "provider": "ollama",
+      "options": {
+        "num_ctx": 4096,
+        "temperature": 0.3,
+        "num_predict": 1024
+      },
+      "keep_alive": "10m",
+      "capabilities": [
+        "code",
+        "engineering"
+      ]
+    },
+    "gemma4e4b:latest": {
+      "max_complexity": "low",
+      "provider": "ollama",
+      "options": {
+        "num_ctx": 4096,
+        "temperature": 0.7,
+        "num_predict": 200
+      },
+      "keep_alive": "30m",
+      "capabilities": [
+        "chat",
+        "general",
+        "fast_reply"
+      ]
+    },
+    "gemma2:2b": {
+      "provider": "ollama",
+      "capabilities": [
+        "chat",
+        "general",
+        "fast_reply"
+      ],
+      "max_complexity": "low",
+      "options": {
+        "num_predict": 512,
+        "temperature": 0.7
+      }
+    }
+  },
+  "default_model": "gemma2:2b"
+}

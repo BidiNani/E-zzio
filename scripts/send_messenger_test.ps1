@@ -6,7 +6,7 @@ param(
     [switch]$Send
 )
 
-$BaseUrl = "http://127.0.0.1:8000"
+$BaseUrl = "http://127.0.0.1:8001"
 
 $body = @{
     text = $Message
@@ -17,3 +17,4 @@ Invoke-RestMethod "$BaseUrl/omni/messenger/send" `
   -Method POST `
   -ContentType "application/json" `
   -Body $body
+

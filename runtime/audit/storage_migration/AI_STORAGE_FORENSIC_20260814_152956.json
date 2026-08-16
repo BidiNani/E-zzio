@@ -1,0 +1,2697 @@
+{
+  "Timestamp": "2026-08-14T15:31:49.3526032+02:00",
+  "Computer": "BIDINANI",
+  "User": "enrik",
+  "DriveInfo": [],
+  "AIPaths": [
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Programs\\Python",
+      "Name": "Python",
+      "Type": "Directory",
+      "Category": "AI-related",
+      "SizeGB": null,
+      "Files": null,
+      "LastModified": "2026-06-11T10:00:09.9882258+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Blizzard Entertainment",
+      "Name": "Blizzard Entertainment",
+      "Type": "Directory",
+      "Category": "AI-related",
+      "SizeGB": null,
+      "Files": null,
+      "LastModified": "2026-07-07T13:29:41.4741318+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\BloodstainedRotN",
+      "Name": "BloodstainedRotN",
+      "Type": "Directory",
+      "Category": "AI-related",
+      "SizeGB": null,
+      "Files": null,
+      "LastModified": "2026-01-27T14:49:28.1264988+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\com.nousresearch.hermes.setup",
+      "Name": "com.nousresearch.hermes.setup",
+      "Type": "Directory",
+      "Category": "AI-related",
+      "SizeGB": null,
+      "Files": null,
+      "LastModified": "2026-07-16T15:25:43.5361972+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\CrewAI",
+      "Name": "CrewAI",
+      "Type": "Directory",
+      "Category": "AI-related",
+      "SizeGB": null,
+      "Files": null,
+      "LastModified": "2026-06-05T21:17:39.3293042+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\hermes",
+      "Name": "hermes",
+      "Type": "Directory",
+      "Category": "AI-related",
+      "SizeGB": null,
+      "Files": null,
+      "LastModified": "2026-07-24T23:39:31.4941489+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Ollama",
+      "Name": "Ollama",
+      "Type": "Directory",
+      "Category": "AI-related",
+      "SizeGB": null,
+      "Files": null,
+      "LastModified": "2026-08-14T12:59:10.7999044+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\OpenAI",
+      "Name": "OpenAI",
+      "Type": "Directory",
+      "Category": "AI-related",
+      "SizeGB": null,
+      "Files": null,
+      "LastModified": "2026-06-11T22:20:30.1874123+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\Hermes",
+      "Name": "Hermes",
+      "Type": "Directory",
+      "Category": "AI-related",
+      "SizeGB": null,
+      "Files": null,
+      "LastModified": "2026-07-25T00:03:52.1410153+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\ollama app.exe",
+      "Name": "ollama app.exe",
+      "Type": "Directory",
+      "Category": "AI-related",
+      "SizeGB": null,
+      "Files": null,
+      "LastModified": "2026-05-26T15:30:55.8461392+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\Python",
+      "Name": "Python",
+      "Type": "Directory",
+      "Category": "AI-related",
+      "SizeGB": null,
+      "Files": null,
+      "LastModified": "2026-07-29T00:47:41.537175+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\VoiceAccess",
+      "Name": "VoiceAccess",
+      "Type": "Directory",
+      "Category": "AI-related",
+      "SizeGB": null,
+      "Files": null,
+      "LastModified": "2026-05-23T16:42:49.5444162+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\.cache\\huggingface",
+      "Name": "huggingface",
+      "Type": "Directory",
+      "Category": "AI-related",
+      "SizeGB": null,
+      "Files": null,
+      "LastModified": "2026-08-13T21:11:58.7367732+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Blizzard Entertainment",
+      "Name": "Blizzard Entertainment",
+      "Type": "Directory",
+      "Category": "AI-related",
+      "SizeGB": null,
+      "Files": null,
+      "LastModified": "2026-07-06T16:59:12.5172265+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Program Files\\Windows Mail",
+      "Name": "Windows Mail",
+      "Type": "Directory",
+      "Category": "AI-related",
+      "SizeGB": null,
+      "Files": null,
+      "LastModified": "2026-06-21T18:13:39.561426+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Program Files (x86)\\LibreOffice Maintenance Service",
+      "Name": "LibreOffice Maintenance Service",
+      "Type": "Directory",
+      "Category": "AI-related",
+      "SizeGB": null,
+      "Files": null,
+      "LastModified": "2026-05-31T19:25:36.9095079+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Program Files (x86)\\Mozilla Maintenance Service",
+      "Name": "Mozilla Maintenance Service",
+      "Type": "Directory",
+      "Category": "AI-related",
+      "SizeGB": null,
+      "Files": null,
+      "LastModified": "2026-08-14T12:56:37.8235721+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Program Files (x86)\\Windows Mail",
+      "Name": "Windows Mail",
+      "Type": "Directory",
+      "Category": "AI-related",
+      "SizeGB": null,
+      "Files": null,
+      "LastModified": "2026-06-21T18:13:39.7254266+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\.cache\\huggingface\\hub\\models--Systran--faster-whisper-base\\snapshots\\ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66\\model.bin",
+      "Name": "model.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-13T21:12:02.0106575+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\.cache\\huggingface\\hub\\models--Systran--faster-whisper-tiny\\snapshots\\d90ca5fe260221311c53c58e660288d3deb8d356\\model.bin",
+      "Name": "model.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-14T13:42:12.109983+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Amazon Games\\App\\Amazon Games UI\\natives_blob.bin",
+      "Name": "natives_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-23T20:43:14.4741631+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Amazon Games\\App\\Amazon Games UI\\snapshot_blob.bin",
+      "Name": "snapshot_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-23T20:43:13.8435589+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Amazon Games\\App\\Amazon Games UI\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2025-12-23T20:43:13.4415004+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Amazon Games\\App\\App\\Amazon Games UI\\._natives_blob.bin",
+      "Name": "._natives_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-03-03T13:23:27.0845115+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Amazon Games\\App\\App\\Amazon Games UI\\._snapshot_blob.bin",
+      "Name": "._snapshot_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-03-03T13:23:27.0845115+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Amazon Games\\App\\App\\Amazon Games UI\\._v8_context_snapshot.bin",
+      "Name": "._v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-03-03T13:23:26.9824591+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Sync Data\\Nigori.bin",
+      "Name": "Nigori.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-14T15:30:13.6817458+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data\\OnDeviceHeadSuggestModel\\20251024.824731831.14\\cr_fr_500000_index.bin",
+      "Name": "cr_fr_500000_index.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.007,
+      "Files": 1,
+      "LastModified": "2025-10-31T09:47:30+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\devin\\cli\\model_configs_v2.bin",
+      "Name": "model_configs_v2.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-06-03T16:55:36.4045576+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\devin\\cli\\team_settings.bin",
+      "Name": "team_settings.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-06-03T16:55:36.2907512+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Discord\\app-1.0.9252\\snapshot_blob.bin",
+      "Name": "snapshot_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-22T23:02:36+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Discord\\app-1.0.9252\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-07-22T23:02:36+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Epic Games\\EOSOverlay\\BrowserCache\\0\\OnDeviceHeadSuggestModel\\20251024.824731831.14\\cr_en-us_500000_index.bin",
+      "Name": "cr_en-us_500000_index.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.007,
+      "Files": 1,
+      "LastModified": "2025-10-31T09:38:04+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Epic Games\\EOSOverlay\\BrowserCache\\1\\OnDeviceHeadSuggestModel\\20251024.824731831.14\\cr_en-us_500000_index.bin",
+      "Name": "cr_en-us_500000_index.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.007,
+      "Files": 1,
+      "LastModified": "2025-10-31T09:38:04+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\FortniteGame\\Saved\\PersistentDownloadDir\\ConfigRules\\configrules.bin",
+      "Name": "configrules.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-04-09T14:52:19.6790027+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\apps\\desktop\\release\\win-unpacked\\snapshot_blob.bin",
+      "Name": "snapshot_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-16T15:32:12.3171368+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\apps\\desktop\\release\\win-unpacked\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-07-16T15:32:12.3252638+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\node_modules\\electron\\dist\\snapshot_blob.bin",
+      "Name": "snapshot_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-16T15:32:12.3171368+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\node_modules\\electron\\dist\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-07-16T15:32:12.3252638+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\librewolf\\Profiles\\v46y8z83.default-default\\startupCache\\scriptCache-child-current.bin",
+      "Name": "scriptCache-child-current.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-07-21T16:18:28.2730145+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\librewolf\\Profiles\\v46y8z83.default-default\\startupCache\\scriptCache-current.bin",
+      "Name": "scriptCache-current.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.012,
+      "Files": 1,
+      "LastModified": "2026-07-21T15:45:18.0937405+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\librewolf\\Profiles\\v46y8z83.default-default\\startupCache\\scriptCache.bin",
+      "Name": "scriptCache.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.012,
+      "Files": 1,
+      "LastModified": "2026-07-22T13:29:54.7317542+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\librewolf\\Profiles\\v46y8z83.default-default\\startupCache\\urlCache-current.bin",
+      "Name": "urlCache-current.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-21T16:18:28.2691179+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\librewolf\\Profiles\\v46y8z83.default-default\\startupCache\\urlCache.bin",
+      "Name": "urlCache.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-22T13:29:54.7212365+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\Sync Data\\Nigori.bin",
+      "Name": "Nigori.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-04T22:44:02.7271587+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Microsoft\\GameDVR\\KnownGameList.bin",
+      "Name": "KnownGameList.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.002,
+      "Files": 1,
+      "LastModified": "2026-07-12T16:15:12.7747879+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Microsoft\\IdentityCache\\1\\UD\\u_JRN7PUU2A1SE7ISK\\e_C2GK9UTC67FSUCG3\\Accounts\\r_74DB6FURNR2TGPBK.bin",
+      "Name": "r_74DB6FURNR2TGPBK.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-05-14T23:05:40.7693692+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Microsoft\\IdentityCache\\1\\UD\\u_JRN7PUU2A1SE7ISK\\e_C2GK9UTC67FSUCG3\\AT\\r_74DB6FURNR2TGPBK\\c_6HM880EG8H6C0PCE.bin",
+      "Name": "c_6HM880EG8H6C0PCE.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-05-14T23:05:40.7663681+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Microsoft\\IdentityCache\\1\\UD\\u_JRN7PUU2A1SE7ISK\\e_C2GK9UTC67FSUCG3\\AT\\r_74DB6FURNR2TGPBK\\c_94KNEF8S46HLAJC9.bin",
+      "Name": "c_94KNEF8S46HLAJC9.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-05T10:39:53.9702097+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Microsoft\\IdentityCache\\1\\UD\\u_JRN7PUU2A1SE7ISK\\e_C2GK9UTC67FSUCG3\\AT\\r_74DB6FURNR2TGPBK\\c_9FGCD9G3CIHBMGC9.bin",
+      "Name": "c_9FGCD9G3CIHBMGC9.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-02-15T17:21:07.4356814+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Microsoft\\IdentityCache\\1\\UD\\u_JRN7PUU2A1SE7ISK\\e_C2GK9UTC67FSUCG3\\AT\\r_74DB6FURNR2TGPBK\\c_Q1JJ95IJFFRNT2GU.bin",
+      "Name": "c_Q1JJ95IJFFRNT2GU.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-05T10:39:54.1101651+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Microsoft\\IdentityCache\\1\\UD\\u_JRN7PUU2A1SE7ISK\\e_C2GK9UTC67FSUCG3\\AT\\r_74DB6FURNR2TGPBK\\c_SR6F7R8QM7CIK9QU.bin",
+      "Name": "c_SR6F7R8QM7CIK9QU.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-05T10:39:53.9536989+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Microsoft\\IdentityCache\\1\\UD\\u_JRN7PUU2A1SE7ISK\\e_C2GK9UTC67FSUCG3\\AT\\r_74DB6FURNR2TGPBK\\c_VMKM3FJ266RBBIFS.bin",
+      "Name": "c_VMKM3FJ266RBBIFS.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-05-03T16:31:23.7121914+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Microsoft\\IdentityCache\\1\\UD\\u_JRN7PUU2A1SE7ISK\\e_C2GK9UTC67FSUCG3\\ID\\r_74DB6FURNR2TGPBK\\c_6HM880EG8H6C0PCE.bin",
+      "Name": "c_6HM880EG8H6C0PCE.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-05-14T23:05:40.7673692+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Microsoft\\IdentityCache\\1\\UD\\u_JRN7PUU2A1SE7ISK\\e_C2GK9UTC67FSUCG3\\ID\\r_74DB6FURNR2TGPBK\\c_94KNEF8S46HLAJC9.bin",
+      "Name": "c_94KNEF8S46HLAJC9.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-05T10:39:53.9712098+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Microsoft\\IdentityCache\\1\\UD\\u_JRN7PUU2A1SE7ISK\\e_C2GK9UTC67FSUCG3\\ID\\r_74DB6FURNR2TGPBK\\c_9FGCD9G3CIHBMGC9.bin",
+      "Name": "c_9FGCD9G3CIHBMGC9.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-02-15T17:21:07.4366777+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Microsoft\\IdentityCache\\1\\UD\\u_JRN7PUU2A1SE7ISK\\e_C2GK9UTC67FSUCG3\\ID\\r_74DB6FURNR2TGPBK\\c_Q1JJ95IJFFRNT2GU.bin",
+      "Name": "c_Q1JJ95IJFFRNT2GU.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-05T10:39:54.1111644+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Microsoft\\IdentityCache\\1\\UD\\u_JRN7PUU2A1SE7ISK\\e_C2GK9UTC67FSUCG3\\ID\\r_74DB6FURNR2TGPBK\\c_SR6F7R8QM7CIK9QU.bin",
+      "Name": "c_SR6F7R8QM7CIK9QU.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-05T10:39:53.954699+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Microsoft\\IdentityCache\\1\\UD\\u_JRN7PUU2A1SE7ISK\\e_C2GK9UTC67FSUCG3\\ID\\r_74DB6FURNR2TGPBK\\c_VMKM3FJ266RBBIFS.bin",
+      "Name": "c_VMKM3FJ266RBBIFS.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-05-03T16:31:23.7192586+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Microsoft\\SSMS\\22.0_59da8ebd\\privateregistry.bin",
+      "Name": "privateregistry.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.003,
+      "Files": 1,
+      "LastModified": "2026-04-30T13:02:42.7206677+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Microsoft\\SSMS\\22.0_59da8ebd\\VTC\\3038cb9bbc2efe7dd368eae759500eac\\~IC\\Templates\\cache.bin",
+      "Name": "cache.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-04-30T13:02:38.379+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Microsoft\\Windows\\1036\\StructuredQuerySchema.bin",
+      "Name": "StructuredQuerySchema.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-31T13:01:44.834974+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\ms-playwright\\chromium-1228\\chrome-win64\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-07-16T15:29:49.8246163+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\ms-playwright\\chromium_headless_shell-1228\\chrome-headless-shell-win64\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-07-16T15:29:57.2756073+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\NVIDIA\\GLCache\\3f3bca284cd30839f8421d1bb8e25cc8\\96df249bb179d595\\5ea7f2c6cd35d8a4.bin",
+      "Name": "5ea7f2c6cd35d8a4.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-07-12T16:42:13.5360508+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\NVIDIA\\GLCache\\3f3bca284cd30839f8421d1bb8e25cc8\\96df249bb179d595\\86e909d6565bbf04.bin",
+      "Name": "86e909d6565bbf04.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-09T11:22:11.1232509+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\NVIDIA\\GLCache\\3f3bca284cd30839f8421d1bb8e25cc8\\96df249bb179d595\\946278c574973d08.bin",
+      "Name": "946278c574973d08.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-07-26T03:31:51.561408+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\NVIDIA\\GLCache\\3f3bca284cd30839f8421d1bb8e25cc8\\96df249bb179d595\\aaa39bdd34d1ef89.bin",
+      "Name": "aaa39bdd34d1ef89.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-07-22T17:52:38.1391233+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\NVIDIA\\GLCache\\3f3bca284cd30839f8421d1bb8e25cc8\\96df249bb179d595\\cc8b4fd92f230ece.bin",
+      "Name": "cc8b4fd92f230ece.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-12T16:50:36.6409079+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\NVIDIA\\GLCache\\3f3bca284cd30839f8421d1bb8e25cc8\\96df249bb179d595\\fbd1bf6ce3876606.bin",
+      "Name": "fbd1bf6ce3876606.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-06T20:14:10.5437323+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\NVIDIA\\GLCache\\770f4fef79200de23d313865e4691c0d\\186620256eaaf137\\c6e976b0770384dd.bin",
+      "Name": "c6e976b0770384dd.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.012,
+      "Files": 1,
+      "LastModified": "2026-08-11T19:41:14.8352272+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\NVIDIA\\GLCache\\c30d67effd5a80bf51a0817799acf3c8\\96df249bb179d595\\217aa088a73fbc65.bin",
+      "Name": "217aa088a73fbc65.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-31T14:57:00.9356534+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\NVIDIA\\GLCache\\c30d67effd5a80bf51a0817799acf3c8\\96df249bb179d595\\5ea7f2c6cd35d8a4.bin",
+      "Name": "5ea7f2c6cd35d8a4.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-08-14T11:27:54.0763681+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\NVIDIA\\GLCache\\c30d67effd5a80bf51a0817799acf3c8\\96df249bb179d595\\946278c574973d08.bin",
+      "Name": "946278c574973d08.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.002,
+      "Files": 1,
+      "LastModified": "2026-08-13T16:30:54.7423508+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\NVIDIA\\GLCache\\c30d67effd5a80bf51a0817799acf3c8\\96df249bb179d595\\946278c574973d09.bin",
+      "Name": "946278c574973d09.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.002,
+      "Files": 1,
+      "LastModified": "2026-08-02T13:58:03.8400343+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\NVIDIA\\GLCache\\c30d67effd5a80bf51a0817799acf3c8\\96df249bb179d595\\946278c574973d0a.bin",
+      "Name": "946278c574973d0a.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-08-02T01:28:02.0442955+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\NVIDIA\\GLCache\\c30d67effd5a80bf51a0817799acf3c8\\96df249bb179d595\\cc8b4fd92f230ece.bin",
+      "Name": "cc8b4fd92f230ece.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-02T00:51:04.9112451+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\NVIDIA\\GLCache\\c30d67effd5a80bf51a0817799acf3c8\\96df249bb179d595\\fbd1bf6ce3876606.bin",
+      "Name": "fbd1bf6ce3876606.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-31T14:57:04.8559207+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\NVIDIA\\GLCache\\f02193a4f061fe68a169768ca516ac07\\186620256eaaf137\\3b89d526f44602c6.bin",
+      "Name": "3b89d526f44602c6.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-07T13:29:18.9443514+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\NVIDIA\\GLCache\\f02193a4f061fe68a169768ca516ac07\\186620256eaaf137\\603c510b695647d8.bin",
+      "Name": "603c510b695647d8.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-15T13:30:35.597554+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Packages\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\LocalState\\start2.bin",
+      "Name": "start2.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-14T15:27:03.505985+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Packages\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\TempState\\TileCache_100_3_PNGEncoded_Data.bin",
+      "Name": "TileCache_100_3_PNGEncoded_Data.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-08-04T17:29:09.0508754+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Packages\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\TempState\\TileCache_100_3_PNGEncoded_Header.bin",
+      "Name": "TileCache_100_3_PNGEncoded_Header.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-10T11:53:51.2477923+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Packages\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\AC\\Microsoft\\IdentityCache\\1\\UD\\u_JRN7PUU2A1SE7ISK\\e_C2GK9UTC67FSUCG3\\Accounts\\r_74DB6FURNR2TGPBK.bin",
+      "Name": "r_74DB6FURNR2TGPBK.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-06-04T16:10:23.9070246+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Packages\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TempState\\TileCache_100_3_PNGEncoded_Data.bin",
+      "Name": "TileCache_100_3_PNGEncoded_Data.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-06T16:26:34.0786818+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Packages\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TempState\\TileCache_100_3_PNGEncoded_Header.bin",
+      "Name": "TileCache_100_3_PNGEncoded_Header.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-06T16:26:34.0786818+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Programs\\Archon App\\snapshot_blob.bin",
+      "Name": "snapshot_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-03-24T19:14:22+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Programs\\Archon App\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-03-24T19:14:22+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Programs\\ReviewTool.gg\\snapshot_blob.bin",
+      "Name": "snapshot_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-01T15:16:30+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Programs\\ReviewTool.gg\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-08-01T15:16:30+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Programs\\wago-app\\snapshot_blob.bin",
+      "Name": "snapshot_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-06-07T14:20:54+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Programs\\wago-app\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-06-07T14:20:54+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Programs\\Warperia\\snapshot_blob.bin",
+      "Name": "snapshot_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-04T16:04:54+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Programs\\Warperia\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-08-04T16:04:54+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Programs\\wowup\\snapshot_blob.bin",
+      "Name": "snapshot_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-01-15T23:04:02+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Programs\\wowup\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-01-15T23:04:02+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Soulframe\\Downloaded\\Dev\\Tools\\CEF3_1\\V7\\snapshot_blob.bin",
+      "Name": "snapshot_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-01T10:46:16+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Soulframe\\Downloaded\\Dev\\Tools\\CEF3_1\\V7\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-01T10:46:16+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Soulframe\\Downloaded\\Public\\Tools\\CEF3_1\\V7\\snapshot_blob.bin",
+      "Name": "snapshot_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-01T10:46:16+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Soulframe\\Downloaded\\Public\\Tools\\CEF3_1\\V7\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-01T10:46:16+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Soulframe\\Downloaded\\Test\\Tools\\CEF3_1\\V7\\snapshot_blob.bin",
+      "Name": "snapshot_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-01T10:46:16+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Soulframe\\Downloaded\\Test\\Tools\\CEF3_1\\V7\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-01T10:46:16+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Temp\\ecache.bin",
+      "Name": "ecache.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-14T13:12:16.9097812+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\TopHeroes\\app-1.113.11\\TopHeroes_Data\\Plugins\\x86_64\\VuplexWebViewChromium\\snapshot_blob.bin",
+      "Name": "snapshot_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-15T14:48:37.6361871+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\TopHeroes\\app-1.113.11\\TopHeroes_Data\\Plugins\\x86_64\\VuplexWebViewChromium\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-07-15T14:48:37.6652285+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\TopHeroes\\app-1.115.11\\TopHeroes_Data\\Plugins\\x86_64\\VuplexWebViewChromium\\snapshot_blob.bin",
+      "Name": "snapshot_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-15T14:48:37.6361871+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\TopHeroes\\app-1.115.11\\TopHeroes_Data\\Plugins\\x86_64\\VuplexWebViewChromium\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-07-15T14:48:37.6652285+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\TopHeroes\\packages\\workDir\\TopHeroes_Data\\Plugins\\x86_64\\VuplexWebViewChromium\\snapshot_blob.bin",
+      "Name": "snapshot_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-15T14:48:37.6361871+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\TopHeroes\\packages\\workDir\\TopHeroes_Data\\Plugins\\x86_64\\VuplexWebViewChromium\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-07-15T14:48:37.6652285+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Ubisoft\\Rainbow Six - Siege\\ekshadersPCDX12_cache.bin",
+      "Name": "ekshadersPCDX12_cache.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.038,
+      "Files": 1,
+      "LastModified": "2026-01-27T15:12:57.8110418+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\Ubisoft Game Launcher\\cache\\ulcf\\cfCache.bin",
+      "Name": "cfCache.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-13T15:35:24.0899341+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\VortxEngine\\app-2.5.72\\Signal-x64\\resources\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-07-12T16:20:24.8859934+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\VortxEngine\\app-2.5.74\\Signal-x64\\resources\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-07-28T00:04:52.5845292+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\zen\\Profiles\\45jchyg8.Default (release)\\startupCache\\scriptCache-child-current.bin",
+      "Name": "scriptCache-child-current.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-22T15:01:04.3764501+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\zen\\Profiles\\45jchyg8.Default (release)\\startupCache\\scriptCache-child.bin",
+      "Name": "scriptCache-child.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-07-22T16:33:00.6570566+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\zen\\Profiles\\45jchyg8.Default (release)\\startupCache\\scriptCache-current.bin",
+      "Name": "scriptCache-current.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.014,
+      "Files": 1,
+      "LastModified": "2026-07-22T15:01:04.3728745+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\zen\\Profiles\\45jchyg8.Default (release)\\startupCache\\scriptCache.bin",
+      "Name": "scriptCache.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.014,
+      "Files": 1,
+      "LastModified": "2026-07-22T16:33:00.6525349+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\zen\\Profiles\\45jchyg8.Default (release)\\startupCache\\urlCache-current.bin",
+      "Name": "urlCache-current.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-22T15:01:04.3627102+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\zen\\Profiles\\45jchyg8.Default (release)\\startupCache\\urlCache.bin",
+      "Name": "urlCache.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-22T16:33:00.638884+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\librewolf\\Profiles\\v46y8z83.default-default\\AlternateServices.bin",
+      "Name": "AlternateServices.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-22T15:10:18.7673975+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\librewolf\\Profiles\\v46y8z83.default-default\\datareporting\\glean\\db\\data.safe.bin",
+      "Name": "data.safe.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-22T15:11:01.992849+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\librewolf\\Profiles\\v46y8z83.default-default\\extension-store\\data.safe.bin",
+      "Name": "data.safe.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-21T14:57:24.6422341+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\librewolf\\Profiles\\v46y8z83.default-default\\extension-store-menus\\data.safe.bin",
+      "Name": "data.safe.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-22T13:54:26.2233519+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\librewolf\\Profiles\\v46y8z83.default-default\\security_state\\data.safe.bin",
+      "Name": "data.safe.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.003,
+      "Files": 1,
+      "LastModified": "2026-07-22T13:29:52.8327642+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\librewolf\\Profiles\\v46y8z83.default-default\\settings\\data.safe.bin",
+      "Name": "data.safe.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-22T15:10:18.9641856+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\Netease\\Mpay\\MWSlocalStorage\\ngwebview_x20_steam\\OnDeviceHeadSuggestModel\\20251024.824731831.14\\cr_en-us_500000_index.bin",
+      "Name": "cr_en-us_500000_index.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.007,
+      "Files": 1,
+      "LastModified": "2025-10-31T09:38:04+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\Opera Software\\Opera GX Stable\\Default\\Sync Data\\Nigori.bin",
+      "Name": "Nigori.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-02-03T13:49:43.3426954+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\zen\\Background Tasks Profiles\\r32bnnv9.MozillaBackgroundTask-F0DC299D809B9700-defaultagent\\datareporting\\glean\\db\\data.safe.bin",
+      "Name": "data.safe.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-14T12:56:41.6397131+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\zen\\Background Tasks Profiles\\yjwjj20s.MozillaBackgroundTask-F0DC299D809B9700-backgroundupdate\\SiteSecurityServiceState.bin",
+      "Name": "SiteSecurityServiceState.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-13T18:53:24.3181767+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\zen\\Profiles\\45jchyg8.Default (release)\\AlternateServices.bin",
+      "Name": "AlternateServices.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-22T20:19:07.2269195+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\zen\\Profiles\\45jchyg8.Default (release)\\SiteSecurityServiceState.bin",
+      "Name": "SiteSecurityServiceState.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-22T19:55:56.8612257+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\zen\\Profiles\\45jchyg8.Default (release)\\datareporting\\glean\\db\\data.safe.bin",
+      "Name": "data.safe.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-22T20:20:00.5622888+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\zen\\Profiles\\45jchyg8.Default (release)\\extension-store\\data.safe.bin",
+      "Name": "data.safe.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-22T14:53:19.5598014+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\zen\\Profiles\\45jchyg8.Default (release)\\security_state\\data.safe.bin",
+      "Name": "data.safe.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.003,
+      "Files": 1,
+      "LastModified": "2026-07-22T16:58:03.8130935+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\zen\\Profiles\\45jchyg8.Default (release)\\settings\\data.safe.bin",
+      "Name": "data.safe.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-22T20:13:57.1653114+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\Documents\\My Games\\Tom Clancy's The Division 2\\proxy_v1.bin",
+      "Name": "proxy_v1.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-27T16:11:11+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\Documents\\Oracle Launcher v2\\oracle_oauth_iv.bin",
+      "Name": "oracle_oauth_iv.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-06-19T20:04:44.0654896+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\Documents\\Oracle Launcher v2\\oracle_oauth_key.bin",
+      "Name": "oracle_oauth_key.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-06-19T20:04:44.0654896+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\.cache\\huggingface\\hub\\models--hexgrad--Kokoro-82M\\snapshots\\f3ff3571791e39611d31c381e3a41a3af07b4987\\voices\\ff_siwis.pt",
+      "Name": "ff_siwis.pt",
+      "Type": "File",
+      "Category": "PyTorch",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-14T01:35:55.3145704+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\distutils-precedence.pth",
+      "Name": "distutils-precedence.pth",
+      "Type": "File",
+      "Category": "PyTorch",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-06-01T19:45:31+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\FortniteGame\\Intermediate\\PipInstall\\Lib\\site-packages\\learning_agents.pth",
+      "Name": "learning_agents.pth",
+      "Type": "File",
+      "Category": "PyTorch",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-04-09T14:52:39.6832+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\__editable__.hermes_agent-0.18.2.pth",
+      "Name": "__editable__.hermes_agent-0.18.2.pth",
+      "Type": "File",
+      "Category": "PyTorch",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-16T15:27:05.1625894+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\_virtualenv.pth",
+      "Name": "_virtualenv.pth",
+      "Type": "File",
+      "Category": "PyTorch",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-16T15:26:48.6296496+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\distutils-precedence.pth",
+      "Name": "distutils-precedence.pth",
+      "Type": "File",
+      "Category": "PyTorch",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-27T00:02:31.6776747+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\google_generativeai-0.8.6-py3.13-nspkg.pth",
+      "Name": "google_generativeai-0.8.6-py3.13-nspkg.pth",
+      "Type": "File",
+      "Category": "PyTorch",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-01T22:54:04.0733477+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\pywin32.pth",
+      "Name": "pywin32.pth",
+      "Type": "File",
+      "Category": "PyTorch",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-16T15:26:54.6010269+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\uv\\cache\\archive-v0\\KTY55-bOFPDUZYqo\\__editable__.hermes_agent-0.18.2.pth",
+      "Name": "__editable__.hermes_agent-0.18.2.pth",
+      "Type": "File",
+      "Category": "PyTorch",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-16T15:27:05.1625894+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\uv\\cache\\archive-v0\\sx7BjHkbJPbjYW_c\\pywin32.pth",
+      "Name": "pywin32.pth",
+      "Type": "File",
+      "Category": "PyTorch",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-16T15:26:54.6010269+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\uv\\cache\\archive-v0\\T9yQXqrMKKRAEI9v\\distutils-precedence.pth",
+      "Name": "distutils-precedence.pth",
+      "Type": "File",
+      "Category": "PyTorch",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-16T15:26:53.8299441+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages\\distutils-precedence.pth",
+      "Name": "distutils-precedence.pth",
+      "Type": "File",
+      "Category": "PyTorch",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-16T15:26:10.5172684+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\lib\\oracle-cli\\Lib\\site-packages\\distutils-precedence.pth",
+      "Name": "distutils-precedence.pth",
+      "Type": "File",
+      "Category": "PyTorch",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-25T15:52:56.1547887+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\ensurepip\\_bundled\\pip-25.0.1-py3-none-any.whl",
+      "Name": "pip-25.0.1-py3-none-any.whl",
+      "Type": "File",
+      "Category": "Python-Wheel",
+      "SizeGB": 0.002,
+      "Files": 1,
+      "LastModified": "2024-01-01T01:00:00+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\uv\\cache\\sdists-v9\\editable\\5f1b90d7dff4884f\\tNCA1-J7jrw8IJgB\\hermes_agent-0.18.2-0.editable-py3-none-any.whl",
+      "Name": "hermes_agent-0.18.2-0.editable-py3-none-any.whl",
+      "Type": "File",
+      "Category": "Python-Wheel",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-16T15:27:05.0226801+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\ensurepip\\_bundled\\pip-24.0-py3-none-any.whl",
+      "Name": "pip-24.0-py3-none-any.whl",
+      "Type": "File",
+      "Category": "Python-Wheel",
+      "SizeGB": 0.002,
+      "Files": 1,
+      "LastModified": "2026-07-16T15:26:10.2234694+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\ensurepip\\_bundled\\setuptools-79.0.1-py3-none-any.whl",
+      "Name": "setuptools-79.0.1-py3-none-any.whl",
+      "Type": "File",
+      "Category": "Python-Wheel",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-07-16T15:26:10.2381212+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\uv\\python\\cpython-3.14.5-windows-x86_64-none\\Lib\\ensurepip\\_bundled\\pip-26.1.1-py3-none-any.whl",
+      "Name": "pip-26.1.1-py3-none-any.whl",
+      "Type": "File",
+      "Category": "Python-Wheel",
+      "SizeGB": 0.002,
+      "Files": 1,
+      "LastModified": "2026-05-29T00:26:26.3064655+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Epic\\EpicGamesLauncher\\Data\\Catalog\\catcache.bin",
+      "Name": "catcache.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.003,
+      "Files": 1,
+      "LastModified": "2026-08-14T13:12:27.7393714+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\GOG.com\\Galaxy\\redists\\overlay\\natives_blob.bin",
+      "Name": "natives_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-05T15:54:06+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\GOG.com\\Galaxy\\redists\\overlay\\snapshot_blob.bin",
+      "Name": "snapshot_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-05T15:54:06+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\GOG.com\\Galaxy\\redists\\overlay\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-08-05T15:54:06+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\LGHUB\\depots\\824196\\core\\LGHUB\\snapshot_blob.bin",
+      "Name": "snapshot_blob.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-11T19:56:44.4318824+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\LGHUB\\depots\\824196\\core\\LGHUB\\v8_context_snapshot.bin",
+      "Name": "v8_context_snapshot.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-08-11T19:56:44.5727121+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Microsoft\\Windows Defender\\Scans\\mpcache-4115FABF84F9EC04AA50BCD085F3FA4164073629.bin",
+      "Name": "mpcache-4115FABF84F9EC04AA50BCD085F3FA4164073629.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.034,
+      "Files": 1,
+      "LastModified": "2026-08-14T10:29:19.3046594+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Microsoft\\Windows Defender\\Scans\\MpDiag.bin",
+      "Name": "MpDiag.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-14T02:25:28.8784692+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Microsoft\\Windows Defender\\Scans\\History\\CacheManager\\0379E791-20F7-4EF8-B6B8-12C793D0E6FA-0.bin",
+      "Name": "0379E791-20F7-4EF8-B6B8-12C793D0E6FA-0.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-06-05T15:49:06.1444018+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Microsoft\\Windows Defender\\Scans\\History\\CacheManager\\4DFA38B3-8A46-47A1-BBD4-AAAE337F8EDE-0.bin",
+      "Name": "4DFA38B3-8A46-47A1-BBD4-AAAE337F8EDE-0.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.004,
+      "Files": 1,
+      "LastModified": "2026-06-23T02:54:58.0819069+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Microsoft\\Windows Defender\\Scans\\History\\CacheManager\\73AAE224-BCE8-480E-BF75-8F8F2D6C56D8-0.bin",
+      "Name": "73AAE224-BCE8-480E-BF75-8F8F2D6C56D8-0.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-04-16T17:58:57.5628809+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Microsoft\\Windows Defender\\Scans\\History\\CacheManager\\DF0A7DF8-62A1-46E9-A64F-ED04425AFC1D-0.bin",
+      "Name": "DF0A7DF8-62A1-46E9-A64F-ED04425AFC1D-0.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-14T10:29:51.8119995+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Microsoft\\Windows Defender\\Scans\\History\\CacheManager\\EB888070-67C3-4640-BBA2-4D0464C380E5-0.bin",
+      "Name": "EB888070-67C3-4640-BBA2-4D0464C380E5-0.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-05-27T18:44:38.6658264+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Microsoft\\Windows Defender\\Support\\MpWppCoreTracing-20260813-170935-00000003-100000000.bin",
+      "Name": "MpWppCoreTracing-20260813-170935-00000003-100000000.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-14T02:09:36.8533735+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Microsoft\\Windows Defender\\Support\\MpWppCoreTracing-20260814-101836-00000003-100000000.bin",
+      "Name": "MpWppCoreTracing-20260814-101836-00000003-100000000.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-14T10:18:36.484594+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Microsoft\\Windows Defender\\Support\\MpWppTracing-20260813-150935-00000003-fffffffeffffffff.bin",
+      "Name": "MpWppTracing-20260813-150935-00000003-fffffffeffffffff.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.004,
+      "Files": 1,
+      "LastModified": "2026-08-14T02:28:01.6675997+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Microsoft\\Windows Defender\\Support\\MpWppTracing-20260814-081836-00000003-fffffffeffffffff.bin",
+      "Name": "MpWppTracing-20260814-081836-00000003-fffffffeffffffff.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-14T10:18:37.0521514+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Microsoft\\Windows Defender\\Support\\MpWppUpdateLogging-20260813-170936.bin",
+      "Name": "MpWppUpdateLogging-20260813-170936.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-13T17:19:51.1966275+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Mozilla-1de4eec8-1241-4177-a864-e594e8d1fb38\\updates\\F0DC299D809B9700\\backgroundupdate\\datareporting\\glean\\db\\data.safe.bin",
+      "Name": "data.safe.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-14T08:53:25.2454694+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlisp\\versions\\131343\\files\\160_B9CF688.bin",
+      "Name": "160_B9CF688.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:39.6343471+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlisp\\versions\\20316160\\files\\160_E658703.bin",
+      "Name": "160_E658703.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.004,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:38.5564641+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlisp\\versions\\66150\\files\\160_E99B5EC.bin",
+      "Name": "160_E99B5EC.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:43.0079214+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlisp\\versions\\66154\\files\\160_B9D2F5C.bin",
+      "Name": "160_B9D2F5C.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.002,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:44.0435951+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlisp\\versions\\66154\\files\\160_B9D8C54.bin",
+      "Name": "160_B9D8C54.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.002,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:40.8573428+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlisp\\versions\\66154\\files\\160_B9DAE68.bin",
+      "Name": "160_B9DAE68.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.002,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:45.1536037+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlisp\\versions\\66405\\files\\160_B9DF510.bin",
+      "Name": "160_B9DF510.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.005,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:41.9681764+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\131356\\files\\160_B9B0430.bin",
+      "Name": "160_B9B0430.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.011,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:37.3152778+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\131356\\files\\160_B9D3EF0.bin",
+      "Name": "160_B9D3EF0.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.011,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:23.2706825+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\131356\\files\\160_B9E26B0.bin",
+      "Name": "160_B9E26B0.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.011,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:33.3498953+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\131356\\files\\160_F7361DC.bin",
+      "Name": "160_F7361DC.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.011,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:26.9679689+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\131357\\files\\160_B9F5618.bin",
+      "Name": "160_B9F5618.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.011,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:35.9639361+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\131529\\files\\160_B9BF564.bin",
+      "Name": "160_B9BF564.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.014,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:32.1784799+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\131529\\files\\160_B9C3560.bin",
+      "Name": "160_B9C3560.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.014,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:34.7269004+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\131529\\files\\160_B9FACDC.bin",
+      "Name": "160_B9FACDC.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.014,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:24.6941821+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\131599\\files\\160_B9CF688.bin",
+      "Name": "160_B9CF688.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.013,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:20.5220344+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\20316928\\files\\160_E658700.bin",
+      "Name": "160_E658700.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.046,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:30.4707101+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\20317440\\files\\160_E658700.bin",
+      "Name": "160_E658700.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.069,
+      "Files": 1,
+      "LastModified": "2026-01-10T21:48:54.5751427+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\20317442\\files\\160_E658700.bin",
+      "Name": "160_E658700.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.069,
+      "Files": 1,
+      "LastModified": "2026-01-14T12:56:27.5272555+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\20317696\\files\\160_E658700.bin",
+      "Name": "160_E658700.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.069,
+      "Files": 1,
+      "LastModified": "2026-03-31T19:08:50.8068871+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\65644\\files\\160_B9CB0B8.bin",
+      "Name": "160_B9CB0B8.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.004,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:05.867419+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\65644\\files\\160_B9D48D0.bin",
+      "Name": "160_B9D48D0.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.004,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:07.4654117+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\65644\\files\\160_B9D6F08.bin",
+      "Name": "160_B9D6F08.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.004,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:12.29769+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\65644\\files\\160_B9D7388.bin",
+      "Name": "160_B9D7388.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.004,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:18.2156366+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\65644\\files\\160_B9DB4F4.bin",
+      "Name": "160_B9DB4F4.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.004,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:15.8718224+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\65644\\files\\160_B9DFA64.bin",
+      "Name": "160_B9DFA64.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.004,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:08.5728225+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\65644\\files\\160_B9FD524.bin",
+      "Name": "160_B9FD524.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.004,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:13.4238584+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\65644\\files\\160_B9FD6C0.bin",
+      "Name": "160_B9FD6C0.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.004,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:10.9627179+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\65644\\files\\160_B9FEB50.bin",
+      "Name": "160_B9FEB50.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.004,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:03.1195863+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\65644\\files\\160_B9FF4BC.bin",
+      "Name": "160_B9FF4BC.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.004,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:04.4775864+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\66157\\files\\160_B9D8C54.bin",
+      "Name": "160_B9D8C54.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.011,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:21.9130292+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\66157\\files\\160_B9DAE68.bin",
+      "Name": "160_B9DAE68.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.011,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:19.3433718+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\66157\\files\\160_E99B5EC.bin",
+      "Name": "160_E99B5EC.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.011,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:09.8704718+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\66158\\files\\160_B9D2F5C.bin",
+      "Name": "160_B9D2F5C.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.011,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:17.076641+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlss\\versions\\66410\\files\\160_B9DF510.bin",
+      "Name": "160_B9DF510.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.005,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:14.6102815+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlssd\\versions\\20316928\\files\\160_E658700.bin",
+      "Name": "160_E658700.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.068,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:30.7217097+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlssd\\versions\\20317440\\files\\160_E658700.bin",
+      "Name": "160_E658700.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.056,
+      "Files": 1,
+      "LastModified": "2026-01-10T21:48:54.8156765+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlssd\\versions\\20317442\\files\\160_E658700.bin",
+      "Name": "160_E658700.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.056,
+      "Files": 1,
+      "LastModified": "2026-01-14T12:56:27.7699314+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlssd\\versions\\20317696\\files\\160_E658700.bin",
+      "Name": "160_E658700.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.056,
+      "Files": 1,
+      "LastModified": "2026-03-31T19:08:51.0328417+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlssg\\versions\\20316928\\files\\160_E658700.bin",
+      "Name": "160_E658700.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.007,
+      "Files": 1,
+      "LastModified": "2025-12-05T11:52:30.7487103+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlssg\\versions\\20317440\\files\\160_E658700.bin",
+      "Name": "160_E658700.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.007,
+      "Files": 1,
+      "LastModified": "2026-01-10T21:48:54.8456827+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlssg\\versions\\20317442\\files\\160_E658700.bin",
+      "Name": "160_E658700.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.007,
+      "Files": 1,
+      "LastModified": "2026-01-14T12:56:27.7967101+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA\\NGX\\models\\dlssg\\versions\\20317696\\files\\160_E658700.bin",
+      "Name": "160_E658700.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.007,
+      "Files": 1,
+      "LastModified": "2026-03-31T19:08:51.0618405+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA Corporation\\Drs\\nvdrsdb0.bin",
+      "Name": "nvdrsdb0.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.002,
+      "Files": 1,
+      "LastModified": "2026-08-14T11:23:31.4234836+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA Corporation\\Drs\\nvdrsdb1.bin",
+      "Name": "nvdrsdb1.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.002,
+      "Files": 1,
+      "LastModified": "2026-08-14T10:18:50.6157072+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA Corporation\\Drs\\nvdrssel.bin",
+      "Name": "nvdrssel.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-14T11:23:31.4234836+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\NVIDIA Corporation\\Drs\\update.bin",
+      "Name": "update.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-07-31T13:50:34.6995074+02:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Packer\\bhcache.07d01897d114dd6f.bin",
+      "Name": "bhcache.07d01897d114dd6f.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-26T13:08:34.1418849+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Packer\\bhcache.160a1fa040f059f9.bin",
+      "Name": "bhcache.160a1fa040f059f9.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-26T13:21:06.6729937+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Packer\\bhcache.23613789814f0ebe.bin",
+      "Name": "bhcache.23613789814f0ebe.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-26T12:59:45.2202279+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Packer\\bhcache.988ea65960d72f79.bin",
+      "Name": "bhcache.988ea65960d72f79.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2025-12-26T12:57:45.1656061+01:00"
+    },
+    {
+      "Drive": "C",
+      "Path": "C:\\ProgramData\\Packer\\catcache4.bin",
+      "Name": "catcache4.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-02-23T11:14:55.5321968+01:00"
+    },
+    {
+      "Drive": "G",
+      "Path": "G:\\AI\\E-zzio\\.venv\\Lib\\site-packages\\faster_whisper\\assets\\silero_vad_v6.onnx",
+      "Name": "silero_vad_v6.onnx",
+      "Type": "File",
+      "Category": "ONNX",
+      "SizeGB": 0.001,
+      "Files": 1,
+      "LastModified": "2026-08-13T21:09:59.3645932+02:00"
+    },
+    {
+      "Drive": "G",
+      "Path": "G:\\AI\\E-zzio\\.venv\\Lib\\site-packages\\onnxruntime\\datasets\\logreg_iris.onnx",
+      "Name": "logreg_iris.onnx",
+      "Type": "File",
+      "Category": "ONNX",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-13T21:03:28.0019755+02:00"
+    },
+    {
+      "Drive": "G",
+      "Path": "G:\\AI\\E-zzio\\.venv\\Lib\\site-packages\\onnxruntime\\datasets\\mul_1.onnx",
+      "Name": "mul_1.onnx",
+      "Type": "File",
+      "Category": "ONNX",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-13T21:03:28.0029896+02:00"
+    },
+    {
+      "Drive": "G",
+      "Path": "G:\\AI\\E-zzio\\.venv\\Lib\\site-packages\\onnxruntime\\datasets\\sigmoid.onnx",
+      "Name": "sigmoid.onnx",
+      "Type": "File",
+      "Category": "ONNX",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-13T21:03:28.0029896+02:00"
+    },
+    {
+      "Drive": "G",
+      "Path": "G:\\AI\\E-zzio\\.venv\\Lib\\site-packages\\pipecat\\audio\\turn\\smart_turn\\data\\smart-turn-v3.2-cpu.onnx",
+      "Name": "smart-turn-v3.2-cpu.onnx",
+      "Type": "File",
+      "Category": "ONNX",
+      "SizeGB": 0.008,
+      "Files": 1,
+      "LastModified": "2026-08-13T21:03:34.8665024+02:00"
+    },
+    {
+      "Drive": "G",
+      "Path": "G:\\AI\\E-zzio\\.venv\\Lib\\site-packages\\pipecat\\audio\\vad\\data\\silero_vad.onnx",
+      "Name": "silero_vad.onnx",
+      "Type": "File",
+      "Category": "ONNX",
+      "SizeGB": 0.002,
+      "Files": 1,
+      "LastModified": "2026-08-13T21:03:34.8775023+02:00"
+    },
+    {
+      "Drive": "G",
+      "Path": "G:\\AI\\E-zzio\\runtime\\realtime\\audio\\voices\\fr_FR-siwis-medium.onnx",
+      "Name": "fr_FR-siwis-medium.onnx",
+      "Type": "File",
+      "Category": "ONNX",
+      "SizeGB": 0.059,
+      "Files": 1,
+      "LastModified": "2026-08-13T21:23:22.5220888+02:00"
+    },
+    {
+      "Drive": "G",
+      "Path": "G:\\AI\\E-zzio\\runtime\\realtime\\models\\silero_vad.onnx",
+      "Name": "silero_vad.onnx",
+      "Type": "File",
+      "Category": "ONNX",
+      "SizeGB": 0.002,
+      "Files": 1,
+      "LastModified": "2026-08-13T23:04:18.5871192+02:00"
+    },
+    {
+      "Drive": "G",
+      "Path": "G:\\AI\\E-zzio\\runtime\\realtime\\models\\kokoro\\current\\kokoro-v0_19.onnx",
+      "Name": "kokoro-v0_19.onnx",
+      "Type": "File",
+      "Category": "ONNX",
+      "SizeGB": 0.303,
+      "Files": 1,
+      "LastModified": "2026-08-13T23:12:45.5753614+02:00"
+    },
+    {
+      "Drive": "G",
+      "Path": "G:\\AI\\E-zzio\\runtime\\realtime\\models\\vad\\silero_vad.onnx",
+      "Name": "silero_vad.onnx",
+      "Type": "File",
+      "Category": "ONNX",
+      "SizeGB": 0.002,
+      "Files": 1,
+      "LastModified": "2026-08-14T11:48:51.3808791+02:00"
+    },
+    {
+      "Drive": "G",
+      "Path": "G:\\AI\\E-zzio\\runtime\\realtime\\models\\kokoro\\current\\voices.bin",
+      "Name": "voices.bin",
+      "Type": "File",
+      "Category": "Model-BIN",
+      "SizeGB": 0.005,
+      "Files": 1,
+      "LastModified": "2026-08-13T23:13:17.2742063+02:00"
+    },
+    {
+      "Drive": "G",
+      "Path": "G:\\AI\\E-zzio\\.venv\\Lib\\site-packages\\distutils-precedence.pth",
+      "Name": "distutils-precedence.pth",
+      "Type": "File",
+      "Category": "PyTorch",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-12T10:45:36.120072+02:00"
+    },
+    {
+      "Drive": "G",
+      "Path": "G:\\AI\\E-zzio\\tools\\voice_converter\\.venv\\Lib\\site-packages\\distutils-precedence.pth",
+      "Name": "distutils-precedence.pth",
+      "Type": "File",
+      "Category": "PyTorch",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-14T01:39:29.1095757+02:00"
+    },
+    {
+      "Drive": "G",
+      "Path": "G:\\AI\\E-zzio\\.venv\\Lib\\site-packages\\scipy-1.17.1-cp311-cp311-win_amd64.whl",
+      "Name": "scipy-1.17.1-cp311-cp311-win_amd64.whl",
+      "Type": "File",
+      "Category": "Python-Wheel",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-13T21:03:24.0427761+02:00"
+    },
+    {
+      "Drive": "G",
+      "Path": "G:\\AI\\E-zzio\\runtime\\cache\\pip\\wheels\\1a\\b0\\8c\\4b75c4116c31f83c8f9f047231251e13cc74481cca4a78a9ce\\docopt-0.6.2-py2.py3-none-any.whl",
+      "Name": "docopt-0.6.2-py2.py3-none-any.whl",
+      "Type": "File",
+      "Category": "Python-Wheel",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-13T21:03:13.3713734+02:00"
+    },
+    {
+      "Drive": "G",
+      "Path": "G:\\AI\\E-zzio\\runtime\\realtime\\audio\\voices\\fr_FR-siwis-medium.onnx.json",
+      "Name": "fr_FR-siwis-medium.onnx.json",
+      "Type": "File",
+      "Category": "AI-File",
+      "SizeGB": 0.0,
+      "Files": 1,
+      "LastModified": "2026-08-13T21:23:22.6893465+02:00"
+    },
+    {
+      "Drive": "G",
+      "Path": "G:\\Ollama\\Models\\manifests\\registry.ollama.ai\\library\\gemma-4-E4B-it-Q4_K_M.gguf",
+      "Name": "gemma-4-E4B-it-Q4_K_M.gguf",
+      "Type": "File",
+      "Category": "LLM-GGUF",
+      "SizeGB": 4.969,
+      "Files": 1,
+      "LastModified": "2026-05-28T22:03:07.7592255+02:00"
+    }
+  ],
+  "PythonEnvironments": [
+    {
+      "Path": "C:\\Users\\enrik\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\venv",
+      "Name": "venv",
+      "PythonExe": "C:\\Users\\enrik\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\venv\\Scripts\\python.exe"
+    },
+    {
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent",
+      "Name": "hermes-agent",
+      "PythonExe": "C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\Scripts\\python.exe"
+    },
+    {
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\node_modules\\@simple-git\\argv-parser\\dist\\src\\env",
+      "Name": "env",
+      "PythonExe": "C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\node_modules\\@simple-git\\argv-parser\\dist\\src\\env\\Scripts\\python.exe"
+    },
+    {
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\node_modules\\axios\\lib\\env",
+      "Name": "env",
+      "PythonExe": "C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\node_modules\\axios\\lib\\env\\Scripts\\python.exe"
+    },
+    {
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\skills\\autonomous-ai-agents\\hermes-agent",
+      "Name": "hermes-agent",
+      "PythonExe": "C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\skills\\autonomous-ai-agents\\hermes-agent\\Scripts\\python.exe"
+    },
+    {
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\venv",
+      "Name": "venv",
+      "PythonExe": "C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe"
+    },
+    {
+      "Path": "C:\\Users\\enrik\\AppData\\Local\\hermes\\skills\\autonomous-ai-agents\\hermes-agent",
+      "Name": "hermes-agent",
+      "PythonExe": "C:\\Users\\enrik\\AppData\\Local\\hermes\\skills\\autonomous-ai-agents\\hermes-agent\\Scripts\\python.exe"
+    },
+    {
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\venv",
+      "Name": "venv",
+      "PythonExe": "C:\\Users\\enrik\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\venv\\Scripts\\python.exe"
+    },
+    {
+      "Path": "C:\\Users\\enrik\\AppData\\Roaming\\uv\\python\\cpython-3.14.5-windows-x86_64-none\\Lib\\venv",
+      "Name": "venv",
+      "PythonExe": "C:\\Users\\enrik\\AppData\\Roaming\\uv\\python\\cpython-3.14.5-windows-x86_64-none\\Lib\\venv\\Scripts\\python.exe"
+    },
+    {
+      "Path": "G:\\AI\\E-zzio_PRE_PURGE_244\\quarantine\\g_drive_cleaner_20260610_174857\\AI\\external\\ComfyUI\\.venv",
+      "Name": ".venv",
+      "PythonExe": "G:\\AI\\E-zzio_PRE_PURGE_244\\quarantine\\g_drive_cleaner_20260610_174857\\AI\\external\\ComfyUI\\.venv\\Scripts\\python.exe"
+    },
+    {
+      "Path": "G:\\AI\\E-zzio_PRE_PURGE_244\\quarantine\\g_drive_cleaner_20260610_174857\\Python312\\Lib\\venv",
+      "Name": "venv",
+      "PythonExe": "G:\\AI\\E-zzio_PRE_PURGE_244\\quarantine\\g_drive_cleaner_20260610_174857\\Python312\\Lib\\venv\\Scripts\\python.exe"
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\.venv",
+      "Name": ".venv",
+      "PythonExe": "G:\\AI\\E-zzio\\.venv\\Scripts\\python.exe"
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\cache\\pycache\\AI\\E-zzio\\.venv",
+      "Name": ".venv",
+      "PythonExe": "G:\\AI\\E-zzio\\runtime\\cache\\pycache\\AI\\E-zzio\\.venv\\Scripts\\python.exe"
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\cache\\pycache\\AI\\E-zzio\\tools\\voice_converter\\.venv",
+      "Name": ".venv",
+      "PythonExe": "G:\\AI\\E-zzio\\runtime\\cache\\pycache\\AI\\E-zzio\\tools\\voice_converter\\.venv\\Scripts\\python.exe"
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\cache\\pycache\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent",
+      "Name": "hermes-agent",
+      "PythonExe": "G:\\AI\\E-zzio\\runtime\\cache\\pycache\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\Scripts\\python.exe"
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\cache\\pycache\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\venv",
+      "Name": "venv",
+      "PythonExe": "G:\\AI\\E-zzio\\runtime\\cache\\pycache\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe"
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\runtime\\cache\\pycache\\Users\\enrik\\AppData\\Roaming\\uv\\python\\cpython-3.11-windows-x86_64-none\\Lib\\venv",
+      "Name": "venv",
+      "PythonExe": "G:\\AI\\E-zzio\\runtime\\cache\\pycache\\Users\\enrik\\AppData\\Roaming\\uv\\python\\cpython-3.11-windows-x86_64-none\\Lib\\venv\\Scripts\\python.exe"
+    },
+    {
+      "Path": "G:\\AI\\E-zzio\\tools\\voice_converter\\.venv",
+      "Name": ".venv",
+      "PythonExe": "G:\\AI\\E-zzio\\tools\\voice_converter\\.venv\\Scripts\\python.exe"
+    }
+  ],
+  "Environment": [
+    {
+      "Variable": "OLLAMA_MODELS",
+      "Value": "G:\\Ollama\\Models",
+      "Machine": null
+    },
+    {
+      "Variable": "HF_HOME",
+      "Value": null,
+      "Machine": null
+    },
+    {
+      "Variable": "HUGGINGFACE_HUB_CACHE",
+      "Value": null,
+      "Machine": null
+    },
+    {
+      "Variable": "TRANSFORMERS_CACHE",
+      "Value": null,
+      "Machine": null
+    },
+    {
+      "Variable": "TORCH_HOME",
+      "Value": null,
+      "Machine": null
+    },
+    {
+      "Variable": "PIP_CACHE_DIR",
+      "Value": "G:\\AI\\E-zzio\\runtime\\cache\\pip",
+      "Machine": null
+    },
+    {
+      "Variable": "npm_config_prefix",
+      "Value": null,
+      "Machine": null
+    },
+    {
+      "Variable": "XDG_CACHE_HOME",
+      "Value": null,
+      "Machine": null
+    },
+    {
+      "Variable": "TEMP",
+      "Value": "C:\\Users\\enrik\\AppData\\Local\\Temp",
+      "Machine": "C:\\WINDOWS\\TEMP"
+    },
+    {
+      "Variable": "TMP",
+      "Value": "C:\\Users\\enrik\\AppData\\Local\\Temp",
+      "Machine": "C:\\WINDOWS\\TEMP"
+    },
+    {
+      "Variable": "PATH",
+      "Value": "C:\\Users\\enrik\\bin;C:\\Users\\enrik\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts;C:\\Users\\enrik\\AppData\\Local\\hermes\\bin;C:\\Users\\enrik\\AppData\\Local\\Programs\\Python\\Launcher\\;G:\\Python312;C:\\Users\\enrik\\AppData\\Local\\Programs\\Ollama;G:\\Ollama;G:\\Python312\\Scripts;C:\\tools\\mysql\\current\\bin;C:\\Users\\enrik\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\enrik\\AppData\\Local\\Microsoft\\WinGet\\Links;C:\\Users\\enrik\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Google.PlatformTools_Microsoft.Winget.Source_8wekyb3d8bbwe\\platform-tools;C:\\Users\\enrik\\AppData\\Roaming\\npm",
+      "Machine": "C:\\Program Files\\ImageMagick-7.1.2-Q16-HDRI;C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.19.10-hotspot\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\dotnet\\;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\WindowsPowerShell\\Scripts;G:\\WayOfElendil\\tools\\bin;C:\\Program Files\\Microsoft VS Code\\bin;G:\\AI\\WotLK_AzerothCore\\tools\\mysql-8.4.0-winx64\\bin;C:\\Program Files\\OpenSSL-Win64\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Git\\cmd;C:\\Program Files (x86)\\cloudflared\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\GitHub CLI\\;C:\\Program Files\\WinGet\\Links;C:\\Program Files\\CMake\\bin;C:\\Program Files\\Pandoc\\"
+    }
+  ],
+  "InstalledAI": [
+    {
+      "Name": "Anniversaire de Burning Crusade",
+      "Version": null,
+      "Publisher": "Blizzard Entertainment",
+      "Install": "F:\\World of Warcraft",
+      "Uninstall": "\"C:\\ProgramData\\Battle.net\\Agent\\Blizzard Uninstaller.exe\" --lang=frFR --uid=wow_classic_anniversary --displayname=\"Anniversaire de Burning Crusade\""
+    },
+    {
+      "Name": "Google AI Studio",
+      "Version": "1.0",
+      "Publisher": "BraveSoftware\\Brave-Browser",
+      "Install": null,
+      "Uninstall": "\"C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe\" --profile-directory=Default --uninstall-app-id=bcmmjkglicliekcndffbfgcfopnidllp"
+    },
+    {
+      "Name": "Mozilla Maintenance Service",
+      "Version": "1.21.14b",
+      "Publisher": "Mozilla",
+      "Install": null,
+      "Uninstall": "\"C:\\Program Files (x86)\\Mozilla Maintenance Service\\uninstall.exe\""
+    },
+    {
+      "Name": "Node.js",
+      "Version": "22.23.2",
+      "Publisher": "Node.js Foundation",
+      "Install": "",
+      "Uninstall": "MsiExec.exe /I{D9606E8F-44C3-4F42-9165-0F62294FDD4B}"
+    },
+    {
+      "Name": "Ollama version 0.32.11",
+      "Version": "0.32.11",
+      "Publisher": "Ollama",
+      "Install": "G:\\Ollama\\",
+      "Uninstall": "\"G:\\Ollama\\unins000.exe\""
+    },
+    {
+      "Name": "Python 3.12.10 (64-bit)",
+      "Version": "3.12.10150.0",
+      "Publisher": "Python Software Foundation",
+      "Install": null,
+      "Uninstall": "\"C:\\Users\\enrik\\AppData\\Local\\Package Cache\\{b6ce88eb-2ce3-4d91-8efc-425ae1f48caf}\\python-3.12.10-amd64.exe\"  /uninstall"
+    },
+    {
+      "Name": "Python 3.12.10 Core Interpreter (64-bit)",
+      "Version": "3.12.10150.0",
+      "Publisher": "Python Software Foundation",
+      "Install": "",
+      "Uninstall": "MsiExec.exe /I{9D09C9EF-A57C-422A-B79A-CC922079653A}"
+    },
+    {
+      "Name": "Python 3.12.10 Development Libraries (64-bit)",
+      "Version": "3.12.10150.0",
+      "Publisher": "Python Software Foundation",
+      "Install": "",
+      "Uninstall": "MsiExec.exe /I{EF4A3D60-9A53-4697-A18D-D3353F8554E6}"
+    },
+    {
+      "Name": "Python 3.12.10 Executables (64-bit)",
+      "Version": "3.12.10150.0",
+      "Publisher": "Python Software Foundation",
+      "Install": "",
+      "Uninstall": "MsiExec.exe /I{0158093D-F809-455B-9429-6D16A4B5D118}"
+    },
+    {
+      "Name": "Python 3.12.10 pip Bootstrap (64-bit)",
+      "Version": "3.12.10150.0",
+      "Publisher": "Python Software Foundation",
+      "Install": "",
+      "Uninstall": "MsiExec.exe /I{CD0A1663-DC2D-41BD-89AF-E1089E841822}"
+    },
+    {
+      "Name": "Python 3.12.10 Standard Library (64-bit)",
+      "Version": "3.12.10150.0",
+      "Publisher": "Python Software Foundation",
+      "Install": "",
+      "Uninstall": "MsiExec.exe /I{DE12B597-D4BF-4B1B-BF5F-C5CE41AFBDFC}"
+    },
+    {
+      "Name": "Python 3.12.10 Tcl/Tk Support (64-bit)",
+      "Version": "3.12.10150.0",
+      "Publisher": "Python Software Foundation",
+      "Install": "",
+      "Uninstall": "MsiExec.exe /I{75485683-EF03-41E6-BF21-D1491694548C}"
+    },
+    {
+      "Name": "Python 3.12.10 Test Suite (64-bit)",
+      "Version": "3.12.10150.0",
+      "Publisher": "Python Software Foundation",
+      "Install": "",
+      "Uninstall": "MsiExec.exe /I{01F171AF-1F21-435E-BEE4-FCC4360C896C}"
+    },
+    {
+      "Name": "Python Launcher",
+      "Version": "3.13.5150.0",
+      "Publisher": "Python Software Foundation",
+      "Install": "",
+      "Uninstall": "MsiExec.exe /X{69012533-AE90-48A1-B7E5-7124E81C4B40}"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "models": {
+    "nomic-embed-text:latest": {
+      "avg_latency_ms": 0.0,
+      "error_count": 0,
+      "success_count": 0,
+      "total_calls": 0
+    },
+    "gemma4e4b:latest": {
+      "avg_latency_ms": 16116.51,
+      "error_count": 0,
+      "success_count": 2,
+      "total_calls": 2,
+      "last_tested": "2026-08-11T17:53:17.528352+00:00"
+    },
+    "qwen3:8b": {
+      "avg_latency_ms": 14585.03,
+      "error_count": 0,
+      "success_count": 2,
+      "total_calls": 2,
+      "last_tested": "2026-08-11T17:53:31.598953+00:00"
+    },
+    "qwen2.5vl:3b": {
+      "avg_latency_ms": 21708.24,
+      "error_count": 0,
+      "success_count": 2,
+      "total_calls": 2,
+      "last_tested": "2026-08-11T17:53:53.379548+00:00"
+    },
+    "qwen2.5-coder:7b": {
+      "avg_latency_ms": 13949.28,
+      "error_count": 0,
+      "success_count": 2,
+      "total_calls": 2,
+      "last_tested": "2026-08-11T17:54:07.837973+00:00"
+    },
+    "hermes3:8b": {
+      "avg_latency_ms": 13017.79,
+      "error_count": 0,
+      "success_count": 2,
+      "total_calls": 2,
+      "last_tested": "2026-08-11T17:54:21.295728+00:00"
+    }
+  },
+  "updated_at": "2026-08-11T17:54:21.295728+00:00",
+  "schema_version": "V1.0-TELEMETRY"
+}

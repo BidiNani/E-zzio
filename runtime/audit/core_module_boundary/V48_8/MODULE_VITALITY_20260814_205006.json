@@ -1,0 +1,3540 @@
+[
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\cognition\\ecol_universal_enforcement.py",
+    "Imports": 13,
+    "VitalityScore": 90,
+    "Grade": "CORE_CRITICAL",
+    "Reasons": [
+      "IMPORTED",
+      "HIGH_DEPENDENCY",
+      "DYNAMIC_REFERENCE",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\contracts.py",
+    "Imports": 20,
+    "VitalityScore": 70,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "HIGH_DEPENDENCY",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\tools\\tool_schema.py",
+    "Imports": 15,
+    "VitalityScore": 70,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "HIGH_DEPENDENCY",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\experiments\\v611_topology\\discovery_hardened.py",
+    "Imports": 11,
+    "VitalityScore": 70,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "HIGH_DEPENDENCY",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\core\\events.py",
+    "Imports": 11,
+    "VitalityScore": 70,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "HIGH_DEPENDENCY",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\contracts\\execution_context.py",
+    "Imports": 10,
+    "VitalityScore": 70,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "HIGH_DEPENDENCY",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\sqlite\\store.py",
+    "Imports": 15,
+    "VitalityScore": 70,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "HIGH_DEPENDENCY",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\decision\\policies.py",
+    "Imports": 10,
+    "VitalityScore": 70,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "HIGH_DEPENDENCY",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\telemetry\\collector.py",
+    "Imports": 15,
+    "VitalityScore": 70,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "HIGH_DEPENDENCY",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\telemetry\\events.py",
+    "Imports": 12,
+    "VitalityScore": 70,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "HIGH_DEPENDENCY",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\project_janitor.py",
+    "Imports": 10,
+    "VitalityScore": 70,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "HIGH_DEPENDENCY",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\contracts\\capability.py",
+    "Imports": 9,
+    "VitalityScore": 65,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\schemas.py",
+    "Imports": 9,
+    "VitalityScore": 65,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\providers\\gemini_provider.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\action\\registry.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\models\\registry.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\intelligence_router.py",
+    "Imports": 3,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\governor\\gemini_bridge.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\cloud_brain_broker.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\cloud_guard.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\execution\\admission\\models.py",
+    "Imports": 6,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\routers\\llm.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\providers\\base_provider.py",
+    "Imports": 3,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\contracts\\enforcer.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\models\\resolver.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\capabilities\\lifecycle\\lifecycle_manager.py",
+    "Imports": 3,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\cognitive_engine\\taxonomy_repair.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\governance\\gate.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\providers\\provider_telemetry.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\ezzio_master.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\models_governance\\budget.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\context\\builder.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\recovery\\health_manager.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\creative_forge.py",
+    "Imports": 3,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\model_registry.py",
+    "Imports": 6,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\evolution_simulation\\sandbox_runner.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\envelope\\envelope.py",
+    "Imports": 7,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\ezzio_message_brain.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\quality_gate\\quality_gate.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\model_router\\providers\\ollama.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\supervisor.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\kernel\\context.py",
+    "Imports": 5,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\capabilities\\lifecycle\\retire_engine.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\identity\\identity_context.py",
+    "Imports": 6,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\providers\\secrets_loader.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\discord\\intent_parser.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\evolution\\observer.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\tool_gateway\\google_bridge.py",
+    "Imports": 5,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\realtime\\pipecat\\router.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\capabilities\\registry.py",
+    "Imports": 6,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\sleep\\state.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\tools\\schema_validator.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\routing\\circuit_breaker.py",
+    "Imports": 5,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\cognition\\cognitive_governor.py",
+    "Imports": 7,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\contracts\\authority.py",
+    "Imports": 3,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\telemetry.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\tools\\manifest_provider.py",
+    "Imports": 7,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\autonomy.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\policy\\registry.py",
+    "Imports": 6,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\cognitive_engine\\cognitive_gatekeeper.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\realtime\\stt\\__init__.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\cli\\commands.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\security\\secrets.py",
+    "Imports": 7,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\providers\\ollama_provider.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\skills\\loader.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\agent\\loop.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\dispatcher.py",
+    "Imports": 5,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\realtime\\brain\\providers\\__init__.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\ezzio_identity.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\routing\\contracts.py",
+    "Imports": 5,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\events.py",
+    "Imports": 4,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\router\\llm_router.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\governance\\risk.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\autonomy\\policy_engine.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\llm_engine.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\capabilities\\security\\manifest_validator.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\providers\\__init__.py",
+    "Imports": 4,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\tools\\tool_registry.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\providers\\provider_registry.py",
+    "Imports": 3,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\capabilities\\revocation.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\knowledge_connectors.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\incidents\\registry.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\skills\\validator.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\cartography\\registry\\registry.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\execution\\context.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\execution\\registry.py",
+    "Imports": 7,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\policy\\evaluator.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\cloud_connectors.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\governance\\rollback.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\safe_actions.py",
+    "Imports": 5,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\tools\\manifest_loader.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\token_compressor.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\identity\\identity_guardian.py",
+    "Imports": 3,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\identity\\identity_recovery.py",
+    "Imports": 3,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\realtime\\orchestrator.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\realtime\\brain\\__init__.py",
+    "Imports": 6,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\providers\\provider_response.py",
+    "Imports": 5,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\providers\\groq_provider.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\capabilities\\evaluator.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\realtime\\brain\\contracts.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\capabilities\\promoter.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\revocation\\registry.py",
+    "Imports": 5,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\routers\\mobile.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\tool_gateway\\gateway_controller.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\realtime\\stt\\whisper_provider.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\router\\llm_response.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\security\\trust.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\memory.py",
+    "Imports": 3,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\kernel\\boot.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\capabilities\\security\\drift_detector.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\capabilities\\installer.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\capabilities\\registry\\registry_core.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\skills\\registry.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\identity\\identity_snapshot.py",
+    "Imports": 3,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\audit\\registry.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\capabilities\\discovery\\acquisition_manager.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\snapshot.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\cognitive_engine\\memory_validator.py",
+    "Imports": 2,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\evolution_experience\\experience_ledger.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\execution\\admission\\controller.py",
+    "Imports": 3,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\action\\store.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\constitution\\snapshot_restore_engine.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\identity\\canonical_identity.py",
+    "Imports": 1,
+    "VitalityScore": 50,
+    "Grade": "ACTIVE",
+    "Reasons": [
+      "IMPORTED",
+      "DYNAMIC_REFERENCE"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\decision\\governor.py",
+    "Imports": 9,
+    "VitalityScore": 45,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\constitution\\hardware_resource_governor.py",
+    "Imports": 9,
+    "VitalityScore": 45,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\atomic_writer.py",
+    "Imports": 8,
+    "VitalityScore": 45,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\pc_model_router.py",
+    "Imports": 8,
+    "VitalityScore": 45,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\evidence\\ledger.py",
+    "Imports": 8,
+    "VitalityScore": 45,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\__init__.py",
+    "Imports": 9,
+    "VitalityScore": 45,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\policy\\engine.py",
+    "Imports": 8,
+    "VitalityScore": 45,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED",
+      "HOTSPOT"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\evidence\\validator.py",
+    "Imports": 6,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\action\\state.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\external\\base.py",
+    "Imports": 4,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\authority\\evolution_request.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\episodic\\episode_store.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\cartography\\snapshot_engine.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\contracts\\__init__.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\response_guard.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\ledger_boot_recovery.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\confidence\\engine.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\execution\\state.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\governance\\governance_ledger.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\external\\platform\\windows.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\identity\\identity_persistence.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\execution\\resolver.py",
+    "Imports": 6,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\router\\transaction.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\reasoning\\planner.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\ledger\\policy_ledger.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\pc_optimizer.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\gateway.py",
+    "Imports": 6,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\router\\gate.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\experience\\experience_ledger.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\memory_actuator_v54.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\cognitive_memory_governor.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\sensors\\system_sensor.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\audit\\skill_audit.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\discord\\gateway.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\action\\resilience.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\kernel\\state.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\evolution\\lab_validator.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\semantic\\vector_store.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\microkernel\\backpressure_controller.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\executor\\base.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\security\\immutable_audit.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\core\\version.py",
+    "Imports": 6,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\integrations\\discord\\discord_watchdog.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\dream\\engine.py",
+    "Imports": 6,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\human_chat.py",
+    "Imports": 4,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\ezzio_truth_guard.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\knowledge\\models.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\agent\\coding_assistant.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\identity\\identity_chain_validator.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\audit\\__init__.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\execution\\attestation\\verifier.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\vision_bridge.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\analyzers\\queue_analyzer.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\cognition\\router.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\constitution\\organism_identity.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\performance_intelligence\\resource_monitor.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\analyzers\\security_analyzer.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\production_kernel_v66.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\performance_intelligence\\runtime_profiler.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\core\\microkernel.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\model_router\\__init__.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\capabilities\\expiry.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\providers\\key_scheduler.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\capabilities\\validator.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\memory_intelligence.py",
+    "Imports": 5,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\policy\\models.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\sleep\\consolidator.py",
+    "Imports": 6,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\tools\\executors\\git.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\decision\\__init__.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\integrations\\discord\\command_router.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\identity\\boot_attestation.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\agent\\research_engine.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\rss\\collector.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\observability\\traces.py",
+    "Imports": 6,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\events\\types.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\analyzers\\base.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\identity\\identity_chain.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\runtime\\circuit_breaker.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\models.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\cognition\\ecol_runtime_interceptor.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\cognition\\state.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\core\\ezzio_core.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\ryzen_optimizer\\governor.py",
+    "Imports": 5,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\performance_intelligence\\resource_governor.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\sensory\\bus\\sensory_bus.py",
+    "Imports": 5,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\production_kernel_v661.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\realtime\\voice\\engine.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\action\\context.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\rss\\cache.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\identity\\identity_validator.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\pc_commander.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\executor\\scaling.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\identity\\identity_boot_check.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\reasoning\\router.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\store.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\execution\\governor.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\governor_service.py",
+    "Imports": 7,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\actions.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\smart_vision.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\cartography\\numa.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\capabilities\\lifecycle\\document_analyst_engine.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\tool_gateway\\model_router.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\security\\file_lock.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\batch_async_writer.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\ollama\\__init__.py",
+    "Imports": 7,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\security\\secret_redactor.py",
+    "Imports": 4,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\__init__.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\rollback\\manager.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\omni_brain.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\ezzio_kernel.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\sensory\\fusion\\fusion_engine.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\capabilities\\health\\health_monitor.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\core\\message.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\sensors\\git_sensor.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\execution\\ledger\\hashchain.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\cognition\\ecol_runtime_contract.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\knowledge\\store.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\guardian\\governor_bridge.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\cognition\\model_token_governor.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\test_isolation\\v453\\async_atomic_writer.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\runtime\\soak_monitor.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\security\\disaster_recovery.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\engine.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\security\\ledger_validator.py",
+    "Imports": 8,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\audit\\logger.py",
+    "Imports": 8,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\queue\\__init__.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\comfy_api.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\authority\\evolution_ledger.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\evolution_intelligence\\evolution_scorer.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\execution\\governor\\resource.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\sensory\\fusion\\autonomic_watcher.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\tools\\guard.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\analyzers\\timeout_analyzer.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\governor\\controller.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\evolution_intelligence\\impact_analyzer.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\realtime\\voice\\chunker.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\ollama\\adaptive_governor.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\security\\permissions.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\omnipresence.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\evolution_simulation\\digital_twin.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\decision\\engine.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\action\\executor.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\gateway\\__init__.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\adaptive_learning_governor.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\contracts\\tool_result.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\runtime\\log_rotator.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\capabilities\\orchestrator\\budget_manager.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\execution\\decorators.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\memory_core.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\skill_manager.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\budget\\manager.py",
+    "Imports": 6,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\security\\guard.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\maintenance\\cleanup_manager.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\telemetry\\storage.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\learning\\feedback.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\agent\\writing_engine.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\realtime\\voice\\__init__.py",
+    "Imports": 5,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\events\\bus.py",
+    "Imports": 5,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\gateway\\session.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\action\\identity.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\agent\\state_machine.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\tools\\patch_pipeline.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\incident_bundle.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\integrations\\discord\\discord_client.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\experience\\analytics\\trend_detector.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\agent\\task_engine.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\knowledge\\knowledge_manager.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\evolution\\opportunity_detector.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\cognition\\core.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\state\\state_manager.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\execution\\worker_bootstrap.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\cognition\\events.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\action\\contracts.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\realtime\\voice\\bargein.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\episode_store.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\event_store.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\telemetry\\health.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\capabilities\\portfolio\\portfolio_manager.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\governance\\decision.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\execution\\router.py",
+    "Imports": 6,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\realtime\\voice\\cancellation.py",
+    "Imports": 4,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\cli\\session.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\evolution_intelligence\\regression_detector.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\identity\\persona.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\queue\\bus.py",
+    "Imports": 4,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\identity\\identity_events.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\topology\\discovery.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\semantic\\contracts.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\sensors\\health.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\telemetry\\metrics.py",
+    "Imports": 4,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\execution\\attestation\\collector.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\bridge.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\test_isolation\\v451\\simple_lock_v451.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\security\\ledger_engine.py",
+    "Imports": 6,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\quality_gate\\static_analyzer.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\audit\\schema.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\sensory\\bus\\percept.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\realtime\\audio\\__init__.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\agent\\controller.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\cartography\\mapper.py",
+    "Imports": 4,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\adaptive_daemon.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\governor.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\external\\output_guard.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\authority\\authority_policy.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\tools\\executors\\powershell.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\authority\\promotion_controller.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\session.py",
+    "Imports": 4,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\ollama\\windows_telemetry.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\gateway\\adapter.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\hd_forge.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\router\\executor.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\runtime\\resilience_orchestrator.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\cognition\\self_healing_engine.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\evolution\\proposal_engine.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\execution\\ledger.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\realtime\\audio\\tts.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\routing\\scorer.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\performance_intelligence\\optimization_scorer.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\ledger.py",
+    "Imports": 5,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\executor\\__init__.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\runtime\\audit_rotator.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\tools\\index_api.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\episodic\\episode_extractor.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\identity\\global_fingerprint.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\realtime\\audio\\stt.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\sensory\\sensors\\proprioception_sensor.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\capabilities\\orchestrator\\workflow_engine.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\realtime\\voice\\stream_worker.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\agent\\result.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\router\\cognitive_router.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\memory_actuator.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\executor\\retry.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\human_chat_guard.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\rollback\\__init__.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\actions.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\gateway\\health.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\tools\\executors\\filesystem.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\cognition\\analyzer.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\episode_extractor.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\sensors\\filesystem_sensor.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\replay.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\recovery\\analyzers\\__init__.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\memory\\episodic\\episode.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\router\\router.py",
+    "Imports": 3,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\integrations\\discord\\permission_guard.py",
+    "Imports": 4,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\tools\\executors\\__init__.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\execution\\attestation\\models.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\tools\\parser.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\cognition\\cognitive_gateway.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\hardware\\memory_actuator_v53.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\capabilities\\lifecycle.py",
+    "Imports": 2,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\core\\human_loop.py",
+    "Imports": 7,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  },
+  {
+    "Module": "G:\\AI\\E-zzio\\runtime\\sensors\\sensor_manager.py",
+    "Imports": 1,
+    "VitalityScore": 30,
+    "Grade": "DYNAMIC_OR_DORMANT",
+    "Reasons": [
+      "IMPORTED"
+    ]
+  }
+]

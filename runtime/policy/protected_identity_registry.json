@@ -1,0 +1,36 @@
+{
+  "allowed_actions": [
+    "READ",
+    "HASH",
+    "INDEX",
+    "AUDIT"
+  ],
+  "forbidden_actions": [
+    "DELETE",
+    "MOVE",
+    "AUTO_ARCHIVE",
+    "AUTO_CLEAN"
+  ],
+  "exact_paths": [
+    "E-ZZIO — IDENTITY FORGE QUESTIONNAI.txt",
+    "E-zzio_Cartographie_Self_Awareness.md",
+    "persona.full.md",
+    "registry/persona.txt",
+    "config/constitution.json",
+    "config/intentions.md",
+    "config/lore.md",
+    "config/persona.json",
+    "registry/personality/identity.md",
+    "registry/personality/lore.md",
+    "registry/personality/speech.md",
+    "registry/personality/traits.md",
+    "registry/core/constitution.md",
+    "registry/core/decision_policy.md",
+    "registry/core/limitations.md",
+    "registry/core/priorities.md",
+    "registry/core/reasoning.md",
+    "registry/core/uncertainty.md",
+    "registry/core/values.md"
+  ],
+  "protection_level": "IMMUTABLE_IDENTITY"
+}

@@ -1,0 +1,92 @@
+[
+  {
+    "File": "runtime\\contracts\\authority.py",
+    "Classification": "AUTHORITY",
+    "Authority": true,
+    "RegistryReference": true,
+    "RuntimeLoad": true,
+    "MutationCount": 0,
+    "MutationRisk": "READ_ONLY",
+    "MutationLines": ""
+  },
+  {
+    "File": "runtime\\contracts\\MODEL_REGISTRY_V1.json",
+    "Classification": "AUTHORITY",
+    "Authority": true,
+    "RegistryReference": false,
+    "RuntimeLoad": false,
+    "MutationCount": 0,
+    "MutationRisk": "READ_ONLY",
+    "MutationLines": ""
+  },
+  {
+    "File": "core\\model_registry.py",
+    "Classification": "CONSUMER",
+    "Authority": false,
+    "RegistryReference": false,
+    "RuntimeLoad": true,
+    "MutationCount": 1,
+    "MutationRisk": "WRITE_PRESENT",
+    "MutationLines": "L103: def save_latency(*args, **kwargs):"
+  },
+  {
+    "File": "core\\intelligence_router.py",
+    "Classification": "MUTATOR_CANDIDATE",
+    "Authority": false,
+    "RegistryReference": true,
+    "RuntimeLoad": true,
+    "MutationCount": 3,
+    "MutationRisk": "WRITE_PRESENT",
+    "MutationLines": "L66: raw_string = json.dumps(temp_payload, sort_keys=True, ensure_ascii=False)\nL69: raw_string = json.dumps(payload, sort_keys=True, ensure_ascii=False)\nL74: f.write(json.dumps(payload, ensure_ascii=False) + \"\\n\")"
+  },
+  {
+    "File": "core\\dispatcher.py",
+    "Classification": "PASSIVE",
+    "Authority": false,
+    "RegistryReference": false,
+    "RuntimeLoad": false,
+    "MutationCount": 1,
+    "MutationRisk": "WRITE_PRESENT",
+    "MutationLines": "L228: ezzio_memory.save_interaction(user_input, response_text, organ[\"label\"], metadata=metadata)"
+  },
+  {
+    "File": "core\\supervisor.py",
+    "Classification": "PASSIVE",
+    "Authority": false,
+    "RegistryReference": false,
+    "RuntimeLoad": false,
+    "MutationCount": 2,
+    "MutationRisk": "WRITE_PRESENT",
+    "MutationLines": "L190: path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding=\"utf-8\")\nL241: path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding=\"utf-8\")"
+  },
+  {
+    "File": "runtime\\models\\ollama_sync.py",
+    "Classification": "CONSUMER",
+    "Authority": false,
+    "RegistryReference": false,
+    "RuntimeLoad": true,
+    "MutationCount": 1,
+    "MutationRisk": "WRITE_PRESENT",
+    "MutationLines": "L60: report_path.write_text(json.dumps(matrix_report, indent=2, ensure_ascii=False), encoding=\"utf-8\")"
+  },
+  {
+    "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "Classification": "CONSUMER",
+    "Authority": false,
+    "RegistryReference": false,
+    "RuntimeLoad": true,
+    "MutationCount": 1,
+    "MutationRisk": "WRITE_PRESENT",
+    "MutationLines": "L19: self.registry_file.write_text(json.dumps(default_data, indent=4), encoding=\"utf-8\")"
+  },
+  {
+    "File": "runtime\\models\\model_registry.json",
+    "Classification": "PASSIVE",
+    "Authority": false,
+    "RegistryReference": false,
+    "RuntimeLoad": false,
+    "MutationCount": 0,
+    "MutationRisk": "READ_ONLY",
+    "MutationLines": ""
+  }
+]

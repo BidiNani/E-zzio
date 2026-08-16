@@ -1,0 +1,128 @@
+[
+  {
+    "File": "G:\\AI\\E-zzio\\core\\model_registry.py",
+    "SizeMB": 0.004,
+    "SHA256": "8A18D87CF56D79B4F5DD350218F3036FEF24E9C2ECCB9106EB4279FB878B6B1C",
+    "Extension": ".py",
+    "LastWrite": "2026-08-12T22:54:30.7862776+02:00"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\model_registry_autopsy.json",
+    "SizeMB": 0.0,
+    "SHA256": "A7448AB157BE01FD38E67D4C3330B90459544CF661E2EB50FFC97FBB7E06B2FA",
+    "Extension": ".json",
+    "LastWrite": "2026-08-11T15:46:14.0295379+02:00"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712_MODEL_REGISTRY_REPORT.md",
+    "SizeMB": 0.008,
+    "SHA256": "11F237886C6E6682F09B29F02863B2E302E90DED430765BEC4235E6871AC1077",
+    "Extension": ".md",
+    "LastWrite": "2026-08-11T18:24:34.6580098+02:00"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\MODEL_REGISTRY_V1.json",
+    "SizeMB": 0.019,
+    "SHA256": "5651D152E9285919CF393FB4FB1A69BEA9FF49F69BDAEB5E8BCABD6D5E1E0970",
+    "Extension": ".json",
+    "LastWrite": "2026-08-11T18:34:58.8060063+02:00"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration\\baseline\\MODEL_REGISTRY_FORENSIC_REFERENCES_20260814_160013.json",
+    "SizeMB": 0.009,
+    "SHA256": "736A732D2D5D3566DFCF8DAD0DBFD421F73C44CDA088F009FDA2AC0293B90CF1",
+    "Extension": ".json",
+    "LastWrite": "2026-08-14T16:00:23.8979068+02:00"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration\\baseline\\MODEL_REGISTRY_V1_20260814_160013.sha256",
+    "SizeMB": 0.0,
+    "SHA256": "49C3FF75CE2270DD3F7C9180DBC5A814692EB88268A4089CF9D49696BAB9A2D5",
+    "Extension": ".sha256",
+    "LastWrite": "2026-08-14T16:00:13.1584718+02:00"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration\\consumer_certification\\MODEL_REGISTRY_AUTHORITY_CHAIN_V6_20260814_160922.json",
+    "SizeMB": 0.014,
+    "SHA256": "F0D0AE16502826BCC63B689AE691D0A9D6E505C8CEDD446EBCAEF7DBCF3B58B5",
+    "Extension": ".json",
+    "LastWrite": "2026-08-14T16:09:22.9053013+02:00"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration\\consumer_certification\\MODEL_REGISTRY_AUTHORITY_FLOW_V4_20260814_160754.json",
+    "SizeMB": 11.351,
+    "SHA256": "6958AF12D123558A7E158A967FE8803B3E547FE0CC75AE5215F59E66EC5D88D2",
+    "Extension": ".json",
+    "LastWrite": "2026-08-14T16:08:15.9541202+02:00"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration\\consumer_certification\\MODEL_REGISTRY_AUTHORITY_FORENSIC_V2_20260814_160707.json",
+    "SizeMB": 0.016,
+    "SHA256": "93900B44625EC047BD3438DE3C1F22447E6A7F54BEB197BE26B9BC737DA6EF08",
+    "Extension": ".json",
+    "LastWrite": "2026-08-14T16:07:08.010606+02:00"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration\\consumer_certification\\MODEL_REGISTRY_AUTHORITY_MATRIX_20260814_160538.json",
+    "SizeMB": 0.004,
+    "SHA256": "D21E034E67962F052585D585DE0481E634A36EC69E8B8A2553395AF4EE8DF207",
+    "Extension": ".json",
+    "LastWrite": "2026-08-14T16:05:38.6441795+02:00"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration\\consumer_certification\\MODEL_REGISTRY_CONSUMER_CERTIFICATION_20260814_160403.json",
+    "SizeMB": 0.017,
+    "SHA256": "D3036FDF13FA4E757FB11B96BEABEBCA6C023B92603F66DB77CDBE83956DA6CB",
+    "Extension": ".json",
+    "LastWrite": "2026-08-14T16:04:37.0095365+02:00"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration\\consumer_certification\\MODEL_REGISTRY_DIRECT_AUTHORITY_V5_20260814_160848.json",
+    "SizeMB": 0.033,
+    "SHA256": "66A637F841B7E6122CD9D2C05B24870E9E7B426E583C802CCAED7C2E343E9938",
+    "Extension": ".json",
+    "LastWrite": "2026-08-14T16:08:56.6186591+02:00"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\audit\\storage_migration\\consumer_certification\\MODEL_REGISTRY_MASTER_CANDIDATE_V7_20260814_161040.json",
+    "SizeMB": 0.001,
+    "SHA256": "F5E5EC648DEED2A0F55AD3028FF2649B0CC7ED1190323979A44A38B7253F8BED",
+    "Extension": ".json",
+    "LastWrite": "2026-08-14T16:10:40.760963+02:00"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cache\\pycache\\AI\\E-zzio\\core\\model_registry.cpython-311.pyc",
+    "SizeMB": 0.006,
+    "SHA256": "7DCF611026BEC6C7606B56EE03B4B88F14377BF237F7A64923CD50D9933517BE",
+    "Extension": ".pyc",
+    "LastWrite": "2026-08-12T22:54:49.0302703+02:00"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\cache\\pycache\\AI\\E-zzio\\runtime\\hardware\\trust\\models_governance\\model_registry.cpython-311.pyc",
+    "SizeMB": 0.002,
+    "SHA256": "53E2B949C34F25261A59F79F4BD1771B6B8FDAE95F3A98B57875AEFBE74D1A23",
+    "Extension": ".pyc",
+    "LastWrite": "2026-08-13T00:50:54.7402615+02:00"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\contracts\\MODEL_REGISTRY_V1.json",
+    "SizeMB": 0.019,
+    "SHA256": "5651D152E9285919CF393FB4FB1A69BEA9FF49F69BDAEB5E8BCABD6D5E1E0970",
+    "Extension": ".json",
+    "LastWrite": "2026-08-11T18:34:58.8060063+02:00"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "SizeMB": 0.001,
+    "SHA256": "3877064687FD07DCC46FC9F5A0F805E59BA4419FFDDD4D7BF86FACA4217E1317",
+    "Extension": ".py",
+    "LastWrite": "2026-08-11T14:33:17.4527484+02:00"
+  },
+  {
+    "File": "G:\\AI\\E-zzio\\runtime\\models\\model_registry.json",
+    "SizeMB": 0.001,
+    "SHA256": "7AF408BA53A050FF2BB9BAE456667DD6EA2DF40CE01ABE205DA6A141B3D61427",
+    "Extension": ".json",
+    "LastWrite": "2026-08-11T21:55:01.4497684+02:00"
+  }
+]

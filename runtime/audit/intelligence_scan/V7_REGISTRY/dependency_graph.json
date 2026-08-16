@@ -1,0 +1,158 @@
+{
+  "dependency_graph": {
+    "core": [
+      "core",
+      "runtime"
+    ],
+    "runtime": [
+      "governance",
+      "core",
+      "runtime",
+      "sandbox"
+    ],
+    "governance": [
+      "governance",
+      "runtime"
+    ]
+  },
+  "isolation_violations": [
+    {
+      "file": "core\\memory_core.py",
+      "source": "core",
+      "target": "runtime",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\kernel_legacy_v2.py",
+      "source": "runtime",
+      "target": "core",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\agent\\controller.py",
+      "source": "runtime",
+      "target": "core",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\agent\\executor.py",
+      "source": "runtime",
+      "target": "core",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\cognition\\__init__.py",
+      "source": "runtime",
+      "target": "core",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\core\\context.py",
+      "source": "core",
+      "target": "runtime",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\core\\context.py",
+      "source": "core",
+      "target": "runtime",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\core\\ezzio_core.py",
+      "source": "core",
+      "target": "runtime",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\core\\ezzio_core.py",
+      "source": "core",
+      "target": "runtime",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\core\\ezzio_core.py",
+      "source": "core",
+      "target": "runtime",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\core\\ezzio_core.py",
+      "source": "core",
+      "target": "runtime",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\gateway\\adapter.py",
+      "source": "runtime",
+      "target": "core",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\guardian\\test_v615_3_models.py",
+      "source": "runtime",
+      "target": "governance",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\guardian\\test_v615_3_models.py",
+      "source": "runtime",
+      "target": "governance",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\hardware\\trust\\execution\\admission\\controller.py",
+      "source": "runtime",
+      "target": "governance",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\hardware\\trust\\models_governance\\budget.py",
+      "source": "runtime",
+      "target": "governance",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\memory\\session.py",
+      "source": "runtime",
+      "target": "core",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\memory\\cortex\\episodic.py",
+      "source": "runtime",
+      "target": "core",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\memory\\dream\\engine.py",
+      "source": "runtime",
+      "target": "core",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\memory\\reflection\\store.py",
+      "source": "runtime",
+      "target": "core",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\memory\\reflection\\validator.py",
+      "source": "runtime",
+      "target": "core",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\memory\\semantic\\contracts.py",
+      "source": "runtime",
+      "target": "core",
+      "type": "FORBIDDEN_CROSSING"
+    },
+    {
+      "file": "runtime\\memory\\sleep\\scheduler.py",
+      "source": "runtime",
+      "target": "core",
+      "type": "FORBIDDEN_CROSSING"
+    }
+  ]
+}

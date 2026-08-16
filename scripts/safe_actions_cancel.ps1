@@ -13,7 +13,7 @@ $body = @{
     reason = $Reason
 } | ConvertTo-Json -Depth 20
 
-$res = Invoke-RestMethod "http://127.0.0.1:8000/safe-actions/cancel" `
+$res = Invoke-RestMethod "http://127.0.0.1:8001/safe-actions/cancel" `
     -Method POST `
     -ContentType "application/json" `
     -TimeoutSec 120 `
@@ -29,3 +29,4 @@ Write-Host "=== E-ZZIO SAFE ACTION CANCEL ===" -ForegroundColor Cyan
     error = $res.error
     message = $res.message
 }
+

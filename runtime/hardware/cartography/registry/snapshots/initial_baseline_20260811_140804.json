@@ -1,0 +1,65 @@
+{
+    "version": "6.13.2",
+    "timestamp": 1786450084.9553077,
+    "formatted_time": "20260811_140804",
+    "topology": {
+        "system": {
+            "os": "Windows",
+            "release": "10",
+            "architecture": "AMD64"
+        },
+        "cpu": {
+            "vendor": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+            "model": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+            "physical_cores": 12,
+            "logical_threads": 24,
+            "smt": true
+        },
+        "clusters": {
+            "CCD0": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+            ],
+            "CCD1": [
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23
+            ]
+        },
+        "memory": {
+            "numa_detected": false,
+            "reason": "Single socket consumer architecture; standard unified memory domain with CCD internal latency separation.",
+            "total_nodes": 1,
+            "nodes": [],
+            "memory_stats": {
+                "total_bytes": 34279641088,
+                "available_bytes": 17431805952,
+                "percent_used": 49.1
+            }
+        },
+        "cache": {
+            "l3_size": "Unknown",
+            "l2_size": "Unknown",
+            "l1_size": "Unknown"
+        }
+    }
+}

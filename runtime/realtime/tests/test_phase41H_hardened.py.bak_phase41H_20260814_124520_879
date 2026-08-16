@@ -1,0 +1,447 @@
+import asyncio
+import json
+import time
+import numpy as np
+from pathlib import Path
+
+import bootstrap
+from runtime.realtime.audio import AsyncAudioRecorder
+
+
+ROOT = Path(r"G:\AI\E-zzio")
+MODEL_PATH = ROOT / "runtime" / "realtime" / "models" / "vad" / "silero_vad.onnx"
+REPORTS_DIR = ROOT / "runtime" / "realtime" / "tests" / "reports"
+REPORT_PATH = REPORTS_DIR / "phase41H_report.json"
+
+
+async def run_audit():
+
+    start_time_utc = time.strftime(
+        "%Y-%m-%dT%H:%M:%SZ",
+        time.gmtime()
+    )
+
+    print("=" * 80)
+    print(" E-ZZIO V7 — PHASE 4.1-H HARDENED VAD CERTIFICATION")
+    print("=" * 80)
+
+    # ------------------------------------------------------------------
+    # PRECHECK
+    # ------------------------------------------------------------------
+
+    if not MODEL_PATH.is_file():
+        raise FileNotFoundError(
+            f"Silero ONNX introuvable : {MODEL_PATH}"
+        )
+
+    print(f"[MODEL] {MODEL_PATH}")
+    print(f"[MODEL] {MODEL_PATH.stat().st_size:,} bytes")
+
+    # ------------------------------------------------------------------
+    # RECORDER
+    # ------------------------------------------------------------------
+
+    recorder = AsyncAudioRecorder(
+        vad_model_path=str(MODEL_PATH),
+        sample_rate=16000,
+        chunk_samples=512,
+        virtual_mode=True
+    )
+
+    events_log = []
+    latencies = []
+
+    # ------------------------------------------------------------------
+    # SYNTHETIC AUDIO
+    # ------------------------------------------------------------------
+
+    t = np.linspace(
+        0,
+        0.032,
+        512,
+        endpoint=False
+    )
+
+    speech_frame = (
+        0.6 * np.sin(2 * np.pi * 300 * t)
+        + 0.3 * np.sin(2 * np.pi * 600 * t)
+    ).reshape(-1, 1).astype(np.float32)
+
+    silence_frame = np.zeros(
+        (512, 1),
+        dtype=np.float32
+    )
+
+    # ------------------------------------------------------------------
+    # INJECTION
+    # ------------------------------------------------------------------
+
+    async def injection_sequence():
+
+        await asyncio.sleep(0.05)
+
+        print("[CHAOS] Injection SPEECH x5")
+
+        for _ in range(5):
+            t1 = time.perf_counter()
+
+            recorder.feed_virtual_chunk(
+                speech_frame.copy(),
+                t1
+            )
+
+            await asyncio.sleep(0.032)
+
+        print("[CHAOS] Injection SILENCE x20")
+
+        for _ in range(20):
+            t1 = time.perf_counter()
+
+            recorder.feed_virtual_chunk(
+                silence_frame.copy(),
+                t1
+            )
+
+            await asyncio.sleep(0.032)
+
+        await asyncio.sleep(0.10)
+
+        recorder.stop()
+
+    # ------------------------------------------------------------------
+    # PIPELINE
+    # ------------------------------------------------------------------
+
+    async def pipeline_consumer():
+
+        async for vad_frame in recorder.listen_stream():
+
+            events_log.append(
+                vad_frame["event"]
+            )
+
+            event = vad_frame["event"]
+
+            print(
+                f"[VAD] {event:<18} "
+                f"prob={vad_frame.get('probability', 0.0):.4f} "
+                f"inference="
+                f"{vad_frame['metrics']['vad_inference_ms']:.3f} ms"
+            )
+
+            if event == "SPEECH_STARTED":
+
+                t5_bargein = time.perf_counter()
+
+                # Simulation de l'arrêt du flux Kokoro.
+                await asyncio.sleep(0.020)
+
+                t7_audio_stop = time.perf_counter()
+
+                m = vad_frame["metrics"]
+
+                latencies.append({
+                    "T1_to_T2_queue_ms":
+                        (m["t2_dequeue"] -
+                         m["t1_callback"]) * 1000,
+
+                    "T2_to_T3_dispatch_ms":
+                        (m["t3_silero_start"] -
+                         m["t2_dequeue"]) * 1000,
+
+                    "T3_to_T4_silero_exec_ms":
+                        m["vad_inference_ms"],
+
+                    "T4_to_T5_bargein_ms":
+                        (t5_bargein -
+                         m["t4_vad_decision"]) * 1000,
+
+                    "T5_to_T7_kokoro_stop_ms":
+                        (t7_audio_stop -
+                         t5_bargein) * 1000,
+
+                    "E2E_QUEUE_TO_STOP_ms":
+                        (t7_audio_stop -
+                         m["t1_callback"]) * 1000
+                })
+
+    consumer_task = asyncio.create_task(
+        pipeline_consumer()
+    )
+
+    injector_task = asyncio.create_task(
+        injection_sequence()
+    )
+
+    # ------------------------------------------------------------------
+    # CONTROLLED SHUTDOWN
+    # ------------------------------------------------------------------
+
+    try:
+
+        await injector_task
+
+        await asyncio.wait_for(
+            consumer_task,
+            timeout=2.0
+        )
+
+    except asyncio.TimeoutError:
+
+        print("[WARN] Consumer timeout.")
+
+        consumer_task.cancel()
+
+        try:
+            await consumer_task
+        except asyncio.CancelledError:
+            pass
+
+    finally:
+
+        recorder.stop()
+
+        if not consumer_task.done():
+
+            consumer_task.cancel()
+
+            try:
+                await consumer_task
+            except asyncio.CancelledError:
+                pass
+
+    # ------------------------------------------------------------------
+    # FORENSIC ASSERTIONS
+    # ------------------------------------------------------------------
+
+    print()
+    print("[FORENSIC] Events:")
+    print(" -> ".join(events_log))
+
+    assert "SPEECH_STARTED" in events_log, (
+        "FAIL: SPEECH_STARTED absent."
+    )
+
+    assert "SPEECH_ENDED" in events_log, (
+        "FAIL: SPEECH_ENDED absent."
+    )
+
+    assert latencies, (
+        "FAIL: aucune métrique Barge-In."
+    )
+
+    # --------------------------------------------------------------
+    # METRICS
+    # --------------------------------------------------------------
+
+    first = latencies[0]
+
+    silero_ms = first[
+        "T3_to_T4_silero_exec_ms"
+    ]
+
+    e2e_ms = first[
+        "E2E_QUEUE_TO_STOP_ms"
+    ]
+
+    queue_ms = first[
+        "T1_to_T2_queue_ms"
+    ]
+
+    kokoro_stop_ms = first[
+        "T5_to_T7_kokoro_stop_ms"
+    ]
+
+    print()
+    print("=" * 80)
+    print(" METRICS")
+    print("=" * 80)
+
+    print(
+        f"Silero inference       : "
+        f"{silero_ms:.3f} ms"
+    )
+
+    print(
+        f"Queue latency          : "
+        f"{queue_ms:.3f} ms"
+    )
+
+    print(
+        f"Kokoro stop simulation : "
+        f"{kokoro_stop_ms:.3f} ms"
+    )
+
+    print(
+        f"E2E queue -> stop      : "
+        f"{e2e_ms:.3f} ms"
+    )
+
+    print(
+        f"Queue overflows        : "
+        f"{recorder.overflow_count}"
+    )
+
+    # ------------------------------------------------------------------
+    # HARD SLA
+    # ------------------------------------------------------------------
+
+    checks = {
+
+        "model_exists":
+            MODEL_PATH.is_file(),
+
+        "silero_cpu":
+            recorder.vad.engine.session.get_providers()
+            == ["CPUExecutionProvider"],
+
+        "speech_started":
+            "SPEECH_STARTED" in events_log,
+
+        "speech_ended":
+            "SPEECH_ENDED" in events_log,
+
+        "silero_inference_under_15ms":
+            silero_ms < 15.0,
+
+        "queue_under_20ms":
+            queue_ms < 20.0,
+
+        "e2e_under_250ms":
+            e2e_ms < 250.0,
+
+        "no_queue_overflow":
+            recorder.overflow_count == 0,
+
+        "controlled_shutdown":
+            recorder._is_recording is False
+    }
+
+    failed = [
+        name
+        for name, result in checks.items()
+        if not result
+    ]
+
+    certified = len(failed) == 0
+
+    # ------------------------------------------------------------------
+    # REPORT
+    # ------------------------------------------------------------------
+
+    REPORTS_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    report = {
+
+        "component":
+            "Hardened Silero VAD & Async Capture",
+
+        "phase":
+            "4.1-H",
+
+        "timestamp_utc":
+            start_time_utc,
+
+        "status":
+            "CERTIFIED" if certified else "FAILED",
+
+        "score":
+            10 if certified else 0,
+
+        "engine":
+            "SILERO_ONNX_CPU",
+
+        "providers":
+            recorder.vad.engine.session.get_providers(),
+
+        "checks":
+            checks,
+
+        "failed_checks":
+            failed,
+
+        "events":
+            events_log,
+
+        "metrics": {
+
+            "silero_inference_ms":
+                round(silero_ms, 3),
+
+            "queue_latency_ms":
+                round(queue_ms, 3),
+
+            "kokoro_stop_simulation_ms":
+                round(kokoro_stop_ms, 3),
+
+            "e2e_queue_to_stop_ms":
+                round(e2e_ms, 3),
+
+            "queue_overflow_count":
+                recorder.overflow_count
+        },
+
+        "architecture": {
+
+            "cpu_only":
+                True,
+
+            "bounded_queue":
+                True,
+
+            "fail_closed":
+                True,
+
+            "async_pipeline":
+                True,
+
+            "controlled_shutdown":
+                True
+        }
+    }
+
+    REPORT_PATH.write_text(
+        json.dumps(
+            report,
+            indent=2,
+            ensure_ascii=False
+        ),
+        encoding="utf-8"
+    )
+
+    # ------------------------------------------------------------------
+    # FINAL
+    # ------------------------------------------------------------------
+
+    print()
+    print("=" * 80)
+
+    if certified:
+
+        print(
+            " E-ZZIO PHASE 4.1-H : 10/10 CERTIFIED"
+        )
+
+    else:
+
+        print(
+            " E-ZZIO PHASE 4.1-H : NOT CERTIFIED"
+        )
+
+        print()
+        print("Failed checks:")
+
+        for item in failed:
+            print(f"  [FAIL] {item}")
+
+    print("=" * 80)
+
+    if not certified:
+        raise SystemExit(1)
+
+
+if __name__ == "__main__":
+    asyncio.run(run_audit())

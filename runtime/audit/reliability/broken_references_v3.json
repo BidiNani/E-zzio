@@ -1,0 +1,222 @@
+[
+  {
+    "source": "recovery/certified_state/microkernel.py",
+    "reference": "runtime.security.secrets",
+    "resolved": false
+  },
+  {
+    "source": "recovery/certified_state/microkernel.py",
+    "reference": "runtime.audit.logger",
+    "resolved": false
+  },
+  {
+    "source": "recovery/certified_state/microkernel.py",
+    "reference": "runtime.observability.traces",
+    "resolved": false
+  },
+  {
+    "source": "recovery/certified_state/microkernel.py",
+    "reference": "runtime.memory.gateway",
+    "resolved": false
+  },
+  {
+    "source": "routers/skills.py",
+    "reference": "skill_manager",
+    "resolved": false
+  },
+  {
+    "source": "runtime/agent/controller.py",
+    "reference": "runtime.audit.logger",
+    "resolved": false
+  },
+  {
+    "source": "runtime/capabilities/service.py",
+    "reference": "runtime.audit",
+    "resolved": false
+  },
+  {
+    "source": "runtime/cognition/__init__.py",
+    "reference": "runtime.cognition.core",
+    "resolved": false
+  },
+  {
+    "source": "runtime/governor/controller.py",
+    "reference": "tools.index_api",
+    "resolved": false
+  },
+  {
+    "source": "runtime/governor/gemini_bridge.py",
+    "reference": "runtime.security.secrets",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v54_persistent_real_engine.py",
+    "reference": "concurrent_segmented_engine_v48",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v610_baseline.py",
+    "reference": "runtime.hardware.operational_governor_v610",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v611_5_regression.py",
+    "reference": "runtime.experiments.v611_topology.discovery_hardened",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v611_fault_injection.py",
+    "reference": "runtime.hardware.operational_governor_v610",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v611_hardening.py",
+    "reference": "runtime.experiments.v611_topology.discovery_hardened",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v611_validator.py",
+    "reference": "runtime.experiments.v611_topology.discovery_hardened",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v612_1_hardening.py",
+    "reference": "runtime.experiments.v611_topology.discovery_hardened",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v612_2_battery.py",
+    "reference": "runtime.experiments.v611_topology.discovery_hardened",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v612_router.py",
+    "reference": "runtime.experiments.v611_topology.discovery_hardened",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v613_0_mapper.py",
+    "reference": "runtime.experiments.v611_topology.discovery_hardened",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v613_1_numa.py",
+    "reference": "runtime.experiments.v611_topology.discovery_hardened",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v613_2_snapshot.py",
+    "reference": "runtime.experiments.v611_topology.discovery_hardened",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v613_3_registry.py",
+    "reference": "runtime.experiments.v611_topology.discovery_hardened",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v61_e2e_real.py",
+    "reference": "concurrent_segmented_engine_v48",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v62_adaptive.py",
+    "reference": "runtime.hardware.adaptive_governor_v62",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v631_chaos_advanced.py",
+    "reference": "runtime.hardware.predictive_governor_v63",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v63_chaos.py",
+    "reference": "runtime.hardware.predictive_governor_v63",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v64_hardening.py",
+    "reference": "runtime.hardware.hardened_governor_v64",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v65_autonomous.py",
+    "reference": "runtime.hardware.autonomous_governor_v65",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v67_operational.py",
+    "reference": "runtime.hardware.operational_governor_v67",
+    "resolved": false
+  },
+  {
+    "source": "runtime/guardian/test_v68_resource_governor.py",
+    "reference": "runtime.hardware.resource_governor_v68",
+    "resolved": false
+  },
+  {
+    "source": "runtime/hardware/evidence/validator.py",
+    "reference": "runtime.experiments.v611_topology.discovery_hardened",
+    "resolved": false
+  },
+  {
+    "source": "runtime/kernel/boot.py",
+    "reference": "runtime.security.trust",
+    "resolved": false
+  },
+  {
+    "source": "runtime/kernel/context.py",
+    "reference": "runtime.security.trust",
+    "resolved": false
+  },
+  {
+    "source": "runtime/memory/bridge.py",
+    "reference": "runtime.audit.skill_audit",
+    "resolved": false
+  },
+  {
+    "source": "runtime/memory/episodic/episode_recovery.py",
+    "reference": "runtime.memory.episode_store",
+    "resolved": false
+  },
+  {
+    "source": "runtime/memory/episodic/episode_recovery.py",
+    "reference": "runtime.memory.episode_extractor",
+    "resolved": false
+  },
+  {
+    "source": "runtime/quarantine/V7.11.1.2/runtime/hardware/operational_governor_v610.py",
+    "reference": "runtime.hardware.audit.null_audit",
+    "resolved": false
+  },
+  {
+    "source": "runtime/quarantine/V7.11.1.2/runtime/hardware/resource_governor_v68.py",
+    "reference": "runtime.hardware.operational_governor_v67",
+    "resolved": false
+  },
+  {
+    "source": "runtime/tools/parser.py",
+    "reference": "runtime.security.permissions",
+    "resolved": false
+  },
+  {
+    "source": "runtime/tools/pipeline.py",
+    "reference": "runtime.audit.logger",
+    "resolved": false
+  },
+  {
+    "source": "runtime/tools/pipeline.py",
+    "reference": "runtime.security.permissions",
+    "resolved": false
+  },
+  {
+    "source": "runtime/tools/pipeline.py",
+    "reference": "runtime.security.guard",
+    "resolved": false
+  },
+  {
+    "source": "runtime/tools/tool_registry.py",
+    "reference": "runtime.security.permissions",
+    "resolved": false
+  }
+]

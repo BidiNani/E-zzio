@@ -1,51 +1,41 @@
-import uuid
-from datetime import datetime, timedelta
-from typing import Tuple, Optional
-from runtime.contracts.capability import CapabilityToken, TokenSigner
-from runtime.tools.tool_schema import ToolRequest
-from runtime.tools.manifest_provider import ManifestProvider
+import logging
+
+class PolicyDecision:
+    ALLOW = "ALLOW"
+    DENY = "DENY"
+    REQUIRE_HUMAN = "REQUIRE_HUMAN"
 
 class PolicyEngine:
-    def __init__(self, manifest_provider: ManifestProvider, key_manager, allowed_runtime_level: int = 0):
-        self.manifest = manifest_provider
-        self.key_manager = key_manager
-        self.allowed_runtime_level = allowed_runtime_level
-        self.GRACE_PERIOD_SEC = 10
+    """Le Gatekeeper unifié. Vérifie la constitution et la réputation (Trust Score) de l'acteur."""
+    
+    def __init__(self, constitution: dict, trust_scorer=None):
+        self.constitution = constitution
+        self.trust_scorer = trust_scorer
 
-    def authorize(self, request: ToolRequest, session_id: str) -> Tuple[bool, str, Optional[CapabilityToken]]:
-        tools_config = self.manifest.get_tools()
-        config = tools_config.get(request.name)
-        if not config:
-            return False, f"Outil inconnu : {request.name}", None
+    def evaluate_intent(self, actor: str, action: str, target: str, context_permissions: list) -> str:
+        # 1. Vérification du Trust Score (Quarantaine si score insuffisant)
+        if self.trust_scorer is not None:
+            if not self.trust_scorer.is_trusted(actor, threshold=50.0):
+                score = self.trust_scorer.get_score(actor)
+                logging.warning(f"[POLICY] QUARANTINE DENY: L'acteur '{actor}' a un score de confiance insuffisant ({score}/100).")
+                return PolicyDecision.DENY
 
-        req_level = config.get("permission_level", 999)
-        if req_level > self.allowed_runtime_level:
-            return False, "Privilège insuffisant.", None
+        # 2. Vérification des invariants (Kernel Lock)
+        if self.constitution.get("kernel_lock"):
+            for path in self.constitution.get("immutable_paths", []):
+                if path in target:
+                    logging.warning(f"[POLICY] DENY: Tentative de modification d'un chemin immuable ({target}) par {actor}")
+                    return PolicyDecision.DENY
 
-        timeout_sec = config.get("timeout_sec", 10)
-        
-        mode = config.get("execution_mode")
-        if mode not in ["internal", "external"]:
-            return False, f"Mode d'exécution invalide ou manquant : {mode}", None
+        # 3. Règles nécessitant une approbation humaine
+        for rule in self.constitution.get("require_human_approval", []):
+            if rule in action:
+                logging.info(f"[POLICY] REQUIRE_HUMAN: Action sensible demandée ({action})")
+                return PolicyDecision.REQUIRE_HUMAN
 
-        raw_token = CapabilityToken(
-            session_id=session_id,
-            tool_name=request.name,
-            executor_type=config.get("executor", "python"),
-            execution_mode=mode,
-            timeout_sec=timeout_sec,
-            budget_cost=config.get("budget_cost", 1),
-            refund_on_failure=config.get("refund_on_failure", False),
-            manifest_hash=self.manifest.get_manifest_hash(),
-            issued_at=datetime.now(),
-            expires_at=datetime.now() + timedelta(seconds=timeout_sec + self.GRACE_PERIOD_SEC),
-            constraints=config.get("sandbox", {}),
-            key_id=self.key_manager.key_id
-        )
-        return True, "AUTHORIZED", raw_token
+        # 4. Vérification des permissions
+        if action not in context_permissions:
+            logging.warning(f"[POLICY] DENY: L'acteur {actor} n'a pas la permission {action}")
+            return PolicyDecision.DENY
 
-
-
-
-
-
+        return PolicyDecision.ALLOW

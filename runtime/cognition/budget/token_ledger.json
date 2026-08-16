@@ -1,0 +1,10 @@
+{
+  "total_allocated": 10000,
+  "spent_by_category": {
+    "reasoning": 0,
+    "code": 500,
+    "memory": 0,
+    "search": 0,
+    "maintenance": 0
+  }
+}

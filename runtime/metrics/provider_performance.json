@@ -1,0 +1,15 @@
+{
+  "schema_version": "V1.2-HARDENED-TELEMETRY",
+  "updated_at": "2026-08-11T20:05:35.569746+00:00",
+  "providers": {
+    "groq": {
+      "calls": 3,
+      "success": 3,
+      "errors": 0,
+      "raw_success_rate": 1.0,
+      "confidence": 0.03,
+      "effective_reliability": 0.515,
+      "avg_latency_ms": 1077.3
+    }
+  }
+}

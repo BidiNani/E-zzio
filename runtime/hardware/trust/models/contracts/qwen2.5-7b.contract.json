@@ -1,0 +1,22 @@
+{
+    "contract_version": "1.0",
+    "model_id": "qwen2.5-7b",
+    "provider": {
+        "execution_type": "LOCAL",
+        "name": "ollama"
+    },
+    "resources": {
+        "gpu_allowed": false,
+        "max_allowed_workers": 8,
+        "max_ram_mb": 8192
+    },
+    "security": {
+        "ledger_required": true,
+        "requires_attestation": true
+    },
+    "signature": "8376e7b8ad74e8b6f80fc086d6ca59b583c31c81ea68bf90c5e6f4bb007fac9c",
+    "trust": {
+        "origin_verified": true,
+        "status": "TRUSTED"
+    }
+}

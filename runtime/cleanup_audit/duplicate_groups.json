@@ -1,0 +1,198 @@
+[
+  {
+    "SHA256": "B033243267BCBDAB84CB01E940811D6D77A894D78F0470FAAF0EB43F8E4EFCC9",
+    "Files": [
+      "ezzio-ui\\.svelte-kit\\output\\client\\robots.txt",
+      "ezzio-ui\\static\\robots.txt"
+    ]
+  },
+  {
+    "SHA256": "A5A668841B762335586FDB543FBDF7136A5366583857A2C02D00889BC36C17CB",
+    "Files": [
+      "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712_ENTRY_GATE_REPORT.md",
+      "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\V712_ENTRY_GATE_REPORT.md"
+    ]
+  },
+  {
+    "SHA256": "9A1DCEEEE2F6FFC5C565982C7FB8CD5093020278BA9735916F976F33DBD7DAF0",
+    "Files": [
+      "ezzio-ui\\.svelte-kit\\generated\\client\\nodes\\1.js",
+      "ezzio-ui\\.svelte-kit\\generated\\client-optimized\\nodes\\1.js"
+    ]
+  },
+  {
+    "SHA256": "1CBD6D2475A5C6BD233FAD5C03BC45E14D766DBCB0739571458EF46D9091FECD",
+    "Files": [
+      "ezzio-ui\\.svelte-kit\\output\\server\\manifest-full.js",
+      "ezzio-ui\\.svelte-kit\\output\\server\\manifest.js"
+    ]
+  },
+  {
+    "SHA256": "1655B7A9231CAFCB4F850BB6F62BC53A183836C87FFA365A6EFC243D79964222",
+    "Files": [
+      "runtime\\audit\\archive_traces\\runtime\\kernel\\boot.py.bak_v4255",
+      "runtime\\audit\\archive_traces\\runtime\\kernel\\boot.py.bak_v4256"
+    ]
+  },
+  {
+    "SHA256": "1974039D521E9510EE530067071B8F8C4BC567908C531C57235DE2503541B867",
+    "Files": [
+      "runtime\\audit\\V7_CLEANUP_PLAN.json",
+      "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_0_7_CLEANUP_PLAN.json"
+    ]
+  },
+  {
+    "SHA256": "B48BF16DE23C74086C887EA68F4393FA60CAA494F4AC5889EE3B79408E3F5115",
+    "Files": [
+      "forge\\vision\\inbox\\20260610_235417_demoniste-vectoriel.png",
+      "forge\\vision\\inbox\\chat_20260611_000848_demoniste-vectoriel.png",
+      "forge\\vision\\inbox\\chat_20260611_001312_demoniste-vectoriel.png"
+    ]
+  },
+  {
+    "SHA256": "B0B288B630C52D055B80FBB23DCE05570997CACC387FBE92A149CDF9B863E9B0",
+    "Files": [
+      "recovery\\certified_state\\microkernel.py",
+      "runtime\\audit\\microkernel_history\\microkernel_after_2442.py",
+      "runtime\\audit\\microkernel_history\\microkernel_after_final_cert.py",
+      "runtime\\audit\\microkernel_history\\microkernel_before_2442.py",
+      "runtime\\audit\\microkernel_history\\microkernel_before_certification.py",
+      "runtime\\audit\\microkernel_history\\microkernel_before_final_cert.py"
+    ]
+  },
+  {
+    "SHA256": "81AAC890F93359CB205FB28BC7668AA0890C656EA8B099C00A58C04A071E5FC2",
+    "Files": [
+      "runtime\\test_sqlite_v557.db",
+      "runtime\\test_sqlite.db"
+    ]
+  },
+  {
+    "SHA256": "C78EC343C7482618D2AAE3D690077EE91DBB940548A58ECC61477B08351CC34A",
+    "Files": [
+      "ezzio-ui\\.svelte-kit\\generated\\client\\nodes\\0.js",
+      "ezzio-ui\\.svelte-kit\\generated\\client-optimized\\nodes\\0.js"
+    ]
+  },
+  {
+    "SHA256": "28BFD1381EE0983116B4069AE63182B75957E71B0475F5924C4A6A2F0E736078",
+    "Files": [
+      "runtime\\audit\\archive_traces\\runtime\\core\\microkernel.py.bak_before_memory_wiring",
+      "runtime\\audit\\archive_traces\\runtime\\core\\microkernel.py.bak_memory_wiring_20260729_180359"
+    ]
+  },
+  {
+    "SHA256": "6FF1DE5B7E8A19012FE4811068CB77C659B2C7DC08286236435EA1BBD407D49C",
+    "Files": [
+      "ezzio-ui\\.svelte-kit\\generated\\client\\nodes\\2.js",
+      "ezzio-ui\\.svelte-kit\\generated\\client-optimized\\nodes\\2.js"
+    ]
+  },
+  {
+    "SHA256": "1688252A905350C932FCA8DA2D8EB32B99F5107F111D55A1DDECE0C2F6DE3804",
+    "Files": [
+      "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\v712_certification_token.json",
+      "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\v712_certification_token.json"
+    ]
+  },
+  {
+    "SHA256": "B3B656FCD7F558C8C8812E3C8E2556263D174606587F496ECE26D0072AA09083",
+    "Files": [
+      "runtime\\audit\\gates\\v712_entry_gate.py",
+      "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\v712_entry_gate.py"
+    ]
+  },
+  {
+    "SHA256": "6DA2F38AC5A66742D87F5CEB05C31F4B86CBAEFF70211770EF1E399BCB058279",
+    "Files": [
+      "registry\\persona.txt",
+      "registry\\build\\persona.full.md"
+    ]
+  },
+  {
+    "SHA256": "8287F810EA5DD7B056225C6A1F86F7E81CE7FEB1AA896EABF79BC05A81B6B0EE",
+    "Files": [
+      "runtime\\agent\\capability\\__init__.py",
+      "runtime\\agent\\ledger\\__init__.py",
+      "runtime\\audit\\microkernel_history\\__init__.py"
+    ]
+  },
+  {
+    "SHA256": "80617C5AB7AFE259D711C4E41A0F6BBAC66A2543A90A6E3F94BE499395E01BCE",
+    "Files": [
+      "forge\\outputs\\image_hd\\EZZIO_HD_1920x1080_20260610_011554.png",
+      "forge\\outputs\\image_hd\\EZZIO_HD_1920x1080_20260610_011625.png"
+    ]
+  },
+  {
+    "SHA256": "DA1A8406B3B0BE6976EFF8C475DF36F9DC3E228140D6CB49433CC8C0F26D9324",
+    "Files": [
+      "core\\cognitive_engine\\lore_lineage_probe.py",
+      "core\\cognitive_engine\\v758_rpg_autopsy.py"
+    ]
+  },
+  {
+    "SHA256": "91A4E2F100227487A802AC040B85700F03520B347FBFE4C23B7BF2D97B43D9FA",
+    "Files": [
+      "core\\integrations\\__init__.py",
+      "core\\integrations\\discord\\__init__.py"
+    ]
+  },
+  {
+    "SHA256": "FD4C9FDA9CD3F9AE7C962B0DDF37232294D55580E1AA165AA06129B8549389EB",
+    "Files": [
+      "data\\action_registry.db-shm",
+      "data\\incidents.db-shm",
+      "data\\rss_cache.db-shm",
+      "data\\telemetry.db-shm",
+      "data\\test_telemetry.db-shm",
+      "runtime\\test_sqlite_v557.db-shm",
+      "runtime\\test_sqlite.db-shm"
+    ]
+  },
+  {
+    "SHA256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "Files": [
+      "core\\__init__.py",
+      "core\\cognitive_engine\\__init__.py",
+      "core\\cognitive_engine\\confidence_ranker.py",
+      "core\\cognitive_engine\\embedding_worker.py",
+      "core\\cognitive_engine\\memory_health_report.py",
+      "core\\constitution\\snapshot_engine.py",
+      "core\\routing\\__init__.py",
+      "data\\action_registry.db-wal",
+      "data\\incidents.db-wal",
+      "data\\rss_cache.db-wal",
+      "data\\telemetry.db-wal",
+      "data\\test_telemetry.db-wal",
+      "ollama\\__init__.py",
+      "runtime\\__init__.py",
+      "runtime\\test_sqlite_v557.db-wal",
+      "runtime\\test_sqlite.db-wal",
+      "runtime\\audit\\discord\\chaos_chain.jsonl",
+      "runtime\\audit\\discord\\clean_chain.jsonl",
+      "runtime\\audit\\discord\\security_events.jsonl"
+    ]
+  },
+  {
+    "SHA256": "3D455D6F28B2385D5EE588CA9A6B7E620FE3EB5434B48AC67D1FA2EAF3395791",
+    "Files": [
+      "ezzio-ui\\.svelte-kit\\generated\\client\\matchers.js",
+      "ezzio-ui\\.svelte-kit\\generated\\client-optimized\\matchers.js"
+    ]
+  },
+  {
+    "SHA256": "F83CCA6F6093A12847ED55A9852D13319E2781AA4592DDF6D85C053E5C1D95C9",
+    "Files": [
+      "ezzio-ui\\.svelte-kit\\generated\\client\\app.js",
+      "ezzio-ui\\.svelte-kit\\generated\\client-optimized\\app.js"
+    ]
+  },
+  {
+    "SHA256": "EDF38E14B43B899275E98ECF753F6A0C7ACD51029281D8414B966DD24ACEE7CF",
+    "Files": [
+      "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\architecture_baseline_v3.json",
+      "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\architecture_baseline_v3.json"
+    ]
+  }
+]

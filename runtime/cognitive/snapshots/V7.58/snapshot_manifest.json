@@ -1,0 +1,21 @@
+{
+  "snapshot_version": "V7.58.1",
+  "frozen_files": [
+    {
+      "sha256": "d1f38a53069a38727e6bdb709dc2034960fa84069a2df281b57b9eba409bb59a",
+      "size_bytes": 3166208,
+      "file": "memory_index.sqlite"
+    },
+    {
+      "sha256": "b1597b0bfc05c7d7e40b00ee5a99037ca13d8320197b2199ea1d5946b3db3090",
+      "size_bytes": 37383,
+      "file": "index_build_manifest.json"
+    },
+    {
+      "sha256": "7db9c7f84e56bfb5dd7456321a699475880dbe5458cdf9638c6369641440637a",
+      "size_bytes": 63717,
+      "file": "cognitive_provenance_matrix.json"
+    }
+  ],
+  "timestamp": "2026-08-12T09:40:31Z"
+}

@@ -9,7 +9,7 @@ $body = @{
     reason = $Reason
 } | ConvertTo-Json -Depth 20
 
-$res = Invoke-RestMethod "http://127.0.0.1:8000/safe-actions/cancel-pending" `
+$res = Invoke-RestMethod "http://127.0.0.1:8001/safe-actions/cancel-pending" `
     -Method POST `
     -ContentType "application/json" `
     -TimeoutSec 180 `
@@ -22,3 +22,4 @@ Write-Host "=== E-ZZIO SAFE ACTION CANCEL PENDING ===" -ForegroundColor Cyan
     cancelled_count = $res.cancelled_count
     errors_count = $res.errors_count
 }
+

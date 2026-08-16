@@ -1,0 +1,83 @@
+[
+  {
+    "File": "runtime\\contracts\\authority.py",
+    "Authority": true,
+    "Runtime": true,
+    "Mutation": false,
+    "Contract": true,
+    "Legacy": false,
+    "Score": 85
+  },
+  {
+    "File": "runtime\\contracts\\MODEL_REGISTRY_V1.json",
+    "Authority": true,
+    "Runtime": true,
+    "Mutation": false,
+    "Contract": true,
+    "Legacy": false,
+    "Score": 85
+  },
+  {
+    "File": "core\\intelligence_router.py",
+    "Authority": false,
+    "Runtime": true,
+    "Mutation": true,
+    "Contract": false,
+    "Legacy": false,
+    "Score": 40
+  },
+  {
+    "File": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "Authority": false,
+    "Runtime": true,
+    "Mutation": true,
+    "Contract": false,
+    "Legacy": false,
+    "Score": 40
+  },
+  {
+    "File": "runtime\\models\\ollama_sync.py",
+    "Authority": false,
+    "Runtime": true,
+    "Mutation": true,
+    "Contract": false,
+    "Legacy": false,
+    "Score": 40
+  },
+  {
+    "File": "core\\model_registry.py",
+    "Authority": false,
+    "Runtime": true,
+    "Mutation": false,
+    "Contract": false,
+    "Legacy": true,
+    "Score": 5
+  },
+  {
+    "File": "runtime\\models\\model_registry.json",
+    "Authority": false,
+    "Runtime": false,
+    "Mutation": false,
+    "Contract": false,
+    "Legacy": false,
+    "Score": 0
+  },
+  {
+    "File": "core\\dispatcher.py",
+    "Authority": false,
+    "Runtime": true,
+    "Mutation": false,
+    "Contract": false,
+    "Legacy": false,
+    "Score": 25
+  },
+  {
+    "File": "core\\supervisor.py",
+    "Authority": false,
+    "Runtime": true,
+    "Mutation": true,
+    "Contract": false,
+    "Legacy": false,
+    "Score": 40
+  }
+]

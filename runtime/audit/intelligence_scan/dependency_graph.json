@@ -1,0 +1,3376 @@
+{
+  "discord_agent_v2.py": [
+    "dotenv",
+    "os",
+    "discord",
+    "aiohttp",
+    "discord.ext",
+    "sys",
+    "pathlib"
+  ],
+  "run_ezzio.py": [
+    "argparse",
+    "runtime.agent.loop",
+    "runtime.router.cognitive_router",
+    "sys",
+    "pathlib"
+  ],
+  "web_server.py": [
+    "google.genai",
+    "time",
+    "dotenv",
+    "datetime",
+    "os",
+    "urllib.parse",
+    "asyncio",
+    "pydantic",
+    "aiohttp",
+    "runtime.memory.semantic.contracts",
+    "fastapi",
+    "google",
+    "uvicorn",
+    "typing"
+  ],
+  "core/actions.py": [
+    "pathlib",
+    "os"
+  ],
+  "core/autonomy.py": [
+    "subprocess",
+    "os",
+    "socket",
+    "shutil",
+    "psutil",
+    "pathlib"
+  ],
+  "core/cloud_brain_broker.py": [
+    "urllib.request",
+    "hashlib",
+    "time",
+    "os",
+    "__future__",
+    "urllib.error",
+    "core.pc_commander",
+    "json",
+    "re",
+    "pathlib",
+    "typing"
+  ],
+  "core/cloud_connectors.py": [
+    "requests",
+    "time",
+    "dotenv",
+    "os",
+    "core.cloud_guard",
+    "base64",
+    "pathlib"
+  ],
+  "core/cloud_guard.py": [
+    "requests",
+    "hashlib",
+    "time",
+    "dotenv",
+    "urllib.parse",
+    "json",
+    "ipaddress",
+    "pathlib"
+  ],
+  "core/comfy_api.py": [
+    "requests",
+    "time",
+    "subprocess",
+    "os",
+    "json",
+    "pathlib",
+    "typing"
+  ],
+  "core/creative_forge.py": [
+    "requests",
+    "time",
+    "subprocess",
+    "os",
+    "shutil",
+    "json",
+    "pathlib",
+    "typing"
+  ],
+  "core/dispatcher.py": [
+    "core.telemetry",
+    "core.model_registry",
+    "core.governor",
+    "core.llm_engine",
+    "core.memory"
+  ],
+  "core/ezzio_identity.py": [
+    "time",
+    "os",
+    "__future__",
+    "sys",
+    "pathlib",
+    "typing"
+  ],
+  "core/ezzio_master.py": [
+    "core.dispatcher",
+    "core",
+    "asyncio",
+    "cloud_brain_broker",
+    "sys",
+    "pathlib",
+    "core.memory"
+  ],
+  "core/ezzio_message_brain.py": [
+    "urllib.request",
+    "time",
+    "os",
+    "urllib.parse",
+    "__future__",
+    "core.smart_vision",
+    "json",
+    "core.ezzio_truth_guard",
+    "pathlib",
+    "typing"
+  ],
+  "core/ezzio_truth_guard.py": [
+    "__future__"
+  ],
+  "core/gemini_pro_provider.py": [
+    "os",
+    "token_compressor",
+    "sys",
+    "pathlib",
+    "google",
+    "google.genai"
+  ],
+  "core/governor.py": [
+    "re"
+  ],
+  "core/hd_forge.py": [
+    "time",
+    "PIL",
+    "os",
+    "json",
+    "pathlib",
+    "typing"
+  ],
+  "core/human_chat.py": [
+    "core.human_loop",
+    "time",
+    "os",
+    "uuid",
+    "__future__",
+    "core.project_janitor",
+    "core.human_chat_guard",
+    "json",
+    "pathlib",
+    "core.pc_model_router",
+    "typing"
+  ],
+  "core/human_chat_guard.py": [
+    "re",
+    "__future__",
+    "typing"
+  ],
+  "core/human_loop.py": [
+    "time",
+    "os",
+    "uuid",
+    "__future__",
+    "core.project_janitor",
+    "json",
+    "pathlib",
+    "core.pc_model_router",
+    "typing"
+  ],
+  "core/knowledge_connectors.py": [
+    "dotenv",
+    "os",
+    "core.cloud_guard",
+    "urllib.parse",
+    "core.token_compressor",
+    "pathlib"
+  ],
+  "core/llm_engine.py": [
+    "ollama",
+    "time",
+    "os",
+    "asyncio",
+    "re",
+    "pathlib"
+  ],
+  "core/memory.py": [
+    "datetime",
+    "json",
+    "pathlib"
+  ],
+  "core/memory_core.py": [
+    "typing",
+    "runtime.memory.sqlite.store"
+  ],
+  "core/model_registry.py": [
+    "pathlib",
+    "json"
+  ],
+  "core/omnipresence.py": [
+    "requests",
+    "time",
+    "dotenv",
+    "os",
+    "uuid",
+    "json",
+    "pathlib",
+    "typing"
+  ],
+  "core/omni_brain.py": [
+    "requests",
+    "ollama",
+    "time",
+    "dotenv",
+    "core.vision_bridge",
+    "os",
+    "socket",
+    "core.creative_forge",
+    "uuid",
+    "json",
+    "sys",
+    "pathlib",
+    "typing"
+  ],
+  "core/pc_commander.py": [
+    "core.human_chat",
+    "time",
+    "core.safe_actions",
+    "os",
+    "__future__",
+    "json",
+    "pathlib",
+    "typing"
+  ],
+  "core/pc_model_router.py": [
+    "requests",
+    "ollama",
+    "time",
+    "os",
+    "core.response_guard",
+    "__future__",
+    "json",
+    "re",
+    "pathlib",
+    "typing"
+  ],
+  "core/pc_optimizer.py": [
+    "requests",
+    "ollama",
+    "time",
+    "os",
+    "__future__",
+    "json",
+    "psutil",
+    "re",
+    "pathlib",
+    "typing"
+  ],
+  "core/persona.py": [
+    "pathlib"
+  ],
+  "core/project_janitor.py": [
+    "time",
+    "shutil",
+    "__future__",
+    "json",
+    "pathlib",
+    "py_compile",
+    "typing"
+  ],
+  "core/response_guard.py": [
+    "re",
+    "__future__",
+    "typing"
+  ],
+  "core/safe_actions.py": [
+    "core.human_loop",
+    "core.human_chat",
+    "time",
+    "subprocess",
+    "os",
+    "uuid",
+    "__future__",
+    "core.project_janitor",
+    "json",
+    "pathlib",
+    "core.pc_model_router",
+    "typing"
+  ],
+  "core/schemas.py": [
+    "pydantic"
+  ],
+  "core/smart_vision.py": [
+    "urllib.request",
+    "time",
+    "os",
+    "base64",
+    "__future__",
+    "json",
+    "re",
+    "pathlib",
+    "typing"
+  ],
+  "core/supervisor.py": [
+    "requests",
+    "time",
+    "core.vision_bridge",
+    "os",
+    "socket",
+    "core.creative_forge",
+    "__future__",
+    "core.model_registry",
+    "json",
+    "psutil",
+    "sys",
+    "pathlib",
+    "core.omni_brain",
+    "typing"
+  ],
+  "core/telemetry.py": [
+    "datetime",
+    "json",
+    "pathlib"
+  ],
+  "core/token_compressor.py": [
+    "re",
+    "collections",
+    "json"
+  ],
+  "core/vision_bridge.py": [
+    "ollama",
+    "time",
+    "PIL",
+    "os",
+    "json",
+    "re",
+    "pathlib"
+  ],
+  "core/vision_prompt_guard.py": [
+    "__future__",
+    "pathlib",
+    "typing"
+  ],
+  "core/talents/analyser.py": [
+    "core.llm_engine",
+    "talents.base_talent"
+  ],
+  "interfaces/api/server.py": [
+    "fastapi.responses",
+    "dotenv",
+    "os",
+    "runtime.telemetry.collector",
+    "pydantic",
+    "runtime.gateway",
+    "uvicorn",
+    "fastapi.security",
+    "fastapi",
+    "pathlib",
+    "runtime.recovery.queue.bus"
+  ],
+  "interfaces/discord/bot.py": [
+    "runtime.governor.gemini_bridge",
+    "dotenv",
+    "os",
+    "discord",
+    "asyncio",
+    "aiohttp",
+    "discord.ext",
+    "sys",
+    "pathlib"
+  ],
+  "recovery/certified_state/capability.py": [
+    "hashlib",
+    "dataclasses",
+    "hmac",
+    "datetime",
+    "typing"
+  ],
+  "recovery/certified_state/microkernel.py": [
+    "runtime.memory.sleep.consolidator",
+    "runtime.contracts.execution_context",
+    "runtime.memory.sqlite.store",
+    "uuid",
+    "runtime.budget.manager",
+    "runtime.tools.tool_schema",
+    "pathlib",
+    "runtime.policy.engine",
+    "runtime.security.secrets",
+    "runtime.execution.registry",
+    "runtime.contracts.capability",
+    "runtime.memory.dream.engine",
+    "runtime.memory.gateway",
+    "runtime.audit.logger",
+    "time",
+    "runtime.tools.manifest_provider",
+    "runtime.execution.router",
+    "runtime.core.events",
+    "runtime.execution.resolver",
+    "runtime.observability.traces",
+    "runtime.core.version"
+  ],
+  "routers/actions.py": [
+    "fastapi",
+    "core.schemas",
+    "core.actions"
+  ],
+  "routers/admin_maintenance.py": [
+    "fastapi",
+    "pydantic",
+    "core.project_janitor"
+  ],
+  "routers/autonomy.py": [
+    "fastapi",
+    "core.autonomy",
+    "core.schemas",
+    "core.governor"
+  ],
+  "routers/brain.py": [
+    "fastapi",
+    "pydantic",
+    "core.pc_model_router"
+  ],
+  "routers/brain_gateway.py": [
+    "fastapi",
+    "pydantic",
+    "core.pc_model_router"
+  ],
+  "routers/chat.py": [
+    "fastapi",
+    "core.schemas",
+    "core.dispatcher"
+  ],
+  "routers/cloud.py": [
+    "fastapi",
+    "core.schemas",
+    "core.cloud_connectors"
+  ],
+  "routers/cloud_brain.py": [
+    "fastapi",
+    "pydantic",
+    "core.cloud_brain_broker"
+  ],
+  "routers/compress.py": [
+    "fastapi",
+    "core.schemas",
+    "core.token_compressor"
+  ],
+  "routers/ezzio_identity.py": [
+    "fastapi",
+    "core.ezzio_identity"
+  ],
+  "routers/ezzio_unified.py": [
+    "fastapi",
+    "pydantic",
+    "core.ezzio_message_brain",
+    "typing"
+  ],
+  "routers/forge.py": [
+    "core.creative_forge",
+    "core.hd_forge",
+    "pydantic",
+    "core.comfy_api",
+    "fastapi",
+    "core.schemas"
+  ],
+  "routers/human_chat.py": [
+    "fastapi",
+    "pydantic",
+    "core.human_chat"
+  ],
+  "routers/human_loop.py": [
+    "fastapi",
+    "pydantic",
+    "core.human_loop"
+  ],
+  "routers/knowledge.py": [
+    "fastapi",
+    "core.knowledge_connectors",
+    "core.schemas"
+  ],
+  "routers/master.py": [
+    "fastapi",
+    "pydantic",
+    "core.ezzio_master"
+  ],
+  "routers/memory.py": [
+    "fastapi",
+    "core.memory",
+    "core.schemas"
+  ],
+  "routers/models.py": [
+    "ollama",
+    "time",
+    "asyncio",
+    "core.model_registry",
+    "fastapi"
+  ],
+  "routers/omnipresence.py": [
+    "fastapi",
+    "pydantic",
+    "core.omnipresence"
+  ],
+  "routers/omni_bridge.py": [
+    "fastapi",
+    "pydantic",
+    "core.omni_brain"
+  ],
+  "routers/pc_commander.py": [
+    "fastapi",
+    "pydantic",
+    "core.pc_commander"
+  ],
+  "routers/performance.py": [
+    "fastapi",
+    "pydantic",
+    "core.pc_optimizer"
+  ],
+  "routers/safe_actions.py": [
+    "fastapi",
+    "pydantic",
+    "core.safe_actions",
+    "typing"
+  ],
+  "routers/skills.py": [
+    "fastapi",
+    "sys",
+    "pathlib",
+    "skill_manager"
+  ],
+  "routers/supervisor.py": [
+    "fastapi",
+    "fastapi.responses",
+    "core.supervisor"
+  ],
+  "routers/system.py": [
+    "fastapi",
+    "core.telemetry",
+    "core.model_registry",
+    "core.dispatcher"
+  ],
+  "routers/ui_dashboard.py": [
+    "fastapi",
+    "fastapi.responses"
+  ],
+  "routers/vision.py": [
+    "fastapi",
+    "core.vision_bridge",
+    "core.schemas"
+  ],
+  "routers/vision_smart.py": [
+    "fastapi",
+    "pydantic",
+    "core.smart_vision"
+  ],
+  "runtime/doctor.py": [
+    "sys",
+    "runtime.contracts.capability",
+    "importlib"
+  ],
+  "runtime/kernel_legacy_v2.py": [
+    "runtime.core.message",
+    "runtime.state.state_manager",
+    "runtime.agent.controller",
+    "runtime.memory.session",
+    "runtime.context.builder",
+    "runtime.router.llm_router",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/sqlite_v557_certification.py": [
+    "importlib.util",
+    "time",
+    "os",
+    "sys",
+    "threading"
+  ],
+  "runtime/action/context.py": [
+    "hashlib",
+    "dataclasses",
+    "hmac",
+    "os",
+    "typing"
+  ],
+  "runtime/action/contracts.py": [
+    "dataclasses",
+    "enum",
+    "typing"
+  ],
+  "runtime/action/executor.py": [
+    "typing"
+  ],
+  "runtime/action/identity.py": [
+    "dataclasses",
+    "typing"
+  ],
+  "runtime/action/registry.py": [
+    "runtime.action.store",
+    "runtime.action.identity",
+    "time",
+    "runtime.action.context",
+    "uuid",
+    "runtime.action.resilience",
+    "importlib",
+    "concurrent.futures",
+    "runtime.action.state",
+    "inspect",
+    "runtime.action.contracts",
+    "typing"
+  ],
+  "runtime/action/resilience.py": [
+    "enum",
+    "typing",
+    "time"
+  ],
+  "runtime/action/state.py": [
+    "enum"
+  ],
+  "runtime/action/store.py": [
+    "hashlib",
+    "datetime",
+    "os",
+    "uuid",
+    "sqlite3",
+    "json",
+    "typing"
+  ],
+  "runtime/action/__init__.py": [
+    "runtime.action.registry",
+    "runtime.action.contracts"
+  ],
+  "runtime/agent/capability_guard.py": [
+    "enum",
+    "capability.registry"
+  ],
+  "runtime/agent/constitution_guard.py": [
+    "pathlib"
+  ],
+  "runtime/agent/contracts.py": [
+    "time",
+    "dataclasses",
+    "uuid",
+    "enum",
+    "typing"
+  ],
+  "runtime/agent/controller.py": [
+    "runtime.audit.logger",
+    "time",
+    "runtime.tools.parser",
+    "runtime.core.microkernel",
+    "runtime.memory.semantic.vector_store"
+  ],
+  "runtime/agent/executor.py": [
+    "contracts",
+    "runtime.core.microkernel"
+  ],
+  "runtime/agent/ledger_bridge.py": [
+    "json",
+    "hashlib",
+    "time"
+  ],
+  "runtime/agent/loop.py": [
+    "runtime.memory.episodic.episode_store",
+    "constitution_guard",
+    "planner",
+    "ledger_bridge",
+    "executor",
+    "contracts",
+    "verifier",
+    "state_machine",
+    "runtime.incidents.registry",
+    "runtime.recovery.actions",
+    "capability_guard",
+    "policy",
+    "runtime.memory.episodic.episode_extractor",
+    "retry"
+  ],
+  "runtime/agent/planner.py": [
+    "contracts"
+  ],
+  "runtime/agent/policy.py": [
+    "enum"
+  ],
+  "runtime/agent/result.py": [
+    "runtime.agent.state_machine"
+  ],
+  "runtime/agent/state_machine.py": [
+    "contracts",
+    "enum"
+  ],
+  "runtime/agent/verifier.py": [
+    "contracts"
+  ],
+  "runtime/agent/__init__.py": [
+    "loop"
+  ],
+  "runtime/agent/capability/base.py": [
+    "abc",
+    "typing"
+  ],
+  "runtime/agent/capability/embedder.py": [
+    "urllib.request",
+    "json",
+    "base"
+  ],
+  "runtime/agent/capability/registry.py": [
+    "embedder",
+    "sandbox_exec"
+  ],
+  "runtime/agent/capability/sandbox_exec.py": [
+    "base"
+  ],
+  "runtime/agent/ledger/vector_store.py": [
+    "sqlite3",
+    "json"
+  ],
+  "runtime/audit/analyzer.py": [
+    "pathlib",
+    "json"
+  ],
+  "runtime/audit/bridge.py": [
+    "runtime.audit.registry",
+    "runtime.audit.schema",
+    "typing"
+  ],
+  "runtime/audit/dependency_scanner.py": [
+    "pathlib",
+    "json"
+  ],
+  "runtime/audit/events.py": [
+    "enum"
+  ],
+  "runtime/audit/logger.py": [
+    "sys",
+    "pathlib",
+    "datetime",
+    "json"
+  ],
+  "runtime/audit/planner.py": [
+    "pathlib",
+    "json"
+  ],
+  "runtime/audit/registry.py": [
+    "runtime.audit.schema",
+    "typing"
+  ],
+  "runtime/audit/scanner.py": [
+    "hashlib",
+    "datetime",
+    "os",
+    "json",
+    "sys",
+    "pathlib",
+    "ast"
+  ],
+  "runtime/audit/schema.py": [
+    "uuid",
+    "dataclasses",
+    "datetime",
+    "typing"
+  ],
+  "runtime/audit/skill_audit.py": [
+    "pathlib",
+    "json",
+    "time"
+  ],
+  "runtime/audit/__init__.py": [
+    "runtime.audit.events",
+    "runtime.audit.bridge",
+    "runtime.audit.schema"
+  ],
+  "runtime/audit/archive_patches/patch_history/absolute_clean_store.py": [
+    "re",
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/absolute_fix.py": [
+    "shutil",
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/action_v2.py": [
+    "re",
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/apply_final_polish.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/apply_final_zero_defect.py": [
+    "shutil",
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/apply_rowid_final.py": [
+    "re",
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/apply_rowid_fix.py": [
+    "re",
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/apply_safe_patch.py": [
+    "re",
+    "os"
+  ],
+  "runtime/audit/archive_patches/patch_history/apply_store_fix.py": [
+    "re",
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/apply_store_perfect.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/apply_surgical_v1952.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/apply_v1923_selfheal.py": [
+    "re",
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/apply_v1931.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/apply_v1945.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/apply_v1946.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/apply_v1947.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/apply_v1948.py": [
+    "re",
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/audit_routes.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/audit_script.py": [
+    "runtime.execution.registry",
+    "runtime.tools.executors.filesystem",
+    "runtime.tools.executors.powershell",
+    "importlib",
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/build_clean_executors.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/build_v1933.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/eradicate_utcnow.py": [
+    "re",
+    "shutil",
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/fix_all.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/fix_architecture.py": [
+    "re",
+    "sys",
+    "os"
+  ],
+  "runtime/audit/archive_patches/patch_history/fix_clean.py": [
+    "re",
+    "os"
+  ],
+  "runtime/audit/archive_patches/patch_history/fix_definitif.py": [
+    "shutil",
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/fix_executor_signature.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/fix_final_5.py": [
+    "re",
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/fix_fstrings.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/fix_git.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/fix_imports.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/fix_quality.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/fix_signer.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/fix_store_indent.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/gen_v1935.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/gen_v1936.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/gen_v1937.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/gen_v1938.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/gen_v1939.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/make_bootstrap.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/make_wiring_test.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/master_fix.py": [
+    "shutil",
+    "pathlib",
+    "re"
+  ],
+  "runtime/audit/archive_patches/patch_history/patch_action.py": [
+    "re",
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/patch_imports.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/patch_order.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/patch_permissions.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/patch_ps_context.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/patch_router.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/polish_warnings.py": [
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/repair_store_clean.py": [
+    "re",
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/rewrite_store_clean.py": [
+    "re",
+    "pathlib"
+  ],
+  "runtime/audit/archive_patches/patch_history/rewrite_supervisor.py": [
+    "re",
+    "os"
+  ],
+  "runtime/audit/archive_patches/patch_history/v1905_zero_defect.py": [
+    "re",
+    "os"
+  ],
+  "runtime/audit/archive_patches/patch_history/v1906_premium_fix.py": [
+    "re",
+    "os"
+  ],
+  "runtime/audit/archive_patches/patch_history/v1907_premium_fix.py": [
+    "re",
+    "os"
+  ],
+  "runtime/audit/archive_patches/patch_history/v1908_clean_fix.py": [
+    "re",
+    "os"
+  ],
+  "runtime/audit/archive_patches/patch_history/v1909_omega_fix.py": [
+    "re",
+    "os"
+  ],
+  "runtime/audit/archive_patches/patch_history/v1911_apex_fix.py": [
+    "re",
+    "os"
+  ],
+  "runtime/audit/archive_patches/patch_history/v1912_ultima_fix.py": [
+    "re",
+    "os"
+  ],
+  "runtime/audit/archive_patches/patch_history/v1913_syntax_fix.py": [
+    "re",
+    "os"
+  ],
+  "runtime/audit/archive_patches/patch_history/v1914_absolute_fix.py": [
+    "re",
+    "os"
+  ],
+  "runtime/audit/archive_patches/patch_history/v1915_final_matrix.py": [
+    "re",
+    "os"
+  ],
+  "runtime/audit/archive_patches/patch_history/v1916_surgical_repair.py": [
+    "re",
+    "sys",
+    "os"
+  ],
+  "runtime/audit/archive_patches/patch_history/v1917_fix.py": [
+    "re",
+    "os"
+  ],
+  "runtime/audit/microkernel_history/microkernel_after_2442.py": [
+    "runtime.memory.sleep.consolidator",
+    "runtime.contracts.execution_context",
+    "runtime.memory.sqlite.store",
+    "uuid",
+    "runtime.budget.manager",
+    "runtime.tools.tool_schema",
+    "pathlib",
+    "runtime.policy.engine",
+    "runtime.security.secrets",
+    "runtime.execution.registry",
+    "runtime.contracts.capability",
+    "runtime.memory.dream.engine",
+    "runtime.memory.gateway",
+    "runtime.audit.logger",
+    "time",
+    "runtime.tools.manifest_provider",
+    "runtime.execution.router",
+    "runtime.core.events",
+    "runtime.execution.resolver",
+    "runtime.observability.traces",
+    "runtime.core.version"
+  ],
+  "runtime/audit/microkernel_history/microkernel_after_final_cert.py": [
+    "runtime.memory.sleep.consolidator",
+    "runtime.contracts.execution_context",
+    "runtime.memory.sqlite.store",
+    "uuid",
+    "runtime.budget.manager",
+    "runtime.tools.tool_schema",
+    "pathlib",
+    "runtime.policy.engine",
+    "runtime.security.secrets",
+    "runtime.execution.registry",
+    "runtime.contracts.capability",
+    "runtime.memory.dream.engine",
+    "runtime.memory.gateway",
+    "runtime.audit.logger",
+    "time",
+    "runtime.tools.manifest_provider",
+    "runtime.execution.router",
+    "runtime.core.events",
+    "runtime.execution.resolver",
+    "runtime.observability.traces",
+    "runtime.core.version"
+  ],
+  "runtime/audit/microkernel_history/microkernel_before_2442.py": [
+    "runtime.memory.sleep.consolidator",
+    "runtime.contracts.execution_context",
+    "runtime.memory.sqlite.store",
+    "uuid",
+    "runtime.budget.manager",
+    "runtime.tools.tool_schema",
+    "pathlib",
+    "runtime.policy.engine",
+    "runtime.security.secrets",
+    "runtime.execution.registry",
+    "runtime.contracts.capability",
+    "runtime.memory.dream.engine",
+    "runtime.memory.gateway",
+    "runtime.audit.logger",
+    "time",
+    "runtime.tools.manifest_provider",
+    "runtime.execution.router",
+    "runtime.core.events",
+    "runtime.execution.resolver",
+    "runtime.observability.traces",
+    "runtime.core.version"
+  ],
+  "runtime/audit/microkernel_history/microkernel_before_certification.py": [
+    "runtime.memory.sleep.consolidator",
+    "runtime.contracts.execution_context",
+    "runtime.memory.sqlite.store",
+    "uuid",
+    "runtime.budget.manager",
+    "runtime.tools.tool_schema",
+    "pathlib",
+    "runtime.policy.engine",
+    "runtime.security.secrets",
+    "runtime.execution.registry",
+    "runtime.contracts.capability",
+    "runtime.memory.dream.engine",
+    "runtime.memory.gateway",
+    "runtime.audit.logger",
+    "time",
+    "runtime.tools.manifest_provider",
+    "runtime.execution.router",
+    "runtime.core.events",
+    "runtime.execution.resolver",
+    "runtime.observability.traces",
+    "runtime.core.version"
+  ],
+  "runtime/audit/microkernel_history/microkernel_before_final_cert.py": [
+    "runtime.memory.sleep.consolidator",
+    "runtime.contracts.execution_context",
+    "runtime.memory.sqlite.store",
+    "uuid",
+    "runtime.budget.manager",
+    "runtime.tools.tool_schema",
+    "pathlib",
+    "runtime.policy.engine",
+    "runtime.security.secrets",
+    "runtime.execution.registry",
+    "runtime.contracts.capability",
+    "runtime.memory.dream.engine",
+    "runtime.memory.gateway",
+    "runtime.audit.logger",
+    "time",
+    "runtime.tools.manifest_provider",
+    "runtime.execution.router",
+    "runtime.core.events",
+    "runtime.execution.resolver",
+    "runtime.observability.traces",
+    "runtime.core.version"
+  ],
+  "runtime/budget/manager.py": [
+    "uuid",
+    "threading",
+    "typing"
+  ],
+  "runtime/capabilities/expiry.py": [
+    "datetime",
+    "typing"
+  ],
+  "runtime/capabilities/lifecycle.py": [
+    "enum"
+  ],
+  "runtime/capabilities/models.py": [
+    "dataclasses",
+    "typing"
+  ],
+  "runtime/capabilities/registry.py": [
+    "dataclasses",
+    "typing"
+  ],
+  "runtime/capabilities/service.py": [
+    "runtime.execution.state",
+    "runtime.execution.context",
+    "runtime.capabilities.expiry",
+    "runtime.capabilities.lifecycle",
+    "runtime.capabilities.validator",
+    "runtime.capabilities.revocation",
+    "runtime.audit",
+    "typing"
+  ],
+  "runtime/capabilities/validator.py": [
+    "runtime.capabilities.lifecycle"
+  ],
+  "runtime/cli/commands.py": [
+    "runtime.skills.registry",
+    "json",
+    "runtime.memory.bridge",
+    "runtime.memory.replay",
+    "pathlib"
+  ],
+  "runtime/cli/shell.py": [
+    "sys",
+    "pathlib",
+    "runtime.cli.commands",
+    "runtime.cli.session"
+  ],
+  "runtime/cognition/analyzer.py": [
+    "dataclasses",
+    "typing"
+  ],
+  "runtime/cognition/events.py": [
+    "dataclasses",
+    "datetime",
+    "typing"
+  ],
+  "runtime/cognition/loop.py": [
+    "runtime.reasoning.planner",
+    "runtime.cognition.state",
+    "runtime.action.executor",
+    "runtime.learning.feedback",
+    "runtime.cognition.events",
+    "typing"
+  ],
+  "runtime/cognition/router.py": [
+    "dotenv",
+    "os",
+    "aiohttp",
+    "pathlib",
+    "typing"
+  ],
+  "runtime/cognition/state.py": [
+    "enum"
+  ],
+  "runtime/cognition/__init__.py": [
+    "runtime.cognition.core",
+    "runtime.cognition.analyzer"
+  ],
+  "runtime/context/builder.py": [
+    "runtime.state.state_manager",
+    "json",
+    "pathlib",
+    "runtime.tools.manifest_loader",
+    "runtime.sensors.sensor_manager"
+  ],
+  "runtime/contracts/capability.py": [
+    "hashlib",
+    "dataclasses",
+    "hmac",
+    "datetime",
+    "typing"
+  ],
+  "runtime/contracts/execution_context.py": [
+    "dataclasses",
+    "runtime.contracts.capability",
+    "typing"
+  ],
+  "runtime/contracts/tool_result.py": [
+    "dataclasses",
+    "typing"
+  ],
+  "runtime/contracts/__init__.py": [
+    "tool_result",
+    "execution_context",
+    "capability"
+  ],
+  "runtime/core/cancellation.py": [
+    "threading",
+    "time"
+  ],
+  "runtime/core/context.py": [
+    "runtime.contracts.capability",
+    "runtime.contracts.execution_context"
+  ],
+  "runtime/core/events.py": [
+    "queue",
+    "traceback",
+    "threading"
+  ],
+  "runtime/core/ezzio_core.py": [
+    "runtime.telemetry.collector",
+    "runtime.recovery.queue.bus",
+    "runtime.cognition.router",
+    "runtime.identity.persona"
+  ],
+  "runtime/core/message.py": [
+    "datetime"
+  ],
+  "runtime/events/bus.py": [
+    "time",
+    "dataclasses",
+    "typing",
+    "uuid",
+    "__future__",
+    "threading",
+    "logging"
+  ],
+  "runtime/execution/audit_compliance.py": [
+    "runtime.contracts.tool_result",
+    "runtime.tools.executors",
+    "os",
+    "pkgutil",
+    "runtime.contracts",
+    "importlib",
+    "sys",
+    "inspect"
+  ],
+  "runtime/execution/context.py": [
+    "dataclasses",
+    "datetime",
+    "typing"
+  ],
+  "runtime/execution/decorators.py": [
+    "functools",
+    "typing"
+  ],
+  "runtime/execution/governor.py": [
+    "__future__",
+    "threading",
+    "typing"
+  ],
+  "runtime/execution/ledger.py": [
+    "hashlib",
+    "datetime",
+    "__future__",
+    "json",
+    "pathlib",
+    "threading",
+    "typing"
+  ],
+  "runtime/execution/lifecycle.py": [
+    "runtime.execution.state"
+  ],
+  "runtime/execution/loop_manager.py": [
+    "runtime.execution.state",
+    "runtime.execution.context"
+  ],
+  "runtime/execution/registry.py": [
+    "runtime.tools.executors.git",
+    "runtime.tools.executors.powershell",
+    "runtime.tools.executors.filesystem"
+  ],
+  "runtime/execution/resource.py": [
+    "pathlib",
+    "runtime.contracts.execution_context"
+  ],
+  "runtime/execution/router.py": [
+    "runtime.tools.tool_schema"
+  ],
+  "runtime/execution/sandbox.py": [
+    "subprocess",
+    "os",
+    "runtime.kernel.context",
+    "runtime.events.bus",
+    "runtime.events.types",
+    "__future__",
+    "json",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/execution/scheduler.py": [
+    "collections"
+  ],
+  "runtime/execution/state.py": [
+    "enum"
+  ],
+  "runtime/execution/supervisor.py": [
+    "runtime.contracts.tool_result",
+    "runtime.execution.registry",
+    "runtime.contracts.execution_context",
+    "logging"
+  ],
+  "runtime/experiments/v611_topology/discovery_hardened.py": [
+    "hashlib",
+    "time",
+    "json",
+    "psutil",
+    "pathlib"
+  ],
+  "runtime/experiments/v611_topology/topology_probe.py": [
+    "cpuinfo",
+    "os",
+    "time",
+    "psutil"
+  ],
+  "runtime/experiments/v611_topology/topology_v2.py": [
+    "os",
+    "psutil"
+  ],
+  "runtime/external/ezzio_app.py": [
+    "openai",
+    "flask",
+    "os"
+  ],
+  "runtime/external/supervisor.py": [
+    "runtime.external.platform.windows",
+    "runtime.contracts.execution_context",
+    "time",
+    "runtime.external.output_guard",
+    "runtime.external.base",
+    "runtime.tools.tool_schema"
+  ],
+  "runtime/external/platform/killer.py": [
+    "subprocess",
+    "os",
+    "time"
+  ],
+  "runtime/external/platform/windows.py": [
+    "ctypes",
+    "os"
+  ],
+  "runtime/gateway/adapter.py": [
+    "runtime.gateway.session",
+    "time",
+    "datetime",
+    "runtime.telemetry.collector",
+    "runtime.telemetry.metrics",
+    "runtime.recovery.contracts",
+    "uuid",
+    "runtime.core.ezzio_core",
+    "runtime.recovery.queue.bus",
+    "typing"
+  ],
+  "runtime/gateway/health.py": [
+    "typing"
+  ],
+  "runtime/gateway/session.py": [
+    "typing"
+  ],
+  "runtime/gateway/__init__.py": [
+    "runtime.gateway.session",
+    "runtime.gateway.health",
+    "runtime.gateway.adapter"
+  ],
+  "runtime/governance/trust_scorer.py": [
+    "__future__",
+    "pathlib",
+    "threading",
+    "json"
+  ],
+  "runtime/governance/watchdog.py": [
+    "time",
+    "runtime.kernel.context",
+    "runtime.events.bus",
+    "runtime.kernel.state",
+    "__future__",
+    "threading",
+    "logging"
+  ],
+  "runtime/governor/controller.py": [
+    "tools.index_api",
+    "subprocess",
+    "os",
+    "tools.patch_pipeline",
+    "sys"
+  ],
+  "runtime/governor/gemini_bridge.py": [
+    "os",
+    "gc",
+    "google.generativeai",
+    "runtime.security.secrets",
+    "runtime.governor.controller"
+  ],
+  "runtime/guardian/governor_bridge.py": [
+    "time",
+    "runtime.hardware.memory_intelligence",
+    "json",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/guardian/test_governor_bridge.py": [
+    "runtime.hardware.governor_service",
+    "time",
+    "runtime.guardian.governor_bridge",
+    "json",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/guardian/test_v51_memory.py": [
+    "runtime.hardware.governor_service",
+    "time",
+    "runtime.guardian.governor_bridge",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/guardian/test_v53_hysteresis.py": [
+    "time",
+    "runtime.hardware.memory_actuator_v53",
+    "runtime.hardware.memory_intelligence",
+    "json",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/guardian/test_v54_persistent_real_engine.py": [
+    "runtime.hardware.memory_actuator_v54",
+    "concurrent_segmented_engine_v48",
+    "time",
+    "runtime.hardware.memory_intelligence",
+    "json",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/guardian/test_v55_predictive.py": [
+    "sys",
+    "pathlib",
+    "runtime.hardware.adaptive_learning_governor",
+    "time"
+  ],
+  "runtime/guardian/test_v56_cognitive.py": [
+    "time",
+    "runtime.hardware.cognitive_memory_governor",
+    "json",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/guardian/test_v610_baseline.py": [
+    "sys",
+    "pathlib",
+    "runtime.hardware.operational_governor_v610",
+    "time"
+  ],
+  "runtime/guardian/test_v610_granular.py": [
+    "sys",
+    "pathlib",
+    "runtime.hardware.ryzen_optimizer.governor",
+    "psutil"
+  ],
+  "runtime/guardian/test_v611_5_regression.py": [
+    "runtime.experiments.v611_topology.discovery_hardened",
+    "runtime.hardware.evidence.validator",
+    "json",
+    "sys",
+    "pathlib",
+    "copy",
+    "runtime.hardware.evidence.ledger"
+  ],
+  "runtime/guardian/test_v611_discovery.py": [
+    "sys",
+    "pathlib",
+    "runtime.hardware.topology.discovery"
+  ],
+  "runtime/guardian/test_v611_fault_injection.py": [
+    "runtime.hardware.operational_governor_v610",
+    "runtime.hardware.production_kernel_v661",
+    "psutil",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/guardian/test_v611_hardening.py": [
+    "sys",
+    "pathlib",
+    "copy",
+    "runtime.experiments.v611_topology.discovery_hardened"
+  ],
+  "runtime/guardian/test_v611_ledger_integrity.py": [
+    "sys",
+    "pathlib",
+    "json",
+    "runtime.hardware.evidence.ledger"
+  ],
+  "runtime/guardian/test_v611_validator.py": [
+    "runtime.experiments.v611_topology.discovery_hardened",
+    "runtime.hardware.evidence.validator",
+    "time",
+    "sys",
+    "pathlib",
+    "runtime.hardware.evidence.ledger"
+  ],
+  "runtime/guardian/test_v612_1_hardening.py": [
+    "runtime.experiments.v611_topology.discovery_hardened",
+    "runtime.hardware.evidence.validator",
+    "runtime.hardware.router.router",
+    "json",
+    "sys",
+    "pathlib",
+    "copy",
+    "runtime.hardware.evidence.ledger"
+  ],
+  "runtime/guardian/test_v612_2_battery.py": [
+    "runtime.experiments.v611_topology.discovery_hardened",
+    "runtime.hardware.evidence.validator",
+    "runtime.hardware.router.gate",
+    "runtime.hardware.router.router",
+    "json",
+    "sys",
+    "pathlib",
+    "copy",
+    "runtime.hardware.evidence.ledger"
+  ],
+  "runtime/guardian/test_v612_3_execution.py": [
+    "sys",
+    "pathlib",
+    "runtime.hardware.router.executor",
+    "psutil"
+  ],
+  "runtime/guardian/test_v612_4_transaction.py": [
+    "runtime.hardware.router.executor",
+    "psutil",
+    "runtime.hardware.router.transaction",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/guardian/test_v612_router.py": [
+    "runtime.experiments.v611_topology.discovery_hardened",
+    "runtime.hardware.evidence.validator",
+    "runtime.hardware.router.router",
+    "sys",
+    "pathlib",
+    "runtime.hardware.evidence.ledger"
+  ],
+  "runtime/guardian/test_v613_0_mapper.py": [
+    "runtime.experiments.v611_topology.discovery_hardened",
+    "sys",
+    "pytest",
+    "pathlib",
+    "runtime.hardware.cartography.mapper"
+  ],
+  "runtime/guardian/test_v613_1_numa.py": [
+    "sys",
+    "pathlib",
+    "runtime.experiments.v611_topology.discovery_hardened",
+    "runtime.hardware.cartography.mapper"
+  ],
+  "runtime/guardian/test_v613_2_snapshot.py": [
+    "runtime.experiments.v611_topology.discovery_hardened",
+    "runtime.hardware.cartography.snapshot_engine",
+    "sys",
+    "pathlib",
+    "copy",
+    "runtime.hardware.cartography.mapper"
+  ],
+  "runtime/guardian/test_v613_3_registry.py": [
+    "runtime.experiments.v611_topology.discovery_hardened",
+    "runtime.hardware.cartography.registry.registry",
+    "sys",
+    "pathlib",
+    "copy",
+    "runtime.hardware.cartography.mapper"
+  ],
+  "runtime/guardian/test_v614_1_policy.py": [
+    "runtime.hardware.trust.policy.registry",
+    "runtime.hardware.trust.policy.models",
+    "runtime.hardware.trust.policy.evaluator",
+    "runtime.hardware.trust.ledger.policy_ledger",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/guardian/test_v614_2_envelope.py": [
+    "sys",
+    "pathlib",
+    "runtime.hardware.trust.envelope.envelope",
+    "time"
+  ],
+  "runtime/guardian/test_v614_3_revocation.py": [
+    "sys",
+    "pathlib",
+    "runtime.hardware.trust.revocation.registry",
+    "runtime.hardware.trust.envelope.envelope"
+  ],
+  "runtime/guardian/test_v614_trust.py": [
+    "sys",
+    "pathlib",
+    "runtime.hardware.trust.engine"
+  ],
+  "runtime/guardian/test_v615_0_admission.py": [
+    "runtime.hardware.trust.policy.registry",
+    "runtime.hardware.trust.execution.admission.controller",
+    "runtime.hardware.trust.execution.admission.models",
+    "runtime.hardware.trust.revocation.registry",
+    "sys",
+    "pathlib",
+    "runtime.hardware.trust.envelope.envelope"
+  ],
+  "runtime/guardian/test_v615_3_models.py": [
+    "runtime.hardware.trust.policy.registry",
+    "runtime.hardware.trust.execution.admission.controller",
+    "runtime.hardware.trust.execution.admission.models",
+    "runtime.hardware.trust.models_governance.budget",
+    "runtime.hardware.trust.revocation.registry",
+    "runtime.hardware.trust.models_governance.model_registry",
+    "sys",
+    "pathlib",
+    "runtime.hardware.trust.envelope.envelope"
+  ],
+  "runtime/guardian/test_v615_governor.py": [
+    "runtime.hardware.trust.execution.governor.resource",
+    "runtime.hardware.trust.policy.registry",
+    "runtime.hardware.trust.execution.admission.controller",
+    "runtime.hardware.trust.execution.admission.models",
+    "runtime.hardware.trust.revocation.registry",
+    "sys",
+    "pathlib",
+    "runtime.hardware.trust.envelope.envelope"
+  ],
+  "runtime/guardian/test_v616_attestation.py": [
+    "time",
+    "runtime.hardware.trust.execution.ledger.hashchain",
+    "json",
+    "psutil",
+    "runtime.hardware.trust.execution.attestation.verifier",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/guardian/test_v617_2_resolver.py": [
+    "sys",
+    "pathlib",
+    "runtime.hardware.trust.models.resolver",
+    "runtime.hardware.trust.models.registry"
+  ],
+  "runtime/guardian/test_v61_e2e_real.py": [
+    "concurrent_segmented_engine_v48",
+    "time",
+    "runtime.hardware.memory_intelligence",
+    "runtime.hardware.cognitive_memory_governor",
+    "runtime.microkernel.backpressure_controller",
+    "json",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/guardian/test_v62_adaptive.py": [
+    "sys",
+    "pathlib",
+    "runtime.hardware.adaptive_governor_v62",
+    "time"
+  ],
+  "runtime/guardian/test_v631_chaos_advanced.py": [
+    "time",
+    "runtime.hardware.predictive_governor_v63",
+    "json",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/guardian/test_v63_chaos.py": [
+    "time",
+    "runtime.hardware.predictive_governor_v63",
+    "json",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/guardian/test_v64_hardening.py": [
+    "time",
+    "runtime.hardware.hardened_governor_v64",
+    "json",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/guardian/test_v65_autonomous.py": [
+    "time",
+    "runtime.hardware.autonomous_governor_v65",
+    "json",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/guardian/test_v661_production.py": [
+    "time",
+    "runtime.hardware.production_kernel_v661",
+    "json",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/guardian/test_v66_production.py": [
+    "time",
+    "json",
+    "sys",
+    "pathlib",
+    "runtime.hardware.production_kernel_v66"
+  ],
+  "runtime/guardian/test_v67_operational.py": [
+    "runtime.hardware.operational_governor_v67",
+    "time",
+    "json",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/guardian/test_v68_resource_governor.py": [
+    "sys",
+    "pathlib",
+    "runtime.hardware.resource_governor_v68",
+    "time"
+  ],
+  "runtime/guardian/test_v68_ryzen.py": [
+    "sys",
+    "pathlib",
+    "runtime.hardware.ryzen_optimizer.governor"
+  ],
+  "runtime/guardian/test_v691_ledger.py": [
+    "runtime.hardware.ryzen_optimizer.governor",
+    "time",
+    "psutil",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/guardian/test_v692_native_affinity.py": [
+    "sys",
+    "pathlib",
+    "runtime.hardware.ryzen_optimizer.governor",
+    "psutil"
+  ],
+  "runtime/guardian/test_v69_stabilization.py": [
+    "sys",
+    "pathlib",
+    "runtime.hardware.ryzen_optimizer.governor",
+    "time"
+  ],
+  "runtime/guardian/__init__.py": [
+    "governor_bridge"
+  ],
+  "runtime/hardware/adaptive_daemon.py": [
+    "psutil",
+    "governor_service",
+    "time"
+  ],
+  "runtime/hardware/adaptive_governor_v62.py": [
+    "time",
+    "os",
+    "json",
+    "pathlib",
+    "collections",
+    "threading"
+  ],
+  "runtime/hardware/adaptive_learning_governor.py": [
+    "time",
+    "json",
+    "pathlib",
+    "collections",
+    "threading"
+  ],
+  "runtime/hardware/autonomous_governor_v65.py": [
+    "time",
+    "dataclasses",
+    "os",
+    "json",
+    "pathlib",
+    "threading"
+  ],
+  "runtime/hardware/cognitive_memory_governor.py": [
+    "time",
+    "os",
+    "json",
+    "pathlib",
+    "collections",
+    "threading"
+  ],
+  "runtime/hardware/cpu_topology.py": [
+    "platform",
+    "os",
+    "psutil"
+  ],
+  "runtime/hardware/governor_service.py": [
+    "time",
+    "os",
+    "cpu_topology",
+    "json",
+    "psutil",
+    "pathlib",
+    "threading"
+  ],
+  "runtime/hardware/hardened_governor_v64.py": [
+    "time",
+    "dataclasses",
+    "os",
+    "json",
+    "pathlib",
+    "threading"
+  ],
+  "runtime/hardware/memory_actuator.py": [
+    "threading",
+    "time"
+  ],
+  "runtime/hardware/memory_actuator_v53.py": [
+    "time",
+    "json",
+    "pathlib",
+    "collections",
+    "threading"
+  ],
+  "runtime/hardware/memory_actuator_v54.py": [
+    "time",
+    "os",
+    "json",
+    "pathlib",
+    "collections",
+    "threading"
+  ],
+  "runtime/hardware/memory_intelligence.py": [
+    "psutil",
+    "os",
+    "time"
+  ],
+  "runtime/hardware/operational_governor_v610.py": [
+    "time",
+    "uuid",
+    "runtime.hardware.audit.null_audit",
+    "runtime.hardware.production_kernel_v661",
+    "threading"
+  ],
+  "runtime/hardware/operational_governor_v67.py": [
+    "hashlib",
+    "time",
+    "dataclasses",
+    "hmac",
+    "os",
+    "getpass",
+    "uuid",
+    "runtime.hardware.production_kernel_v661",
+    "json",
+    "pathlib",
+    "threading"
+  ],
+  "runtime/hardware/predictive_governor_v63.py": [
+    "time",
+    "os",
+    "json",
+    "pathlib",
+    "collections",
+    "threading"
+  ],
+  "runtime/hardware/production_kernel_v66.py": [
+    "hashlib",
+    "time",
+    "dataclasses",
+    "hmac",
+    "os",
+    "json",
+    "pathlib",
+    "collections",
+    "threading"
+  ],
+  "runtime/hardware/production_kernel_v661.py": [
+    "hashlib",
+    "time",
+    "dataclasses",
+    "hmac",
+    "os",
+    "json",
+    "pathlib",
+    "collections",
+    "threading"
+  ],
+  "runtime/hardware/resource_governor_v68.py": [
+    "runtime.hardware.operational_governor_v67",
+    "runtime.hardware.ryzen_optimizer.governor",
+    "time",
+    "pathlib",
+    "threading"
+  ],
+  "runtime/hardware/test_governor_ipc.py": [
+    "runtime.hardware.governor_service",
+    "time",
+    "json",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/hardware/test_pure_cpu.py": [
+    "runtime.hardware.governor_service",
+    "time",
+    "json",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/hardware/test_v492_adaptive_matrix.py": [
+    "runtime.hardware.governor_service",
+    "time",
+    "runtime.hardware.adaptive_daemon",
+    "json",
+    "psutil",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/hardware/test_v49_adaptive.py": [
+    "runtime.hardware.governor_service",
+    "time",
+    "runtime.hardware.adaptive_daemon",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/hardware/test_v51_gpu_ipc.py": [
+    "runtime.hardware.governor_service",
+    "time",
+    "json",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/hardware/test_v52_actuator.py": [
+    "runtime.hardware.memory_actuator",
+    "time",
+    "runtime.hardware.memory_intelligence",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/hardware/__init__.py": [
+    "memory_actuator_v54",
+    "memory_intelligence",
+    "cpu_topology",
+    "governor_service",
+    "cognitive_memory_governor",
+    "adaptive_daemon",
+    "adaptive_learning_governor"
+  ],
+  "runtime/hardware/cartography/mapper.py": [
+    "cpuinfo",
+    "platform",
+    "runtime.hardware.cartography.numa",
+    "psutil"
+  ],
+  "runtime/hardware/cartography/numa.py": [
+    "platform",
+    "psutil"
+  ],
+  "runtime/hardware/cartography/snapshot_engine.py": [
+    "hashlib",
+    "pathlib",
+    "json",
+    "time"
+  ],
+  "runtime/hardware/cartography/registry/registry.py": [
+    "runtime.hardware.cartography.snapshot_engine",
+    "pathlib",
+    "json",
+    "time"
+  ],
+  "runtime/hardware/evidence/ledger.py": [
+    "hashlib",
+    "time",
+    "os",
+    "json",
+    "pathlib",
+    "threading"
+  ],
+  "runtime/hardware/evidence/validator.py": [
+    "runtime.hardware.evidence.ledger",
+    "runtime.experiments.v611_topology.discovery_hardened",
+    "json",
+    "time"
+  ],
+  "runtime/hardware/router/executor.py": [
+    "os",
+    "runtime.hardware.router.gate",
+    "psutil"
+  ],
+  "runtime/hardware/router/router.py": [
+    "runtime.hardware.evidence.validator",
+    "runtime.hardware.router.gate",
+    "os",
+    "json",
+    "runtime.hardware.evidence.ledger"
+  ],
+  "runtime/hardware/router/transaction.py": [
+    "uuid",
+    "psutil",
+    "runtime.hardware.router.executor",
+    "time"
+  ],
+  "runtime/hardware/ryzen_optimizer/governor.py": [
+    "time",
+    "affinity",
+    "topology",
+    "psutil",
+    "collections",
+    "threading"
+  ],
+  "runtime/hardware/ryzen_optimizer/topology.py": [
+    "os",
+    "psutil"
+  ],
+  "runtime/hardware/topology/discovery.py": [
+    "json",
+    "os",
+    "time",
+    "psutil"
+  ],
+  "runtime/hardware/trust/engine.py": [
+    "pathlib",
+    "json",
+    "time"
+  ],
+  "runtime/hardware/trust/envelope/envelope.py": [
+    "hashlib",
+    "time",
+    "dataclasses",
+    "uuid",
+    "runtime.hardware.trust.revocation.registry",
+    "json"
+  ],
+  "runtime/hardware/trust/execution/admission/controller.py": [
+    "hashlib",
+    "time",
+    "runtime.hardware.trust.policy.registry",
+    "runtime.hardware.trust.execution.admission.models",
+    "runtime.hardware.trust.models_governance.budget",
+    "uuid",
+    "json",
+    "runtime.hardware.trust.envelope.envelope"
+  ],
+  "runtime/hardware/trust/execution/admission/models.py": [
+    "dataclasses",
+    "runtime.hardware.trust.envelope.envelope"
+  ],
+  "runtime/hardware/trust/execution/attestation/collector.py": [
+    "runtime.hardware.trust.execution.attestation.models",
+    "psutil"
+  ],
+  "runtime/hardware/trust/execution/attestation/models.py": [
+    "dataclasses",
+    "enum",
+    "typing"
+  ],
+  "runtime/hardware/trust/execution/attestation/verifier.py": [
+    "runtime.hardware.trust.execution.attestation.collector",
+    "hashlib",
+    "time",
+    "runtime.hardware.trust.execution.ledger.hashchain",
+    "uuid",
+    "runtime.hardware.trust.execution.attestation.models",
+    "json"
+  ],
+  "runtime/hardware/trust/execution/governor/resource.py": [
+    "dataclasses",
+    "runtime.hardware.trust.execution.admission.models",
+    "psutil"
+  ],
+  "runtime/hardware/trust/execution/ledger/hashchain.py": [
+    "hashlib",
+    "pathlib",
+    "json",
+    "typing"
+  ],
+  "runtime/hardware/trust/ledger/policy_ledger.py": [
+    "pathlib",
+    "json",
+    "time"
+  ],
+  "runtime/hardware/trust/models/contract_signer.py": [
+    "hashlib",
+    "sys",
+    "pathlib",
+    "json"
+  ],
+  "runtime/hardware/trust/models/registry.py": [
+    "hashlib",
+    "pathlib",
+    "json"
+  ],
+  "runtime/hardware/trust/models/resolver.py": [
+    "runtime.hardware.trust.models.registry"
+  ],
+  "runtime/hardware/trust/models_governance/budget.py": [
+    "dataclasses",
+    "runtime.hardware.trust.execution.admission.models",
+    "runtime.hardware.trust.models_governance.model_registry"
+  ],
+  "runtime/hardware/trust/models_governance/model_registry.py": [
+    "pathlib",
+    "json"
+  ],
+  "runtime/hardware/trust/policy/evaluator.py": [
+    "runtime.hardware.trust.ledger.policy_ledger",
+    "pathlib",
+    "runtime.hardware.trust.policy.registry"
+  ],
+  "runtime/hardware/trust/policy/models.py": [
+    "dataclasses"
+  ],
+  "runtime/hardware/trust/policy/registry.py": [
+    "pathlib",
+    "json"
+  ],
+  "runtime/hardware/trust/revocation/registry.py": [
+    "pathlib",
+    "json",
+    "time"
+  ],
+  "runtime/identity/persona.py": [
+    "os",
+    "json",
+    "typing"
+  ],
+  "runtime/incidents/classifier.py": [
+    "dataclasses",
+    "__future__",
+    "enum",
+    "model",
+    "typing"
+  ],
+  "runtime/incidents/collector.py": [
+    "datetime",
+    "uuid",
+    "__future__",
+    "enum",
+    "json",
+    "model",
+    "typing"
+  ],
+  "runtime/incidents/decision.py": [
+    "hashlib",
+    "datetime",
+    "dataclasses",
+    "uuid",
+    "__future__",
+    "enum",
+    "json",
+    "model",
+    "classifier",
+    "typing"
+  ],
+  "runtime/incidents/evidence.py": [
+    "os",
+    "__future__",
+    "enum",
+    "json",
+    "model",
+    "pathlib",
+    "typing"
+  ],
+  "runtime/incidents/model.py": [
+    "hashlib",
+    "datetime",
+    "dataclasses",
+    "__future__",
+    "enum",
+    "json",
+    "typing"
+  ],
+  "runtime/incidents/registry.py": [
+    "datetime",
+    "uuid",
+    "__future__",
+    "enum",
+    "json",
+    "pathlib",
+    "typing"
+  ],
+  "runtime/kernel/boot.py": [
+    "runtime.execution.ledger",
+    "runtime.execution.governor",
+    "hashlib",
+    "os",
+    "runtime.events.bus",
+    "runtime.kernel.state",
+    "runtime.kernel.context",
+    "uuid",
+    "__future__",
+    "json",
+    "runtime.policy.engine",
+    "ctypes",
+    "sys",
+    "pathlib",
+    "runtime.capabilities.registry",
+    "runtime.security.trust"
+  ],
+  "runtime/kernel/context.py": [
+    "runtime.execution.ledger",
+    "runtime.execution.governor",
+    "dataclasses",
+    "runtime.events.bus",
+    "runtime.kernel.state",
+    "uuid",
+    "__future__",
+    "runtime.policy.engine",
+    "runtime.capabilities.registry",
+    "runtime.security.trust",
+    "typing"
+  ],
+  "runtime/kernel/state.py": [
+    "__future__",
+    "enum",
+    "threading",
+    "time"
+  ],
+  "runtime/kernel/_v425_worker.py": [
+    "sys",
+    "pathlib",
+    "runtime.kernel.boot",
+    "time"
+  ],
+  "runtime/knowledge/models.py": [
+    "uuid",
+    "dataclasses",
+    "enum",
+    "datetime"
+  ],
+  "runtime/knowledge/store.py": [
+    "runtime.knowledge.models",
+    "datetime",
+    "os",
+    "sqlite3",
+    "typing"
+  ],
+  "runtime/knowledge/__init__.py": [
+    "runtime.knowledge.models",
+    "runtime.knowledge.store"
+  ],
+  "runtime/learning/feedback.py": [
+    "typing"
+  ],
+  "runtime/memory/atomic_writer.py": [
+    "shutil",
+    "pathlib",
+    "os",
+    "json"
+  ],
+  "runtime/memory/batch_async_writer.py": [
+    "time",
+    "os",
+    "shutil",
+    "json",
+    "queue",
+    "pathlib",
+    "threading"
+  ],
+  "runtime/memory/bridge.py": [
+    "runtime.memory.event_store",
+    "runtime.audit.skill_audit"
+  ],
+  "runtime/memory/events.py": [
+    "dataclasses",
+    "datetime",
+    "uuid",
+    "json",
+    "typing"
+  ],
+  "runtime/memory/event_store.py": [
+    "hashlib",
+    "time",
+    "os",
+    "json",
+    "pathlib"
+  ],
+  "runtime/memory/models.py": [
+    "dataclasses",
+    "typing"
+  ],
+  "runtime/memory/replay.py": [
+    "pathlib",
+    "json"
+  ],
+  "runtime/memory/session.py": [
+    "runtime.core.message",
+    "pathlib",
+    "datetime",
+    "json"
+  ],
+  "runtime/memory/__init__.py": [
+    "runtime.memory.sqlite.store",
+    "runtime.memory.models"
+  ],
+  "runtime/memory/cortex/episodic.py": [
+    "datetime",
+    "runtime.core.events",
+    "runtime.memory.sqlite.store",
+    "uuid",
+    "runtime.memory.events",
+    "collections",
+    "threading"
+  ],
+  "runtime/memory/dream/engine.py": [
+    "time",
+    "runtime.core.events",
+    "runtime.memory.sqlite.store",
+    "json",
+    "threading"
+  ],
+  "runtime/memory/episodic/episode.py": [
+    "dataclasses",
+    "typing"
+  ],
+  "runtime/memory/episodic/episode_extractor.py": [
+    "uuid",
+    "datetime",
+    "runtime.memory.episodic.episode",
+    "typing"
+  ],
+  "runtime/memory/episodic/episode_recovery.py": [
+    "runtime.memory.episode_store",
+    "runtime.memory.episode_extractor",
+    "runtime.memory.episodic.episode",
+    "runtime.memory.sqlite.store",
+    "typing"
+  ],
+  "runtime/memory/episodic/episode_store.py": [
+    "runtime.memory.episodic.episode",
+    "sqlite3",
+    "json",
+    "pathlib",
+    "typing"
+  ],
+  "runtime/memory/reflection/proposal.py": [
+    "dataclasses",
+    "datetime",
+    "typing"
+  ],
+  "runtime/memory/reflection/store.py": [
+    "runtime.core.events",
+    "sqlite3",
+    "json",
+    "runtime.memory.sqlite.store"
+  ],
+  "runtime/memory/reflection/validator.py": [
+    "datetime",
+    "runtime.core.events",
+    "runtime.memory.sqlite.store",
+    "uuid",
+    "sqlite3",
+    "json"
+  ],
+  "runtime/memory/semantic/contracts.py": [
+    "core.memory_core",
+    "dataclasses",
+    "datetime",
+    "enum",
+    "typing"
+  ],
+  "runtime/memory/semantic/vector_store.py": [
+    "math",
+    "sqlite3",
+    "json"
+  ],
+  "runtime/memory/signals/salience.py": [
+    "dataclasses"
+  ],
+  "runtime/memory/sleep/consolidator.py": [
+    "uuid",
+    "sqlite3",
+    "json",
+    "time"
+  ],
+  "runtime/memory/sleep/scheduler.py": [
+    "runtime.memory.sleep.state",
+    "datetime",
+    "runtime.core.events"
+  ],
+  "runtime/memory/sleep/state.py": [
+    "dataclasses",
+    "datetime"
+  ],
+  "runtime/memory/sqlite/store.py": [
+    "runtime.memory.events",
+    "sqlite3",
+    "json",
+    "pathlib",
+    "threading",
+    "typing"
+  ],
+  "runtime/microkernel/backpressure_controller.py": [
+    "typing",
+    "threading",
+    "time"
+  ],
+  "runtime/microkernel/test_v60_backpressure.py": [
+    "time",
+    "runtime.hardware.cognitive_memory_governor",
+    "runtime.microkernel.backpressure_controller",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/observability/traces.py": [
+    "dataclasses",
+    "typing"
+  ],
+  "runtime/optimization/token_compressor.py": [
+    "re",
+    "collections",
+    "json"
+  ],
+  "runtime/policy/engine.py": [
+    "logging"
+  ],
+  "runtime/reasoning/planner.py": [
+    "typing"
+  ],
+  "runtime/reasoning/router.py": [
+    "enum"
+  ],
+  "runtime/reasoning/__init__.py": [
+    "runtime.reasoning.router"
+  ],
+  "runtime/recovery/actions.py": [
+    "runtime.kernel.context",
+    "runtime.recovery.snapshot",
+    "shutil",
+    "__future__",
+    "pathlib"
+  ],
+  "runtime/recovery/contracts.py": [
+    "hashlib",
+    "dataclasses",
+    "hmac",
+    "os",
+    "enum",
+    "json",
+    "typing"
+  ],
+  "runtime/recovery/controller.py": [
+    "runtime.kernel.context",
+    "runtime.events.types",
+    "runtime.events.bus",
+    "__future__",
+    "runtime.incidents.registry",
+    "runtime.recovery.actions",
+    "logging"
+  ],
+  "runtime/recovery/incident_bundle.py": [
+    "hashlib",
+    "datetime",
+    "runtime.recovery.analyzers",
+    "runtime.telemetry.events",
+    "uuid",
+    "runtime.recovery.contracts",
+    "runtime.recovery.store",
+    "runtime.telemetry.collector",
+    "json",
+    "typing"
+  ],
+  "runtime/recovery/ledger.py": [
+    "hashlib",
+    "datetime",
+    "os",
+    "sqlite3",
+    "json",
+    "threading",
+    "typing"
+  ],
+  "runtime/recovery/snapshot.py": [
+    "shutil",
+    "__future__",
+    "json",
+    "pathlib",
+    "typing"
+  ],
+  "runtime/recovery/store.py": [
+    "datetime",
+    "os",
+    "runtime.recovery.contracts",
+    "sqlite3",
+    "json",
+    "threading",
+    "typing"
+  ],
+  "runtime/recovery/__init__.py": [
+    "runtime.recovery.ledger",
+    "runtime.recovery.contracts",
+    "runtime.recovery.store",
+    "runtime.recovery.incident_bundle",
+    "runtime.recovery.rollback",
+    "runtime.recovery.queue",
+    "runtime.recovery.decision"
+  ],
+  "runtime/recovery/analyzers/base.py": [
+    "runtime.recovery.contracts",
+    "abc",
+    "typing"
+  ],
+  "runtime/recovery/analyzers/queue_analyzer.py": [
+    "runtime.recovery.analyzers.base",
+    "typing",
+    "runtime.recovery.contracts"
+  ],
+  "runtime/recovery/analyzers/security_analyzer.py": [
+    "runtime.recovery.analyzers.base",
+    "typing",
+    "runtime.recovery.contracts"
+  ],
+  "runtime/recovery/analyzers/timeout_analyzer.py": [
+    "runtime.recovery.analyzers.base",
+    "typing",
+    "runtime.recovery.contracts"
+  ],
+  "runtime/recovery/analyzers/__init__.py": [
+    "runtime.recovery.analyzers.timeout_analyzer",
+    "runtime.recovery.analyzers.queue_analyzer",
+    "runtime.recovery.analyzers.security_analyzer"
+  ],
+  "runtime/recovery/decision/engine.py": [
+    "runtime.recovery.ledger",
+    "runtime.recovery.decision.policies",
+    "datetime",
+    "runtime.recovery.decision.governor",
+    "runtime.recovery.rollback.manager",
+    "runtime.telemetry.events",
+    "uuid",
+    "runtime.recovery.contracts",
+    "runtime.recovery.executor.scaling",
+    "runtime.recovery.executor.retry",
+    "runtime.telemetry.collector",
+    "sqlite3",
+    "json",
+    "runtime.recovery.executor.quarantine",
+    "threading",
+    "typing"
+  ],
+  "runtime/recovery/decision/governor.py": [
+    "dataclasses",
+    "enum",
+    "typing"
+  ],
+  "runtime/recovery/decision/policies.py": [
+    "dataclasses",
+    "os",
+    "json",
+    "typing"
+  ],
+  "runtime/recovery/decision/__init__.py": [
+    "runtime.recovery.decision.engine",
+    "runtime.recovery.decision.policies"
+  ],
+  "runtime/recovery/executor/base.py": [
+    "abc",
+    "typing"
+  ],
+  "runtime/recovery/executor/quarantine.py": [
+    "runtime.recovery.executor.base",
+    "typing"
+  ],
+  "runtime/recovery/executor/retry.py": [
+    "runtime.recovery.executor.base",
+    "typing"
+  ],
+  "runtime/recovery/executor/scaling.py": [
+    "runtime.recovery.executor.base",
+    "typing"
+  ],
+  "runtime/recovery/queue/bus.py": [
+    "os",
+    "runtime.recovery.contracts",
+    "sqlite3",
+    "json",
+    "queue",
+    "threading",
+    "typing"
+  ],
+  "runtime/recovery/queue/__init__.py": [
+    "runtime.recovery.queue.bus"
+  ],
+  "runtime/recovery/rollback/manager.py": [
+    "hashlib",
+    "dataclasses",
+    "datetime",
+    "uuid",
+    "sqlite3",
+    "json",
+    "threading",
+    "typing"
+  ],
+  "runtime/recovery/rollback/__init__.py": [
+    "runtime.recovery.rollback.manager"
+  ],
+  "runtime/router/cognitive_router.py": [
+    "urllib.request",
+    "dotenv",
+    "os",
+    "__future__",
+    "urllib.error",
+    "json",
+    "pathlib",
+    "google"
+  ],
+  "runtime/router/llm_router.py": [
+    "runtime.router.llm_response",
+    "urllib.request",
+    "json",
+    "time"
+  ],
+  "runtime/rss/cache.py": [
+    "datetime",
+    "os",
+    "sqlite3",
+    "typing"
+  ],
+  "runtime/rss/collector.py": [
+    "runtime.rss.cache",
+    "xml.etree.ElementTree",
+    "urllib.request",
+    "typing"
+  ],
+  "runtime/rss/__init__.py": [
+    "runtime.rss.cache",
+    "runtime.rss.collector"
+  ],
+  "runtime/security/audit.py": [
+    "pathlib",
+    "datetime",
+    "json"
+  ],
+  "runtime/security/command_policy.py": [
+    "re"
+  ],
+  "runtime/security/environment.py": [
+    "tempfile",
+    "os"
+  ],
+  "runtime/security/guard.py": [
+    "runtime.security.secrets",
+    "runtime.tools.manifest_provider",
+    "runtime.tools.tool_schema",
+    "runtime.policy.engine"
+  ],
+  "runtime/security/permissions.py": [
+    "runtime.tools.manifest_loader"
+  ],
+  "runtime/security/ps_ast_policy.py": [
+    "json",
+    "base64"
+  ],
+  "runtime/security/sandbox.py": [
+    "runtime.tools.tool_schema",
+    "concurrent.futures",
+    "pathlib",
+    "runtime.tools.manifest_loader",
+    "typing"
+  ],
+  "runtime/security/secrets.py": [
+    "hashlib",
+    "secrets",
+    "time",
+    "datetime",
+    "os",
+    "pathlib"
+  ],
+  "runtime/security/trust.py": [
+    "json",
+    "hashlib",
+    "pathlib"
+  ],
+  "runtime/sensors/filesystem_sensor.py": [
+    "pathlib",
+    "datetime"
+  ],
+  "runtime/sensors/git_sensor.py": [
+    "subprocess",
+    "pathlib"
+  ],
+  "runtime/sensors/health.py": [
+    "runtime.sensors.system_sensor",
+    "datetime",
+    "runtime.sensors.git_sensor",
+    "runtime.sensors.filesystem_sensor"
+  ],
+  "runtime/sensors/sensor_manager.py": [
+    "hashlib",
+    "datetime",
+    "runtime.sensors.health",
+    "runtime.sensors.system_sensor",
+    "json",
+    "runtime.sensors.git_sensor",
+    "pathlib",
+    "runtime.sensors.filesystem_sensor"
+  ],
+  "runtime/sensors/system_sensor.py": [
+    "shutil",
+    "platform",
+    "ctypes",
+    "urllib.request"
+  ],
+  "runtime/skills/loader.py": [
+    "pathlib",
+    "importlib.util",
+    "runtime.skills.validator"
+  ],
+  "runtime/skills/registry.py": [
+    "runtime.skills.loader",
+    "runtime.memory.bridge"
+  ],
+  "runtime/skills/skill_manager.py": [
+    "importlib.util",
+    "subprocess",
+    "datetime",
+    "os",
+    "shutil",
+    "importlib",
+    "sys",
+    "pathlib",
+    "ast"
+  ],
+  "runtime/skills/validator.py": [
+    "pathlib",
+    "json"
+  ],
+  "runtime/skills/active/filesystem_search/skill.py": [
+    "pathlib",
+    "os"
+  ],
+  "runtime/skills/active/git_manager/skill.py": [
+    "subprocess",
+    "pathlib"
+  ],
+  "runtime/skills/active/python_analyzer/skill.py": [
+    "pathlib",
+    "ast"
+  ],
+  "runtime/state/state_manager.py": [
+    "pathlib",
+    "datetime",
+    "json"
+  ],
+  "runtime/telemetry/collector.py": [
+    "time",
+    "runtime.telemetry.storage",
+    "runtime.telemetry.events",
+    "runtime.telemetry.metrics",
+    "queue",
+    "threading",
+    "typing"
+  ],
+  "runtime/telemetry/events.py": [
+    "time",
+    "dataclasses",
+    "uuid",
+    "enum",
+    "typing"
+  ],
+  "runtime/telemetry/health.py": [
+    "runtime.telemetry.collector",
+    "dataclasses",
+    "typing"
+  ],
+  "runtime/telemetry/metrics.py": [
+    "dataclasses",
+    "socket",
+    "threading",
+    "typing"
+  ],
+  "runtime/telemetry/storage.py": [
+    "hashlib",
+    "datetime",
+    "os",
+    "runtime.telemetry.events",
+    "runtime.telemetry.metrics",
+    "sqlite3",
+    "json",
+    "statistics",
+    "threading",
+    "typing"
+  ],
+  "runtime/telemetry/__init__.py": [
+    "runtime.telemetry.health",
+    "runtime.telemetry.storage",
+    "runtime.telemetry.events",
+    "runtime.telemetry.collector",
+    "runtime.telemetry.metrics"
+  ],
+  "runtime/test_isolation/v451/simple_lock_v451.py": [
+    "pathlib",
+    "os",
+    "json",
+    "time"
+  ],
+  "runtime/test_isolation/v451/test_lock_logic.py": [
+    "runtime.test_isolation.v451.simple_lock_v451",
+    "time",
+    "os",
+    "json",
+    "pathlib"
+  ],
+  "runtime/test_isolation/v452/store_v452.py": [
+    "hashlib",
+    "pathlib",
+    "json",
+    "time"
+  ],
+  "runtime/test_isolation/v452/test_crash_resilience.py": [
+    "pathlib",
+    "json",
+    "store_v452"
+  ],
+  "runtime/test_isolation/v453/async_atomic_writer.py": [
+    "os",
+    "shutil",
+    "json",
+    "queue",
+    "pathlib",
+    "threading"
+  ],
+  "runtime/test_isolation/v453/atomic_writer.py": [
+    "shutil",
+    "pathlib",
+    "os",
+    "json"
+  ],
+  "runtime/test_isolation/v453/test_atomic_commit.py": [
+    "pathlib",
+    "os",
+    "atomic_writer"
+  ],
+  "runtime/test_isolation/v453/test_batch_benchmark.py": [
+    "time",
+    "runtime.memory.batch_async_writer",
+    "os",
+    "json",
+    "psutil",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/test_isolation/v453/test_crash_before_replace.py": [
+    "pathlib",
+    "os",
+    "atomic_writer"
+  ],
+  "runtime/test_isolation/v453/test_crash_pending.py": [
+    "pathlib",
+    "os",
+    "atomic_writer"
+  ],
+  "runtime/test_isolation/v453/test_event_store_atomic.py": [
+    "sys",
+    "pathlib",
+    "os",
+    "runtime.memory.atomic_writer"
+  ],
+  "runtime/test_isolation/v453/test_integration_v454.py": [
+    "subprocess",
+    "runtime.memory.event_store",
+    "json",
+    "sys",
+    "pathlib",
+    "runtime.memory.atomic_writer"
+  ],
+  "runtime/test_isolation/v453/test_integration_v454_b.py": [
+    "time",
+    "subprocess",
+    "json",
+    "sys",
+    "pathlib",
+    "runtime.memory.atomic_writer"
+  ],
+  "runtime/test_isolation/v453/test_integration_v454_c.py": [
+    "time",
+    "json",
+    "sys",
+    "pathlib",
+    "runtime.memory.atomic_writer"
+  ],
+  "runtime/test_isolation/v453/test_integration_v454_c_async.py": [
+    "time",
+    "runtime.test_isolation.v453.async_atomic_writer",
+    "json",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/test_isolation/v453/test_integration_v454_c_hardened.py": [
+    "time",
+    "os",
+    "runtime.test_isolation.v453.async_atomic_writer",
+    "json",
+    "psutil",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/test_isolation/v453/test_recovery_verify.py": [
+    "sys",
+    "pathlib",
+    "runtime.memory.atomic_writer"
+  ],
+  "runtime/test_isolation/v453/test_stress_chaos.py": [
+    "subprocess",
+    "os",
+    "json",
+    "sys",
+    "pathlib",
+    "runtime.memory.atomic_writer",
+    "random"
+  ],
+  "runtime/test_isolation/v453/worker_flood.py": [
+    "sys",
+    "pathlib",
+    "runtime.memory.atomic_writer",
+    "time"
+  ],
+  "runtime/test_isolation/v456/segmented_manager.py": [
+    "hashlib",
+    "pathlib",
+    "os",
+    "json"
+  ],
+  "runtime/test_isolation/v456/segmented_recovery.py": [
+    "hashlib",
+    "pathlib",
+    "os",
+    "json"
+  ],
+  "runtime/test_isolation/v456/test_manifest_checksum.py": [
+    "segmented_recovery",
+    "sys",
+    "pathlib",
+    "json"
+  ],
+  "runtime/test_isolation/v456/test_recovery_chaos.py": [
+    "os",
+    "segmented_recovery",
+    "json",
+    "sys",
+    "pathlib"
+  ],
+  "runtime/test_isolation/v456/test_segmentation.py": [
+    "sys",
+    "pathlib",
+    "segmented_manager",
+    "json"
+  ],
+  "runtime/test_isolation/v457/concurrent_segmented_engine.py": [
+    "hashlib",
+    "time",
+    "os",
+    "json",
+    "psutil",
+    "queue",
+    "pathlib",
+    "threading"
+  ],
+  "runtime/test_isolation/v457/test_v457_benchmark.py": [
+    "time",
+    "concurrent_segmented_engine",
+    "json",
+    "psutil",
+    "sys",
+    "pathlib",
+    "threading"
+  ],
+  "runtime/test_isolation/v458/active_worker.py": [
+    "sys",
+    "pathlib",
+    "concurrent_segmented_engine",
+    "time"
+  ],
+  "runtime/test_isolation/v458/concurrent_segmented_engine.py": [
+    "hashlib",
+    "time",
+    "os",
+    "json",
+    "queue",
+    "pathlib",
+    "threading"
+  ],
+  "runtime/test_isolation/v458/test_v458_1_crash_hardening.py": [
+    "time",
+    "subprocess",
+    "concurrent_segmented_engine",
+    "json",
+    "sys",
+    "pathlib",
+    "threading"
+  ],
+  "runtime/test_isolation/v458/test_v458_profiler_chaos.py": [
+    "time",
+    "subprocess",
+    "concurrent_segmented_engine",
+    "json",
+    "statistics",
+    "sys",
+    "pathlib",
+    "threading"
+  ],
+  "runtime/test_isolation/v4598/concurrent_segmented_engine_faulty.py": [
+    "hashlib",
+    "time",
+    "queue",
+    "os",
+    "json",
+    "sys",
+    "pathlib",
+    "threading"
+  ],
+  "runtime/test_isolation/v4598/test_v459_8_chaos_matrix.py": [
+    "argparse",
+    "time",
+    "subprocess",
+    "os",
+    "json",
+    "sys",
+    "pathlib",
+    "concurrent_segmented_engine_faulty"
+  ],
+  "runtime/test_isolation/v4599/concurrent_segmented_engine_soak.py": [
+    "hashlib",
+    "time",
+    "queue",
+    "os",
+    "json",
+    "sys",
+    "pathlib",
+    "threading"
+  ],
+  "runtime/test_isolation/v4599/test_v459_9_soak_drill.py": [
+    "concurrent_segmented_engine_soak",
+    "time",
+    "subprocess",
+    "os",
+    "json",
+    "psutil",
+    "sys",
+    "pathlib",
+    "random"
+  ],
+  "runtime/test_isolation/v460/concurrent_segmented_engine_v46.py": [
+    "hashlib",
+    "time",
+    "queue",
+    "os",
+    "json",
+    "sys",
+    "pathlib",
+    "threading"
+  ],
+  "runtime/test_isolation/v460/test_v46_scale_soak.py": [
+    "time",
+    "subprocess",
+    "concurrent_segmented_engine_v46",
+    "json",
+    "psutil",
+    "sys",
+    "pathlib",
+    "threading"
+  ],
+  "runtime/test_isolation/v470/concurrent_segmented_engine_v47.py": [
+    "hashlib",
+    "time",
+    "queue",
+    "os",
+    "json",
+    "sys",
+    "pathlib",
+    "collections",
+    "threading"
+  ],
+  "runtime/test_isolation/v470/test_v47_semantic_benchmark.py": [
+    "time",
+    "concurrent_segmented_engine_v47",
+    "uuid",
+    "json",
+    "psutil",
+    "sys",
+    "pathlib",
+    "threading"
+  ],
+  "runtime/test_isolation/v480/concurrent_segmented_engine_v48.py": [
+    "hashlib",
+    "time",
+    "queue",
+    "os",
+    "json",
+    "psutil",
+    "sys",
+    "pathlib",
+    "collections",
+    "threading"
+  ],
+  "runtime/test_isolation/v480/test_v48_governor_benchmark.py": [
+    "concurrent_segmented_engine_v48",
+    "time",
+    "uuid",
+    "json",
+    "psutil",
+    "sys",
+    "pathlib",
+    "threading"
+  ],
+  "runtime/tools/bootstrap.py": [
+    "runtime.tools.executors.git",
+    "runtime.tools.executors.powershell",
+    "runtime.tools.executors.filesystem"
+  ],
+  "runtime/tools/manifest_loader.py": [
+    "runtime.tools.manifest_provider"
+  ],
+  "runtime/tools/manifest_provider.py": [
+    "hashlib",
+    "json",
+    "pathlib",
+    "copy",
+    "threading",
+    "typing"
+  ],
+  "runtime/tools/parser.py": [
+    "runtime.security.permissions",
+    "runtime.tools.tool_schema",
+    "json",
+    "typing"
+  ],
+  "runtime/tools/pipeline.py": [
+    "runtime.audit.logger",
+    "runtime.agent.state_machine",
+    "time",
+    "runtime.tools.schema_validator",
+    "runtime.tools.parser",
+    "runtime.agent.result",
+    "runtime.tools.tool_registry",
+    "runtime.tools.tool_schema",
+    "runtime.security.permissions",
+    "runtime.security.guard"
+  ],
+  "runtime/tools/schema_validator.py": [
+    "runtime.tools.manifest_loader",
+    "typing"
+  ],
+  "runtime/tools/tool_registry.py": [
+    "runtime.security.permissions",
+    "pathlib",
+    "runtime.tools.tool_schema",
+    "runtime.tools.executors.filesystem"
+  ],
+  "runtime/tools/tool_schema.py": [
+    "uuid",
+    "typing"
+  ],
+  "runtime/tools/executors/filesystem.py": [
+    "pathlib",
+    "runtime.external.base",
+    "runtime.tools.tool_schema"
+  ],
+  "runtime/tools/executors/git.py": [
+    "subprocess",
+    "runtime.external.base",
+    "runtime.tools.tool_schema"
+  ],
+  "runtime/tools/executors/powershell.py": [
+    "subprocess",
+    "runtime.external.base",
+    "runtime.tools.tool_schema",
+    "time"
+  ],
+  "runtime/tools/executors/reflector.py": [
+    "runtime.contracts.tool_result",
+    "runtime.execution.decorators",
+    "runtime.tools.tool_schema"
+  ],
+  "runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/01_database_autopsy.py": [
+    "pathlib",
+    "sqlite3"
+  ],
+  "runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/02_direct_store_test.py": [
+    "uuid",
+    "runtime.memory.events",
+    "runtime.memory.sqlite.store"
+  ],
+  "runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/03_message_event_store.py": [
+    "uuid",
+    "runtime.memory.events",
+    "runtime.core.message",
+    "runtime.memory.sqlite.store"
+  ],
+  "runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/04_working_memory.py": [
+    "runtime.memory.session"
+  ],
+  "runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/05_persistence_write.py": [
+    "runtime.memory.session"
+  ],
+  "runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/06_persistence_read.py": [
+    "runtime.memory.session"
+  ],
+  "runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/syntax_runtime_core_message_py.py": [
+    "pathlib",
+    "ast"
+  ],
+  "runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/syntax_runtime_memory_events_py.py": [
+    "pathlib",
+    "ast"
+  ],
+  "runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/syntax_runtime_memory_session_py.py": [
+    "pathlib",
+    "ast"
+  ],
+  "runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/syntax_runtime_memory_sqlite_store_py.py": [
+    "pathlib",
+    "ast"
+  ],
+  "runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/syntax_runtime_memory___init___py.py": [
+    "pathlib",
+    "ast"
+  ],
+  "tests/conftest.py": [
+    "sys",
+    "os"
+  ],
+  "tools/exec_tools.py": [
+    "subprocess",
+    "sys",
+    "os"
+  ],
+  "tools/fs_tools.py": [
+    "datetime",
+    "os",
+    "shutil",
+    "json",
+    "ast"
+  ],
+  "tools/guard.py": [
+    "os",
+    "hashlib"
+  ],
+  "tools/index_engine_v5_5.py": [
+    "importlib.util",
+    "hashlib",
+    "time",
+    "queue",
+    "blake3",
+    "datetime",
+    "platform",
+    "os",
+    "psutil",
+    "sqlite3",
+    "json",
+    "logging.handlers",
+    "sys",
+    "threading",
+    "random",
+    "logging"
+  ],
+  "tools/patch_engine.py": [
+    "os",
+    "shutil",
+    "tools.guard",
+    "ast",
+    "difflib"
+  ],
+  "tools/patch_pipeline.py": [
+    "traceback",
+    "os",
+    "shutil",
+    "tools.guard",
+    "py_compile",
+    "typing"
+  ],
+  "tools/workspace_index_v2.py": [
+    "hashlib",
+    "time",
+    "os",
+    "shutil",
+    "sqlite3"
+  ],
+  "tools/workspace_index_v3.py": [
+    "hashlib",
+    "time",
+    "datetime",
+    "os",
+    "shutil",
+    "sqlite3",
+    "logging.handlers",
+    "logging"
+  ],
+  "tools/legacy_root_scripts/deploy_fix.py": [
+    "shutil",
+    "pathlib"
+  ],
+  "tools/legacy_root_scripts/ezzio_perfection.py": [
+    "shutil",
+    "pathlib"
+  ],
+  "tools/legacy_root_scripts/file_tools.py": [
+    "subprocess",
+    "os",
+    "pathlib",
+    "google",
+    "shlex",
+    "google.genai"
+  ],
+  "tools/legacy_root_scripts/Inspect-WorkspaceIndex.py": [
+    "pathlib",
+    "sqlite3"
+  ],
+  "tools/legacy_root_scripts/inspect_exec.py": [
+    "pathlib"
+  ],
+  "tools/legacy_root_scripts/inspect_routes.py": [
+    "runtime.action.registry",
+    "importlib",
+    "sys",
+    "pathlib",
+    "runtime.tools.pipeline"
+  ],
+  "tools/legacy_root_scripts/list_models.py": [
+    "dotenv",
+    "os",
+    "google"
+  ],
+  "tools/legacy_root_scripts/main.py": [
+    "openai",
+    "flask",
+    "os"
+  ],
+  "tools/legacy_root_scripts/restore_contracts.py": [
+    "pathlib"
+  ],
+  "tools/legacy_root_scripts/safe_fix.py": [
+    "re",
+    "pathlib"
+  ],
+  "tools/legacy_root_scripts/self_analysis.py": [
+    "concurrent.futures",
+    "dotenv",
+    "os",
+    "google"
+  ],
+  "tools/legacy_root_scripts/sweeper.py": [
+    "dotenv",
+    "os",
+    "google",
+    "time"
+  ],
+  "tools/legacy_root_scripts/vision.py": [
+    "mss",
+    "dotenv",
+    "os",
+    "mss.tools",
+    "pathlib",
+    "google",
+    "google.genai"
+  ]
+}
