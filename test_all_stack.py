@@ -3,7 +3,6 @@ import os
 import sys
 import time
 
-# 1. Résolution de chemin
 sys.path.insert(0, os.getcwd())
 
 from core.secrets import load_secrets
@@ -56,20 +55,20 @@ async def run_master_check():
     print(f"      [OK] Local Chat     -> {c3['intent'].value} ({c3['target_provider']})")
     print(f"      [OK] Memory Recall  -> {c4['intent'].value} ({c4['target_provider']})\n")
 
-    # --- 3. MOTEURS D'INFÉRENCE EN DIRECT ---
+    # --- 3. MOTEURS D'INFÉRENCE EN DIRECT (100% CPU) ---
     print("[3/5] TEST DES FOURNISSEURS IA EN DIRECT...")
-    # A. Inférence Locale Ollama
-    print("      [*] Ollama Local (qwen3.5:9b)...", end=" ", flush=True)
-    t0 = time.perf_counter()
     ollama = OllamaProvider()
+    print(f"      [*] Ollama Local CPU Pure ({ollama.model})...", end=" ", flush=True)
+    t0 = time.perf_counter()
     try:
-        res_loc = await ollama.search("Réponds 'OK_LOCAL' en un mot.")
+        # max_tokens=5 pour une réponse ping-pong instantanée
+        res_loc = await ollama.search("Réponds 'OK_CPU' en un mot.", max_tokens=5)
         dt = time.perf_counter() - t0
         print(f"[OK] ({dt:.2f}s) -> '{res_loc['data']['text'][:30]}...'")
     except Exception as e:
         print(f"[KO] Erreur: {e}")
 
-    # B. Cloud Reasoning Gemini
+    # Cloud Reasoning Gemini
     print("      [*] Gemini Cloud...", end=" ", flush=True)
     t0 = time.perf_counter()
     gemini = GeminiProvider()
@@ -80,7 +79,7 @@ async def run_master_check():
     except Exception as e:
         print(f"[KO] Erreur: {e}")
 
-    # C. Web Search Tavily
+    # Web Search Tavily
     print("      [*] Tavily Web...", end=" ", flush=True)
     t0 = time.perf_counter()
     tavily = TavilyProvider()
@@ -99,31 +98,24 @@ async def run_master_check():
     think_res = await core.think(user_id="user_admin", message="Bonjour E-ZZIO, statut ?")
     print(f"      [OK] Intention active : {think_res['intent']}")
     print(f"      [OK] Moteur utilisé   : {think_res['provider'].upper()}")
+    print(f"      [OK] Mode d'exécution : {think_res['mode']}")
     print(f"      [OK] Synthèse         : {think_res['response'][:90]}...\n")
 
-    # --- 5. ENDPOINTS FASTAPI EN TRANSPORT ASGI DIRECT ---
+    # --- 5. ENDPOINTS FASTAPI (Transport Direct ASGI) ---
     print("[5/5] TEST ENDPOINTS HTTP API (Transport Direct ASGI)...")
-    # Initialisation explicite des magasins de la couche API
     await _evidence_store.init()
     await chat_core.init()
 
     transport = httpx.ASGITransport(app=app)
     async with httpx.AsyncClient(transport=transport, base_url="http://testserver", timeout=120.0) as client:
-        # Health check
         h_resp = await client.get("/health")
         assert h_resp.status_code == 200, f"Health check failed: {h_resp.text}"
 
-        # Route Research (Google Mode)
         r_resp = await client.post("/api/v1/research/search", json={"query": "Microkernel IPC", "mode": "google"})
-        if r_resp.status_code != 200:
-            print(f"      [ERREUR DETAIL] /api/v1/research/search HTTP {r_resp.status_code} : {r_resp.text}")
-        assert r_resp.status_code == 200, "Research route failed"
+        assert r_resp.status_code == 200, f"Research route failed: {r_resp.text}"
 
-        # Route Chat Autonome
         c_resp = await client.post("/api/v1/chat", json={"message": "Explique SQLite WAL en 1 phrase.", "user_id": "root"})
-        if c_resp.status_code != 200:
-            print(f"      [ERREUR DETAIL] /api/v1/chat HTTP {c_resp.status_code} : {c_resp.text}")
-        assert c_resp.status_code == 200, "Chat route failed"
+        assert c_resp.status_code == 200, f"Chat route failed: {c_resp.text}"
         data_chat = c_resp.json()
 
         print(f"      [OK] GET /health                      -> HTTP 200 OK")
@@ -132,7 +124,7 @@ async def run_master_check():
         print(f"           Réponse : {data_chat.get('response')[:100]}...\n")
 
     print("=" * 65)
-    print("   TOUS LES VOYANTS SONT AU VERT — SYSTÈME 100% OPÉRATIONNEL     ")
+    print("   TOUS LES VOYANTS SONT AU VERT — SYSTÈME 100% OPÉRATIONNEL (CPU) ")
     print("=" * 65)
 
 if __name__ == "__main__":
