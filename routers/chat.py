@@ -1,33 +1,45 @@
-from fastapi import APIRouter
-from core.dispatcher import ezzio_dispatcher
-from core.schemas import Prompt
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel, Field
+from typing import Any, Dict, Optional
+from runtime.core.ezzio_core import EzzioCore
 
-router = APIRouter(tags=["chat"])
+router = APIRouter(prefix="/api/v1/chat", tags=["Autonomous Cognitive Chat"])
 
-@router.post("/preflight")
-async def preflight(prompt: Prompt):
-    return ezzio_dispatcher.preflight(prompt.text, speed=prompt.speed)
+# Instance singleton du noyau Ezzio
+_core = EzzioCore()
 
-@router.post("/route")
-async def route(prompt: Prompt):
-    return ezzio_dispatcher.preflight(prompt.text, speed=prompt.speed)
+class ChatRequest(BaseModel):
+    message: str = Field(..., description="Message ou prompt utilisateur")
+    user_id: str = Field("default_user", description="Identifiant unique de l'utilisateur")
+    session_id: Optional[str] = Field(None, description="Identifiant de session optionnel")
 
-@router.post("/chat")
-async def chat(prompt: Prompt):
-    return await ezzio_dispatcher.route_detailed_async(prompt.text, speed=prompt.speed)
+class ChatResponse(BaseModel):
+    response: str
+    intent: str
+    provider: str
+    mode: str
+    session_id: str
+    data: Dict[str, Any]
 
-@router.post("/api/chat")
-async def api_chat(prompt: Prompt):
-    return await ezzio_dispatcher.route_detailed_async(prompt.text, speed=prompt.speed)
+@router.on_event("startup")
+async def startup_event():
+    await _core.init()
 
-@router.post("/api/chat/auto")
-async def api_chat_auto(prompt: Prompt):
-    return await ezzio_dispatcher.route_detailed_async(prompt.text, speed="auto")
-
-@router.post("/api/chat/fast")
-async def api_chat_fast(prompt: Prompt):
-    return await ezzio_dispatcher.route_detailed_async(prompt.text, speed="fast")
-
-@router.post("/api/chat/deep")
-async def api_chat_deep(prompt: Prompt):
-    return await ezzio_dispatcher.route_detailed_async(prompt.text, speed="deep")
+@router.post("", response_model=ChatResponse)
+async def chat_endpoint(req: ChatRequest):
+    try:
+        result = await _core.think(
+            user_id=req.user_id,
+            message=req.message,
+            session_id=req.session_id
+        )
+        return ChatResponse(
+            response=result.get("response", ""),
+            intent=result.get("intent", "unknown"),
+            provider=result.get("provider", "unknown"),
+            mode=result.get("mode", "unknown"),
+            session_id=result.get("session_id", req.session_id or f"sess_{req.user_id}"),
+            data=result.get("data", {})
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"Erreur d'inférence autonome: {str(exc)}")

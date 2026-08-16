@@ -1,24 +1,26 @@
 from fastapi import FastAPI
 from routers.research import router as research_router
-from core.evidence_store import EvidenceStore
+from routers.chat import router as chat_router
+from core.memory.unified_gateway import UnifiedMemoryGateway
 
 app = FastAPI(
     title="E-ZZIO Autonomous Gateway",
-    version="3.1.0",
+    version="3.2.0",
     description="Interface souveraine de contrôle et d'orchestration cognitive"
 )
 
-# Enregistrement du routeur de recherche et d'intelligence
+# Montage des routeurs
 app.include_router(research_router)
+app.include_router(chat_router)
 
 @app.on_event("startup")
 async def startup_event():
-    evidence_store = EvidenceStore("runtime/evidence/evidence.db")
-    await evidence_store.init()
+    mem = UnifiedMemoryGateway("runtime/evidence/evidence.db")
+    await mem.init()
 
 @app.get("/")
 async def root():
-    return {"status": "online", "system": "E-ZZIO Core Microkernel", "version": "3.1.0"}
+    return {"status": "online", "system": "E-ZZIO Core Microkernel", "version": "3.2.0"}
 
 @app.get("/health")
 async def health_check():
