@@ -1,5 +1,6 @@
 import json
 import aiosqlite
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 class EvidenceStore:
@@ -27,14 +28,16 @@ class EvidenceStore:
 
     async def store(self, query: str, provider: str, mode: str, data: Dict[str, Any],
                     task_id: Optional[str] = None, user_id: Optional[str] = None,
-                    channel_id: Optional[str] = None) -> int:
+                    channel_id: Optional[str] = None, created_at: Optional[str] = None) -> int:
+        """Enregistre une preuve d'audit en garantissant le timestamp created_at."""
+        now_ts = created_at or datetime.now(timezone.utc).isoformat()
         async with aiosqlite.connect(self.db_path) as db:
             cursor = await db.execute(
                 """
-                INSERT INTO evidence (query, provider, mode, data, task_id, user_id, channel_id)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO evidence (query, provider, mode, data, task_id, user_id, channel_id, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """,
-                (query, provider, mode, json.dumps(data), task_id, user_id, channel_id)
+                (query, provider, mode, json.dumps(data), task_id, user_id, channel_id, now_ts)
             )
             await db.commit()
             return cursor.lastrowid
