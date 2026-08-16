@@ -10,7 +10,7 @@ class OllamaProvider(IResearchProvider):
     def __init__(self, base_url: Optional[str] = None, model: Optional[str] = None):
         load_secrets()
         self.base_url = base_url or os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434")
-        self.model = model or os.getenv("OLLAMA_MODEL", "qwen2.5:latest")
+        self.model = model or os.getenv("OLLAMA_MODEL", "qwen2.5:7b")
 
     async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
         """Exécute une inférence locale souveraine via Ollama."""
