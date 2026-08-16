@@ -1,6 +1,13 @@
+import sys
 import os
-import asyncio
 from pathlib import Path
+
+# Résolution garantie de la racine du projet quel que soit le dossier de lancement
+ROOT_DIR = Path(__file__).resolve().parent.parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+import asyncio
 import discord
 from discord.ext import commands
 from core.secrets import load_secrets
@@ -22,7 +29,7 @@ async def on_ready():
     print(f"[OK] Bot Discord connecté : {bot.user.name} (ID: {bot.user.id})")
     print("[*] Chargement dynamique des cogs...")
     
-    cogs_dir = Path("runtime/discord/cogs")
+    cogs_dir = ROOT_DIR / "runtime" / "discord" / "cogs"
     if cogs_dir.exists():
         for file in cogs_dir.glob("*.py"):
             if not file.name.startswith("__"):
