@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, BackgroundTasks
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import Any, Dict, Optional
 from core.decision_router import DecisionRouter, SearchMode
@@ -48,10 +48,11 @@ async def perform_search(req: ResearchRequest):
     effective_task_id = req.task_id or f"task_res_{id(req)}"
     
     try:
-        result = await _research_skill.execute_governed_task(
-            task_id=effective_task_id,
+        # Appel de la méthode search() de ResearchSkill
+        result = await _research_skill.search(
             query=req.query,
-            mode=selected_mode
+            mode=selected_mode,
+            task_id=effective_task_id
         )
         return ResearchResponse(
             task_id=effective_task_id,
