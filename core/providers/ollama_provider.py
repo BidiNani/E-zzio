@@ -14,20 +14,22 @@ class OllamaProvider(IResearchProvider):
         self.model = model or os.getenv("OLLAMA_MODEL", "qwen3.5:9b")
 
     async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
-        """Exécution 100% CPU pure (zéro VRAM, 12 threads physiques, streaming direct)."""
+        """Exécution 100% CPU pure (zéro VRAM, 6 threads, thinking désactivé, budget tokens élevé)."""
         url = f"{self.base_url}/api/generate"
         payload = {
             "model": self.model,
             "prompt": query,
             "stream": True,
+            "think": False,  # désactive le mode raisonnement (thinking) si supporté
             "options": {
-                "num_gpu": 0,        # FORÇAGE : 0 couche en VRAM (GPU totalement ignoré)
-                "num_thread": int(os.getenv("OLLAMA_NUM_THREAD", "12")),
-                "temperature": kwargs.get("temperature", 0.7),
-                "num_predict": kwargs.get("max_tokens", 150)
+                "num_gpu": 0,
+                "num_thread": int(os.getenv("OLLAMA_NUM_THREAD", "6")),
+                "num_ctx": kwargs.get("num_ctx", 2048),
+                "num_predict": kwargs.get("max_tokens", 1500),  # budget relevé
+                "temperature": kwargs.get("temperature", 0.7)
             }
         }
-        
+
         timeout = httpx.Timeout(connect=10.0, read=180.0, write=10.0, pool=10.0)
         accumulated_text = []
         last_chunk = {}
@@ -40,13 +42,27 @@ class OllamaProvider(IResearchProvider):
                         continue
                     try:
                         chunk = json.loads(line)
-                        accumulated_text.append(chunk.get("response", ""))
+                        token = chunk.get("response", "")
+                        if token:
+                            accumulated_text.append(token)
                         if chunk.get("done", False):
                             last_chunk = chunk
                     except json.JSONDecodeError:
                         continue
 
         full_response = "".join(accumulated_text).strip()
+
+        # Ne jamais retourner de thinking brut. Si response est vide, c'est une génération tronquée.
+        if not full_response:
+            return {
+                "provider": self.name,
+                "model": self.model,
+                "data": {
+                    "text": "[Réponse tronquée : budget de tokens insuffisant pour ce modèle en mode raisonnement]",
+                    "raw": last_chunk
+                }
+            }
+
         return {
             "provider": self.name,
             "model": self.model,
