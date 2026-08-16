@@ -14,14 +14,17 @@ class OllamaProvider(IResearchProvider):
         self.model = model or os.getenv("OLLAMA_MODEL", "qwen3.5:9b")
 
     async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
-        """Exécute l'inférence locale en flux continu (évite tout ReadTimeout sur CPU)."""
+        """Inférence locale streaming avec offload GPU et threads CPU maximisés."""
         url = f"{self.base_url}/api/generate"
         payload = {
             "model": self.model,
             "prompt": query,
-            "stream": True
+            "stream": True,
+            "options": {
+                "num_gpu": 999,      # laisse Ollama caser un max de couches sur les 4 Go VRAM
+                "num_thread": 12     # exploite les 12 coeurs physiques du 5900X
+            }
         }
-        # Timeout de connexion initial et lecture continue
         timeout = httpx.Timeout(connect=15.0, read=300.0, write=15.0, pool=15.0)
         accumulated_text = []
         last_chunk = {}
