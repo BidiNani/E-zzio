@@ -1,67 +1,78 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import Any, Dict, Optional
-from core.decision_router import DecisionRouter, SearchMode
+import logging
+import uuid
+
 from core.evidence_store import EvidenceStore
-from core.skills.research_skill import ResearchSkill
-from core.providers.ollama_provider import OllamaProvider
+from core.decision_router import DecisionRouter, SearchMode
 from core.providers.tavily_provider import TavilyProvider
-from core.providers.jina_provider import JinaProvider
 from core.providers.gemini_provider import GeminiProvider
+from core.providers.ollama_provider import OllamaProvider
 
-router = APIRouter(prefix="/api/v1/research", tags=["Research & Intelligence"])
+logger = logging.getLogger("ezzio.api.research")
 
-# Initialisation singleton des 4 moteurs
-_ollama = OllamaProvider()
-_tavily = TavilyProvider()
-_jina = JinaProvider()
-_gemini = GeminiProvider()
+router = APIRouter(prefix="/api/v1/research", tags=["Research"])
 
 _evidence_store = EvidenceStore("runtime/evidence/evidence.db")
-_decision_router = DecisionRouter(providers=[_ollama, _tavily, _jina, _gemini])
-_research_skill = ResearchSkill(
-    router=_decision_router,
-    evidence_store=_evidence_store
-)
+_decision_router = DecisionRouter([
+    TavilyProvider(),
+    GeminiProvider(),
+    OllamaProvider()
+])
+
+async def init_research_router():
+    """Initialise la base de persistance des preuves lors du lifespan."""
+    await _evidence_store.init()
+    logger.info("[OK] EvidenceStore initialisé pour le routeur Research.")
 
 class ResearchRequest(BaseModel):
-    query: str = Field(..., description="Requête de recherche ou prompt d'analyse")
-    mode: str = Field("fast", description="Mode : fast, research, forensic, google, local")
-    task_id: Optional[str] = Field(None, description="Identifiant optionnel de tâche gouvernée")
+    query: str = Field(..., description="Requête de recherche ou d'investigation")
+    mode: str = Field(default="fast", description="Mode de recherche : fast, deep, google, local")
+    max_tokens: Optional[int] = Field(default=None, description="Limite de tokens")
 
 class ResearchResponse(BaseModel):
     task_id: str
     mode: str
     provider: str
-    data: Dict[str, Any]
-
-@router.on_event("startup")
-async def startup_event():
-    await _evidence_store.init()
+    data: Dict[str, Any] = Field(default_factory=dict)
 
 @router.post("/search", response_model=ResearchResponse)
-async def perform_search(req: ResearchRequest):
-    mode_mapping = {
-        "fast": SearchMode.FAST,
-        "research": SearchMode.RESEARCH,
-        "forensic": SearchMode.FORENSIC,
-        "google": SearchMode.GOOGLE,
-        "local": SearchMode.LOCAL,
-    }
-    selected_mode = mode_mapping.get(req.mode.lower(), SearchMode.FAST)
-    effective_task_id = req.task_id or f"task_res_{id(req)}"
-
+async def search_endpoint(payload: ResearchRequest):
     try:
-        result = await _research_skill.search(
-            query=req.query,
-            mode=selected_mode,
-            task_id=effective_task_id
+        mode_map = {
+            "fast": SearchMode.FAST,
+            "deep": SearchMode.DEEP,
+            "google": SearchMode.GOOGLE,
+            "local": SearchMode.LOCAL
+        }
+        search_mode = mode_map.get(payload.mode.lower(), SearchMode.FAST)
+        task_id = f"task_res_{uuid.uuid4().int >> 64}"
+
+        result = await _decision_router.search(
+            query=payload.query,
+            mode=search_mode,
+            max_tokens=payload.max_tokens or 400
         )
+
+        provider_name = result.get("provider", "unknown")
+        data_content = result.get("data", {})
+
+        # Archivage transactionnel de la preuve
+        await _evidence_store.store(
+            query=payload.query,
+            provider=provider_name,
+            mode=payload.mode,
+            data=data_content,
+            task_id=task_id
+        )
+
         return ResearchResponse(
-            task_id=effective_task_id,
-            mode=result.get("mode", req.mode),
-            provider=result.get("provider", "unknown"),
-            data=result.get("data", {})
+            task_id=task_id,
+            mode=payload.mode,
+            provider=provider_name,
+            data=data_content
         )
-    except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"Erreur d'orchestration de recherche: {str(exc)}")
+    except Exception as e:
+        logger.error(f"[ERREUR] Échec /api/v1/research/search : {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))

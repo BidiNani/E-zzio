@@ -1,17 +1,28 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import Any, Dict, Optional
+import logging
+
 from runtime.core.ezzio_core import EzzioCore
+from core.memory.unified_gateway import UnifiedMemoryGateway
 
-router = APIRouter(prefix="/api/v1/chat", tags=["Autonomous Cognitive Chat"])
+logger = logging.getLogger("ezzio.api.chat")
 
-# Instance singleton du noyau Ezzio
-_core = EzzioCore()
+router = APIRouter(prefix="/api/v1/chat", tags=["Chat"])
+
+# Instance mémoire et noyau EzzioCore
+_memory_gateway = UnifiedMemoryGateway("runtime/evidence/evidence.db")
+_core = EzzioCore(memory_gateway=_memory_gateway)
+
+async def init_chat_router():
+    """Initialise le sous-système de chat lors du lifespan de l'application."""
+    await _core.init()
+    logger.info("[OK] EzzioCore et MemoryGateway initialisés pour le routeur Chat.")
 
 class ChatRequest(BaseModel):
-    message: str = Field(..., description="Message ou prompt utilisateur")
-    user_id: str = Field("default_user", description="Identifiant unique de l'utilisateur")
-    session_id: Optional[str] = Field(None, description="Identifiant de session optionnel")
+    message: str = Field(..., description="Message de l'utilisateur")
+    user_id: str = Field(default="user_default", description="Identifiant unique utilisateur")
+    session_id: Optional[str] = Field(default=None, description="Identifiant de session de conversation")
 
 class ChatResponse(BaseModel):
     response: str
@@ -19,27 +30,24 @@ class ChatResponse(BaseModel):
     provider: str
     mode: str
     session_id: str
-    data: Dict[str, Any]
-
-@router.on_event("startup")
-async def startup_event():
-    await _core.init()
+    data: Dict[str, Any] = Field(default_factory=dict)
 
 @router.post("", response_model=ChatResponse)
-async def chat_endpoint(req: ChatRequest):
+async def post_chat(payload: ChatRequest):
     try:
         result = await _core.think(
-            user_id=req.user_id,
-            message=req.message,
-            session_id=req.session_id
+            user_id=payload.user_id,
+            message=payload.message,
+            session_id=payload.session_id
         )
         return ChatResponse(
             response=result.get("response", ""),
-            intent=result.get("intent", "unknown"),
-            provider=result.get("provider", "unknown"),
-            mode=result.get("mode", "unknown"),
-            session_id=result.get("session_id", req.session_id or f"sess_{req.user_id}"),
+            intent=result.get("intent", "local_chat"),
+            provider=result.get("provider", "ollama"),
+            mode=result.get("mode", "local_chat"),
+            session_id=result.get("session_id", f"sess_{payload.user_id}"),
             data=result.get("data", {})
         )
-    except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"Erreur d'inférence autonome: {str(exc)}")
+    except Exception as e:
+        logger.error(f"[ERREUR] Échec /api/v1/chat : {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
