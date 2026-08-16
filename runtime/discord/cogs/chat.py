@@ -6,25 +6,27 @@ from typing import Optional, Literal
 
 from runtime.core.ezzio_core import EzzioCore
 from core.memory.unified_gateway import UnifiedMemoryGateway
+from core.providers.gemini_provider import GeminiProvider
 
 logger = logging.getLogger("ezzio.discord.chat")
 
 class ChatCog(commands.Cog):
-    """Cog Discord pour les interactions conversationnelles, le rappel et la gestion mémorielle."""
+    """Cog Discord durci avec mémoire FTS5 et fallback automatique Cloud."""
 
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.memory_gw = UnifiedMemoryGateway("runtime/evidence/evidence.db")
         self.core = EzzioCore(memory_gateway=self.memory_gw)
+        self.cloud_fallback = GeminiProvider()
         self._initialized = False
 
     async def cog_load(self):
         if not self._initialized:
             await self.core.init()
             self._initialized = True
-            logger.info("[OK] EzzioCore et UnifiedMemoryGateway initialisés pour Discord.")
+            logger.info("[OK] EzzioCore et UnifiedMemoryGateway initialisés.")
 
-    @app_commands.command(name="chat", description="Discute avec E-ZZIO en local (100% CPU souverain)")
+    @app_commands.command(name="chat", description="Discute avec E-ZZIO (100% CPU avec fallback Cloud)")
     @app_commands.describe(message="Ton message ou question technique")
     async def chat(self, interaction: discord.Interaction, message: str):
         await interaction.response.defer(thinking=True)
@@ -32,9 +34,10 @@ class ChatCog(commands.Cog):
         session_id = f"disc_user_{user_id}"
 
         try:
+            # 1. Tentative locale TIER-1
             result = await self.core.think(user_id=user_id, message=message, session_id=session_id)
-            response_text = result.get("response", "Aucune réponse générée.")
-            provider = result.get("provider", "local").upper()
+            response_text = result.get("response", "Aucune réponse.")
+            provider = result.get("provider", "ollama").upper()
             intent = result.get("intent", "chat").upper()
 
             embed = discord.Embed(description=response_text, color=discord.Color.teal())
@@ -42,16 +45,30 @@ class ChatCog(commands.Cog):
             await interaction.followup.send(embed=embed)
 
         except Exception as e:
-            logger.error(f"[ERREUR] Échec /chat: {e}", exc_info=True)
-            await interaction.followup.send(
-                embed=discord.Embed(description=f"❌ Erreur lors du traitement : `{str(e)}`", color=discord.Color.red())
-            )
+            logger.warning(f"[*] Incident TIER-1 ({e}). Bascule immédiate vers Gemini Cloud Fallback...")
+            try:
+                # 2. Repli résilient TIER-2
+                cloud_res = await self.cloud_fallback.search(f"Réponds de façon concise et technique : {message}")
+                cloud_text = cloud_res.get("data", {}).get("text", "Réponse indisponible.")
+                
+                await self.memory_gw.record_message(
+                    session_id, "assistant", cloud_text, metadata={"provider": "gemini", "fallback": True}
+                )
+                
+                embed = discord.Embed(description=cloud_text, color=discord.Color.gold())
+                embed.set_footer(text="E-ZZIO Autonomous | Provider: GEMINI (Auto-Fallback)")
+                await interaction.followup.send(embed=embed)
+            except Exception as ex_cloud:
+                logger.error(f"[ERREUR] Échec total de la chaîne de réponse: {ex_cloud}")
+                await interaction.followup.send(
+                    embed=discord.Embed(
+                        description=f"❌ Tous les moteurs d'inférence sont temporairement indisponibles : `{str(ex_cloud)}`",
+                        color=discord.Color.red()
+                    )
+                )
 
-    @app_commands.command(name="recall", description="Recherche dans la mémoire long terme cross-session et les preuves")
-    @app_commands.describe(
-        sujet="Sujet, fait ou consigne passée à retrouver",
-        limite="Nombre maximal d'éléments mémoriels à inspecter (1 à 10)"
-    )
+    @app_commands.command(name="recall", description="Recherche mémorielle FTS5 BM25 et synthèse")
+    @app_commands.describe(sujet="Sujet à retrouver", limite="Nombre de traces (1 à 10)")
     async def recall(self, interaction: discord.Interaction, sujet: str, limite: Optional[int] = 5):
         await interaction.response.defer(thinking=True)
         user_id = str(interaction.user.id)
@@ -66,61 +83,43 @@ class ChatCog(commands.Cog):
             if total_found == 0:
                 embed_empty = discord.Embed(
                     title="🧠 Rappel Mémoriel E-ZZIO",
-                    description=f"Aucune trace trouvée dans la mémoire long terme pour : `\"{sujet}\"`.",
+                    description=f"Aucune trace trouvée pour : `\"{sujet}\"`.",
                     color=discord.Color.dark_grey()
                 )
-                embed_empty.set_footer(text="Base SQLite WAL : 0 résultat")
+                embed_empty.set_footer(text="Base SQLite FTS5 BM25 : 0 résultat")
                 await interaction.followup.send(embed=embed_empty)
                 return
 
             context_blocks = []
             if evidences:
-                context_blocks.append(f"**Preuves archivées ({len(evidences)}) :**")
+                context_blocks.append(f"**Preuves ({len(evidences)}) :**")
                 for ev in evidences[:3]:
-                    context_blocks.append(f"- `[{ev.get('provider', 'N/A')}]` {ev.get('query')}")
+                    context_blocks.append(f"- `[{ev.get('provider')}]` {ev.get('query')}")
 
             if chat_history:
-                context_blocks.append(f"\n**Échanges cross-session ({len(chat_history)}) :**")
+                context_blocks.append(f"\n**Échanges indexés ({len(chat_history)}) :**")
                 for msg in chat_history[:4]:
                     role = msg.get("role", "user").capitalize()
                     content = msg.get("content", "").replace("\n", " ")[:140]
                     context_blocks.append(f"- **{role}** : {content}")
 
             context_str = "\n".join(context_blocks)
+            synth_prompt = f"Traces mémorielles FTS5 sur '{sujet}' :\n{context_str}\n\nConsigne : Synthétise en 2 phrases."
 
-            synth_prompt = (
-                f"Voici les traces mémorielles retrouvées dans la base de données concernant '{sujet}' :\n"
-                f"{context_str}\n\n"
-                f"Consigne : Rédige une synthèse factuelle et concise (2-3 phrases) de ce qui a été fait ou abordé sur ce sujet."
-            )
-
-            core_result = await self.core.think(
-                user_id=user_id,
-                message=synth_prompt,
-                session_id=f"disc_recall_{user_id}"
-            )
+            core_result = await self.core.think(user_id=user_id, message=synth_prompt, session_id=f"disc_recall_{user_id}")
             synthesis_text = core_result.get("response", "").strip()
 
-            embed = discord.Embed(
-                title=f"🧠 Rappel Mémoriel : \"{sujet}\"",
-                description=synthesis_text if synthesis_text else "Synthèse des faits extraits de la base de persistance.",
-                color=discord.Color.purple()
-            )
-            embed.add_field(name="📦 Contexte extrait de la base WAL", value=context_str[:1024], inline=False)
-            embed.set_footer(text=f"E-ZZIO Memory Engine | {total_found} trace(s) extraite(s) | SQLite WAL")
+            embed = discord.Embed(title=f"🧠 Rappel Mémoriel : \"{sujet}\"", description=synthesis_text, color=discord.Color.purple())
+            embed.add_field(name="📦 Traces FTS5 extraites", value=context_str[:1024], inline=False)
+            embed.set_footer(text=f"E-ZZIO Memory Engine | {total_found} trace(s) | FTS5 BM25")
             await interaction.followup.send(embed=embed)
 
         except Exception as e:
-            logger.error(f"[ERREUR] Échec /recall: {e}", exc_info=True)
-            await interaction.followup.send(
-                embed=discord.Embed(description=f"❌ Erreur lors du rappel mémoriel : `{str(e)}`", color=discord.Color.red())
-            )
+            logger.error(f"[ERREUR] /recall : {e}", exc_info=True)
+            await interaction.followup.send(embed=discord.Embed(description=f"❌ Erreur : `{str(e)}`", color=discord.Color.red()))
 
     @app_commands.command(name="forget", description="Purger ou réinitialiser la mémoire contextuelle dans SQLite WAL")
-    @app_commands.describe(
-        portee="Portée de la purge mémorielle",
-        mot_cle="Mot-clé spécifique à supprimer (requis si 'par_mot_cle' est sélectionné)"
-    )
+    @app_commands.describe(portee="Portée de la purge", mot_cle="Mot-clé requis si 'par_mot_cle'")
     async def forget(
         self,
         interaction: discord.Interaction,
@@ -134,48 +133,22 @@ class ChatCog(commands.Cog):
         try:
             if portee == "cette_session":
                 deleted = await self.memory_gw.clear_session(session_id)
-                embed = discord.Embed(
-                    title="🧹 Mémoire de session réinitialisée",
-                    description=f"**{deleted}** message(s) supprimé(s) pour la session courante (`{session_id}`).",
-                    color=discord.Color.orange()
-                )
-
+                desc = f"**{deleted}** message(s) supprimé(s) pour `{session_id}`."
             elif portee == "tout_mon_historique":
                 deleted = await self.memory_gw.clear_user_history(user_id)
-                embed = discord.Embed(
-                    title="🗑️ Historique complet utilisateur purgé",
-                    description=f"**{deleted}** message(s) supprimé(s) sur toutes tes sessions Discord.",
-                    color=discord.Color.red()
-                )
-
+                desc = f"**{deleted}** message(s) supprimé(s) pour tout ton compte."
             elif portee == "par_mot_cle":
                 if not mot_cle or not mot_cle.strip():
-                    await interaction.followup.send(
-                        embed=discord.Embed(
-                            description="⚠️ Veuillez fournir un `mot_cle` pour la purge ciblée.",
-                            color=discord.Color.gold()
-                        )
-                    )
+                    await interaction.followup.send("⚠️ Spécifiez un `mot_cle`.")
                     return
-                
                 res = await self.memory_gw.purge_by_keyword(mot_cle.strip())
-                embed = discord.Embed(
-                    title=f"🎯 Purge ciblée : \"{mot_cle.strip()}\"",
-                    description=(
-                        f"- **Messages supprimés :** {res['messages_deleted']}\n"
-                        f"- **Preuves supprimées :** {res['evidences_deleted']}"
-                    ),
-                    color=discord.Color.dark_gold()
-                )
+                desc = f"- Messages : {res['messages_deleted']}\n- Preuves : {res['evidences_deleted']}"
 
-            embed.set_footer(text="Base SQLite WAL — Opération irréversible")
+            embed = discord.Embed(title="🧹 Purge Mémorielle Validée", description=desc, color=discord.Color.orange())
+            embed.set_footer(text="Base SQLite WAL & Index FTS5 mis à jour")
             await interaction.followup.send(embed=embed)
-
         except Exception as e:
-            logger.error(f"[ERREUR] Échec /forget: {e}", exc_info=True)
-            await interaction.followup.send(
-                embed=discord.Embed(description=f"❌ Erreur lors de la purge : `{str(e)}`", color=discord.Color.red())
-            )
+            await interaction.followup.send(embed=discord.Embed(description=f"❌ Erreur purge : `{str(e)}`", color=discord.Color.red()))
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(ChatCog(bot))
