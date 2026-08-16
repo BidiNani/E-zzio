@@ -10,7 +10,6 @@ class SearchMode(Enum):
     LOCAL = "local"
 
 class DecisionRouter:
-    # Matrice de priorité stricte et déterministe par mode
     MODE_PRIORITIES = {
         SearchMode.FAST: ["tavily", "jina"],
         SearchMode.RESEARCH: ["jina", "tavily", "gemini"],
@@ -21,13 +20,11 @@ class DecisionRouter:
 
     def __init__(self, providers: List[IResearchProvider]):
         self.providers = providers
-        # Indexation par le nom unique du provider
         self._provider_map: Dict[str, IResearchProvider] = {
             getattr(p, "name", ""): p for p in providers if hasattr(p, "name")
         }
 
     def _select_providers(self, mode: SearchMode) -> List[IResearchProvider]:
-        """Sélectionne et ordonne les providers selon la priorité stricte du mode."""
         priority_names = self.MODE_PRIORITIES.get(mode, [])
         ordered = [self._provider_map[name] for name in priority_names if name in self._provider_map]
         return ordered if ordered else self.providers
@@ -37,19 +34,23 @@ class DecisionRouter:
             raise RuntimeError("Aucun fournisseur de recherche configuré.")
 
         selected = self._select_providers(mode)
-        last_error = None
+        errors: List[str] = []
 
         for provider in selected:
+            provider_name = getattr(provider, "name", "unknown")
             try:
                 result = await provider.search(query, **kwargs)
                 if result:
                     return {
                         "mode": mode.value,
-                        "provider": result.get("provider", getattr(provider, "name", "unknown")),
+                        "provider": result.get("provider", provider_name),
                         "data": result.get("data", {})
                     }
             except Exception as e:
-                last_error = e
+                # Capture explicite du type et de la représentation technique complète
+                err_detail = f"[{provider_name}] {type(e).__name__}: {e!r}"
+                errors.append(err_detail)
                 continue
 
-        raise RuntimeError(f"Échec de recherche ({mode.value}) sur tous les fournisseurs qualifiés. Dernier log: {last_error}")
+        error_summary = " | ".join(errors) if errors else "Aucune exception levée mais aucun résultat produit."
+        raise RuntimeError(f"Échec de recherche ({mode.value}) sur tous les fournisseurs qualifiés. Journal: {error_summary}")
