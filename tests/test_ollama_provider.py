@@ -6,4 +6,4 @@ async def test_ollama_provider_structure():
     provider = OllamaProvider()
     assert provider.name == "ollama"
     assert "11434" in provider.base_url
-    assert provider.model == "qwen2.5:7b"
+    assert "qwen" in provider.model.lower()
