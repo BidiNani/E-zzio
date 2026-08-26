@@ -1,0 +1,1 @@
+def task_target(): return 42
