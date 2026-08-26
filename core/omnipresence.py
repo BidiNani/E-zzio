@@ -33,6 +33,7 @@ CPU_ONLY_ENV = {
 for key, value in CPU_ONLY_ENV.items():
     os.environ[key] = value
 
+
 def load_config() -> Dict[str, str]:
     cfg = {}
     if SECRETS_FILE.exists():
@@ -52,6 +53,7 @@ def load_config() -> Dict[str, str]:
         cfg[key] = os.environ.get(key, cfg.get(key, ""))
     return cfg
 
+
 def _redact(value: str) -> str:
     if not value:
         return ""
@@ -59,13 +61,16 @@ def _redact(value: str) -> str:
         return "***"
     return value[:4] + "..." + value[-4:]
 
+
 def _bool(value: str, default: bool = False) -> bool:
     if value is None:
         return default
     return str(value).strip().lower() in ["1", "true", "yes", "y", "on"]
 
+
 def now_stamp() -> str:
     return time.strftime("%Y%m%d_%H%M%S")
+
 
 def write_event(kind: str, payload: Dict[str, Any], folder: Path = OUTBOX) -> Dict[str, Any]:
     event_id = f"{now_stamp()}_{uuid.uuid4().hex[:10]}"
@@ -78,6 +83,7 @@ def write_event(kind: str, payload: Dict[str, Any], folder: Path = OUTBOX) -> Di
     path = folder / f"{event_id}.json"
     path.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
     return {"ok": True, "id": event_id, "path": str(path), "record": record}
+
 
 def status() -> Dict[str, Any]:
     cfg = load_config()
@@ -112,6 +118,7 @@ def status() -> Dict[str, Any]:
         },
     }
 
+
 def inbox_add(source: str, text: str, user: str = "unknown", metadata: Optional[Dict[str, Any]] = None):
     payload = {
         "source": source,
@@ -121,6 +128,7 @@ def inbox_add(source: str, text: str, user: str = "unknown", metadata: Optional[
     }
     return write_event("inbox.message", payload, INBOX)
 
+
 def outbox_add(target: str, text: str, metadata: Optional[Dict[str, Any]] = None):
     payload = {
         "target": target,
@@ -128,6 +136,7 @@ def outbox_add(target: str, text: str, metadata: Optional[Dict[str, Any]] = None
         "metadata": metadata or {},
     }
     return write_event("outbox.message", payload, OUTBOX)
+
 
 def discord_send_webhook(content: str, username: str = "E-ZZIO", allow_send: Optional[bool] = None):
     cfg = load_config()
@@ -166,6 +175,7 @@ def discord_send_webhook(content: str, username: str = "E-ZZIO", allow_send: Opt
         "response": r.text[:1000],
         "event": event,
     }
+
 
 def discord_send_bot_channel(content: str, channel_id: Optional[str] = None, allow_send: Optional[bool] = None):
     cfg = load_config()
@@ -212,6 +222,7 @@ def discord_send_bot_channel(content: str, channel_id: Optional[str] = None, all
         "event": event,
     }
 
+
 def messenger_send_text(text: str, recipient_psid: Optional[str] = None, allow_send: Optional[bool] = None):
     cfg = load_config()
     token = cfg.get("META_PAGE_ACCESS_TOKEN", "").strip()
@@ -238,7 +249,7 @@ def messenger_send_text(text: str, recipient_psid: Optional[str] = None, allow_s
             "event": event,
         }
 
-    url = f"https://graph.facebook.com/v20.0/me/messages"
+    url = "https://graph.facebook.com/v20.0/me/messages"
     payload = {
         "recipient": {"id": recipient_psid},
         "message": {"text": text},
@@ -259,6 +270,7 @@ def messenger_send_text(text: str, recipient_psid: Optional[str] = None, allow_s
         "event": event,
     }
 
+
 def mobile_push(text: str, title: str = "E-ZZIO", channel: str = "local"):
     payload = {
         "title": title,
@@ -267,6 +279,7 @@ def mobile_push(text: str, title: str = "E-ZZIO", channel: str = "local"):
         "note": "Bridge local prêt pour futur smartphone/app/APK.",
     }
     return write_event("mobile.push", payload, MOBILE)
+
 
 def mobile_pull(limit: int = 20):
     limit = max(1, min(int(limit), 100))
@@ -278,6 +291,7 @@ def mobile_pull(limit: int = 20):
         except Exception:
             out.append({"path": str(p), "error": "json invalid"})
     return {"ok": True, "items": out}
+
 
 def verify_mobile_token(token: str):
     cfg = load_config()

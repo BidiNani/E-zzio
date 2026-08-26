@@ -2,13 +2,16 @@
 E-ZZIO V7.28.9 — Identity Continuity Certification Script
 Vérifie la permanence de la Constitution, du Persona Kernel et des vecteurs de décision.
 """
+
 import sys
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent.parent
-if str(ROOT_DIR) not in sys.path: sys.path.insert(0, str(ROOT_DIR))
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
 from core.identity.identity_validator import identity_validator
+
 
 def run_identity_audit():
     print("============================================================")
@@ -38,6 +41,7 @@ def run_identity_audit():
     print("============================================================")
 
     assert report.get("identity_status") == "PRESERVED", "L'identité d'E-ZZIO a subi une dérive !"
+
 
 if __name__ == "__main__":
     run_identity_audit()

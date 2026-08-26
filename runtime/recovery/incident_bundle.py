@@ -10,10 +10,13 @@ from runtime.recovery.analyzers import DEFAULT_ANALYZERS
 from runtime.telemetry.collector import TelemetryCollector
 from runtime.telemetry.events import TelemetryEvent, EventType
 
+
 class IncidentBundleGenerator:
     """Générateur Forensique (v2.7.1.1) scellant à 100% l'intégrité et émettant vers le Ledger."""
 
-    def __init__(self, store: Optional[IncidentStore] = None, collector: Optional[TelemetryCollector] = None, analyzers: Optional[List] = None):
+    def __init__(
+        self, store: Optional[IncidentStore] = None, collector: Optional[TelemetryCollector] = None, analyzers: Optional[List] = None
+    ):
         self.store = store or IncidentStore()
         self.collector = collector or TelemetryCollector()
         self.analyzers = analyzers if analyzers is not None else DEFAULT_ANALYZERS
@@ -30,12 +33,12 @@ class IncidentBundleGenerator:
         span_id: Optional[str] = None,
         state_trace: Optional[List[Dict[str, Any]]] = None,
         error_details: Optional[str] = None,
-        metadata: Optional[Dict[str, Any]] = None
+        metadata: Optional[Dict[str, Any]] = None,
     ) -> IncidentBundle:
-        
+
         timestamp = datetime.now(timezone.utc).isoformat()
         incident_id = f"inc_{uuid.uuid4().hex[:8]}"
-        
+
         severity_val = severity.value if isinstance(severity, Severity) else str(severity)
         severity_enum = Severity(severity_val) if severity_val in Severity.__members__ else Severity.INFO
         severity_score = SEVERITY_SCORES.get(severity_enum, 10)
@@ -43,10 +46,10 @@ class IncidentBundleGenerator:
         category_val = category.value if isinstance(category, IncidentCategory) else str(category)
 
         payload_str = json.dumps(payload, sort_keys=True, default=str)
-        payload_hash = hashlib.sha256(payload_str.encode('utf-8')).hexdigest()
-        
+        payload_hash = hashlib.sha256(payload_str.encode("utf-8")).hexdigest()
+
         telemetry_snapshot = self.collector.get_health_endpoint()
-        
+
         eval_context = {
             "execution_id": execution_id,
             "action_name": action_name,
@@ -54,7 +57,7 @@ class IncidentBundleGenerator:
             "category": category_val,
             "context_signature_valid": context_signature_valid,
             "telemetry_snapshot": telemetry_snapshot,
-            "error_details": error_details
+            "error_details": error_details,
         }
 
         raw_findings: List[Finding] = []
@@ -93,7 +96,7 @@ class IncidentBundleGenerator:
             telemetry_snapshot=telemetry_snapshot,
             findings=findings_dict,
             root_candidates=root_candidates,
-            metadata=meta
+            metadata=meta,
         )
 
         # Calcul du hash canonique à 100%
@@ -116,24 +119,26 @@ class IncidentBundleGenerator:
             telemetry_snapshot=telemetry_snapshot,
             findings=findings_dict,
             root_candidates=root_candidates,
-            metadata=meta
+            metadata=meta,
         )
 
         # Persistance SQLite + Export JSON
         self.store.save_bundle(bundle)
 
         # Connexion avec l'Evidence Ledger via TelemetryEvent
-        self.collector.record_event(TelemetryEvent(
-            event_type=EventType.SYSTEM_HEALTH_CHECK,
-            payload={
-                "event": "INCIDENT_CREATED",
-                "incident_id": bundle.incident_id,
-                "severity": bundle.severity,
-                "severity_score": bundle.severity_score,
-                "bundle_hash": bundle.bundle_hash,
-                "execution_id": bundle.execution_id,
-                "timestamp": bundle.timestamp
-            }
-        ))
+        self.collector.record_event(
+            TelemetryEvent(
+                event_type=EventType.SYSTEM_HEALTH_CHECK,
+                payload={
+                    "event": "INCIDENT_CREATED",
+                    "incident_id": bundle.incident_id,
+                    "severity": bundle.severity,
+                    "severity_score": bundle.severity_score,
+                    "bundle_hash": bundle.bundle_hash,
+                    "execution_id": bundle.execution_id,
+                    "timestamp": bundle.timestamp,
+                },
+            )
+        )
 
         return bundle

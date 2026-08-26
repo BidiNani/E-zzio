@@ -1,5 +1,6 @@
 from .contracts import VerificationResult
 
+
 class Verifier:
     def verify(self, result):
         if result.status == "SUCCESS":

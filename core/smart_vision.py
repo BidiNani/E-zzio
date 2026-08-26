@@ -7,7 +7,7 @@ import re
 import time
 import urllib.request
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
 INBOX = PROJECT_ROOT / "forge" / "vision" / "inbox"
@@ -30,19 +30,47 @@ for key, value in {
     os.environ[key] = value
 
 TECH_WORDS = [
-    "powershell", "terminal", "erreur", "error", "traceback", "cmd", "console",
-    "script", "code", "docker", "api", "localhost", "windows", "capture",
-    "screenshot"
+    "powershell",
+    "terminal",
+    "erreur",
+    "error",
+    "traceback",
+    "cmd",
+    "console",
+    "script",
+    "code",
+    "docker",
+    "api",
+    "localhost",
+    "windows",
+    "capture",
+    "screenshot",
 ]
 
 LOGO_WORDS = [
-    "logo", "icone", "icône", "icon", "avatar", "illustration", "dessin",
-    "vectoriel", "symbole", "embleme", "emblème", "mascotte", "druide",
-    "demoniste", "démoniste", "sigle", "emblem"
+    "logo",
+    "icone",
+    "icône",
+    "icon",
+    "avatar",
+    "illustration",
+    "dessin",
+    "vectoriel",
+    "symbole",
+    "embleme",
+    "emblème",
+    "mascotte",
+    "druide",
+    "demoniste",
+    "démoniste",
+    "sigle",
+    "emblem",
 ]
+
 
 def _b64(path: Path) -> str:
     return base64.b64encode(path.read_bytes()).decode("ascii")
+
 
 def infer_kind(path: str = "", prompt: str = "") -> Dict[str, Any]:
     text = f"{Path(path).name} {prompt}".lower()
@@ -61,6 +89,7 @@ def infer_kind(path: str = "", prompt: str = "") -> Dict[str, Any]:
         "technical": technical,
         "logo_or_illustration": logo,
     }
+
 
 def build_prompt(path: str = "", user_prompt: str = "") -> str:
     task = infer_kind(path, user_prompt)
@@ -109,6 +138,7 @@ Mode image generale :
         ask_line = "Demande utilisateur : decris l'image clairement et utilement."
 
     return f"{common}\n\n{mode}\n\n{ask_line}"
+
 
 def clean_reply(reply: str, path: str = "", prompt: str = "") -> str:
     text = (reply or "").strip()
@@ -162,6 +192,7 @@ def clean_reply(reply: str, path: str = "", prompt: str = "") -> str:
 
     return text
 
+
 def ollama_vision(path: Path, prompt: str) -> Dict[str, Any]:
     payload = {
         "model": VISION_MODEL,
@@ -193,6 +224,7 @@ def ollama_vision(path: Path, prompt: str) -> Dict[str, Any]:
         "raw": data,
         "reply": data.get("response", "").strip(),
     }
+
 
 def analyze_path(path: str, prompt: str = "") -> Dict[str, Any]:
     started = time.time()
@@ -238,6 +270,7 @@ def analyze_path(path: str, prompt: str = "") -> Dict[str, Any]:
             "reply": f"Erreur vision : {exc}",
             "elapsed_ms": int((time.time() - started) * 1000),
         }
+
 
 def save_upload(filename: str, content: bytes) -> Path:
     safe_name = re.sub(r"[^A-Za-z0-9_.-]+", "_", filename or "image.png")

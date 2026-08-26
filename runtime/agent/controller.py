@@ -4,8 +4,10 @@ from runtime.core.microkernel import RuntimeBuilder
 from runtime.audit.logger import AuditLogger
 from runtime.memory.semantic.vector_store import VectorStore
 
+
 class AgentController:
     """Pilote la boucle cognitive et communique avec le MicroKernel en intégrant la mémoire sémantique."""
+
     def __init__(self, router, context_builder, max_steps: int = 4):
         self.router = router
         self.context_builder = context_builder
@@ -34,11 +36,7 @@ class AgentController:
 
         # Injection optionnelle des indices sémantiques dans l'historique initial
         if semantic_hints:
-            thought_history.append({
-                "step": 0, 
-                "type": "semantic_memory_retrieval", 
-                "hints": semantic_hints
-            })
+            thought_history.append({"step": 0, "type": "semantic_memory_retrieval", "hints": semantic_hints})
 
         while step_count < self.max_steps:
             step_count += 1
@@ -64,26 +62,28 @@ class AgentController:
             tool_result = self.runtime.execute(request, session_id)
             duration = time.time() - start_t
 
-            success_flag = (tool_result.get("success") if isinstance(tool_result, dict) else getattr(tool_result, "success", None))
+            success_flag = tool_result.get("success") if isinstance(tool_result, dict) else getattr(tool_result, "success", None)
             self.auditor.log_agent_action(session_id, step_count, request.name, success_flag, duration)
 
             if success_flag:
                 thought_history.append({"step": step_count, "tool": request.name, "status": "success"})
-                current_tool_output = (tool_result.get("output") if isinstance(tool_result, dict) else getattr(tool_result, "output", None))
-                
+                current_tool_output = tool_result.get("output") if isinstance(tool_result, dict) else getattr(tool_result, "output", None)
+
                 # 2. Apprentissage épisodique en aval (Stockage du succès si pertinent)
                 try:
                     store_func = getattr(memory, "embed_text", None)
                     if store_func:
                         vec = store_func(initial_user_query)
                         if vec:
-                            self.vector_store.add(f"session_{session_id}_{step_count}", vec, f"Query: {initial_user_query} | Tool: {request.name} -> SUCCESS")
+                            self.vector_store.add(
+                                f"session_{session_id}_{step_count}", vec, f"Query: {initial_user_query} | Tool: {request.name} -> SUCCESS"
+                            )
                 except Exception:
                     pass
 
                 continue
             else:
-                error_msg = (tool_result.get('error') if isinstance(tool_result, dict) else getattr(tool_result, 'error', None))
+                error_msg = tool_result.get("error") if isinstance(tool_result, dict) else getattr(tool_result, "error", None)
                 return f"❌ [Action interrompue] {error_msg}"
 
         return "❌ Erreur critique : Boucle agentique interrompue."

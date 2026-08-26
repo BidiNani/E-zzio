@@ -15,9 +15,11 @@ from core.knowledge_connectors import (
 
 router = APIRouter(prefix="/knowledge", tags=["knowledge"])
 
+
 @router.get("/status")
 async def status():
     return knowledge_status()
+
 
 @router.post("/search")
 async def search(req: KnowledgeRequest):

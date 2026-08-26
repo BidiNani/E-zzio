@@ -1,9 +1,0 @@
-{
-  "component": "MODEL_REGISTRY",
-  "version": "V47.9",
-  "mode": "FAST_FORENSIC_IMPACT_MAP",
-  "source": "MODEL_REGISTRY_FORENSIC_CHAIN_REPAIRED_20260814_185911.json",
-  "timestamp": "2026-08-14T19:00:18.5858117+02:00",
-  "methods_scanned": 0,
-  "impact_map": []
-}

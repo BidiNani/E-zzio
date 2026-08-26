@@ -6,6 +6,7 @@ import os
 from typing import Any, Callable, Optional
 from runtime.recovery.contracts import IncidentBundle
 
+
 class RecoveryEventBus:
     """Bus d'événements asynchrone ultra-résistant avec bascule automatique sur SQLite en cas de congestion."""
 
@@ -25,13 +26,13 @@ class RecoveryEventBus:
             try:
                 with conn:
                     conn.execute("PRAGMA journal_mode=WAL;")
-                    conn.execute('''
+                    conn.execute("""
                         CREATE TABLE IF NOT EXISTS overflow_recovery_queue (
                             overflow_id INTEGER PRIMARY KEY AUTOINCREMENT,
                             bundle_json TEXT NOT NULL,
                             timestamp TEXT NOT NULL
                         )
-                    ''')
+                    """)
             finally:
                 conn.close()
 
@@ -70,7 +71,7 @@ class RecoveryEventBus:
             "telemetry_snapshot": bundle.telemetry_snapshot,
             "findings": bundle.findings,
             "root_candidates": bundle.root_candidates,
-            "metadata": (bundle.get("metadata") if isinstance(bundle, dict) else getattr(bundle, "metadata", None))
+            "metadata": (bundle.get("metadata") if isinstance(bundle, dict) else getattr(bundle, "metadata", None)),
         }
         with self._db_lock:
             conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
@@ -78,7 +79,7 @@ class RecoveryEventBus:
                 with conn:
                     conn.execute(
                         "INSERT INTO overflow_recovery_queue (bundle_json, timestamp) VALUES (?, ?)",
-                        (json.dumps(data, default=str), bundle.timestamp)
+                        (json.dumps(data, default=str), bundle.timestamp),
                     )
             finally:
                 conn.close()
@@ -111,7 +112,7 @@ class RecoveryEventBus:
                             telemetry_snapshot=raw.get("telemetry_snapshot", {}),
                             findings=raw.get("findings", []),
                             root_candidates=raw.get("root_candidates", []),
-                            metadata=raw.get("metadata", {})
+                            metadata=raw.get("metadata", {}),
                         )
                         if self.incident_processor:
                             self.incident_processor(bundle)
@@ -131,5 +132,5 @@ class RecoveryEventBus:
                     self.incident_processor(bundle)
             except queue.Empty:
                 self._process_overflow_backlog()
-        
+
         self._process_overflow_backlog()

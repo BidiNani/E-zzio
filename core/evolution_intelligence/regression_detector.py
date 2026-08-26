@@ -2,12 +2,16 @@
 E-ZZIO V7.39 — Regression Intelligence
 Compare empiriquement une version candidate avec l'historique pour bloquer toute dégradation.
 """
+
+
 class RegressionDetector:
     @staticmethod
-    def evaluate_regression(baseline_metrics: dict, candidate_metrics: dict, time_tolerance: float = 0.05, mem_tolerance: float = 0.05) -> dict:
+    def evaluate_regression(
+        baseline_metrics: dict, candidate_metrics: dict, time_tolerance: float = 0.05, mem_tolerance: float = 0.05
+    ) -> dict:
         base_time = baseline_metrics.get("execution_time", 0.0)
         base_mem = baseline_metrics.get("memory_mb", 0.0)
-        
+
         cand_time = candidate_metrics.get("execution_time", 0.0)
         cand_mem = candidate_metrics.get("memory_mb", 0.0)
 
@@ -25,10 +29,8 @@ class RegressionDetector:
             "memory_delta": f"{mem_delta_pct * 100:+.2f}%",
             "regression_detected": is_regression,
             "promotion_allowed": not is_regression,
-            "details": {
-                "time_regression": regression_time,
-                "memory_regression": regression_mem
-            }
+            "details": {"time_regression": regression_time, "memory_regression": regression_mem},
         }
+
 
 regression_detector = RegressionDetector()

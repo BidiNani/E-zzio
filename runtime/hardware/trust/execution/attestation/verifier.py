@@ -2,9 +2,10 @@ import time
 import uuid
 import hashlib
 import json
-from runtime.hardware.trust.execution.attestation.models import ObservationSnapshot, ExecutionReceipt, AttestationVerdict
+from runtime.hardware.trust.execution.attestation.models import ExecutionReceipt, AttestationVerdict
 from runtime.hardware.trust.execution.attestation.collector import RuntimeObservationCollector
 from runtime.hardware.trust.execution.ledger.hashchain import HashChainedLedger
+
 
 class ExecutionAttestor:
     def __init__(self, ledger: HashChainedLedger, secret_seed: str = "EZZIO_ATTESTOR_ROOT_KEY"):
@@ -20,7 +21,7 @@ class ExecutionAttestor:
         contract_details: dict,
         model_identity: dict,
         target_pid: int,
-        started_at: float
+        started_at: float,
     ) -> ExecutionReceipt:
         finished_at = time.time()
         violations = []
@@ -66,11 +67,11 @@ class ExecutionAttestor:
                 "actual_affinity_mask": observation.actual_affinity_mask,
                 "active_threads": observation.active_threads,
                 "peak_ram_mb": observation.peak_ram_mb,
-                "is_alive": observation.is_alive
+                "is_alive": observation.is_alive,
             },
             "attestation_verdict": verdict,
             "violations": violations,
-            "finished_at": finished_at
+            "finished_at": finished_at,
         }
         signature = self._sign_receipt(contract_payload)
 
@@ -89,16 +90,12 @@ class ExecutionAttestor:
                 "active_threads": observation.active_threads,
                 "peak_ram_mb": observation.peak_ram_mb,
                 "os_enforcement_verified": observation.os_enforcement_verified,
-                "is_alive": observation.is_alive
+                "is_alive": observation.is_alive,
             },
             "attestation_verdict": verdict,
             "violations": violations,
-            "timestamps": {
-                "started_at": started_at,
-                "finished_at": finished_at,
-                "duration_sec": round(finished_at - started_at, 4)
-            },
-            "signature": signature
+            "timestamps": {"started_at": started_at, "finished_at": finished_at, "duration_sec": round(finished_at - started_at, 4)},
+            "signature": signature,
         }
 
         self.ledger.append_receipt(raw_receipt)
@@ -118,7 +115,7 @@ class ExecutionAttestor:
             attestation_verdict=verdict,
             violations=violations,
             timestamps=raw_receipt["timestamps"],
-            signature=signature
+            signature=signature,
         )
 
     def _sign_receipt(self, payload: dict) -> str:
@@ -144,11 +141,11 @@ class ExecutionAttestor:
                 "actual_affinity_mask": receipt.get("observation", {}).get("actual_affinity_mask"),
                 "active_threads": receipt.get("observation", {}).get("active_threads"),
                 "peak_ram_mb": receipt.get("observation", {}).get("peak_ram_mb"),
-                "is_alive": receipt.get("observation", {}).get("is_alive")
+                "is_alive": receipt.get("observation", {}).get("is_alive"),
             },
             "attestation_verdict": receipt.get("attestation_verdict"),
             "violations": receipt.get("violations"),
-            "finished_at": receipt.get("timestamps", {}).get("finished_at")
+            "finished_at": receipt.get("timestamps", {}).get("finished_at"),
         }
         encoded = json.dumps(payload, sort_keys=True).encode("utf-8")
         h = hashlib.sha256()

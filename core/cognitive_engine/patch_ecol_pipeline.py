@@ -3,7 +3,7 @@ E-ZZIO V7.61.1 — ECOL Pipeline Patcher
 Génère proprement les modules token_optimizer.py, prompt_compressor.py,
 capability_selector.py et met à niveau model_router.py sans erreur de syntaxe.
 """
-import os
+
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
@@ -12,7 +12,7 @@ CORE_COG_DIR = ROOT_DIR / "core" / "cognition"
 NEW_MODULES = {
     "token_optimizer.py": ("TokenOptimizer", "Analyse, nettoie et déduplique l'input brut avant traitement."),
     "prompt_compressor.py": ("PromptCompressor", "Compresse la mémoire symbolique pour maximiser l'attention du LLM."),
-    "capability_selector.py": ("CapabilitySelector", "Détermine si la tâche requiert un LLM, un script local ou une API cloud.")
+    "capability_selector.py": ("CapabilitySelector", "Détermine si la tâche requiert un LLM, un script local ou une API cloud."),
 }
 
 MODEL_ROUTER_CODE = '''"""
@@ -41,10 +41,11 @@ class ModelRouter:
         else:
             engine = self.cloud_complex
             provider = "api"
-            
+
         logger.info(f"Routage cognitif -> Fournisseur: {provider} | Moteur: {engine}")
         return {"provider": provider, "model": engine}
 '''
+
 
 def apply_patch():
     print("[*] Application du correctif ECOL Pipeline V7.61.1...")
@@ -80,9 +81,10 @@ class {class_name}:
         f.write(MODEL_ROUTER_CODE.strip() + "\n")
     print("  + Module mis à niveau : model_router.py (Aiguillage capacitaire)")
 
-    print("\n" + "="*65)
+    print("\n" + "=" * 65)
     print(" ECOL PIPELINE PATCH (V7.61.1) APPLIQUE AVEC SUCCES")
-    print("="*65)
+    print("=" * 65)
+
 
 if __name__ == "__main__":
     apply_patch()

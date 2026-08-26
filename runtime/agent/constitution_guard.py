@@ -1,5 +1,6 @@
 from pathlib import Path
 
+
 class ConstitutionGuard:
     def __init__(self, constitution_path="registry/core/constitution.md"):
         self.constitution_path = Path(constitution_path)
@@ -18,7 +19,7 @@ class ConstitutionGuard:
         """Vérifie si une action cible un composant critique protégé."""
         normalized_target = target_path.replace("\\", "/")
         protected_scopes = ["registry/core", "runtime/kernel", "runtime/constitution"]
-        
+
         for scope in protected_scopes:
             if normalized_target.startswith(scope):
                 return False

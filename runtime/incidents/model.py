@@ -6,11 +6,13 @@ from dataclasses import dataclass, field, asdict
 from enum import Enum
 from typing import Any, Dict, List, Optional
 
+
 class IncidentSeverity(str, Enum):
     INFO = "INFO"
     WARNING = "WARNING"
     CRITICAL = "CRITICAL"
     PANIC = "PANIC"
+
 
 class IncidentCategory(str, Enum):
     BOOT_FAILURE = "BOOT_FAILURE"
@@ -19,6 +21,7 @@ class IncidentCategory(str, Enum):
     RESOURCE_EXHAUSTION = "RESOURCE_EXHAUSTION"
     FSM_TRANSITION = "FSM_TRANSITION"
     EXECUTION_ERROR = "EXECUTION_ERROR"
+
 
 @dataclass
 class IncidentRecord:
@@ -51,7 +54,7 @@ class IncidentRecord:
             "context_hash": self.context_hash,
             "runtime_state": self.runtime_state,
             "evidence": self.evidence,
-            "resolved": self.resolved
+            "resolved": self.resolved,
         }
         serialized = json.dumps(payload_data, sort_keys=True, ensure_ascii=False)
         return hashlib.sha256(serialized.encode("utf-8")).hexdigest()

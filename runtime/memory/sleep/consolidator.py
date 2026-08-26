@@ -3,6 +3,7 @@ import uuid
 import time
 import sqlite3
 
+
 class Consolidator:
     def __init__(self, event_bus, store):
         self.event_bus = event_bus
@@ -17,7 +18,7 @@ class Consolidator:
                 return
             session_id = data.get("session_id") or data.get("execution", {}).get("session_id") or "session_cognitive_01"
             ep_id = f"ep_{uuid.uuid4().hex[:8]}"
-            
+
             res_obj = data.get("result") or {}
             if isinstance(res_obj, dict):
                 success_bool = res_obj.get("success", data.get("success", False))
@@ -28,8 +29,14 @@ class Consolidator:
 
             success_val = 1 if success_bool else 0
             payload_str = json.dumps(data)
-            
-            if session_id == "session_cognitive_01" or "forbidden" in payload_str.lower() or "ast" in payload_str.lower() or "denied" in payload_str.lower() or "remove-item" in payload_str.lower():
+
+            if (
+                session_id == "session_cognitive_01"
+                or "forbidden" in payload_str.lower()
+                or "ast" in payload_str.lower()
+                or "denied" in payload_str.lower()
+                or "remove-item" in payload_str.lower()
+            ):
                 outcome_val = "DENIED BY AST POLICY"
             elif err_text:
                 outcome_val = str(err_text)
@@ -57,21 +64,24 @@ class Consolidator:
                         consolidated INTEGER DEFAULT 0
                     )
                 """)
-                conn.execute("""
-                    INSERT OR REPLACE INTO episodes 
+                conn.execute(
+                    """
+                    INSERT OR REPLACE INTO episodes
                     (episode_id, session_id, started_at, ended_at, context, intent, events, outcome, success, importance, confidence, consolidated)
                     VALUES (?, ?, datetime('now'), datetime('now'), ?, ?, ?, ?, ?, ?, ?, 0)
-                """, (
-                    ep_id, 
-                    session_id, 
-                    json.dumps(data.get("metadata", {})), 
-                    "tool_execution", 
-                    json.dumps([data]), 
-                    outcome_val, 
-                    success_val, 
-                    0.9, 
-                    1.0
-                ))
+                """,
+                    (
+                        ep_id,
+                        session_id,
+                        json.dumps(data.get("metadata", {})),
+                        "tool_execution",
+                        json.dumps([data]),
+                        outcome_val,
+                        success_val,
+                        0.9,
+                        1.0,
+                    ),
+                )
             conn.close()
         except Exception:
             pass
@@ -83,24 +93,27 @@ class Consolidator:
             conn.row_factory = sqlite3.Row
             cursor = conn.execute("SELECT * FROM episodes")
             episodes = [dict(r) for r in cursor.fetchall()]
-            
+
             conn.execute("UPDATE episodes SET consolidated = 1 WHERE consolidated = 0")
             conn.commit()
             conn.close()
-            
+
             episode_ids = [e["episode_id"] for e in episodes]
-            
+
             if self.event_bus:
-                self.event_bus.emit("EpisodesConsolidated", {
-                    "event": "EpisodesConsolidated",
-                    "version": "1.0",
-                    "source": "DreamEngine",
-                    "timestamp": int(time.time()),
-                    "episode_ids": episode_ids,
-                    "consolidated": len(episodes),
-                    "episodes": episodes,
-                    "payload": payload
-                })
+                self.event_bus.emit(
+                    "EpisodesConsolidated",
+                    {
+                        "event": "EpisodesConsolidated",
+                        "version": "1.0",
+                        "source": "DreamEngine",
+                        "timestamp": int(time.time()),
+                        "episode_ids": episode_ids,
+                        "consolidated": len(episodes),
+                        "episodes": episodes,
+                        "payload": payload,
+                    },
+                )
         except Exception:
             pass
 

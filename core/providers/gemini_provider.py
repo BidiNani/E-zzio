@@ -1,9 +1,10 @@
 import os
 import asyncio
 import httpx
-from typing import Any, Dict, Optional, List
+from typing import Any, Dict, Optional
 from core.providers.iresearch_provider import IResearchProvider
 from core.secrets import load_secrets
+
 
 class GeminiProvider(IResearchProvider):
     name: str = "gemini"
@@ -27,9 +28,7 @@ class GeminiProvider(IResearchProvider):
         if not self.api_key:
             raise RuntimeError("GEMINI_API_KEY manquante dans secrets/.env ou variables d'environnement")
 
-        payload: Dict[str, Any] = {
-            "contents": [{"parts": [{"text": query}]}]
-        }
+        payload: Dict[str, Any] = {"contents": [{"parts": [{"text": query}]}]}
         if "tools" in kwargs and kwargs["tools"]:
             payload["tools"] = kwargs["tools"]
 
@@ -48,12 +47,12 @@ class GeminiProvider(IResearchProvider):
                 for attempt in range(1, 3):
                     try:
                         resp = await self._call_endpoint(client, current_model, payload)
-                        
+
                         # Si surcharge (503/429), pause et nouvelle tentative
                         if resp.status_code in (503, 429, 500):
                             await asyncio.sleep(1.0 * attempt)
                             continue
-                            
+
                         resp.raise_for_status()
                         data = resp.json()
 
@@ -66,11 +65,7 @@ class GeminiProvider(IResearchProvider):
                         return {
                             "provider": self.name,
                             "model": current_model,
-                            "data": {
-                                "text": text_response,
-                                "model": current_model,
-                                "raw": data
-                            }
+                            "data": {"text": text_response, "model": current_model, "raw": data},
                         }
                     except Exception as exc:
                         last_error = exc

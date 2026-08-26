@@ -2,6 +2,7 @@
 E-ZZIO V7.28.4 — Industrial Certification Suite (With Clean State Restoration)
 Restaure le ledger sain après l'exercice de falsification pour éviter de polluer les boots suivants.
 """
+
 import sys
 import json
 import time
@@ -9,11 +10,13 @@ import multiprocessing
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent.parent
-if str(ROOT_DIR) not in sys.path: sys.path.insert(0, str(ROOT_DIR))
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
 from core.security.ledger_engine import LedgerEngine
 from core.security.ledger_validator import ledger_validator
 from runtime.recovery.ledger_boot_recovery import LedgerBootRecovery
+
 
 def worker_task(worker_id: int, count: int):
     engine = LedgerEngine()
@@ -24,8 +27,9 @@ def worker_task(worker_id: int, count: int):
             candidates=[{"provider": "ollama", "model": "qwen3:8b"}],
             selected="qwen3:8b",
             state="COMPLETED",
-            execution_details={"worker": worker_id, "iter": i}
+            execution_details={"worker": worker_id, "iter": i},
         )
+
 
 def run_industrial_certification():
     print("============================================================")
@@ -40,12 +44,14 @@ def run_industrial_certification():
     print("[TEST E] 8 workers OS en parallèle (800 transactions concurrentes)...")
     num_workers = 8
     tx_per_worker = 100
-    
+
     start_time = time.time()
     processes = [multiprocessing.Process(target=worker_task, args=(wid, tx_per_worker)) for wid in range(num_workers)]
-    for p in processes: p.start()
-    for p in processes: p.join()
-    
+    for p in processes:
+        p.start()
+    for p in processes:
+        p.join()
+
     duration = time.time() - start_time
     print(f"  -> Exécuté en {round(duration, 2)} secondes.")
 
@@ -56,8 +62,9 @@ def run_industrial_certification():
     # TEST F — Auto-Release Verrou Noyau
     print("\n[TEST F] Test d'auto-libération du verrou par le noyau OS...")
     from core.security.file_lock import ProcessFileLock
+
     lock_path = ROOT_DIR / "runtime" / "decisions" / "ledger.lock"
-    with ProcessFileLock(lock_path, timeout=5.0) as lk:
+    with ProcessFileLock(lock_path, timeout=5.0):
         pass
     print("  [OK] Auto-release validé.")
 
@@ -76,7 +83,7 @@ def run_industrial_certification():
     print("\n[TEST H] Test d'attaque par falsification exclusive du HMAC...")
     # Sauvegarde de l'état sain avant altération volontaire
     healthy_content = ledger_path.read_text(encoding="utf-8")
-    
+
     lines = healthy_content.strip().splitlines()
     rec = json.loads(lines[10])
     rec["signature"] = "0000000000000000000000000000000000000000000000000000000000000000"
@@ -97,6 +104,7 @@ def run_industrial_certification():
     print("\n============================================================")
     print(" V7.28.4 CERTIFIÉ PROPRE : 10/10 ABSOLU ATTEINT")
     print("============================================================\n")
+
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()

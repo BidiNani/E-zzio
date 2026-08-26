@@ -2,9 +2,9 @@
 E-ZZIO V7.31 — Identity Fortress Certification
 Banc de certification ultime : Validator de Chaîne, Snapshot 9/9, Restauration Atomique, Secret Exigé & Boot Attestation.
 """
+
 import sys
 import os
-import json
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent.parent
@@ -20,6 +20,7 @@ from core.identity.identity_chain_validator import identity_chain_validator
 from core.identity.boot_attestation import boot_attestation_engine
 from core.identity.identity_persistence import identity_persistence
 
+
 def run_fortress_certification():
     print("============================================================")
     print(" E-ZZIO V7.31 — IDENTITY FORTRESS CERTIFICATION (10/10)")
@@ -29,10 +30,8 @@ def run_fortress_certification():
 
     # 1. Validation du Validator de Chaîne Historique
     pers_res = identity_persistence.build_and_seal_identity_persistence()
-    chain_block = identity_chain_engine.append_identity_block(
-        identity_root_hash=pers_res["identity_root_hash"],
-        version="v1.0-fortress",
-        description="Fortress Validation Block"
+    identity_chain_engine.append_identity_block(
+        identity_root_hash=pers_res["identity_root_hash"], version="v1.0-fortress", description="Fortress Validation Block"
     )
     chain_val = identity_chain_validator.validate_chain()
     assert chain_val["valid"] is True, f"Chaîne invalide : {chain_val.get('error')}"
@@ -69,11 +68,13 @@ def run_fortress_certification():
         assert secret_failed is True, "Le système n'a pas rejeté l'absence de secret maître !"
         print("  [5/5] Strict Secret Enforcement : OK (Démarrage sans secret bloqué).")
     finally:
-        if old_env: os.environ["EZZIO_LEDGER_SECRET"] = old_env
+        if old_env:
+            os.environ["EZZIO_LEDGER_SECRET"] = old_env
 
     print("\n============================================================")
     print(" V7.31 CERTIFIÉ : COUCHE IDENTITÉ HARDENED (10/10 REEL)")
     print("============================================================\n")
+
 
 if __name__ == "__main__":
     run_fortress_certification()

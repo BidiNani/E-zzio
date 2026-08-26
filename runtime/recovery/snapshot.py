@@ -3,6 +3,7 @@ import shutil
 from pathlib import Path
 from typing import List
 
+
 class SnapshotManager:
     """Gère l'isolation par snapshot et le rollback atomique des fichiers modifiés."""
 
@@ -14,7 +15,7 @@ class SnapshotManager:
         """Crée une copie de sauvegarde des fichiers/dossiers cibles avant modification."""
         snap_dir = self.snapshots_root / execution_id
         snap_dir.mkdir(parents=True, exist_ok=True)
-        
+
         manifest = []
         for path in target_paths:
             if path.exists():
@@ -28,6 +29,7 @@ class SnapshotManager:
         # Enregistre un manifeste de snapshot pour guider le rollback
         manifest_file = snap_dir / "manifest.json"
         import json
+
         manifest_file.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
         return snap_dir
 
@@ -35,17 +37,18 @@ class SnapshotManager:
         """Restaure atomiquement l'état initial des fichiers à partir du snapshot."""
         snap_dir = self.snapshots_root / execution_id
         manifest_file = snap_dir / "manifest.json"
-        
+
         if not manifest_file.exists():
             return False
 
         try:
             import json
+
             manifest = json.loads(manifest_file.read_text(encoding="utf-8"))
             for entry in manifest:
                 orig_path = Path(entry["original"])
                 backup_path = Path(entry["backup"])
-                
+
                 if backup_path.exists():
                     if backup_path.is_dir():
                         shutil.copytree(backup_path, orig_path, dirs_exist_ok=True)

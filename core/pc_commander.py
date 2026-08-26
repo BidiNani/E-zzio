@@ -43,29 +43,37 @@ SAFE_ACTIONS = {
     "human_sessions",
 }
 
+
 def now() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%S")
+
 
 def safe_session_name(session: str) -> str:
     raw = (session or "pc").strip().lower()
     safe = "".join(ch if ch.isalnum() or ch in ("-", "_") else "_" for ch in raw)
     return safe[:80] or "pc"
 
+
 def session_state_path(session: str) -> Path:
     return SESSIONS_ROOT / f"{safe_session_name(session)}.json"
+
 
 def append_journal(event: Dict[str, Any]) -> None:
     event.setdefault("created_at", now())
     event.setdefault("version", "v2.22-pc-commander")
-    event.setdefault("policy", {
-        "cpu_ram_only": True,
-        "gpu": "untouched",
-        "no_ads": True,
-        "safe_actions_only": True,
-    })
+    event.setdefault(
+        "policy",
+        {
+            "cpu_ram_only": True,
+            "gpu": "untouched",
+            "no_ads": True,
+            "safe_actions_only": True,
+        },
+    )
 
     with JOURNAL_PATH.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(event, ensure_ascii=False) + "\n")
+
 
 def read_json(path: Path, default: Any) -> Any:
     try:
@@ -75,9 +83,11 @@ def read_json(path: Path, default: Any) -> Any:
         pass
     return default
 
+
 def write_json(path: Path, data: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
 
 def get_session_state(session: str) -> Dict[str, Any]:
     path = session_state_path(session)
@@ -92,6 +102,7 @@ def get_session_state(session: str) -> Dict[str, Any]:
     for key, value in default.items():
         state.setdefault(key, value)
     return state
+
 
 def set_pending(session: str, proposal: Optional[Dict[str, Any]]) -> Dict[str, Any]:
     state = get_session_state(session)
@@ -110,24 +121,29 @@ def set_pending(session: str, proposal: Optional[Dict[str, Any]]) -> Dict[str, A
     write_json(session_state_path(session), state)
     return state
 
+
 def normalize(text: str) -> str:
     return (text or "").strip().lower()
 
+
 def contains_any(low: str, words: List[str]) -> bool:
     return any(word in low for word in words)
+
 
 def status() -> Dict[str, Any]:
     sessions = []
 
     for path in sorted(SESSIONS_ROOT.glob("*.json"), key=lambda p: p.stat().st_mtime, reverse=True):
         state = read_json(path, {})
-        sessions.append({
-            "session": path.stem,
-            "pending_proposal_id": state.get("pending_proposal_id"),
-            "pending_action": state.get("pending_action"),
-            "pending_label": state.get("pending_label"),
-            "updated_at": state.get("updated_at"),
-        })
+        sessions.append(
+            {
+                "session": path.stem,
+                "pending_proposal_id": state.get("pending_proposal_id"),
+                "pending_action": state.get("pending_action"),
+                "pending_label": state.get("pending_label"),
+                "updated_at": state.get("updated_at"),
+            }
+        )
 
     return {
         "ok": True,
@@ -157,6 +173,7 @@ def status() -> Dict[str, Any]:
             "confirmation_word": "CONFIRME",
         },
     }
+
 
 def interpret(text: str) -> Dict[str, Any]:
     low = normalize(text)
@@ -188,7 +205,9 @@ def interpret(text: str) -> Dict[str, Any]:
             "reason": "demande d'état mémoire/actions",
         }
 
-    if contains_any(low, ["état", "etat", "status", "système", "systeme"]) and contains_any(low, ["rapide", "e-zzio", "ezzio", "pc", "ton"]):
+    if contains_any(low, ["état", "etat", "status", "système", "systeme"]) and contains_any(
+        low, ["rapide", "e-zzio", "ezzio", "pc", "ton"]
+    ):
         return {
             "kind": "quick",
             "action": "human_chat_brief",
@@ -297,6 +316,7 @@ def interpret(text: str) -> Dict[str, Any]:
         "reason": "pas d'action sûre reconnue, fallback chat humain",
     }
 
+
 def summarize_result(action: str, result: Dict[str, Any]) -> str:
     if action == "maintenance_status":
         return f"Maintenance : ok={result.get('ok')}, bad_count={result.get('bad_count')}, dust={result.get('dust_candidate_count')}."
@@ -328,18 +348,21 @@ def summarize_result(action: str, result: Dict[str, Any]) -> str:
 
     return "Action terminée."
 
+
 def command(text: str, session: str = "pc") -> Dict[str, Any]:
     started = time.time()
     session = safe_session_name(session)
     state = get_session_state(session)
     parsed = interpret(text)
 
-    append_journal({
-        "type": "incoming_command",
-        "session": session,
-        "text": text,
-        "parsed": parsed,
-    })
+    append_journal(
+        {
+            "type": "incoming_command",
+            "session": session,
+            "text": text,
+            "parsed": parsed,
+        }
+    )
 
     if parsed["kind"] == "confirm_pending":
         proposal_id = state.get("pending_proposal_id")
@@ -441,8 +464,8 @@ def command(text: str, session: str = "pc") -> Dict[str, Any]:
         reply = (
             f"J'ai préparé une action sûre : {proposal.get('label')}. "
             f"Elle attend confirmation. Tape exactement CONFIRME pour l'exécuter, ou annule pour l'abandonner."
-            if proposal.get("ok") else
-            proposal.get("error")
+            if proposal.get("ok")
+            else proposal.get("error")
         )
 
         output = {

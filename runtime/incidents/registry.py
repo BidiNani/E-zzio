@@ -1,14 +1,14 @@
 from __future__ import annotations
-from enum import Enum
 import json
 import uuid
 from pathlib import Path
 from datetime import datetime
 from typing import Any, Dict
 
+
 class IncidentRegistry:
     """Registre persistant des incidents et anomalies du Runtime au format JSONL."""
-    
+
     def __init__(self, log_dir: Path = Path("runtime/incidents")):
         self.log_dir = log_dir
         self.log_dir.mkdir(parents=True, exist_ok=True)
@@ -23,7 +23,7 @@ class IncidentRegistry:
             "type": incident_type,
             "actor": actor,
             "severity": severity,
-            "details": details
+            "details": details,
         }
         with open(self.log_file, "a", encoding="utf-8") as f:
             f.write(json.dumps(record) + "\n")

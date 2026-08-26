@@ -2,11 +2,11 @@ import sqlite3
 import os
 import json
 import threading
-from typing import List, Dict, Any, Optional
-from datetime import datetime, timezone
+from typing import Dict, Any, Optional
 from runtime.recovery.contracts import IncidentBundle
 
 CURRENT_SCHEMA_VERSION = 3
+
 
 class IncidentStore:
     """Moteur de stockage SQLite avec Migrations pas-à-pas et PRAGMAs d'entreprise."""
@@ -39,7 +39,7 @@ class IncidentStore:
             current_v = row[0] if row else 0
 
             if current_v < 1:
-                self._conn.execute('''
+                self._conn.execute("""
                     CREATE TABLE IF NOT EXISTS incident_bundles (
                         incident_id TEXT PRIMARY KEY,
                         timestamp TEXT NOT NULL,
@@ -56,7 +56,7 @@ class IncidentStore:
                         root_candidates TEXT NOT NULL,
                         metadata TEXT NOT NULL
                     )
-                ''')
+                """)
                 current_v = 1
 
             if current_v < 2:
@@ -83,29 +83,34 @@ class IncidentStore:
         self.connect()
         with self._db_lock:
             with self._conn:
-                self._conn.execute('''
-                    INSERT OR REPLACE INTO incident_bundles 
+                self._conn.execute(
+                    """
+                    INSERT OR REPLACE INTO incident_bundles
                     (incident_id, timestamp, severity, severity_score, category, execution_id, action_name, trace_id, span_id, context_valid, payload_hash, bundle_hash, state_trace, telemetry_snapshot, findings, root_candidates, metadata)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                ''', (
-                    bundle.incident_id,
-                    bundle.timestamp,
-                    bundle.severity,
-                    bundle.severity_score,
-                    bundle.category,
-                    bundle.execution_id,
-                    bundle.action_name,
-                    bundle.trace_id,
-                    bundle.span_id,
-                    1 if bundle.context_signature_valid else 0,
-                    bundle.payload_hash,
-                    bundle.bundle_hash,
-                    json.dumps(bundle.state_trace, default=str),
-                    json.dumps(bundle.telemetry_snapshot, default=str),
-                    json.dumps(bundle.findings, default=str),
-                    json.dumps(bundle.root_candidates, default=str),
-                    json.dumps((bundle.get("metadata") if isinstance(bundle, dict) else getattr(bundle, "metadata", None)), default=str)
-                ))
+                """,
+                    (
+                        bundle.incident_id,
+                        bundle.timestamp,
+                        bundle.severity,
+                        bundle.severity_score,
+                        bundle.category,
+                        bundle.execution_id,
+                        bundle.action_name,
+                        bundle.trace_id,
+                        bundle.span_id,
+                        1 if bundle.context_signature_valid else 0,
+                        bundle.payload_hash,
+                        bundle.bundle_hash,
+                        json.dumps(bundle.state_trace, default=str),
+                        json.dumps(bundle.telemetry_snapshot, default=str),
+                        json.dumps(bundle.findings, default=str),
+                        json.dumps(bundle.root_candidates, default=str),
+                        json.dumps(
+                            (bundle.get("metadata") if isinstance(bundle, dict) else getattr(bundle, "metadata", None)), default=str
+                        ),
+                    ),
+                )
         self.export_bundle_json(bundle)
 
     def export_bundle_json(self, bundle: IncidentBundle) -> str:
@@ -127,9 +132,9 @@ class IncidentStore:
             "telemetry_snapshot": bundle.telemetry_snapshot,
             "findings": bundle.findings,
             "root_candidates": bundle.root_candidates,
-            "metadata": (bundle.get("metadata") if isinstance(bundle, dict) else getattr(bundle, "metadata", None))
+            "metadata": (bundle.get("metadata") if isinstance(bundle, dict) else getattr(bundle, "metadata", None)),
         }
-        with open(filepath, 'w', encoding='utf-8') as f:
+        with open(filepath, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
         return filepath
 
@@ -138,7 +143,8 @@ class IncidentStore:
         with self._db_lock:
             cursor = self._conn.execute("SELECT * FROM incident_bundles WHERE incident_id = ?", (incident_id,))
             row = cursor.fetchone()
-            if not row: return None
+            if not row:
+                return None
             return {
                 "incident_id": row[0],
                 "timestamp": row[1],
@@ -154,7 +160,7 @@ class IncidentStore:
                 "bundle_hash": row[9],
                 "state_trace": json.loads(row[10]),
                 "telemetry_snapshot": json.loads(row[11]),
-                "root_candidates": json.loads(row[12])
+                "root_candidates": json.loads(row[12]),
             }
 
     def close(self):

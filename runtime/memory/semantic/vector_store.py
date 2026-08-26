@@ -2,6 +2,7 @@ import sqlite3
 import json
 import math
 
+
 class VectorStore:
     def __init__(self, db_path="runtime/memory/semantic/memory.db"):
         self.db_path = db_path
@@ -10,8 +11,7 @@ class VectorStore:
         self.conn.commit()
 
     def add(self, memory_id, vector, content):
-        self.conn.execute("INSERT OR REPLACE INTO memory VALUES (?, ?, ?)", 
-                          (memory_id, json.dumps(vector), content))
+        self.conn.execute("INSERT OR REPLACE INTO memory VALUES (?, ?, ?)", (memory_id, json.dumps(vector), content))
         self.conn.commit()
 
     def _cosine_similarity(self, v1, v2):
@@ -30,7 +30,7 @@ class VectorStore:
             vec = json.loads(row[1])
             score = self._cosine_similarity(query_vector, vec)
             scored.append((score, row[2]))
-        
+
         # Tri par score de similarité décroissant
         scored.sort(key=lambda x: x[0], reverse=True)
         return [item[1] for item in scored[:top_k]]

@@ -9,11 +9,7 @@ class Analyser(BaseTalent):
         super().__init__(name)
 
     async def run(self, data: Any) -> Any:
-        prompt = (
-            "Analyse le contenu suivant de manière concise, factuelle "
-            "et utile. Signale explicitement les incertitudes.\n\n"
-            f"{data}"
-        )
+        prompt = f"Analyse le contenu suivant de manière concise, factuelle et utile. Signale explicitement les incertitudes.\n\n{data}"
 
         return await query_model_async(
             prompt,

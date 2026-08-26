@@ -1,0 +1,333 @@
+"""E-ZZIO Autonomous Model Fabric with upstream FREE_ONLY filtering."""
+
+from __future__ import annotations
+
+import asyncio
+import os
+import time
+from pathlib import Path
+from typing import Any
+
+from .discovery.gemini import GeminiDiscovery
+from .discovery.groq import GroqDiscovery
+from .discovery.litellm import LiteLLMDiscovery
+from .discovery.openrouter import OpenRouterDiscovery
+
+from .key_pool import KeyPoolManager
+from .lifecycle import ModelLifecycleManager
+from .registry import ModelLifecycle, ModelRegistry
+from .router import EzzioRouter
+from .telemetry import SafeTelemetry
+from .qualification.gate import QualificationGate
+from .qualification.free_only import filter_free_only
+
+
+class AutonomousModelFabric:
+
+    def __init__(
+        self,
+        project_root: str | Path,
+    ) -> None:
+
+        self.project_root = Path(project_root)
+
+        data_root = self.project_root / "data" / "models"
+        forensic_root = self.project_root / "_forensic" / "reports"
+
+        self.registry = ModelRegistry(data_root / "registry.json")
+        self.lifecycle = ModelLifecycleManager(self.registry)
+        self.key_pool = KeyPoolManager()
+        self.telemetry = SafeTelemetry(forensic_root)
+
+        self.router = EzzioRouter(
+            registry=self.registry,
+            key_pool=self.key_pool,
+            telemetry=self.telemetry,
+        )
+
+        self.gate = QualificationGate()
+
+        self.providers = {
+            "gemini": GeminiDiscovery(),
+            "groq": GroqDiscovery(),
+            "openrouter": OpenRouterDiscovery(),
+            "litellm": LiteLLMDiscovery(),
+        }
+        self.discoveries = {}
+
+    def key_for_provider(self, provider: str) -> str | None:
+        name = f"{provider.upper()}_API_KEY"
+        return os.environ.get(name, "").strip() or None
+
+    async def discover(
+        self,
+    ) -> dict[str, list[dict[str, Any]]]:
+
+        discovered: dict[str, list[dict[str, Any]]] = {}
+
+        for provider, adapter in self.providers.items():
+            key = self.key_for_provider(provider) or ""
+
+            try:
+                raw_models = await adapter.discover(key)
+                
+                accepted, rejected, stats = filter_free_only(raw_models)
+                print(
+                    f"[FREE_ONLY] {provider.upper():<12} : "
+                    f"FREE={stats['FREE']}  "
+                    f"PAID={stats['PAID']}  "
+                    f"UNKNOWN={stats['UNKNOWN']}"
+                )
+                print(
+                    f"[DEBUG] {provider.upper()} : "
+                    f"raw={len(raw_models)} "
+                    f"accepted={len(accepted)} "
+                    f"rejected={len(rejected)}"
+                )
+
+                # La découverte FREE validée ne dépend pas du lifecycle.
+                discovered[provider] = accepted
+
+                # L'ingestion lifecycle est optionnelle : elle ne doit jamais
+                # effacer ni invalider un catalogue déjà filtré FREE_ONLY.
+                try:
+                    ingest = getattr(self.lifecycle, "ingest", None)
+
+                    if callable(ingest):
+                        result = ingest(provider, accepted)
+
+                        if hasattr(result, "__await__"):
+                            await result
+                    else:
+                        print(
+                            f"[WARN] {provider.upper():<12} : "
+                            "ModelLifecycleManager.ingest absent ; "
+                            "catalogue FREE conservé."
+                        )
+
+                except Exception as exc:
+                    print(
+                        f"[WARN] {provider.upper():<12} : "
+                        f"ingestion lifecycle ignorée : {exc}"
+                    )
+
+                self.telemetry.emit(
+                    "free_only_filter_summary",
+                    {
+                        "provider": provider,
+                        "stats": stats,
+                        "accepted_count": len(accepted),
+                        "rejected_count": len(rejected),
+                    },
+                )
+
+                self.telemetry.emit(
+                    "discovery_success",
+                    {
+                        "provider": provider,
+                        "raw_count": len(raw_models),
+                        "free_accepted_count": len(accepted),
+                    },
+                )
+
+            except Exception as exc:
+                print(
+                    f"[FREE_ONLY] {provider.upper():<12} : "
+                    f"échec découverte : {exc}"
+                )
+                discovered[provider] = []
+                self.telemetry.emit(
+                    "discovery_failure",
+                    {
+                        "provider": provider,
+                        "error_type": type(exc).__name__,
+                    },
+                )
+
+        for provider, models in discovered.items():
+            print(
+                f"[DEBUG] RETURN {provider.upper()} = {len(models)}"
+            )
+
+        self.discoveries = discovered
+        return discovered
+
+    async def discover_all(self) -> dict[str, list[dict[str, Any]]]:
+        return await self.discover()
+
+    def activate_qualified(
+        self,
+        qualification_results: list[dict[str, Any]],
+        exclusive_per_tier: bool = True,
+    ) -> list[dict[str, Any]]:
+        transitions = []
+        active_by_tier = {}
+
+        if exclusive_per_tier:
+            for m in self.registry.all():
+                if m.lifecycle == ModelLifecycle.ACTIVE.value:
+                    active_by_tier[m.tier] = m
+
+        for q in qualification_results:
+            provider = q["provider"]
+            model_id = q["model_id"]
+            tier = q.get("tier", "UNQUALIFIED")
+            qualified = q.get("qualified", False)
+
+            entry = self.registry.find(provider, model_id)
+            if not entry:
+                continue
+
+            old_state = entry.lifecycle
+
+            if not qualified:
+                entry.lifecycle = ModelLifecycle.QUARANTINED.value
+                entry.tier = "UNQUALIFIED"
+                transitions.append({
+                    "model": f"{provider}/{model_id}",
+                    "old_state": old_state,
+                    "new_state": ModelLifecycle.QUARANTINED.value,
+                    "tier": tier,
+                })
+            else:
+                if exclusive_per_tier and tier in active_by_tier:
+                    existing = active_by_tier[tier]
+                    if existing != entry:
+                        old_active_state = existing.lifecycle
+                        existing.lifecycle = ModelLifecycle.SUPERSEDED.value
+                        transitions.append({
+                            "model": f"{existing.provider}/{existing.model_id}",
+                            "old_state": old_active_state,
+                            "new_state": ModelLifecycle.SUPERSEDED.value,
+                            "tier": tier,
+                        })
+
+                entry.lifecycle = ModelLifecycle.ACTIVE.value
+                entry.tier = tier
+                active_by_tier[tier] = entry
+
+                transitions.append({
+                    "model": f"{provider}/{model_id}",
+                    "old_state": old_state,
+                    "new_state": ModelLifecycle.ACTIVE.value,
+                    "tier": tier,
+                })
+
+        self.registry.save()
+        return transitions
+
+    async def qualify_candidates(
+        self,
+    ) -> list[dict[str, Any]]:
+
+        results = []
+
+        for model in self.registry.all():
+            if model.lifecycle not in {
+                ModelLifecycle.CANDIDATE.value,
+                ModelLifecycle.SUPERSEDED.value,
+            }:
+                continue
+
+            provider = model.provider.lower()
+            endpoint = self.router.endpoint(provider)
+
+            if not endpoint:
+                continue
+
+            key = self.key_for_provider(provider)
+            if not key:
+                continue
+
+            model.lifecycle = ModelLifecycle.QUALIFYING.value
+            metadata = model.metadata or {}
+
+            result = await self.gate.qualify_openai_compatible(
+                provider=provider,
+                model=metadata,
+                api_key=key,
+                endpoint=endpoint,
+            )
+
+            results.append(result)
+
+            if result["qualified"]:
+                model.lifecycle = ModelLifecycle.ACTIVE.value
+                model.tier = result["tier"]
+                model.latency_ms = result["latency_ms"]
+                model.qualification_score = result["score"]
+                model.last_verified = time.time()
+            else:
+                model.lifecycle = ModelLifecycle.QUARANTINED.value
+
+        self.registry.save()
+        return results
+
+    async def refresh(self) -> dict[str, Any]:
+        started = time.perf_counter()
+
+        discovered = await self.discover()
+        qualified = await self.qualify_candidates()
+
+        elapsed = time.perf_counter() - started
+
+        summary = {
+            "timestamp": time.time(),
+            "duration_seconds": round(elapsed, 3),
+            "providers": {
+                provider: len(models)
+                for provider, models in discovered.items()
+            },
+            "qualified": sum(1 for item in qualified if item["qualified"]),
+            "rejected": sum(1 for item in qualified if not item["qualified"]),
+            "active_models": len(self.registry.active()),
+        }
+
+        self.telemetry.emit("fabric_refresh", summary)
+        return summary
+
+    async def run_forever(self, interval_seconds: int = 21600) -> None:
+        while True:
+            try:
+                await self.refresh()
+            except Exception as exc:
+                self.telemetry.emit(
+                    "refresh_failure",
+                    {"error_type": type(exc).__name__},
+                )
+            await asyncio.sleep(interval_seconds)
+
+    def status(self) -> dict[str, Any]:
+        active = self.registry.active()
+        return {
+            "active_models": len(active),
+            "providers": sorted({model.provider for model in active}),
+            "models": [
+                {
+                    "provider": model.provider,
+                    "model": model.model_id,
+                    "tier": model.tier,
+                    "score": model.qualification_score,
+                    "latency_ms": model.latency_ms,
+                    "lifecycle": model.lifecycle,
+                }
+                for model in active
+            ],
+            "keys": self.key_pool.forensic_status(),
+        }
+
+
+def build_fabric(project_root: str | Path | None = None) -> AutonomousModelFabric:
+    if project_root is None:
+        project_root = Path(__file__).resolve().parent.parent
+    return AutonomousModelFabric(project_root)
+
+
+async def main() -> None:
+    root = os.environ.get("EZZIO_PROJECT_ROOT", r"G:\AI\E-zzio")
+    fabric = build_fabric(root)
+    await fabric.refresh()
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

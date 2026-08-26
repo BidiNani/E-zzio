@@ -2,10 +2,12 @@
 E-ZZIO Core — Tactical Model Router (ECOL V7.61)
 Sélectionne le moteur cognitif en fonction du vecteur de coût et de la capacité requise.
 """
+
 import logging
-from typing import Dict, Any
+from typing import Dict
 
 logger = logging.getLogger(__name__)
+
 
 class ModelRouter:
     def __init__(self):
@@ -24,6 +26,6 @@ class ModelRouter:
         else:
             engine = self.cloud_complex
             provider = "api"
-            
+
         logger.info(f"Routage cognitif -> Fournisseur: {provider} | Moteur: {engine}")
         return {"provider": provider, "model": engine}

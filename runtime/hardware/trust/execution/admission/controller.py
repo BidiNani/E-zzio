@@ -7,8 +7,15 @@ from runtime.hardware.trust.envelope.envelope import EnvelopeIssuer
 from runtime.hardware.trust.policy.registry import TrustPolicyRegistry
 from runtime.hardware.trust.models_governance.budget import ModelBudgetGovernor
 
+
 class ExecutionAdmissionController:
-    def __init__(self, envelope_issuer: EnvelopeIssuer, policy_registry: TrustPolicyRegistry, budget_governor: ModelBudgetGovernor, secret_seed: str = "EZZIO_ADMISSION_ROOT_KEY"):
+    def __init__(
+        self,
+        envelope_issuer: EnvelopeIssuer,
+        policy_registry: TrustPolicyRegistry,
+        budget_governor: ModelBudgetGovernor,
+        secret_seed: str = "EZZIO_ADMISSION_ROOT_KEY",
+    ):
         self.issuer = envelope_issuer
         self.policy_registry = policy_registry
         self.budget_governor = budget_governor
@@ -34,13 +41,13 @@ class ExecutionAdmissionController:
                 capability_token_id=token.token_id,
                 model_origin=model.model_id,
                 reason=f"TOKEN_VERIFICATION_FAILED: {verify_result['reason']}",
-                signature=""
+                signature="",
             )
 
         # 2. Vérification du Trust Registry & Budget du Modèle émetteur
         requested_workers = token.constraints.get("max_workers", 4)
         budget_alloc = self.budget_governor.enforce_budget(model, requested_workers)
-        
+
         if not budget_alloc.allowed:
             return AdmissionGrant(
                 status="DENY",
@@ -53,7 +60,7 @@ class ExecutionAdmissionController:
                 capability_token_id=token.token_id,
                 model_origin=model.model_id,
                 reason=f"MODEL_REJECTED_BY_TRUST_REGISTRY: {budget_alloc.reason}",
-                signature=""
+                signature="",
             )
 
         # 3. Vérification de la politique globale hardware
@@ -71,7 +78,7 @@ class ExecutionAdmissionController:
                 capability_token_id=token.token_id,
                 model_origin=model.model_id,
                 reason=f"POLICY_PROFILE_NOT_FOUND: {str(e)}",
-                signature=""
+                signature="",
             )
 
         # 4. Calcul final des workers (intersection budget modèle + limite policy hardware)
@@ -86,7 +93,7 @@ class ExecutionAdmissionController:
             "allowed_workers": allowed_workers,
             "token_id": token.token_id,
             "model_id": model.model_id,
-            "issued_at": issued_at
+            "issued_at": issued_at,
         }
         signature = self._sign_grant(payload)
 
@@ -101,7 +108,7 @@ class ExecutionAdmissionController:
             capability_token_id=token.token_id,
             model_origin=model.model_id,
             reason="ADMISSION_GRANTED_WITH_MODEL_BUDGET",
-            signature=signature
+            signature=signature,
         )
 
     def _sign_grant(self, payload: dict) -> str:

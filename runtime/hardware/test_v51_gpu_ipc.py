@@ -7,6 +7,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 
 from runtime.hardware.governor_service import HardwareGovernorService
 
+
 def test_v51_gpu_ipc_integration():
     print("=============================================================", flush=True)
     print(" E-ZZIO V5.1 — Unified CPU/GPU Governor IPC Integration Test", flush=True)
@@ -37,7 +38,7 @@ def test_v51_gpu_ipc_integration():
 
         # --- TEST 2 : Bascule de Profil & GPU Policy Mapping ---
         print("\n--- TEST 2 : Validation du Mapping GPU (GAMING vs EVOLUTION) ---", flush=True)
-        
+
         # Mode GAMING -> GPU DISABLED
         state_gaming = governor.set_profile("GAMING")
         assert state_gaming.get("gpu_telemetry", {}).get("policy") == "DISABLED", "FAIL: GAMING doit désactiver le GPU (DISABLED) !"
@@ -57,6 +58,7 @@ def test_v51_gpu_ipc_integration():
     print("\n=============================================================", flush=True)
     print(" STATUS : E-ZZIO V5.1 UNIFIED CPU/GPU IPC CERTIFIÉ", flush=True)
     print("=============================================================", flush=True)
+
 
 if __name__ == "__main__":
     test_v51_gpu_ipc_integration()

@@ -2,6 +2,7 @@
 E-ZZIO V7.32 — Authority Policy Engine
 Définit les domaines protégés, les exigences de validation et les autorisations automatiques.
 """
+
 import json
 from pathlib import Path
 
@@ -11,8 +12,9 @@ POLICY_FILE = ROOT_DIR / "runtime" / "evolution" / "authority_policy.json"
 DEFAULT_POLICY = {
     "protected_domains": ["identity", "constitution", "security"],
     "require_validation": ["kernel", "memory", "skills"],
-    "automatic_allowed": ["cache", "telemetry", "optimization"]
+    "automatic_allowed": ["cache", "telemetry", "optimization"],
 }
+
 
 class AuthorityPolicyEngine:
     def __init__(self):
@@ -29,5 +31,6 @@ class AuthorityPolicyEngine:
         if target in self.policy.get("automatic_allowed", []):
             return {"allowed": True, "requires_validation": False, "reason": "AUTOMATIC_OPTIMIZATION_ALLOWED"}
         return {"allowed": False, "requires_validation": True, "reason": "UNKNOWN_DOMAIN_REJECTED_BY_DEFAULT"}
+
 
 authority_policy_engine = AuthorityPolicyEngine()

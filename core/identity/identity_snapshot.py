@@ -2,6 +2,7 @@
 E-ZZIO V7.31 — Full Snapshot Engine
 Capture l'ensemble des 9 artefacts fondamentaux d'identité sous contrôle secret strict.
 """
+
 import os
 import json
 import shutil
@@ -18,6 +19,7 @@ CONFIG_DIR = ROOT_DIR / "config"
 ENV_PATH = ROOT_DIR / "secrets" / ".env"
 
 load_dotenv(dotenv_path=ENV_PATH, override=True)
+
 
 class IdentitySnapshotEngine:
     def __init__(self):
@@ -52,7 +54,7 @@ class IdentitySnapshotEngine:
             (CONFIG_DIR / "persona.json", snap_dir / "persona.json"),
             (CONFIG_DIR / "lore.md", snap_dir / "lore.md"),
             (CONFIG_DIR / "skills_manifest.json", snap_dir / "skills_manifest.json"),
-            (CONFIG_DIR / "memory_graph.json", snap_dir / "memory_graph.json")
+            (CONFIG_DIR / "memory_graph.json", snap_dir / "memory_graph.json"),
         ]
 
         hashes = {}
@@ -74,10 +76,11 @@ class IdentitySnapshotEngine:
             "backed_up_count": len(hashes),
             "file_hashes": hashes,
             "snapshot_root_hash": snapshot_root_hash,
-            "signature": signature
+            "signature": signature,
         }
 
         (snap_dir / "snapshot_meta.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
         return metadata
+
 
 identity_snapshot_engine = IdentitySnapshotEngine()

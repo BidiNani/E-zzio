@@ -1,11 +1,10 @@
 from runtime.memory.replay import MemoryReplay
-from runtime.memory.bridge import MemoryBridge
 from runtime.skills.registry import SkillRegistry
 from pathlib import Path
 import json
 
-class CommandHandler:
 
+class CommandHandler:
     def __init__(self):
         self.registry = SkillRegistry()
 
@@ -13,13 +12,13 @@ class CommandHandler:
         parts = raw_input.strip().split(maxsplit=1)
         if not parts:
             return ""
-        
+
         cmd = parts[0].lower()
         arg = parts[1] if len(parts) > 1 else ""
 
         if cmd == "exit":
             return "EXIT"
-        
+
         elif cmd == "status":
             skills = self.registry.list_skills()
             return f"[STATUS] E-zzio Core v4.2.2 | Skills actifs : {len(skills)} -> {skills}"
@@ -47,7 +46,7 @@ class CommandHandler:
             res = f"[MEMORY SUMMARY] Total événements : {summary['total_events']} | Skills exécutés : {summary['total_skills_executed']} | Dernier skill : {summary['last_skill']}\n"
             res += "[DERNIERS ÉPISODES] :\n"
             for ep in recent:
-                p = ep.get('payload', {})
+                p = ep.get("payload", {})
                 res += f"  - Skill: {p.get('skill')} | Args: {p.get('arguments')}\n"
             return res.strip()
 

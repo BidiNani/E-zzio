@@ -2,6 +2,7 @@
 E-ZZIO V7.29.1 — Ledger Validator (Identity Seal Verification)
 Vérifie l'intégrité de la chaîne et la validité des sceaux d'identité embarqués.
 """
+
 import os
 import json
 import hashlib
@@ -14,6 +15,7 @@ LEDGER_PATH = ROOT_DIR / "runtime" / "decisions" / "router_decisions.jsonl"
 ENV_PATH = ROOT_DIR / "secrets" / ".env"
 
 load_dotenv(dotenv_path=ENV_PATH, override=True)
+
 
 class LedgerValidator:
     def __init__(self):
@@ -77,5 +79,6 @@ class LedgerValidator:
             expected_previous_hash = stored_hash
 
         return {"valid": True, "total_records": len(lines), "error": None}
+
 
 ledger_validator = LedgerValidator()

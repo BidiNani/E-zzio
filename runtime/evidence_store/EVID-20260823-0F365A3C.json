@@ -1,0 +1,17 @@
+{
+  "evidence_id": "EVID-20260823-0F365A3C",
+  "task_id": "TASK-LOOP-001",
+  "timestamp_utc": "2026-08-23T13:12:18.200126+00:00",
+  "provider": "agent_antigravity",
+  "model_name": "antigravity_agent",
+  "agent_version": "ezzio-federated-v1.0",
+  "capability": "agentic_code_create",
+  "policy_status": "APPROVED",
+  "input_context_hash": "82f4b6df89ba7358cd3fe0aa88725b396ad1386744a85cf2c4c0b2d50cf4a5ec",
+  "output_payload_hash": "7d754a5cbea2edc40e67c5c5a8d750aed262ae901fb3bef09ebfdf567d0be72b",
+  "execution_duration_ms": 150.0,
+  "verification_status": "VERIFIED_VALID",
+  "raw_payload_snippet": "{\"status\": \"SUCCESS\", \"created_file\": \"closed_loop_test_real.py\"}",
+  "ledger_decision_id": null,
+  "envelope_signature_hmac": "d3a1c7507e22e136b3bcc0616371a438134a52e297696d8eab416e12b156b90b"
+}

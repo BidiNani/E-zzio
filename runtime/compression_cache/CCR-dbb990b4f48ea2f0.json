@@ -1,0 +1,7 @@
+{
+  "cache_id": "CCR-dbb990b4f48ea2f0",
+  "sha256": "dbb990b4f48ea2f0267c726f9732ac9385f5431217c7d6a4254afb192073d4fa",
+  "timestamp_utc": "2026-08-23T13:49:09.620761+00:00",
+  "char_length": 58,
+  "original_text": "{\"status\": \"SUCCESS\", \"records\": [1, 2, 3], \"empty\": null}"
+}

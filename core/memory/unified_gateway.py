@@ -8,6 +8,7 @@ from core.evidence_store import EvidenceStore
 
 logger = logging.getLogger("ezzio.memory.gateway")
 
+
 class UnifiedMemoryGateway:
     """Passerelle unifiée de persistance mémorielle, audit WAL et indexation FTS5 haute performance."""
 
@@ -18,11 +19,11 @@ class UnifiedMemoryGateway:
     async def init(self):
         """Initialisation et migration automatique des tables et index FTS5."""
         await self.evidence_store.init()
-        
+
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute("PRAGMA journal_mode = WAL;")
             await db.execute("PRAGMA synchronous = NORMAL;")
-            
+
             # 1. Création de base de la table si absente
             await db.execute("""
                 CREATE TABLE IF NOT EXISTS session_messages (
@@ -38,11 +39,11 @@ class UnifiedMemoryGateway:
             # 2. Migration automatique si la table existe sans metadata ou timestamp
             cursor = await db.execute("PRAGMA table_info(session_messages);")
             columns = [row[1] for row in await cursor.fetchall()]
-            
+
             if "metadata" not in columns:
                 await db.execute("ALTER TABLE session_messages ADD COLUMN metadata TEXT;")
                 logger.info("[MIGRATION] Colonne 'metadata' ajoutée à session_messages.")
-                
+
             if "timestamp" not in columns:
                 now_fallback = datetime.now(timezone.utc).isoformat()
                 await db.execute(f"ALTER TABLE session_messages ADD COLUMN timestamp TEXT DEFAULT '{now_fallback}';")
@@ -82,21 +83,14 @@ class UnifiedMemoryGateway:
 
             await db.commit()
 
-    async def record_message(
-        self,
-        session_id: str,
-        role: str,
-        content: str,
-        metadata: Optional[Dict[str, Any]] = None,
-        **kwargs: Any
-    ):
+    async def record_message(self, session_id: str, role: str, content: str, metadata: Optional[Dict[str, Any]] = None, **kwargs: Any):
         now = datetime.now(timezone.utc).isoformat()
         meta_str = json.dumps(metadata) if metadata else None
-        
+
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute(
                 "INSERT INTO session_messages (session_id, role, content, metadata, timestamp) VALUES (?, ?, ?, ?, ?);",
-                (session_id, role, content, meta_str, now)
+                (session_id, role, content, meta_str, now),
             )
             await db.commit()
 
@@ -105,7 +99,7 @@ class UnifiedMemoryGateway:
             db.row_factory = aiosqlite.Row
             cursor = await db.execute(
                 "SELECT role, content, metadata, timestamp FROM session_messages WHERE session_id = ? ORDER BY id ASC LIMIT ?;",
-                (session_id, limit)
+                (session_id, limit),
             )
             rows = await cursor.fetchall()
             results = []
@@ -120,30 +114,33 @@ class UnifiedMemoryGateway:
             return results
 
     async def search_memory(self, query: str, limit: int = 5) -> Dict[str, List[Dict[str, Any]]]:
-        clean_q = re.sub(r'[^\w\s]', ' ', query).strip()
+        clean_q = re.sub(r"[^\w\s]", " ", query).strip()
         fts_query = " OR ".join([f'"{word}"*' for word in clean_q.split() if len(word) > 1])
-        
+
         async with aiosqlite.connect(self.db_path) as db:
             db.row_factory = aiosqlite.Row
-            
+
             pattern = f"%{query}%"
             cur_ev = await db.execute(
                 "SELECT id, provider, mode, query, task_id, created_at FROM evidence WHERE query LIKE ? ORDER BY id DESC LIMIT ?;",
-                (pattern, limit)
+                (pattern, limit),
             )
             evidences = [dict(r) for r in await cur_ev.fetchall()]
 
             messages = []
             if fts_query:
                 try:
-                    cur_fts = await db.execute("""
+                    cur_fts = await db.execute(
+                        """
                         SELECT sm.id, sm.session_id, sm.role, sm.content, sm.metadata, sm.timestamp
                         FROM session_messages_fts fts
                         JOIN session_messages sm ON fts.rowid = sm.id
                         WHERE session_messages_fts MATCH ?
                         ORDER BY bm25(session_messages_fts)
                         LIMIT ?;
-                    """, (fts_query, limit))
+                    """,
+                        (fts_query, limit),
+                    )
                     messages = [dict(r) for r in await cur_fts.fetchall()]
                 except Exception:
                     messages = []
@@ -151,7 +148,7 @@ class UnifiedMemoryGateway:
             if not messages:
                 cur_msg = await db.execute(
                     "SELECT id, session_id, role, content, metadata, timestamp FROM session_messages WHERE content LIKE ? ORDER BY id DESC LIMIT ?;",
-                    (pattern, limit)
+                    (pattern, limit),
                 )
                 messages = [dict(r) for r in await cur_msg.fetchall()]
 

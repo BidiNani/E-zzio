@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+
 class SkillValidator:
     @staticmethod
     def validate_manifest(manifest_path: Path) -> bool:

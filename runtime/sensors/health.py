@@ -3,8 +3,10 @@ from runtime.sensors.system_sensor import SystemSensor
 from runtime.sensors.filesystem_sensor import FilesystemSensor
 from runtime.sensors.git_sensor import GitSensor
 
+
 class SensorHealth:
     """Surveille l'intégrité et la disponibilité des capteurs d'E-zzio."""
+
     def __init__(self, project_root="."):
         self.system = SystemSensor()
         self.fs = FilesystemSensor(project_root)
@@ -34,5 +36,5 @@ class SensorHealth:
             "system_sensor": sys_status,
             "filesystem_sensor": fs_status,
             "git_sensor": git_status,
-            "last_check": datetime.now().isoformat()
+            "last_check": datetime.now().isoformat(),
         }

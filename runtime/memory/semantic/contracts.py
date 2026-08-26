@@ -4,10 +4,12 @@ from datetime import datetime
 from enum import Enum
 from core.memory_core import memory_core
 
+
 class SemanticSource(str, Enum):
     KERNEL = "kernel"
     DREAM = "dream"
     AGENT = "agent"
+
 
 class SemanticIntent(str, Enum):
     RECALL = "recall"
@@ -15,11 +17,13 @@ class SemanticIntent(str, Enum):
     COMPARE = "compare"
     LEARN = "learn"
 
+
 class MemoryType(str, Enum):
     EPISODE = "episode"
     RULE = "rule"
     FACT = "fact"
     BELIEF = "belief"
+
 
 @dataclass
 class SemanticFilters:
@@ -31,8 +35,9 @@ class SemanticFilters:
         return {
             "memory_type": [t.value if isinstance(t, MemoryType) else t for t in self.memory_type],
             "confidence_min": self.confidence_min,
-            "session_id": self.session_id
+            "session_id": self.session_id,
         }
+
 
 @dataclass
 class SemanticQuery:
@@ -54,8 +59,9 @@ class SemanticQuery:
             "filters": self.filters.to_dict(),
             "top_k": self.top_k,
             "contract_version": self.contract_version,
-            "timestamp": self.timestamp
+            "timestamp": self.timestamp,
         }
+
 
 @dataclass
 class SemanticResultItem:
@@ -74,6 +80,7 @@ class SemanticResultItem:
         d["type"] = self.type.value if isinstance(self.type, MemoryType) else self.type
         return d
 
+
 @dataclass
 class SemanticQueryResult:
     query_id: str
@@ -86,8 +93,9 @@ class SemanticQueryResult:
             "query_id": self.query_id,
             "results": [r.to_dict() for r in self.results],
             "metadata": self.metadata,
-            "contract_version": self.contract_version
+            "contract_version": self.contract_version,
         }
+
 
 __all__ = [
     "SemanticSource",
@@ -97,5 +105,5 @@ __all__ = [
     "SemanticQuery",
     "SemanticResultItem",
     "SemanticQueryResult",
-    "memory_core"
+    "memory_core",
 ]

@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import List, Dict, Any
 from runtime.memory.episodic.episode import Episode, EpisodeStep
 
+
 class EpisodeExtractor:
     """Transforme une séquence d'événements bruts en épisodes cognitifs segmentés, incluant les échecs."""
 
@@ -44,11 +45,7 @@ class EpisodeExtractor:
             payload = ev.get("payload", {})
 
             time_diff = (current_dt - start_dt).total_seconds()
-            is_break = (
-                session_id != current_session or
-                trace_id != current_trace or
-                time_diff > self.max_duration_sec
-            )
+            is_break = session_id != current_session or trace_id != current_trace or time_diff > self.max_duration_sec
 
             if is_break and current_steps:
                 episode = Episode(
@@ -60,7 +57,7 @@ class EpisodeExtractor:
                     goal=current_goal,
                     steps=current_steps,
                     outcome=outcome,
-                    importance=0.8 if outcome == "failure" else 0.6
+                    importance=0.8 if outcome == "failure" else 0.6,
                 )
                 episodes.append(episode)
                 current_steps = []
@@ -84,12 +81,7 @@ class EpisodeExtractor:
             elif "success" in execution and execution["success"] is False:
                 outcome = "failure"
 
-            step = EpisodeStep(
-                event_id=ev.get("event_id", str(uuid.uuid4())),
-                event_type=event_type,
-                timestamp=timestamp,
-                payload=payload
-            )
+            step = EpisodeStep(event_id=ev.get("event_id", str(uuid.uuid4())), event_type=event_type, timestamp=timestamp, payload=payload)
             current_steps.append(step)
             end_time_str = timestamp
 
@@ -104,7 +96,7 @@ class EpisodeExtractor:
                 goal=current_goal,
                 steps=current_steps,
                 outcome=outcome,
-                importance=0.8 if outcome == "failure" else 0.6
+                importance=0.8 if outcome == "failure" else 0.6,
             )
             episodes.append(episode)
 

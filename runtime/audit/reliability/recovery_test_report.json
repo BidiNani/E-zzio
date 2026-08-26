@@ -1,9 +1,0 @@
-{
-  "TestedAt": "2026-08-12T22:34:11Z",
-  "KilledPid": 25008,
-  "RecoveredPid": 24340,
-  "ProcessRebound": true,
-  "HttpHealthy": true,
-  "WorkerPoolActive": true,
-  "Status": "RECOVERY_TEST_PASS"
-}

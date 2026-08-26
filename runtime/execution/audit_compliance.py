@@ -29,6 +29,7 @@ if ToolResult is not canonical.ToolResult:
     print("FAIL: Multiple ToolResult class objects detected in memory space.")
     sys.exit(11)
 
+
 def run_audit():
     package = runtime.tools.executors
     print("\n=============================================")
@@ -41,7 +42,7 @@ def run_audit():
             module = importlib.import_module(module_name)
             for attr_name in dir(module):
                 obj = getattr(module, attr_name)
-                
+
                 if isinstance(obj, type) and hasattr(obj, "TOOL_NAME"):
                     tool_name = getattr(obj, "TOOL_NAME", "UNKNOWN")
                     issues = []
@@ -49,7 +50,7 @@ def run_audit():
                     # A. Décorateur
                     if not getattr(obj, "__is_executor__", False):
                         issues.append("Missing @executor decorator")
-                    
+
                     # B. Signature execute()
                     if hasattr(obj, "execute"):
                         sig = inspect.signature(obj.execute)
@@ -77,7 +78,7 @@ def run_audit():
                         all_compliant = False
                     else:
                         print(f"{tool_name:<30} [PASS]")
-                        
+
         except Exception as e:
             print(f"{module_name:<30} [CRASH] : {e}")
             all_compliant = False
@@ -90,5 +91,6 @@ def run_audit():
         print("RESULT : COMPLIANCE FAILURES DETECTED.")
         sys.exit(1)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     run_audit()

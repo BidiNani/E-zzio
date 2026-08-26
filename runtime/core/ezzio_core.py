@@ -1,87 +1,176 @@
+from core.identity.canonical_identity import CanonicalIdentity
+import asyncio
 import logging
-from typing import Any, Dict, Optional
+from pathlib import Path
 from core.memory.unified_gateway import UnifiedMemoryGateway
-from core.router.intent_router import IntentRouter, IntentType
-from core.decision_router import DecisionRouter, SearchMode
+from core.codebase_indexer import CodebaseIndexer
+from core.scope_resolver import DomainScopeResolver
 from core.providers.ollama_provider import OllamaProvider
-from core.providers.gemini_provider import GeminiProvider
 from core.security.guardrail import PromptGuard, SecurityViolationError
+from core.router.intent_router import IntentRouter
+from core.decision_router import SearchMode
 from core.security.quota_manager import QuotaExceededError
 
 logger = logging.getLogger("ezzio.core")
 
+
 class EzzioCore:
-    def __init__(self, memory_gateway: UnifiedMemoryGateway, quota_manager=None, decision_router=None):
-        self.memory = memory_gateway
-        self.intent_router = IntentRouter()
-        self.decision_router = decision_router or DecisionRouter([OllamaProvider(), GeminiProvider()])
+    """Noyau cognitif principal d'E-ZZIO OS avec résolution contextuelle de scope par domaine (V49)."""
+
+    def __init__(self, memory_gateway: UnifiedMemoryGateway = None, decision_router=None, quota_manager=None):
+        self.memory_gateway = memory_gateway or UnifiedMemoryGateway()
+        self.decision_router = decision_router
         self.quota_manager = quota_manager
+        self.codebase = CodebaseIndexer()
+        self.scope_resolver = DomainScopeResolver()
+        self.ollama = OllamaProvider()
         self.guard = PromptGuard()
+        self.intent_router = IntentRouter()
+        self.root = Path.cwd().resolve()
 
     async def init(self):
-        await self.memory.init()
+        if hasattr(self.memory_gateway, "init"):
+            await self.memory_gateway.init()
+        if self.quota_manager and hasattr(self.quota_manager, "init"):
+            await self.quota_manager.init()
 
-    async def think(self, user_id: str, message: str, session_id: Optional[str] = None) -> Dict[str, Any]:
-        sanitized_message = self.guard.sanitize(message)
-        effective_session = session_id or f"sess_{user_id}"
-        await self.memory.record_message(effective_session, "user", sanitized_message)
+    async def think(self, user_id: str, message: str, session_id: str = None) -> dict:
+        resolved_session = session_id or f"sess_{user_id}"
 
-        classification = self.intent_router.classify(sanitized_message)
-        intent = classification.get("intent", IntentType.LOCAL_CHAT)
-        target_provider = classification.get("target_provider", "ollama")
+        # 1. Validation de sécurité stricte (PromptGuard)
+        if self.guard:
+            self.guard.sanitize(message)
 
-        intent_mode_map = {
-            IntentType.LOCAL_CHAT: "local_chat",
-            IntentType.WEB_SEARCH: "web_search",
-            IntentType.DEEP_REASONING: "deep_reasoning",
-            IntentType.MEMORY_QUERY: "memory_recall"
-        }
-        expected_mode = intent_mode_map.get(intent, "local_chat")
+        # 2. Persistance WAL utilisateur
+        try:
+            await self.memory_gateway.record_message(resolved_session, "user", message, metadata={"user_id": user_id})
+        except Exception as e:
+            logger.error("Erreur de persistance mémorielle (user): %r", e)
 
-        response_text = ""
-        used_provider = target_provider
-        mode_used = expected_mode
-
-        if intent == IntentType.DEEP_REASONING:
-            try:
-                if self.quota_manager:
-                    await self.quota_manager.check_and_increment(user_id, "gemini")
-                res = await self.decision_router.search(sanitized_message, mode=SearchMode.GOOGLE)
-                response_text = res.get("data", {}).get("text", "")
-                used_provider = res.get("provider", "gemini")
-            except (QuotaExceededError, Exception) as e:
-                logger.warning(f"[*] Fallback local déclenché pour Deep Reasoning ({e})")
-                res = await self.decision_router.search(sanitized_message, mode=SearchMode.LOCAL)
-                response_text = res.get("data", {}).get("text", "")
-                used_provider = res.get("provider", "ollama")
-                mode_used = "local_fallback"
-        elif intent == IntentType.WEB_SEARCH:
-            try:
-                if self.quota_manager:
-                    await self.quota_manager.check_and_increment(user_id, "tavily")
-                res = await self.decision_router.search(sanitized_message, mode=SearchMode.FAST)
-                response_text = res.get("data", {}).get("text", "")
-                used_provider = res.get("provider", "tavily")
-            except (QuotaExceededError, Exception):
-                res = await self.decision_router.search(sanitized_message, mode=SearchMode.LOCAL)
-                response_text = res.get("data", {}).get("text", "")
-                used_provider = res.get("provider", "ollama")
-                mode_used = "local_search_fallback"
+        # 3. Classification synchrone et normalisation d'intention
+        intent_res = self.intent_router.classify(message)
+        if isinstance(intent_res, dict):
+            intent_raw = intent_res.get("intent", "local_chat")
+            mode_raw = intent_res.get("mode", intent_raw)
         else:
-            mode = SearchMode.LOCAL if target_provider == "ollama" else SearchMode.FAST
-            res = await self.decision_router.search(sanitized_message, mode=mode)
-            response_text = res.get("data", {}).get("text", "")
-            used_provider = res.get("provider", target_provider)
+            intent_raw = intent_res
+            mode_raw = intent_res
 
-        await self.memory.record_message(
-            effective_session,
-            "assistant",
-            response_text,
-            metadata={"provider": used_provider, "intent": intent.value, "mode": mode_used}
-        )
+        intent = intent_raw.value if hasattr(intent_raw, "value") else str(intent_raw)
+        mode_str = mode_raw.value if hasattr(mode_raw, "value") else str(mode_raw)
+
+        # 4. Traduction d'intention et vérification Quota
+        search_mode = SearchMode.LOCAL
+        if intent == "web_search" or mode_str == "web_search":
+            search_mode = SearchMode.FAST
+            mode_str = "web_search"
+        elif intent == "deep_reasoning" or mode_str == "deep_reasoning":
+            search_mode = SearchMode.GOOGLE
+            mode_str = "deep_reasoning"
+
+            if self.quota_manager:
+                try:
+                    if hasattr(self.quota_manager, "check_and_increment"):
+                        await self.quota_manager.check_and_increment(user_id, "gemini")
+                except (QuotaExceededError, Exception):
+                    search_mode = SearchMode.LOCAL
+                    mode_str = "local_fallback"
+        elif intent == "memory_query" or mode_str == "memory_query":
+            search_mode = SearchMode.LOCAL
+            mode_str = "memory_recall"
+        else:
+            search_mode = SearchMode.LOCAL
+            mode_str = "local_chat"
+
+        # 5. Injection de contexte : Arborescence générale ou Scope ciblé par domaine (V49)
+        context_data = ""
+        lower_msg = message.lower()
+
+        domain_mapping = {
+            "mémoire": "memory",
+            "memory": "memory",
+            "router": "router",
+            "routage": "router",
+            "sécurité": "security",
+            "security": "security",
+            "quota": "security",
+            "discord": "discord",
+        }
+
+        target_domain = None
+        for keyword, domain in domain_mapping.items():
+            if keyword in lower_msg:
+                target_domain = domain
+                break
+
+        if target_domain:
+            scoped_files = self.scope_resolver.resolve_scope(target_domain, max_depth=1)
+            blocks = []
+            for rel_path in scoped_files:
+                full_path = self.root / rel_path
+                if full_path.exists() and full_path.stat().st_size < 100_000:
+                    code_text = await asyncio.to_thread(
+                        full_path.read_text, encoding="utf-8", errors="ignore"
+                    )  # FIX: I/O non bloquante dans un contexte async
+                    blocks.append(f"[{rel_path}]\n{code_text}")
+        # 5. Injection de l'identité et du persona souverain (persona.full.md)
+        persona_path = self.root / "persona.full.md"
+        if persona_path.exists():
+            try:
+                persona_content = await asyncio.to_thread(persona_path.read_text, encoding="utf-8", errors="ignore")
+                persona_header = f"[IDENTITÉ SYSTÈME & PERSONA]\n{persona_content.strip()}\n\n"
+            except Exception:
+                persona_header = CanonicalIdentity().build_system_prompt() + "\n\n"
+        else:
+            persona_header = CanonicalIdentity().build_system_prompt() + "\n\n"
+
+        full_prompt = f"{persona_header}[MESSAGE UTILISATEUR] :\n{message}\n{context_data}" if context_data else f"{persona_header}[MESSAGE UTILISATEUR] :\n{message}"
+
+        # 6. Exécution via DecisionRouter
+        response_text = ""
+        provider_used = "ollama"
+        data_dict = {}
+
+        try:
+            if self.decision_router:
+                routed_res = await self.decision_router.search(query=full_prompt, mode=search_mode)
+                if isinstance(routed_res, dict):
+                    provider_used = routed_res.get("provider", "ollama")
+                    data_dict = routed_res.get("data", {})
+                    response_text = data_dict.get("text") or str(data_dict)
+                else:
+                    response_text = str(routed_res)
+            else:
+                res = await self.ollama.search(query=full_prompt)
+                response_text = res.get("data", {}).get("text", "Réponse locale")
+                provider_used = res.get("provider", "ollama")
+        except SecurityViolationError:
+            raise
+        except Exception as e:
+            response_text = f"Erreur d'exécution : {e}"
+            provider_used = "ollama"
+        data_dict = {}
+
+        if not response_text or response_text == "None":
+            response_text = f"Réponse standard générée pour l'intention : {intent}"
+
+        if mode_str == "local_fallback":
+            provider_used = "ollama"
+        data_dict = {}
+
+        # 7. Persistance aval assistant
+        try:
+            await self.memory_gateway.record_message(
+                resolved_session, "assistant", response_text, metadata={"provider": provider_used, "intent": intent}
+            )
+        except Exception as e:
+            logger.error("Erreur de persistance mémorielle (assistant): %r", e)
+
         return {
+            "status": "success",
+            "intent": intent,
+            "mode": mode_str,
+            "provider": provider_used,
+            "model_used": data_dict.get("model") or data_dict.get("model_used") or getattr(self.ollama, "model", None) or "unknown",
             "response": response_text,
-            "intent": intent.value,
-            "provider": used_provider,
-            "mode": mode_used
         }

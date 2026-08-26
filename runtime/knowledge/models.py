@@ -3,12 +3,14 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 import uuid
 
+
 class SourceType(str, Enum):
     USER = "USER"
     RSS = "RSS"
     WEB = "WEB"
     INTERNAL = "INTERNAL"
     MODEL = "MODEL"
+
 
 @dataclass
 class KnowledgeItem:

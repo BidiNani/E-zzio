@@ -6,11 +6,13 @@ from runtime.kernel.context import RuntimeContext
 from runtime.events.bus import Event
 from runtime.kernel.state import RuntimePhase
 
+
 class RuntimeWatchdog(threading.Thread):
     """
-    Chien de garde du Runtime. 
+    Chien de garde du Runtime.
     Surveille en arrière-plan la santé de l'OS, la charge du Governor et l'état de la machine d'état.
     """
+
     def __init__(self, context: RuntimeContext, check_interval_sec: float = 2.0):
         super().__init__(daemon=True)
         self.context = context
@@ -31,15 +33,17 @@ class RuntimeWatchdog(threading.Thread):
                 # 2. Audit de la charge du Governor
                 active_workers = self.context.governor._active_workers
                 max_workers = self.context.governor.limits.get("max_parallel_workers", 8)
-                
+
                 if active_workers >= max_workers:
                     self.health_status = "CONGESTED"
-                    self.context.bus.publish(Event(
-                        type="RuntimeCongested",
-                        actor="RuntimeWatchdog",
-                        source="governance.watchdog",
-                        payload={"active_workers": active_workers, "max_workers": max_workers}
-                    ))
+                    self.context.bus.publish(
+                        Event(
+                            type="RuntimeCongested",
+                            actor="RuntimeWatchdog",
+                            source="governance.watchdog",
+                            payload={"active_workers": active_workers, "max_workers": max_workers},
+                        )
+                    )
                 else:
                     self.health_status = "HEALTHY"
 

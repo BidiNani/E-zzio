@@ -1,8 +1,0 @@
-{
-  "Version": "V48.22",
-  "Timestamp": "2026-08-14T21:18:53.0636866+02:00",
-  "CoreFilesScanned": 214,
-  "Violations": 0,
-  "BoundaryScore": "100/100",
-  "Status": "BOUNDARY_SECURE"
-}

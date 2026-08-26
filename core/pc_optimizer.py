@@ -1,4 +1,5 @@
 from __future__ import annotations
+from core.identity.canonical_identity import CanonicalIdentity
 
 import os
 import re
@@ -55,20 +56,12 @@ DEEP_MODELS = [
     "granite3.3:8b",
 ]
 
-IDENTITY_SYSTEM = """
-Tu es E-ZZIO, l'ami IA local d'Enrik.
-Tu n'es pas une marque automobile.
-Tu n'es pas un produit commercial.
-Tu es un assistant local sur PC, CPU/RAM only, sans publicité, sans tracking, sans sponsor.
-Tu dois répondre en français, court, honnête, sans prétendre que des modules non configurés sont actifs.
-Ne dis jamais "non filtré" ou "sans restrictions de contenu".
-Dis plutôt : utile, fiable, local-first, sécurisé, zéro pub.
-""".strip()
+IDENTITY_SYSTEM = CanonicalIdentity().build_system_prompt().strip()
 
 IDENTITY_PROMPT = """
 Réponds en une seule phrase.
 Question : Quel est le rôle d'E-ZZIO ?
-Réponse attendue : E-ZZIO est l'ami IA local d'Enrik sur PC, optimisé CPU/RAM, sans pub, avec vision, forge, mémoire, supervision et ponts futurs.
+Réponse attendue : E-ZZIO est l'organisme souverain géré par CanonicalIdentity.
 """.strip()
 
 BAD_TERMS = [
@@ -104,11 +97,14 @@ GOOD_TERMS = [
     "watchdog",
 ]
 
+
 def _now():
     return time.strftime("%Y-%m-%dT%H:%M:%S")
 
+
 def _gb(value: float) -> float:
-    return round(value / (1024 ** 3), 2)
+    return round(value / (1024**3), 2)
+
 
 def clean_reply(text: str) -> str:
     text = text or ""
@@ -150,6 +146,7 @@ NEGATED_BAD_PATTERNS = {
     ],
 }
 
+
 def collect_bad_hits(low: str):
     hits = []
 
@@ -164,6 +161,7 @@ def collect_bad_hits(low: str):
         hits.append(term)
 
     return hits
+
 
 def identity_score(text: str) -> Dict[str, Any]:
     cleaned = clean_reply(text)
@@ -198,6 +196,7 @@ def identity_score(text: str) -> Dict[str, Any]:
         "cleaned": cleaned,
     }
 
+
 def pc_profile() -> Dict[str, Any]:
     mem = psutil.virtual_memory()
 
@@ -205,14 +204,16 @@ def pc_profile() -> Dict[str, Any]:
     for part in psutil.disk_partitions(all=False):
         try:
             usage = psutil.disk_usage(part.mountpoint)
-            disks.append({
-                "device": part.device,
-                "mountpoint": part.mountpoint,
-                "fstype": part.fstype,
-                "total_gb": _gb(usage.total),
-                "free_gb": _gb(usage.free),
-                "used_percent": usage.percent,
-            })
+            disks.append(
+                {
+                    "device": part.device,
+                    "mountpoint": part.mountpoint,
+                    "fstype": part.fstype,
+                    "total_gb": _gb(usage.total),
+                    "free_gb": _gb(usage.free),
+                    "used_percent": usage.percent,
+                }
+            )
         except Exception:
             pass
 
@@ -250,6 +251,7 @@ def pc_profile() -> Dict[str, Any]:
         },
     }
 
+
 def ollama_tags() -> Dict[str, Any]:
     try:
         response = requests.get("http://127.0.0.1:11434/api/tags", timeout=5)
@@ -259,9 +261,11 @@ def ollama_tags() -> Dict[str, Any]:
     except Exception as exc:
         return {"ok": False, "error": str(exc), "models": []}
 
+
 def model_available(model: str) -> bool:
     tags = ollama_tags()
     return model in tags.get("models", [])
+
 
 def warmup_model(model: str, prompt: str = "Réponds uniquement par: OK", timeout_sec: int = 120) -> Dict[str, Any]:
     started = time.time()
@@ -310,6 +314,7 @@ def warmup_model(model: str, prompt: str = "Réponds uniquement par: OK", timeou
             "error": str(exc),
         }
 
+
 def warmup_profile(level: str = "fast") -> Dict[str, Any]:
     level = (level or "fast").lower().strip()
 
@@ -343,6 +348,7 @@ def warmup_profile(level: str = "fast") -> Dict[str, Any]:
     report["report_path"] = str(path)
 
     return report
+
 
 def bench_model(model: str, prompt: str = IDENTITY_PROMPT, predict: int = 80) -> Dict[str, Any]:
     started = time.time()
@@ -398,6 +404,7 @@ def bench_model(model: str, prompt: str = IDENTITY_PROMPT, predict: int = 80) ->
             "error": str(exc),
         }
 
+
 def quick_bench() -> Dict[str, Any]:
     candidates = [
         "qwen3:1.7b",
@@ -419,10 +426,7 @@ def quick_bench() -> Dict[str, Any]:
 
     best = None
     if accepted_results:
-        best = sorted(
-            accepted_results,
-            key=lambda x: (-x.get("identity_score", 0), x.get("elapsed_ms", 999999))
-        )[0]
+        best = sorted(accepted_results, key=lambda x: (-x.get("identity_score", 0), x.get("elapsed_ms", 999999)))[0]
 
     report = {
         "ok": len(ok_results) > 0,
@@ -446,6 +450,7 @@ def quick_bench() -> Dict[str, Any]:
     report["report_path"] = str(path)
 
     return report
+
 
 def performance_status() -> Dict[str, Any]:
     return {
@@ -472,4 +477,3 @@ def performance_status() -> Dict[str, Any]:
             "no_ads": True,
         },
     }
-

@@ -1,6 +1,7 @@
 from .sandbox_exec import SandboxExecutePython
 from .embedder import EmbedderCapability
 
+
 class CapabilityRegistry:
     def __init__(self):
         self._capabilities = {}

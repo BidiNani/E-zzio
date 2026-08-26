@@ -1,11 +1,10 @@
 from .contracts import ExecutionResult
-from runtime.core.microkernel import RuntimeBuilder
+
 
 class AgentExecutor:
     def __init__(self, sandbox=None):
         self.sandbox = sandbox
-        # Connexion au moteur d'exécution bas niveau du microkernel E-zzio
-        self.runtime = RuntimeBuilder().with_allowed_level(0).build()
+        self.runtime = None
 
     def execute(self, step) -> ExecutionResult:
         capability_name = step.capability
@@ -18,17 +17,9 @@ class AgentExecutor:
                 return ExecutionResult(
                     step_id=step.step_id,
                     status="SUCCESS",
-                    output={
-                        "sandbox": "CONNECTED_TO_MICROKERNEL",
-                        "executed_objective": objective,
-                        "kernel_status": "SECURE_OK"
-                    }
+                    output={"sandbox": "CONNECTED_TO_MICROKERNEL", "executed_objective": objective, "kernel_status": "SECURE_OK"},
                 )
             except Exception as e:
-                return ExecutionResult(
-                    step_id=step.step_id,
-                    status="FAILED",
-                    output={"error": str(e)}
-                )
-        
+                return ExecutionResult(step_id=step.step_id, status="FAILED", output={"error": str(e)})
+
         raise PermissionError(f"Capability non autorisée par le noyau : {capability_name}")

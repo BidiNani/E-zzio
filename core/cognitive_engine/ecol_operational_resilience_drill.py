@@ -3,9 +3,8 @@ E-ZZIO V7.61.11 — Operational Resilience Drill
 Valide la crash-consistency (ligne partielle), la concurrence multi-thread (RLock stress),
 et le drill de restauration/reprise après sinistre.
 """
-import os
+
 import sys
-import json
 import threading
 import shutil
 from pathlib import Path
@@ -19,9 +18,10 @@ from core.cognition.cognitive_governor import CognitiveGovernor, LedgerSecurityE
 LEDGER_PATH = ROOT_DIR / "runtime" / "cognition" / "budget" / "cognitive_budget_ledger.jsonl"
 BACKUP_PATH = LEDGER_PATH.with_suffix(".jsonl.pre-industrial.bak")
 
+
 def run_resilience_drill():
     print("[*] Lancement de l'Operational Resilience Drill (V7.61.11)...")
-    governor = CognitiveGovernor()
+    CognitiveGovernor()
     results = []
 
     # -------------------------------------------------------------
@@ -40,8 +40,10 @@ def run_resilience_drill():
 
         # Tentative d'instanciation ou de vérification : doit lever un Fail-Closed
         try:
-            broken_gov = CognitiveGovernor()
-            results.append({"test": "Crash Consistency (Truncated Line)", "status": "FAIL", "error": "Le système a ignoré une ligne partielle !"})
+            CognitiveGovernor()
+            results.append(
+                {"test": "Crash Consistency (Truncated Line)", "status": "FAIL", "error": "Le système a ignoré une ligne partielle !"}
+            )
             print("  [FAIL] Alerte : Ligne partielle ignorée sans erreur !")
         except LedgerSecurityError:
             results.append({"test": "Crash Consistency (Truncated Line)", "status": "PASS"})
@@ -116,7 +118,7 @@ def run_resilience_drill():
         # Reprise et vérification
         recovery_gov = CognitiveGovernor()
         recovery_gov.verify_ledger_chain()
-        
+
         results.append({"test": "Disaster Recovery & Resume", "status": "PASS"})
         print("  [PASS] Restauration du Ledger réussie et reprise de l'activité validée.")
 
@@ -131,6 +133,7 @@ def run_resilience_drill():
         status_icon = "[✓]" if res["status"] == "PASS" else "[X]"
         print(f"  {status_icon} {res['test']} : {res['status']}")
     print("=" * 65)
+
 
 if __name__ == "__main__":
     run_resilience_drill()

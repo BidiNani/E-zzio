@@ -88,7 +88,7 @@ ACTION_REGISTRY: Dict[str, Dict[str, Any]] = {
         "requires_confirmation": False,
         "kind": "read",
     },
-        "scan_ai_ecosystem": {
+    "scan_ai_ecosystem": {
         "label": "Scanner tout l'écosystème G:\\AI",
         "safe": True,
         "destructive": False,
@@ -104,13 +104,16 @@ ACTION_REGISTRY: Dict[str, Dict[str, Any]] = {
     },
 }
 
+
 def now() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%S")
+
 
 def append_jsonl(path: Path, event: Dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(event, ensure_ascii=False) + "\n")
+
 
 def read_jsonl(path: Path, limit: int = 500) -> List[Dict[str, Any]]:
     if not path.exists():
@@ -119,13 +122,14 @@ def read_jsonl(path: Path, limit: int = 500) -> List[Dict[str, Any]]:
     lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
     output: List[Dict[str, Any]] = []
 
-    for line in lines[-max(1, min(int(limit), 5000)):]:
+    for line in lines[-max(1, min(int(limit), 5000)) :]:
         try:
             output.append(json.loads(line))
         except Exception:
             output.append({"broken_line": line[:400]})
 
     return output
+
 
 def registry() -> Dict[str, Any]:
     return {
@@ -141,6 +145,7 @@ def registry() -> Dict[str, Any]:
         },
     }
 
+
 def run_index() -> Dict[str, Dict[str, Any]]:
     runs = read_jsonl(RUNS_PATH, limit=5000)
     index: Dict[str, Dict[str, Any]] = {}
@@ -151,6 +156,7 @@ def run_index() -> Dict[str, Dict[str, Any]]:
             index[proposal_id] = run
 
     return index
+
 
 def augment_queue_items(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     runs_by_proposal = run_index()
@@ -180,6 +186,7 @@ def augment_queue_items(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
     return augmented
 
+
 def ledger(limit: int = 100) -> Dict[str, Any]:
     raw_items = read_jsonl(QUEUE_PATH, limit=limit)
     items = augment_queue_items(raw_items)
@@ -207,6 +214,7 @@ def ledger(limit: int = 100) -> Dict[str, Any]:
         },
     }
 
+
 def status() -> Dict[str, Any]:
     data = ledger(limit=5000)
     runs = read_jsonl(RUNS_PATH, limit=50)
@@ -232,6 +240,7 @@ def status() -> Dict[str, Any]:
             "confirmation_word": "CONFIRME",
         },
     }
+
 
 def propose_action(action: str, params: Optional[Dict[str, Any]] = None, reason: str = "") -> Dict[str, Any]:
     params = params or {}
@@ -276,6 +285,7 @@ def propose_action(action: str, params: Optional[Dict[str, Any]] = None, reason:
     append_jsonl(QUEUE_PATH, proposal)
     return proposal
 
+
 def queue(limit: int = 50) -> Dict[str, Any]:
     items = augment_queue_items(read_jsonl(QUEUE_PATH, limit=limit))
     return {
@@ -285,6 +295,7 @@ def queue(limit: int = 50) -> Dict[str, Any]:
         "items": items,
     }
 
+
 def find_proposal(proposal_id: str) -> Optional[Dict[str, Any]]:
     items = read_jsonl(QUEUE_PATH, limit=5000)
     for item in reversed(items):
@@ -292,30 +303,37 @@ def find_proposal(proposal_id: str) -> Optional[Dict[str, Any]]:
             return item
     return None
 
+
 def already_executed(proposal_id: str) -> Optional[Dict[str, Any]]:
     return run_index().get(proposal_id)
+
 
 def run_action_logic(action: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     params = params or {}
 
     if action == "maintenance_status":
         from core.project_janitor import maintenance_status
+
         return maintenance_status()
 
     if action == "maintenance_audit":
         from core.project_janitor import audit_project
+
         return audit_project()
 
     if action == "dust_dry_run":
         from core.project_janitor import quarantine_dust
+
         return quarantine_dust(apply=False)
 
     if action == "human_status":
         from core.human_loop import status as human_status
+
         return human_status()
 
     if action == "human_tick_safe":
         from core.human_loop import tick
+
         return tick(
             user_goal=str(params.get("goal") or "rester stable et prêt"),
             context=str(params.get("context") or "safe action queue"),
@@ -324,22 +342,30 @@ def run_action_logic(action: str, params: Optional[Dict[str, Any]] = None) -> Di
 
     if action == "human_reflect":
         from core.human_loop import reflect
+
         return reflect(note=str(params.get("note") or "réflexion action queue"))
 
     if action == "human_chat_brief":
         from core.human_chat import build_brief
+
         return build_brief()
 
     if action == "brain_status":
         from core.pc_model_router import router_status
+
         return router_status()
 
     if action == "scan_ai_ecosystem":
         import subprocess
+
         scanner_script = "G:/AI/Bidi_Scanner_v2.ps1"
         if Path(scanner_script).exists():
             try:
-                subprocess.run(["powershell", "-ExecutionPolicy", "Bypass", "-File", scanner_script], check=True, creationflags=subprocess.CREATE_NO_WINDOW)
+                subprocess.run(
+                    ["powershell", "-ExecutionPolicy", "Bypass", "-File", scanner_script],
+                    check=True,
+                    creationflags=subprocess.CREATE_NO_WINDOW,
+                )
                 return {"ok": True, "message": "Le scan de l'écosystème G:\\AI a été lancé avec succès."}
             except Exception as e:
                 return {"ok": False, "error": f"Erreur lors du scan : {e}"}
@@ -347,12 +373,14 @@ def run_action_logic(action: str, params: Optional[Dict[str, Any]] = None) -> Di
 
     if action == "human_sessions":
         from core.human_chat import list_sessions
+
         return list_sessions()
 
     return {
         "ok": False,
         "error": f"Action non implémentée : {action}",
     }
+
 
 def run_proposal(proposal_id: str, confirmation: str = "") -> Dict[str, Any]:
     proposal = find_proposal(proposal_id)
@@ -429,6 +457,7 @@ def run_proposal(proposal_id: str, confirmation: str = "") -> Dict[str, Any]:
     append_jsonl(RUNS_PATH, run)
     return run
 
+
 def quick_action(action: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     params = params or {}
 
@@ -461,6 +490,7 @@ def quick_action(action: str, params: Optional[Dict[str, Any]] = None) -> Dict[s
 
 CANCELS_PATH = QUEUE_ROOT / "cancellations.jsonl"
 
+
 def cancel_index() -> Dict[str, Dict[str, Any]]:
     cancellations = read_jsonl(CANCELS_PATH, limit=5000)
     index: Dict[str, Dict[str, Any]] = {}
@@ -471,6 +501,7 @@ def cancel_index() -> Dict[str, Dict[str, Any]]:
             index[proposal_id] = item
 
     return index
+
 
 def augment_queue_items(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     runs_by_proposal = run_index()
@@ -519,6 +550,7 @@ def augment_queue_items(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
     return augmented
 
+
 def ledger(limit: int = 100) -> Dict[str, Any]:
     raw_items = read_jsonl(QUEUE_PATH, limit=limit)
     items = augment_queue_items(raw_items)
@@ -549,6 +581,7 @@ def ledger(limit: int = 100) -> Dict[str, Any]:
         },
     }
 
+
 def status() -> Dict[str, Any]:
     data = ledger(limit=5000)
     runs = read_jsonl(RUNS_PATH, limit=50)
@@ -577,6 +610,7 @@ def status() -> Dict[str, Any]:
             "history": "append_only",
         },
     }
+
 
 def cancel_proposal(proposal_id: str, reason: str = "annulation manuelle") -> Dict[str, Any]:
     proposal = find_proposal(proposal_id)
@@ -620,6 +654,7 @@ def cancel_proposal(proposal_id: str, reason: str = "annulation manuelle") -> Di
     append_jsonl(CANCELS_PATH, event)
     return event
 
+
 def cancel_pending(reason: str = "nettoyage file pending") -> Dict[str, Any]:
     data = ledger(limit=5000)
     pending = [item for item in data.get("items", []) if not item.get("executed") and not item.get("cancelled")]
@@ -643,6 +678,7 @@ def cancel_pending(reason: str = "nettoyage file pending") -> Dict[str, Any]:
         "cancelled": cancelled,
         "errors": errors,
     }
+
 
 def run_proposal(proposal_id: str, confirmation: str = "") -> Dict[str, Any]:
     proposal = find_proposal(proposal_id)
@@ -725,4 +761,3 @@ def run_proposal(proposal_id: str, confirmation: str = "") -> Dict[str, Any]:
 
     append_jsonl(RUNS_PATH, run)
     return run
-

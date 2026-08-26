@@ -1,5 +1,5 @@
 import psutil
-import platform
+
 
 class NUMAInspector:
     @staticmethod
@@ -9,11 +9,11 @@ class NUMAInspector:
         Fournit un diagnostic explicite même en l'absence de partitions NUMA matérielles.
         """
         vm = psutil.virtual_memory()
-        
+
         # Détection NUMA via psutil (si supporté par l'OS / psutil version récente)
         nodes = []
         numa_supported = False
-        
+
         try:
             # psutil.NUMA nodes n'est pas toujours disponible sur tous les OS desktop Windows
             if hasattr(psutil, "cpu_numa_nodes"):
@@ -21,10 +21,7 @@ class NUMAInspector:
                 if numa_nodes:
                     numa_supported = True
                     for node_id, cpus in numa_nodes.items():
-                        nodes.append({
-                            "node_id": node_id,
-                            "cpus": cpus
-                        })
+                        nodes.append({"node_id": node_id, "cpus": cpus})
         except Exception:
             pass
 
@@ -39,9 +36,5 @@ class NUMAInspector:
             "reason": diagnostic_reason,
             "total_nodes": len(nodes) if nodes else 1,
             "nodes": nodes,
-            "memory_stats": {
-                "total_bytes": vm.total,
-                "available_bytes": vm.available,
-                "percent_used": vm.percent
-            }
+            "memory_stats": {"total_bytes": vm.total, "available_bytes": vm.available, "percent_used": vm.percent},
         }

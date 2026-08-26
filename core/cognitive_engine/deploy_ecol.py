@@ -3,7 +3,7 @@ E-ZZIO V7.60.0 — Cognitive Operating Layer (ECOL) Deployment
 Déploie l'arborescence, les modules du système nerveux et les registres
 de l'économie cognitive.
 """
-import os
+
 import json
 from pathlib import Path
 
@@ -14,7 +14,7 @@ RUNTIME_DIRS = {
     "budget": ROOT_DIR / "runtime" / "cognition" / "budget",
     "state": ROOT_DIR / "runtime" / "cognition" / "state",
     "metrics": ROOT_DIR / "runtime" / "cognition" / "metrics",
-    "decisions": ROOT_DIR / "runtime" / "cognition" / "decisions"
+    "decisions": ROOT_DIR / "runtime" / "cognition" / "decisions",
 }
 
 MODULES = {
@@ -27,29 +27,31 @@ MODULES = {
     "cognitive_governor.py": "Gardien final : autorise, limite ou bloque l'effort.",
     "uncertainty_engine.py": "Mesure la confiance et cartographie les zones d'inconnu.",
     "learning_engine.py": "Transforme l'Experience Ledger en règles validées.",
-    "__init__.py": "Initialisation de la couche ECOL."
+    "__init__.py": "Initialisation de la couche ECOL.",
 }
+
 
 def to_pascal_case(snake_str):
     if snake_str == "__init__":
         return "Init"
     return "".join(x.title() for x in snake_str.split("_"))
 
+
 def deploy_ecol():
     print("[*] Forge de l'E-ZZIO Cognitive Operating Layer (ECOL)...")
-    
+
     # 1. Création des répertoires
     CORE_COG_DIR.mkdir(parents=True, exist_ok=True)
     for d in RUNTIME_DIRS.values():
         d.mkdir(parents=True, exist_ok=True)
-        
+
     print("[+] Répertoires structurels instanciés.")
 
     # 2. Création des modules Core
     for filename, desc in MODULES.items():
         filepath = CORE_COG_DIR / filename
         class_name = to_pascal_case(filename.replace(".py", ""))
-        
+
         content = f"""\"\"\"
 E-ZZIO Core — Cognitive Operating Layer (ECOL)
 Module: {filename}
@@ -79,19 +81,20 @@ class {class_name}:
     ledgers = [
         ("budget", "cognitive_budget_ledger.jsonl"),
         ("metrics", "cognition_metrics.jsonl"),
-        ("decisions", "cognitive_decisions.jsonl")
+        ("decisions", "cognitive_decisions.jsonl"),
     ]
-    
+
     for key, filename in ledgers:
         target_file = RUNTIME_DIRS[key] / filename
         if not target_file.exists():
             with open(target_file, "w", encoding="utf-8") as f:
-                pass # Fichier vide prêt à recevoir les logs
+                pass  # Fichier vide prêt à recevoir les logs
             print(f"  - Création du registre : {filename}")
 
-    print("\n" + "="*65)
+    print("\n" + "=" * 65)
     print(" DEPLOIEMENT ECOL (V7.60.0) TERMINE AVEC SUCCES")
-    print("="*65)
+    print("=" * 65)
+
 
 if __name__ == "__main__":
     deploy_ecol()

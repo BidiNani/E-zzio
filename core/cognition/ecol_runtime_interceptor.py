@@ -1,15 +1,15 @@
 """
 E-ZZIO Core — Governor Runtime Interceptor (V7.67)
-Fournit un mécanisme d'interception actif (décorateur @ecol_guarded) pour 
-contraindre l'exécution réelle des outils, scripts et dispatchers LLM 
+Fournit un mécanisme d'interception actif (décorateur @ecol_guarded) pour
+contraindre l'exécution réelle des outils, scripts et dispatchers LLM
 aux verdicts du Cognitive Governor (ALLOW / DENY / REVIEW).
 """
-import os
+
 import sys
 import functools
 import logging
 from pathlib import Path
-from typing import Dict, Any, Callable
+from typing import Callable
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -20,9 +20,12 @@ from core.cognition.cognitive_governor import LedgerSecurityError
 
 logger = logging.getLogger(__name__)
 
+
 class ExecutionBlockedByEcolError(Exception):
     """Levée lorsqu'un composant tente d'exécuter une action bloquée par le gouverneur (DENY)."""
+
     pass
+
 
 class EcolRuntimeInterceptor:
     def __init__(self, contract: EcolRuntimeContract = None):
@@ -34,17 +37,18 @@ class EcolRuntimeInterceptor:
         action: str = "EXECUTE_TOOL",
         priority: str = "normal",
         risk_level: str = "low",
-        estimated_cost: int = 100
+        estimated_cost: int = 100,
     ):
         """
         Décorateur d'interception active pour transformer une fonction d'exécution
         en une tâche gouvernée et scellée dans le Ledger ECOL.
         """
+
         def decorator(func: Callable) -> Callable:
             @functools.wraps(func)
             def wrapper(*args, **kwargs):
                 task_description = f"Exécution de la fonction '{func.__name__}'"
-                
+
                 payload = {
                     "source_component": source_component,
                     "action": action,
@@ -52,10 +56,7 @@ class EcolRuntimeInterceptor:
                     "priority": priority,
                     "risk_level": risk_level,
                     "estimated_cost": estimated_cost,
-                    "context_metadata": {
-                        "module": func.__module__,
-                        "qualname": func.__qualname__
-                    }
+                    "context_metadata": {"module": func.__module__, "qualname": func.__qualname__},
                 }
 
                 logger.info(f"[ECOL INTERCEPTOR] Évaluation de l'action : {action} ({func.__name__})...")
@@ -72,7 +73,7 @@ class EcolRuntimeInterceptor:
                             f"FAIL CLOSED : Exécution bloquée par le gouverneur pour '{func.__name__}'. "
                             f"Motif : {reason} (TX: {transaction_id})"
                         )
-                    
+
                     if decision == "REVIEW":
                         logger.warning(f"[ECOL REVIEW] Action '{func.__name__}' placée en révision manuelle (TX: {transaction_id})")
                         # Optionnel : bloquer ou rétrograder en mode strict
@@ -90,7 +91,9 @@ class EcolRuntimeInterceptor:
                     raise ExecutionBlockedByEcolError(f"Verrouillage de sécurité actif : {sec_err}") from sec_err
 
             return wrapper
+
         return decorator
+
 
 def test_runtime_interceptor():
     print("[*] Test du Governor Runtime Interceptor (V7.67)...")
@@ -98,11 +101,7 @@ def test_runtime_interceptor():
 
     # Définition d'un outil simulé protégé par ECOL
     @interceptor.guarded_execution(
-        source_component="tool_runner",
-        action="EXECUTE_PYTHON_SCRIPT",
-        priority="normal",
-        risk_level="low",
-        estimated_cost=200
+        source_component="tool_runner", action="EXECUTE_PYTHON_SCRIPT", priority="normal", risk_level="low", estimated_cost=200
     )
     def target_safe_tool(script_name: str) -> str:
         print(f"    -> [OUTIL EFFECTIF] Exécution du script : {script_name}")
@@ -122,7 +121,7 @@ def test_runtime_interceptor():
         action="EXECUTE_MASSIVE_DELETION",
         priority="low",
         risk_level="high",
-        estimated_cost=999999 # Dépassement massif du budget global
+        estimated_cost=999999,  # Dépassement massif du budget global
     )
     def target_dangerous_tool() -> str:
         print("    -> [OUTIL EFFECTIF] Cette ligne ne doit JAMAIS s'exécuter !")
@@ -135,9 +134,10 @@ def test_runtime_interceptor():
     except ExecutionBlockedByEcolError as e:
         print(f"  [PASS] Interception réussie (FAIL CLOSED actif) : {e}")
 
-    print("\n" + "="*65)
+    print("\n" + "=" * 65)
     print(" GOVERNOR RUNTIME INTERCEPTOR (V7.67) : DEPLOYED & ENFORCED")
-    print("="*65)
+    print("=" * 65)
+
 
 if __name__ == "__main__":
     test_runtime_interceptor()

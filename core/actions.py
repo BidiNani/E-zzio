@@ -3,6 +3,7 @@ from pathlib import Path
 
 SAFE_ROOT = Path("G:/AI/E-zzio/workspace").resolve()
 
+
 class ActionToolbox:
     def _safe_path(self, user_path):
         SAFE_ROOT.mkdir(parents=True, exist_ok=True)
@@ -37,5 +38,6 @@ class ActionToolbox:
             "can_list_files": True,
             "destructive_actions": False,
         }
+
 
 toolbox = ActionToolbox()

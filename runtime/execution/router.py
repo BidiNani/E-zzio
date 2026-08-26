@@ -1,27 +1,16 @@
 from runtime.tools.tool_schema import ToolResult
 
-class ExecutionRouter:
 
+class ExecutionRouter:
     @staticmethod
     def route(context, executor_cls, project_root, **kwargs):
         try:
-            result = executor_cls.execute(
-                context=context,
-                **kwargs
-            )
+            result = executor_cls.execute(context=context, **kwargs)
 
             if not isinstance(result, ToolResult):
-                return ToolResult(
-                    success=False,
-                    output="",
-                    error="Executor contract violation"
-                )
+                return ToolResult(success=False, output="", error="Executor contract violation")
 
             return result
 
         except Exception as e:
-            return ToolResult(
-                success=False,
-                output="",
-                error=str(e)
-            )
+            return ToolResult(success=False, output="", error=str(e))

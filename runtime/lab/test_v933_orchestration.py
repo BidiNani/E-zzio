@@ -8,19 +8,17 @@ if str(ROOT_DIR) not in sys.path:
 from runtime.capabilities.orchestrator.budget_manager import BudgetManager
 from runtime.capabilities.orchestrator.workflow_engine import WorkflowEngine
 
+
 def run_test():
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print(" 🏛️ E-ZZIO V9.3.3 — ORCHESTRATION CERTIFICATION")
-    print("="*60)
+    print("=" * 60)
 
     # Test Plan : Recherche Godot
     plan = {
         "intent": "RESEARCH_AND_ANALYZE",
         "total_memory_mb": 450,
-        "steps": [
-            {"capability": "WEB_RESEARCHER", "gpu_required": False},
-            {"capability": "DOCUMENT_ANALYST", "gpu_required": False}
-        ]
+        "steps": [{"capability": "WEB_RESEARCHER", "gpu_required": False}, {"capability": "DOCUMENT_ANALYST", "gpu_required": False}],
     }
 
     # 1. Budget Check
@@ -34,16 +32,16 @@ def run_test():
     print(f" Workflow Execution    : [{result['status']}]")
 
     # 3. Test Violation HW-001 (GPU Requested)
-    gpu_plan = {"steps": [{"capability": "IMAGE_GEN", "gpu_required": True}], "total_memory_mb": 100}
-    # Forçons la simulation de WoW actif via le Budget Manager si on pouvait, 
+    # Forçons la simulation de WoW actif via le Budget Manager si on pouvait,
     # mais ici on teste le Deny simple de notre structure.
-    
+
     print("-" * 60)
     print(" 🟢 STATUS : COGNITIVE ORCHESTRATION ACTIVE")
-    print("="*60 + "\n")
-    
-    assert check['status'] == "ALLOWED"
-    assert result['status'] == "SUCCESS"
+    print("=" * 60 + "\n")
+
+    assert check["status"] == "ALLOWED"
+    assert result["status"] == "SUCCESS"
+
 
 if __name__ == "__main__":
     run_test()

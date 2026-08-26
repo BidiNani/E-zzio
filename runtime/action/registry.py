@@ -8,11 +8,12 @@ from runtime.action.contracts import ActionContract, RiskLevel
 from runtime.action.store import ActionStore
 from runtime.action.context import ExecutionContext
 from runtime.action.state import ExecutionState, validate_transition
-from runtime.action.identity import ExecutionIdentity
 from runtime.action.resilience import CircuitBreaker
+
 
 class ActionRegistry:
     """Sovereign Kernel Action Registry enforcing strict cryptographically secured state transitions."""
+
     def __init__(self, store: Optional[ActionStore] = None):
         self._contracts: Dict[str, ActionContract] = {}
         self._handlers: Dict[str, Callable] = {}
@@ -33,7 +34,7 @@ class ActionRegistry:
             cost=contract.cost,
             timeout=contract.timeout,
             risk_level=contract.risk_level.value if isinstance(contract.risk_level, RiskLevel) else str(contract.risk_level),
-            schema=contract.schema
+            schema=contract.schema,
         )
 
     def bootstrap(self, handler_resolver: Optional[Callable[[str], Callable]] = None) -> int:
@@ -50,11 +51,11 @@ class ActionRegistry:
                 cost=rc["cost"],
                 timeout=rc["timeout"],
                 risk_level=risk,
-                schema=rc["schema"]
+                schema=rc["schema"],
             )
             self._contracts[contract.name] = contract
             self._circuit_breakers[contract.name] = CircuitBreaker()
-            
+
             handler = None
             if handler_resolver and contract.handler_ref:
                 handler = handler_resolver(contract.handler_ref)
@@ -98,22 +99,24 @@ class ActionRegistry:
         self.store.log_transition(exec_id, current.value, target.value)
         return target
 
-    def execute(self, name: str, payload: Dict[str, Any], context: Optional[ExecutionContext] = None, dry_run: bool = False, active_permissions: Optional[List[str]] = None) -> Dict[str, Any]:
+    def execute(
+        self,
+        name: str,
+        payload: Dict[str, Any],
+        context: Optional[ExecutionContext] = None,
+        dry_run: bool = False,
+        active_permissions: Optional[List[str]] = None,
+    ) -> Dict[str, Any]:
         exec_id = f"exec_{uuid.uuid4().hex}"
         start_time = time.time()
-        
+
         current_state = ExecutionState.CREATED
 
         contract = self._contracts.get(name)
         cost = contract.cost if contract else 1
         risk_str = contract.risk_level.value if contract and isinstance(contract.risk_level, RiskLevel) else "LOW"
 
-        ctx = context or ExecutionContext(
-            trace_id=exec_id,
-            agent_id="ezzio-core",
-            permissions=("*",),
-            budget_remaining=100
-        )
+        ctx = context or ExecutionContext(trace_id=exec_id, agent_id="ezzio-core", permissions=("*",), budget_remaining=100)
 
         if not ctx.verify_signature():
             current_state = self._transition_to(exec_id, current_state, ExecutionState.QUARANTINED)
@@ -168,7 +171,7 @@ class ActionRegistry:
                 "action": name,
                 "required_permission": contract.permission,
                 "estimated_cost": contract.cost,
-                "risk_level": risk_str
+                "risk_level": risk_str,
             }
             self.store.log_execution(exec_id, name, current_state.value, payload, res, cost, 0.0)
             return res
@@ -192,13 +195,10 @@ class ActionRegistry:
 
             duration_ms = round((time.time() - start_time) * 1000, 2)
             current_state = self._transition_to(exec_id, current_state, ExecutionState.SUCCESS)
-            if cb: cb.record_success()
+            if cb:
+                cb.record_success()
 
-            res = {
-                "status": current_state.value,
-                "result": result,
-                "budget_remaining": active_ctx.budget_remaining
-            }
+            res = {"status": current_state.value, "result": result, "budget_remaining": active_ctx.budget_remaining}
             self.store.log_execution(exec_id, name, current_state.value, payload, res, cost, duration_ms)
             self.store.log_evidence(exec_id, ctx.trace_id, name, current_state.value, risk_str, payload, ctx.to_dict(), res, duration_ms)
             return res
@@ -206,7 +206,8 @@ class ActionRegistry:
         except FuturesTimeoutError:
             duration_ms = round((time.time() - start_time) * 1000, 2)
             current_state = self._transition_to(exec_id, current_state, ExecutionState.TIMEOUT)
-            if cb: cb.record_failure()
+            if cb:
+                cb.record_failure()
 
             res = {"status": current_state.value, "error": f"Action '{name}' timed out after {contract.timeout}s"}
             self.store.log_execution(exec_id, name, current_state.value, payload, res, cost, duration_ms)
@@ -216,13 +217,10 @@ class ActionRegistry:
         except TypeError as e:
             duration_ms = round((time.time() - start_time) * 1000, 2)
             current_state = self._transition_to(exec_id, current_state, ExecutionState.ERROR)
-            if cb: cb.record_failure()
+            if cb:
+                cb.record_failure()
 
-            res = {
-                "status": current_state.value,
-                "error": str(e),
-                "category": "HANDLER_SIGNATURE_ERROR"
-            }
+            res = {"status": current_state.value, "error": str(e), "category": "HANDLER_SIGNATURE_ERROR"}
             self.store.log_execution(exec_id, name, current_state.value, payload, res, cost, duration_ms)
             self.store.log_evidence(exec_id, ctx.trace_id, name, current_state.value, risk_str, payload, ctx.to_dict(), res, duration_ms)
             return res
@@ -230,16 +228,10 @@ class ActionRegistry:
         except Exception as e:
             duration_ms = round((time.time() - start_time) * 1000, 2)
             current_state = self._transition_to(exec_id, current_state, ExecutionState.ERROR)
-            if cb: cb.record_failure()
+            if cb:
+                cb.record_failure()
 
-            res = {
-                "status": current_state.value,
-                "error": str(e),
-                "category": "RUNTIME_FAILURE"
-            }
+            res = {"status": current_state.value, "error": str(e), "category": "RUNTIME_FAILURE"}
             self.store.log_execution(exec_id, name, current_state.value, payload, res, cost, duration_ms)
             self.store.log_evidence(exec_id, ctx.trace_id, name, current_state.value, risk_str, payload, ctx.to_dict(), res, duration_ms)
             return res
-
-
-

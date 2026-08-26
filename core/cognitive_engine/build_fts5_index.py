@@ -3,6 +3,7 @@ E-ZZIO V7.59 — Controlled FTS5 Index Builder & Provenance Auditor
 Analyse la provenance des lignes qualifiées, construit l'index SQLite FTS5 de manière
 isoler et réversible, et génère un index_build_manifest.json.
 """
+
 import os
 import sys
 import json
@@ -23,6 +24,7 @@ REPORT_FILE = ROOT_DIR / "runtime" / "audit" / "system" / "provenance_audit_repo
 
 TARGET_EXTENSIONS = {".md", ".jsonl", ".db", ".sqlite", ".txt", ".json"}
 EXCLUDE_DIRS = {".git", ".venv", "__pycache__", "node_modules"}
+
 
 class CognitiveIndexBuilder:
     def __init__(self):
@@ -52,16 +54,10 @@ class CognitiveIndexBuilder:
             conn.commit()
 
     def audit_and_build(self):
-        print(f"[*] Démarrage de l'audit de provenance et de l'indexation FTS5 contrôlée...")
+        print("[*] Démarrage de l'audit de provenance et de l'indexation FTS5 contrôlée...")
         self.init_db()
 
-        metrics = {
-            "PROTECTED": 0,
-            "QUALIFIED": 0,
-            "REJECTED": 0,
-            "SYNTHETIC_BLOCKED": 0,
-            "HASH_ERRORS": 0
-        }
+        metrics = {"PROTECTED": 0, "QUALIFIED": 0, "REJECTED": 0, "SYNTHETIC_BLOCKED": 0, "HASH_ERRORS": 0}
 
         indexed_files_manifest = []
 
@@ -94,7 +90,8 @@ class CognitiveIndexBuilder:
 
                     # Suivi de provenance par dossier parent
                     parent_dir = str(file_path.parent.relative_to(ROOT_DIR)).replace("\\", "/")
-                    if parent_dir == ".": parent_dir = "root"
+                    if parent_dir == ".":
+                        parent_dir = "root"
                     self.provenance_stats[parent_dir] = self.provenance_stats.get(parent_dir, 0) + 1
 
                     # Traitement d'indexation selon le type
@@ -110,18 +107,24 @@ class CognitiveIndexBuilder:
                                 for line in f:
                                     line_clean = line.strip()
                                     if line_clean:
-                                        cursor.execute("""
+                                        cursor.execute(
+                                            """
                                             INSERT INTO memory_search (content, memory_type, source_path, source_hash, confidence, importance, last_validated)
                                             VALUES (?, ?, ?, ?, ?, ?, ?)
-                                        """, (line_clean, memory_type, rel_path, "jsonl_line_hash", confidence, importance, timestamp))
+                                        """,
+                                            (line_clean, memory_type, rel_path, "jsonl_line_hash", confidence, importance, timestamp),
+                                        )
                                         self.total_records_indexed += 1
                         else:
                             # Pour les fichiers Markdown, Texte, JSON, SQLite (métadonnées)
                             content_text = f"Fichier documenté : {rel_path} [Type: {memory_type}]"
-                            cursor.execute("""
+                            cursor.execute(
+                                """
                                 INSERT INTO memory_search (content, memory_type, source_path, source_hash, confidence, importance, last_validated)
                                 VALUES (?, ?, ?, ?, ?, ?, ?)
-                            """, (content_text, memory_type, rel_path, "file_registry_hash", confidence, importance, timestamp))
+                            """,
+                                (content_text, memory_type, rel_path, "file_registry_hash", confidence, importance, timestamp),
+                            )
                             self.total_records_indexed += 1
 
                         indexed_files_manifest.append(rel_path)
@@ -137,7 +140,7 @@ class CognitiveIndexBuilder:
             "total_records_indexed": self.total_records_indexed,
             "metrics": metrics,
             "provenance_distribution": self.provenance_stats,
-            "indexed_files": indexed_files_manifest
+            "indexed_files": indexed_files_manifest,
         }
 
         with open(MANIFEST_FILE, "w", encoding="utf-8") as f:
@@ -145,11 +148,12 @@ class CognitiveIndexBuilder:
 
         # Génération du rapport d'audit de provenance
         with open(REPORT_FILE, "w", encoding="utf-8") as f:
-            json.dump({
-                "timestamp": datetime.now(timezone.utc).isoformat(),
-                "provenance_breakdown": self.provenance_stats,
-                "metrics": metrics
-            }, f, ensure_ascii=False, indent=2)
+            json.dump(
+                {"timestamp": datetime.now(timezone.utc).isoformat(), "provenance_breakdown": self.provenance_stats, "metrics": metrics},
+                f,
+                ensure_ascii=False,
+                indent=2,
+            )
 
         # Affichage console complet (Télémétrie intégrale)
         print("-" * 50)
@@ -169,6 +173,7 @@ class CognitiveIndexBuilder:
         print("-" * 50)
         print(f" Manifest réversible généré : {MANIFEST_FILE}")
         print(f" Rapport d'audit de prov.   : {REPORT_FILE}")
+
 
 if __name__ == "__main__":
     builder = CognitiveIndexBuilder()

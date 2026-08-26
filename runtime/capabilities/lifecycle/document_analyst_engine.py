@@ -2,8 +2,7 @@
 E-ZZIO V9.3.2 — Document Analyst Engine
 Gère l'extraction sémantique, le résumé et le cloisonnement face aux documents hostiles.
 """
-import json
-from pathlib import Path
+
 
 class DocumentAnalystEngine:
     def __init__(self):
@@ -16,13 +15,13 @@ class DocumentAnalystEngine:
                 "status": "SANITIZED",
                 "extracted_concepts": ["MALICIOUS_PAYLOAD_NEUTRALIZED"],
                 "summary": "Document hostile intercepté : structure sémantique lue en mode strict sans exécution d'instructions.",
-                "security_gate": "PASSED"
+                "security_gate": "PASSED",
             }
-        
+
         # Analyse standard d'un document normal
         return {
             "status": "SUCCESS",
             "extracted_concepts": ["architecture", "runtime", "governance"],
             "summary": f"Analyse sémantique réussie. Longueur traitée : {len(doc_content)} caractères.",
-            "security_gate": "PASSED"
+            "security_gate": "PASSED",
         }

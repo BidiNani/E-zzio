@@ -4,10 +4,12 @@ from pathlib import Path
 from typing import List, Optional, Protocol
 from core.tasks.models import Task, TaskState
 
+
 class ITaskStore(Protocol):
     def save(self, task: Task) -> None: ...
     def get_by_id(self, task_id: str) -> Optional[Task]: ...
     def list_by_state(self, state: TaskState) -> List[Task]: ...
+
 
 class SqliteTaskStore:
     def __init__(self, db_path: Path):
@@ -22,7 +24,7 @@ class SqliteTaskStore:
     def _init_db(self) -> None:
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         with self._get_connection() as conn:
-            conn.execute('''
+            conn.execute("""
                 CREATE TABLE IF NOT EXISTS governed_tasks (
                     task_id TEXT PRIMARY KEY,
                     title TEXT NOT NULL,
@@ -35,13 +37,14 @@ class SqliteTaskStore:
                     created_at TEXT NOT NULL,
                     updated_at TEXT NOT NULL
                 );
-            ''')
+            """)
             conn.execute("CREATE INDEX IF NOT EXISTS idx_tasks_state ON governed_tasks(state);")
             conn.commit()
 
     def save(self, task: Task) -> None:
         with self._get_connection() as conn:
-            conn.execute('''
+            conn.execute(
+                """
                 INSERT INTO governed_tasks (
                     task_id, title, workspace, state, scope_json,
                     plan_json, approval_id, error_message, created_at, updated_at
@@ -53,12 +56,20 @@ class SqliteTaskStore:
                     approval_id = excluded.approval_id,
                     error_message = excluded.error_message,
                     updated_at = excluded.updated_at;
-            ''', (
-                task.task_id, task.title, task.workspace, task.state.value,
-                json.dumps(task.scope), json.dumps(task.plan),
-                task.approval_id, task.error_message,
-                task.created_at, task.updated_at
-            ))
+            """,
+                (
+                    task.task_id,
+                    task.title,
+                    task.workspace,
+                    task.state.value,
+                    json.dumps(task.scope),
+                    json.dumps(task.plan),
+                    task.approval_id,
+                    task.error_message,
+                    task.created_at,
+                    task.updated_at,
+                ),
+            )
             conn.commit()
 
     def get_by_id(self, task_id: str) -> Optional[Task]:
@@ -84,5 +95,5 @@ class SqliteTaskStore:
             approval_id=row["approval_id"],
             error_message=row["error_message"],
             created_at=row["created_at"],
-            updated_at=row["updated_at"]
+            updated_at=row["updated_at"],
         )

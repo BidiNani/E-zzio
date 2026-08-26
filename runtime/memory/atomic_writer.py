@@ -3,13 +3,14 @@ import json
 import shutil
 from pathlib import Path
 
+
 class AtomicEventWriter:
     def __init__(self, store_path: str):
         self.path = Path(store_path)
         self.pending_path = self.path.with_suffix(".pending")
         self.bak_path = self.path.with_suffix(".bak")
         self.commit_log_path = self.path.parent / "events.commit.log"
-        
+
         # Auto-récupération obligatoire à l'instanciation
         self._recover_interrupted_swap()
 
@@ -77,6 +78,6 @@ class AtomicEventWriter:
                     pass
 
             return True
-        except Exception as e:
+        except Exception:
             self._log_state("FAILED")
             return False

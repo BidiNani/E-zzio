@@ -1,8 +1,8 @@
 """
 Test de certification de la couche organique V9.3 (Lifecycle Manager & Web Researcher)
 """
+
 import sys
-import json
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
@@ -11,10 +11,11 @@ if str(ROOT_DIR) not in sys.path:
 
 from runtime.capabilities.lifecycle.lifecycle_manager import LifecycleManager
 
+
 def run_test():
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print(" 🏛️ E-ZZIO V9.3 — CAPABILITY ORGANISM LAYER TEST")
-    print("="*60)
+    print("=" * 60)
 
     manager = LifecycleManager()
     cap_id = "WEB_RESEARCHER"
@@ -37,9 +38,10 @@ def run_test():
     print(f" Contrôle GPU (HW-001)  : {final_manifest.get('resource_budget', {}).get('gpu_allowed')}")
     print("-" * 60)
     print(" 🟢 STATUS : CAPABILITY ORGANISM LAYER CERTIFIED")
-    print("="*60 + "\n")
+    print("=" * 60 + "\n")
 
-    assert final_manifest.get('status') == "MONITORED"
+    assert final_manifest.get("status") == "MONITORED"
+
 
 if __name__ == "__main__":
     run_test()

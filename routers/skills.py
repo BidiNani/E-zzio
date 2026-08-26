@@ -9,6 +9,7 @@ from skill_manager import EzzioSkillManager
 router = APIRouter(prefix="/api/skills", tags=["Auto-Evolution Skills"])
 manager = EzzioSkillManager()
 
+
 @router.post("/deploy")
 def deploy_and_load_skill(payload: dict = Body(...)):
     """
@@ -30,24 +31,14 @@ def deploy_and_load_skill(payload: dict = Body(...)):
 
     # 2. Exécution du pipeline (Validation AST -> Promotion -> Hot-Reload)
     result = manager.promote_and_load(filename)
-    
-    if not result.get("ok"):
-        return {
-            "status": "rejected",
-            "message": "Le skill a échoué aux tests de sécurité du micro-noyau.",
-            "details": result
-        }
 
-    return {
-            "status": "success",
-            "message": "Skill validé, promu et chargé en mémoire avec succès.",
-            "details": result
-    }
+    if not result.get("ok"):
+        return {"status": "rejected", "message": "Le skill a échoué aux tests de sécurité du micro-noyau.", "details": result}
+
+    return {"status": "success", "message": "Skill validé, promu et chargé en mémoire avec succès.", "details": result}
+
 
 @router.get("/active")
 def list_active_skills():
     """Liste l'ensemble des skills actuellement actifs et chargés en mémoire."""
-    return {
-        "active_skills": list(manager.loaded_skills.keys()),
-        "count": len(manager.loaded_skills)
-    }
+    return {"active_skills": list(manager.loaded_skills.keys()), "count": len(manager.loaded_skills)}

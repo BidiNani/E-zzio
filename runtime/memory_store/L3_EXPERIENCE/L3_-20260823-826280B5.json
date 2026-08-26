@@ -1,0 +1,11 @@
+{
+  "tier": "L3_EXPERIENCE",
+  "memory_id": "L3_-20260823-826280B5",
+  "timestamp_utc": "2026-08-23T12:51:55.180709+00:00",
+  "source": "concurrent_audit",
+  "importance": 1.0,
+  "compression_ratio": 1.0,
+  "original_sha256": "b554695e86da9b3cfa51d16d01d8df169567c83da8b1375c1e9ef4d8b279a32f",
+  "content": "Concurrent Heuristic 1-3",
+  "evidence_id": "EVID-20260823-93B7991C"
+}

@@ -2,13 +2,14 @@ from runtime.tools.executors.powershell import PowerShellExecutor
 from runtime.tools.executors.filesystem import FileSystemExecutor
 from runtime.tools.executors.git import GitExecutor
 
+
 class ExecutorRegistry:
     def __init__(self):
         self._registry = {
             "system.powershell": PowerShellExecutor,
             "powershell.safe.execute": PowerShellExecutor,
             "filesystem.read": FileSystemExecutor,
-            "git.status": GitExecutor
+            "git.status": GitExecutor,
         }
 
     def register(self, name, cls):

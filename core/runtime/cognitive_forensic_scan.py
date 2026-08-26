@@ -1,10 +1,10 @@
-"""
+r"""
 E-ZZIO V7.53 — Full Cognitive Forensic Scanner (Read-Only)
 Inventaire exhaustif de G:\AI\E-zzio : hachage SHA-256, inspection SQLite (.db),
 analyse structurelle JSON/JSONL/MD/TXT/Python.
 """
+
 import os
-import sys
 import pathlib
 import hashlib
 import json
@@ -13,7 +13,8 @@ from datetime import datetime, timezone
 
 ROOT_DIR = pathlib.Path(r"G:\AI\E-zzio")
 OUTPUT_REPORT = ROOT_DIR / "runtime" / "audit" / "system" / "full_cognitive_inventory.json"
-EXCLUDE_DIRS = {'.git', '__pycache__', '.venv', 'node_modules', 'venv', '.idea'}
+EXCLUDE_DIRS = {".git", "__pycache__", ".venv", "node_modules", "venv", ".idea"}
+
 
 def compute_sha256(file_path):
     sha256_hash = hashlib.sha256()
@@ -24,6 +25,7 @@ def compute_sha256(file_path):
         return sha256_hash.hexdigest()
     except Exception:
         return None
+
 
 def inspect_sqlite(db_path):
     info = {"tables": {}, "total_rows": 0, "error": None}
@@ -48,6 +50,7 @@ def inspect_sqlite(db_path):
         info["error"] = str(e)
     return info
 
+
 def inspect_json(file_path):
     info = {"record_count": 0, "keys": [], "has_timestamps": False, "has_provenance": False, "error": None}
     try:
@@ -55,7 +58,7 @@ def inspect_json(file_path):
         if size > 50 * 1024 * 1024:  # Évite les OOM sur les fichiers > 50MB
             info["error"] = "File too large for deep JSON parse (>50MB)"
             return info
-        
+
         with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
             if file_path.suffix.lower() == ".jsonl":
                 count = 0
@@ -80,7 +83,7 @@ def inspect_json(file_path):
                 elif isinstance(data, dict):
                     info["record_count"] = 1
                     info["keys"] = list(data.keys())
-        
+
         keys_str = str(info["keys"]).lower()
         info["has_timestamps"] = any(k in keys_str for k in ["time", "date", "timestamp", "created"])
         info["has_provenance"] = any(k in keys_str for k in ["hash", "user_id", "source", "provenance", "author"])
@@ -88,16 +91,17 @@ def inspect_json(file_path):
         info["error"] = str(e)
     return info
 
+
 def run_inventory():
     print(f"[*] Démarrage de l'inventaire cognitif complet sur : {ROOT_DIR}")
-    
+
     inventory = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "total_files": 0,
         "total_size_bytes": 0,
         "formats": {},
         "files": [],
-        "hash_registry": {} # Pour la détection de doublons exacts
+        "hash_registry": {},  # Pour la détection de doublons exacts
     }
 
     target_extensions = {".md", ".json", ".jsonl", ".db", ".sqlite", ".txt", ".py"}
@@ -105,22 +109,22 @@ def run_inventory():
     for root, dirs, files in os.walk(ROOT_DIR):
         # Filtrage des dossiers exclus
         dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS]
-        
+
         for file in files:
             file_path = pathlib.Path(root) / file
             ext = file_path.suffix.lower()
-            
+
             if ext not in target_extensions:
                 continue
-                
+
             inventory["total_files"] += 1
             try:
                 size = file_path.stat().st_size
             except:
                 size = 0
-                
+
             inventory["total_size_bytes"] += size
-            
+
             if ext not in inventory["formats"]:
                 inventory["formats"][ext] = {"count": 0, "total_size": 0}
             inventory["formats"][ext]["count"] += 1
@@ -133,19 +137,14 @@ def run_inventory():
                     inventory["hash_registry"][file_hash] = []
                 inventory["hash_registry"][file_hash].append(str(file_path.relative_to(ROOT_DIR)))
 
-            file_meta = {
-                "path": str(file_path.relative_to(ROOT_DIR)),
-                "size_bytes": size,
-                "sha256": file_hash,
-                "extension": ext
-            }
+            file_meta = {"path": str(file_path.relative_to(ROOT_DIR)), "size_bytes": size, "sha256": file_hash, "extension": ext}
 
             # Inspected deep-dive
             if ext in {".db", ".sqlite"}:
                 file_meta["sqlite_inspection"] = inspect_sqlite(file_path)
             elif ext in {".json", ".jsonl"}:
                 file_meta["json_inspection"] = inspect_json(file_path)
-                
+
             inventory["files"].append(file_meta)
 
     # Nettoyage / Synthèse des doublons exacts (où len > 1)
@@ -158,11 +157,12 @@ def run_inventory():
     with open(OUTPUT_REPORT, "w", encoding="utf-8") as f:
         json.dump(inventory, f, ensure_ascii=False, indent=2)
 
-    print(f"[OK] Inventaire complet terminé.")
+    print("[OK] Inventaire complet terminé.")
     print(f"-> Fichiers analysés : {inventory['total_files']}")
-    print(f"-> Poids total : {round(inventory['total_size_bytes'] / (1024*1024), 2)} MB")
+    print(f"-> Poids total : {round(inventory['total_size_bytes'] / (1024 * 1024), 2)} MB")
     print(f"-> Doublons exacts détectés (par hash) : {len(duplicates)}")
     print(f"-> Rapport enregistré dans : {OUTPUT_REPORT}")
+
 
 if __name__ == "__main__":
     run_inventory()

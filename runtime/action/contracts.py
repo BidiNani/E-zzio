@@ -2,11 +2,13 @@ from enum import Enum
 from dataclasses import dataclass, field
 from typing import Dict, Any, List
 
+
 class RiskLevel(Enum):
     LOW = "LOW"
     MEDIUM = "MEDIUM"
     HIGH = "HIGH"
     CRITICAL = "CRITICAL"
+
 
 @dataclass
 class ActionContract:
@@ -26,7 +28,7 @@ class ActionContract:
             if field_name not in payload:
                 errors.append(f"Missing required field: '{field_name}'")
                 continue
-            
+
             val = payload[field_name]
             if expected_type == "str" and not isinstance(val, str):
                 errors.append(f"Field '{field_name}' must be of type str")

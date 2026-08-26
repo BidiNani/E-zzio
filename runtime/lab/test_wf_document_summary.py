@@ -2,6 +2,7 @@
 Test de certification du workflow WF-DOCUMENT-SUMMARY-001
 Vérifie l'analyse READ_ONLY, l'application de la Personal Knowledge Layer et le Ledger.
 """
+
 import sys
 import json
 from pathlib import Path
@@ -13,24 +14,25 @@ if str(ROOT_DIR) not in sys.path:
 
 from runtime.knowledge.knowledge_manager import PersonalKnowledgeManager
 
+
 def run_summary_workflow_test():
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print(" 🏛️ E-ZZIO — WORKFLOW WF-DOCUMENT-SUMMARY-001 TEST")
-    print("="*60)
+    print("=" * 60)
 
     # 1. Vérification de la Knowledge Layer (Préférence de format)
     km = PersonalKnowledgeManager()
     prefs = km.get_confirmed_preferences()
     format_pref = prefs.get("PREF_REPORT_FORMAT", {"proposed_value": {"format": "markdown"}})
-    
-    print(f" [1] Knowledge Layer Loaded : PREF_REPORT_FORMAT active")
+
+    print(" [1] Knowledge Layer Loaded : PREF_REPORT_FORMAT active")
     print(f"     Format cible           : {format_pref['proposed_value']}")
 
     # 2. Simulation d'exécution du workflow READ_ONLY
     workflow_id = "WF-DOCUMENT-SUMMARY-001"
-    print(f" [2] Intent Reçu            : 'Résumé de document / livre (Cas 1 - Fichier fourni)'")
-    print(f"     Capability Ordonnée    : DOCUMENT_ANALYST")
-    print(f"     Niveau de Risque       : LOW (READ_ONLY)")
+    print(" [2] Intent Reçu            : 'Résumé de document / livre (Cas 1 - Fichier fourni)'")
+    print("     Capability Ordonnée    : DOCUMENT_ANALYST")
+    print("     Niveau de Risque       : LOW (READ_ONLY)")
 
     # 3. Enregistrement dans l'Experience Ledger (workflow_success.jsonl)
     ledger_dir = ROOT_DIR / "runtime" / "experience" / "ledger"
@@ -43,23 +45,12 @@ def run_summary_workflow_test():
         "category": "DOCUMENT_SUMMARY",
         "capabilities": ["DOCUMENT_ANALYST"],
         "telemetry": {
-            "performance": {
-                "human_estimated_time_min": 60,
-                "machine_duration_ms": 3400,
-                "memory_peak_mb": 112,
-                "cpu_peak_percent": 14
-            },
-            "perceived_quality": {
-                "correction_required": False,
-                "useful_sections": ["core_ideas", "key_points", "conclusion"]
-            },
-            "friction_analysis": {
-                "blocked": False,
-                "missing_capability": None
-            }
+            "performance": {"human_estimated_time_min": 60, "machine_duration_ms": 3400, "memory_peak_mb": 112, "cpu_peak_percent": 14},
+            "perceived_quality": {"correction_required": False, "useful_sections": ["core_ideas", "key_points", "conclusion"]},
+            "friction_analysis": {"blocked": False, "missing_capability": None},
         },
         "knowledge_applied": ["PREF_REPORT_FORMAT"],
-        "status": "SUCCESS"
+        "status": "SUCCESS",
     }
 
     with open(success_file, "a", encoding="utf-8") as f:
@@ -72,7 +63,8 @@ def run_summary_workflow_test():
     print(" ECOL Violation             : 0")
     print("-" * 60)
     print(" 🟢 STATUS : DOCUMENT SUMMARY WORKFLOW CERTIFIED")
-    print("="*60 + "\n")
+    print("=" * 60 + "\n")
+
 
 if __name__ == "__main__":
     run_summary_workflow_test()

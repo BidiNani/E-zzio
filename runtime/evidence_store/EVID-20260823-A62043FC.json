@@ -1,0 +1,17 @@
+{
+  "evidence_id": "EVID-20260823-A62043FC",
+  "task_id": "TASK-ROUTE-5F688FF9",
+  "timestamp_utc": "2026-08-23T13:30:25.020331+00:00",
+  "provider": "local_ollama",
+  "model_name": "qwen2.5:3b",
+  "agent_version": "ezzio-federated-v1.0",
+  "capability": "quick",
+  "policy_status": "APPROVED",
+  "input_context_hash": "b98cde053beef9207a946ef516a598ccb54f3a4cc9af88b68c3e12bd6246bc49",
+  "output_payload_hash": "1ebdfc9394763200b31435016d15bf42533b7ecb3b38986587a3f9cdcda7addb",
+  "execution_duration_ms": 1.5,
+  "verification_status": "VERIFIED_VALID",
+  "raw_payload_snippet": "{\"cost_adjusted\": 150, \"gaming_coexistence_active\": true, \"provider_domain\": \"local_ollama\", \"routed_model\": \"qwen2.5:3b\", \"status\": \"OPTIMIZED_FEDERATED_ROUTE_DISPATCHED\", \"task_type\": \"quick\"}",
+  "ledger_decision_id": null,
+  "envelope_signature_hmac": "0f6166f7d78aaf4c646e58fce457dcc18db5021f2060984c35e3c9b9d44e08e8"
+}

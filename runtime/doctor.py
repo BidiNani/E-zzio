@@ -1,6 +1,7 @@
 import sys
 import importlib
 
+
 def run_checks():
     print("=== E-ZZIO SYSTEM HEALTH DIAGNOSTIC ===")
     checks = {
@@ -11,9 +12,9 @@ def run_checks():
         "Security Guard": "runtime.security.guard",
         "Event Bus": "runtime.core.events",
         "Audit Logger": "runtime.audit.logger",
-        "Microkernel Core": "runtime.core.microkernel"
+        "Microkernel Core": "runtime.core.microkernel",
     }
-    
+
     success = True
     for name, mod_path in checks.items():
         try:
@@ -22,10 +23,11 @@ def run_checks():
         except Exception as e:
             print(f"[{name:.<25}] .......... FAIL ({e})")
             success = False
-            
+
     # Test d'intégrité cryptographique rapide
     try:
         from runtime.contracts.capability import CapabilityToken, TokenSigner
+
         signer = TokenSigner()
         token = CapabilityToken(subject="doctor-test", permissions=frozenset(["diag"]))
         sig = signer.sign(token)
@@ -43,6 +45,7 @@ def run_checks():
     else:
         print("\nArchitecture score: DEGRADED - INVARIANTS BROKEN")
         sys.exit(1)
+
 
 if __name__ == "__main__":
     run_checks()

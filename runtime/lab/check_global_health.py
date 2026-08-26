@@ -2,6 +2,7 @@
 E-ZZIO — Global Health Diagnostic Engine
 Exécute un bilan de santé système complet.
 """
+
 import sys
 import json
 import psutil
@@ -10,6 +11,7 @@ from pathlib import Path
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
+
 
 def run_health_check():
     # 1. System & Memory Check (HW-001)
@@ -53,9 +55,9 @@ def run_health_check():
     autonomy_file = ROOT_DIR / "runtime" / "autonomy" / "autonomy_registry.json"
     registry_ok = autonomy_file.exists()
 
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print(" 🏛️ E-ZZIO — GLOBAL SYSTEM HEALTH DIAGNOSTIC")
-    print("="*60)
+    print("=" * 60)
     print(f" Memory Footprint (HW-001) : {ram_mb} MB RAM | CPU: {cpu_pct}% [HEALTHY]")
     print(f" Discord Interface          : {'ACTIVE & READY' if discord_ok else 'ERROR'}")
     print(f" Experience Ledger          : {total_wf} Workflows ({success_count} Success, {failure_count} Failure | {sr}% SR)")
@@ -67,7 +69,8 @@ def run_health_check():
     print(" ECOL Violation             : 0")
     print("-" * 60)
     print(" 🟢 GLOBAL HEALTH STATUS : ALL SYSTEMS OPERATIONAL")
-    print("="*60 + "\n")
+    print("=" * 60 + "\n")
+
 
 if __name__ == "__main__":
     run_health_check()

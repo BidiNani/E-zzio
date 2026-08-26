@@ -1,6 +1,7 @@
 from runtime.memory.event_store import MemoryEventStore
 from runtime.audit.skill_audit import SkillAudit
 
+
 class MemoryBridge:
     def __init__(self):
         self.memory = MemoryEventStore()
@@ -13,15 +14,7 @@ class MemoryBridge:
         if isinstance(result, dict) and (result.get("success") is False or "error" in result):
             event_type = "SKILL_FAILED"
 
-        return self.memory.append(
-            event_type,
-            {
-                "skill": skill,
-                "arguments": args,
-                "result": result
-            },
-            {"interface": "cli", "version": "4.3"}
-        )
+        return self.memory.append(event_type, {"skill": skill, "arguments": args, "result": result}, {"interface": "cli", "version": "4.3"})
 
     def snapshot(self):
         return self.memory.recent(20)

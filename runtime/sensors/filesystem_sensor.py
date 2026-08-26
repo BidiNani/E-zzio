@@ -1,10 +1,23 @@
 from pathlib import Path
 import datetime
 
+
 class FilesystemSensor:
     IGNORED_DIRS = {
-        ".git", "__pycache__", "build", "node_modules", ".venv", "models", "cache", "env",
-        ".pytest_cache", ".mypy_cache", ".ruff_cache", "dist", "tmp", "logs"
+        ".git",
+        "__pycache__",
+        "build",
+        "node_modules",
+        ".venv",
+        "models",
+        "cache",
+        "env",
+        ".pytest_cache",
+        ".mypy_cache",
+        ".ruff_cache",
+        "dist",
+        "tmp",
+        "logs",
     }
 
     def __init__(self, root_dir=None):
@@ -47,5 +60,5 @@ class FilesystemSensor:
             "python_files": py_files,
             "powershell_files": ps1_files,
             "size_mb": size_mb,
-            "last_change": last_change_str
+            "last_change": last_change_str,
         }

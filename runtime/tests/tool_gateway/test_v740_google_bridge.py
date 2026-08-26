@@ -2,6 +2,7 @@
 E-ZZIO V7.40 — Certification Test Suite (Google Identity Bridge)
 Valide le chiffrement, le scellement HMAC et la détection d'altération du Vault OAuth2.
 """
+
 import sys
 import json
 from pathlib import Path
@@ -11,6 +12,7 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from core.tool_gateway.google_bridge import google_bridge
+
 
 def run_google_bridge_certification():
     print("============================================================")
@@ -24,10 +26,10 @@ def run_google_bridge_certification():
         access_token="ya29.simulated_access_token_v740",
         refresh_token="1//0g_simulated_refresh_token",
         scopes=["gmail.readonly", "drive.file"],
-        expires_in_sec=3600
+        expires_in_sec=3600,
     )
     assert success is True, "Échec de l'écriture dans le Vault."
-    
+
     # Vérification que le fichier ne contient pas les tokens en clair
     vault_content = vault_file.read_text(encoding="utf-8")
     assert "ya29." not in vault_content, "CRITIQUE : Le token est lisible en clair dans le Vault !"
@@ -53,6 +55,7 @@ def run_google_bridge_certification():
     print("\n============================================================")
     print(" V7.40 CERTIFIÉ : GOOGLE BRIDGE & SECURE VAULT ACTIFS")
     print("============================================================\n")
+
 
 if __name__ == "__main__":
     run_google_bridge_certification()

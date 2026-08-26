@@ -1,10 +1,11 @@
 """
 E-ZZIO V7.45.1 — Secret Leak Protection Matrix
-Intercepte et masque infailliblement tous types de secrets, tokens, clés d'API, 
+Intercepte et masque infailliblement tous types de secrets, tokens, clés d'API,
 variables d'environnement et en-têtes d'autorisation (JSON, texte, stack traces).
 """
+
 import re
-import json
+
 
 class SecretRedactor:
     PATTERNS = [
@@ -15,7 +16,7 @@ class SecretRedactor:
         # Tokens OAuth spécifiques (ya29.*)
         r"\bya29\.[^\s]*",
         # Valeurs génériques en clair associées à un secret dans les logs
-        r"\b(token|secret|key|password)\b\s*[:=]\s*([^\s,;\"'}]*)"
+        r"\b(token|secret|key|password)\b\s*[:=]\s*([^\s,;\"'}]*)",
     ]
 
     @staticmethod
@@ -38,5 +39,6 @@ class SecretRedactor:
         # Nettoyage additionnel de secours pour les tokens isolés
         sanitized = re.sub(r"(?:AIza|ey[A-Za-z0-9-_]{20,})[^\s]*", "***REDACTED***", sanitized)
         return sanitized
+
 
 secret_redactor = SecretRedactor()

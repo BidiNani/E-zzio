@@ -2,10 +2,11 @@
 E-ZZIO V7.45.1 — Discord Watchdog & Health Monitor
 Surveille l'intégrité opérationnelle du bot, de la passerelle et du Vault local.
 """
+
 import time
 import requests
-from pathlib import Path
 from core.tool_gateway.google_bridge import google_bridge
+
 
 class DiscordWatchdog:
     def __init__(self, local_api_url: str = "http://127.0.0.1:8001/master/chat"):
@@ -46,7 +47,8 @@ class DiscordWatchdog:
             "api_bridge": api_status,
             "permission_guard": "OK",
             "failures": self.failure_counter,
-            "last_activity": self.last_message_timestamp
+            "last_activity": self.last_message_timestamp,
         }
+
 
 discord_watchdog = DiscordWatchdog()

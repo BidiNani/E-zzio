@@ -3,13 +3,12 @@ E-ZZIO V7.61.3 — Ledger Migration & Cryptographic Hardening
 Migre l'ancien registre non chaîné vers une blockchain de blocs immuables (SHA-256),
 place l'exception de sécurité en tête de module, et ajoute l'empreinte runtime.
 """
-import os
+
 import json
 import hashlib
 import uuid
 from pathlib import Path
 from datetime import datetime, timezone
-from typing import Dict, Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 GOVERNOR_PATH = ROOT_DIR / "core" / "cognition" / "cognitive_governor.py"
@@ -43,7 +42,7 @@ class CognitiveGovernor:
         self.ledger_path = self.root_dir / "runtime" / "cognition" / "budget" / "cognitive_budget_ledger.jsonl"
         self.ledger_path.parent.mkdir(parents=True, exist_ok=True)
         self.max_session_budget = 500000
-        
+
         self.runtime_id = "{RUNTIME_ID}"
         self.boot_id = "{BOOT_ID}"
         self.kernel_version = "{KERNEL_VERSION}"
@@ -55,7 +54,7 @@ class CognitiveGovernor:
         \"\"\"Récupère le hachage du dernier enregistrement de la chaîne.\"\"\"
         if not self.ledger_path.exists():
             return "0000000000000000000000000000000000000000000000000000000000000000"
-        
+
         last_hash = "0000000000000000000000000000000000000000000000000000000000000000"
         try:
             with open(self.ledger_path, "r", encoding="utf-8") as f:
@@ -75,20 +74,20 @@ class CognitiveGovernor:
 
         logger.info("Vérification de l'intégrité cryptographique du Token Ledger...")
         expected_prev_hash = "0000000000000000000000000000000000000000000000000000000000000000"
-        
+
         try:
             with open(self.ledger_path, "r", encoding="utf-8") as f:
                 for line_num, line in enumerate(f, 1):
                     if not line.strip():
                         continue
                     data = json.loads(line)
-                    
+
                     stored_prev = data.get("previous_hash", "0000000000000000000000000000000000000000000000000000000000000000")
                     stored_self = data.get("record_hash")
-                    
+
                     if stored_prev != expected_prev_hash:
                         raise LedgerSecurityError(f"Corruption du Ledger à la ligne {{line_num}} : rupture de la chaîne cryptographique.")
-                    
+
                     # Reconstruction du payload pour vérification du hash
                     payload_to_hash = {{
                         "runtime_id": data.get("runtime_id", self.runtime_id),
@@ -102,10 +101,10 @@ class CognitiveGovernor:
                         "previous_hash": stored_prev
                     }}
                     computed_hash = hashlib.sha256(json.dumps(payload_to_hash, sort_keys=True).encode("utf-8")).hexdigest()
-                    
+
                     if computed_hash != stored_self:
                         raise LedgerSecurityError(f"Altération des données détectée à la ligne {{line_num}} (Hash mismatch).")
-                        
+
                     expected_prev_hash = stored_self
             logger.info("[OK] Intégrité cryptographique du Token Ledger certifiée à 100%.")
             return True
@@ -133,10 +132,10 @@ class CognitiveGovernor:
 
     def evaluate_and_record(self, task: str, estimated_tokens: int, priority: str = "normal", risk_level: str = "low") -> Dict[str, Any]:
         current_spend = self._calculate_current_spend()
-        
+
         decision = "ALLOW"
         reason = "Budget cognitif nominal."
-        
+
         if current_spend + estimated_tokens > self.max_session_budget:
             if priority == "critical":
                 decision = "EMERGENCY_ALLOW"
@@ -144,14 +143,14 @@ class CognitiveGovernor:
             else:
                 decision = "DENY"
                 reason = f"Budget insuffisant. Restant: {{max(0, self.max_session_budget - current_spend)}} tokens."
-                
+
         if risk_level == "high" and priority != "critical":
             decision = "DENY"
             reason = "Rejet : Tâche à haut risque non justifiée par l'urgence."
 
         prev_hash = self._get_last_hash()
         timestamp = datetime.now(timezone.utc).isoformat()
-        
+
         block_payload = {{
             "runtime_id": self.runtime_id,
             "boot_id": self.boot_id,
@@ -163,7 +162,7 @@ class CognitiveGovernor:
             "decision": decision,
             "previous_hash": prev_hash
         }}
-        
+
         record_hash = hashlib.sha256(json.dumps(block_payload, sort_keys=True).encode("utf-8")).hexdigest()
 
         transaction = {{
@@ -172,19 +171,20 @@ class CognitiveGovernor:
             "record_hash": record_hash,
             "current_spend_after": current_spend + (estimated_tokens if "ALLOW" in decision or "EMERGENCY" in decision else 0)
         }}
-        
+
         try:
             with open(self.ledger_path, "a", encoding="utf-8") as f:
                 f.write(json.dumps(transaction, ensure_ascii=False) + "\\n")
         except Exception as e:
             logger.error(f"Échec de l'écriture cryptographique dans le Ledger : {{e}}")
-            
+
         return transaction
 """
 
+
 def migrate_ledger():
     print("[*] Lancement de la migration et du durcissement du Ledger...")
-    
+
     # 1. Mise à jour du code du Gouverneur
     with open(GOVERNOR_PATH, "w", encoding="utf-8") as f:
         f.write(HARDENED_GOVERNOR_CODE.strip() + "\n")
@@ -231,7 +231,7 @@ def migrate_ledger():
                     "priority": priority,
                     "estimated_cost": est_cost,
                     "decision": decision,
-                    "previous_hash": current_prev_hash
+                    "previous_hash": current_prev_hash,
                 }
 
                 record_hash = hashlib.sha256(json.dumps(block_payload, sort_keys=True).encode("utf-8")).hexdigest()
@@ -240,7 +240,7 @@ def migrate_ledger():
                     **block_payload,
                     "reason": entry.get("reason", "Migré depuis le registre non chaîné."),
                     "record_hash": record_hash,
-                    "current_spend_after": entry.get("current_spend_after", est_cost)
+                    "current_spend_after": entry.get("current_spend_after", est_cost),
                 }
 
                 migrated_records.append(migrated_record)
@@ -252,9 +252,10 @@ def migrate_ledger():
                     f.write(json.dumps(mr, ensure_ascii=False) + "\n")
             print(f"  + Migration réussie : {len(migrated_records)} blocs cryptographiques scellés.")
 
-    print("\n" + "="*65)
+    print("\n" + "=" * 65)
     print(" V7.61.3 UPGRADE & MIGRATION SUCCEEDED")
-    print("="*65)
+    print("=" * 65)
+
 
 if __name__ == "__main__":
     migrate_ledger()

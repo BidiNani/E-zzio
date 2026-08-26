@@ -1,8 +1,9 @@
 """
 E-ZZIO V7.39 — Tool Gateway Controller
-Passe-plat sécurisé pour toutes les interactions externes. Intercepte les appels, 
+Passe-plat sécurisé pour toutes les interactions externes. Intercepte les appels,
 évalue les risques via le manifeste, et gère les autorisations.
 """
+
 import json
 import uuid
 from pathlib import Path
@@ -11,6 +12,7 @@ from datetime import datetime, timezone
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 MANIFEST_FILE = ROOT_DIR / "runtime" / "tools" / "manifest.json"
 ACTION_LOG_FILE = ROOT_DIR / "runtime" / "tools" / "action_ledger.jsonl"
+
 
 class ToolGatewayController:
     def __init__(self):
@@ -30,13 +32,13 @@ class ToolGatewayController:
             return self._log_action(action_id, tool_name, "REJECTED_UNKNOWN_TOOL", "CRITICAL")
 
         risk = tool_config.get("risk_level", "CRITICAL")
-        
+
         # Logique V7.43 (Secure Action Layer embarquée)
         if risk == "LOW":
             status = "APPROVED_AUTO"
         elif risk == "MEDIUM":
             status = "APPROVED_WITH_AUDIT"
-        else: # HIGH or CRITICAL
+        else:  # HIGH or CRITICAL
             status = "WAITING_APPROVAL"
 
         return self._log_action(action_id, tool_name, status, risk, payload, intent)
@@ -49,12 +51,13 @@ class ToolGatewayController:
             "intent": intent,
             "risk_level": risk,
             "status": status,
-            "payload_hash": hash(str(payload)) if payload else None
+            "payload_hash": hash(str(payload)) if payload else None,
         }
-        
+
         with open(ACTION_LOG_FILE, "a", encoding="utf-8") as f:
             f.write(json.dumps(record, ensure_ascii=False) + "\n")
-            
+
         return record
+
 
 tool_gateway = ToolGatewayController()

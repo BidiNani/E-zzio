@@ -34,6 +34,7 @@ OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
 WORKFLOWS_ROOT.mkdir(parents=True, exist_ok=True)
 MOBILE_ROOT.mkdir(parents=True, exist_ok=True)
 
+
 def _safe_output_path(relative_path: str) -> Path:
     candidate = (OUTPUT_ROOT / str(relative_path)).resolve()
     if not str(candidate).startswith(str(OUTPUT_ROOT.resolve())):
@@ -41,10 +42,12 @@ def _safe_output_path(relative_path: str) -> Path:
     candidate.parent.mkdir(parents=True, exist_ok=True)
     return candidate
 
+
 def _cpu_env():
     env = os.environ.copy()
     env.update(CPU_ONLY_ENV)
     return env
+
 
 def comfy_health():
     try:
@@ -63,6 +66,7 @@ def comfy_health():
             "error": str(exc),
             "cpu_ram_only_policy": True,
         }
+
 
 def status():
     return {
@@ -100,6 +104,7 @@ def status():
         },
     }
 
+
 def save_prompt_file(kind: str, prompt: str, negative: str = "", meta: Optional[dict] = None):
     stamp = time.strftime("%Y%m%d_%H%M%S")
     path = _safe_output_path(f"{kind}/prompt_{stamp}.json")
@@ -115,21 +120,25 @@ def save_prompt_file(kind: str, prompt: str, negative: str = "", meta: Optional[
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     return {"ok": True, "path": str(path), "payload": payload}
 
+
 def make_image_prompt(prompt: str, style: str = "cinematic", negative: str = ""):
-    enriched = (
-        f"{prompt}\n"
-        f"Style: {style}. CPU-friendly generation, small resolution first, coherent composition, clean lighting."
-    )
+    enriched = f"{prompt}\nStyle: {style}. CPU-friendly generation, small resolution first, coherent composition, clean lighting."
     neg = negative or "low quality, blurry, distorted hands, text artifacts, watermark"
-    return save_prompt_file("image", enriched, neg, {
-        "style": style,
-        "recommended_cpu_settings": {
-            "resolution": "512x512 first",
-            "steps": "12-20",
-            "batch": 1,
-            "note": "Monter la qualité seulement si le temps CPU reste acceptable."
-        }
-    })
+    return save_prompt_file(
+        "image",
+        enriched,
+        neg,
+        {
+            "style": style,
+            "recommended_cpu_settings": {
+                "resolution": "512x512 first",
+                "steps": "12-20",
+                "batch": 1,
+                "note": "Monter la qualité seulement si le temps CPU reste acceptable.",
+            },
+        },
+    )
+
 
 def make_video_plan(prompt: str, duration_sec: int = 4, fps: int = 8, style: str = "cinematic"):
     duration_sec = max(1, min(int(duration_sec), 12))
@@ -163,6 +172,7 @@ def make_video_plan(prompt: str, duration_sec: int = 4, fps: int = 8, style: str
     path.write_text(json.dumps(plan, ensure_ascii=False, indent=2), encoding="utf-8")
     return {"ok": True, "path": str(path), "plan": plan}
 
+
 def ffmpeg_make_video_from_folder(folder: str, fps: int = 8, output_name: str = "ezzio_video_cpu.mp4"):
     if not shutil.which("ffmpeg"):
         return {"ok": False, "error": "ffmpeg introuvable dans le PATH."}
@@ -177,13 +187,20 @@ def ffmpeg_make_video_from_folder(folder: str, fps: int = 8, output_name: str = 
     cmd = [
         "ffmpeg",
         "-y",
-        "-framerate", str(fps),
-        "-pattern_type", "glob",
-        "-i", str(source / "*.png"),
-        "-c:v", "libx264",
-        "-preset", "veryfast",
-        "-crf", "23",
-        "-pix_fmt", "yuv420p",
+        "-framerate",
+        str(fps),
+        "-pattern_type",
+        "glob",
+        "-i",
+        str(source / "*.png"),
+        "-c:v",
+        "libx264",
+        "-preset",
+        "veryfast",
+        "-crf",
+        "23",
+        "-pix_fmt",
+        "yuv420p",
         str(out),
     ]
 
@@ -206,6 +223,7 @@ def ffmpeg_make_video_from_folder(folder: str, fps: int = 8, output_name: str = 
         "cmd": cmd,
     }
 
+
 def apk_status():
     ui_root = PROJECT_ROOT / "ezzio-ui"
     package_json = ui_root / "package.json"
@@ -222,6 +240,7 @@ def apk_status():
         "note": "Build APK = CPU classique. L'APK est une interface vers l'API E-ZZIO.",
     }
 
+
 def write_mobile_manifest(app_name: str = "E-ZZIO", app_id: str = "com.ezzio.local"):
     manifest = {
         "app_name": app_name,
@@ -235,4 +254,3 @@ def write_mobile_manifest(app_name: str = "E-ZZIO", app_id: str = "com.ezzio.loc
     path = MOBILE_ROOT / "mobile_manifest.json"
     path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     return {"ok": True, "path": str(path), "manifest": manifest}
-

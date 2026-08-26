@@ -1,0 +1,17 @@
+{
+  "evidence_id": "EVID-20260823-AA3A987D",
+  "task_id": "TASK-ROUTE-26166D63",
+  "timestamp_utc": "2026-08-23T13:32:58.224138+00:00",
+  "provider": "cloud_gemini",
+  "model_name": "gemini-2.5-pro",
+  "agent_version": "ezzio-federated-v1.0",
+  "capability": "deep_reasoning",
+  "policy_status": "APPROVED",
+  "input_context_hash": "81d1e7bccacf5209bc6fc5a1c4d15d01ca391c4a13ab558da83e014698a3242b",
+  "output_payload_hash": "34bffca8a30cb50badb979dbf03e6cc0998db47b9c9fb17a7d33ddc5667013fd",
+  "execution_duration_ms": 1.5,
+  "verification_status": "VERIFIED_VALID",
+  "raw_payload_snippet": "{\"cost_adjusted\": 25, \"gaming_coexistence_active\": true, \"provider_domain\": \"cloud_gemini\", \"routed_model\": \"gemini-2.5-pro\", \"status\": \"OPTIMIZED_FEDERATED_ROUTE_DISPATCHED\", \"task_type\": \"deep_reaso",
+  "ledger_decision_id": null,
+  "envelope_signature_hmac": "aabefda04f14d36f153e581ce25af050590a4025304ab343aeaf2911f6ed6b1e"
+}

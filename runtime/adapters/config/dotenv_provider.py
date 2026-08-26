@@ -4,12 +4,13 @@ from typing import Optional
 from dotenv import load_dotenv
 from contracts.config_port import IConfigProvider
 
+
 class DotEnvConfigProvider(IConfigProvider):
     """
     Implémentation physique du port de configuration.
     Isole l'utilisation de python-dotenv et la lecture du système de fichiers.
     """
-    
+
     def __init__(self, env_path: Optional[str] = None):
         self._loaded = False
         if env_path:
@@ -18,7 +19,7 @@ class DotEnvConfigProvider(IConfigProvider):
             # Fallback automatique vers le chemin standard du projet E-ZZIO
             root_dir = Path(__file__).resolve().parent.parent.parent.parent
             self._env_path = root_dir / "secrets" / ".env"
-        
+
     def _ensure_loaded(self):
         if not self._loaded:
             if self._env_path.exists():

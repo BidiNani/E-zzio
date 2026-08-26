@@ -1,7 +1,0 @@
-NAME                       ID              SIZE      MODIFIED     
-qwen3:4b                   359d7dd4bcda    2.5 GB    16 hours ago    
-gemma2:2b                  8ccf136fdd52    1.6 GB    20 hours ago    
-gemma4e4b:latest           669410cd0bdb    5.3 GB    12 days ago     
-qwen3:8b                   500a1f067a9f    5.2 GB    12 days ago     
-qwen2.5-coder:7b           dae161e27b0e    4.7 GB    2 weeks ago     
-nomic-embed-text:latest    0a109f422b47    274 MB    2 weeks ago     

@@ -4,7 +4,7 @@ Construit le DAG complet des dépendances du noyau, calcule les métriques de ce
 identifie les nœuds racines (Roots), ponts (Bridges) et terminaux (Finals),
 et exporte le manifeste mathématique `founding_kernel.json`.
 """
-import os
+
 import json
 import re
 import hashlib
@@ -16,6 +16,7 @@ TARGET_DIRS = ["core", "runtime"]
 EXCLUDE_PATTERNS = [".venv", "__pycache__", "cache", "logs", ".tmp", ".bak", "tests"]
 OUTPUT_REPORT = ROOT_DIR / "runtime" / "audit" / "system" / "founding_kernel.json"
 
+
 def compute_sha256(file_path: Path) -> str:
     hasher = hashlib.sha256()
     try:
@@ -26,14 +27,15 @@ def compute_sha256(file_path: Path) -> str:
     except Exception:
         return "ERROR"
 
+
 def extract_local_imports(file_path: Path, all_modules: set) -> list:
     imports = []
     try:
         with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
             for line in f:
                 line_stripped = line.strip()
-                if match := re.match(r'^(?:import|from)\s+([a-zA-Z0-9_\.]+)', line_stripped):
-                    mod_path = match.group(1).replace('.', '/')
+                if match := re.match(r"^(?:import|from)\s+([a-zA-Z0-9_\.]+)", line_stripped):
+                    mod_path = match.group(1).replace(".", "/")
                     for m in all_modules:
                         if m.startswith(mod_path) and m != file_path.relative_to(ROOT_DIR).as_posix()[:-3]:
                             if m not in imports:
@@ -42,9 +44,10 @@ def extract_local_imports(file_path: Path, all_modules: set) -> list:
         pass
     return imports
 
+
 def analyze_kernel():
     print("[*] Analyse structurelle et construction du DAG des dépendances...")
-    
+
     file_map = {}
     all_modules = set()
 
@@ -52,7 +55,7 @@ def analyze_kernel():
         dir_path = ROOT_DIR / target
         if not dir_path.exists():
             continue
-        for path in dir_path.rglob('*'):
+        for path in dir_path.rglob("*"):
             if path.is_file() and path.suffix.lower() == ".py":
                 rel_path = path.relative_to(ROOT_DIR).as_posix()
                 if any(ex in rel_path.lower() for ex in EXCLUDE_PATTERNS):
@@ -74,7 +77,7 @@ def analyze_kernel():
             "size_bytes": stat.st_size,
             "sha256": sha256,
             "dependencies": local_deps,
-            "dependents": []
+            "dependents": [],
         }
 
     # Calcul des dépendents (in-degree / reachability)
@@ -88,7 +91,7 @@ def analyze_kernel():
 
     # Calcul des métriques de centralité et de criticité
     max_deps = max((len(n["dependencies"]) + len(n["dependents"]) for n in nodes.values()), default=1)
-    
+
     kernel_records = []
     for rel_path, node in nodes.items():
         total_connections = len(node["dependencies"]) + len(node["dependents"])
@@ -102,15 +105,17 @@ def analyze_kernel():
         else:
             criticality = "PERIPHERAL"
 
-        kernel_records.append({
-            "module": node["module"],
-            "first_seen": node["first_seen"],
-            "descendants": descendants_count,
-            "centrality": centrality,
-            "criticality": criticality,
-            "hash_verified": node["sha256"] != "ERROR",
-            "sha256": node["sha256"]
-        })
+        kernel_records.append(
+            {
+                "module": node["module"],
+                "first_seen": node["first_seen"],
+                "descendants": descendants_count,
+                "centrality": centrality,
+                "criticality": criticality,
+                "hash_verified": node["sha256"] != "ERROR",
+                "sha256": node["sha256"],
+            }
+        )
 
     # Tri par centralité et descendants
     kernel_records.sort(key=lambda x: (x["centrality"], x["descendants"]), reverse=True)
@@ -125,7 +130,7 @@ def analyze_kernel():
         "top_root_nodes": roots[:20],
         "top_bridge_nodes": bridges[:20],
         "top_final_nodes": finals[:20],
-        "full_kernel_registry": kernel_records
+        "full_kernel_registry": kernel_records,
     }
 
     OUTPUT_REPORT.parent.mkdir(parents=True, exist_ok=True)
@@ -142,6 +147,7 @@ def analyze_kernel():
         print(f"  - [{r['criticality']:<12}] {r['module']:<35} (Cent: {r['centrality']}, Desc: {r['descendants']})")
     print("=" * 65)
     print(f" Rapport exporté : {OUTPUT_REPORT}")
+
 
 if __name__ == "__main__":
     analyze_kernel()

@@ -1,7 +1,8 @@
 import json
 import hashlib
 from pathlib import Path
-from typing import Dict, Any, Tuple
+from typing import Tuple
+
 
 class HashChainedLedger:
     def __init__(self, ledger_file: Path):
@@ -36,7 +37,7 @@ class HashChainedLedger:
     def append_receipt(self, receipt_dict: dict) -> str:
         """Ajoute un reçu au ledger en le liant cryptographiquement au précédent."""
         prev_hash, seq_id = self.get_last_hash_and_sequence()
-        
+
         receipt_dict["sequence_id"] = seq_id + 1
         receipt_dict["previous_receipt_hash"] = prev_hash
 
@@ -62,7 +63,7 @@ class HashChainedLedger:
             try:
                 record = json.loads(line)
             except json.JSONDecodeError:
-                return False, f"CORRUPTED_JSON_AT_LINE_{idx+1}"
+                return False, f"CORRUPTED_JSON_AT_LINE_{idx + 1}"
 
             if record.get("previous_receipt_hash") != expected_prev_hash:
                 return False, f"HASH_CHAIN_BROKEN_AT_SEQUENCE_{record.get('sequence_id')}"

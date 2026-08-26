@@ -1,6 +1,7 @@
 from runtime.skills.loader import SkillLoader
 from runtime.memory.bridge import MemoryBridge
 
+
 class SkillRegistry:
     def __init__(self, active_dir: str = "runtime/skills/active"):
         self.loader = SkillLoader(active_dir)

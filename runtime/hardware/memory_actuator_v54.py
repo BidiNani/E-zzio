@@ -5,27 +5,29 @@ import threading
 from collections import deque
 from pathlib import Path
 
+
 class PersistentMemoryActuatorV54:
     """
     Régulateur actif V5.4 d'infrastructure.
     Gère la persistance d'état sur disque, le couplage direct avec le moteur
     de stockage réel, la détection d'anomalies de fréquence et l'audit Guardian.
     """
+
     def __init__(self, engine_ref, memory_engine_ref, state_dir: str = None, check_interval: float = 0.2):
         self.engine = engine_ref
         self.memory_engine = memory_engine_ref
         self.check_interval = check_interval
-        
+
         self.base_dir = Path(state_dir) if state_dir else Path(__file__).resolve().parent
         self.state_dir = self.base_dir / "state"
         self.state_dir.mkdir(parents=True, exist_ok=True)
-        
+
         self.state_file_path = self.state_dir / "memory_actuator_state.json"
         self.audit_log_path = self.base_dir / "guardian_actuator_audit.jsonl"
-        
+
         # Buffer glissant 30s pour lissage (150 échantillons à 0.2s)
         self.history_buffer = deque(maxlen=150)
-        
+
         # Historique d'anomalies (fenêtre glissante d'1h / 3600s)
         self.critical_spikes_window = deque()
         self.max_spikes_per_hour = 10
@@ -35,13 +37,13 @@ class PersistentMemoryActuatorV54:
         self.hold_time_sec = 3.0
         self.last_critical_time = 0.0
         self.current_regulation_tier = "NOMINAL"
-        
+
         self._lock = threading.Lock()
         self._stop_event = threading.Event()
-        
+
         # Chargement de l'état précédent si disponible
         self._load_persisted_state()
-        
+
         self.monitor_thread = threading.Thread(target=self._actuator_loop, daemon=True)
 
     def _load_persisted_state(self):
@@ -52,7 +54,10 @@ class PersistentMemoryActuatorV54:
                     self.current_regulation_tier = data.get("current_regulation_tier", "NOMINAL")
                     self.last_critical_time = data.get("last_critical_time", 0.0)
                     self.anomaly_active = data.get("anomaly_active", False)
-                    print(f"[ACTUATOR STATE LOADED] Tier restauré : {self.current_regulation_tier} | Anomaly Flag : {self.anomaly_active}", flush=True)
+                    print(
+                        f"[ACTUATOR STATE LOADED] Tier restauré : {self.current_regulation_tier} | Anomaly Flag : {self.anomaly_active}",
+                        flush=True,
+                    )
             except Exception as e:
                 print(f"[ACTUATOR STATE WARN] Impossible de lire l'état persistant : {e}", flush=True)
 
@@ -64,7 +69,7 @@ class PersistentMemoryActuatorV54:
             "current_regulation_tier": self.current_regulation_tier,
             "last_critical_time": self.last_critical_time,
             "anomaly_active": self.anomaly_active,
-            "spikes_last_hour_count": len(self.critical_spikes_window)
+            "spikes_last_hour_count": len(self.critical_spikes_window),
         }
         try:
             with open(temp_path, "w", encoding="utf-8") as f:
@@ -98,12 +103,12 @@ class PersistentMemoryActuatorV54:
                 "oom_index": metrics.get("oom_index"),
                 "d_rss_dt_mbs": metrics.get("d_rss_dt_mbs"),
                 "rss_mb": metrics.get("rss_mb"),
-                "free_ram_gb": metrics.get("free_ram_gb")
+                "free_ram_gb": metrics.get("free_ram_gb"),
             },
             "applied_params": {
                 "max_batch_size": getattr(self.engine, "max_batch_size", 2000),
-                "max_batch_delay": getattr(self.engine, "max_batch_delay", 0.01)
-            }
+                "max_batch_delay": getattr(self.engine, "max_batch_delay", 0.01),
+            },
         }
         try:
             with open(self.audit_log_path, "a", encoding="utf-8") as f:
@@ -191,7 +196,7 @@ class PersistentMemoryActuatorV54:
                 "reason": reason,
                 "anomaly_active": self.anomaly_active,
                 "spikes_last_hour": len(self.critical_spikes_window),
-                "max_batch_size": getattr(self.engine, "max_batch_size", 2000)
+                "max_batch_size": getattr(self.engine, "max_batch_size", 2000),
             }
 
     def stop(self):

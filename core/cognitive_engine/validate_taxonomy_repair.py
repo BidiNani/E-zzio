@@ -1,11 +1,11 @@
 """
 E-ZZIO V7.59.2.1 — Deep Taxonomy Validation
-Inspecte de près le contenu des 62 RPG_MEMORY, traque les 8 SYNTHETIC_NOISE 
+Inspecte de près le contenu des 62 RPG_MEMORY, traque les 8 SYNTHETIC_NOISE
 et évalue un échantillon de security_audit pour certifier l'absence de faux positifs.
 """
+
 import sys
 import sqlite3
-import json
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
@@ -16,6 +16,7 @@ INDEX_DB = ROOT_DIR / "runtime" / "cognitive" / "index" / "memory_index.sqlite"
 
 from core.cognitive_engine.taxonomy_repair import TaxonomyRepairValidator
 
+
 def deep_validate():
     if not INDEX_DB.exists():
         print("[!] Base FTS5 introuvable.")
@@ -25,7 +26,7 @@ def deep_validate():
     validator = TaxonomyRepairValidator()
 
     uri = f"file:{INDEX_DB}?mode=ro"
-    
+
     rpg_samples = []
     noise_samples = []
     security_samples_count = 0
@@ -43,15 +44,9 @@ def deep_validate():
             m_type = eval_res["memory_type"]
 
             if m_type == "RPG_MEMORY":
-                rpg_samples.append({
-                    "path": source_path,
-                    "snippet": content[:140]
-                })
+                rpg_samples.append({"path": source_path, "snippet": content[:140]})
             elif m_type == "SYNTHETIC_NOISE":
-                noise_samples.append({
-                    "path": source_path,
-                    "reason": eval_res["reason"]
-                })
+                noise_samples.append({"path": source_path, "reason": eval_res["reason"]})
             elif m_type == "security_audit":
                 security_samples_count += 1
 
@@ -79,6 +74,7 @@ def deep_validate():
     else:
         print("  -> Aucune entrée de bruit détectée.")
     print("=" * 60)
+
 
 if __name__ == "__main__":
     deep_validate()

@@ -1,13 +1,15 @@
 import logging
 
+
 class PolicyDecision:
     ALLOW = "ALLOW"
     DENY = "DENY"
     REQUIRE_HUMAN = "REQUIRE_HUMAN"
 
+
 class PolicyEngine:
     """Le Gatekeeper unifié. Vérifie la constitution et la réputation (Trust Score) de l'acteur."""
-    
+
     def __init__(self, constitution: dict, trust_scorer=None):
         self.constitution = constitution
         self.trust_scorer = trust_scorer

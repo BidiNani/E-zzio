@@ -4,7 +4,7 @@ Complète la certification globale en intégrant la gouvernance mémoire,
 la santé du stockage NVMe, l'auto-récupération, l'évolution en quarantaine
 et l'observabilité (Self-Awareness).
 """
-import os
+
 import sys
 import json
 import psutil
@@ -23,6 +23,7 @@ from core.constitution.hardware_resource_governor import HardwareResourceGoverno
 
 logger = logging.getLogger(__name__)
 
+
 class ExtendedOrganismCertifier:
     def __init__(self, root_dir: Path = ROOT_DIR):
         self.root_dir = root_dir
@@ -32,7 +33,7 @@ class ExtendedOrganismCertifier:
 
     def audit_extended_domains(self) -> Dict[str, Any]:
         hw_telemetry = self.hw_gov.get_system_telemetry()
-        
+
         # Vérification NVMe / Stockage (G:\ racine)
         disk_usage = psutil.disk_usage("G:\\")
         disk_free_gb = round(disk_usage.free / (1024**3), 2)
@@ -40,34 +41,29 @@ class ExtendedOrganismCertifier:
 
         # Vérification RAM
         ram_percent = hw_telemetry["ram_usage_percent"]
-        memory_status = "OPTIMIZED_GAMING_AWARE" if ram_percent < 85 else "HIGH_PRESSURE"
 
         extended_domains = {
             "MEMORY_GOVERNANCE": {
                 "score": "10/10",
                 "status": "PASS",
-                "detail": f"RAM Usage: {ram_percent}% | Compression & Context Compaction Active"
+                "detail": f"RAM Usage: {ram_percent}% | Compression & Context Compaction Active",
             },
             "STORAGE_INTELLIGENCE": {
                 "score": "10/10",
                 "status": storage_status,
-                "detail": f"NVMe G:\\ Free: {disk_free_gb} GB | No swap contention"
+                "detail": f"NVMe G:\\ Free: {disk_free_gb} GB | No swap contention",
             },
-            "SELF_RECOVERY": {
-                "score": "10/10",
-                "status": "PASS",
-                "detail": "Component isolation & runtime rollback ready"
-            },
+            "SELF_RECOVERY": {"score": "10/10", "status": "PASS", "detail": "Component isolation & runtime rollback ready"},
             "EVOLUTION_QUARANTINE": {
                 "score": "10/10",
                 "status": "PASS",
-                "detail": "Skills pipeline: Quarantine -> Sandbox -> ECOL -> Promotion"
+                "detail": "Skills pipeline: Quarantine -> Sandbox -> ECOL -> Promotion",
             },
             "SELF_AWARENESS_OBSERVABILITY": {
                 "score": "10/10",
                 "status": "PASS",
-                "detail": "Unified audit logs & explainable decision trails active"
-            }
+                "detail": "Unified audit logs & explainable decision trails active",
+            },
         }
 
         # Reprise des piliers fondateurs
@@ -77,7 +73,7 @@ class ExtendedOrganismCertifier:
             "UNIVERSAL_GATEWAY": {"score": "10/10", "status": "PASS", "detail": "No-bypass enforcement actif"},
             "HARDWARE_COEXISTENCE": {"score": "10/10", "status": "PASS", "detail": hw_telemetry["profile"]},
             "MODEL_TOKEN_GOVERNANCE": {"score": "10/10", "status": "PASS", "detail": "Gaming-aware routing actif"},
-            "SECURITY_DPAPI": {"score": "10/10", "status": "PASS", "detail": "OS-bound secret isolation vérifié"}
+            "SECURITY_DPAPI": {"score": "10/10", "status": "PASS", "detail": "OS-bound secret isolation vérifié"},
         }
 
         all_domains = {**core_domains, **extended_domains}
@@ -89,11 +85,7 @@ class ExtendedOrganismCertifier:
             "hardware_telemetry": hw_telemetry,
             "domains": all_domains,
             "global_status": "10/10 FULL-SPECTRUM ORGANISM CERTIFIED",
-            "metrics": {
-                "total_certified_domains": len(all_domains),
-                "drift": "ZERO_DRIFT",
-                "gaming_mode": hw_telemetry["gaming_detected"]
-            }
+            "metrics": {"total_certified_domains": len(all_domains), "drift": "ZERO_DRIFT", "gaming_mode": hw_telemetry["gaming_detected"]},
         }
 
         # Signature HMAC
@@ -101,29 +93,28 @@ class ExtendedOrganismCertifier:
         sec_key = b"EZZIO_GLOBAL_CERTIFICATION_ROOT_KEY_2026"
         cert_signature = hmac.new(sec_key, cert_json.encode("utf-8"), hashlib.sha256).hexdigest()
 
-        final_bundle = {
-            **certificate,
-            "certificate_signature_hmac": cert_signature
-        }
+        final_bundle = {**certificate, "certificate_signature_hmac": cert_signature}
 
         self.report_path.write_text(json.dumps(final_bundle, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         return final_bundle
+
 
 def test_extended_certifier():
     print("[*] Exécution de l'audit complet de l'organisme (V7.74)...")
     certifier = ExtendedOrganismCertifier()
     cert = certifier.audit_extended_domains()
 
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print(" E-ZZIO FULL-SPECTRUM ORGANISM CERTIFICATION DASHBOARD (V7.74)")
-    print("="*70)
+    print("=" * 70)
     for domain, info in cert["domains"].items():
         print(f" {domain:<30} : {info['score']} [{info['status']}]")
-    print("="*70)
+    print("=" * 70)
     print(f" GLOBAL STATUS : {cert['global_status']}")
     print(f" DOMAINES CERTIFIÉS : {cert['metrics']['total_certified_domains']} / {cert['metrics']['total_certified_domains']}")
     print(f" SIGNATURE HMAC   : {cert['certificate_signature_hmac'][:32]}...")
-    print("="*70)
+    print("=" * 70)
+
 
 if __name__ == "__main__":
     test_extended_certifier()

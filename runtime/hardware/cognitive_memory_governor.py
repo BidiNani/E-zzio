@@ -5,6 +5,7 @@ import threading
 from collections import deque
 from pathlib import Path
 
+
 class GuardianCognitiveGovernorV56:
     """
     Régulateur mémoire cognitif V5.6.
@@ -14,38 +15,39 @@ class GuardianCognitiveGovernorV56:
     - Persistance atomique d'état et mémoire cognitive d'incidents
     - Thread d'arrière-plan d'actuation réactive
     """
+
     WORKLOAD_PROFILES = {
         "INGESTION_BURST": {"base_oom_threshold": 0.80, "hold_time": 4.0, "max_batch": 3000},
-        "FULL_INDEXING":  {"base_oom_threshold": 0.70, "hold_time": 5.0, "max_batch": 1500},
-        "GUARDIAN_SCAN":  {"base_oom_threshold": 0.85, "hold_time": 2.0, "max_batch": 2000},
-        "IDLE_MAINTENANCE":{"base_oom_threshold": 0.90, "hold_time": 1.0, "max_batch": 4000}
+        "FULL_INDEXING": {"base_oom_threshold": 0.70, "hold_time": 5.0, "max_batch": 1500},
+        "GUARDIAN_SCAN": {"base_oom_threshold": 0.85, "hold_time": 2.0, "max_batch": 2000},
+        "IDLE_MAINTENANCE": {"base_oom_threshold": 0.90, "hold_time": 1.0, "max_batch": 4000},
     }
 
     def __init__(self, engine_ref, memory_engine_ref, state_dir: str = None, check_interval: float = 0.2):
         self.engine = engine_ref
         self.memory_engine = memory_engine_ref
         self.check_interval = check_interval
-        
+
         self.base_dir = Path(state_dir) if state_dir else Path(__file__).resolve().parent
         self.state_dir = self.base_dir / "state"
         self.state_dir.mkdir(parents=True, exist_ok=True)
-        
+
         self.state_file_path = self.state_dir / "cognitive_v56_state.json"
         self.audit_log_path = self.base_dir / "guardian_actuator_audit.jsonl"
-        
+
         self.active_workload = "INGESTION_BURST"
         self.history_buffer = deque(maxlen=150)
         self.spikes_24h_history = deque()
-        
+
         # Métriques cognitives
         self.total_preemptive_throttles = 0
         self.ttc_trigger_history = deque(maxlen=50)
         self.last_critical_time = 0.0
         self.current_regulation_tier = "NOMINAL"
-        
+
         self._lock = threading.Lock()
         self._stop_event = threading.Event()
-        
+
         self._load_cognitive_state()
         self.monitor_thread = threading.Thread(target=self._actuator_loop, daemon=True)
 
@@ -60,7 +62,10 @@ class GuardianCognitiveGovernorV56:
                     spikes = data.get("spikes_24h_history", [])
                     now = time.time()
                     self.spikes_24h_history = deque([s for s in spikes if (now - s) <= 86400.0])
-                    print(f"[COGNITIVE STATE LOADED] Workload: {self.active_workload} | Spikes 24h: {len(self.spikes_24h_history)}", flush=True)
+                    print(
+                        f"[COGNITIVE STATE LOADED] Workload: {self.active_workload} | Spikes 24h: {len(self.spikes_24h_history)}",
+                        flush=True,
+                    )
             except Exception as e:
                 print(f"[COGNITIVE STATE WARN] Échec lecture état : {e}", flush=True)
 
@@ -74,7 +79,7 @@ class GuardianCognitiveGovernorV56:
             "total_preemptive_throttles": self.total_preemptive_throttles,
             "effective_threshold": self.calculate_effective_threshold(),
             "spikes_24h_count": len(self.spikes_24h_history),
-            "spikes_24h_history": list(self.spikes_24h_history)
+            "spikes_24h_history": list(self.spikes_24h_history),
         }
         try:
             with open(temp_path, "w", encoding="utf-8") as f:
@@ -86,7 +91,7 @@ class GuardianCognitiveGovernorV56:
             print(f"[COGNITIVE STATE WARN] Erreur écriture atomique : {e}", flush=True)
 
     def _actuator_loop(self):
-        while not self._stop_event.set_is_set() if hasattr(self._stop_event, 'set_is_set') else not self._stop_event.is_set():
+        while not self._stop_event.set_is_set() if hasattr(self._stop_event, "set_is_set") else not self._stop_event.is_set():
             try:
                 self.apply_regulation_tick()
             except Exception as e:
@@ -107,11 +112,11 @@ class GuardianCognitiveGovernorV56:
         """
         base_thresh = self.WORKLOAD_PROFILES[self.active_workload]["base_oom_threshold"]
         now = time.time()
-        
+
         # Purge des événements > 24h (86400s)
         while self.spikes_24h_history and (now - self.spikes_24h_history[0]) > 86400.0:
             self.spikes_24h_history.popleft()
-            
+
         penalty = min(0.10, (len(self.spikes_24h_history) / 10.0) * 0.10)
         return round(max(0.50, base_thresh - penalty), 3)
 
@@ -129,11 +134,11 @@ class GuardianCognitiveGovernorV56:
             oom_index = metrics.get("oom_index", 0.0)
             d_rss_dt = metrics.get("d_rss_dt_mbs", 0.0)
             rss_mb = metrics.get("rss_mb", 0.0)
-            
+
             t_ttc = self.calculate_time_to_critical(rss_mb, d_rss_dt)
             profile_cfg = self.WORKLOAD_PROFILES[self.active_workload]
             effective_threshold = self.calculate_effective_threshold()
-            
+
             prev_tier = self.current_regulation_tier
             target_tier = prev_tier
             reason = "NOMINAL_COGNITIVE_STABLE"
@@ -179,7 +184,7 @@ class GuardianCognitiveGovernorV56:
                 self.engine.max_batch_delay = 0.01
 
             self.current_regulation_tier = target_tier
-            
+
             if prev_tier != target_tier or target_tier == "CRITICAL":
                 self._save_cognitive_state_atomic()
 
@@ -192,7 +197,7 @@ class GuardianCognitiveGovernorV56:
                 "spikes_24h_count": len(self.spikes_24h_history),
                 "total_throttles": self.total_preemptive_throttles,
                 "reason": reason,
-                "max_batch_size": getattr(self.engine, "max_batch_size", 2000)
+                "max_batch_size": getattr(self.engine, "max_batch_size", 2000),
             }
 
     def start(self):

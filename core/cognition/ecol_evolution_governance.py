@@ -3,11 +3,10 @@ E-ZZIO Core — Evolution & Skills Governance Layer (V7.69.1 Hotfix)
 Corrige la gestion des niveaux de risque critiques au niveau de l'adaptateur
 pour garantir le blocage immédiat (Fail-Closed) des compétences non vérifiées.
 """
-import os
+
 import sys
 import logging
 from pathlib import Path
-from typing import Dict, Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -16,6 +15,7 @@ if str(ROOT_DIR) not in sys.path:
 from core.cognition.ecol_runtime_interceptor import EcolRuntimeInterceptor, ExecutionBlockedByEcolError
 
 logger = logging.getLogger(__name__)
+
 
 class EcolEvolutionGovernor:
     def __init__(self, interceptor: EcolRuntimeInterceptor = None):
@@ -29,13 +29,13 @@ class EcolEvolutionGovernor:
         """
         # Politique de sécurité adaptatrice : tout risque critique ou élevé devient 'high'
         enforced_risk = "high" if risk_level in {"high", "critical"} else risk_level
-        
+
         return self.interceptor.guarded_execution(
             source_component="evolution_engine",
             action="SKILL_INSTALL",
             priority="normal",
             risk_level=enforced_risk,
-            estimated_cost=estimated_tokens
+            estimated_cost=estimated_tokens,
         )
 
     def create_auto_publish_guard(self, risk_level: str = "low", estimated_tokens: int = 150):
@@ -44,8 +44,9 @@ class EcolEvolutionGovernor:
             action="AUTO_PUBLISH",
             priority="normal",
             risk_level=risk_level,
-            estimated_cost=estimated_tokens
+            estimated_cost=estimated_tokens,
         )
+
 
 def test_evolution_governance():
     print("[*] Test de l'Evolution & Skills Governance Layer (V7.69.1 Hotfix)...")
@@ -77,9 +78,10 @@ def test_evolution_governance():
     except ExecutionBlockedByEcolError as e:
         print(f"  [PASS] Interception réussie (FAIL CLOSED actif sur l'évolution) : {e}")
 
-    print("\n" + "="*65)
+    print("\n" + "=" * 65)
     print(" EVOLUTION & SKILLS GOVERNANCE LAYER (V7.69.1) : PATCHED & ENFORCED")
-    print("="*65)
+    print("=" * 65)
+
 
 if __name__ == "__main__":
     test_evolution_governance()

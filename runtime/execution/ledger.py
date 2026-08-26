@@ -6,9 +6,10 @@ from pathlib import Path
 from datetime import datetime
 from typing import Any, Dict
 
+
 class ExecutionLedger:
     """Registre append-only vérifiable des exécutions et décisions du Runtime."""
-    
+
     def __init__(self, log_dir: Path = Path("runtime/ledger/logs")):
         self.log_dir = log_dir
         self.log_dir.mkdir(parents=True, exist_ok=True)
@@ -39,18 +40,18 @@ class ExecutionLedger:
                 "policy_decision": policy_decision,
                 "resource_budget": budget,
                 "result": result,
-                "previous_hash": self._last_hash
+                "previous_hash": self._last_hash,
             }
-            
+
             # Copie temporaire sans le hash pour calcul déterministe
             calc_data = record_data.copy()
             raw_str = json.dumps(calc_data, sort_keys=True)
             current_hash = hashlib.sha256(raw_str.encode("utf-8")).hexdigest()
             record_data["hash"] = current_hash
-            
+
             with open(self.ledger_file, "a", encoding="utf-8") as f:
                 f.write(json.dumps(record_data) + "\n")
-                
+
             self._last_hash = current_hash
             return current_hash
 
@@ -59,29 +60,29 @@ class ExecutionLedger:
         with self._lock:
             if not self.ledger_file.exists() or self.ledger_file.stat().st_size == 0:
                 return True
-            
+
             lines = self.ledger_file.read_text(encoding="utf-8").splitlines()
             previous = "GENESIS_BLOCK_HASH"
-            
+
             for line in lines:
                 if not line.strip():
                     continue
                 try:
                     block = json.loads(line)
                     stored_hash = block.get("hash")
-                    
+
                     if block.get("previous_hash") != previous:
                         return False
-                    
+
                     # On retire le hash pour recalculer la signature exacte
                     calc_block = block.copy()
                     calc_block.pop("hash", None)
                     raw_str = json.dumps(calc_block, sort_keys=True)
                     expected_hash = hashlib.sha256(raw_str.encode("utf-8")).hexdigest()
-                    
+
                     if stored_hash != expected_hash:
                         return False
-                        
+
                     previous = stored_hash
                 except Exception:
                     return False

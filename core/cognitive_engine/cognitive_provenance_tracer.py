@@ -8,6 +8,7 @@ Analyse la base FTS5 existante et classe chaque enregistrement selon la taxonomi
 5. OPERATIONAL (télémétrie, bridge, system)
 6. SYNTHETIC_NOISE (tests, sandbox, fuzz)
 """
+
 import sqlite3
 import json
 from pathlib import Path
@@ -16,12 +17,18 @@ ROOT_DIR = Path(r"G:\AI\E-zzio")
 INDEX_DB = ROOT_DIR / "runtime" / "cognitive" / "index" / "memory_index.sqlite"
 PROVENANCE_REPORT = ROOT_DIR / "runtime" / "audit" / "system" / "cognitive_provenance_matrix.json"
 
+
 def classify_record(source_path: str, content: str, current_memory_type: str) -> str:
     path_lower = source_path.lower()
     content_lower = content.lower()
 
     # 1. IDENTITY (Socle immuable / Registry / Constitution)
-    if "registry/core" in path_lower or "registry/personality" in path_lower or "constitution" in path_lower or current_memory_type == "identity_core":
+    if (
+        "registry/core" in path_lower
+        or "registry/personality" in path_lower
+        or "constitution" in path_lower
+        or current_memory_type == "identity_core"
+    ):
         return "IDENTITY"
 
     # 2. RPG_MEMORY (Genèse, contexte personnel, lore, intentions)
@@ -48,22 +55,16 @@ def classify_record(source_path: str, content: str, current_memory_type: str) ->
 
     return "OPERATIONAL"  # Par défaut si non classé
 
+
 def run_tracer():
     if not INDEX_DB.exists():
-        print(f"[!] Erreur : Base FTS5 introuvable.")
+        print("[!] Erreur : Base FTS5 introuvable.")
         return
 
-    print(f"[*] Analyse de la provenance et classification cognitive des entrées...")
+    print("[*] Analyse de la provenance et classification cognitive des entrées...")
 
     uri = f"file:{INDEX_DB}?mode=ro"
-    taxonomy_counts = {
-        "IDENTITY": 0,
-        "RPG_MEMORY": 0,
-        "EXPERIENCE": 0,
-        "SECURITY": 0,
-        "OPERATIONAL": 0,
-        "SYNTHETIC_NOISE": 0
-    }
+    taxonomy_counts = {"IDENTITY": 0, "RPG_MEMORY": 0, "EXPERIENCE": 0, "SECURITY": 0, "OPERATIONAL": 0, "SYNTHETIC_NOISE": 0}
     source_mapping = {}
 
     with sqlite3.connect(uri, uri=True) as conn:
@@ -79,11 +80,7 @@ def run_tracer():
                 source_mapping[source_path] = {"tier": tier, "count": 0}
             source_mapping[source_path]["count"] += 1
 
-    report = {
-        "total_records_audited": len(rows),
-        "taxonomy_breakdown": taxonomy_counts,
-        "source_mapping": source_mapping
-    }
+    report = {"total_records_audited": len(rows), "taxonomy_breakdown": taxonomy_counts, "source_mapping": source_mapping}
 
     PROVENANCE_REPORT.parent.mkdir(parents=True, exist_ok=True)
     with open(PROVENANCE_REPORT, "w", encoding="utf-8") as f:
@@ -101,6 +98,7 @@ def run_tracer():
         print(f"   - {tier:<18} : {count:>5} entrées ({pct:>5.1f}%)")
     print("-" * 50)
     print(f" Rapport de matrice généré : {PROVENANCE_REPORT}")
+
 
 if __name__ == "__main__":
     run_tracer()

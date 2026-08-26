@@ -1,20 +1,15 @@
 import json
-import os
-from runtime.hardware.evidence.ledger import HardwareEvidenceLedger
 from runtime.hardware.evidence.validator import TopologyTrustValidator
 from runtime.hardware.router.gate import AllocationIntegrityGate
+
 
 class TopologyRouter:
     def __init__(self, validator: TopologyTrustValidator, dry_run: bool = True):
         self.validator = validator
         self.dry_run = dry_run
         self.policy_version = "6.12.2"
-        
-        self.policies = {
-            "AI_INFERENCE": "CCD0",
-            "BACKGROUND_SCAN": "CCD1",
-            "STORAGE_IO": "BALANCED"
-        }
+
+        self.policies = {"AI_INFERENCE": "CCD0", "BACKGROUND_SCAN": "CCD1", "STORAGE_IO": "BALANCED"}
 
     def _get_validated_snapshot(self):
         """Interface publique sécurisée pour récupérer le dernier état sans fuite d'implémentation privée."""
@@ -29,7 +24,7 @@ class TopologyRouter:
 
     def plan_workload(self, workload_type: str, current_probe: dict) -> dict:
         """Planification sous haute surveillance d'intégrité (Fail-Closed)."""
-        
+
         # 1. Trust Gate (Validator)
         try:
             verdict = self.validator.validate_boot_state(current_probe)
@@ -47,7 +42,7 @@ class TopologyRouter:
         topo = latest["hardware"]
         cpu_info = topo.get("cpu", {})
         max_threads = cpu_info.get("logical", cpu_info.get("logical_threads", 0))
-        
+
         if max_threads <= 0:
             return self._denied_verdict("INVALID_MAX_THREADS")
 
@@ -73,18 +68,14 @@ class TopologyRouter:
             "trust": {
                 "chain_valid": verdict.get("chain_valid", False),
                 "hardware_match": verdict.get("signature_match", False),
-                "routing_allowed": verdict.get("routing_allowed", False)
+                "routing_allowed": verdict.get("routing_allowed", False),
             },
             "policy_version": self.policy_version,
-            "mode": "DRY_RUN" if self.dry_run else "PRODUCTION"
+            "mode": "DRY_RUN" if self.dry_run else "PRODUCTION",
         }
 
     def _denied_verdict(self, reason: str, details=None) -> dict:
-        verdict_dict = {
-            "status": "DENIED",
-            "reason": reason,
-            "policy_version": self.policy_version
-        }
+        verdict_dict = {"status": "DENIED", "reason": reason, "policy_version": self.policy_version}
         if details is not None:
             verdict_dict["details"] = details
         return verdict_dict

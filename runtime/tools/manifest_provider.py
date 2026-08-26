@@ -5,8 +5,10 @@ import copy
 from pathlib import Path
 from typing import Dict, Any
 
+
 class ManifestProvider:
     """Fournisseur d'état du manifest, garantissant l'intégrité via SHA-256 du contenu."""
+
     SUPPORTED_VERSION = 2
 
     def __init__(self, path: str = None):
@@ -27,7 +29,7 @@ class ManifestProvider:
             try:
                 content = self.path.read_bytes()
                 current_hash = hashlib.sha256(content).hexdigest()[:12]
-                
+
                 # Invalidation parfaite basée sur le contenu réel
                 if self._cache and current_hash == self._cache_hash:
                     return copy.deepcopy(self._cache)

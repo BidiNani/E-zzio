@@ -1,24 +1,27 @@
-import os
 import json
 import hashlib
 from pathlib import Path
 
+
 class RegistryIntegrityError(Exception):
     """Levé si le registre des modèles a été altéré depuis son gel cryptographique."""
+
     pass
+
 
 class ModelRegistryAuthority:
     """
     Autorité d'accès contrôlé au registre des modèles IA.
     Garantit l'intégrité cryptographique, le contrôle d'epoch et l'attestation physique.
     """
+
     def __init__(self, root_dir: str = None, min_epoch: int = 1):
         self.root_dir = Path(root_dir) if root_dir else Path("G:/AI/E-zzio").resolve()
         self.v712_registry = self.root_dir / "runtime" / "audit" / "intelligence_scan" / "V7_REGISTRY" / "V712"
         self.manifest_path = self.v712_registry / "governance_freeze_manifest.json"
         self.registry_path = self.root_dir / "runtime" / "contracts" / "MODEL_REGISTRY_V1.json"
         self.min_epoch = min_epoch
-        
+
         self._cache = None
         self._hash_prefix = "UNKNOWN"
         self._verify_and_load()
@@ -56,7 +59,9 @@ class ModelRegistryAuthority:
         # Vérification de l'Epoch
         current_epoch = self._cache.get("registry_epoch", 0)
         if current_epoch < self.min_epoch:
-            raise RegistryIntegrityError(f"REGISTRY_DOWNGRADE_BLOCKED : Epoch détecté ({current_epoch}) inférieur au minimum requis ({self.min_epoch}).")
+            raise RegistryIntegrityError(
+                f"REGISTRY_DOWNGRADE_BLOCKED : Epoch détecté ({current_epoch}) inférieur au minimum requis ({self.min_epoch})."
+            )
 
         print(f"[AUTHORITY] Modèle d'Autorité validé (Epoch: {current_epoch}, Hash Prefix: {self._hash_prefix})")
 

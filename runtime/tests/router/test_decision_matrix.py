@@ -3,10 +3,12 @@ import asyncio
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent.parent
-if str(ROOT_DIR) not in sys.path: sys.path.insert(0, str(ROOT_DIR))
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
 from core.intelligence_router import intelligence_router
 from core.routing.contracts import RouteConstraints, Urgency
+
 
 async def run_matrix():
     print("=== E-ZZIO V7.24.2.1 ROUTER DECISION MATRIX ===")
@@ -30,6 +32,7 @@ async def run_matrix():
     # CAS 5 : Vision
     d5 = await intelligence_router.route("vision", "Que vois-tu ?", RouteConstraints(require_vision=True))
     print(f"[CAS 5 - Vision] Choix attendu: qwen2.5vl ou gemini -> Obtenu: {d5.provider}/{d5.model} (Score: {d5.confidence_score})")
+
 
 if __name__ == "__main__":
     asyncio.run(run_matrix())

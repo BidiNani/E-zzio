@@ -1,16 +1,18 @@
-from enum import Enum
 from .contracts import AgentStatus
+
 
 class InvalidTransition(Exception):
     pass
 
+
 _ALLOWED = {
-    AgentStatus.CREATED: [AgentStatus.PLANNING],
+    AgentStatus.CREATED: [AgentStatus.PLANNING, AgentStatus.HALTED, AgentStatus.FAILED],
     AgentStatus.PLANNING: [AgentStatus.WAITING_APPROVAL, AgentStatus.HALTED],
     AgentStatus.WAITING_APPROVAL: [AgentStatus.EXECUTING, AgentStatus.HALTED],
     AgentStatus.EXECUTING: [AgentStatus.VERIFYING, AgentStatus.FAILED],
     AgentStatus.VERIFYING: [AgentStatus.COMPLETED, AgentStatus.PLANNING, AgentStatus.FAILED],
 }
+
 
 class AgentStateMachine:
     def __init__(self):

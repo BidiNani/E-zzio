@@ -3,7 +3,7 @@ E-ZZIO V7.60.2 — ECOL Legacy LLM Adapter Deployment
 Déploie la couche d'interception pour capturer les appels directs (Ollama/OpenAI)
 et les router vers la Cognitive Gateway.
 """
-import os
+
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
@@ -11,7 +11,7 @@ CORE_COG_DIR = ROOT_DIR / "core" / "cognition"
 
 ADAPTER_CODE = '''"""
 E-ZZIO Core — Legacy LLM Adapter (ECOL)
-Intercepte les anciens appels directs (Ollama, API) et les redirige vers 
+Intercepte les anciens appels directs (Ollama, API) et les redirige vers
 la Cognitive Gateway pour appliquer l'économie cognitive et le filtrage d'identité.
 """
 import logging
@@ -37,10 +37,10 @@ class LegacyLLMAdapter:
         Le vieux module pense parler à Ollama, mais il parle à l'ECOL.
         """
         logger.warning("[LEGACY INTERCEPT] Appel direct Ollama détecté. Redirection vers ECOL.")
-        
+
         # 1. Extraction de l'intention à partir des messages bruts
         task_description = messages[-1]['content'] if messages else "Tâche indéfinie"
-        
+
         # 2. Encapsulation pour la Gateway
         context_payload = {
             "legacy_model_requested": model,
@@ -48,7 +48,7 @@ class LegacyLLMAdapter:
             "legacy_kwargs": kwargs,
             "source": "ollama_adapter"
         }
-        
+
         # 3. Passage par la porte unique ECOL
         if self.gateway:
             ecol_response = self.gateway.ask(
@@ -77,7 +77,7 @@ class LegacyLLMAdapter:
         Intercepte les appels API REST classiques (ex: requêtes OpenAI/Claude).
         """
         logger.warning(f"[LEGACY INTERCEPT] Appel API externe ({endpoint}) intercepté.")
-        
+
         # Traduction similaire pour les appels API...
         return {
             "choices": [{
@@ -90,6 +90,7 @@ class LegacyLLMAdapter:
         }
 '''
 
+
 def deploy_adapter():
     print("[*] Déploiement du Legacy LLM Adapter (Interception Layer)...")
     CORE_COG_DIR.mkdir(parents=True, exist_ok=True)
@@ -97,11 +98,12 @@ def deploy_adapter():
     adapter_path = CORE_COG_DIR / "legacy_llm_adapter.py"
     with open(adapter_path, "w", encoding="utf-8") as f:
         f.write(ADAPTER_CODE.strip() + "\n")
-        
+
     print("  + Implémentation validée : legacy_llm_adapter.py")
-    print("\n" + "="*65)
+    print("\n" + "=" * 65)
     print(" LEGACY ADAPTER DEPLOYMENT (V7.60.2) SUCCEEDED")
-    print("="*65)
+    print("=" * 65)
+
 
 if __name__ == "__main__":
     deploy_adapter()

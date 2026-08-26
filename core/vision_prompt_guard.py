@@ -6,15 +6,39 @@ from typing import Any, Dict
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".webp", ".bmp", ".gif"}
 
 TECH_WORDS = [
-    "powershell", "terminal", "erreur", "error", "traceback", "cmd", "console",
-    "script", "code", "docker", "api", "localhost", "windows", "capture ecran",
-    "capture écran", "screenshot"
+    "powershell",
+    "terminal",
+    "erreur",
+    "error",
+    "traceback",
+    "cmd",
+    "console",
+    "script",
+    "code",
+    "docker",
+    "api",
+    "localhost",
+    "windows",
+    "capture ecran",
+    "capture écran",
+    "screenshot",
 ]
 
 LOGO_WORDS = [
-    "logo", "icone", "icône", "icon", "avatar", "illustration", "dessin",
-    "vectoriel", "symbole", "embleme", "emblème", "mascotte"
+    "logo",
+    "icone",
+    "icône",
+    "icon",
+    "avatar",
+    "illustration",
+    "dessin",
+    "vectoriel",
+    "symbole",
+    "embleme",
+    "emblème",
+    "mascotte",
 ]
+
 
 def infer_image_task(path: str = "", prompt: str = "") -> Dict[str, Any]:
     text = f"{path} {prompt}".lower()
@@ -43,6 +67,7 @@ def infer_image_task(path: str = "", prompt: str = "") -> Dict[str, Any]:
         "looks_technical": looks_technical,
         "looks_logo": looks_logo,
     }
+
 
 def build_vision_prompt(path: str = "", prompt: str = "") -> str:
     task = infer_image_task(path, prompt)
@@ -87,6 +112,7 @@ Mode image generale :
     extra = f"Demande utilisateur : {user_prompt}" if user_prompt else "Demande utilisateur : analyse l'image de facon claire et utile."
 
     return f"{base_rules}\n\n{mode}\n\n{extra}"
+
 
 def clean_vision_reply(reply: str, path: str = "", prompt: str = "") -> str:
     text = (reply or "").strip()

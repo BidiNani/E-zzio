@@ -1,8 +1,8 @@
-import os
 import time
 import subprocess
 from pathlib import Path
 from ..schemas import ModelRequest, ModelResponse
+
 
 class LlamaCppProvider:
     def __init__(self, root_dir: Path):
@@ -16,10 +16,11 @@ class LlamaCppProvider:
             raise FileNotFoundError(f"Fichier GGUF introuvable : {full_path}")
 
         start_time = time.time()
-        
+
         # Mode dégrade via CLI llama.cpp ou binding si installé
         try:
             from llama_cpp import Llama
+
             llm = Llama(model_path=str(full_path), n_ctx=2048, verbose=False)
             output = llm(req.prompt, max_tokens=512)
             content = output["choices"][0]["text"]
@@ -34,8 +35,5 @@ class LlamaCppProvider:
         latency = (time.time() - start_time) * 1000
 
         return ModelResponse(
-            content=content,
-            model_used=model_meta.get("model_path", "gguf"),
-            provider_used="llama_cpp",
-            latency_ms=latency
+            content=content, model_used=model_meta.get("model_path", "gguf"), provider_used="llama_cpp", latency_ms=latency
         )

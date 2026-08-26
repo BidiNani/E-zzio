@@ -3,11 +3,13 @@ E-ZZIO V9.0.2 — Autonomic Watcher (Sensory Daemon)
 Boucle de surveillance asynchrone appliquant le filtre d'efférence (anti-bruit).
 Ne réveille l'organisme que si le budget d'attention change.
 """
+
 import time
 import threading
 from typing import Optional, Callable
 from runtime.sensory.bus.sensory_bus import SensoryBus
 from runtime.sensory.sensors.proprioception_sensor import ProprioceptionSensor
+
 
 class AutonomicWatcher:
     def __init__(self, bus: SensoryBus, interval_sec: int = 5):
@@ -16,10 +18,10 @@ class AutonomicWatcher:
         self.interval = interval_sec
         self._running = False
         self._thread: Optional[threading.Thread] = None
-        
+
         # Filtre d'efférence : mémorise le dernier état d'attention
         self.last_attention_state = "UNKNOWN"
-        
+
         # Callback pour réveiller le système extérieur uniquement en cas d'alerte
         self.on_state_change: Optional[Callable] = None
 
@@ -39,13 +41,13 @@ class AutonomicWatcher:
             try:
                 # 1. Sensation (Capture de l'état)
                 percept = self.sensor.sense()
-                
+
                 # 2. Routage dans le bus
                 self.bus.transmit(percept)
-                
+
                 # 3. Efference Copy (Filtre anti-bruit)
                 current_attention = percept.priority
-                
+
                 if current_attention != self.last_attention_state:
                     # Changement d'état détecté ! On déclenche l'alerte.
                     if self.on_state_change:
@@ -55,6 +57,6 @@ class AutonomicWatcher:
             except Exception:
                 # Un sens périphérique ne doit jamais faire crasher l'organisme
                 pass
-            
+
             # Respiration du thread
             time.sleep(self.interval)

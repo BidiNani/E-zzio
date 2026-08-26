@@ -17,14 +17,13 @@ class ExecutionContext:
 
     @property
     def state(self):
-        if not hasattr(self, '_state'):
-            object.__setattr__(self, '_state', {})
+        if not hasattr(self, "_state"):
+            object.__setattr__(self, "_state", {})
         return self._state
 
     @state.setter
     def state(self, value):
-        object.__setattr__(self, '_state', value)
-
+        object.__setattr__(self, "_state", value)
 
     execution_id: str
     session_id: str
@@ -33,9 +32,7 @@ class ExecutionContext:
 
     tool_request: Dict[str, Any]
 
-    created_at: datetime = field(
-        default_factory=lambda: __import__('datetime').datetime.now(__import__('datetime').timezone.utc)
-    )
+    created_at: datetime = field(default_factory=lambda: __import__("datetime").datetime.now(__import__("datetime").timezone.utc))
 
     timeout: float = 30.0
 

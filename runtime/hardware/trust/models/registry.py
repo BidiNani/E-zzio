@@ -2,6 +2,7 @@ import json
 import hashlib
 from pathlib import Path
 
+
 class CoreModelRegistry:
     def __init__(self, contract_dir: Path, secret_seed: str = "EZZIO_CORE_ROOT_KEY"):
         self.contract_dir = contract_dir

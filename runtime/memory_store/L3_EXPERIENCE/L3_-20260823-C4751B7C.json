@@ -1,0 +1,11 @@
+{
+  "tier": "L3_EXPERIENCE",
+  "memory_id": "L3_-20260823-C4751B7C",
+  "timestamp_utc": "2026-08-23T13:18:11.876213+00:00",
+  "source": "agent_antigravity_closed_loop",
+  "importance": 1.2,
+  "compression_ratio": 1.0,
+  "original_sha256": "2c7499bac98d0972657dcf0bec83cb86515d0eba3dcf682804aeab0d4db6dec2",
+  "content": "Closed-loop verified: FILE_CREATED on cha_worker_2.py (SHA256: 27c40fe7).",
+  "evidence_id": "EVID-20260823-F9172C2C"
+}

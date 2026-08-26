@@ -1,4 +1,5 @@
 from .cpu_topology import DynamicCPUTopology
+
 Ryzen5900XTopology = DynamicCPUTopology
 from .governor_service import HardwareGovernorService
 from .adaptive_daemon import AdaptiveHardwareDaemon
@@ -15,5 +16,5 @@ __all__ = [
     "MemoryIntelligenceEngine",
     "PersistentMemoryActuatorV54",
     "AdaptiveLearningGovernorV55",
-    "GuardianCognitiveGovernorV56"
+    "GuardianCognitiveGovernorV56",
 ]

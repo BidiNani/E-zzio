@@ -4,8 +4,10 @@
 import os
 import psutil
 
+
 class RyzenTopologyInspector:
     """Inspecte la topologie matérielle réelle du processeur Ryzen (Cœurs, SMT, Fréquences)."""
+
     @staticmethod
     def inspect() -> dict:
         logical_threads = os.cpu_count() or 4
@@ -15,7 +17,7 @@ class RyzenTopologyInspector:
             physical_cores = logical_threads // 2
 
         smt_active = logical_threads > physical_cores
-        
+
         freqs = {}
         try:
             f = psutil.cpu_freq()
@@ -29,5 +31,5 @@ class RyzenTopologyInspector:
             "physical_cores": physical_cores,
             "logical_threads": logical_threads,
             "smt_active": smt_active,
-            "frequencies": freqs
+            "frequencies": freqs,
         }

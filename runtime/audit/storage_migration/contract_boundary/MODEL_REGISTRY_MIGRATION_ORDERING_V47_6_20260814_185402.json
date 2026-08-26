@@ -1,7 +1,0 @@
-{
-  "component": "MODEL_REGISTRY",
-  "version": "V47.6",
-  "scan_mode": "READ_ONLY_PRIORITY_ENGINE",
-  "timestamp": "2026-08-14T18:54:02.8882528+02:00",
-  "migration_order": []
-}

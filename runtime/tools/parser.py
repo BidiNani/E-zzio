@@ -3,12 +3,14 @@ from typing import Optional
 from runtime.tools.tool_schema import ToolRequest
 from runtime.security.permissions import SecurityPolicy
 
+
 class ToolParser:
     """Analyse stricte de la sortie du LLM (Exige un JSON brut pur)."""
+
     @staticmethod
     def parse_intent(llm_output: str) -> Optional[ToolRequest]:
         clean_text = llm_output.strip()
-        
+
         # Exigence stricte : Le texte doit commencer par '{' et finir par '}'
         if not (clean_text.startswith("{") and clean_text.endswith("}")):
             return None

@@ -12,9 +12,11 @@ if TYPE_CHECKING:
     from runtime.execution.governor import ResourceGovernor
     from runtime.execution.ledger import ExecutionLedger
 
+
 @dataclass(frozen=True)
 class RuntimeContext:
     """Le Cœur de l'OS unifié V4.2."""
+
     bus: EzzioEventBus
     state: EzzioRuntimeState
     trust: TrustRegistry

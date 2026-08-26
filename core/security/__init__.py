@@ -1,9 +1,3 @@
-from core.security.guardrail import PromptGuard, SecurityViolationError
-from core.security.quota_manager import QuotaManager, QuotaExceededError
+from core.security.unified_vault import UnifiedKeyVault, key_vault
 
-__all__ = [
-    "PromptGuard",
-    "SecurityViolationError",
-    "QuotaManager",
-    "QuotaExceededError"
-]
+__all__ = ["UnifiedKeyVault", "key_vault"]

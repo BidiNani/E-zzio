@@ -6,8 +6,10 @@ from runtime.memory.sqlite.store import SQLiteEventStore
 
 SAFE_FIELDS = ["episode_id", "outcome", "intent", "context"]
 
+
 class DreamEngine:
     """Producteur unique de l'événement de clôture avec un contrat de données versionné (v1.0)."""
+
     def __init__(self, event_bus: EventBus, store: SQLiteEventStore):
         self.event_bus = event_bus
         self.store = store
@@ -21,7 +23,8 @@ class DreamEngine:
     def _dream_worker(self, payload: dict):
         episodes = payload.get("episodes", [])
         episode_ids = payload.get("episode_ids", [])
-        if not episodes: return
+        if not episodes:
+            return
 
         sanitized_episodes = [{k: ep[k] for k in SAFE_FIELDS if k in ep} for ep in episodes]
         self.event_bus.emit("AuditLog", {"message": f"DreamEngine : Rêve initié sur {len(sanitized_episodes)} épisodes.", "level": "INFO"})
@@ -29,10 +32,7 @@ class DreamEngine:
         request_payload = {
             "tool_name": "llm.cognitive_reflection",
             "arguments": {"episodes_data": sanitized_episodes},
-            "context_metadata": {
-                "origin": "dream_engine",
-                "episode_ids": episode_ids
-            }
+            "context_metadata": {"origin": "dream_engine", "episode_ids": episode_ids},
         }
         self.event_bus.emit("SystemActionRequested", request_payload)
 
@@ -46,7 +46,7 @@ class DreamEngine:
 
         metadata = payload.get("metadata", {})
         output = payload.get("output", "[]")
-        
+
         try:
             proposals = json.loads(output)
             if isinstance(proposals, list) and proposals:
@@ -56,10 +56,10 @@ class DreamEngine:
                     "version": "1.0",
                     "source": "DreamEngine",
                     "timestamp": int(time.time()),
-                    "proposals": proposals
+                    "proposals": proposals,
                 }
                 self.event_bus.emit("ReflectionProposalGenerated", proposal_envelope)
-                
+
                 episode_ids = metadata.get("episode_ids", [])
                 if episode_ids:
                     # Contrat v1.0 strict pour l'unicité de la clôture biologique
@@ -68,7 +68,7 @@ class DreamEngine:
                         "version": "1.0",
                         "source": "DreamEngine",
                         "timestamp": int(time.time()),
-                        "episode_ids": episode_ids
+                        "episode_ids": episode_ids,
                     }
                     self.event_bus.emit("EpisodesConsolidated", consolidation_envelope)
         except Exception as e:

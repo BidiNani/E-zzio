@@ -1,10 +1,10 @@
 import re
-import sqlite3
 from pathlib import Path
 from typing import Optional
 from core.storage import storage
 
 DB_PATH = Path(r"G:\\AI\\E-zzio\\runtime\\state\\deterministic_memory.db")
+
 
 def _init_db():
     with storage.get_connection(DB_PATH) as conn:
@@ -16,7 +16,9 @@ def _init_db():
             )
         """)
 
+
 _init_db()
+
 
 def check_memory_intent(user_prompt: str) -> Optional[str]:
     p = str(user_prompt).strip()
@@ -25,7 +27,9 @@ def check_memory_intent(user_prompt: str) -> Optional[str]:
 
     m_set = re.search(r"(?:retiens|m[ée]morise|enregistre)\s+(?:que\s+)?(?:le\s+|la\s+)?(.+?)\s+(?:est|=|:)\s+(.+)", p, re.IGNORECASE)
     if not m_set:
-        m_set = re.search(r"(?:retiens|m[ée]morise|enregistre)\s+(?:le\s+code\s+secret|la\s+valeur|le\s+code)\s+([a-zA-Z0-9_-]+)", p, re.IGNORECASE)
+        m_set = re.search(
+            r"(?:retiens|m[ée]morise|enregistre)\s+(?:le\s+code\s+secret|la\s+valeur|le\s+code)\s+([a-zA-Z0-9_-]+)", p, re.IGNORECASE
+        )
         if m_set:
             k, v = "code secret", m_set.group(1).strip()
         else:

@@ -2,14 +2,16 @@
 E-ZZIO V7.40 — Autonomous Task Engine
 Décompose une intention complexe en un plan d'action séquentiel.
 """
+
 import uuid
 from datetime import datetime, timezone
+
 
 class TaskEngine:
     @staticmethod
     def create_execution_plan(intent: str) -> dict:
         plan_id = f"PLAN-{uuid.uuid4().hex[:6].upper()}"
-        
+
         # Simulation d'analyse sémantique de l'intention
         tasks = []
         if "guide" in intent.lower() or "analyse" in intent.lower():
@@ -24,7 +26,8 @@ class TaskEngine:
             "intent": intent,
             "tasks": tasks,
             "status": "READY",
-            "created_at": datetime.now(timezone.utc).isoformat()
+            "created_at": datetime.now(timezone.utc).isoformat(),
         }
+
 
 task_engine = TaskEngine()

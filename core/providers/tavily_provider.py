@@ -4,6 +4,7 @@ from typing import Any, Dict, Optional
 from core.providers.iresearch_provider import IResearchProvider
 from core.secrets import load_secrets
 
+
 class TavilyProvider(IResearchProvider):
     name: str = "tavily"
 
@@ -14,26 +15,32 @@ class TavilyProvider(IResearchProvider):
 
     async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
         if not self.api_key:
-            raise RuntimeError("TAVILY_API_KEY manquante dans secrets/.env ou variables d'environnement")
-
-        headers = {"Authorization": f"Bearer {self.api_key}"}
+            raise RuntimeError(
+                "TAVILY_API_KEY manquante dans secrets/.env ou variables d'environnement"
+            )
+        headers = {
+            "Authorization": f"Bearer {self.api_key}"
+        }
         body = {
             "query": query,
             "max_results": kwargs.get("max_results", 5),
             "search_depth": kwargs.get("search_depth", "basic"),
-            "include_answer": False
+            "include_answer": False,
         }
-
         async with httpx.AsyncClient(timeout=20.0) as client:
-            resp = await client.post(self.base_url, headers=headers, json=body)
+            resp = await client.post(
+                self.base_url,
+                headers=headers,
+                json=body,
+            )
             resp.raise_for_status()
             data = resp.json()
-            results = data.get("results", [])
-            return {
-                "provider": self.name,
-                "data": {
-                    "results": results,
-                    "total": len(results),
-                    "raw": data
-                }
-            }
+        results = data.get("results", [])
+        return {
+            "provider": self.name,
+            "data": {
+                "results": results,
+                "total": len(results),
+                "raw": data,
+            },
+        }

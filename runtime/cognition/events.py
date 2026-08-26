@@ -2,14 +2,17 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Dict, Any, List
 
+
 @dataclass
 class CognitiveEvent:
     event_type: str
     payload: Dict[str, Any] = field(default_factory=dict)
     timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
+
 class EventBus:
     """Internal event bus for decoupled component messaging."""
+
     def __init__(self):
         self._history: List[CognitiveEvent] = []
 

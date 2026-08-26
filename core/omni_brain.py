@@ -6,7 +6,6 @@ import socket
 from pathlib import Path
 from typing import Dict, Any
 
-import requests
 import ollama
 from dotenv import dotenv_values
 
@@ -53,6 +52,7 @@ Lexique E-ZZIO :
 - CPU/RAM only = GPU/VRAM non utilisé.
 """.strip()
 
+
 def load_config() -> Dict[str, str]:
     cfg = {}
     if SECRETS_FILE.exists():
@@ -73,10 +73,12 @@ def load_config() -> Dict[str, str]:
         cfg[key] = os.environ.get(key, cfg.get(key, ""))
     return cfg
 
+
 def _bool(value: str, default: bool = False) -> bool:
     if value is None:
         return default
     return str(value).strip().lower() in ["1", "true", "yes", "y", "on"]
+
 
 def _redact(value: str) -> str:
     if not value:
@@ -84,6 +86,7 @@ def _redact(value: str) -> str:
     if len(value) <= 10:
         return "***"
     return value[:5] + "..." + value[-5:]
+
 
 def get_lan_ips():
     ips = []
@@ -107,6 +110,7 @@ def get_lan_ips():
         pass
 
     return ips
+
 
 def integration_truth():
     cfg = load_config()
@@ -148,6 +152,7 @@ def integration_truth():
         },
     }
 
+
 def mobile_config():
     cfg = load_config()
     ips = get_lan_ips()
@@ -155,18 +160,20 @@ def mobile_config():
 
     urls = []
     for ip in ips:
-        urls.append({
-            "host": ip,
-            "base_url": f"http://{ip}:8001",
-            "status": f"http://{ip}:8001/status",
-            "router_status": f"http://{ip}:8001/router-status",
-            "mobile_pull": f"http://{ip}:8001/omni/mobile/pull",
-            "mobile_inbox": f"http://{ip}:8001/omni/mobile/inbox",
-            "omni_reply": f"http://{ip}:8001/omni-bridge/reply",
-            "mobile_reply": f"http://{ip}:8001/omni-bridge/mobile/reply",
-            "commands": f"http://{ip}:8001/omni-bridge/commands",
-            "truth": f"http://{ip}:8001/omni-bridge/truth",
-        })
+        urls.append(
+            {
+                "host": ip,
+                "base_url": f"http://{ip}:8001",
+                "status": f"http://{ip}:8001/status",
+                "router_status": f"http://{ip}:8001/router-status",
+                "mobile_pull": f"http://{ip}:8001/omni/mobile/pull",
+                "mobile_inbox": f"http://{ip}:8001/omni/mobile/inbox",
+                "omni_reply": f"http://{ip}:8001/omni-bridge/reply",
+                "mobile_reply": f"http://{ip}:8001/omni-bridge/mobile/reply",
+                "commands": f"http://{ip}:8001/omni-bridge/commands",
+                "truth": f"http://{ip}:8001/omni-bridge/truth",
+            }
+        )
 
     return {
         "ok": True,
@@ -186,9 +193,11 @@ def mobile_config():
         "truth": integration_truth()["smartphone"],
     }
 
+
 def verify_mobile_token(token: str):
     expected = load_config().get("EZZIO_MOBILE_SHARED_TOKEN", "")
     return bool(expected and token and token == expected)
+
 
 def write_json_event(folder: Path, kind: str, payload: Dict[str, Any]):
     event_id = f"{time.strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:10]}"
@@ -201,6 +210,7 @@ def write_json_event(folder: Path, kind: str, payload: Dict[str, Any]):
     path = folder / f"{event_id}.json"
     path.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
     return {"ok": True, "id": event_id, "path": str(path), "record": record}
+
 
 def local_status_payload():
     return {
@@ -218,9 +228,11 @@ def local_status_payload():
         },
     }
 
+
 def local_router_status_payload():
     try:
         import sys
+
         web_server = sys.modules.get("web_server")
         report = getattr(web_server, "router_load_report", None)
 
@@ -240,6 +252,7 @@ def local_router_status_payload():
         "ok": False,
         "error": "router_load_report indisponible en mémoire",
     }
+
 
 def no_ads_policy_payload():
     return {
@@ -262,19 +275,24 @@ def no_ads_policy_payload():
         ],
     }
 
+
 def local_forge_status_payload():
     try:
         from core.creative_forge import status
+
         return {"ok": True, "source": "core.creative_forge.status", "data": status()}
     except Exception as exc:
         return {"ok": False, "error": str(exc)}
 
+
 def local_vision_status_payload():
     try:
         from core.vision_bridge import status
+
         return {"ok": True, "source": "core.vision_bridge.status", "data": status()}
     except Exception as exc:
         return {"ok": False, "error": str(exc)}
+
 
 def _get_json(path: str, timeout: int = 8):
     """
@@ -301,6 +319,7 @@ def _get_json(path: str, timeout: int = 8):
         "error": f"Commande interne non mappée sans HTTP : {path}",
     }
 
+
 def available_commands():
     return {
         "ok": True,
@@ -320,8 +339,10 @@ def available_commands():
         ],
     }
 
+
 def _compact_json(data: Dict[str, Any]):
     return json.dumps(data, ensure_ascii=False, indent=2)
+
 
 def handle_command(text: str):
     command = str(text or "").strip().split()[0].lower()
@@ -337,7 +358,7 @@ def handle_command(text: str):
         return {
             "handled": True,
             "reply": (
-                "Je suis E-ZZIO, l'ami IA local d'Enrik : API PC, bridge smartphone LAN, "
+                CanonicalIdentity().build_system_prompt()[:120] + "..."
                 "connecteurs Discord/Messenger officiels, Vision, Forge, mémoire et autonomie. "
                 "CPU/RAM only. Zéro pub, zéro tracking, zéro sponsor."
             ),
@@ -372,17 +393,9 @@ def handle_command(text: str):
 
     return {"handled": False}
 
+
 def sanitize_reply(answer: str):
     answer = str(answer or "").strip()
-
-    forbidden_claims = [
-        "Je suis déjà connecté à votre smartphone",
-        "je suis déjà connecté à votre smartphone",
-        "commandes vocales",
-        "mode omni est activé, donc je suis partout",
-        "je suis partout",
-        "application",
-    ]
 
     lowered = answer.lower()
     risky = False
@@ -405,37 +418,19 @@ def sanitize_reply(answer: str):
 
     return answer
 
+
+from core.identity.canonical_identity import CanonicalIdentity
+
 def build_system_prompt(source: str, mode: str):
+    canonical = CanonicalIdentity().build_system_prompt()
     tone = "Réponds court, concret, avec chaleur discrète."
     if source in ["mobile", "smartphone", "phone"]:
         tone = "Réponds comme un compagnon mobile : clair, rapide, honnête."
     if mode == "companion":
         tone = "Réponds comme un ami IA local : chaleureux, mais pas bavard."
 
-    return f"""
-Tu es E-ZZIO, l'ami IA local d'Enrik.
+    return f"{canonical}\n\n[MODULATION TONS OMNI]\n- Source: {source}\n- Mode: {mode}\n- Style tonal: {tone}"
 
-Vérité obligatoire :
-- Ne dis jamais que tu es déjà sur smartphone si seule l'API LAN est prête.
-- Ne dis jamais qu'une application mobile existe si elle n'a pas été construite/installée.
-- Ne dis jamais que les commandes vocales existent si aucun module vocal n'est installé.
-- Ne dis jamais que Discord/Messenger sont actifs si les tokens ne sont pas configurés et l'envoi autorisé.
-- Utilise les mots : prêt, configuré, actif, pas encore fait.
-- Quand Enrik dit "bridge", c'est le bridge logiciel E-ZZIO, pas un pont routier.
-
-Identité :
-- Projet local : G:/AI/E-zzio.
-- Objectif : rendre E-ZZIO accessible sur PC, smartphone, Discord/Messenger, Vision, Forge, mémoire, autonomie.
-- CPU/RAM only. GPU/VRAM non utilisé.
-- Zéro pub, zéro sponsor, zéro tracking.
-
-Style :
-- Français.
-- {tone}
-- Si la demande est ambiguë, donne l'état réel.
-
-{PROJECT_LEXICON}
-""".strip()
 
 def local_brain_reply(text: str, source: str = "mobile", user: str = "enrik", mode: str = "fast"):
     text = str(text or "").strip()
@@ -443,33 +438,45 @@ def local_brain_reply(text: str, source: str = "mobile", user: str = "enrik", mo
     if not text:
         return {"ok": False, "error": "Message vide."}
 
-    inbox = write_json_event(INBOX, "omni.inbox", {
-        "source": source,
-        "user": user,
-        "text": text,
-        "mode": mode,
-    })
+    inbox = write_json_event(
+        INBOX,
+        "omni.inbox",
+        {
+            "source": source,
+            "user": user,
+            "text": text,
+            "mode": mode,
+        },
+    )
 
     command = handle_command(text)
     if command.get("handled"):
         answer = command["reply"]
-        outbox = write_json_event(OUTBOX, "omni.command.reply", {
-            "target": source,
-            "user": user,
-            "input": text,
-            "answer": answer,
-            "model": "command-router",
-            "ok": True,
-        })
+        outbox = write_json_event(
+            OUTBOX,
+            "omni.command.reply",
+            {
+                "target": source,
+                "user": user,
+                "input": text,
+                "answer": answer,
+                "model": "command-router",
+                "ok": True,
+            },
+        )
 
         mobile = None
         if source in ["mobile", "smartphone", "phone"]:
-            mobile = write_json_event(MOBILE, "mobile.command.reply", {
-                "title": "E-ZZIO",
-                "text": answer,
-                "source": source,
-                "user": user,
-            })
+            mobile = write_json_event(
+                MOBILE,
+                "mobile.command.reply",
+                {
+                    "title": "E-ZZIO",
+                    "text": answer,
+                    "source": source,
+                    "user": user,
+                },
+            )
 
         return {
             "ok": True,
@@ -512,45 +519,54 @@ def local_brain_reply(text: str, source: str = "mobile", user: str = "enrik", mo
         error = None
 
     except Exception as exc:
-        answer = (
-            "Je suis connecté au bridge E-ZZIO, mais le cerveau local n'a pas répondu. "
-            "Vérifie Ollama et le modèle qwen3:1.7b."
-        )
+        answer = "Je suis connecté au bridge E-ZZIO, mais le cerveau local n'a pas répondu. Vérifie Ollama et le modèle qwen3:1.7b."
         ok = False
         error = str(exc)
 
     elapsed_ms = int((time.time() - started) * 1000)
 
-    outbox = write_json_event(OUTBOX, "omni.reply", {
-        "target": source,
-        "user": user,
-        "input": text,
-        "answer": answer,
-        "model": model,
-        "elapsed_ms": elapsed_ms,
-        "ok": ok,
-        "error": error,
-    })
+    outbox = write_json_event(
+        OUTBOX,
+        "omni.reply",
+        {
+            "target": source,
+            "user": user,
+            "input": text,
+            "answer": answer,
+            "model": model,
+            "elapsed_ms": elapsed_ms,
+            "ok": ok,
+            "error": error,
+        },
+    )
 
     mobile = None
     if source in ["mobile", "smartphone", "phone"]:
-        mobile = write_json_event(MOBILE, "mobile.reply", {
-            "title": "E-ZZIO",
-            "text": answer,
+        mobile = write_json_event(
+            MOBILE,
+            "mobile.reply",
+            {
+                "title": "E-ZZIO",
+                "text": answer,
+                "source": source,
+                "user": user,
+            },
+        )
+
+    log = write_json_event(
+        BRAIN_LOGS,
+        "brain.reply",
+        {
             "source": source,
             "user": user,
-        })
-
-    log = write_json_event(BRAIN_LOGS, "brain.reply", {
-        "source": source,
-        "user": user,
-        "input": text,
-        "answer": answer,
-        "model": model,
-        "elapsed_ms": elapsed_ms,
-        "ok": ok,
-        "error": error,
-    })
+            "input": text,
+            "answer": answer,
+            "model": model,
+            "elapsed_ms": elapsed_ms,
+            "ok": ok,
+            "error": error,
+        },
+    )
 
     return {
         "ok": ok,
@@ -573,6 +589,7 @@ def local_brain_reply(text: str, source: str = "mobile", user: str = "enrik", mo
         },
     }
 
+
 def bridge_status():
     cfg = load_config()
     return {
@@ -580,7 +597,7 @@ def bridge_status():
         "ok": True,
         "identity": {
             "name": "E-ZZIO",
-            "meaning": "ami IA local et organisme logiciel d'Enrik",
+            "meaning": "Organisme logiciel souverain géré via CanonicalIdentity",
             "bridge_definition": "pont logiciel entre API PC, smartphone LAN, Discord/Messenger officiels",
         },
         "models": {
@@ -612,6 +629,3 @@ def bridge_status():
             "secrets": str(SECRETS_FILE),
         },
     }
-
-
-

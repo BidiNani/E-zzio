@@ -6,9 +6,11 @@ from dataclasses import dataclass, field, asdict
 from enum import Enum
 from typing import List, Dict, Any, Optional
 
+
 def get_recovery_secret() -> str:
     """Récupère le secret HMAC depuis l'environnement ou utilise une clé par défaut."""
     return os.environ.get("EZZIO_RECOVERY_HMAC_SECRET", "ezzio-sovereign-kernel-recovery-secret-2026")
+
 
 class Severity(str, Enum):
     INFO = "INFO"
@@ -16,12 +18,9 @@ class Severity(str, Enum):
     HIGH = "HIGH"
     CRITICAL = "CRITICAL"
 
-SEVERITY_SCORES = {
-    Severity.INFO: 10,
-    Severity.WARNING: 40,
-    Severity.HIGH: 70,
-    Severity.CRITICAL: 100
-}
+
+SEVERITY_SCORES = {Severity.INFO: 10, Severity.WARNING: 40, Severity.HIGH: 70, Severity.CRITICAL: 100}
+
 
 class IncidentCategory(str, Enum):
     EXTERNAL_TIMEOUT = "EXTERNAL_TIMEOUT"
@@ -29,6 +28,7 @@ class IncidentCategory(str, Enum):
     HANDLER_DEGRADATION = "HANDLER_DEGRADATION"
     RUNTIME_FAILURE = "RUNTIME_FAILURE"
     UNHANDLED_EXCEPTION = "UNHANDLED_EXCEPTION"
+
 
 @dataclass(frozen=True)
 class Finding:
@@ -39,6 +39,7 @@ class Finding:
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
+
 
 @dataclass(frozen=True)
 class IncidentBundle:
@@ -77,13 +78,14 @@ class IncidentBundle:
             "telemetry_snapshot": self.telemetry_snapshot,
             "findings": self.findings,
             "root_candidates": self.root_candidates,
-            "metadata": self.metadata
+            "metadata": self.metadata,
         }
         raw = json.dumps(canonical, sort_keys=True, default=str)
-        return hashlib.sha256(raw.encode('utf-8')).hexdigest()
+        return hashlib.sha256(raw.encode("utf-8")).hexdigest()
 
     def verify_integrity(self) -> bool:
         return self.compute_canonical_hash() == self.bundle_hash
+
 
 def compute_decision_signature(
     decision_trace_id: str,
@@ -92,8 +94,8 @@ def compute_decision_signature(
     approval_status: str,
     confidence: float,
     timestamp: str,
-    secret_key: Optional[str] = None
+    secret_key: Optional[str] = None,
 ) -> str:
     key = secret_key or get_recovery_secret()
     raw = f"{decision_trace_id}|{incident_id}|{action_type}|{approval_status}|{confidence}|{timestamp}"
-    return hmac.new(key.encode('utf-8'), raw.encode('utf-8'), hashlib.sha256).hexdigest()
+    return hmac.new(key.encode("utf-8"), raw.encode("utf-8"), hashlib.sha256).hexdigest()

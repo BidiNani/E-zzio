@@ -8,6 +8,7 @@ import shutil
 import os
 import subprocess
 
+
 class SkillSecurityVisitor(ast.NodeVisitor):
     def __init__(self):
         self.violations = []
@@ -18,7 +19,7 @@ class SkillSecurityVisitor(ast.NodeVisitor):
 
     def visit_Import(self, node):
         for alias in node.names:
-            base_module = alias.name.split('.')[0]
+            base_module = alias.name.split(".")[0]
             if base_module in self.forbidden_modules or base_module == "pathlib":
                 self.blocked_aliases.add(alias.asname or alias.name)
                 if base_module in self.forbidden_modules:
@@ -27,14 +28,14 @@ class SkillSecurityVisitor(ast.NodeVisitor):
 
     def visit_ImportFrom(self, node):
         if node.module:
-            base_module = node.module.split('.')[0]
+            base_module = node.module.split(".")[0]
             if base_module in self.forbidden_modules or base_module == "pathlib":
                 for alias in node.names:
                     self.blocked_aliases.add(alias.asname or alias.name)
 
             if base_module in self.forbidden_modules:
                 self.violations.append(f"Module interdit importé depuis : {node.module}")
-            
+
             if node.module == "runtime.security.secrets" or node.module.endswith("secrets"):
                 for alias in node.names:
                     if alias.name == "SecretKeyManager":
@@ -69,18 +70,19 @@ class SkillSecurityVisitor(ast.NodeVisitor):
             # BLOCAGE DE LA RÉFLEXION DYNAMIQUE AJOUTÉ
             if node.func.id in {"eval", "exec", "globals", "locals", "getattr", "__import__", "compile"}:
                 self.violations.append(f"Fonction globale critique interdite : {node.func.id}()")
-            
+
             elif node.func.id in {"open", "Path"}:
-                if getattr(node, 'args', None):
+                if getattr(node, "args", None):
                     first_arg = node.args[0]
                     if isinstance(first_arg, ast.Constant) and isinstance(first_arg.value, str):
                         if "secrets" in first_arg.value or ".env" in first_arg.value or ".." in first_arg.value:
-                             self.violations.append(f"Appel I/O interdit ({node.func.id}) vers cible critique : {first_arg.value}")
+                            self.violations.append(f"Appel I/O interdit ({node.func.id}) vers cible critique : {first_arg.value}")
                     elif isinstance(first_arg, ast.Name):
                         if first_arg.id in self.tainted_vars:
-                             self.violations.append(f"Appel I/O interdit ({node.func.id}) via variable compromise : {first_arg.id}")
-                             
+                            self.violations.append(f"Appel I/O interdit ({node.func.id}) via variable compromise : {first_arg.id}")
+
         self.generic_visit(node)
+
 
 class EzzioSkillManager:
     def __init__(self, base_path="runtime/skills"):
@@ -108,7 +110,7 @@ class EzzioSkillManager:
     def promote_and_load(self, skill_filename: str) -> dict:
         staging_file = self.staging_dir / skill_filename
         if not staging_file.exists():
-            return {"ok": False, "error": f"Skill introuvable en staging"}
+            return {"ok": False, "error": "Skill introuvable en staging"}
 
         # 1. Validation AST statique
         is_safe, errors = self.validate_skill(staging_file)
@@ -119,7 +121,7 @@ class EzzioSkillManager:
 
         active_target = self.active_dir / skill_filename
         backup_target = self.archive_dir / f"backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{skill_filename}"
-        
+
         module_name = active_target.stem
 
         try:
@@ -141,7 +143,7 @@ class EzzioSkillManager:
             temp_target = active_target.with_suffix(".pending")
             staging_file.rename(temp_target)
             os.replace(temp_target, active_target)
-            
+
             # 5. Hot-Reload dans le noyau
             if module_name in sys.modules:
                 module = importlib.reload(sys.modules[module_name])
@@ -153,16 +155,16 @@ class EzzioSkillManager:
 
             self.loaded_skills[module_name] = module
             return {"ok": True, "module": module_name, "status": "Promu et validé avec succès"}
-            
+
         except Exception as e:
             # ROLLBACK
-            if 'temp_target' in locals() and temp_target.exists():
+            if "temp_target" in locals() and temp_target.exists():
                 crash_target = self.archive_dir / f"crashed_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{skill_filename}"
                 temp_target.rename(crash_target)
             elif staging_file.exists():
                 crash_target = self.archive_dir / f"crashed_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{skill_filename}"
                 staging_file.rename(crash_target)
-            
+
             if backup_target.exists():
                 if active_target.exists():
                     active_target.unlink()
@@ -172,5 +174,5 @@ class EzzioSkillManager:
                         importlib.reload(sys.modules[module_name])
                 except:
                     pass
-                    
+
             return {"ok": False, "error": f"Échec lors du Smoke Test ou du Reload (Rollback atomique effectué) : {str(e)}"}

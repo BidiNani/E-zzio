@@ -3,9 +3,11 @@ E-ZZIO Core — ECOL Pipeline
 Module: prompt_compressor.py
 Description: Compresse la mémoire symbolique pour maximiser l'attention du LLM.
 """
+
 import logging
 
 logger = logging.getLogger(__name__)
+
 
 class PromptCompressor:
     def __init__(self):

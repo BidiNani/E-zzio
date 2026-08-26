@@ -1,7 +1,9 @@
 from typing import Dict, Any, List
 
+
 class DeterministicPlanner:
     """Deterministic task planner translating cognitive analysis into concrete actions."""
+
     @staticmethod
     def plan(analysis: Dict[str, Any]) -> List[Dict[str, Any]]:
         importance = analysis.get("importance", 0.5)

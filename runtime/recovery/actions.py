@@ -4,9 +4,10 @@ from pathlib import Path
 from runtime.kernel.context import RuntimeContext
 from runtime.recovery.snapshot import SnapshotManager
 
+
 class RecoveryActions:
     """Bibliothèque des actions de remédiation active incluant le rollback transactionnel."""
-    
+
     snapshot_manager = SnapshotManager()
 
     @staticmethod

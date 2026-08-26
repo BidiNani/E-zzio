@@ -1,6 +1,6 @@
-from pathlib import Path
 from runtime.hardware.trust.policy.registry import TrustPolicyRegistry
 from runtime.hardware.trust.ledger.policy_ledger import PolicyAuditLedger
+
 
 class PolicyDecisionPoint:
     def __init__(self, registry: TrustPolicyRegistry, audit_ledger: PolicyAuditLedger):
@@ -9,7 +9,7 @@ class PolicyDecisionPoint:
 
     def evaluate(self, trust_context: dict, request) -> dict:
         """
-        Évalue la permission d'exécution en croisant l'état du Trust Engine 
+        Évalue la permission d'exécution en croisant l'état du Trust Engine
         et le profil de criticité du Workload.
         """
         profile_name = request.profile
@@ -27,22 +27,16 @@ class PolicyDecisionPoint:
 
         # 1. Vérification du Score Minimum
         if current_score < min_score:
-            result = {
-                "decision": "DENY",
-                "reason": f"TRUST_SCORE_TOO_LOW_FOR_PROFILE (Current: {current_score}, Required: {min_score})"
-            }
+            result = {"decision": "DENY", "reason": f"TRUST_SCORE_TOO_LOW_FOR_PROFILE (Current: {current_score}, Required: {min_score})"}
         # 2. Vérification de l'État de la Machine à États
         elif current_state not in allowed_states:
-            result = {
-                "decision": "DENY",
-                "reason": f"{profile_name}_REQUIRES_ONE_OF_STATES_{allowed_states}_GOT_{current_state}"
-            }
+            result = {"decision": "DENY", "reason": f"{profile_name}_REQUIRES_ONE_OF_STATES_{allowed_states}_GOT_{current_state}"}
         else:
             result = {
                 "decision": "ALLOW",
                 "profile": profile_name,
                 "constraints": constraints,
-                "reason": f"TRUST_SCORE_AND_STATE_ACCEPTABLE_FOR_{profile_name}"
+                "reason": f"TRUST_SCORE_AND_STATE_ACCEPTABLE_FOR_{profile_name}",
             }
 
         # 3. Traçabilité obligatoire dans le Ledger d'audit

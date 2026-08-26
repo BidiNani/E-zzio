@@ -2,6 +2,7 @@
 E-ZZIO V7.30 — Certification Test Suite
 Valide la création de snapshots, la récupération automatique et la gouvernance de l'autorité.
 """
+
 import sys
 import json
 from pathlib import Path
@@ -15,6 +16,7 @@ from core.identity.identity_recovery import identity_recovery_engine
 from core.identity.identity_chain import identity_chain_engine
 from core.identity.identity_persistence import identity_persistence
 
+
 def run_survival_tests():
     print("============================================================")
     print(" E-ZZIO V7.30 — IDENTITY IMMORTALITY LAYER CERTIFICATION")
@@ -27,9 +29,7 @@ def run_survival_tests():
     pers_res = identity_persistence.build_and_seal_identity_persistence()
     snap_res = identity_snapshot_engine.create_snapshot()
     chain_res = identity_chain_engine.append_identity_block(
-        identity_root_hash=pers_res["identity_root_hash"],
-        version="v1.0-identity-forge",
-        description="Genesis Identity Block"
+        identity_root_hash=pers_res["identity_root_hash"], version="v1.0-identity-forge", description="Genesis Identity Block"
     )
 
     print(f"  [+] Snapshot #{snap_res['snapshot_index']} généré avec succès.")
@@ -40,9 +40,9 @@ def run_survival_tests():
     # ------------------------------------------------------------------
     print("\n[TEST A] Simulation de destruction de identity.json...")
     assert identity_file.exists(), "identity.json doit exister avant le test !"
-    
+
     # Sauvegarde du contenu avant destruction
-    saved_identity_content = identity_file.read_text(encoding="utf-8")
+    identity_file.read_text(encoding="utf-8")
     identity_file.unlink()
     assert not identity_file.exists(), "Échec de la suppression simulée !"
     print(" -> [OK] identity.json détruit.")
@@ -60,7 +60,7 @@ def run_survival_tests():
     # ------------------------------------------------------------------
     print("\n[TEST B] Contrôle de la gouvernance et de l'autorité BidiNani...")
     auth_data = json.loads(authority_file.read_text(encoding="utf-8"))
-    
+
     assert auth_data["authority"]["creator"] == "BidiNani", "Créateur non conforme !"
     assert auth_data["authority"]["core_values_modification"] == "forbidden", "Règle de modification invalide !"
     print(" -> [OK] Test B validé : Directives d'autorité et rôle du Mentor verrouillés.")
@@ -68,6 +68,7 @@ def run_survival_tests():
     print("\n============================================================")
     print(" V7.30 CERTIFIÉ : IDENTITY IMMORTALITY & RECOVERY LAYER OK")
     print("============================================================\n")
+
 
 if __name__ == "__main__":
     run_survival_tests()

@@ -1,6 +1,7 @@
 from runtime.recovery.executor.base import BaseActionExecutor
 from typing import Dict, Any
 
+
 class RetryExecutor(BaseActionExecutor):
     def execute(self, parameters: Dict[str, Any], context: Dict[str, Any]) -> Dict[str, Any]:
         max_retries = parameters.get("max_retries", 3)
@@ -9,7 +10,7 @@ class RetryExecutor(BaseActionExecutor):
             "status": "SUCCESS",
             "target": "execution_retry_policy",
             "previous_state": {"retry_scheduled": False, "max_retries": 0},
-            "new_state": {"retry_scheduled": True, "max_retries": max_retries, "backoff": backoff}
+            "new_state": {"retry_scheduled": True, "max_retries": max_retries, "backoff": backoff},
         }
 
     def restore(self, previous_state: Dict[str, Any], context: Dict[str, Any]) -> Dict[str, Any]:

@@ -2,13 +2,15 @@
 E-ZZIO V7.34 — Impact Analyzer
 Analyse la complexité, le coût en ressources estimé et le risque de régression d'un candidat.
 """
+
 import ast
+
 
 class ImpactAnalyzer:
     @staticmethod
     def analyze_impact(content: str) -> dict:
         tree = ast.parse(content)
-        
+
         # Métriques basées sur l'AST
         function_count = sum(1 for node in ast.walk(tree) if isinstance(node, ast.FunctionDef))
         loop_count = sum(1 for node in ast.walk(tree) if isinstance(node, (ast.For, ast.While)))
@@ -24,7 +26,8 @@ class ImpactAnalyzer:
             "function_count": function_count,
             "complexity_score": round(complexity_score, 2),
             "resource_cost": resource_cost,
-            "regression_probability": round(regression_probability, 2)
+            "regression_probability": round(regression_probability, 2),
         }
+
 
 impact_analyzer = ImpactAnalyzer()

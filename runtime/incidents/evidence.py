@@ -1,19 +1,19 @@
 from __future__ import annotations
-from enum import Enum
-import os
 import json
 from pathlib import Path
-from typing import List, Optional, Dict, Any
+from typing import List, Optional
 
 from .model import IncidentRecord, IncidentSeverity, IncidentCategory
+
 
 class EvidenceLedger:
     """
     Registre de preuves append-only et chaîné par hachage cryptographique pour V4.4.
     Garantit l'immutabilité et l'auditabilité forensic des incidents capturés.
-    
+
     GARDE-FOU STRICT : Stockage d'observation isolé, aucune incidence sur le noyau V4.2.
     """
+
     def __init__(self, storage_path: Optional[Path | str] = None) -> None:
         if storage_path is None:
             project_root = Path(__file__).resolve().parent.parent.parent
@@ -29,7 +29,7 @@ class EvidenceLedger:
         """Récupère le dernier enregistrement du ledger pour chaîner le hash précédent."""
         if not self.storage_path.exists() or self.storage_path.stat().st_size == 0:
             return None
-        
+
         last_line = None
         with open(self.storage_path, "r", encoding="utf-8") as f:
             for line in f:
@@ -55,7 +55,7 @@ class EvidenceLedger:
                 evidence=data.get("evidence", []),
                 resolved=data.get("resolved", False),
                 previous_hash=data.get("previous_hash"),
-                payload_hash=data.get("payload_hash")
+                payload_hash=data.get("payload_hash"),
             )
         except Exception:
             return None
@@ -106,7 +106,7 @@ class EvidenceLedger:
                         evidence=data.get("evidence", []),
                         resolved=data.get("resolved", False),
                         previous_hash=data.get("previous_hash"),
-                        payload_hash=data.get("payload_hash")
+                        payload_hash=data.get("payload_hash"),
                     )
                     records.append(rec)
                 except Exception:

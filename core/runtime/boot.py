@@ -5,6 +5,7 @@ Orchestre l'initialisation sécurisée :
 2. Vérification d'intégrité et boot recovery du Decision Ledger.
 3. Autorisation du Runtime.
 """
+
 import sys
 from pathlib import Path
 
@@ -14,6 +15,7 @@ if str(ROOT_DIR) not in sys.path:
 
 from core.identity.identity_boot_check import verify_system_identity
 from core.security.ledger_engine import ledger_engine
+
 
 def boot_system() -> bool:
     print("============================================================")
@@ -33,6 +35,7 @@ def boot_system() -> bool:
     print("\n[OK] SYSTEM STATUS : RUNTIME SOUVERAIN OPÉRATIONNEL")
     print("============================================================\n")
     return True
+
 
 if __name__ == "__main__":
     success = boot_system()

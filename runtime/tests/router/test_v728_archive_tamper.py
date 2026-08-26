@@ -1,17 +1,20 @@
 """
 E-ZZIO V7.28.6 — Historical Archive Tampering Certification Test
-Simule une modification malveillante dans une archive passée (Archive #1) 
+Simule une modification malveillante dans une archive passée (Archive #1)
 et vérifie que l'auditeur intercepte la compromission.
 """
+
 import sys
 import json
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent.parent
-if str(ROOT_DIR) not in sys.path: sys.path.insert(0, str(ROOT_DIR))
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
 from core.security.ledger_engine import LedgerEngine
 from core.security.archive_validator import archive_validator
+
 
 def run_tamper_test():
     print("============================================================")
@@ -23,10 +26,14 @@ def run_tamper_test():
     state_path = ROOT_DIR / "runtime" / "state" / "ledger_chain_state.json"
 
     # Nettoyage initial
-    if ledger_path.exists(): ledger_path.unlink()
-    if state_path.exists(): state_path.unlink()
-    for meta in archive_dir.glob("*.meta.json"): meta.unlink()
-    for arc in archive_dir.glob("*.jsonl"): arc.unlink()
+    if ledger_path.exists():
+        ledger_path.unlink()
+    if state_path.exists():
+        state_path.unlink()
+    for meta in archive_dir.glob("*.meta.json"):
+        meta.unlink()
+    for arc in archive_dir.glob("*.jsonl"):
+        arc.unlink()
 
     # Génération des archives via 100 transactions (seuil à 50 -> 2 archives créées)
     engine = LedgerEngine(archive_threshold=50)
@@ -38,7 +45,7 @@ def run_tamper_test():
             candidates=[],
             selected="qwen3:8b",
             state="COMPLETED",
-            execution_details={"index": i}
+            execution_details={"index": i},
         )
 
     # Vérification que l'état initial est parfaitement valide
@@ -52,10 +59,10 @@ def run_tamper_test():
     assert archive_1_jsonl.exists(), "Archive #1 introuvable !"
 
     lines = archive_1_jsonl.read_text(encoding="utf-8").strip().splitlines()
-    record = json.loads(lines[20]) # Ligne 21 de l'archive 1
+    record = json.loads(lines[20])  # Ligne 21 de l'archive 1
     record["selected"] = "modele_corrompu_par_attaquant"
     lines[20] = json.dumps(record, ensure_ascii=False)
-    
+
     # Réécriture de l'archive #1 falsifiée
     archive_1_jsonl.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("  [OK] Archive #1 altérée de manière silencieuse sur le disque.")
@@ -70,12 +77,13 @@ def run_tamper_test():
     assert "ALTÉRATION HISTORIQUE DÉTECTÉE" in audit_res["error"] or "ROOT HASH" in audit_res["error"], (
         f"Erreur inattendue rapportée par l'auditeur : {audit_res.get('error')}"
     )
-    print(f"  [CERT] Compromission de l'Archive historique #1 interceptée avec succès !")
+    print("  [CERT] Compromission de l'Archive historique #1 interceptée avec succès !")
     print(f"  [CERT] Archive incriminée : {audit_res.get('compromised_archive')}")
 
     print("\n============================================================")
     print(" V7.28.6 CERTIFIÉ : IMMUTABILITÉ RÉTROACTIVE DES ARCHIVES VALIDÉE")
     print("============================================================\n")
+
 
 if __name__ == "__main__":
     run_tamper_test()

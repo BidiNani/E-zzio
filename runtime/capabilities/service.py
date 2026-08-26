@@ -7,11 +7,13 @@ from runtime.execution.context import ExecutionContext
 from runtime.execution.state import ExecutionState
 from runtime.audit import AuditBridge, AuditAction
 
+
 class CapabilityEnforcementGateway:
     """
-    Unified gateway orchestrating validation, expiry, revocation, 
+    Unified gateway orchestrating validation, expiry, revocation,
     and direct AuditBridge integration for capability tokens.
     """
+
     def __init__(self, revocation_registry: Optional[CapabilityRevocationRegistry] = None):
         self.revocation_registry = revocation_registry or CapabilityRevocationRegistry()
 
@@ -25,7 +27,7 @@ class CapabilityEnforcementGateway:
                 action=AuditAction.REVOKE_TOKEN,
                 capability_id=token_id,
                 status="BLOCKED",
-                metadata={"reason": "token_revoked", "old_state": token_meta.get("state", "UNKNOWN")}
+                metadata={"reason": "token_revoked", "old_state": token_meta.get("state", "UNKNOWN")},
             )
             return False
 
@@ -35,18 +37,13 @@ class CapabilityEnforcementGateway:
                 action=AuditAction.EXPIRE_TOKEN,
                 capability_id=token_id,
                 status="EXPIRED",
-                metadata={"reason": "token_expired", "old_state": token_meta.get("state", "UNKNOWN")}
+                metadata={"reason": "token_expired", "old_state": token_meta.get("state", "UNKNOWN")},
             )
             return False
 
         is_valid = CapabilityValidator.is_valid(token_meta)
         if is_valid:
-            AuditBridge.emit(
-                component="CapabilityGateway",
-                action=AuditAction.VALIDATE_TOKEN,
-                capability_id=token_id,
-                status="SUCCESS"
-            )
+            AuditBridge.emit(component="CapabilityGateway", action=AuditAction.VALIDATE_TOKEN, capability_id=token_id, status="SUCCESS")
         return is_valid
 
     def authorize_execution(self, context: ExecutionContext, token_meta: Dict[str, Any]) -> bool:
@@ -60,7 +57,7 @@ class CapabilityEnforcementGateway:
                 action=AuditAction.EXECUTION_BLOCKED,
                 execution_id=context.execution_id,
                 status="BLOCKED",
-                metadata={"reason": "no_capability"}
+                metadata={"reason": "no_capability"},
             )
             return False
 
@@ -73,7 +70,7 @@ class CapabilityEnforcementGateway:
                 execution_id=context.execution_id,
                 capability_id=context.capability_id,
                 status="EXPIRED",
-                metadata={"reason": "capability_invalid_or_expired"}
+                metadata={"reason": "capability_invalid_or_expired"},
             )
             return False
 
@@ -83,7 +80,7 @@ class CapabilityEnforcementGateway:
             action=AuditAction.EXECUTION_AUTHORIZED,
             execution_id=context.execution_id,
             capability_id=context.capability_id,
-            status="SUCCESS"
+            status="SUCCESS",
         )
         return True
 
@@ -97,5 +94,5 @@ class CapabilityEnforcementGateway:
             action=AuditAction.REVOKE_TOKEN,
             capability_id=token_id,
             status="SUCCESS",
-            metadata={"old_state": token_meta.get("state", "UNKNOWN"), "new_state": CapabilityState.REVOKED}
+            metadata={"old_state": token_meta.get("state", "UNKNOWN"), "new_state": CapabilityState.REVOKED},
         )

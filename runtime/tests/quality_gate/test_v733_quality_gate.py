@@ -2,6 +2,7 @@
 E-ZZIO V7.33 — Certification Test Suite (Quality Gate)
 Valide l'autonomie d'évaluation et de filtrage d'E-ZZIO.
 """
+
 import sys
 from pathlib import Path
 
@@ -10,6 +11,7 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from core.quality_gate.quality_gate import quality_gate
+
 
 def run_quality_gate_certification():
     print("============================================================")
@@ -39,6 +41,7 @@ def run_quality_gate_certification():
     print("\n============================================================")
     print(" V7.33 CERTIFIÉ : AUTONOMOUS QUALITY GATE OPÉRATIONNEL")
     print("============================================================\n")
+
 
 if __name__ == "__main__":
     run_quality_gate_certification()

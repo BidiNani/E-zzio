@@ -1,4 +1,3 @@
-import json
 import time
 import subprocess
 import os
@@ -31,10 +30,12 @@ CPU_ONLY_ENV = {
     "PYTORCH_ENABLE_MPS_FALLBACK": "0",
 }
 
+
 def _cpu_env():
     env = os.environ.copy()
     env.update(CPU_ONLY_ENV)
     return env
+
 
 def comfy_health():
     try:
@@ -49,6 +50,7 @@ def comfy_health():
             "ok": False,
             "error": str(exc),
         }
+
 
 def ensure_comfy_online(timeout_sec: int = 180):
     health = comfy_health()
@@ -116,32 +118,39 @@ def ensure_comfy_online(timeout_sec: int = 180):
         "health": comfy_health(),
     }
 
+
 def _model_files(path: Path):
     path.mkdir(parents=True, exist_ok=True)
     out = []
     for p in path.iterdir():
         if p.is_file() and p.suffix.lower() in [".safetensors", ".ckpt", ".pt", ".pth"]:
-            out.append({
-                "name": p.name,
-                "path": str(p),
-                "gb": round(p.stat().st_size / (1024 ** 3), 3),
-                "modified": p.stat().st_mtime,
-            })
+            out.append(
+                {
+                    "name": p.name,
+                    "path": str(p),
+                    "gb": round(p.stat().st_size / (1024**3), 3),
+                    "modified": p.stat().st_mtime,
+                }
+            )
     return sorted(out, key=lambda x: x["name"].lower())
+
 
 def list_outputs(limit: int = 20):
     OUTPUT.mkdir(parents=True, exist_ok=True)
     files = []
     for p in OUTPUT.rglob("*"):
         if p.is_file() and p.suffix.lower() in [".png", ".jpg", ".jpeg", ".webp", ".mp4"]:
-            files.append({
-                "name": p.name,
-                "path": str(p),
-                "mb": round(p.stat().st_size / (1024 ** 2), 3),
-                "modified": p.stat().st_mtime,
-            })
+            files.append(
+                {
+                    "name": p.name,
+                    "path": str(p),
+                    "mb": round(p.stat().st_size / (1024**2), 3),
+                    "modified": p.stat().st_mtime,
+                }
+            )
     files.sort(key=lambda x: x["modified"], reverse=True)
     return files[:limit]
+
 
 def model_vault_status():
     comfy = ensure_comfy_online(timeout_sec=180)
@@ -165,6 +174,7 @@ def model_vault_status():
         "ready_for_basic_generation": any(m["name"] == DEFAULT_CKPT for m in checkpoints),
         "default_checkpoint": DEFAULT_CKPT,
     }
+
 
 def basic_workflow(prompt: str, negative: str = "", seed: Optional[int] = None, steps: int = 8, width: int = 384, height: int = 384):
     if seed is None:
@@ -239,7 +249,10 @@ def basic_workflow(prompt: str, negative: str = "", seed: Optional[int] = None, 
         },
     }
 
-def queue_basic_generation(prompt: str, negative: str = "", seed: Optional[int] = None, steps: int = 8, width: int = 384, height: int = 384):
+
+def queue_basic_generation(
+    prompt: str, negative: str = "", seed: Optional[int] = None, steps: int = 8, width: int = 384, height: int = 384
+):
     status = model_vault_status()
 
     if not status["comfy"]["ok"]:

@@ -11,6 +11,7 @@ from core.human_chat import (
 
 router = APIRouter(tags=["human-chat"])
 
+
 class HumanChatRequest(BaseModel):
     text: str
     session: str = "pc"
@@ -18,13 +19,16 @@ class HumanChatRequest(BaseModel):
     speed: str = "auto"
     predict: int = 260
 
+
 @router.get("/human-chat/status")
 async def get_human_chat_status():
     return status()
 
+
 @router.get("/human-chat/sessions")
 async def get_human_chat_sessions():
     return list_sessions()
+
 
 @router.get("/human-chat/session/{session}")
 async def get_human_chat_session(session: str, limit: int = 30):
@@ -34,9 +38,11 @@ async def get_human_chat_session(session: str, limit: int = 30):
         "events": read_session(session, limit=limit),
     }
 
+
 @router.get("/human-chat/brief")
 async def get_human_chat_brief():
     return build_brief()
+
 
 @router.post("/api/chat/human")
 async def post_api_chat_human(req: HumanChatRequest):
@@ -47,6 +53,7 @@ async def post_api_chat_human(req: HumanChatRequest):
         speed=req.speed,
         predict=req.predict,
     )
+
 
 @router.post("/human-chat/message")
 async def post_human_chat_message(req: HumanChatRequest):

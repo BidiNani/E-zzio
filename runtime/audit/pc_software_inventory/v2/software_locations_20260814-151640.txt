@@ -1,5 +1,0 @@
-C:\Program Files
-C:\Program Files (x86)
-C:\Users\enrik\AppData\Local
-C:\Users\enrik\AppData\Local\Programs
-C:\Users\enrik\AppData\Roaming

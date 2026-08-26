@@ -3,6 +3,7 @@ from enum import Enum, auto
 import threading
 import time
 
+
 class RuntimePhase(Enum):
     PRE_BOOT = auto()
     CONSTITUTION_CHECK = auto()
@@ -11,6 +12,7 @@ class RuntimePhase(Enum):
     SUSPENDED = auto()
     PANIC = auto()
     HALTED = auto()
+
 
 class EzzioRuntimeState:
     _ALLOWED_TRANSITIONS = {
@@ -57,5 +59,6 @@ class EzzioRuntimeState:
     def panic_reason(self) -> str | None:
         with self._lock:
             return self._panic_reason
+
 
 kernel_state = EzzioRuntimeState()

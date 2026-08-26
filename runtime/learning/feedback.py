@@ -1,7 +1,9 @@
 from typing import Dict, Any
 
+
 class FeedbackEngine:
     """Processes execution results to calculate confidence adjustments and learning deltas."""
+
     @staticmethod
     def process_feedback(execution_result: Dict[str, Any]) -> Dict[str, Any]:
         status = execution_result.get("status")

@@ -1,31 +1,32 @@
-import json
+"""Model Router Context — Assemblage du contexte avec socle canonique inviolable."""
+from __future__ import annotations
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Optional
+from core.identity.canonical_identity import CanonicalIdentity
 
-class EzzioContextInjector:
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+_CANONICAL_IDENTITY: CanonicalIdentity | None = None
+
+
+class ContextAssembler:
     def __init__(self, root_dir: Optional[Path] = None):
-        self.root_dir = root_dir or Path(r"G:\AI\E-zzio")
-        self.health_file = self.root_dir / "runtime" / "state" / "backend" / "health.json"
-        self.integrity_file = self.root_dir / "runtime" / "audit" / "integrity" / "sha256_baseline_v1.json"
+        self.root_dir = root_dir or PROJECT_ROOT
 
-    def _get_system_state(self) -> Dict[str, Any]:
-        state = {"status": "UNKNOWN", "workers": "8/8"}
-        if self.health_file.exists():
+    def build_system_prompt(self, caller_context: Optional[str] = None) -> str:
+        """
+        Règle d'autorité identitaire :
+        CanonicalIdentity constitue la base immuable du prompt.
+        Le contexte de l'appelant est uniquement annexé en tant que métadonnée opérationnelle.
+        """
+        global _CANONICAL_IDENTITY
+        if _CANONICAL_IDENTITY is None:
             try:
-                data = json.loads(self.health_file.read_text(encoding="utf-8"))
-                state["status"] = data.get("status", "UNKNOWN")
-                state["pid"] = data.get("pid", "N/A")
-            except Exception:
-                pass
-        return state
+                _CANONICAL_IDENTITY = CanonicalIdentity(root_dir=self.root_dir)
+            except Exception as exc:
+                raise RuntimeError(f"[IDENTITY FAIL-CLOSED] ModelRouter Context: {exc}") from exc
 
-    def build_system_prompt(self, base_system_prompt: Optional[str] = None) -> str:
-        state = self._get_system_state()
-        constitution = (
-            "Tu es E-ZZIO, un Personal AI OS autonome exécuté localement sur Ryzen 9 5900X avec 8 workers Governor.\n"
-            f"État Kernel local : Status={state.get('status')}, PID={state.get('pid')}. Intégrité SHA256 certifiée (531 fichiers).\n"
-            "Réponds toujours avec cette identité système en tête, de façon concise et précise."
-        )
-        if base_system_prompt:
-            return f"{constitution}\n\nNote : {base_system_prompt}"
-        return constitution
+        canonical_prompt = _CANONICAL_IDENTITY.build_system_prompt(source="router_context", mode="operational")
+
+        if caller_context and caller_context.strip():
+            return f"{canonical_prompt}\n\n### [CONTEXTE OPÉRATIONNEL ADDITIONNEL]\n{caller_context.strip()}"
+        return canonical_prompt

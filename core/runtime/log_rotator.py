@@ -7,19 +7,23 @@ import json
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
+
 class SafeJsonFormatter(logging.Formatter):
     """Formateur JSON strict protégeant contre l'injection de retours ligne ou guillemets."""
+
     def format(self, record: logging.LogRecord) -> str:
         log_record = {
             "timestamp": self.formatTime(record, self.datefmt),
             "level": record.levelname,
             "module": record.name,
-            "message": record.getMessage()
+            "message": record.getMessage(),
         }
         return json.dumps(log_record, ensure_ascii=False)
 
+
 ROOT_PATH = Path(r"G:\AI\E-zzio")
 LOG_DIR = ROOT_PATH / "runtime" / "logs"
+
 
 def setup_production_logging():
     LOG_DIR.mkdir(parents=True, exist_ok=True)
@@ -29,17 +33,11 @@ def setup_production_logging():
     root_logger.setLevel(logging.INFO)
 
     handler_exists = any(
-        isinstance(h, RotatingFileHandler) and Path(getattr(h, 'baseFilename', '')) == log_file
-        for h in root_logger.handlers
+        isinstance(h, RotatingFileHandler) and Path(getattr(h, "baseFilename", "")) == log_file for h in root_logger.handlers
     )
 
     if not handler_exists:
-        handler = RotatingFileHandler(
-            log_file, 
-            maxBytes=5 * 1024 * 1024, 
-            backupCount=5, 
-            encoding="utf-8"
-        )
+        handler = RotatingFileHandler(log_file, maxBytes=5 * 1024 * 1024, backupCount=5, encoding="utf-8")
         handler.setFormatter(SafeJsonFormatter())
         root_logger.addHandler(handler)
     else:
@@ -53,6 +51,7 @@ def setup_production_logging():
         uv_logger.addHandler(handler)
 
     logging.info("Pipeline de journalisation unifié et sécurisé actif (v2.1).")
+
 
 if __name__ == "__main__":
     setup_production_logging()

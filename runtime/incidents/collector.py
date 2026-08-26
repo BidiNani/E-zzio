@@ -1,5 +1,4 @@
 from __future__ import annotations
-from enum import Enum
 import uuid
 import json
 from datetime import datetime, timezone
@@ -7,14 +6,16 @@ from typing import Any, Callable, Dict, List, Optional
 
 from .model import IncidentRecord, IncidentSeverity, IncidentCategory
 
+
 class IncidentCollector:
     """
     Observateur non-intrusif du runtime V4.2.
     Collecte les exceptions, erreurs et événements pour générer des IncidentRecords normalisés.
-    
+
     GARDE-FOU STRICT : Le collector ne possède AUCUN droit de mutation ou d'intervention
     sur le noyau V4.2 (pas de modification de FSM, pas de libération de lock, pas de bypass).
     """
+
     def __init__(self, sink_callback: Optional[Callable[[IncidentRecord], None]] = None) -> None:
         self._sink_callback = sink_callback
 
@@ -31,7 +32,7 @@ class IncidentCollector:
         severity: IncidentSeverity = IncidentSeverity.CRITICAL,
         category: IncidentCategory = IncidentCategory.EXECUTION_ERROR,
         evidence: Optional[List[Dict[str, Any]]] = None,
-        context_hash: str = ""
+        context_hash: str = "",
     ) -> IncidentRecord:
         """
         Capture une exception levée dans le runtime et produit un enregistrement d'incident normalisé.
@@ -52,7 +53,7 @@ class IncidentCollector:
             message=message,
             context_hash=context_hash,
             runtime_state=runtime_state,
-            evidence=evidence or []
+            evidence=evidence or [],
         )
         # Fixation immédiate du hash cryptographique du payload pour sceller l'incident
         record.payload_hash = record.compute_payload_hash()
@@ -75,7 +76,7 @@ class IncidentCollector:
         runtime_state: str = "READY",
         severity: IncidentSeverity = IncidentSeverity.INFO,
         category: IncidentCategory = IncidentCategory.FSM_TRANSITION,
-        context_hash: str = ""
+        context_hash: str = "",
     ) -> IncidentRecord:
         """
         Capture un événement brut (ex: publication du bus du noyau) pour analyse de gouvernance.
@@ -95,7 +96,7 @@ class IncidentCollector:
             message=message,
             context_hash=context_hash,
             runtime_state=runtime_state,
-            evidence=[payload]
+            evidence=[payload],
         )
         record.payload_hash = record.compute_payload_hash()
 

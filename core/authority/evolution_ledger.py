@@ -2,6 +2,7 @@
 E-ZZIO V7.32 — Evolution Ledger
 Enregistre chaque évolution validée dans une chaîne de blocs immuable.
 """
+
 import json
 import hashlib
 from pathlib import Path
@@ -9,6 +10,7 @@ from datetime import datetime, timezone
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 LEDGER_FILE = ROOT_DIR / "runtime" / "evolution" / "ledger" / "evolution_ledger.jsonl"
+
 
 class EvolutionLedger:
     def __init__(self):
@@ -37,12 +39,13 @@ class EvolutionLedger:
             "change": change_target,
             "validation": validation_status,
             "artifact_hash": artifact_hash,
-            "block_hash": block_hash
+            "block_hash": block_hash,
         }
 
         with open(LEDGER_FILE, "a", encoding="utf-8") as f:
             f.write(json.dumps(block_data, ensure_ascii=False) + "\n")
 
         return block_data
+
 
 evolution_ledger = EvolutionLedger()

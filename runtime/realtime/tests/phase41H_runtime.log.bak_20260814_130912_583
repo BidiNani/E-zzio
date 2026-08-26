@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "G:\AI\E-zzio\runtime\realtime\tests\test_phase41H_hardened.py", line 25, in <module>
-    from runtime.realtime.audio import AsyncAudioRecorder
-  File "G:\AI\E-zzio\runtime\realtime\audio\__init__.py", line 1, in <module>
-    from .devices import HardwareManager
-  File "G:\AI\E-zzio\runtime\realtime\audio\devices.py", line 1, in <module>
-    import sounddevice as sd
-ModuleNotFoundError: No module named 'sounddevice'

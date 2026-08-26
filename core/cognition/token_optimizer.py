@@ -3,9 +3,11 @@ E-ZZIO Core — ECOL Pipeline
 Module: token_optimizer.py
 Description: Analyse, nettoie et déduplique l'input brut avant traitement.
 """
+
 import logging
 
 logger = logging.getLogger(__name__)
+
 
 class TokenOptimizer:
     def __init__(self):

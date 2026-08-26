@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-class TelemetryInterface(ABC):
 
+class TelemetryInterface(ABC):
     @abstractmethod
     def emit(self, event):
         pass

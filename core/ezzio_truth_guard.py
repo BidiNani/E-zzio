@@ -1,4 +1,5 @@
 from __future__ import annotations
+from core.identity.canonical_identity import CanonicalIdentity
 
 REAL_PC_PROFILE = {
     "cpu": "AMD Ryzen 9 5900X",
@@ -9,8 +10,7 @@ REAL_PC_PROFILE = {
 }
 
 REAL_PC_PROFILE_TEXT = (
-    "Configuration vérifiée d'Enrik : AMD Ryzen 9 5900X, 32 Go DDR4, "
-    "MSI GTX 1650 4 Go. Politique E-ZZIO : CPU/RAM only, GPU untouched."
+    "Configuration vérifiée d'Enrik : AMD Ryzen 9 5900X, 32 Go DDR4, MSI GTX 1650 4 Go. Politique E-ZZIO : CPU/RAM only, GPU untouched."
 )
 
 FORBIDDEN_HARDWARE_CLAIMS = [
@@ -51,13 +51,29 @@ GAMING_WORDS = [
     "fantasy",
 ]
 
+
 def is_hardware_question(text: str) -> bool:
     t = (text or "").lower()
-    return any(w in t for w in [
-        "config", "configuration", "matériel", "materiel", "cpu", "ram", "gpu",
-        "carte graphique", "processeur", "combien de ram", "état rapide", "etat rapide",
-        "système", "systeme"
-    ])
+    return any(
+        w in t
+        for w in [
+            "config",
+            "configuration",
+            "matériel",
+            "materiel",
+            "cpu",
+            "ram",
+            "gpu",
+            "carte graphique",
+            "processeur",
+            "combien de ram",
+            "état rapide",
+            "etat rapide",
+            "système",
+            "systeme",
+        ]
+    )
+
 
 def is_user_correction(text: str) -> bool:
     t = (text or "").lower().strip()
@@ -70,9 +86,11 @@ def is_user_correction(text: str) -> bool:
         or "depuis quand" in t
     )
 
+
 def is_gaming_context(text: str) -> bool:
     t = (text or "").lower()
     return any(w in t for w in GAMING_WORDS)
+
 
 def correction_ack(text: str) -> str:
     t = text or ""
@@ -97,6 +115,7 @@ def correction_ack(text: str) -> str:
         "Tu as raison, je prends ta correction en compte. Je dois m'appuyer sur ton contexte explicite "
         "et ne pas inventer une explication générique."
     )
+
 
 def sanitize_reply(reply: str, user_text: str = "") -> str:
     text = (reply or "").strip()
@@ -131,9 +150,10 @@ def sanitize_reply(reply: str, user_text: str = "") -> str:
 
     return text
 
+
 def system_prompt(intent: str = "chat") -> str:
     return f"""
-Tu es E-ZZIO, ami IA local d'Enrik sur PC.
+Tu es E-ZZIO (géré via CanonicalIdentity).
 
 PROFIL MATÉRIEL VERROUILLÉ :
 - CPU : {REAL_PC_PROFILE["cpu"]}

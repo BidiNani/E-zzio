@@ -3,8 +3,8 @@ E-ZZIO Core — Secret Sovereignty Layer (V7.63)
 Gère le cycle de vie des clés HMAC, les époques cryptographiques (ACTIVE vs VERIFY_ONLY),
 l'isolation de la racine de confiance et le Fail-Closed strict en cas de perte de clé.
 """
+
 import os
-import sys
 import json
 import hmac
 import logging
@@ -12,13 +12,16 @@ import hashlib
 import threading
 from pathlib import Path
 from datetime import datetime, timezone
-from typing import Dict, Any, Tuple
+from typing import Tuple
 
 logger = logging.getLogger(__name__)
 
+
 class SecretSovereigntyError(Exception):
     """Levée en cas de compromission, d'absence ou d'incohérence de la racine de confiance."""
+
     pass
+
 
 class SecretSovereigntyLayer:
     def __init__(self, root_dir: Path = Path(r"G:\\AI\E-zzio")):
@@ -26,20 +29,15 @@ class SecretSovereigntyLayer:
         self.security_dir = self.root_dir / "runtime" / "security"
         self.vault_path = self.security_dir / "secret_vault.json"
         self.keys_dir = self.security_dir / "keys"
-        
+
         self.security_dir.mkdir(parents=True, exist_ok=True)
         self.keys_dir.mkdir(parents=True, exist_ok=True)
-        
+
         self._lock = threading.RLock()
         self._initialize_vault_if_needed()
 
     def _canonical_dump(self, payload: dict) -> str:
-        return json.dumps(
-            payload,
-            sort_keys=True,
-            separators=(",", ":"),
-            ensure_ascii=False
-        )
+        return json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
 
     def _initialize_vault_if_needed(self):
         """Initialise le coffre-fort de clés si inexistant (Génération du premier Genesis Key)."""
@@ -48,20 +46,20 @@ class SecretSovereigntyLayer:
                 logger.info("Initialisation du Secret Vault (Époque Genesis ECOL-KEY-001)...")
                 initial_key_id = "ECOL-KEY-001"
                 initial_secret = os.urandom(32)
-                
+
                 # Sauvegarde physique de la clé brute dans la zone isolée sécurisée
                 key_file = self.keys_dir / f"{initial_key_id}.key"
                 key_file.write_bytes(initial_secret)
-                
+
                 vault_data = {
                     "active_key_id": initial_key_id,
                     "keys": {
                         initial_key_id: {
                             "status": "ACTIVE",
                             "created_at": datetime.now(timezone.utc).isoformat(),
-                            "algorithm": "HMAC-SHA256"
+                            "algorithm": "HMAC-SHA256",
                         }
-                    }
+                    },
                 }
                 self.vault_path.write_text(self._canonical_dump(vault_data) + "\n", encoding="utf-8")
 
@@ -81,11 +79,13 @@ class SecretSovereigntyLayer:
             active_id = vault.get("active_key_id")
             if not active_id or active_id not in vault.get("keys", {}):
                 raise SecretSovereigntyError("FAIL CLOSED : Aucune clé active valide n'a été trouvée dans le coffre-fort.")
-            
+
             key_file = self.keys_dir / f"{active_id}.key"
             if not key_file.exists():
-                raise SecretSovereigntyError(f"FAIL CLOSED : Le fichier de clé physique '{active_id}.key' est introuvable (Perte de secret).")
-            
+                raise SecretSovereigntyError(
+                    f"FAIL CLOSED : Le fichier de clé physique '{active_id}.key' est introuvable (Perte de secret)."
+                )
+
             return active_id, key_file.read_bytes()
 
     def get_key_material(self, key_id: str) -> bytes:
@@ -94,11 +94,11 @@ class SecretSovereigntyLayer:
             vault = self.load_vault()
             if key_id not in vault.get("keys", {}):
                 raise SecretSovereigntyError(f"FAIL CLOSED : Tentative d'utilisation d'une clé inconnue ou révoquée '{key_id}'.")
-            
+
             key_file = self.keys_dir / f"{key_id}.key"
             if not key_file.exists():
                 raise SecretSovereigntyError(f"FAIL CLOSED : Le fichier de clé physique '{key_id}.key' est introuvable pour vérification.")
-            
+
             return key_file.read_bytes()
 
     def rotate_key(self, new_key_id: str) -> str:
@@ -106,7 +106,7 @@ class SecretSovereigntyLayer:
         with self._lock:
             vault = self.load_vault()
             old_active = vault.get("active_key_id")
-            
+
             if new_key_id in vault.get("keys", {}):
                 raise SecretSovereigntyError(f"FAIL CLOSED : La clé '{new_key_id}' existe déjà.")
 
@@ -123,7 +123,7 @@ class SecretSovereigntyLayer:
             vault["keys"][new_key_id] = {
                 "status": "ACTIVE",
                 "created_at": datetime.now(timezone.utc).isoformat(),
-                "algorithm": "HMAC-SHA256"
+                "algorithm": "HMAC-SHA256",
             }
             vault["active_key_id"] = new_key_id
 
@@ -131,10 +131,11 @@ class SecretSovereigntyLayer:
             logger.info(f"[OK] Rotation réussie. Nouvelle époque active : {new_key_id}")
             return new_key_id
 
+
 def test_sovereignty_layer():
     print("[*] Test et certification du Secret Sovereignty Layer (V7.63)...")
     ssl = SecretSovereigntyLayer()
-    
+
     # Test 1 : Récupération de la clé active
     active_id, active_mat = ssl.get_active_key_material()
     print(f"  [PASS] Clé active récupérée avec succès : {active_id} ({len(active_mat)} octets)")
@@ -157,9 +158,10 @@ def test_sovereignty_layer():
     verified = hmac.compare_digest(hmac.new(old_mat, msg.encode("utf-8"), hashlib.sha256).hexdigest(), sig)
     print(f"  [PASS] Vérification historique avec l'ancienne clé ({active_id}) : {verified}")
 
-    print("\n" + "="*65)
+    print("\n" + "=" * 65)
     print(" SECRET SOVEREIGNTY LAYER (V7.63) DEPLOYED & TESTED SUCCESSFULLY")
-    print("="*65)
+    print("=" * 65)
+
 
 if __name__ == "__main__":
     test_sovereignty_layer()

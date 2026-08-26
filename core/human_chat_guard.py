@@ -3,22 +3,24 @@ from __future__ import annotations
 import re
 from typing import Any, Dict, Optional
 
+
 def normalize(text: str) -> str:
     return (text or "").strip().lower()
 
+
 def wants_system_state(text: str) -> bool:
     low = normalize(text)
-    return (
-        ("état" in low or "etat" in low or "status" in low or "brief" in low)
-        and ("système" in low or "systeme" in low or "pc" in low or "e-zzio" in low or "ezzio" in low)
+    return ("état" in low or "etat" in low or "status" in low or "brief" in low) and (
+        "système" in low or "systeme" in low or "pc" in low or "e-zzio" in low or "ezzio" in low
     )
+
 
 def wants_next_optimization(text: str) -> bool:
     low = normalize(text)
-    return (
-        ("optimisation" in low or "optimiser" in low or "amélioration" in low or "amelioration" in low)
-        and ("sans rien casser" in low or "prochaine" in low or "pc" in low or "e-zzio" in low or "ezzio" in low)
+    return ("optimisation" in low or "optimiser" in low or "amélioration" in low or "amelioration" in low) and (
+        "sans rien casser" in low or "prochaine" in low or "pc" in low or "e-zzio" in low or "ezzio" in low
     )
+
 
 def system_state_reply() -> str:
     return (
@@ -26,11 +28,13 @@ def system_state_reply() -> str:
         "cerveau routeur disponible, CPU/RAM only, GPU intact, zéro pub, zéro tracking."
     )
 
+
 def next_optimization_reply() -> str:
     return (
         "Je peux préparer la prochaine optimisation PC sans rien casser : d'abord audit, puis plan, "
         "backup, test, validation endpoint, rapport JSON, et seulement ensuite une modification explicite si tu confirmes."
     )
+
 
 def deterministic_human_reply(text: str) -> Optional[Dict[str, Any]]:
     if wants_system_state(text):
@@ -51,6 +55,7 @@ def deterministic_human_reply(text: str) -> Optional[Dict[str, Any]]:
 
     return None
 
+
 def sanitize_human_chat_reply(reply: str) -> str:
     text = reply or ""
     text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL | re.IGNORECASE)
@@ -65,7 +70,10 @@ def sanitize_human_chat_reply(reply: str) -> str:
     replacements = [
         ("je vais effectuer", "je peux préparer un plan pour effectuer, après ta confirmation,"),
         ("je vais analyser", "je peux analyser si tu me le demandes explicitement"),
-        ("je vais supprimer", "je ne supprimerai rien sans confirmation explicite ; je peux seulement préparer une proposition de suppression"),
+        (
+            "je vais supprimer",
+            "je ne supprimerai rien sans confirmation explicite ; je peux seulement préparer une proposition de suppression",
+        ),
         ("je vais fermer", "je ne fermerai rien sans confirmation explicite ; je peux seulement proposer quoi fermer"),
         ("je m'occuperai de", "je peux t'aider à préparer"),
         ("je me concentrerai sur le nettoyage", "je peux préparer un nettoyage en dry-run, sans appliquer de changement"),

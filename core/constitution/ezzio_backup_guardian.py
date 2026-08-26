@@ -1,12 +1,11 @@
 """
 E-ZZIO Core — EZZIO_BACKUP_GUARDIAN (V8.9.2)
-Sélectionne les organes vitaux, valide leur intégrité cryptographique, 
+Sélectionne les organes vitaux, valide leur intégrité cryptographique,
 génère un manifeste SHA-256 et exporte l'archive vers un stockage externe sécurisé.
 """
-import os
+
 import sys
 import json
-import shutil
 import hashlib
 import logging
 from pathlib import Path
@@ -21,16 +20,19 @@ from core.cognition.ecol_universal_enforcement import EcolUniversalGateway
 
 logger = logging.getLogger(__name__)
 
+
 class BackupGuardianError(Exception):
     """Levée si l'intégrité de l'organisme est compromise avant l'archivage (Fail-Closed)."""
+
     pass
+
 
 class EzzioBackupGuardian:
     def __init__(self, root_dir: Path = ROOT_DIR, safe_destination: Path = Path(r"C:\AI_Backups\E-zzio")):
         self.root_dir = root_dir
         self.safe_destination = safe_destination
         self.safe_destination.mkdir(parents=True, exist_ok=True)
-        
+
         self.gateway = EcolUniversalGateway()
         self.gateway.register_gateway_action("BACKUP_GUARDIAN_ARCHIVE")
 
@@ -52,10 +54,7 @@ class EzzioBackupGuardian:
         framework_bytes = framework_path.read_bytes()
         framework_hash = hashlib.sha256(framework_bytes).hexdigest().lower()
 
-        return {
-            "genome_hash": genome_hash,
-            "constitution_hash": framework_hash
-        }
+        return {"genome_hash": genome_hash, "constitution_hash": framework_hash}
 
     def execute_secure_backup(self) -> Dict[str, Any]:
         """
@@ -76,7 +75,7 @@ class EzzioBackupGuardian:
             (self.root_dir / "runtime" / "ecol", "ecol"),
             (self.root_dir / "runtime" / "memory_store", "memory_store"),
             (self.root_dir / "runtime" / "skills_store", "skills_store"),
-            (self.root_dir / "runtime" / "snapshots", "snapshots")
+            (self.root_dir / "runtime" / "snapshots", "snapshots"),
         ]
 
         files_captured_count = 0
@@ -86,7 +85,7 @@ class EzzioBackupGuardian:
             if src_path.exists():
                 dest_sub_path = backup_target_dir / sub_dir
                 dest_sub_path.mkdir(parents=True, exist_ok=True)
-                
+
                 if src_path.is_file():
                     target_file = dest_sub_path / src_path.name
                     target_file.write_bytes(src_path.read_bytes())
@@ -112,16 +111,13 @@ class EzzioBackupGuardian:
             "genome_hash": hashes["genome_hash"],
             "constitution_hash": hashes["constitution_hash"],
             "files_manifest": manifest_files,
-            "status": "VERIFIED"
+            "status": "VERIFIED",
         }
 
         manifest_json = json.dumps(manifest, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
         global_sha256 = hashlib.sha256(manifest_json.encode("utf-8")).hexdigest().lower()
 
-        final_manifest = {
-            **manifest,
-            "global_sha256": global_sha256
-        }
+        final_manifest = {**manifest, "global_sha256": global_sha256}
 
         manifest_path = backup_target_dir / "backup_manifest.sha256"
         manifest_path.write_text(json.dumps(final_manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -132,7 +128,7 @@ class EzzioBackupGuardian:
             "task_description": f"Création du backup externe sécurisé [{backup_id}]",
             "priority": "critical",
             "risk_level": "low",
-            "estimated_cost": files_captured_count
+            "estimated_cost": files_captured_count,
         }
 
         def commit_backup_record():
@@ -141,17 +137,14 @@ class EzzioBackupGuardian:
                 "destination": str(backup_target_dir),
                 "files_captured": files_captured_count,
                 "global_sha256": global_sha256,
-                "status": "VERIFIED_AND_SECURED"
+                "status": "VERIFIED_AND_SECURED",
             }
 
         # Validation No-Bypass via ECOL
-        result = self.gateway.execute_via_gateway(
-            action="BACKUP_GUARDIAN_ARCHIVE",
-            payload=payload,
-            target_func=commit_backup_record
-        )
+        result = self.gateway.execute_via_gateway(action="BACKUP_GUARDIAN_ARCHIVE", payload=payload, target_func=commit_backup_record)
 
         return result
+
 
 def test_backup_guardian():
     print("[*] Test de l'EZZIO_BACKUP_GUARDIAN (V8.9.2)...")
@@ -159,7 +152,7 @@ def test_backup_guardian():
 
     try:
         res = guardian.execute_secure_backup()
-        print(f"\n  [PASS] Backup externe sécurisé créé avec succès !")
+        print("\n  [PASS] Backup externe sécurisé créé avec succès !")
         print(f"         Backup ID     : {res['backup_id']}")
         print(f"         Destination   : {res['destination']}")
         print(f"         Fichiers capt : {res['files_captured']}")
@@ -168,9 +161,10 @@ def test_backup_guardian():
     except Exception as e:
         print(f"  [FAIL] Échec du backup de sécurité : {e}")
 
-    print("\n" + "="*65)
+    print("\n" + "=" * 65)
     print(" EZZIO_BACKUP_GUARDIAN (V8.9.2) : DISASTER RECOVERY ARMED")
-    print("="*65)
+    print("=" * 65)
+
 
 if __name__ == "__main__":
     test_backup_guardian()

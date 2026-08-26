@@ -2,10 +2,12 @@
 E-ZZIO Core — Cognitive Gateway (ECOL)
 Point d'entrée unique de toute intelligence. Aucun module ne doit contourner cette porte.
 """
+
 import logging
 from typing import Dict, Any
 
 logger = logging.getLogger(__name__)
+
 
 class CognitiveGateway:
     def __init__(self):
@@ -21,15 +23,15 @@ class CognitiveGateway:
         Vérifie l'identité, alloue le budget, optimise le contexte et route vers le modèle.
         """
         logger.debug("Requête reçue par la Gateway | Tâche: %s [Priorité: %s]", task, priority)
-        
+
         # 1. Validation de l'identité et de la gouvernance
         # 2. Évaluation des ressources et du budget cognitif
         # 3. Optimisation du contexte via le Context Engine
         # 4. Exécution sécurisée via le Model Router
-        
+
         return {
             "status": "ACCEPTED",
             "task": task,
             "processed_by": "ECOL_Cognitive_Gateway",
-            "result": "Simulation d'exécution unifiée réussie."
+            "result": "Simulation d'exécution unifiée réussie.",
         }

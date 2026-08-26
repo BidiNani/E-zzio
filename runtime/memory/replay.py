@@ -1,6 +1,7 @@
 from pathlib import Path
 import json
 
+
 class MemoryReplay:
     def __init__(self, store_path: str = "runtime/memory/events.jsonl"):
         self.store_path = Path(store_path)
@@ -23,10 +24,13 @@ class MemoryReplay:
         return {
             "total_events": total,
             "total_skills_executed": len(skills),
-            "last_skill": skills[-1].get("payload", {}).get("skill") if skills else None
+            "last_skill": skills[-1].get("payload", {}).get("skill") if skills else None,
         }
+
 
 if __name__ == "__main__":
     replay = MemoryReplay()
     summary = replay.summarize()
-    print(f"[REPLAY SUMMARY] Total: {summary['total_events']} | Skills: {summary['total_skills_executed']} | Dernier: {summary['last_skill']}")
+    print(
+        f"[REPLAY SUMMARY] Total: {summary['total_events']} | Skills: {summary['total_skills_executed']} | Dernier: {summary['last_skill']}"
+    )

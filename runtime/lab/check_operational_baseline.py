@@ -2,6 +2,7 @@
 E-ZZIO — Operational Baseline Final Verification
 Vérifie et affiche l'état opérationnel et de gouvernance final.
 """
+
 import sys
 from pathlib import Path
 
@@ -9,10 +10,11 @@ ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
+
 def verify_operational_baseline():
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print(" E-ZZIO — OPERATIONAL BASELINE CHECK")
-    print("="*60)
+    print("=" * 60)
     print(" Kernel State              : FROZEN")
     print(" Runtime Integrity         : VERIFIED")
     print(" Experience Ledger         : ACTIVE")
@@ -36,7 +38,8 @@ def verify_operational_baseline():
     print(" ")
     print(" STATUS:")
     print(" OPERATIONAL OBSERVATION MODE")
-    print("="*60 + "\n")
+    print("=" * 60 + "\n")
+
 
 if __name__ == "__main__":
     verify_operational_baseline()

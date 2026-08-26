@@ -20,34 +20,26 @@ ALLOWED_HOSTS = {
     "api.github.com",
     "github.com",
     "raw.githubusercontent.com",
-
     "oauth.reddit.com",
     "www.reddit.com",
     "reddit.com",
-
     "eu.api.blizzard.com",
     "us.api.blizzard.com",
     "kr.api.blizzard.com",
     "tw.api.blizzard.com",
     "oauth.battle.net",
-
     "fr.wikipedia.org",
     "en.wikipedia.org",
     "www.wikidata.org",
     "query.wikidata.org",
     "commons.wikimedia.org",
     "api.wikimedia.org",
-
     "api.stackexchange.com",
-
     "export.arxiv.org",
-
     "api.crossref.org",
-
     "api.open-meteo.com",
     "geocoding-api.open-meteo.com",
     "archive-api.open-meteo.com",
-
     "nominatim.openstreetmap.org",
 }
 
@@ -55,7 +47,6 @@ DEFAULT_LIMITS = {
     "github": {"min_interval": 0.80, "cache_ttl": 300},
     "reddit": {"min_interval": 1.10, "cache_ttl": 180},
     "blizzard": {"min_interval": 0.45, "cache_ttl": 600},
-
     "wikipedia": {"min_interval": 1.00, "cache_ttl": 3600},
     "wikidata": {"min_interval": 1.20, "cache_ttl": 3600},
     "stackexchange": {"min_interval": 1.00, "cache_ttl": 900},
@@ -63,12 +54,13 @@ DEFAULT_LIMITS = {
     "crossref": {"min_interval": 0.60, "cache_ttl": 7200},
     "openmeteo": {"min_interval": 0.30, "cache_ttl": 900},
     "osm": {"min_interval": 1.10, "cache_ttl": 86400},
-
     "generic": {"min_interval": 1.50, "cache_ttl": 300},
 }
 
+
 def now():
     return time.time()
+
 
 def audit(event_type, payload=None):
     AUDIT_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -81,6 +73,7 @@ def audit(event_type, payload=None):
         f.write(json.dumps(entry, ensure_ascii=False) + "\n")
     return entry
 
+
 def safe_json_read(path, default):
     try:
         if not path.exists():
@@ -89,9 +82,11 @@ def safe_json_read(path, default):
     except Exception:
         return default
 
+
 def safe_json_write(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
 
 def provider_from_url(url):
     host = urlparse(url).netloc.lower()
@@ -119,12 +114,14 @@ def provider_from_url(url):
 
     return "generic"
 
+
 def is_private_host(host):
     try:
         ip = ipaddress.ip_address(host)
         return ip.is_private or ip.is_loopback or ip.is_link_local or ip.is_multicast
     except Exception:
         return False
+
 
 def validate_url(url):
     parsed = urlparse(url)
@@ -142,14 +139,20 @@ def validate_url(url):
 
     return host
 
+
 def cache_key(method, url, params=None, body=None):
-    raw = json.dumps({
-        "method": method.upper(),
-        "url": url,
-        "params": params or {},
-        "body": body or {},
-    }, sort_keys=True, ensure_ascii=False)
+    raw = json.dumps(
+        {
+            "method": method.upper(),
+            "url": url,
+            "params": params or {},
+            "body": body or {},
+        },
+        sort_keys=True,
+        ensure_ascii=False,
+    )
     return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
 
 def get_cache(key, ttl):
     path = CACHE_ROOT / f"{key}.json"
@@ -167,13 +170,18 @@ def get_cache(key, ttl):
     item["cache_age_sec"] = round(age, 2)
     return item
 
+
 def set_cache(key, payload):
     CACHE_ROOT.mkdir(parents=True, exist_ok=True)
     path = CACHE_ROOT / f"{key}.json"
-    safe_json_write(path, {
-        "ts": now(),
-        "payload": payload,
-    })
+    safe_json_write(
+        path,
+        {
+            "ts": now(),
+            "payload": payload,
+        },
+    )
+
 
 def rate_wait(provider):
     limits = DEFAULT_LIMITS.get(provider, DEFAULT_LIMITS["generic"])
@@ -192,6 +200,7 @@ def rate_wait(provider):
 
     return round(wait, 3)
 
+
 def redacted_headers(headers):
     clean = {}
     for key, value in (headers or {}).items():
@@ -201,6 +210,7 @@ def redacted_headers(headers):
         else:
             clean[key] = value
     return clean
+
 
 def guarded_request(method, url, headers=None, params=None, json_body=None, timeout=25, cache=True, cache_ttl=None):
     host = validate_url(url)
@@ -226,15 +236,18 @@ def guarded_request(method, url, headers=None, params=None, json_body=None, time
 
     waited = rate_wait(provider)
 
-    audit("cloud_request", {
-        "provider": provider,
-        "host": host,
-        "method": method,
-        "url": url,
-        "params": params or {},
-        "headers": redacted_headers(headers),
-        "waited_sec": waited,
-    })
+    audit(
+        "cloud_request",
+        {
+            "provider": provider,
+            "host": host,
+            "method": method,
+            "url": url,
+            "params": params or {},
+            "headers": redacted_headers(headers),
+            "waited_sec": waited,
+        },
+    )
 
     response = requests.request(
         method=method,
@@ -246,8 +259,7 @@ def guarded_request(method, url, headers=None, params=None, json_body=None, time
     )
 
     rate_headers = {
-        k: v for k, v in response.headers.items()
-        if k.lower().startswith("x-ratelimit") or k.lower() in ["retry-after", "x-cache-status"]
+        k: v for k, v in response.headers.items() if k.lower().startswith("x-ratelimit") or k.lower() in ["retry-after", "x-cache-status"]
     }
 
     result = {
@@ -271,6 +283,7 @@ def guarded_request(method, url, headers=None, params=None, json_body=None, time
         set_cache(key, result.get("data") if result.get("data") is not None else result.get("text"))
 
     return result
+
 
 def cloud_status():
     return {

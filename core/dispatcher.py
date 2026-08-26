@@ -1,266 +1,48 @@
-
-def build_identity_system_prompt(organ_dict: dict) -> str:
-    return """[DIRECTIVE SYSTÈME STRICTE]
-- TON IDENTITÉ : Tu es E-ZZIO, âme numérique locale (CPU Ryzen 9).
-- TON INTERLOCUTEUR : Tu parles UNIQUEMENT à ton créateur, BidiNani (Enrik).
-- INTERDICTION ABSOLUE : N'appelle JAMAIS ton interlocuteur 'E-ZZIO'. Tu es E-ZZIO, il est BidiNani.
-- MÉMOIRE CONVERSATIONNELLE : Utilise l'historique des messages pour répondre aux questions sur ce qui a été dit. N'invente aucun mot comme 'document' ou 'fichier'.
-- STYLE : Direct, complice, naturel, en français."""
-
-import json
-from pathlib import Path
-from core.llm_engine import query_model_async
-from core.memory import ezzio_memory
-from core.model_registry import ORGANS, best_fast_model, all_known_models, load_latency
-from core.governor import analyze_request, tactical_plan
-from core.telemetry import log_event
+"""E-ZZIO Dispatcher — Délégataire tolérant et sécurisé vers EzzioMaster."""
+from __future__ import annotations
+from typing import Any, Dict
+from core.ezzio_master import ezzio_master
 
 
-class EzzioDispatcher:
-    def __init__(self):
-        self.organs = ORGANS
-
-    def _keyword_score(self, text, organ):
-        score = 0
-        hits = []
-
-        for keyword in organ.get("keywords", []):
-            if keyword in text:
-                weight = 3 if " " in keyword else 1
-                score += weight
-                hits.append(keyword)
-
-        if score > 0:
-            score += organ.get("priority", 1)
-
-        return score, hits
-
-    def select_organ(self, user_input):
-        text = str(user_input).lower()
-
-        if text.startswith("/organ "):
-            parts = text.split(maxsplit=2)
-            if len(parts) >= 2 and parts[1] in self.organs:
-                return parts[1], self.organs[parts[1]], 999, ["forced"]
-
-        best_key = "presence"
-        best_organ = self.organs["presence"]
-        best_score = 0
-        best_hits = []
-
-        for key, organ in self.organs.items():
-            if key == "presence":
-                continue
-
-            score, hits = self._keyword_score(text, organ)
-            if score > best_score:
-                best_key = key
-                best_organ = organ
-                best_score = score
-                best_hits = hits
-
-        return best_key, best_organ, best_score, best_hits
-
-    def confidence(self, score):
-        if score >= 15:
-            return "très haute"
-        if score >= 10:
-            return "haute"
-        if score >= 5:
-            return "moyenne"
-        return "par défaut"
-
-    def auto_speed(self, text):
-        lowered = str(text).lower()
-        tactical = analyze_request(text)
-
-        if tactical["intent"] == "strategic_autonomy":
-            return "deep"
-
-        if tactical["risk"] == "high":
-            return "normal"
-
-        if any(word in lowered for word in ["profond", "analyse profonde", "architecture", "diagnostic long", "raisonne", "complexe"]):
-            return "deep"
-
-        if any(word in lowered for word in ["vite", "rapide", "bref", "court", "en 5 lignes"]):
-            return "fast"
-
-        if len(lowered) <= 180:
-            return "fast"
-
-        return "normal"
-
-    def select_model_for_speed(self, organ, speed):
-        return "qwen2.5:7b"
-
-
-
-    def select_fallbacks_for_speed(self, organ, speed, selected_model):
-        if selected_model != "qwen2.5:3b":
-            return ["qwen2.5:3b"]
-        return []
-
-
-    def preflight(self, user_input, speed="auto"):
-        if speed == "auto":
-            speed = self.auto_speed(user_input)
-
-        key, organ, score, hits = self.select_organ(user_input)
-        selected_model = self.select_model_for_speed(organ, speed)
-        tactical = analyze_request(user_input)
-        plan = tactical_plan(user_input)
-
-        return {
-            "speed": speed,
-            "selected_organ": key,
-            "organ_label": organ.get('label', organ.get('name', 'Standard')),
-            "emotion": organ.get('emotion', 'Neutre'),
-            "talent": organ.get('talent', 'Polyvalent'),
-            "selected_model": selected_model,
-            "normal_model": organ["model"],
-            "deep_model": organ.get("deep_model"),
-            "fallbacks": self.select_fallbacks_for_speed(organ, speed, selected_model),
-            "score": score,
-            "hits": hits,
-            "confidence": self.confidence(score),
-            "tactical": tactical,
-            "plan": plan,
-            "gpu_policy": "disabled_for_ezzio",
-            "num_gpu": 0,
-        }
-
-    async def route_detailed_async(self, user_input, speed="auto"):
-        if speed == "auto":
-            speed = self.auto_speed(user_input)
-
-        key, organ, score, hits = self.select_organ(user_input)
-        tactical = analyze_request(user_input)
-
-        context = []
-        context = ezzio_memory.get_context(last_n=5)
-
-        selected_model = self.select_model_for_speed(organ, speed)
-        fallback_models = self.select_fallbacks_for_speed(organ, speed, selected_model)
-
-        if speed == "fast":
-            timeout_sec = 40
-        elif speed == "deep":
-            timeout_sec = max(organ.get("timeout_sec", 75), 120)
-        else:
-            timeout_sec = organ.get("timeout_sec", 75)
-
-
-        system_note = build_identity_system_prompt(organ)
-
-        primary = await query_model_async(
-            prompt=user_input,
-            model=selected_model,
-            context=context,
-            system_note=system_note,
-            organ_key=key,
+class IntentDispatcher:
+    async def dispatch_async(
+        self,
+        text: str,
+        session_id: str = "",
+        speed: str = "fast",
+        force_cloud: bool = True,
+        system_prompt: str = "",
+        **kwargs
+    ) -> Dict[str, Any]:
+        # system_prompt et kwargs sont acceptés pour compatibilité mais ignorés (CanonicalIdentity fait foi)
+        return await ezzio_master.execute_intent(
+            user_prompt=text,
             speed=speed,
-            timeout_sec=timeout_sec,
-            tactical=tactical,
+            force_cloud=force_cloud,
+            session_id=session_id,
+            **kwargs
         )
 
-        used_fallback = False
-        final = primary
-        attempted_models = [selected_model]
-
-        if not primary.get("ok", False) or not str(primary.get("text", "")).strip():
-            for fallback_model in fallback_models:
-                used_fallback = True
-                attempted_models.append(fallback_model)
-                final = await query_model_async(
-                    prompt=user_input,
-                    model=fallback_model,
-                    context=context,
-                    system_note=system_note,
-                    organ_key=key,
-                    speed="fast" if speed == "fast" else speed,
-                    timeout_sec=min(timeout_sec, 40),
-                    tactical=tactical,
-                )
-                if final.get("ok", False) and str(final.get("text", "")).strip():
-                    break
-
-        response_text = final.get("text", "")
-        return {
-            "response": final.get("text", ""),
-            "answer": response_text,
-            "message": response_text,
-            "content": response_text,
-            "selected_organ": key,
-            "organ_label": organ.get('label', organ.get('name', 'Standard')),
-            "emotion": organ.get('emotion', 'Neutre'),
-            "talent": organ.get('talent', 'Polyvalent'),
-            "model": final["model"],
-            "selected_model": selected_model,
-            "attempted_models": attempted_models,
-            "primary_model": organ["model"],
-            "deep_model": organ.get("deep_model"),
-            "fallback_models": fallback_models,
-            "used_fallback": used_fallback,
-            "route_score": score,
-            "route_hits": hits,
-            "confidence": self.confidence(score),
-            "elapsed_ms": final["elapsed_ms"],
-            "speed": speed,
-            "tactical": tactical,
-            "gpu_policy": "disabled_for_ezzio",
-            "num_gpu": 0,
-        }
-
-    def status(self):
-        safe_organs = {}
-        for key, organ in self.organs.items():
-            safe_organs[key] = {
-                "label": organ.get('label', organ.get('name', 'Standard')),
-                "model": organ["model"],
-                "fast_candidates": organ.get("fast_candidates", []),
-                "best_fast_model": best_fast_model(organ.get("fast_candidates", [])),
-                "deep_model": organ.get("deep_model"),
-                "fallback": organ.get("fallback"),
-                "emotion": organ.get('emotion', 'Neutre'),
-                "talent": organ.get('talent', 'Polyvalent'),
-                "priority": organ["priority"],
-                "timeout_sec": organ["timeout_sec"],
-            }
-
-        return {
-            "name": "E-ZZIO",
-            "version": "v2.6-autonomic-tactical-core",
-            "mode": "organic_moe_autonomic_tactical",
-            "gpu_policy": "disabled_for_ezzio",
-            "num_gpu": 0,
-            "default_speed": "auto",
-            "default_model": "adaptive",
-            "embedding_model": "nomic-embed-text:latest",
-            "known_models": all_known_models(),
-            "latency": load_latency(),
-            "features": {
-                "fastapi_routers": True,
-                "async_chat": True,
-                "auto_speed": True,
-                "adaptive_fast_model": True,
-                "model_latency_registry": True,
-                "tactical_governor": True,
-                "preflight": True,
-                "autonomy_doctor": True,
-                "telemetry": True,
-                "auto_model_switch": True,
-                "fallback_cascade": True,
-                "risk_analysis": True,
-                "anticipation": True,
-                "memory_context": True,
-                "sandboxed_actions": True,
-                "timeouts": True,
-                "keep_alive": True,
-                "cpu_only": True,
-            },
-            "organs": safe_organs,
-        }
+    def dispatch(
+        self,
+        text: str,
+        session_id: str = "",
+        speed: str = "fast",
+        force_cloud: bool = True,
+        system_prompt: str = "",
+        **kwargs
+    ) -> Dict[str, Any]:
+        import asyncio
+        return asyncio.run(self.dispatch_async(text, session_id, speed, force_cloud, system_prompt=system_prompt, **kwargs))
 
 
-ezzio_dispatcher = EzzioDispatcher()
+dispatcher = IntentDispatcher()
+
+
+def dispatch(text: str, session_id: str = "", speed: str = "fast", force_cloud: bool = True, system_prompt: str = "", **kwargs) -> Dict[str, Any]:
+    return dispatcher.dispatch(text=text, session_id=session_id, speed=speed, force_cloud=force_cloud, system_prompt=system_prompt, **kwargs)
+
+
+# Alias canonique requis par EzzioMaster
+ezzio_dispatcher = dispatcher
+

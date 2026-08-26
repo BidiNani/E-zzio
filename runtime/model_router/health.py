@@ -1,8 +1,8 @@
 import requests
 import os
 import psutil
-from pathlib import Path
 from typing import Dict, Any
+
 
 class ModelHealthChecker:
     def __init__(self, config: Dict[str, Any]):
@@ -22,5 +22,5 @@ class ModelHealthChecker:
     def check_ram_availability(self, required_ram_gb: float) -> bool:
         if required_ram_gb <= 0:
             return True
-        free_ram_gb = psutil.virtual_memory().available / (1024 ** 3)
+        free_ram_gb = psutil.virtual_memory().available / (1024**3)
         return free_ram_gb >= required_ram_gb

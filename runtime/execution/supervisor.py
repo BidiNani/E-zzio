@@ -5,6 +5,7 @@ from runtime.execution.registry import ExecutorRegistry
 
 logger = logging.getLogger("Ezzio.Supervisor")
 
+
 class ExecutionSupervisor:
     def __init__(self, registry: ExecutorRegistry = None):
         self.registry = registry or ExecutorRegistry()
@@ -15,17 +16,17 @@ class ExecutionSupervisor:
             error_msg = f"Runtime Error: No registered executor found for '{context.tool_name}'"
             logger.error(error_msg)
             return ToolResult(success=False, error=error_msg, exit_code=-1)
-        
+
         try:
             instance = executor_cls()
             logger.info(f"Supervisor delegating to {executor_cls.__name__} [Trace: {context.trace_id}]")
             result = instance.execute(context)
-            
+
             if not isinstance(result, ToolResult):
                 error_msg = f"Contract Violation: {executor_cls.__name__} returned {type(result)} instead of ToolResult."
                 logger.error(error_msg)
                 return ToolResult(success=False, error=error_msg, exit_code=-3)
-                
+
             return result
 
         except Exception as e:

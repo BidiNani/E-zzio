@@ -2,6 +2,7 @@
 E-ZZIO V7.41 — Certification Test Suite (Multi Model Router)
 Valide le routage intelligent (Local vs Cloud) et l'intégration avec la Tool Gateway.
 """
+
 import sys
 from pathlib import Path
 
@@ -10,6 +11,7 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from core.tool_gateway.model_router import model_router
+
 
 def run_router_certification():
     print("============================================================")
@@ -34,6 +36,7 @@ def run_router_certification():
     print("\n============================================================")
     print(" V7.41 CERTIFIÉ : INTELLIGENCE ROUTER OPÉRATIONNEL")
     print("============================================================\n")
+
 
 if __name__ == "__main__":
     run_router_certification()

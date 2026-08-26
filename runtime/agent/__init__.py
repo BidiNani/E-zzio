@@ -1,1 +1,1 @@
-from .loop import AgentLoop
+from .loop import AgentLoop as AgentLoop

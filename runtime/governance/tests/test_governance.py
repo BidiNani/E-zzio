@@ -3,6 +3,7 @@ from pathlib import Path
 from runtime.governance.decision import DecisionContract
 from runtime.governance.gate import GovernanceGate
 
+
 class TestGovernanceKernel(unittest.TestCase):
     def setUp(self):
         self.root_dir = Path("G:/AI/E-zzio").resolve()
@@ -26,6 +27,7 @@ class TestGovernanceKernel(unittest.TestCase):
         res = self.gate.evaluate(d)
         # Le RiskEngine devrait bloquer (score trop haut)
         self.assertEqual(res["status"], "DENIED")
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -5,6 +5,7 @@ from runtime.external.platform.windows import WindowsProcessIsolator
 from runtime.external.output_guard import OutputGuard
 from runtime.tools.tool_schema import ToolResult
 
+
 class WorkerSupervisor:
     @staticmethod
     def run_worker(executor_instance: ExternalExecutorBase, context: ExecutionContext, project_root: str, **kwargs) -> ToolResult:
@@ -14,20 +15,20 @@ class WorkerSupervisor:
         try:
             executor_instance.spawn(context, project_root, guard=guard, **kwargs)
 
-            process = getattr(executor_instance, 'process', None)
+            process = getattr(executor_instance, "process", None)
             if process:
                 isolator.assign(process)
-                st = getattr(context, 'state', {})
+                st = getattr(context, "state", {})
                 if isinstance(st, dict):
-                    st.setdefault('metadata', {})['pid'] = process.pid
+                    st.setdefault("metadata", {})["pid"] = process.pid
 
-            st = getattr(context, 'state', {})
+            st = getattr(context, "state", {})
             if isinstance(st, dict):
-                st.setdefault('metadata', {})['executor'] = getattr(executor_instance, 'TOOL_NAME', 'unknown')
+                st.setdefault("metadata", {})["executor"] = getattr(executor_instance, "TOOL_NAME", "unknown")
 
             while executor_instance.is_alive():
                 try:
-                    if hasattr(executor_instance, 'collect_output'):
+                    if hasattr(executor_instance, "collect_output"):
                         chunk = executor_instance.collect_output()
                         if chunk:
                             guard.feed(chunk)

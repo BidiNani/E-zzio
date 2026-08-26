@@ -3,9 +3,12 @@ import logging
 
 logger = logging.getLogger("ezzio.security.quota")
 
+
 class QuotaExceededError(Exception):
     """Exception levée lorsque le quota d'un fournisseur cloud est épuisé."""
+
     pass
+
 
 class QuotaManager:
     def __init__(self, db_path: str = "runtime/evidence/evidence.db"):
@@ -31,10 +34,7 @@ class QuotaManager:
             pass
 
         async with aiosqlite.connect(self.db_path) as db:
-            cursor = await db.execute(
-                "SELECT COUNT(*) FROM api_usage_ledger WHERE user_id = ? AND provider = ?;",
-                (user_id, provider)
-            )
+            cursor = await db.execute("SELECT COUNT(*) FROM api_usage_ledger WHERE user_id = ? AND provider = ?;", (user_id, provider))
             count = (await cursor.fetchone())[0]
             limit = self.HOURLY_LIMITS.get(provider, 10)
 
@@ -42,10 +42,8 @@ class QuotaManager:
                 raise QuotaExceededError(f"Quota horaire dépassé pour {provider} ({count}/{limit})")
 
             from datetime import datetime, timezone
+
             now = datetime.now(timezone.utc).isoformat()
-            await db.execute(
-                "INSERT INTO api_usage_ledger (user_id, provider, timestamp) VALUES (?, ?, ?);",
-                (user_id, provider, now)
-            )
+            await db.execute("INSERT INTO api_usage_ledger (user_id, provider, timestamp) VALUES (?, ?, ?);", (user_id, provider, now))
             await db.commit()
             return True

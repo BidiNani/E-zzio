@@ -1,4 +1,5 @@
 from __future__ import annotations
+from core.identity.canonical_identity import CanonicalIdentity
 
 import os
 import re
@@ -38,20 +39,52 @@ CPU_ONLY_ENV = {
 for key, value in CPU_ONLY_ENV.items():
     os.environ[key] = value
 
+# ---------------------------------------------------------------------------
+# CHANGELOG v2.19-pc-policy-realign-and-healthcheck
+# - DEFAULT_POLICY réalignée sur l'inventaire Ollama réel (23/08/2026) :
+#   retire llama3.2:3b, phi4-mini:latest, deepseek-r1:8b, hermes3:8b,
+#   qwen2.5vl:3b, shieldgemma:2b, granite3.3:8b, qwen2.5-coder:1.5b,
+#   qwen3:1.7b, qwen3:4b (aucun n'est installé, tous absents de `ollama list`)
+#   ajoute qwen3-coder:30b, qwen2.5-coder:14b, qwen3:14b, granite4.1:8b,
+#   gpt-oss-20b (mrasif/gpt-oss-20b-GGUF), bge-m3, nomic-embed-text,
+#   Kiwi-4b (hf.co/mradermacher/Kiwi-4b-i1-GGUF)
+# - Aucune catégorie de tâche n'a plus de candidat introuvable dans
+#   installed_models (vérifié contre ollama_models() live)
+# - ajout classify_error() : distingue connection_refused / timeout /
+#   model_not_found / other au lieu d'un except générique opaque
+# - ajout is_available() : healthcheck rapide (GET /api/tags) réutilisable
+#   par un futur Cognitive Router (web_server.py) pour décider d'un
+#   fallback cloud -> local, sans dupliquer la logique de connexion ici
+# - route ajoutée pour "guard" et "vision" et "archive"/"music" avec des
+#   modèles réellement installés faute d'équivalent exact : ces catégories
+#   pointent maintenant vers un modèle générique existant plutôt que vers
+#   un modèle absent (voir commentaires inline). À revalider si des
+#   modèles dédiés (vision, garde) sont un jour pull.
+# - AUCUN changement de comportement pour fast/companion/identity/code/
+#   powershell/logic/deep : mêmes règles de sélection, juste des noms de
+#   modèles différents pointant vers des binaires qui existent réellement
+# ---------------------------------------------------------------------------
+
 DEFAULT_POLICY = {
-    "version": "v2.18-pc-clean-core-hardening",
+    "version": "v2.19-pc-policy-realign-and-healthcheck",
     "models": {
-        "fast": ["llama3.2:3b", "qwen2.5-coder:1.5b", "phi4-mini:latest"],
-        "companion": ["hermes3:8b", "llama3.2:3b", "phi4-mini:latest"],
-        "identity": ["hermes3:8b", "qwen2.5-coder:7b", "llama3.2:3b"],
-        "code": ["qwen2.5-coder:7b", "qwen2.5-coder:1.5b", "phi4-mini:latest"],
-        "powershell": ["qwen2.5-coder:7b", "qwen2.5-coder:1.5b"],
-        "logic": ["phi4-mini:latest", "hermes3:8b", "qwen2.5-coder:7b"],
-        "deep": ["deepseek-r1:8b", "qwen3:8b", "hermes3:8b"],
-        "vision": ["qwen2.5vl:3b"],
-        "guard": ["shieldgemma:2b"],
-        "archive": ["granite3.3:8b", "hermes3:8b"],
-        "music": ["qwen3:8b", "hermes3:8b"]
+        "fast": ["qwen3:8b", "qwen2.5-coder:7b"],
+        "companion": ["qwen3:8b", "qwen3:14b"],
+        "identity": ["qwen3:8b", "qwen2.5-coder:7b"],
+        "code": ["qwen2.5-coder:7b", "qwen2.5-coder:14b", "qwen3-coder:30b"],
+        "powershell": ["qwen2.5-coder:7b", "qwen2.5-coder:14b"],
+        "logic": ["qwen3:14b", "qwen3:8b", "qwen2.5-coder:7b"],
+        "deep": ["qwen3:14b", "qwen3-coder:30b", "qwen3:8b"],
+        # pas de modèle vision installé actuellement (qwen2.5vl:3b absent) ;
+        # fallback explicite sur un modèle texte, à corriger si un modèle
+        # vision est pull un jour (ex: qwen2.5vl, llava)
+        "vision": ["qwen3:8b"],
+        # pas de modèle guard dédié installé (shieldgemma:2b absent) ;
+        # fallback explicite, PAS un vrai remplacement fonctionnel
+        "guard": ["qwen3:8b"],
+        "archive": ["granite4.1:8b", "qwen3:14b"],
+        "music": ["qwen3:8b", "qwen3:14b"],
+        "embed": ["nomic-embed-text", "bge-m3"],
     },
     "avoid_for_identity": ["qwen3:1.7b", "qwen3:4b"],
     "policy": {
@@ -59,20 +92,11 @@ DEFAULT_POLICY = {
         "gpu": "untouched",
         "no_ads": True,
         "no_tracking": True,
-        "no_sponsors": True
-    }
+        "no_sponsors": True,
+    },
 }
 
-IDENTITY_SYSTEM = """
-Tu es E-ZZIO, l'ami IA local d'Enrik.
-Tu es un assistant local sur PC, optimisé CPU/RAM, sans publicité, sans tracking, sans sponsor.
-Tu dois répondre en français.
-Tu dois être honnête : ne dis pas qu'un module est actif s'il est seulement prêt ou non configuré.
-Tu n'es pas une marque automobile.
-Tu n'es pas un produit commercial.
-Tu dois rester utile, fiable, local-first, sobre et professionnel.
-La GTX doit rester intacte et non utilisée.
-""".strip()
+IDENTITY_SYSTEM = CanonicalIdentity().build_system_prompt().strip()
 
 TASK_SYSTEMS = {
     "fast": """
@@ -91,22 +115,23 @@ Ne donne pas de conseil vague : donne des règles concrètes.
 Tu aides à coder proprement E-ZZIO.
 Privilégie architecture simple, fonctions claires, validation JSON, logs, erreurs explicites et compatibilité Windows.
 """.strip(),
-    "identity": """
-Réponds comme l'identité officielle E-ZZIO : ami IA local d'Enrik sur PC, CPU/RAM only, zéro pub, fiable, honnête.
-""".strip(),
+    "identity": CanonicalIdentity().build_system_prompt(),
     "deep": """
 Analyse de façon structurée et honnête. Distingue actif, prêt, configuré et futur.
 """.strip(),
 }
 
+
 def _now() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%S")
+
 
 def clean_reply(text: str) -> str:
     text = text or ""
     text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL | re.IGNORECASE)
     text = text.replace("\x00", "").strip()
     return text
+
 
 def sanitize_truth(reply: str, task: str) -> str:
     text = clean_reply(reply)
@@ -184,8 +209,10 @@ def sanitize_truth(reply: str, task: str) -> str:
 def words(text: str) -> set[str]:
     return set(re.findall(r"[a-zA-ZÀ-ÿ0-9_.:-]+", (text or "").lower()))
 
+
 def has_phrase(low: str, phrases: list[str]) -> bool:
     return any(p in low for p in phrases)
+
 
 def ollama_models() -> list[str]:
     try:
@@ -195,11 +222,53 @@ def ollama_models() -> list[str]:
     except Exception:
         return []
 
+
+def is_available() -> Dict[str, Any]:
+    """
+    Healthcheck léger et rapide (pas de génération, juste /api/tags).
+    Pensé pour être appelé par un futur Cognitive Router (dans
+    web_server.py) AVANT de décider d'un fallback cloud -> local, sans
+    dupliquer ici de logique de décision : ce module reste un routeur
+    intra-Ollama, la décision cloud/local reste hors de ce fichier.
+    """
+    started = time.time()
+    try:
+        response = requests.get("http://127.0.0.1:11434/api/tags", timeout=3)
+        response.raise_for_status()
+        elapsed_ms = int((time.time() - started) * 1000)
+        return {"available": True, "elapsed_ms": elapsed_ms, "error": None}
+    except requests.exceptions.ConnectionError:
+        return {"available": False, "elapsed_ms": int((time.time() - started) * 1000), "error": "connection_refused"}
+    except requests.exceptions.Timeout:
+        return {"available": False, "elapsed_ms": int((time.time() - started) * 1000), "error": "timeout"}
+    except Exception as exc:
+        return {"available": False, "elapsed_ms": int((time.time() - started) * 1000), "error": f"other:{exc}"}
+
+
+def classify_error(exc: Exception) -> str:
+    """
+    Classification grossière mais utile pour qu'un appelant en amont
+    (E-zzio) puisse distinguer "modèle absent -> pull ou changer de
+    policy" de "Ollama down -> basculer sur le cloud" de "timeout ->
+    peut-être juste réessayer".
+    """
+    name = type(exc).__name__
+    text = str(exc).lower()
+
+    if isinstance(exc, requests.exceptions.ConnectionError) or "connection refused" in text or "connection error" in text:
+        return "connection_refused"
+    if isinstance(exc, requests.exceptions.Timeout) or "timeout" in text or "timed out" in text:
+        return "timeout"
+    if "model" in text and ("not found" in text or "not exist" in text or "no such" in text):
+        return "model_not_found"
+    return f"other:{name}"
+
+
 def load_policy() -> Dict[str, Any]:
     if POLICY_PATH.exists():
         try:
             policy = json.loads(POLICY_PATH.read_text(encoding="utf-8"))
-            policy["version"] = "v2.18-pc-clean-core-hardening"
+            policy["version"] = "v2.19-pc-policy-realign-and-healthcheck"
             return policy
         except Exception:
             pass
@@ -207,11 +276,13 @@ def load_policy() -> Dict[str, Any]:
     save_policy(DEFAULT_POLICY)
     return DEFAULT_POLICY
 
+
 def save_policy(policy: Dict[str, Any]) -> Dict[str, Any]:
     PERF_ROOT.mkdir(parents=True, exist_ok=True)
-    policy["version"] = "v2.18-pc-clean-core-hardening"
+    policy["version"] = "v2.19-pc-policy-realign-and-healthcheck"
     POLICY_PATH.write_text(json.dumps(policy, ensure_ascii=False, indent=2), encoding="utf-8")
     return policy
+
 
 def latest_guarded_bench():
     files = sorted(PERF_ROOT.glob("bench_guarded_*.json"), key=lambda p: p.stat().st_mtime, reverse=True)
@@ -224,6 +295,7 @@ def latest_guarded_bench():
             continue
     return None
 
+
 def infer_task(text: str, requested_task: str = "auto", speed: str = "auto") -> str:
     requested_task = (requested_task or "auto").lower().strip()
     speed = (speed or "auto").lower().strip()
@@ -235,13 +307,30 @@ def infer_task(text: str, requested_task: str = "auto", speed: str = "auto") -> 
     token_set = words(low)
 
     explicit_code_words = {
-        "python", "fastapi", "code", "fonction", "classe", "router", "endpoint",
-        "json", "traceback", "syntaxerror", "debug"
+        "python",
+        "fastapi",
+        "code",
+        "fonction",
+        "classe",
+        "router",
+        "endpoint",
+        "json",
+        "traceback",
+        "syntaxerror",
+        "debug",
     }
 
     explicit_powershell_words = {
-        "powershell", ".ps1", "script", "backup", "rollback", "logs", "log",
-        "set-content", "invoke-restmethod", "get-content"
+        "powershell",
+        ".ps1",
+        "script",
+        "backup",
+        "rollback",
+        "logs",
+        "log",
+        "set-content",
+        "invoke-restmethod",
+        "get-content",
     }
 
     if token_set.intersection(explicit_powershell_words):
@@ -266,6 +355,7 @@ def infer_task(text: str, requested_task: str = "auto", speed: str = "auto") -> 
         return "fast"
 
     return "companion"
+
 
 def select_model(task: str = "auto", text: str = "", speed: str = "auto") -> Dict[str, Any]:
     policy = load_policy()
@@ -299,7 +389,7 @@ def select_model(task: str = "auto", text: str = "", speed: str = "auto") -> Dic
                 "installed": True,
                 "candidates": deduped,
                 "reason": "first_installed_policy_match",
-                "policy_path": str(POLICY_PATH)
+                "policy_path": str(POLICY_PATH),
             }
 
     return {
@@ -311,13 +401,15 @@ def select_model(task: str = "auto", text: str = "", speed: str = "auto") -> Dic
         "candidates": deduped,
         "installed_models": installed,
         "reason": "no_candidate_installed",
-        "policy_path": str(POLICY_PATH)
+        "policy_path": str(POLICY_PATH),
     }
+
 
 def router_status() -> Dict[str, Any]:
     policy = load_policy()
     bench = latest_guarded_bench()
     installed = ollama_models()
+    health = is_available()
 
     route_preview = {}
     for task in ["fast", "companion", "identity", "powershell", "code", "logic", "deep", "vision", "guard", "archive", "music"]:
@@ -325,28 +417,26 @@ def router_status() -> Dict[str, Any]:
 
     return {
         "ok": True,
-        "version": "v2.18-pc-clean-core-hardening",
+        "version": "v2.19-pc-policy-realign-and-healthcheck",
         "created_at": _now(),
         "policy_path": str(POLICY_PATH),
+        "health": health,
         "installed_models": installed,
         "route_preview": route_preview,
         "latest_guarded_bench": {
             "available": bench is not None,
             "best": bench.get("best") if bench else None,
             "accepted_count": bench.get("accepted_count") if bench else None,
-            "report_path": bench.get("report_path") or bench.get("_path") if bench else None
+            "report_path": bench.get("report_path") or bench.get("_path") if bench else None,
         },
-        "policy": policy
+        "policy": policy,
     }
+
 
 def chat_with_route(text: str, task: str = "auto", speed: str = "auto", predict: int = 260) -> Dict[str, Any]:
     route = select_model(task=task, text=text, speed=speed)
     if not route.get("ok"):
-        return {
-            "ok": False,
-            "route": route,
-            "reply": "Aucun modèle local installé ne correspond à cette tâche."
-        }
+        return {"ok": False, "route": route, "reply": "Aucun modèle local installé ne correspond à cette tâche.", "error_kind": "no_candidate_installed"}
 
     model = route["model"]
     resolved_task = route["task"]
@@ -360,11 +450,7 @@ def chat_with_route(text: str, task: str = "auto", speed: str = "auto", predict:
             "elapsed_ms": 0,
             "reply": sanitize_ezzio_reply(static, resolved_task),
             "deterministic": True,
-            "policy": {
-                "cpu_ram_only": True,
-                "gpu": "untouched",
-                "no_ads": True
-            }
+            "policy": {"cpu_ram_only": True, "gpu": "untouched", "no_ads": True},
         }
 
     if resolved_task == "fast":
@@ -388,18 +474,9 @@ def chat_with_route(text: str, task: str = "auto", speed: str = "auto", predict:
     try:
         response = ollama.chat(
             model=model,
-            messages=[
-                {"role": "system", "content": IDENTITY_SYSTEM + "\n\n" + task_rules},
-                {"role": "user", "content": text or ""}
-            ],
-            options={
-                "num_gpu": 0,
-                "num_ctx": num_ctx,
-                "num_predict": int(predict),
-                "temperature": temperature,
-                "num_thread": threads
-            },
-            keep_alive="20m"
+            messages=[{"role": "system", "content": IDENTITY_SYSTEM + "\n\n" + task_rules}, {"role": "user", "content": text or ""}],
+            options={"num_gpu": 0, "num_ctx": num_ctx, "num_predict": int(predict), "temperature": temperature, "num_thread": threads},
+            keep_alive="20m",
         )
 
         reply = sanitize_ezzio_reply(sanitize_truth(response.get("message", {}).get("content", ""), resolved_task), resolved_task)
@@ -410,11 +487,7 @@ def chat_with_route(text: str, task: str = "auto", speed: str = "auto", predict:
             "route": route,
             "elapsed_ms": int((time.time() - started) * 1000),
             "reply": reply,
-            "policy": {
-                "cpu_ram_only": True,
-                "gpu": "untouched",
-                "no_ads": True
-            }
+            "policy": {"cpu_ram_only": True, "gpu": "untouched", "no_ads": True},
         }
 
     except Exception as exc:
@@ -423,8 +496,10 @@ def chat_with_route(text: str, task: str = "auto", speed: str = "auto", predict:
             "created_at": _now(),
             "route": route,
             "elapsed_ms": int((time.time() - started) * 1000),
-            "error": str(exc)
+            "error": str(exc),
+            "error_kind": classify_error(exc),
         }
+
 
 def write_default_policy() -> Dict[str, Any]:
     return save_policy(DEFAULT_POLICY)

@@ -2,6 +2,7 @@ import threading
 import queue
 import traceback
 
+
 class EventBus:
     def __init__(self):
         self._subscribers = {}
@@ -22,7 +23,7 @@ class EventBus:
         while not self._stop_event.is_set() or not self._queue.empty():
             try:
                 event_type, payload = self._queue.get(timeout=0.1)
-                
+
                 # Récupération sécurisée des écouteurs
                 listeners = list(self._subscribers.get(event_type, []))
 
@@ -34,13 +35,7 @@ class EventBus:
                         traceback.print_exc()
 
                         if event_type != "EventListenerError":
-                            self._queue.put((
-                                "EventListenerError",
-                                {
-                                    "event": event_type,
-                                    "error": str(e)
-                                }
-                            ))
+                            self._queue.put(("EventListenerError", {"event": event_type, "error": str(e)}))
                 self._queue.task_done()
 
             except queue.Empty:

@@ -1,11 +1,13 @@
 """
 E-ZZIO V7.26.0 — Health Recovery Manager
-Effectue des sondes de santé périodiques pour ramener progressivement 
+Effectue des sondes de santé périodiques pour ramener progressivement
 un provider défaillant de OPEN -> HALF_OPEN -> ONLINE.
 """
+
 import asyncio
 from providers.provider_registry import get_provider_instance
 from core.routing.circuit_breaker import circuit_breaker
+
 
 class HealthRecoveryManager:
     @staticmethod
@@ -32,5 +34,6 @@ class HealthRecoveryManager:
                     if recovered:
                         print(f"[Self-Healing] Succès de la sonde : le provider '{prov}' est rétabli. Fermeture du disjoncteur.")
                         circuit_breaker.record_success(prov)
+
 
 health_manager = HealthRecoveryManager()

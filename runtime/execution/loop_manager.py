@@ -13,11 +13,7 @@ class ExecutionLoopManager:
     def __init__(self):
         self.active = {}
 
-    def register(
-        self,
-        context: ExecutionContext,
-        capability_verifier
-    ):
+    def register(self, context: ExecutionContext, capability_verifier):
         """
         Registers execution only after capability validation.
         """
@@ -30,9 +26,7 @@ class ExecutionLoopManager:
             return False
 
         context.state = ExecutionState.AUTHORIZED
-        self.active[
-            context.execution_id
-        ] = context
+        self.active[context.execution_id] = context
 
         return True
 
@@ -40,7 +34,4 @@ class ExecutionLoopManager:
         return self.active.get(execution_id)
 
     def remove(self, execution_id):
-        return self.active.pop(
-            execution_id,
-            None
-        )
+        return self.active.pop(execution_id, None)

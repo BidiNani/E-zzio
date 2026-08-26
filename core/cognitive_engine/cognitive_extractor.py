@@ -2,6 +2,7 @@
 E-ZZIO V7.58 — Cognitive Extractor (Forensic Dry-Run 2)
 Cible l'exhaustivité (.txt, .json) et intègre le Pare-Feu Cognitif.
 """
+
 import os
 import sys
 import json
@@ -20,6 +21,7 @@ REPORT_FILE = ROOT_DIR / "runtime" / "audit" / "system" / "extraction_dry_run_re
 TARGET_EXTENSIONS = {".md", ".jsonl", ".db", ".sqlite", ".txt", ".json"}
 EXCLUDE_DIRS = {".git", ".venv", "__pycache__", "node_modules"}
 
+
 class ExtractorDryRun:
     def __init__(self):
         self.validator = MemoryValidator()
@@ -27,24 +29,9 @@ class ExtractorDryRun:
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "status": "DRY_RUN",
             "files_scanned": 0,
-            "metrics": {
-                "PROTECTED": 0,
-                "QUALIFIED": 0,
-                "REJECTED": 0,
-                "ERRORS": 0
-            },
-            "extraction_potential": {
-                "jsonl_records": 0,
-                "sqlite_rows": 0,
-                "md_documents": 0,
-                "json_documents": 0,
-                "txt_documents": 0
-            },
-            "details": {
-                "protected_files": [],
-                "qualified_files": [],
-                "rejected_reasons": {}
-            }
+            "metrics": {"PROTECTED": 0, "QUALIFIED": 0, "REJECTED": 0, "ERRORS": 0},
+            "extraction_potential": {"jsonl_records": 0, "sqlite_rows": 0, "md_documents": 0, "json_documents": 0, "txt_documents": 0},
+            "details": {"protected_files": [], "qualified_files": [], "rejected_reasons": {}},
         }
 
     def compute_hash(self, file_path: Path) -> str:
@@ -61,7 +48,8 @@ class ExtractorDryRun:
         count = 0
         try:
             with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
-                for _ in f: count += 1
+                for _ in f:
+                    count += 1
             self.stats["extraction_potential"]["jsonl_records"] += count
         except Exception as e:
             raise Exception(f"Erreur JSONL : {e}")
@@ -87,9 +75,9 @@ class ExtractorDryRun:
     def process_file(self, file_path: Path):
         self.stats["files_scanned"] += 1
         rel_path = file_path.relative_to(ROOT_DIR).as_posix()
-        
+
         validation = self.validator.evaluate_source(file_path)
-        
+
         if not validation.get("promoted", False):
             self.stats["metrics"]["REJECTED"] += 1
             reason = validation.get("reason", "Unknown")
@@ -101,7 +89,7 @@ class ExtractorDryRun:
             "path": rel_path,
             "hash": file_hash,
             "memory_type": validation.get("memory_type", "generic"),
-            "confidence": validation.get("confidence", 0.5)
+            "confidence": validation.get("confidence", 0.5),
         }
 
         if validation.get("protected", False):
@@ -123,11 +111,11 @@ class ExtractorDryRun:
                 self.stats["extraction_potential"]["json_documents"] += 1
             elif ext == ".txt":
                 self.stats["extraction_potential"]["txt_documents"] += 1
-        except Exception as e:
+        except Exception:
             self.stats["metrics"]["ERRORS"] += 1
 
     def run(self):
-        print(f"[*] Démarrage de l'extraction V7.58 (DRY-RUN)")
+        print("[*] Démarrage de l'extraction V7.58 (DRY-RUN)")
         for root, dirs, files in os.walk(ROOT_DIR):
             dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS]
             for file in files:
@@ -150,6 +138,7 @@ class ExtractorDryRun:
         print("-" * 50)
         print(f" Lignes JSONL conservées  : {self.stats['extraction_potential']['jsonl_records']}")
         print(f" Rapport sauvegardé dans  : {REPORT_FILE}")
+
 
 if __name__ == "__main__":
     extractor = ExtractorDryRun()

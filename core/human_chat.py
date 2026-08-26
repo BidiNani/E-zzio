@@ -33,16 +33,20 @@ CPU_ONLY_ENV = {
 for key, value in CPU_ONLY_ENV.items():
     os.environ[key] = value
 
+
 def now() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%S")
+
 
 def safe_session_name(name: str) -> str:
     raw = (name or "pc").strip().lower()
     safe = "".join(ch if ch.isalnum() or ch in ("-", "_") else "_" for ch in raw)
     return safe[:80] or "pc"
 
+
 def session_path(session: str) -> Path:
     return SESSIONS_ROOT / f"{safe_session_name(session)}.jsonl"
+
 
 def append_session(session: str, role: str, content: str, meta: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     event = {
@@ -69,6 +73,7 @@ def append_session(session: str, role: str, content: str, meta: Optional[Dict[st
 
     return event
 
+
 def read_session(session: str, limit: int = 12) -> List[Dict[str, Any]]:
     path = session_path(session)
     if not path.exists():
@@ -77,13 +82,14 @@ def read_session(session: str, limit: int = 12) -> List[Dict[str, Any]]:
     lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
     events: List[Dict[str, Any]] = []
 
-    for line in lines[-max(1, min(int(limit), 100)):]:
+    for line in lines[-max(1, min(int(limit), 100)) :]:
         try:
             events.append(json.loads(line))
         except Exception:
             events.append({"broken_line": line[:300]})
 
     return events
+
 
 def list_sessions() -> Dict[str, Any]:
     sessions = []
@@ -97,13 +103,15 @@ def list_sessions() -> Dict[str, Any]:
             count = 0
             last = None
 
-        sessions.append({
-            "session": path.stem,
-            "path": str(path),
-            "message_count": count,
-            "modified_at": time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime(path.stat().st_mtime)),
-            "last": last,
-        })
+        sessions.append(
+            {
+                "session": path.stem,
+                "path": str(path),
+                "message_count": count,
+                "modified_at": time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime(path.stat().st_mtime)),
+                "last": last,
+            }
+        )
 
     return {
         "ok": True,
@@ -112,6 +120,7 @@ def list_sessions() -> Dict[str, Any]:
         "sessions": sessions,
         "root": str(CHAT_ROOT),
     }
+
 
 def compact_context(session: str, limit: int = 8) -> str:
     events = read_session(session, limit=limit)
@@ -127,6 +136,7 @@ def compact_context(session: str, limit: int = 8) -> str:
         lines.append(f"{role}: {content}")
 
     return "\n".join(lines)
+
 
 def status() -> Dict[str, Any]:
     return {
@@ -155,6 +165,7 @@ def status() -> Dict[str, Any]:
         ],
     }
 
+
 def build_brief() -> Dict[str, Any]:
     maintenance = None
     human = None
@@ -163,18 +174,21 @@ def build_brief() -> Dict[str, Any]:
 
     try:
         from core.project_janitor import maintenance_status
+
         maintenance = maintenance_status()
     except Exception as exc:
         errors.append({"where": "maintenance", "error": str(exc)})
 
     try:
         from core.human_loop import status as human_status
+
         human = human_status()
     except Exception as exc:
         errors.append({"where": "human_loop", "error": str(exc)})
 
     try:
         from core.pc_model_router import router_status
+
         brain = router_status()
     except Exception as exc:
         errors.append({"where": "brain", "error": str(exc)})
@@ -185,8 +199,8 @@ def build_brief() -> Dict[str, Any]:
         "Brief E-ZZIO : système PC propre et prêt. "
         "Maintenance OK, human loop actif, cerveau routeur disponible. "
         "CPU/RAM only, GPU intact, zéro pub."
-        if ok else
-        "Brief E-ZZIO : système actif, mais certains points demandent vérification."
+        if ok
+        else "Brief E-ZZIO : système actif, mais certains points demandent vérification."
     )
 
     return {
@@ -198,14 +212,19 @@ def build_brief() -> Dict[str, Any]:
         "human": {
             "version": human.get("version"),
             "rhythm": human.get("rhythm"),
-        } if human else None,
+        }
+        if human
+        else None,
         "brain": {
             "version": brain.get("version"),
             "installed_count": len(brain.get("installed_models", [])),
             "latest_guarded_bench": brain.get("latest_guarded_bench"),
-        } if brain else None,
+        }
+        if brain
+        else None,
         "errors": errors,
     }
+
 
 def command_reply(text: str, session: str) -> Optional[Dict[str, Any]]:
     cmd = (text or "").strip().lower()
@@ -236,6 +255,7 @@ def command_reply(text: str, session: str) -> Optional[Dict[str, Any]]:
     if cmd in ("/status", "status"):
         try:
             from core.pc_model_router import router_status
+
             brain = router_status()
             return {
                 "reply": (
@@ -258,6 +278,7 @@ def command_reply(text: str, session: str) -> Optional[Dict[str, Any]]:
     if cmd in ("/maintenance", "maintenance"):
         try:
             from core.project_janitor import maintenance_status
+
             maintenance = maintenance_status()
             return {
                 "reply": (
@@ -277,13 +298,11 @@ def command_reply(text: str, session: str) -> Optional[Dict[str, Any]]:
     if cmd in ("/human", "human"):
         try:
             from core.human_loop import status as human_status
+
             human = human_status()
             rhythm = human.get("rhythm") or {}
             return {
-                "reply": (
-                    f"Human loop actif. Dernier tick : {rhythm.get('last_tick')}. "
-                    f"Dernier objectif : {rhythm.get('last_goal')}."
-                ),
+                "reply": (f"Human loop actif. Dernier tick : {rhythm.get('last_tick')}. Dernier objectif : {rhythm.get('last_goal')}."),
                 "command": "/human",
                 "data": {
                     "version": human.get("version"),
@@ -299,6 +318,7 @@ def command_reply(text: str, session: str) -> Optional[Dict[str, Any]]:
     if cmd in ("/journal", "journal"):
         try:
             from core.human_loop import journal_tail
+
             tail = journal_tail(limit=5)
             return {
                 "reply": f"Journal humain disponible : {tail.get('count')} événement(s) récents.",
@@ -329,24 +349,35 @@ def command_reply(text: str, session: str) -> Optional[Dict[str, Any]]:
 
     return None
 
+
 def human_chat(text: str, session: str = "pc", task: str = "auto", speed: str = "auto", predict: int = 260) -> Dict[str, Any]:
     started = time.time()
     session = safe_session_name(session)
     text = text or ""
 
-    append_session(session, "user", text, {
-        "task": task,
-        "speed": speed,
-    })
+    append_session(
+        session,
+        "user",
+        text,
+        {
+            "task": task,
+            "speed": speed,
+        },
+    )
 
     deterministic = deterministic_human_reply(text)
     if deterministic:
         reply = deterministic["reply"]
-        append_session(session, "assistant", reply, {
-            "command": deterministic.get("command"),
-            "deterministic": True,
-            "truth_guard": True,
-        })
+        append_session(
+            session,
+            "assistant",
+            reply,
+            {
+                "command": deterministic.get("command"),
+                "deterministic": True,
+                "truth_guard": True,
+            },
+        )
         return {
             "ok": True,
             "created_at": now(),
@@ -367,11 +398,16 @@ def human_chat(text: str, session: str = "pc", task: str = "auto", speed: str = 
     command = command_reply(text, session)
     if command:
         reply = sanitize_human_chat_reply(command["reply"])
-        append_session(session, "assistant", reply, {
-            "command": command.get("command"),
-            "deterministic": True,
-            "truth_guard": True,
-        })
+        append_session(
+            session,
+            "assistant",
+            reply,
+            {
+                "command": command.get("command"),
+                "deterministic": True,
+                "truth_guard": True,
+            },
+        )
         return {
             "ok": True,
             "created_at": now(),
@@ -419,16 +455,19 @@ Tu ne dois pas supprimer, fermer, modifier ou nettoyer réellement sans confirma
             predict=predict,
         )
 
-        reply = sanitize_human_chat_reply(
-            routed.get("reply") or "Je suis là, mais je n'ai pas produit de réponse exploitable."
-        )
+        reply = sanitize_human_chat_reply(routed.get("reply") or "Je suis là, mais je n'ai pas produit de réponse exploitable.")
 
-        append_session(session, "assistant", reply, {
-            "route": routed.get("route"),
-            "elapsed_ms": routed.get("elapsed_ms"),
-            "deterministic": routed.get("deterministic", False),
-            "truth_guard": True,
-        })
+        append_session(
+            session,
+            "assistant",
+            reply,
+            {
+                "route": routed.get("route"),
+                "elapsed_ms": routed.get("elapsed_ms"),
+                "deterministic": routed.get("deterministic", False),
+                "truth_guard": True,
+            },
+        )
 
         routed["version"] = "v2.20.1b-human-chat-truth-guard"
         routed["session"] = session
@@ -441,10 +480,15 @@ Tu ne dois pas supprimer, fermer, modifier ou nettoyer réellement sans confirma
 
     except Exception as exc:
         reply = f"Je reste disponible, mais le cerveau routeur a rencontré une erreur : {exc}"
-        append_session(session, "assistant", reply, {
-            "error": str(exc),
-            "truth_guard": True,
-        })
+        append_session(
+            session,
+            "assistant",
+            reply,
+            {
+                "error": str(exc),
+                "truth_guard": True,
+            },
+        )
         return {
             "ok": False,
             "created_at": now(),

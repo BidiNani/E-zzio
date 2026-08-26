@@ -1,6 +1,7 @@
 """
 E-ZZIO V7.61.8 — Réinitialisation et scellement du premier bloc canonique (Genesis).
 """
+
 import sys
 from pathlib import Path
 
@@ -11,6 +12,7 @@ if str(ROOT_DIR) not in sys.path:
 from core.cognition.cognitive_governor import CognitiveGovernor
 
 LEDGER_PATH = ROOT_DIR / "runtime" / "cognition" / "budget" / "cognitive_budget_ledger.jsonl"
+
 
 def reset_ledger():
     print("[*] Réinitialisation du Token Ledger au format canonique V7.61.7...")
@@ -23,6 +25,7 @@ def reset_ledger():
     gov = CognitiveGovernor()
     res = gov.evaluate_and_record("ECOL_INDUSTRIAL_GENESIS", 100, "critical", "low")
     print(f"  + Bloc Genesis canonique scellé avec succès : {res['record_hash']}")
+
 
 if __name__ == "__main__":
     reset_ledger()

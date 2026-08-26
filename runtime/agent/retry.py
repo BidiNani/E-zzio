@@ -1,10 +1,15 @@
 class RetryGovernor:
-    def __init__(self, max_retry=2):
-        self.max_retry = max_retry
-        self.count = 0
+    """Gouverneur de retry borne pour la boucle agentique E-ZZIO."""
 
-    def can_retry(self):
-        if self.count >= self.max_retry:
-            return False
-        self.count += 1
-        return True
+    def __init__(self, max_retries: int = 2):
+        self.max_retries = max_retries
+        self.retry_count = 0
+
+    def can_retry(self) -> bool:
+        if self.retry_count < self.max_retries:
+            self.retry_count += 1
+            return True
+        return False
+
+    def reset(self):
+        self.retry_count = 0

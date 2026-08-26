@@ -3,6 +3,7 @@ import time
 import psutil
 from runtime.hardware.router.executor import AffinityExecutor
 
+
 class TransactionalAffinityManager:
     def __init__(self, executor: AffinityExecutor):
         self.executor = executor
@@ -25,7 +26,7 @@ class TransactionalAffinityManager:
                 "tx_status": "ROLLED_BACK",
                 "operation_id": op_id,
                 "duration_ms": round((time.time() - start_time) * 1000, 3),
-                "reason": f"INITIAL_STATE_CAPTURE_FAILED: {str(e)}"
+                "reason": f"INITIAL_STATE_CAPTURE_FAILED: {str(e)}",
             }
 
         # 2. Exécution via l'Execution Safety Layer (PLAN -> VALIDATE -> EXECUTE -> VERIFY)
@@ -41,7 +42,7 @@ class TransactionalAffinityManager:
                 "duration_ms": duration,
                 "initial_affinity": initial_affinity,
                 "applied_affinity": exec_result.get("applied"),
-                "execution_details": exec_result
+                "execution_details": exec_result,
             }
         else:
             # 4. ROLLBACK D'URGENCE (Restauration stricte de l'état initial)
@@ -50,7 +51,7 @@ class TransactionalAffinityManager:
             try:
                 p.cpu_affinity(initial_affinity)
                 current_after_rollback = p.cpu_affinity()
-                rollback_success = (set(current_after_rollback) == set(initial_affinity))
+                rollback_success = set(current_after_rollback) == set(initial_affinity)
             except Exception as rb_e:
                 rollback_error = str(rb_e)
 
@@ -61,5 +62,5 @@ class TransactionalAffinityManager:
                 "reason": exec_result.get("reason", "EXECUTION_VERIFICATION_FAILED"),
                 "rollback_verified": rollback_success,
                 "rollback_error": rollback_error,
-                "execution_details": exec_result
+                "execution_details": exec_result,
             }

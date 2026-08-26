@@ -2,12 +2,14 @@
 E-ZZIO V9.2.1 — Capability Registry
 Gère l'inventaire local des compétences de l'organisme et applique la Capability Constitution.
 """
+
 import json
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Dict, Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 REGISTRY_PATH = ROOT_DIR / "runtime" / "capabilities" / "capability_registry.json"
+
 
 class CapabilityRegistry:
     def __init__(self):
@@ -26,7 +28,7 @@ class CapabilityRegistry:
                         "memory_cost_mb": 15,
                         "gpu_required": False,
                         "rollback_available": True,
-                        "ecol_compliance": "VERIFIED"
+                        "ecol_compliance": "VERIFIED",
                     },
                     {
                         "skill_id": "evolution_observer",
@@ -35,8 +37,8 @@ class CapabilityRegistry:
                         "memory_cost_mb": 25,
                         "gpu_required": False,
                         "rollback_available": True,
-                        "ecol_compliance": "VERIFIED"
-                    }
+                        "ecol_compliance": "VERIFIED",
+                    },
                 ]
             }
             self.registry_file.write_text(json.dumps(initial_data, indent=2, ensure_ascii=False), encoding="utf-8")
@@ -59,16 +61,17 @@ class CapabilityRegistry:
         for field in required_fields:
             if field not in capability_manifest:
                 return False
-        
+
         data = self.load_registry()
         for cap in data["registered_capabilities"]:
             if cap["skill_id"] == capability_manifest["skill_id"]:
                 return False  # Déjà enregistré
-        
+
         capability_manifest["ecol_compliance"] = "VERIFIED"
         data["registered_capabilities"].append(capability_manifest)
         self.registry_file.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
         return True
+
 
 if __name__ == "__main__":
     registry = CapabilityRegistry()

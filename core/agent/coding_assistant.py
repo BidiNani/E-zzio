@@ -2,6 +2,7 @@
 E-ZZIO V7.43 — Coding Assistant Core
 Moteur de développement lié à la Quality Gate pour garantir des modifications sûres.
 """
+
 import sys
 from pathlib import Path
 
@@ -15,11 +16,12 @@ try:
 except ImportError:
     quality_gate = None
 
+
 class CodingAssistantCore:
     @staticmethod
     def generate_and_validate_code(request: str, proposed_code: str) -> dict:
         # 1. Génération (Simulée par le passage de proposed_code)
-        
+
         # 2. Validation Quality Gate
         if quality_gate:
             qg_res = quality_gate.evaluate_candidate("generated_module.py", proposed_code)
@@ -32,7 +34,8 @@ class CodingAssistantCore:
             "code_generated": proposed_code,
             "quality_gate_passed": qg_res.get("approved", False),
             "qg_reason": qg_res.get("reason", ""),
-            "status": "READY_TO_COMMIT" if qg_res.get("approved", False) else "REJECTED_BY_QA"
+            "status": "READY_TO_COMMIT" if qg_res.get("approved", False) else "REJECTED_BY_QA",
         }
+
 
 coding_assistant = CodingAssistantCore()

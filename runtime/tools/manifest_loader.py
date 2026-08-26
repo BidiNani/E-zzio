@@ -1,7 +1,9 @@
 from runtime.tools.manifest_provider import ManifestProvider
 
+
 class ManifestLoader:
     """Shim de compatibilité ascendante liant l'ancien ManifestLoader au nouveau ManifestProvider."""
+
     _provider = None
 
     @classmethod

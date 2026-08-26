@@ -2,7 +2,9 @@
 E-ZZIO V7.33 — Quality Gate Orchestrator
 Enchaîne les analyses (Statique, Sécurité, Régression, Performance) avant toute promotion.
 """
+
 from core.quality_gate.static_analyzer import static_analyzer
+
 
 class QualityGateOrchestrator:
     def evaluate_candidate(self, candidate_name: str, content: str) -> dict:
@@ -18,10 +20,7 @@ class QualityGateOrchestrator:
         # 3. Regression Tests (Simulation)
         # 4. Performance Benchmark (Simulation)
 
-        return {
-            "approved": True,
-            "stage": "all_passed",
-            "reason": "QUALITY_GATE_PASSED_SUCCESSFULLY"
-        }
+        return {"approved": True, "stage": "all_passed", "reason": "QUALITY_GATE_PASSED_SUCCESSFULLY"}
+
 
 quality_gate = QualityGateOrchestrator()

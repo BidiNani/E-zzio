@@ -1,12 +1,12 @@
 import sys
 import time
-import json
 from pathlib import Path
 
 # S'assure de l'importabilité directe du module hardware
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 
 from runtime.hardware.governor_service import HardwareGovernorService
+
 
 def test_hardware_governor_ipc():
     print("=============================================================", flush=True)
@@ -30,12 +30,17 @@ def test_hardware_governor_ipc():
         time.sleep(0.1)
 
         state = governor.read_ipc_state()
-        print(f"[IPC STATE READ] Profile: {state.get('active_profile')} | Affinity Threads: {state.get('cpu_topology', {}).get('assigned_affinity_count')} | Priority: {state.get('win32_priority')}", flush=True)
+        print(
+            f"[IPC STATE READ] Profile: {state.get('active_profile')} | Affinity Threads: {state.get('cpu_topology', {}).get('assigned_affinity_count')} | Priority: {state.get('win32_priority')}",
+            flush=True,
+        )
 
         assert state.get("active_profile") == profile, f"FAIL: Profil IPC attendu {profile}, trouvé {state.get('active_profile')}"
-        
+
         if profile == "GAMING":
-            assert state.get("cpu_topology", {}).get("assigned_affinity_count") == 12, "FAIL: GAMING doit utiliser exactement 12 threads (CCD1)"
+            assert state.get("cpu_topology", {}).get("assigned_affinity_count") == 12, (
+                "FAIL: GAMING doit utiliser exactement 12 threads (CCD1)"
+            )
         elif profile == "COMPUTE":
             assert state.get("cpu_topology", {}).get("assigned_affinity_count") == 22, "FAIL: COMPUTE doit utiliser 22 threads (2-23)"
         elif profile == "EVOLUTION":
@@ -44,6 +49,7 @@ def test_hardware_governor_ipc():
     print("\n=============================================================", flush=True)
     print(" STATUS : GOVERNOR AUTONOME & IPC V4.8.1 CERTIFIÉS", flush=True)
     print("=============================================================", flush=True)
+
 
 if __name__ == "__main__":
     test_hardware_governor_ipc()

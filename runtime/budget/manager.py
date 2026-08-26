@@ -2,9 +2,11 @@ import uuid
 import threading
 from typing import Dict
 
+
 class BudgetTransaction:
     """Context manager garantissant le commit ou le rollback automatique."""
-    def __init__(self, manager: 'BudgetManager', cost: int):
+
+    def __init__(self, manager: "BudgetManager", cost: int):
         self.manager = manager
         self.cost = cost
         self.res_id = None
@@ -20,8 +22,10 @@ class BudgetTransaction:
             self.manager.rollback(self.res_id)
         return False  # Ne masque pas l'exception d'origine
 
+
 class BudgetManager:
     """Gestionnaire de budget thread-safe avec mode transactionnel nativement intégré."""
+
     def __init__(self, max_actions: int = 50):
         self.max_actions = max_actions
         self.used_actions = 0

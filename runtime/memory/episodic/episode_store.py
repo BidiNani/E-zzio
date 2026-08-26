@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import List, Optional
 from runtime.memory.episodic.episode import Episode, EpisodeStep
 
+
 class EpisodeStore:
     """Stocke et récupère les épisodes via une connexion persistante unique et un cycle de vie idempotent."""
 
@@ -12,10 +13,10 @@ class EpisodeStore:
             db_path = Path("runtime/memory/sqlite/cognitive_store.db")
         else:
             db_path = Path(db_path) if str(db_path) != ":memory:" else ":memory:"
-        
+
         if str(db_path) != ":memory:":
             db_path.parent.mkdir(parents=True, exist_ok=True)
-            
+
         self.db_path = db_path
         self._connection = None
         self._closed = False
@@ -54,38 +55,33 @@ class EpisodeStore:
 
     def save_episode(self, episode: Episode):
         steps_data = [
-            {
-                "event_id": s.event_id,
-                "event_type": s.event_type,
-                "timestamp": s.timestamp,
-                "payload": s.payload
-            } for s in episode.steps
+            {"event_id": s.event_id, "event_type": s.event_type, "timestamp": s.timestamp, "payload": s.payload} for s in episode.steps
         ]
         conn = self._get_connection()
-        conn.execute("""
-            INSERT OR REPLACE INTO episodes 
+        conn.execute(
+            """
+            INSERT OR REPLACE INTO episodes
             (episode_id, session_id, trace_id, start_time, end_time, goal, steps_json, outcome, importance, consolidated)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, (
-            episode.episode_id,
-            episode.session_id,
-            episode.trace_id,
-            episode.start_time,
-            episode.end_time,
-            episode.goal,
-            json.dumps(steps_data),
-            episode.outcome,
-            episode.importance,
-            1 if episode.consolidated else 0
-        ))
+        """,
+            (
+                episode.episode_id,
+                episode.session_id,
+                episode.trace_id,
+                episode.start_time,
+                episode.end_time,
+                episode.goal,
+                json.dumps(steps_data),
+                episode.outcome,
+                episode.importance,
+                1 if episode.consolidated else 0,
+            ),
+        )
         conn.commit()
 
     def get_episodes_by_session(self, session_id: str) -> List[Episode]:
         conn = self._get_connection()
-        cursor = conn.execute(
-            "SELECT * FROM episodes WHERE session_id = ? ORDER BY start_time ASC",
-            (session_id,)
-        )
+        cursor = conn.execute("SELECT * FROM episodes WHERE session_id = ? ORDER BY start_time ASC", (session_id,))
         rows = cursor.fetchall()
         return [self._row_to_episode(row) for row in rows]
 
@@ -102,12 +98,8 @@ class EpisodeStore:
     def _row_to_episode(self, row: sqlite3.Row) -> Episode:
         steps_raw = json.loads(row["steps_json"])
         steps = [
-            EpisodeStep(
-                event_id=s["event_id"],
-                event_type=s["event_type"],
-                timestamp=s["timestamp"],
-                payload=s["payload"]
-            ) for s in steps_raw
+            EpisodeStep(event_id=s["event_id"], event_type=s["event_type"], timestamp=s["timestamp"], payload=s["payload"])
+            for s in steps_raw
         ]
         cols = row.keys()
         return Episode(
@@ -120,5 +112,5 @@ class EpisodeStore:
             steps=steps,
             outcome=row["outcome"],
             importance=row["importance"],
-            consolidated=bool(row["consolidated"])
+            consolidated=bool(row["consolidated"]),
         )

@@ -2,11 +2,13 @@
 E-ZZIO V7.57.1 — Cognitive Memory Validator
 Intègre le Pare-Feu Cognitif pour exclure les données de laboratoire (synthetic_test_data).
 """
+
 import json
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 POLICY_FILE = ROOT_DIR / "runtime" / "policy" / "protected_identity_registry.json"
+
 
 class MemoryValidator:
     def __init__(self):
@@ -41,23 +43,19 @@ class MemoryValidator:
                 "confidence": 1.0,
                 "importance": 10,
                 "memory_type": "identity_core",
-                "reason": "IMMUTABLE_IDENTITY"
+                "reason": "IMMUTABLE_IDENTITY",
             }
 
         # 2. Filtres standard (Bruit et Cache)
         if file_path.suffix.lower() in self.banned_extensions:
             return {"promoted": False, "reason": f"banned_extension_{file_path.suffix.lower()[1:]}", "memory_type": "junk"}
-            
+
         if any(banned_dir in file_path.parts for banned_dir in self.banned_directories):
             return {"promoted": False, "reason": "archived_or_temporary", "memory_type": "junk"}
 
         # 3. Pare-Feu Cognitif (Données de Laboratoire)
         if any(marker in path_str for marker in self.synthetic_markers):
-            return {
-                "promoted": False,
-                "reason": "synthetic_test_data",
-                "memory_type": "laboratory_trace"
-            }
+            return {"promoted": False, "reason": "synthetic_test_data", "memory_type": "laboratory_trace"}
 
         # 4. Évaluation classique
         confidence, importance, memory_type = 0.5, 5, "generic"
@@ -75,5 +73,5 @@ class MemoryValidator:
             "confidence": confidence,
             "importance": importance,
             "memory_type": memory_type,
-            "reason": "standard_validation"
+            "reason": "standard_validation",
         }

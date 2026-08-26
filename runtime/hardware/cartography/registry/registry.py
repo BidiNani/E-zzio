@@ -3,6 +3,7 @@ import time
 from pathlib import Path
 from runtime.hardware.cartography.snapshot_engine import CartographySnapshotEngine
 
+
 class HardwareCartographyRegistry:
     def __init__(self, registry_dir: Path):
         self.registry_dir = registry_dir
@@ -25,7 +26,7 @@ class HardwareCartographyRegistry:
 
     def evaluate_and_update(self, current_map: dict) -> dict:
         """
-        Évalue l'état matériel actuel face au registre, classifie les dérives 
+        Évalue l'état matériel actuel face au registre, classifie les dérives
         et historicise les événements.
         """
         registry = self.load_registry()
@@ -38,34 +39,26 @@ class HardwareCartographyRegistry:
                 "snapshot_file": json_path.name,
                 "hash": file_hash,
                 "topology": current_map,
-                "registered_at": time.time()
+                "registered_at": time.time(),
             }
-            registry["history"].append({
-                "timestamp": time.time(),
-                "event": "REGISTRY_INITIALIZED",
-                "severity": "INFO",
-                "category": "BOOT",
-                "details": "Initial hardware truth established."
-            })
+            registry["history"].append(
+                {
+                    "timestamp": time.time(),
+                    "event": "REGISTRY_INITIALIZED",
+                    "severity": "INFO",
+                    "category": "BOOT",
+                    "details": "Initial hardware truth established.",
+                }
+            )
             self.save_registry(registry)
-            return {
-                "status": "BASELINE_ESTABLISHED",
-                "severity": "INFO",
-                "category": "BOOT",
-                "events": []
-            }
+            return {"status": "BASELINE_ESTABLISHED", "severity": "INFO", "category": "BOOT", "events": []}
 
         # 2. Comparaison avec la baseline enregistrée
         base_topo = baseline.get("topology", {})
         raw_drifts = self.snapshot_engine.detect_drift(base_topo, current_map)
 
         if not raw_drifts:
-            return {
-                "status": "MATCH",
-                "severity": "NONE",
-                "category": "NOMINAL",
-                "events": []
-            }
+            return {"status": "MATCH", "severity": "NONE", "category": "NOMINAL", "events": []}
 
         # 3. Classification intelligente de la dérive (Change Intelligence)
         is_critical = any("THREADS" in d or "SMT" in d or "CORES" in d for d in raw_drifts)
@@ -78,7 +71,7 @@ class HardwareCartographyRegistry:
             "severity": severity,
             "category": category,
             "events": raw_drifts,
-            "action": "REQUIRE_REVALIDATION"
+            "action": "REQUIRE_REVALIDATION",
         }
 
         registry["history"].append(event_record)
@@ -89,5 +82,5 @@ class HardwareCartographyRegistry:
             "severity": severity,
             "category": category,
             "events": raw_drifts,
-            "action": "REQUIRE_REVALIDATION"
+            "action": "REQUIRE_REVALIDATION",
         }

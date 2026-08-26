@@ -2,15 +2,18 @@
 E-ZZIO V7.28.5.2 — Multi-Rotation & Merkle Chain Lineage Test
 Valide que l'archive #2 pointe cryptographiquement vers la racine de l'archive #1.
 """
+
 import sys
 import json
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent.parent
-if str(ROOT_DIR) not in sys.path: sys.path.insert(0, str(ROOT_DIR))
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
 from core.security.ledger_engine import LedgerEngine
 from core.security.ledger_validator import ledger_validator
+
 
 def run_multi_rotation_test():
     print("============================================================")
@@ -22,10 +25,14 @@ def run_multi_rotation_test():
     state_path = ROOT_DIR / "runtime" / "state" / "ledger_chain_state.json"
 
     # Nettoyage complet pour un test stérile
-    if ledger_path.exists(): ledger_path.unlink()
-    if state_path.exists(): state_path.unlink()
-    for meta in archive_dir.glob("*.meta.json"): meta.unlink()
-    for arc in archive_dir.glob("*.jsonl"): arc.unlink()
+    if ledger_path.exists():
+        ledger_path.unlink()
+    if state_path.exists():
+        state_path.unlink()
+    for meta in archive_dir.glob("*.meta.json"):
+        meta.unlink()
+    for arc in archive_dir.glob("*.jsonl"):
+        arc.unlink()
 
     # Seuil court de 50 transactions pour forcer les rotations rapidement
     engine = LedgerEngine(archive_threshold=50)
@@ -38,7 +45,7 @@ def run_multi_rotation_test():
             candidates=[],
             selected="qwen3:8b",
             state="COMPLETED",
-            execution_details={"index": i}
+            execution_details={"index": i},
         )
         assert success is True, f"Échec de commit à l'itération {i}"
 
@@ -55,7 +62,7 @@ def run_multi_rotation_test():
 
     print(f"\n  [Archive #1] Séquences : {meta_1['first_sequence']} → {meta_1['last_sequence']}")
     print(f"               Root Hash : {meta_1['archive_root_hash']}")
-    
+
     print(f"\n  [Archive #2] Séquences : {meta_2['first_sequence']} → {meta_2['last_sequence']}")
     print(f"               Prev Root : {meta_2['previous_archive_root_hash']}")
     print(f"               Root Hash : {meta_2['archive_root_hash']}")
@@ -75,6 +82,7 @@ def run_multi_rotation_test():
     print("\n============================================================")
     print(" V7.28.5.2 CERTIFIÉ : MERKLE LINEAGE INTER-ARCHIVES VALIDÉ")
     print("============================================================\n")
+
 
 if __name__ == "__main__":
     run_multi_rotation_test()

@@ -1,8 +1,8 @@
 import time
-import json
 import threading
 from collections import deque
 from pathlib import Path
+
 
 class AdaptiveLearningGovernorV55:
     """
@@ -10,28 +10,29 @@ class AdaptiveLearningGovernorV55:
     Intègre l'estimation préventive du temps avant saturation (T_ttc)
     et la modulation des seuils selon le profil de charge actif.
     """
+
     WORKLOAD_PROFILES = {
         "INGESTION_BURST": {"oom_threshold": 0.80, "hold_time": 4.0, "max_batch": 3000},
-        "FULL_INDEXING":  {"oom_threshold": 0.70, "hold_time": 5.0, "max_batch": 1500},
-        "GUARDIAN_SCAN":  {"oom_threshold": 0.85, "hold_time": 2.0, "max_batch": 2000},
-        "IDLE_MAINTENANCE":{"oom_threshold": 0.90, "hold_time": 1.0, "max_batch": 4000}
+        "FULL_INDEXING": {"oom_threshold": 0.70, "hold_time": 5.0, "max_batch": 1500},
+        "GUARDIAN_SCAN": {"oom_threshold": 0.85, "hold_time": 2.0, "max_batch": 2000},
+        "IDLE_MAINTENANCE": {"oom_threshold": 0.90, "hold_time": 1.0, "max_batch": 4000},
     }
 
     def __init__(self, engine_ref, memory_engine_ref, state_dir: str = None, check_interval: float = 0.2):
         self.engine = engine_ref
         self.memory_engine = memory_engine_ref
         self.check_interval = check_interval
-        
+
         self.base_dir = Path(state_dir) if state_dir else Path(__file__).resolve().parent
         self.state_dir = self.base_dir / "state"
         self.state_dir.mkdir(parents=True, exist_ok=True)
         self.state_file_path = self.state_dir / "adaptive_v55_state.json"
-        
+
         self.active_workload = "INGESTION_BURST"
         self.history_buffer = deque(maxlen=150)
         self.last_critical_time = 0.0
         self.current_regulation_tier = "NOMINAL"
-        
+
         self._lock = threading.Lock()
         self._stop_event = threading.Event()
         self.monitor_thread = threading.Thread(target=self._actuator_loop, daemon=True)
@@ -67,11 +68,11 @@ class AdaptiveLearningGovernorV55:
             oom_index = metrics.get("oom_index", 0.0)
             d_rss_dt = metrics.get("d_rss_dt_mbs", 0.0)
             rss_mb = metrics.get("rss_mb", 0.0)
-            
+
             # Calcul du T_ttc
             t_ttc = self.calculate_time_to_critical(rss_mb, d_rss_dt)
             profile_cfg = self.WORKLOAD_PROFILES[self.active_workload]
-            
+
             prev_tier = self.current_regulation_tier
             target_tier = prev_tier
             reason = "NOMINAL_PREDICTIVE_STABLE"
@@ -119,7 +120,7 @@ class AdaptiveLearningGovernorV55:
                 "t_ttc_seconds": round(t_ttc, 2),
                 "oom_index": oom_index,
                 "reason": reason,
-                "max_batch_size": getattr(self.engine, "max_batch_size", 2000)
+                "max_batch_size": getattr(self.engine, "max_batch_size", 2000),
             }
 
     def start(self):

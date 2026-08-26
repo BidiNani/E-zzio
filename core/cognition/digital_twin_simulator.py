@@ -3,9 +3,8 @@ E-ZZIO Core — Digital Twin & Simulation Engine (V8.6)
 Exécute des simulations d'impact (ressources, tokens, conformité constitutionnelle)
 sur un jumeau numérique virtuel avant d'autoriser toute modification sur l'organisme réel.
 """
-import os
+
 import sys
-import json
 import logging
 from pathlib import Path
 from typing import Dict, Any
@@ -19,9 +18,12 @@ from core.cognition.ecol_universal_enforcement import EcolUniversalGateway
 
 logger = logging.getLogger(__name__)
 
+
 class SimulationFailureError(Exception):
     """Levée si la simulation d'un changement révèle un risque pour l'organisme (Fail-Closed)."""
+
     pass
+
 
 class DigitalTwinSimulator:
     def __init__(self):
@@ -54,7 +56,7 @@ class DigitalTwinSimulator:
             "task_description": f"Simulation jumeau numérique pour '{change_type}'",
             "priority": "normal",
             "risk_level": "low" if projected_ram_usage < 75.0 else "medium",
-            "estimated_cost": 100
+            "estimated_cost": 100,
         }
 
         def commit_simulation_pass():
@@ -63,17 +65,14 @@ class DigitalTwinSimulator:
                 "simulation_status": "PASSED",
                 "projected_ram_percent": round(projected_ram_usage, 2),
                 "gaming_context": is_gaming,
-                "recommendation": "SAFE_FOR_PRODUCTION_PROMOTION"
+                "recommendation": "SAFE_FOR_PRODUCTION_PROMOTION",
             }
 
         # Validation No-Bypass via ECOL
-        result = self.gateway.execute_via_gateway(
-            action="DIGITAL_TWIN_SIMULATE",
-            payload=payload,
-            target_func=commit_simulation_pass
-        )
+        result = self.gateway.execute_via_gateway(action="DIGITAL_TWIN_SIMULATE", payload=payload, target_func=commit_simulation_pass)
 
         return result
+
 
 def test_digital_twin():
     print("[*] Test du Digital Twin & Simulation Engine (V8.6)...")
@@ -87,9 +86,10 @@ def test_digital_twin():
     except Exception as e:
         print(f"  [FAIL] Erreur : {e}")
 
-    print("\n" + "="*65)
+    print("\n" + "=" * 65)
     print(" DIGITAL TWIN SIMULATOR (V8.6) : OPERATIONAL & PREDICTIVE")
-    print("="*65)
+    print("=" * 65)
+
 
 if __name__ == "__main__":
     test_digital_twin()

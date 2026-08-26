@@ -2,6 +2,7 @@
 E-ZZIO V7.29.0 — Unit Test for Identity Context
 Valide l'intégrité de la génération du Root Hash et du Sceau d'Identité.
 """
+
 import sys
 from pathlib import Path
 
@@ -10,6 +11,7 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from core.identity.identity_context import IdentityContext
+
 
 def run_unit_test():
     print("============================================================")
@@ -24,12 +26,13 @@ def run_unit_test():
     print(f"  -> Identity Root     : {payload['identity_root_hash']}")
     print(f"  -> Identity Seal     : {payload['identity_seal'][:32]}...")
 
-    assert len(payload['identity_root_hash']) == 64, "Le Root Hash n'est pas un SHA-256 valide !"
-    assert len(payload['identity_seal']) == 64, "Le Sceau HMAC n'est pas valide !"
-    assert payload['signer'] == "E-ZZIO Sovereign Kernel", "Signataire non conforme !"
+    assert len(payload["identity_root_hash"]) == 64, "Le Root Hash n'est pas un SHA-256 valide !"
+    assert len(payload["identity_seal"]) == 64, "Le Sceau HMAC n'est pas valide !"
+    assert payload["signer"] == "E-ZZIO Sovereign Kernel", "Signataire non conforme !"
 
     print("\n[OK] TEST UNITAIRE RÉUSSI : Identity Context généré et scellé.")
     print("============================================================\n")
+
 
 if __name__ == "__main__":
     run_unit_test()

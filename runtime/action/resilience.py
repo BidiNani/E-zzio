@@ -1,14 +1,16 @@
 import time
 from enum import Enum
-from typing import Dict
+
 
 class CircuitState(Enum):
     CLOSED = "CLOSED"
     OPEN = "OPEN"
     HALF_OPEN = "HALF_OPEN"
 
+
 class CircuitBreaker:
     """Prevents cascading failures by opening circuit after repeated action faults."""
+
     def __init__(self, failure_threshold: int = 3, cooldown_seconds: float = 10.0):
         self.failure_threshold = failure_threshold
         self.cooldown_seconds = cooldown_seconds

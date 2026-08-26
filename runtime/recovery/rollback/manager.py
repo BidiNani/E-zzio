@@ -2,10 +2,10 @@ import json
 import sqlite3
 import threading
 import uuid
-import hashlib
 from dataclasses import dataclass
 from typing import Dict, Any, Optional
 from datetime import datetime, timezone
+
 
 @dataclass(frozen=True)
 class RollbackRecord:
@@ -16,6 +16,7 @@ class RollbackRecord:
     previous_state: Dict[str, Any]
     new_state: Dict[str, Any]
     rollback_available: bool
+
 
 class RollbackManager:
     """Consigne et restaure l'état des composants avec vérification transactionnelle d'intégrité."""
@@ -31,7 +32,7 @@ class RollbackManager:
             try:
                 with conn:
                     conn.execute("PRAGMA journal_mode=WAL;")
-                    conn.execute('''
+                    conn.execute("""
                         CREATE TABLE IF NOT EXISTS rollback_history (
                             record_id TEXT PRIMARY KEY,
                             incident_id TEXT NOT NULL,
@@ -43,11 +44,13 @@ class RollbackManager:
                             timestamp TEXT NOT NULL,
                             restored_at TEXT
                         )
-                    ''')
+                    """)
             finally:
                 conn.close()
 
-    def record_change(self, incident_id: str, action_type: str, target: str, prev_state: Dict[str, Any], new_state: Dict[str, Any]) -> RollbackRecord:
+    def record_change(
+        self, incident_id: str, action_type: str, target: str, prev_state: Dict[str, Any], new_state: Dict[str, Any]
+    ) -> RollbackRecord:
         record_id = f"rb_{uuid.uuid4().hex[:8]}"
         now = datetime.now(timezone.utc).isoformat()
         rec = RollbackRecord(
@@ -57,21 +60,28 @@ class RollbackManager:
             target_component=target,
             previous_state=prev_state,
             new_state=new_state,
-            rollback_available=True
+            rollback_available=True,
         )
         with self._db_lock:
             conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
             try:
                 with conn:
-                    conn.execute('''
+                    conn.execute(
+                        """
                         INSERT INTO rollback_history (record_id, incident_id, action_type, target_component, previous_state, new_state, rollback_available, timestamp)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                    ''', (
-                        rec.record_id, rec.incident_id, rec.action_type, rec.target_component,
-                        json.dumps(rec.previous_state, default=str),
-                        json.dumps(rec.new_state, default=str),
-                        1, now
-                    ))
+                    """,
+                        (
+                            rec.record_id,
+                            rec.incident_id,
+                            rec.action_type,
+                            rec.target_component,
+                            json.dumps(rec.previous_state, default=str),
+                            json.dumps(rec.new_state, default=str),
+                            1,
+                            now,
+                        ),
+                    )
             finally:
                 conn.close()
         return rec
@@ -83,14 +93,14 @@ class RollbackManager:
             try:
                 conn.execute("BEGIN IMMEDIATE;")
                 cursor = conn.execute(
-                    "SELECT record_id, action_type, previous_state, rollback_available FROM rollback_history WHERE record_id = ?", 
-                    (record_id,)
+                    "SELECT record_id, action_type, previous_state, rollback_available FROM rollback_history WHERE record_id = ?",
+                    (record_id,),
                 )
                 row = cursor.fetchone()
                 if not row:
                     conn.rollback()
                     return {"status": "FAILED", "reason": f"Rollback record '{record_id}' not found."}
-                
+
                 _, action_type, prev_state_json, available = row
                 if not available:
                     conn.rollback()
@@ -112,12 +122,7 @@ class RollbackManager:
                 conn.execute("UPDATE rollback_history SET rollback_available = 0, restored_at = ? WHERE record_id = ?", (now, record_id))
                 conn.commit()
 
-                return {
-                    "status": "SUCCESS",
-                    "record_id": record_id,
-                    "restored_state": previous_state,
-                    "execution_details": restore_res
-                }
+                return {"status": "SUCCESS", "record_id": record_id, "restored_state": previous_state, "execution_details": restore_res}
             except Exception as e:
                 conn.rollback()
                 return {"status": "FAILED", "reason": f"Transactional rollback exception: {str(e)}"}

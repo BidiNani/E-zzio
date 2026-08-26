@@ -29,6 +29,7 @@ HD_OUTPUT.mkdir(parents=True, exist_ok=True)
 
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".webp"}
 
+
 def _safe_image_path(path_text: str) -> Path:
     p = Path(path_text).resolve()
 
@@ -50,23 +51,28 @@ def _safe_image_path(path_text: str) -> Path:
 
     return p
 
+
 def list_comfy_images(limit: int = 30):
     files = []
     for p in COMFY_OUTPUT.rglob("*"):
         if p.is_file() and p.suffix.lower() in IMAGE_EXTS:
-            files.append({
-                "name": p.name,
-                "path": str(p),
-                "mb": round(p.stat().st_size / (1024 ** 2), 3),
-                "modified": p.stat().st_mtime,
-            })
+            files.append(
+                {
+                    "name": p.name,
+                    "path": str(p),
+                    "mb": round(p.stat().st_size / (1024**2), 3),
+                    "modified": p.stat().st_mtime,
+                }
+            )
 
     files.sort(key=lambda x: x["modified"], reverse=True)
-    return files[:max(1, min(int(limit), 200))]
+    return files[: max(1, min(int(limit), 200))]
+
 
 def latest_comfy_image():
     files = list_comfy_images(1)
     return files[0] if files else None
+
 
 def _fit_16_9(img: Image.Image, width: int, height: int):
     return ImageOps.fit(
@@ -75,6 +81,7 @@ def _fit_16_9(img: Image.Image, width: int, height: int):
         method=Image.Resampling.LANCZOS,
         centering=(0.5, 0.5),
     )
+
 
 def upscale_image_to_hd(
     source_path: str,
@@ -135,6 +142,7 @@ def upscale_image_to_hd(
 
     return result
 
+
 def upscale_latest_to_1080p():
     latest = latest_comfy_image()
     if not latest:
@@ -151,22 +159,23 @@ def upscale_latest_to_1080p():
         sharpen=True,
     )
 
+
 def hd_presets():
     return {
         "cpu_recommended_generation": [
             {"name": "fast_16_9", "width": 384, "height": 216, "steps": 6},
             {"name": "balanced_16_9", "width": 512, "height": 288, "steps": 8},
             {"name": "quality_16_9", "width": 640, "height": 360, "steps": 10},
-            {"name": "heavy_16_9", "width": 768, "height": 432, "steps": 12}
+            {"name": "heavy_16_9", "width": 768, "height": 432, "steps": 12},
         ],
         "final_exports": [
             {"name": "full_hd", "width": 1920, "height": 1080},
             {"name": "qhd", "width": 2560, "height": 1440},
-            {"name": "uhd_possible_but_slow", "width": 3840, "height": 2160}
+            {"name": "uhd_possible_but_slow", "width": 3840, "height": 2160},
         ],
         "policy": {
             "native_1920_generation": "not recommended on CPU-only",
             "recommended": "generate smaller 16:9 then upscale to 1920x1080",
-            "gpu": "not used"
-        }
+            "gpu": "not used",
+        },
     }

@@ -1,13 +1,10 @@
-from typing import Dict, Any, Optional
+from typing import Dict, Any
+
 
 class ActionExecutor:
     """Executes planned actions strictly bounded by an allowed whitelist."""
-    ALLOWED_ACTIONS = [
-        "STORE_KNOWLEDGE",
-        "CREATE_REPORT",
-        "NOTIFY_USER",
-        "IGNORE"
-    ]
+
+    ALLOWED_ACTIONS = ["STORE_KNOWLEDGE", "CREATE_REPORT", "NOTIFY_USER", "IGNORE"]
 
     def __init__(self, brain=None):
         self.brain = brain
@@ -26,7 +23,7 @@ class ActionExecutor:
                 self.brain.remember_fact(
                     content=f"cognitive_audit: executed plan successfully with details -> {plan}",
                     category="cognitive_audit",
-                    importance=plan.get("priority", 5) / 10.0
+                    importance=plan.get("priority", 5) / 10.0,
                 )
                 return {"status": "SUCCESS", "action": action, "executed": True}
             except Exception as e:

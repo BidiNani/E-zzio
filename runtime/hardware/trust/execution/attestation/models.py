@@ -1,6 +1,7 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
 from typing import List, Dict, Any
+
 
 class AttestationVerdict(Enum):
     COMPLIANT = "COMPLIANT"
@@ -13,6 +14,7 @@ class AttestationVerdict(Enum):
     LEDGER_WRITE_FAILED = "LEDGER_WRITE_FAILED"
     NON_COMPLIANT = "NON_COMPLIANT"
 
+
 @dataclass(frozen=True)
 class ObservationSnapshot:
     pid: int
@@ -21,6 +23,7 @@ class ObservationSnapshot:
     peak_ram_mb: float
     os_enforcement_verified: bool
     is_alive: bool
+
 
 @dataclass(frozen=True)
 class ExecutionReceipt:

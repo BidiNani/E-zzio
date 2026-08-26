@@ -2,6 +2,7 @@
 E-ZZIO V9.0.1 — Laboratory Test : Sensory Bus & Proprioception
 Validation de la génération et du routage d'un Percept matériel.
 """
+
 import sys
 import time
 import json
@@ -15,11 +16,12 @@ if str(ROOT_DIR) not in sys.path:
 from runtime.sensory.bus.sensory_bus import SensoryBus
 from runtime.sensory.sensors.proprioception_sensor import ProprioceptionSensor
 
+
 def run_test():
-    print("\n" + "="*50)
+    print("\n" + "=" * 50)
     print(" 🧪 LABORATOIRE V9.0.1 — SENSORY BUS TEST")
-    print("="*50)
-    
+    print("=" * 50)
+
     start_time = time.perf_counter()
 
     try:
@@ -37,7 +39,7 @@ def run_test():
 
         # 4. Consommation
         percepts_in_bus = bus.consume_all()
-        
+
         end_time = time.perf_counter()
         execution_ms = (end_time - start_time) * 1000
 
@@ -49,11 +51,12 @@ def run_test():
             print(" 🟢 STATUT : SUCCÈS (Percept généré et routé)")
         else:
             print(" 🔴 STATUT : ÉCHEC (Aucun percept dans le bus)")
-            
+
     except Exception as e:
         print(f" 🔴 ERREUR CRITIQUE : {str(e)}")
-    
-    print("="*50 + "\n")
+
+    print("=" * 50 + "\n")
+
 
 if __name__ == "__main__":
     run_test()

@@ -1,8 +1,10 @@
 from pathlib import Path
 from runtime.contracts.execution_context import ExecutionContext
 
+
 class FileSystemResourceSandbox:
     """Applique la physique du système de fichiers en se basant UNIQUEMENT sur le token."""
+
     def __init__(self, context: ExecutionContext, project_root: str):
         self.context = context
         self.project_root = Path(project_root).resolve()
@@ -31,7 +33,7 @@ class FileSystemResourceSandbox:
                 break
             except ValueError:
                 continue
-                
+
         if not valid_root or not target_path:
             raise PermissionError("Sandbox Resource : Chemin hors des racines autorisées.")
 

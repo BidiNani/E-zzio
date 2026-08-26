@@ -1,13 +1,14 @@
 from dataclasses import dataclass, field
 from typing import Optional, List, Dict, Any
-import datetime
 import hashlib
 import hmac
+
 
 @dataclass(frozen=True)
 class CapabilityToken:
     def is_valid(self):
-        return getattr(self, 'valid', True)
+        return getattr(self, "valid", True)
+
     subject: Optional[str] = "system"
     permissions: List[str] = field(default_factory=lambda: ["*"])
     issued_at: Any = None
@@ -23,8 +24,10 @@ class CapabilityToken:
     constraints: Dict[str, Any] = field(default_factory=dict)
     key_id: Optional[str] = None
 
+
 class CapabilityPolicy:
     """Sovereign policy enforcer for capability tokens and execution scopes."""
+
     def __init__(self, allowed_level: int = 1):
         self.allowed_level = allowed_level
 
@@ -34,6 +37,7 @@ class CapabilityPolicy:
         if "*" in token.permissions or required_permission in token.permissions:
             return True
         return False
+
 
 class TokenSigner:
     def __init__(self, secret: str = "ezzio-secret"):
@@ -58,11 +62,7 @@ class TokenSigner:
         else:
             payload = str(token)
 
-        return hmac.new(
-            active_secret,
-            payload.encode("utf-8"),
-            hashlib.sha256
-        ).hexdigest()
+        return hmac.new(active_secret, payload.encode("utf-8"), hashlib.sha256).hexdigest()
 
     @staticmethod
     def verify(token_or_sig: Any, signature: Any, secret: Any = "ezzio-secret") -> bool:
@@ -72,5 +72,3 @@ class TokenSigner:
         else:
             sig_str = str(signature)
         return hmac.compare_digest(expected, sig_str)
-
-

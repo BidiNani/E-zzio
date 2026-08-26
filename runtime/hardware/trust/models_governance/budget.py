@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from runtime.hardware.trust.models_governance.model_registry import ModelTrustRegistry
 from runtime.hardware.trust.execution.admission.models import ModelIdentity
 
+
 @dataclass(frozen=True)
 class ModelBudgetAllocation:
     model_id: str
@@ -10,13 +11,14 @@ class ModelBudgetAllocation:
     granted_ram_mb: int
     reason: str
 
+
 class ModelBudgetGovernor:
     def __init__(self, trust_registry: ModelTrustRegistry):
         self.trust_registry = trust_registry
 
     def enforce_budget(self, model_identity: ModelIdentity, requested_workers: int) -> ModelBudgetAllocation:
         """
-        Vérifie si le modèle est dans le registre de confiance (non-quarantaine) 
+        Vérifie si le modèle est dans le registre de confiance (non-quarantaine)
         et applique les budgets stricts de RAM et de workers.
         """
         model_info = self.trust_registry.get_model_status(model_identity.model_id)
@@ -28,7 +30,7 @@ class ModelBudgetGovernor:
                 allowed=False,
                 granted_workers=0,
                 granted_ram_mb=0,
-                reason="MODEL_IN_QUARANTINE_NOT_TRUSTED"
+                reason="MODEL_IN_QUARANTINE_NOT_TRUSTED",
             )
 
         max_workers_budget = model_info.get("max_allowed_workers", 4)
@@ -41,5 +43,5 @@ class ModelBudgetGovernor:
             allowed=True,
             granted_workers=granted_workers,
             granted_ram_mb=max_ram_budget,
-            reason="MODEL_BUDGET_ENFORCED_SUCCESSFULLY"
+            reason="MODEL_BUDGET_ENFORCED_SUCCESSFULLY",
         )

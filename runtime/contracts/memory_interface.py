@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-class MemoryInterface(ABC):
 
+class MemoryInterface(ABC):
     @abstractmethod
     def store(self, key, value):
         pass

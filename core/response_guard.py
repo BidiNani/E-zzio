@@ -1,12 +1,10 @@
 from __future__ import annotations
+from core.identity.canonical_identity import CanonicalIdentity
 
 import re
 from typing import Optional
 
-OFFICIAL_IDENTITY = (
-    "Je suis l'ami IA local d'Enrik sur PC, optimisé CPU/RAM only, "
-    "sans publicité, sans tracking, sans sponsor, fiable, sobre et professionnel."
-)
+OFFICIAL_IDENTITY = CanonicalIdentity().build_system_prompt()
 
 FAST_LOCAL_TRUTH = (
     "Le cœur PC d'E-ZZIO fonctionne localement en CPU/RAM only, sans pub ni tracking. "
@@ -18,11 +16,13 @@ POWERSHELL_RULE = (
     "des logs, un rapport JSON, une validation d'endpoint, et prévois un rollback avant toute modification risquée."
 )
 
+
 def _clean(text: str) -> str:
     text = text or ""
     text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL | re.IGNORECASE)
     text = text.replace("\x00", "").strip()
     return text
+
 
 def deterministic_reply(prompt: str, task: str) -> Optional[str]:
     low = (prompt or "").lower()
@@ -38,6 +38,7 @@ def deterministic_reply(prompt: str, task: str) -> Optional[str]:
         return POWERSHELL_RULE
 
     return None
+
 
 def sanitize_ezzio_reply(reply: str, task: str = "auto") -> str:
     text = _clean(reply)
@@ -70,21 +71,27 @@ def sanitize_ezzio_reply(reply: str, task: str = "auto") -> str:
 
     if task == "powershell":
         low2 = text.lower()
-        vague = any(x in low2 for x in [
-            "noms de variables explicites",
-            "commentaires clairs",
-            "try-catch",
-            "gestion des erreurs",
-        ])
-        concrete = any(x in low2 for x in [
-            "backup",
-            "logs",
-            "rapport json",
-            "rollback",
-            "validation d'endpoint",
-            "param()",
-            "convertto-json",
-        ])
+        vague = any(
+            x in low2
+            for x in [
+                "noms de variables explicites",
+                "commentaires clairs",
+                "try-catch",
+                "gestion des erreurs",
+            ]
+        )
+        concrete = any(
+            x in low2
+            for x in [
+                "backup",
+                "logs",
+                "rapport json",
+                "rollback",
+                "validation d'endpoint",
+                "param()",
+                "convertto-json",
+            ]
+        )
         if vague and not concrete:
             text = POWERSHELL_RULE
 

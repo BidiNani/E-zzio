@@ -2,6 +2,7 @@
 E-ZZIO V7.40-43 — Certification Test Suite (Agent Stage 2)
 Valide la planification, la rédaction stylisée et la génération de code validée.
 """
+
 import sys
 from pathlib import Path
 
@@ -12,6 +13,7 @@ if str(ROOT_DIR) not in sys.path:
 from core.agent.task_engine import task_engine
 from core.agent.writing_engine import writing_engine
 from core.agent.coding_assistant import coding_assistant
+
 
 def run_agent_stage2_certification():
     print("============================================================")
@@ -37,7 +39,7 @@ def run_agent_stage2_certification():
     print(" [V7.43] CODING ASSISTANT CORE")
     code_req = "Créer une fonction de somme"
     good_code = "def compute_sum(a, b):\n    return a + b"
-    
+
     code_res = coding_assistant.generate_and_validate_code(code_req, good_code)
     assert code_res["quality_gate_passed"] is True, "Le code valide a été rejeté par la QG."
     print(f"  -> Génération validée par Quality Gate. Statut : {code_res['status']}")
@@ -46,6 +48,7 @@ def run_agent_stage2_certification():
     print("\n============================================================")
     print(" STATUS : PRODUCTION ENGINES (CODE/WRITE/PLAN) ACTIVÉS")
     print("============================================================\n")
+
 
 if __name__ == "__main__":
     run_agent_stage2_certification()

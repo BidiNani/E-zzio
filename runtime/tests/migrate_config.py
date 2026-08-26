@@ -41,7 +41,7 @@ c_discord = f_discord.read_text(encoding="utf-8")
 # Modification de l'import (On importe la classe et l'adaptateur DotEnv)
 c_discord = c_discord.replace(
     "from core.tool_gateway.google_bridge import google_bridge",
-    "from core.tool_gateway.google_bridge import GoogleIdentityBridge\nfrom runtime.adapters.config.dotenv_provider import DotEnvConfigProvider"
+    "from core.tool_gateway.google_bridge import GoogleIdentityBridge\nfrom runtime.adapters.config.dotenv_provider import DotEnvConfigProvider",
 )
 
 # Injection de l'instanciation (Wiring) juste avant OWNER_ID

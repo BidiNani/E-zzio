@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from typing import List
 
+
 @dataclass
 class TaskAnalysis:
     prompt: str
@@ -8,10 +9,30 @@ class TaskAnalysis:
     complexity_score: float
     keywords_detected: List[str] = field(default_factory=list)
 
+
 class TaskAnalyzer:
     """Analyzes prompts to extract complexity and keywords for memory retrieval."""
+
     HEAVY_KEYWORDS = ["architecture", "refactor", "synthesis", "benchmark", "cloud", "security", "optimization"]
-    STOPWORDS = {"les", "des", "une", "pour", "avec", "dans", "sur", "cette", "sont", "pourquoi", "comment", "fait", "faire", "tout", "plus", "cree", "crée"}
+    STOPWORDS = {
+        "les",
+        "des",
+        "une",
+        "pour",
+        "avec",
+        "dans",
+        "sur",
+        "cette",
+        "sont",
+        "pourquoi",
+        "comment",
+        "fait",
+        "faire",
+        "tout",
+        "plus",
+        "cree",
+        "crée",
+    }
 
     @classmethod
     def analyze(cls, prompt: str) -> TaskAnalysis:
@@ -23,10 +44,7 @@ class TaskAnalyzer:
         score = min(1.0, (word_count / 150.0) * 0.4 + (len(detected_heavy) * 0.2))
 
         return TaskAnalysis(
-            prompt=prompt,
-            estimated_tokens=estimated_tokens,
-            complexity_score=round(score, 2),
-            keywords_detected=detected_heavy
+            prompt=prompt, estimated_tokens=estimated_tokens, complexity_score=round(score, 2), keywords_detected=detected_heavy
         )
 
     @classmethod

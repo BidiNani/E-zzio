@@ -1,0 +1,17 @@
+{
+  "evidence_id": "EVID-20260823-248CB56C",
+  "task_id": "TASK-CHA-004-6",
+  "timestamp_utc": "2026-08-23T13:18:35.160450+00:00",
+  "provider": "agent_antigravity",
+  "model_name": "antigravity_agent",
+  "agent_version": "ezzio-federated-v1.0",
+  "capability": "agentic_code_create",
+  "policy_status": "APPROVED",
+  "input_context_hash": "a0eb8e6825d2d1447f21edcbcc013cee3d07856496ca343a0e9789a103c63a9b",
+  "output_payload_hash": "5fc2ee6f7f8891449f0de68e0fdf49a73965359878e3ab8f44a25bf5ae319b66",
+  "execution_duration_ms": 150.0,
+  "verification_status": "VERIFIED_VALID",
+  "raw_payload_snippet": "{\"status\": \"SUCCESS\"}",
+  "ledger_decision_id": null,
+  "envelope_signature_hmac": "04a5c71aad99bcf687b1bb0492456163a7d077944b1639deba006e258edd1dce"
+}

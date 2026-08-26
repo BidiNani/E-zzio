@@ -2,8 +2,8 @@
 E-ZZIO V7.31 — Identity Persistence Layer
 Gère le chargement, le hachage et le scellement de la spécification d'identité.
 """
+
 import os
-import json
 import hashlib
 import hmac
 from pathlib import Path
@@ -15,6 +15,7 @@ RUNTIME_IDENTITY_DIR = ROOT_DIR / "runtime" / "identity"
 ENV_PATH = ROOT_DIR / "secrets" / ".env"
 
 load_dotenv(dotenv_path=ENV_PATH, override=True)
+
 
 class IdentityPersistenceEngine:
     def __init__(self):
@@ -52,7 +53,8 @@ class IdentityPersistenceEngine:
             "lore_hash": lore_hash,
             "identity_spec_hash": identity_spec_hash,
             "identity_root_hash": identity_root_hash,
-            "signature": signature
+            "signature": signature,
         }
+
 
 identity_persistence = IdentityPersistenceEngine()

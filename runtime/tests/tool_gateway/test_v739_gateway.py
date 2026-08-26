@@ -2,6 +2,7 @@
 E-ZZIO V7.39 — Certification Test Suite (Tool Gateway Foundation)
 Valide l'interception, le routage et le blocage basé sur le risque des appels externes.
 """
+
 import sys
 from pathlib import Path
 
@@ -10,6 +11,7 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from core.tool_gateway.gateway_controller import tool_gateway
+
 
 def run_gateway_certification():
     print("============================================================")
@@ -35,6 +37,7 @@ def run_gateway_certification():
     print("\n============================================================")
     print(" V7.39 CERTIFIÉ : TOOL GATEWAY & SECURE ACTION LAYER ACTIFS")
     print("============================================================\n")
+
 
 if __name__ == "__main__":
     run_gateway_certification()

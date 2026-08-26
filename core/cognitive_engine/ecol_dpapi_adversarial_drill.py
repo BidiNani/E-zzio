@@ -2,13 +2,11 @@
 E-ZZIO Core — DPAPI Adversarial Certification (V7.64.2)
 Correction de l'affectation du secret déchiffré (Test 1) et génération dynamique du Trust Report.
 """
+
 import os
-import sys
 import json
 import ctypes
-import hmac
 import logging
-import hashlib
 import shutil
 from pathlib import Path
 from datetime import datetime, timezone
@@ -17,40 +15,40 @@ logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 
+
 class DPAPIVaultError(Exception):
     pass
 
+
 class DATA_BLOB(ctypes.Structure):
-    _fields_ = [("cbData", ctypes.c_ulong),
-                ("pbData", ctypes.POINTER(ctypes.c_ubyte))]
+    _fields_ = [("cbData", ctypes.c_ulong), ("pbData", ctypes.POINTER(ctypes.c_ubyte))]
+
 
 def _dpapi_encrypt(secret_bytes: bytes) -> bytes:
     if os.name != "nt":
         return secret_bytes
     blob_in = DATA_BLOB(len(secret_bytes), ctypes.cast(secret_bytes, ctypes.POINTER(ctypes.c_ubyte)))
     blob_out = DATA_BLOB()
-    res = ctypes.windll.crypt32.CryptProtectData(
-        ctypes.byref(blob_in), "E-ZZIO Sandbox Root", None, None, None, 0, ctypes.byref(blob_out)
-    )
+    res = ctypes.windll.crypt32.CryptProtectData(ctypes.byref(blob_in), "E-ZZIO Sandbox Root", None, None, None, 0, ctypes.byref(blob_out))
     if not res:
         raise DPAPIVaultError("Échec chiffrement DPAPI.")
     enc = ctypes.string_at(blob_out.pbData, blob_out.cbData)
     ctypes.windll.kernel32.LocalFree(blob_out.pbData)
     return enc
 
+
 def _dpapi_decrypt(encrypted_bytes: bytes) -> bytes:
     if os.name != "nt":
         return encrypted_bytes
     blob_in = DATA_BLOB(len(encrypted_bytes), ctypes.cast(encrypted_bytes, ctypes.POINTER(ctypes.c_ubyte)))
     blob_out = DATA_BLOB()
-    res = ctypes.windll.crypt32.CryptUnprotectData(
-        ctypes.byref(blob_in), None, None, None, None, 0, ctypes.byref(blob_out)
-    )
+    res = ctypes.windll.crypt32.CryptUnprotectData(ctypes.byref(blob_in), None, None, None, None, 0, ctypes.byref(blob_out))
     if not res:
         raise DPAPIVaultError("Échec déchiffrement DPAPI (contexte invalide ou altération).")
     dec = ctypes.string_at(blob_out.pbData, blob_out.cbData)
     ctypes.windll.kernel32.LocalFree(blob_out.pbData)
     return dec
+
 
 class SandboxDPAPIManager:
     def __init__(self, sandbox_dir: Path):
@@ -70,9 +68,7 @@ class SandboxDPAPIManager:
         vault = {
             "active_key_id": key_id,
             "protection_mode": "WINDOWS_DPAPI_USER_CURRENT",
-            "keys": {
-                key_id: {"status": "ACTIVE", "created_at": datetime.now(timezone.utc).isoformat()}
-            }
+            "keys": {key_id: {"status": "ACTIVE", "created_at": datetime.now(timezone.utc).isoformat()}},
         }
         self.vault_path.write_text(self._canonical_dump(vault) + "\n", encoding="utf-8")
         return raw_secret
@@ -98,6 +94,7 @@ class SandboxDPAPIManager:
         if not key_file.exists():
             raise DPAPIVaultError(f"Fichier de clé physique absent : {key_id}.dpkey")
         return _dpapi_decrypt(key_file.read_bytes())
+
 
 def run_adversarial_drill():
     print("[*] Lancement du DPAPI Adversarial Certification Drill (V7.64.2)...")
@@ -170,13 +167,13 @@ def run_adversarial_drill():
     try:
         manager.rotate("ECOL-DPAPI-KEY-002")
         vault = json.loads((sandbox / "dpapi_vault.json").read_text(encoding="utf-8"))
-        
+
         assert vault["active_key_id"] == "ECOL-DPAPI-KEY-002", "La nouvelle clé n'est pas active."
         assert vault["keys"]["ECOL-DPAPI-KEY-001"]["status"] == "VERIFY_ONLY", "L'ancienne clé n'est pas en VERIFY_ONLY."
-        
+
         old_secret = manager.get_secret("ECOL-DPAPI-KEY-001")
         assert len(old_secret) == 32, "Échec de lecture de l'ancienne époque."
-        
+
         test_results["epoch_rotation_and_verify_only"] = "PASS"
         print("  [PASS] Rotation validée et ancienneté protégée en VERIFY_ONLY.")
     except Exception as e:
@@ -199,13 +196,14 @@ def run_adversarial_drill():
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "adversarial_test_results": test_results,
         "os_bound_protection": "Windows DPAPI (User-Context)",
-        "overall_status": overall_status
+        "overall_status": overall_status,
     }
 
     report_path = ROOT_DIR / "runtime" / "cognition" / "budget" / "ECOL_TRUST_REPORT.json"
     report_path.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"\n[*] Rapport d'audit dynamique généré : {report_path}")
     print(f"[*] Statut global : {overall_status}")
+
 
 if __name__ == "__main__":
     run_adversarial_drill()

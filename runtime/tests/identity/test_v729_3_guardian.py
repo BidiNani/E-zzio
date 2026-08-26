@@ -2,6 +2,7 @@
 E-ZZIO V7.29.3 — Certification Test Suite (Identity Guardian)
 Valide l'audit dynamique en temps réel et la bascule en FAIL_CLOSED.
 """
+
 import sys
 import json
 from pathlib import Path
@@ -14,6 +15,7 @@ from core.identity.identity_context import ImmutableIdentityContext
 from core.identity.identity_guardian import IdentityGuardian
 from core.identity.identity_events import IdentityState
 from core.identity.identity_validator import identity_validator
+
 
 def run_guardian_certification():
     print("============================================================")
@@ -32,7 +34,7 @@ def run_guardian_certification():
         # 2. Boot & Instanciation du Guardian
         ctx = ImmutableIdentityContext()
         guardian = IdentityGuardian(ctx)
-        
+
         audit_initial = guardian.audit_now()
         assert audit_initial["valid"] is True, "Audit initial échoué !"
         assert audit_initial["state"] == IdentityState.VERIFIED
@@ -63,6 +65,7 @@ def run_guardian_certification():
 
     finally:
         persona_path.write_text(orig_persona, encoding="utf-8")
+
 
 if __name__ == "__main__":
     run_guardian_certification()

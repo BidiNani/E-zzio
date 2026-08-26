@@ -2,7 +2,9 @@
 E-ZZIO V7.33 — Static Analyzer
 Vérifie la syntaxe, l'absence de structures interdites et la propreté du code candidat.
 """
+
 import ast
+
 
 class StaticAnalyzer:
     @staticmethod
@@ -17,5 +19,6 @@ class StaticAnalyzer:
             return {"passed": True, "error": None}
         except SyntaxError as e:
             return {"passed": False, "error": f"SYNTAX_ERROR: {e}"}
+
 
 static_analyzer = StaticAnalyzer()

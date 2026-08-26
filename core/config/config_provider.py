@@ -3,11 +3,12 @@ from typing import Any, Dict, Optional
 from core.config.iconfig_provider import IConfigProvider
 import os
 
+
 class ConfigProvider(IConfigProvider):
     def __init__(self, db_path: str = "runtime/config/config.db"):
         self.db_path = db_path
         os.makedirs(os.path.dirname(db_path), exist_ok=True)
-    
+
     async def init(self):
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute("""
@@ -18,21 +19,18 @@ class ConfigProvider(IConfigProvider):
                 )
             """)
             await db.commit()
-    
+
     async def get_config(self, key: str) -> Optional[Any]:
         async with aiosqlite.connect(self.db_path) as db:
             cursor = await db.execute("SELECT value FROM config WHERE key = ?", (key,))
             row = await cursor.fetchone()
             return row[0] if row else None
-    
+
     async def set_config(self, key: str, value: Any) -> None:
         async with aiosqlite.connect(self.db_path) as db:
-            await db.execute(
-                "INSERT OR REPLACE INTO config (key, value, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP)",
-                (key, str(value))
-            )
+            await db.execute("INSERT OR REPLACE INTO config (key, value, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP)", (key, str(value)))
             await db.commit()
-    
+
     async def list_configs(self, prefix: str = "") -> Dict[str, Any]:
         async with aiosqlite.connect(self.db_path) as db:
             cursor = await db.execute("SELECT key, value FROM config WHERE key LIKE ?", (f"{prefix}%",))

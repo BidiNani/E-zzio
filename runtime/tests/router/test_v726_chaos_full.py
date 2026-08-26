@@ -2,17 +2,19 @@
 E-ZZIO V7.26.0 — Industrial Chaos & Fault Tolerance Suite
 Teste la persistance des disjoncteurs, l'auto-guérison et l'immutabilité cryptographique.
 """
+
 import sys
 import asyncio
 import json
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent.parent
-if str(ROOT_DIR) not in sys.path: sys.path.insert(0, str(ROOT_DIR))
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
 from core.routing.circuit_breaker import circuit_breaker
 from core.security.ledger_validator import ledger_validator
-from core.recovery.health_manager import health_manager
+
 
 async def run_industrial_chaos():
     print("============================================================")
@@ -24,9 +26,10 @@ async def run_industrial_chaos():
     circuit_breaker.record_failure("ollama")
     circuit_breaker.record_failure("ollama")
     circuit_breaker.record_failure("ollama")
-    
+
     # Simulation d'un reboot (instanciation d'un nouveau circuit breaker)
     from core.routing.circuit_breaker import CircuitBreaker
+
     rebooted_cb = CircuitBreaker()
     is_tripped_after_reboot = rebooted_cb.is_open("ollama")
     print(f"  -> État du disjoncteur Ollama après simulation de reboot : Trip = {is_tripped_after_reboot}")
@@ -49,30 +52,31 @@ async def run_industrial_chaos():
             # On corrompt volontairement une valeur dans un enregistrement
             corrupted_record = json.loads(lines[0])
             corrupted_record["selected"] = "modele_pirate_modifie"
-            
+
             # Injection de la ligne corrompue dans un fichier test isolé
             test_corrupt_path = ROOT_DIR / "runtime" / "decisions" / "corrupt_test.jsonl"
             test_corrupt_path.write_text(json.dumps(corrupted_record) + "\n" + "\n".join(lines[1:]), encoding="utf-8")
-            
+
             # Validation temporaire pointant vers le fichier corrompu
-            from core.security.ledger_validator import LedgerValidator
             import core.security.ledger_validator as lv
+
             original_path = lv.LEDGER_PATH
             lv.LEDGER_PATH = test_corrupt_path
-            
+
             corrupt_check = ledger_validator.verify_ledger_chain()
             print(f"  -> Résultat de l'analyse sur ledger corrompu : {corrupt_check}")
-            
+
             # Nettoyage
             lv.LEDGER_PATH = original_path
             test_corrupt_path.unlink()
-            
+
             assert corrupt_check["valid"] is False, "Le validateur n'a pas détecté la corruption du ledger !"
             print("  [OK] Détection d'altération cryptographique confirmée (Zéro faux positif).")
 
     print("\n============================================================")
     print(" V7.26.0 INDUSTRIEL CERTIFIÉ : 10/10 FAULT TOLERANT & SECURE")
     print("============================================================\n")
+
 
 if __name__ == "__main__":
     asyncio.run(run_industrial_chaos())

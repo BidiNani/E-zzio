@@ -3,6 +3,7 @@ E-ZZIO V7.59.1 — Semantic & Structural Audit of memory_index.sqlite
 Analyse en lecture seule : répartition par memory_type, détection des faibles confiances
 et identification des doublons de contenu/hash.
 """
+
 import sqlite3
 from pathlib import Path
 import json
@@ -11,12 +12,13 @@ ROOT_DIR = Path(r"G:\AI\E-zzio")
 INDEX_DB = ROOT_DIR / "runtime" / "cognitive" / "index" / "memory_index.sqlite"
 AUDIT_REPORT = ROOT_DIR / "runtime" / "audit" / "system" / "fts5_semantic_audit.json"
 
+
 def run_semantic_audit():
     if not INDEX_DB.exists():
         print(f"[!] Erreur : Base FTS5 introuvable à l'emplacement {INDEX_DB}")
         return
 
-    print(f"[*] Analyse sémantique de l'index FTS5 en cours...")
+    print("[*] Analyse sémantique de l'index FTS5 en cours...")
 
     uri = f"file:{INDEX_DB}?mode=ro"
     with sqlite3.connect(uri, uri=True) as conn:
@@ -28,9 +30,9 @@ def run_semantic_audit():
 
         # 2. Répartition par memory_type
         cursor.execute("""
-            SELECT memory_type, COUNT(*) 
-            FROM memory_search 
-            GROUP BY memory_type 
+            SELECT memory_type, COUNT(*)
+            FROM memory_search
+            GROUP BY memory_type
             ORDER BY COUNT(*) DESC;
         """)
         type_breakdown = {row[0]: row[1] for row in cursor.fetchall()}
@@ -41,21 +43,21 @@ def run_semantic_audit():
 
         # 4. Analyse des doublons par contenu exact (ou hash similaire)
         cursor.execute("""
-            SELECT content, COUNT(*) as cnt 
-            FROM memory_search 
-            GROUP BY content 
-            HAVING cnt > 1 
-            ORDER BY cnt DESC 
+            SELECT content, COUNT(*) as cnt
+            FROM memory_search
+            GROUP BY content
+            HAVING cnt > 1
+            ORDER BY cnt DESC
             LIMIT 10;
         """)
         top_content_duplicates = [{"content": row[0][:80], "occurrences": row[1]} for row in cursor.fetchall()]
 
         # 5. Répartition par source_path (Top 10)
         cursor.execute("""
-            SELECT source_path, COUNT(*) as cnt 
-            FROM memory_search 
-            GROUP BY source_path 
-            ORDER BY cnt DESC 
+            SELECT source_path, COUNT(*) as cnt
+            FROM memory_search
+            GROUP BY source_path
+            ORDER BY cnt DESC
             LIMIT 10;
         """)
         top_sources = {row[0]: row[1] for row in cursor.fetchall()}
@@ -65,7 +67,7 @@ def run_semantic_audit():
         "memory_type_breakdown": type_breakdown,
         "low_confidence_count": low_confidence_count,
         "top_content_duplicates": top_content_duplicates,
-        "top_sources": top_sources
+        "top_sources": top_sources,
     }
 
     AUDIT_REPORT.parent.mkdir(parents=True, exist_ok=True)
@@ -93,6 +95,7 @@ def run_semantic_audit():
         print(" Aucun doublon textuel strict majeur détecté.")
     print("-" * 50)
     print(f" Rapport d'audit généré : {AUDIT_REPORT}")
+
 
 if __name__ == "__main__":
     run_semantic_audit()

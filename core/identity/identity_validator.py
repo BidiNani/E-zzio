@@ -2,8 +2,8 @@
 E-ZZIO V7.29.3 — Identity Validator
 Vérifie la validité des ancres enregistrées dans runtime/identity/.
 """
+
 import os
-import json
 import hashlib
 import hmac
 from pathlib import Path
@@ -14,6 +14,7 @@ RUNTIME_IDENTITY_DIR = ROOT_DIR / "runtime" / "identity"
 ENV_PATH = ROOT_DIR / "secrets" / ".env"
 
 load_dotenv(dotenv_path=ENV_PATH, override=True)
+
 
 class IdentityValidator:
     @staticmethod
@@ -34,5 +35,6 @@ class IdentityValidator:
             return {"valid": False, "error": "INVALID_IDENTITY_HMAC_SIGNATURE"}
 
         return {"valid": True, "identity_root": stored_root, "error": None}
+
 
 identity_validator = IdentityValidator()

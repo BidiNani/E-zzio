@@ -13,6 +13,7 @@ TOKEN_STATE = PROJECT_ROOT / "registry" / "cloud_tokens_runtime.json"
 
 load_dotenv(SECRETS_PATH)
 
+
 def _token_state_load():
     try:
         if TOKEN_STATE.exists():
@@ -21,9 +22,11 @@ def _token_state_load():
         pass
     return {}
 
+
 def _token_state_save(data):
     TOKEN_STATE.parent.mkdir(parents=True, exist_ok=True)
     TOKEN_STATE.write_text(__import__("json").dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
 
 def github_headers():
     token = os.getenv("GITHUB_TOKEN", "").strip()
@@ -36,6 +39,7 @@ def github_headers():
         headers["Authorization"] = f"Bearer {token}"
     return headers
 
+
 def github_get(path, params=None):
     path = path.lstrip("/")
     return guarded_request(
@@ -45,6 +49,7 @@ def github_get(path, params=None):
         params=params or {},
         cache=True,
     )
+
 
 def reddit_token():
     state = _token_state_load()
@@ -80,6 +85,7 @@ def reddit_token():
     _token_state_save(state)
     return token
 
+
 def reddit_headers():
     user_agent = os.getenv("REDDIT_USER_AGENT", "E-ZZIO-local/1.0").strip()
     token = reddit_token()
@@ -87,6 +93,7 @@ def reddit_headers():
     if token:
         headers["Authorization"] = f"Bearer {token}"
     return headers
+
 
 def reddit_get(path, params=None):
     path = path.lstrip("/")
@@ -99,8 +106,10 @@ def reddit_get(path, params=None):
         cache_ttl=120,
     )
 
+
 def blizzard_region():
     return os.getenv("BLIZZARD_REGION", "eu").strip().lower() or "eu"
+
 
 def blizzard_token():
     state = _token_state_load()
@@ -114,8 +123,8 @@ def blizzard_token():
     if not all([client_id, client_secret]):
         return None
 
-    region = blizzard_region()
-    token_url = f"https://oauth.battle.net/token"
+    blizzard_region()
+    token_url = "https://oauth.battle.net/token"
 
     auth_raw = f"{client_id}:{client_secret}".encode("utf-8")
     auth_b64 = base64.b64encode(auth_raw).decode("ascii")
@@ -137,12 +146,14 @@ def blizzard_token():
     _token_state_save(state)
     return token
 
+
 def blizzard_headers():
     token = blizzard_token()
     headers = {}
     if token:
         headers["Authorization"] = f"Bearer {token}"
     return headers
+
 
 def blizzard_get(path, params=None):
     region = blizzard_region()
@@ -159,6 +170,7 @@ def blizzard_get(path, params=None):
         cache=True,
         cache_ttl=600,
     )
+
 
 def connectors_status():
     return {

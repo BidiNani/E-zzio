@@ -2,9 +2,11 @@
 E-ZZIO Core — Organism Identity & Existence Counter (V8.10)
 Calcule l'âge opérationnel de l'organisme à partir de sa naissance physique sur NTFS.
 """
+
 from datetime import datetime, timezone
 from pathlib import Path
 import json
+
 
 class OrganismIdentity:
     def __init__(self, root_dir: Path = Path(r"G:\AI\E-zzio")):
@@ -33,25 +35,16 @@ class OrganismIdentity:
         hours = seconds // 3600
         minutes = (seconds % 3600) // 60
 
-        milestones = {
-            "24h": days >= 1,
-            "7_days": days >= 7,
-            "30_days": days >= 30,
-            "100_days": days >= 100,
-            "1_year": days >= 365
-        }
+        milestones = {"24h": days >= 1, "7_days": days >= 7, "30_days": days >= 30, "100_days": days >= 100, "1_year": days >= 365}
 
         return {
             "birth_timestamp_utc": self.birth_str,
             "current_timestamp_utc": now.isoformat(),
             "total_days_alive": days,
-            "detailed_age": {
-                "days": days,
-                "hours": hours,
-                "minutes": minutes
-            },
-            "milestones": milestones
+            "detailed_age": {"days": days, "hours": hours, "minutes": minutes},
+            "milestones": milestones,
         }
+
 
 if __name__ == "__main__":
     ident = OrganismIdentity()

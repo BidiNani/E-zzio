@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 import py_compile
 import shutil
 import time
@@ -46,11 +45,14 @@ ALLOWED_PATTERN_FILES = {
     "core/human_chat_guard.py": set(BAD_PATTERNS),
 }
 
+
 def now() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%S")
 
+
 def rel_posix(path: Path) -> str:
     return path.relative_to(PROJECT_ROOT).as_posix()
+
 
 def is_excluded(path: Path) -> bool:
     try:
@@ -59,9 +61,11 @@ def is_excluded(path: Path) -> bool:
         return True
     return bool(parts.intersection(EXCLUDED_PARTS))
 
+
 def allowed_for_file(path: Path, pattern: str) -> bool:
     rel = rel_posix(path)
     return pattern in ALLOWED_PATTERN_FILES.get(rel, set())
+
 
 def interesting_files() -> List[Path]:
     files: List[Path] = []
@@ -75,6 +79,7 @@ def interesting_files() -> List[Path]:
         files.append(web)
 
     return sorted(set(files))
+
 
 def collect_pattern_issues(path: Path, text: str) -> List[Dict[str, Any]]:
     issues: List[Dict[str, Any]] = []
@@ -95,14 +100,17 @@ def collect_pattern_issues(path: Path, text: str) -> List[Dict[str, Any]]:
                 context = line.strip()[:220]
                 break
 
-        issues.append({
-            "kind": "bad_pattern",
-            "pattern": pattern,
-            "line": line_no,
-            "context": context,
-        })
+        issues.append(
+            {
+                "kind": "bad_pattern",
+                "pattern": pattern,
+                "line": line_no,
+                "context": context,
+            }
+        )
 
     return issues
+
 
 def audit_python(path: Path) -> Dict[str, Any]:
     result: Dict[str, Any] = {
@@ -120,10 +128,12 @@ def audit_python(path: Path) -> Dict[str, Any]:
     except Exception as exc:
         result["compile_ok"] = False
         result["ok"] = False
-        result["issues"].append({
-            "kind": "compile_error",
-            "message": str(exc),
-        })
+        result["issues"].append(
+            {
+                "kind": "compile_error",
+                "message": str(exc),
+            }
+        )
 
     try:
         text = path.read_text(encoding="utf-8", errors="replace")
@@ -137,12 +147,15 @@ def audit_python(path: Path) -> Dict[str, Any]:
 
     except Exception as exc:
         result["ok"] = False
-        result["issues"].append({
-            "kind": "read_error",
-            "message": str(exc),
-        })
+        result["issues"].append(
+            {
+                "kind": "read_error",
+                "message": str(exc),
+            }
+        )
 
     return result
+
 
 def audit_text(path: Path) -> Dict[str, Any]:
     result: Dict[str, Any] = {
@@ -165,12 +178,15 @@ def audit_text(path: Path) -> Dict[str, Any]:
 
     except Exception as exc:
         result["ok"] = False
-        result["issues"].append({
-            "kind": "read_error",
-            "message": str(exc),
-        })
+        result["issues"].append(
+            {
+                "kind": "read_error",
+                "message": str(exc),
+            }
+        )
 
     return result
+
 
 def audit_project() -> Dict[str, Any]:
     files = interesting_files()
@@ -204,6 +220,7 @@ def audit_project() -> Dict[str, Any]:
         },
     }
 
+
 def dust_candidates() -> List[Dict[str, Any]]:
     candidates: List[Dict[str, Any]] = []
 
@@ -216,25 +233,32 @@ def dust_candidates() -> List[Dict[str, Any]]:
         name = path.name.lower()
 
         if path.is_dir() and name == "__pycache__":
-            candidates.append({
-                "path": str(path),
-                "kind": "dir",
-                "reason": "__pycache__",
-            })
+            candidates.append(
+                {
+                    "path": str(path),
+                    "kind": "dir",
+                    "reason": "__pycache__",
+                }
+            )
         elif path.is_file() and path.suffix.lower() in [".pyc", ".pyo"]:
-            candidates.append({
-                "path": str(path),
-                "kind": "file",
-                "reason": "compiled_python_cache",
-            })
+            candidates.append(
+                {
+                    "path": str(path),
+                    "kind": "file",
+                    "reason": "compiled_python_cache",
+                }
+            )
         elif path.is_file() and name.endswith(".tmp"):
-            candidates.append({
-                "path": str(path),
-                "kind": "file",
-                "reason": "temporary_file",
-            })
+            candidates.append(
+                {
+                    "path": str(path),
+                    "kind": "file",
+                    "reason": "temporary_file",
+                }
+            )
 
     return candidates
+
 
 def quarantine_dust(apply: bool = False) -> Dict[str, Any]:
     candidates = dust_candidates()
@@ -258,10 +282,12 @@ def quarantine_dust(apply: bool = False) -> Dict[str, Any]:
                 item["quarantined_to"] = str(dst)
             moved.append(item)
         except Exception as exc:
-            errors.append({
-                "path": str(src),
-                "error": str(exc),
-            })
+            errors.append(
+                {
+                    "path": str(src),
+                    "error": str(exc),
+                }
+            )
 
     return {
         "ok": len(errors) == 0,
@@ -275,6 +301,7 @@ def quarantine_dust(apply: bool = False) -> Dict[str, Any]:
         "moved": moved if apply else [],
         "errors": errors,
     }
+
 
 def maintenance_status() -> Dict[str, Any]:
     audit = audit_project()

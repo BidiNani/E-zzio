@@ -1,9 +1,10 @@
 import platform
-import shutil
 import urllib.request
+
 
 class SystemSensor:
     """Capteur de perception système et matériel."""
+
     def __init__(self, ollama_url="http://localhost:11434"):
         self.ollama_url = ollama_url
 
@@ -12,6 +13,7 @@ class SystemSensor:
         ram_available = "Inconnu"
         try:
             import ctypes
+
             class MEMORYSTATUSEX(ctypes.Structure):
                 _fields_ = [
                     ("dwLength", ctypes.c_ulong),
@@ -24,6 +26,7 @@ class SystemSensor:
                     ("ullAvailVirtual", ctypes.c_ulonglong),
                     ("ullExtendedVirtualInformation", ctypes.c_ulonglong),
                 ]
+
             stat = MEMORYSTATUSEX()
             stat.dwLength = ctypes.sizeof(MEMORYSTATUSEX)
             ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(stat))
@@ -36,24 +39,14 @@ class SystemSensor:
         try:
             req = urllib.request.Request(f"{self.ollama_url}/api/tags")
             with urllib.request.urlopen(req, timeout=2) as resp:
-                ollama_online = (resp.status == 200)
+                ollama_online = resp.status == 200
         except Exception:
             ollama_online = False
 
         return {
-            "cpu": {
-                "processor": platform.processor(),
-                "machine": platform.machine(),
-                "system": platform.system()
-            },
-            "memory": {
-                "total": ram_total,
-                "available": ram_available
-            },
-            "gpu": {
-                "name": "GTX 1650 (Local)",
-                "policy": "CPU-only / Optimisé"
-            },
+            "cpu": {"processor": platform.processor(), "machine": platform.machine(), "system": platform.system()},
+            "memory": {"total": ram_total, "available": ram_available},
+            "gpu": {"name": "GTX 1650 (Local)", "policy": "CPU-only / Optimisé"},
             "python": platform.python_version(),
-            "ollama": ollama_online
+            "ollama": ollama_online,
         }

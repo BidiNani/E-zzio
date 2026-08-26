@@ -2,7 +2,6 @@ from enum import Enum
 
 
 class ExecutionState(str, Enum):
-
     REQUESTED = "REQUESTED"
     AUTHORIZED = "AUTHORIZED"
     SCHEDULED = "SCHEDULED"

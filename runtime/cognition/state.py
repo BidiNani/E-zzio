@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class CognitiveState(Enum):
     IDLE = "IDLE"
     OBSERVING = "OBSERVING"

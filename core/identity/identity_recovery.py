@@ -2,6 +2,7 @@
 E-ZZIO V7.31 — Atomic Transactional Recovery Engine
 Restaure l'identité dans une zone de staging, valide l'intégrité à 100%, puis valide atomiquement.
 """
+
 import os
 import json
 import shutil
@@ -18,6 +19,7 @@ CONFIG_DIR = ROOT_DIR / "config"
 ENV_PATH = ROOT_DIR / "secrets" / ".env"
 
 load_dotenv(dotenv_path=ENV_PATH, override=True)
+
 
 class IdentityRecoveryEngine:
     def __init__(self):
@@ -87,7 +89,7 @@ class IdentityRecoveryEngine:
                     "persona.json": CONFIG_DIR / "persona.json",
                     "lore.md": CONFIG_DIR / "lore.md",
                     "skills_manifest.json": CONFIG_DIR / "skills_manifest.json",
-                    "memory_graph.json": CONFIG_DIR / "memory_graph.json"
+                    "memory_graph.json": CONFIG_DIR / "memory_graph.json",
                 }
 
                 for fname, target_path in target_map.items():
@@ -98,18 +100,14 @@ class IdentityRecoveryEngine:
 
                 shutil.rmtree(STAGING_DIR, ignore_errors=True)
 
-                return {
-                    "recovered": True,
-                    "atomic": True,
-                    "restored_snapshot": snap_dir.name,
-                    "restored_count": len(file_hashes)
-                }
+                return {"recovered": True, "atomic": True, "restored_snapshot": snap_dir.name, "restored_count": len(file_hashes)}
 
-            except Exception as e:
+            except Exception:
                 if STAGING_DIR.exists():
                     shutil.rmtree(STAGING_DIR, ignore_errors=True)
                 continue
 
         return {"recovered": False, "error": "ALL_SNAPSHOTS_INVALID"}
+
 
 identity_recovery_engine = IdentityRecoveryEngine()

@@ -4,6 +4,7 @@ import hashlib
 from dataclasses import dataclass, field, replace, asdict
 from typing import Dict, Any, Tuple, Optional, Union, List
 
+
 def get_hmac_secret() -> bytes:
     """Récupère le secret HMAC en exigeant une variable d'environnement en production."""
     secret = os.environ.get("EZZIO_HMAC_SECRET")
@@ -14,11 +15,15 @@ def get_hmac_secret() -> bytes:
         return b"ezzio_kernel_default_secure_fallback_key_2026"
     return secret.encode("utf-8")
 
+
 SYSTEM_HMAC_SECRET = get_hmac_secret()
+
 
 class SecurityError(Exception):
     """Raised when context tampering is detected."""
+
     pass
+
 
 @dataclass(frozen=True)
 class ExecutionContext:
@@ -26,13 +31,13 @@ class ExecutionContext:
 
     @property
     def state(self):
-        if not hasattr(self, '_state'):
-            object.__setattr__(self, '_state', {})
+        if not hasattr(self, "_state"):
+            object.__setattr__(self, "_state", {})
         return self._state
 
     @state.setter
     def state(self, value):
-        object.__setattr__(self, '_state', value)
+        object.__setattr__(self, "_state", value)
 
     trace_id: str
     parent_trace_id: Optional[str] = None
@@ -65,21 +70,15 @@ class ExecutionContext:
         if self.budget_remaining < 0:
             raise ValueError(f"ExecutionContext.budget_remaining cannot be negative (got {self.budget_remaining}).")
 
-    def consume_budget(self, cost: int) -> 'ExecutionContext':
+    def consume_budget(self, cost: int) -> "ExecutionContext":
         new_budget = self.budget_remaining - cost
         if new_budget < 0:
             raise ValueError(f"Execution budget exceeded: remaining {self.budget_remaining} < cost {cost}.")
         return replace(self, budget_remaining=new_budget, signature="")
 
-    def derive_child(self, child_trace_id: str, new_permissions: Optional[Union[Tuple[str, ...], List[str]]] = None) -> 'ExecutionContext':
+    def derive_child(self, child_trace_id: str, new_permissions: Optional[Union[Tuple[str, ...], List[str]]] = None) -> "ExecutionContext":
         perms = tuple(new_permissions) if new_permissions is not None else self.permissions
-        return replace(
-            self,
-            trace_id=child_trace_id,
-            parent_trace_id=self.trace_id,
-            permissions=perms,
-            signature=""
-        )
+        return replace(self, trace_id=child_trace_id, parent_trace_id=self.trace_id, permissions=perms, signature="")
 
     def to_dict(self) -> Dict[str, Any]:
         data = asdict(self)
@@ -87,7 +86,7 @@ class ExecutionContext:
         return data
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> 'ExecutionContext':
+    def from_dict(cls, data: Dict[str, Any]) -> "ExecutionContext":
         if "permissions" in data and isinstance(data["permissions"], list):
             data["permissions"] = tuple(data["permissions"])
         return cls(**data)

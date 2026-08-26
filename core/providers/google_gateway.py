@@ -1,9 +1,10 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 from core.providers.igoogle_provider import IGoogleProvider
 from core.providers.google_drive_provider import GoogleDriveProvider
 from core.providers.google_gmail_provider import GoogleGmailProvider
 from core.providers.google_calendar_provider import GoogleCalendarProvider
 from core.providers.google_docs_provider import GoogleDocsProvider
+
 
 class GoogleToolsGateway:
     def __init__(self):
@@ -24,5 +25,6 @@ class GoogleToolsGateway:
             raise ValueError(f"Service Google inconnu : '{service}'. Services disponibles : {list(self.providers.keys())}")
 
         return await provider.execute(action=action, **kwargs)
+
 
 google_gateway = GoogleToolsGateway()

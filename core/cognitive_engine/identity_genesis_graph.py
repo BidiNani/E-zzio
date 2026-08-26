@@ -3,7 +3,7 @@ E-ZZIO V7.59.7 — Identity Genesis Graph
 Calcule l'horodatage, le hachage cryptographique et le graphe de références croisées
 des 19 artefacts identitaires pour reconstituer la chronologie exacte de la forge d'E-ZZIO.
 """
-import os
+
 import json
 import hashlib
 from pathlib import Path
@@ -31,8 +31,9 @@ IDENTITY_FILES = [
     "registry/personality/identity.md",
     "registry/personality/lore.md",
     "registry/personality/speech.md",
-    "registry/personality/traits.md"
+    "registry/personality/traits.md",
 ]
+
 
 def compute_sha256(file_path: Path) -> str:
     hasher = hashlib.sha256()
@@ -40,6 +41,7 @@ def compute_sha256(file_path: Path) -> str:
         while chunk := f.read(8192):
             hasher.update(chunk)
     return hasher.hexdigest()
+
 
 def build_genesis_graph():
     print("[*] Reconstitution du graphe généalogique d'identité...")
@@ -65,26 +67,24 @@ def build_genesis_graph():
                 if other_name in content.lower():
                     references.append(other_rel)
 
-        nodes.append({
-            "relative_path": rel_path,
-            "filename": full_path.name,
-            "sha256": sha256,
-            "size_bytes": stat.st_size,
-            "timestamps": {
-                "created": datetime.fromtimestamp(stat.st_ctime, timezone.utc).isoformat(),
-                "modified": datetime.fromtimestamp(stat.st_mtime, timezone.utc).isoformat()
-            },
-            "outgoing_references": references
-        })
+        nodes.append(
+            {
+                "relative_path": rel_path,
+                "filename": full_path.name,
+                "sha256": sha256,
+                "size_bytes": stat.st_size,
+                "timestamps": {
+                    "created": datetime.fromtimestamp(stat.st_ctime, timezone.utc).isoformat(),
+                    "modified": datetime.fromtimestamp(stat.st_mtime, timezone.utc).isoformat(),
+                },
+                "outgoing_references": references,
+            }
+        )
 
     # 2. Tri chronologique par date de création / modification
     nodes.sort(key=lambda x: x["timestamps"]["modified"])
 
-    graph_data = {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
-        "total_nodes": len(nodes),
-        "chronological_lineage": nodes
-    }
+    graph_data = {"generated_at": datetime.now(timezone.utc).isoformat(), "total_nodes": len(nodes), "chronological_lineage": nodes}
 
     OUTPUT_REPORT.parent.mkdir(parents=True, exist_ok=True)
     with open(OUTPUT_REPORT, "w", encoding="utf-8") as f:
@@ -97,11 +97,12 @@ def build_genesis_graph():
     print("-" * 65)
     print(" LIGNÉE CHRONOLOGIQUE DES ARTEFACTS (Ordre de Forge) :")
     for idx, node in enumerate(nodes, 1):
-        mtime = node['timestamps']['modified'][:19].replace('T', ' ')
-        refs_count = len(node['outgoing_references'])
+        mtime = node["timestamps"]["modified"][:19].replace("T", " ")
+        refs_count = len(node["outgoing_references"])
         print(f"  {idx:02d}. [{mtime}] {node['relative_path']:<42} (Refs: {refs_count})")
     print("=" * 65)
     print(f" Rapport exporté : {OUTPUT_REPORT}")
+
 
 if __name__ == "__main__":
     build_genesis_graph()

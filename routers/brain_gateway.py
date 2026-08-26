@@ -9,16 +9,19 @@ from core.pc_model_router import (
 
 router = APIRouter(tags=["brain-gateway"])
 
+
 class GatewayRouteRequest(BaseModel):
     text: str = ""
     task: str = "auto"
     speed: str = "auto"
+
 
 class GatewayChatRequest(BaseModel):
     text: str
     task: str = "auto"
     speed: str = "auto"
     predict: int = 260
+
 
 @router.get("/api/brain/status")
 async def api_brain_status():
@@ -34,9 +37,11 @@ async def api_brain_status():
     }
     return data
 
+
 @router.post("/api/brain/route")
 async def api_brain_route(req: GatewayRouteRequest):
     return select_model(task=req.task, text=req.text, speed=req.speed)
+
 
 @router.post("/api/brain/chat")
 async def api_brain_chat(req: GatewayChatRequest):
@@ -49,6 +54,7 @@ async def api_brain_chat(req: GatewayChatRequest):
     data["gateway"] = "/api/brain/chat"
     return data
 
+
 @router.post("/api/chat/pc")
 async def api_chat_pc(req: GatewayChatRequest):
     data = chat_with_route(
@@ -59,6 +65,7 @@ async def api_chat_pc(req: GatewayChatRequest):
     )
     data["gateway"] = "/api/chat/pc"
     return data
+
 
 @router.post("/api/chat/router")
 async def api_chat_router(req: GatewayChatRequest):

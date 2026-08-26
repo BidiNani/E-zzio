@@ -3,12 +3,12 @@ E-ZZIO Core — Explainability & Decision Audit Trail Engine (V8.5)
 Interroge les ledgers de gouvernance et les journaux d'exécution pour fournir
 une explication détaillée et contextualisée de chaque décision prise par l'organisme.
 """
-import os
+
 import sys
 import json
 import logging
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -16,9 +16,12 @@ if str(ROOT_DIR) not in sys.path:
 
 logger = logging.getLogger(__name__)
 
+
 class ExplainabilityError(Exception):
     """Levée si l'action ou la transaction demandée est introuvable dans les ledgers."""
+
     pass
+
 
 class ExplainabilityEngine:
     def __init__(self, root_dir: Path = ROOT_DIR):
@@ -52,10 +55,10 @@ class ExplainabilityEngine:
                 "action": action_name,
                 "status": "EXPLAINED_FROM_POLICY",
                 "rationale": [
-                    f"Action gouvernée par les invariants de l'organisme E-zzio.",
+                    "Action gouvernée par les invariants de l'organisme E-zzio.",
                     "Soumise aux contraintes de la passerelle universelle ECOL (No-Bypass).",
-                    "Vérifiée par le Hardware Governor (Coexistence Gaming H24)."
-                ]
+                    "Vérifiée par le Hardware Governor (Coexistence Gaming H24).",
+                ],
             }
 
         # Reconstruction de la piste d'audit explicative
@@ -67,7 +70,7 @@ class ExplainabilityEngine:
             f"Composant source initiateur : {source}",
             f"Statut d'exécution effectif : {status}",
             f"Empreinte de transaction ECOL (TX) : {tx_id}",
-            "Conformité validée par la politique de sécurité active et les quotas alloués."
+            "Conformité validée par la politique de sécurité active et les quotas alloués.",
         ]
 
         return {
@@ -76,8 +79,9 @@ class ExplainabilityEngine:
             "transaction_id": tx_id,
             "source_component": source,
             "timestamp": latest_record.get("timestamp"),
-            "rationale": rationale
+            "rationale": rationale,
         }
+
 
 def test_explainability():
     print("[*] Test de l'Explainability & Decision Audit Trail Engine (V8.5)...")
@@ -85,16 +89,17 @@ def test_explainability():
 
     print("\n--- Test 1 : Demande d'explication sur l'action de routage LLM ---")
     explanation = engine.explain_action("LLM_INFERENCE_ROUTE")
-    
+
     print(f"  [PASS] Action analysée : {explanation['action']}")
     print(f"         Statut : {explanation['status']}")
     print("         Justifications contextuelles (Rationale) :")
     for reason in explanation["rationale"]:
         print(f"           - {reason}")
 
-    print("\n" + "="*65)
+    print("\n" + "=" * 65)
     print(" EXPLAINABILITY ENGINE (V8.5) : OPERATIONAL & TRANSPARENT")
-    print("="*65)
+    print("=" * 65)
+
 
 if __name__ == "__main__":
     test_explainability()

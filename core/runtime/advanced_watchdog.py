@@ -13,20 +13,11 @@ STATE_DIR = ROOT_PATH / "runtime" / "state" / "backend"
 PID_FILE = STATE_DIR / "pid.json"
 HEALTH_FILE = STATE_DIR / "health.json"
 
+
 def diagnose_runtime_state() -> dict:
-    checks = {
-        "pid": False,
-        "cmdline": False,
-        "tcp": False,
-        "http": False,
-        "semantic": False
-    }
-    
-    diagnosis = {
-        "status": "UNKNOWN",
-        "reason": "NONE",
-        "checks": checks
-    }
+    checks = {"pid": False, "cmdline": False, "tcp": False, "http": False, "semantic": False}
+
+    diagnosis = {"status": "UNKNOWN", "reason": "NONE", "checks": checks}
 
     if not PID_FILE.exists():
         diagnosis["status"] = "DEAD"
@@ -66,9 +57,7 @@ def diagnose_runtime_state() -> dict:
         return diagnosis
 
     port_active = any(
-        conn.laddr.port == 8001 and conn.status == psutil.CONN_LISTEN
-        for conn in psutil.net_connections(kind='inet')
-        if conn.pid == pid
+        conn.laddr.port == 8001 and conn.status == psutil.CONN_LISTEN for conn in psutil.net_connections(kind="inet") if conn.pid == pid
     )
     if port_active:
         checks["tcp"] = True
@@ -94,6 +83,7 @@ def diagnose_runtime_state() -> dict:
 
     return diagnosis
 
+
 def update_health_manifest(diagnosis: dict):
     STATE_DIR.mkdir(parents=True, exist_ok=True)
     heartbeat = {
@@ -102,9 +92,10 @@ def update_health_manifest(diagnosis: dict):
         "status": diagnosis["status"],
         "reason": diagnosis["reason"],
         "checks": diagnosis["checks"],
-        "last_heartbeat": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        "last_heartbeat": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
     HEALTH_FILE.write_text(json.dumps(heartbeat, indent=2), encoding="utf-8")
+
 
 if __name__ == "__main__":
     diag = diagnose_runtime_state()

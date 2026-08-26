@@ -1,6 +1,7 @@
 from typing import List, Dict, Any
 from .schemas import ModelRequest
 
+
 class ModelSelector:
     def __init__(self, catalog: Dict[str, Any]):
         self.catalog = catalog

@@ -1,0 +1,17 @@
+{
+  "evidence_id": "EVID-20260823-FEA3E6CB",
+  "task_id": "TASK-ROUTE-EEE1BF2A",
+  "timestamp_utc": "2026-08-23T13:30:43.879989+00:00",
+  "provider": "agent_antigravity",
+  "model_name": "antigravity_agent",
+  "agent_version": "ezzio-federated-v1.0",
+  "capability": "agentic_refactor",
+  "policy_status": "APPROVED",
+  "input_context_hash": "bcdfe72be79ad71283e85b6ba386db3f5a8d7f9ced84142a02c1c57ecd06b3f5",
+  "output_payload_hash": "80244aec6d6b53733bdbb2627cc34afbc3424bf0a1a7b56d3b1fbe677bf06a91",
+  "execution_duration_ms": 1.5,
+  "verification_status": "VERIFIED_VALID",
+  "raw_payload_snippet": "{\"cost_adjusted\": 1500, \"gaming_coexistence_active\": true, \"provider_domain\": \"agent_antigravity\", \"routed_model\": \"antigravity_agent\", \"status\": \"OPTIMIZED_FEDERATED_ROUTE_DISPATCHED\", \"task_type\": \"",
+  "ledger_decision_id": null,
+  "envelope_signature_hmac": "037d43ba2edf503a9562d99709eb5959ad02191b3e5b7de9f712d117e4d8bcd7"
+}

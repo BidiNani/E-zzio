@@ -3,9 +3,11 @@ E-ZZIO Core — ECOL Pipeline
 Module: capability_selector.py
 Description: Détermine si la tâche requiert un LLM, un script local ou une API cloud.
 """
+
 import logging
 
 logger = logging.getLogger(__name__)
+
 
 class CapabilitySelector:
     def __init__(self):

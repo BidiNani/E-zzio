@@ -7,10 +7,11 @@ if str(ROOT_DIR) not in sys.path:
 
 from runtime.confidence.engine import ConfidenceEngine
 
+
 def run_test():
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print(" 🏛️ E-ZZIO V9.5.1 — CONFIDENCE ENGINE CERTIFICATION")
-    print("="*60)
+    print("=" * 60)
 
     engine = ConfidenceEngine()
 
@@ -27,9 +28,10 @@ def run_test():
 
     print("-" * 60)
     print(" 🟢 STATUS : GOVERNED DECISION ENGINE ACTIVE")
-    print("="*60 + "\n")
+    print("=" * 60 + "\n")
 
-    assert res_invar['decision'] == "DENIED"
+    assert res_invar["decision"] == "DENIED"
+
 
 if __name__ == "__main__":
     run_test()

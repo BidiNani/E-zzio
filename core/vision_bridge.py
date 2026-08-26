@@ -30,6 +30,7 @@ for key, value in CPU_ONLY_ENV.items():
 VISION_INBOX.mkdir(parents=True, exist_ok=True)
 VISION_OUT.mkdir(parents=True, exist_ok=True)
 
+
 def _safe_vision_path(path_text: str) -> Path:
     p = Path(path_text).resolve()
 
@@ -48,6 +49,7 @@ def _safe_vision_path(path_text: str) -> Path:
 
     return p
 
+
 def _image_info(path: Path):
     try:
         with Image.open(path) as img:
@@ -60,12 +62,14 @@ def _image_info(path: Path):
     except Exception as exc:
         return {"error": str(exc)}
 
+
 def save_upload_bytes(filename: str, content: bytes) -> Path:
     safe_name = Path(filename).name
     stamp = time.strftime("%Y%m%d_%H%M%S")
     out = VISION_INBOX / f"{stamp}_{safe_name}"
     out.write_bytes(content)
     return out
+
 
 def build_vision_prompt(user_prompt: str, mode: str):
     user_prompt = (user_prompt or "").strip()
@@ -95,13 +99,14 @@ Format obligatoire :
         "debug": "Mode : debug technique Windows/E-ZZIO.",
         "ui": "Mode : analyse interface/UI.",
         "creative": "Mode : analyse visuelle créative CPU-friendly.",
-        "auto": "Mode : auto."
+        "auto": "Mode : auto.",
     }.get(mode, "Mode : auto.")
 
     if user_prompt:
         return f"{base}\n\n{mode_note}\n\nDemande : {user_prompt}"
 
     return f"{base}\n\n{mode_note}\n\nDemande : Analyse l'image."
+
 
 def clean_prompt_leak(text: str):
     text = str(text or "").strip()
@@ -123,6 +128,7 @@ def clean_prompt_leak(text: str):
     text = re.sub(r"\n{3,}", "\n\n", text).strip()
     return text
 
+
 def quality_warnings(text: str):
     lowered = str(text or "").lower()
     warnings = []
@@ -141,6 +147,7 @@ def quality_warnings(text: str):
             warnings.append(f"Conseil générique/non-Windows détecté : {item}")
 
     return warnings
+
 
 def analyze_image_file(path_text: str, prompt: str = "", mode: str = "auto"):
     path = _safe_vision_path(path_text)
@@ -210,6 +217,7 @@ def analyze_image_file(path_text: str, prompt: str = "", mode: str = "auto"):
 
     return result
 
+
 def route_vision_result(text: str):
     lowered = str(text).lower()
 
@@ -239,6 +247,7 @@ def route_vision_result(text: str):
         "reason": "analyse visuelle générale",
         "next_action": "répondre ou demander précision",
     }
+
 
 def status():
     return {

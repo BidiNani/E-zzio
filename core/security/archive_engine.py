@@ -1,8 +1,9 @@
 """
 E-ZZIO V7.28.5.1 — Ledger Archive Engine (With Cryptographic Anchor)
-Gère la rotation et injecte une transaction d'ancrage (ARCHIVE_ANCHOR) 
+Gère la rotation et injecte une transaction d'ancrage (ARCHIVE_ANCHOR)
 pour lier mathématiquement le nouveau ledger actif aux archives scellées.
 """
+
 import os
 import json
 import hashlib
@@ -18,6 +19,7 @@ STATE_PATH = ROOT_DIR / "runtime" / "state" / "ledger_chain_state.json"
 ENV_PATH = ROOT_DIR / "secrets" / ".env"
 
 load_dotenv(dotenv_path=ENV_PATH, override=True)
+
 
 class LedgerArchiveEngine:
     def __init__(self, rotation_threshold: int = 5000):
@@ -47,7 +49,7 @@ class LedgerArchiveEngine:
                 return False
 
             ARCHIVE_DIR.mkdir(parents=True, exist_ok=True)
-            
+
             existing_archives = list(ARCHIVE_DIR.glob("ledger_*.jsonl"))
             archive_index = len(existing_archives) + 1
             archive_name_base = f"ledger_{archive_index:06d}"
@@ -60,14 +62,14 @@ class LedgerArchiveEngine:
 
             first_record = json.loads(lines[0])
             last_record = json.loads(lines[-1])
-            
+
             hasher = hashlib.sha256()
             for line in lines:
                 hasher.update(line.encode("utf-8"))
             content_sha256 = hasher.hexdigest()
 
             prev_root = self._get_last_archive_root_hash()
-            
+
             root_payload = f"{content_sha256}:{prev_root}:{first_record['sequence']}:{last_record['sequence']}".encode("utf-8")
             archive_root_hash = hashlib.sha256(root_payload).hexdigest()
 
@@ -79,7 +81,7 @@ class LedgerArchiveEngine:
                 "content_hash": content_sha256,
                 "previous_archive_root_hash": prev_root,
                 "archive_root_hash": archive_root_hash,
-                "archived_at": datetime.now(timezone.utc).isoformat()
+                "archived_at": datetime.now(timezone.utc).isoformat(),
             }
             meta_file_path.write_text(json.dumps(metadata, indent=2, ensure_ascii=False), encoding="utf-8")
 
@@ -96,11 +98,8 @@ class LedgerArchiveEngine:
                 "candidates": [],
                 "selected": "system-kernel",
                 "transaction_state": "ARCHIVED_AND_ANCHORED",
-                "execution_details": {
-                    "archived_file": archive_file_path.name,
-                    "archive_root_hash": archive_root_hash
-                },
-                "previous_hash": last_hash
+                "execution_details": {"archived_file": archive_file_path.name, "archive_root_hash": archive_root_hash},
+                "previous_hash": last_hash,
             }
 
             # Calcul SHA-256 et HMAC de l'ancre
@@ -122,7 +121,9 @@ class LedgerArchiveEngine:
             # Mise à jour de l'ancre d'état globale
             self._update_anchor_state(anchor_seq, anchor_hash, archive_root_hash)
 
-            print(f"[Archive Engine] ROTATION ET ANCRAGE RÉUSSIS : {len(lines)} txs archivées. Nouvelle séquence initialisée à {anchor_seq}.")
+            print(
+                f"[Archive Engine] ROTATION ET ANCRAGE RÉUSSIS : {len(lines)} txs archivées. Nouvelle séquence initialisée à {anchor_seq}."
+            )
             return True
 
         except Exception as e:
@@ -135,8 +136,9 @@ class LedgerArchiveEngine:
             "last_sequence": seq,
             "last_hash": last_hash,
             "last_archive_root_hash": root_hash,
-            "updated_at": datetime.now(timezone.utc).isoformat()
+            "updated_at": datetime.now(timezone.utc).isoformat(),
         }
         STATE_PATH.write_text(json.dumps(state, indent=2), encoding="utf-8")
+
 
 ledger_archiver = LedgerArchiveEngine(rotation_threshold=5000)

@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 from typing import Dict, Any
 
+
 class CapabilityExpiryManager:
     @staticmethod
     def check_expiry(token_meta: Dict[str, Any]) -> bool:

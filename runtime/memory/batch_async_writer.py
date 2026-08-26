@@ -6,28 +6,30 @@ import threading
 import time
 from pathlib import Path
 
+
 class BatchAsyncAtomicEventWriter:
     """
     Writer asynchrone à commit par lots (Hybride Taille/Temps)
     Optimisé pour Ryzen 9 5900X et supports NVMe.
     """
+
     def __init__(self, store_path: str, max_batch_size: int = 500, max_batch_delay: float = 0.05):
         self.path = Path(store_path)
         self.pending_path = self.path.with_suffix(".pending")
         self.bak_path = self.path.with_suffix(".bak")
         self.commit_log_path = self.path.parent / "events.commit.log"
-        
+
         self.max_batch_size = max_batch_size
         self.max_batch_delay = max_batch_delay
-        
+
         self.queue = queue.Queue()
         self._stop_event = threading.Event()
         self.accepting = True
         self.closed = False
-        
+
         # Auto-récupération initiale
         self._recover_interrupted_swap()
-        
+
         # Démarrage du thread Commit Worker dédié au batching
         self.worker_thread = threading.Thread(target=self._commit_loop, daemon=True)
         self.worker_thread.start()
@@ -68,7 +70,7 @@ class BatchAsyncAtomicEventWriter:
         while not self._stop_event.is_set() or not self.queue.empty():
             batch = []
             start_time = time.time()
-            
+
             # Collecte par taille ou fenêtre temporelle
             while len(batch) < self.max_batch_size:
                 timeout = self.max_batch_delay - (time.time() - start_time)
@@ -80,14 +82,14 @@ class BatchAsyncAtomicEventWriter:
                     self.queue.task_done()
                 except queue.Empty:
                     break
-            
+
             if not batch:
                 continue
 
             try:
                 # Sérialisation groupée du lot en lignes JSON
                 batch_lines = [json.dumps(ev, ensure_ascii=False) + "\n" for ev in batch]
-                
+
                 self._log_state("PREPARED")
 
                 # 1. Initialisation du pending avec le store existant

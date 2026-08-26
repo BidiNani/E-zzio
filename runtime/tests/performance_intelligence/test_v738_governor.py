@@ -2,6 +2,7 @@
 E-ZZIO V7.38 — Certification Test Suite (Adaptive Resource Governor)
 Valide l'adaptation dynamique d'E-ZZIO à son environnement matériel.
 """
+
 import sys
 from pathlib import Path
 
@@ -10,6 +11,7 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from core.performance_intelligence.resource_governor import resource_governor
+
 
 def run_governor_certification():
     print("============================================================")
@@ -32,7 +34,7 @@ def run_governor_certification():
     # [3/4] Memory Budget Enforcement
     safe_alloc = resource_governor.enforce_memory_budget(requested_mb=100.0)
     assert safe_alloc is True, "Le gouverneur a bloqué une allocation mineure sécurisée !"
-    
+
     massive_alloc = resource_governor.enforce_memory_budget(requested_mb=999999.0)
     assert massive_alloc is False, "Le gouverneur a autorisé le dépassement de la RAM physique !"
     print("\n [3/4] Memory Budget Enforcement : OK")
@@ -46,6 +48,7 @@ def run_governor_certification():
     print("\n============================================================")
     print(" V7.38 CERTIFIÉ : ADAPTIVE RESOURCE GOVERNOR ACTIF")
     print("============================================================\n")
+
 
 if __name__ == "__main__":
     run_governor_certification()

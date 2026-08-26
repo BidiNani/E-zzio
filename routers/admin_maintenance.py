@@ -9,16 +9,20 @@ from core.project_janitor import (
 
 router = APIRouter(prefix="/maintenance", tags=["maintenance"])
 
+
 class DustCleanRequest(BaseModel):
     apply: bool = False
+
 
 @router.get("/status")
 async def get_maintenance_status():
     return maintenance_status()
 
+
 @router.get("/audit")
 async def get_maintenance_audit():
     return audit_project()
+
 
 @router.post("/dust")
 async def post_maintenance_dust(req: DustCleanRequest):

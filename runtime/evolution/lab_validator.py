@@ -3,12 +3,13 @@ E-ZZIO V9.1.4 — Evolution Lab (Sandbox Validator)
 Simule l'exécution d'une proposition d'évolution dans une sandbox isolée,
 vérifie le respect des invariants ECOL/Constitution, et émet un verdict.
 """
+
 import json
-from pathlib import Path
 from datetime import datetime, timezone
 from runtime.evolution.proposal_engine import ProposalEngine
 
 PROTECTED_DOMAINS = ["constitution", "ecol", "identity", "recovery", "core"]
+
 
 class LabValidator:
     def __init__(self):
@@ -25,7 +26,7 @@ class LabValidator:
                     "proposal_id": proposal_id,
                     "sandbox_timestamp": datetime.now(timezone.utc).isoformat(),
                     "verdict": "DENIED_INVARIANT",
-                    "reason": f"Violation critique : la cible touche le domaine protégé '{domain}'."
+                    "reason": f"Violation critique : la cible touche le domaine protégé '{domain}'.",
                 }
 
         # 2. Simulation de sandbox (Benchmark avant/après simulé)
@@ -34,12 +35,8 @@ class LabValidator:
             "proposal_id": proposal_id,
             "sandbox_timestamp": datetime.now(timezone.utc).isoformat(),
             "verdict": "SANDBOX_PASSED",
-            "simulation_metrics": {
-                "latency_delta_ms": -12.5,
-                "memory_overhead_mb": 142.0,
-                "rollback_verified": True
-            },
-            "reason": "La sandbox confirme la conformité, l'absence d'impact critique et la validité du plan de rollback."
+            "simulation_metrics": {"latency_delta_ms": -12.5, "memory_overhead_mb": 142.0, "rollback_verified": True},
+            "reason": "La sandbox confirme la conformité, l'absence d'impact critique et la validité du plan de rollback.",
         }
         return simulation_result
 
@@ -56,8 +53,9 @@ class LabValidator:
             "timestamp_utc": datetime.now(timezone.utc).isoformat(),
             "total_validated": len(results),
             "results": results,
-            "status": "VALIDATION_COMPLETE"
+            "status": "VALIDATION_COMPLETE",
         }
+
 
 if __name__ == "__main__":
     validator = LabValidator()

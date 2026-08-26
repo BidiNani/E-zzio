@@ -2,10 +2,11 @@
 E-ZZIO V9 — Sensory Bus
 Achemine les Percepts des capteurs vers le moteur de fusion (sans prise de décision).
 """
-import json
+
 from queue import Queue
 from typing import List
 from .percept import Percept
+
 
 class SensoryBus:
     def __init__(self):
@@ -16,7 +17,7 @@ class SensoryBus:
         if not self._stream.full():
             self._stream.put(percept)
             self._history.append(percept)
-            
+
             # Rotation de l'historique léger (mémoire à court terme du bus)
             if len(self._history) > 50:
                 self._history.pop(0)

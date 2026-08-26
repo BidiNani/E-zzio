@@ -5,9 +5,11 @@ from core.vision_bridge import status, analyze_image_file, save_upload_bytes
 
 router = APIRouter(prefix="/vision", tags=["vision"])
 
+
 @router.get("/status")
 async def vision_status():
     return status()
+
 
 @router.post("/analyze-path")
 async def analyze_path(req: VisionPathRequest):
@@ -19,6 +21,7 @@ async def analyze_path(req: VisionPathRequest):
         raise HTTPException(status_code=404, detail=str(exc))
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc))
+
 
 @router.post("/analyze")
 async def analyze_upload(

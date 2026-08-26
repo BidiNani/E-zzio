@@ -2,7 +2,7 @@
 E-ZZIO V7.32 — Promotion Controller
 Gère la promotion sécurisée des candidats et le rollback vers les snapshots V7.31.
 """
-import json
+
 import hashlib
 from pathlib import Path
 from core.identity.identity_snapshot import identity_snapshot_engine
@@ -12,6 +12,7 @@ from core.authority.evolution_ledger import evolution_ledger
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 CANDIDATES_DIR = ROOT_DIR / "runtime" / "evolution" / "candidates"
 PROMOTED_DIR = ROOT_DIR / "runtime" / "evolution" / "promoted"
+
 
 class PromotionController:
     def __init__(self):
@@ -33,9 +34,7 @@ class PromotionController:
         promoted_path.write_text(content, encoding="utf-8")
 
         block = evolution_ledger.append_block(
-            change_target=candidate_name,
-            validation_status=validation_status,
-            artifact_hash=artifact_hash
+            change_target=candidate_name, validation_status=validation_status, artifact_hash=artifact_hash
         )
 
         post_snapshot = identity_snapshot_engine.create_snapshot()
@@ -46,10 +45,11 @@ class PromotionController:
             "artifact_hash": artifact_hash,
             "ledger_block": block["block_index"],
             "pre_snapshot": pre_snapshot["snapshot_index"],
-            "post_snapshot": post_snapshot["snapshot_index"]
+            "post_snapshot": post_snapshot["snapshot_index"],
         }
 
     def rollback_to_last_snapshot(self) -> dict:
         return identity_recovery_engine.recover_identity_from_latest_snapshot()
+
 
 promotion_controller = PromotionController()

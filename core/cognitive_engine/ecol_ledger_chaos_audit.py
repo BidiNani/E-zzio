@@ -1,9 +1,9 @@
 """
 E-ZZIO V7.61.10 — Forensic Ledger Certification & Chaos Integrity Drill (Fixed)
-Garantit que le test de rupture de chaîne (Chain Break) injecte bien un second bloc 
+Garantit que le test de rupture de chaîne (Chain Break) injecte bien un second bloc
 avant de corrompre le lien.
 """
-import os
+
 import sys
 import json
 import shutil
@@ -18,9 +18,10 @@ from core.cognition.cognitive_governor import CognitiveGovernor, LedgerSecurityE
 LEDGER_PATH = ROOT_DIR / "runtime" / "cognition" / "budget" / "cognitive_budget_ledger.jsonl"
 SANDBOX_DIR = ROOT_DIR / "runtime" / "cognition" / "budget" / "sandbox_drill"
 
+
 def run_chaos_drill():
     print("[*] Lancement du Forensic Ledger Certification & Chaos Integrity Drill (V7.61.10)...")
-    
+
     if not LEDGER_PATH.exists():
         print("[!] Erreur : Le Ledger réel est introuvable. Exécutez d'abord la création du Genesis.")
         return
@@ -31,7 +32,7 @@ def run_chaos_drill():
 
     SANDBOX_DIR.mkdir(parents=True, exist_ok=True)
     sandbox_ledger = SANDBOX_DIR / "test_ledger.jsonl"
-    
+
     results = []
 
     # -------------------------------------------------------------
@@ -55,7 +56,7 @@ def run_chaos_drill():
     try:
         shutil.copy2(LEDGER_PATH, sandbox_ledger)
         gov.ledger_path = sandbox_ledger
-        
+
         lines = sandbox_ledger.read_text(encoding="utf-8").splitlines()
         if lines:
             data = json.loads(lines[0])
@@ -80,7 +81,7 @@ def run_chaos_drill():
     try:
         shutil.copy2(LEDGER_PATH, sandbox_ledger)
         gov.ledger_path = sandbox_ledger
-        
+
         lines = sandbox_ledger.read_text(encoding="utf-8").splitlines()
         if len(lines) >= 2:
             data = json.loads(lines[1])
@@ -105,7 +106,7 @@ def run_chaos_drill():
     try:
         shutil.copy2(LEDGER_PATH, sandbox_ledger)
         gov.ledger_path = sandbox_ledger
-        
+
         with open(sandbox_ledger, "a", encoding="utf-8") as f:
             f.write("{broken_json_line\n")
 
@@ -131,6 +132,7 @@ def run_chaos_drill():
         status_icon = "[✓]" if res["status"] == "PASS" else "[X]"
         print(f"  {status_icon} {res['test']} : {res['status']}")
     print("=" * 65)
+
 
 if __name__ == "__main__":
     run_chaos_drill()

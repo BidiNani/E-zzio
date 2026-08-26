@@ -2,24 +2,22 @@ import time
 import threading
 from typing import Dict, Any
 
+
 class SemanticBackpressureController:
     """
     Contrôleur de backpressure V6.0.
     Raccorde le Governor Cognitif V5.6 aux pipelines sémantiques.
     """
+
     def __init__(self, governor_ref, check_interval: float = 0.05):
         self.governor = governor_ref
         self.check_interval = check_interval
-        
-        self.context_window_map = {
-            "NOMINAL": 16384,
-            "MODERATE": 8192,
-            "CRITICAL": 2048
-        }
-        
+
+        self.context_window_map = {"NOMINAL": 16384, "MODERATE": 8192, "CRITICAL": 2048}
+
         self._lock = threading.Lock()
         self.current_state: Dict[str, Any] = {}
-        
+
         self._stop_event = threading.Event()
         self.monitor_thread = threading.Thread(target=self._controller_loop, daemon=True)
         self.update_backpressure_state()
@@ -44,8 +42,8 @@ class SemanticBackpressureController:
             oom_index = gov_tick.get("oom_index", 0.0)
 
             allocated_n_ctx = self.context_window_map.get(tier, 2048)
-            allow_background_agents = (tier == "NOMINAL")
-            ingestion_paused = (tier == "CRITICAL")
+            allow_background_agents = tier == "NOMINAL"
+            ingestion_paused = tier == "CRITICAL"
 
             self.current_state = {
                 "timestamp": time.time(),
@@ -56,7 +54,7 @@ class SemanticBackpressureController:
                 "allow_background_agents": allow_background_agents,
                 "ingestion_paused": ingestion_paused,
                 "max_batch_size": gov_tick.get("max_batch_size", 2000),
-                "reason": gov_tick.get("reason", "NOMINAL")
+                "reason": gov_tick.get("reason", "NOMINAL"),
             }
             return self.current_state
 

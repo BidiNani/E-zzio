@@ -1,1 +1,0 @@
-{"timestamp": "2026-08-11T23:29:47.714572+00:00", "event": "HEALTH_CHECK", "data": {"status": "ONLINE", "vault": "OK", "permission_guard": "OK", "circuit_breaker": "OPEN", "audit_integrity": false}, "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000", "hash": "2fbdfafeb5bba16c9da0684353cfb68d91208d59daa8555a1d5f8922d75fd66d"}

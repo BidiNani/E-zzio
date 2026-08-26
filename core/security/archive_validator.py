@@ -1,14 +1,16 @@
 """
 E-ZZIO V7.28.6 — Archive Lineage Validator
-Audite rétroactivement l'intégrité de la chaîne d'archives pour détecter 
+Audite rétroactivement l'intégrité de la chaîne d'archives pour détecter
 la moindre altération historique (tampering) dans les blocs scellés.
 """
+
 import json
 import hashlib
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 ARCHIVE_DIR = ROOT_DIR / "runtime" / "decisions" / "archive"
+
 
 class ArchiveLineageValidator:
     @staticmethod
@@ -39,7 +41,7 @@ class ArchiveLineageValidator:
                 return {
                     "valid": False,
                     "compromised_archive": meta_path.name,
-                    "error": f"RUPTURE DE LIGNÉE INTER-ARCHIVES : Le previous_root ne correspond pas dans {meta_path.name}"
+                    "error": f"RUPTURE DE LIGNÉE INTER-ARCHIVES : Le previous_root ne correspond pas dans {meta_path.name}",
                 }
 
             # 2. Recalcul strict du content_hash (SHA-256 de toutes les lignes)
@@ -52,24 +54,27 @@ class ArchiveLineageValidator:
                 return {
                     "valid": False,
                     "compromised_archive": meta_path.name,
-                    "error": f"ALTÉRATION HISTORIQUE DÉTECTÉE : Le content_hash de l'archive {meta_path.name} a été modifié (falsification rétroactive)."
+                    "error": f"ALTÉRATION HISTORIQUE DÉTECTÉE : Le content_hash de l'archive {meta_path.name} a été modifié (falsification rétroactive).",
                 }
 
             # 3. Recalcul et vérification de l'archive_root_hash
             first_rec = json.loads(lines[0])
             last_rec = json.loads(lines[-1])
-            root_payload = f"{recalculated_content_hash}:{expected_prev_root}:{first_rec['sequence']}:{last_rec['sequence']}".encode("utf-8")
+            root_payload = f"{recalculated_content_hash}:{expected_prev_root}:{first_rec['sequence']}:{last_rec['sequence']}".encode(
+                "utf-8"
+            )
             recalculated_root_hash = hashlib.sha256(root_payload).hexdigest()
 
             if recalculated_root_hash != meta.get("archive_root_hash"):
                 return {
                     "valid": False,
                     "compromised_archive": meta_path.name,
-                    "error": f"ROOT HASH CORROMPU : L'archive_root_hash de {meta_path.name} ne correspond pas aux données."
+                    "error": f"ROOT HASH CORROMPU : L'archive_root_hash de {meta_path.name} ne correspond pas aux données.",
                 }
 
             expected_prev_root = recalculated_root_hash
 
         return {"valid": True, "archives_verified": len(metas), "error": None}
+
 
 archive_validator = ArchiveLineageValidator()

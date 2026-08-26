@@ -6,6 +6,7 @@ from runtime.telemetry.metrics import ExecutionMetric
 from runtime.telemetry.events import TelemetryEvent
 from runtime.telemetry.storage import TelemetryStorage
 
+
 class TelemetryCollector:
     """Collecteur Asynchrone v2.6.9 : Métriques I/O temps réel, Peak Queue et Health Endpoint."""
 
@@ -14,18 +15,18 @@ class TelemetryCollector:
         self.storage = storage
         self.batch_size = batch_size
         self.flush_interval = flush_interval
-        
+
         # Compteurs atomiques
         self.dropped_metrics = 0
         self.dropped_events = 0
         self.flush_count = 0
-        
+
         # Métriques temps réel (Respiration du moteur)
         self.queue_peak_size = 0
         self.last_flush_timestamp = 0.0
         self.last_flush_duration_ms = 0.0
         self.total_flush_duration_ms = 0.0
-        
+
         self._stats_lock = threading.Lock()
         self._queue = queue.Queue(maxsize=10000)
         self._writer_thread = None
@@ -63,7 +64,7 @@ class TelemetryCollector:
 
     def record_execution(self, metric: ExecutionMetric) -> None:
         try:
-            self._queue.put_nowait(('metric', metric))
+            self._queue.put_nowait(("metric", metric))
             self._update_peak()
         except queue.Full:
             with self._stats_lock:
@@ -71,7 +72,7 @@ class TelemetryCollector:
 
     def record_event(self, event: TelemetryEvent) -> None:
         try:
-            self._queue.put_nowait(('event', event))
+            self._queue.put_nowait(("event", event))
             self._update_peak()
         except queue.Full:
             with self._stats_lock:
@@ -83,10 +84,14 @@ class TelemetryCollector:
         while not self._queue.empty():
             try:
                 item = self._queue.get_nowait()
-                if item is None: continue
-                if item[0] == 'metric': batch_metrics.append(item[1])
-                elif item[0] == 'event': batch_events.append(item[1])
-            except queue.Empty: break
+                if item is None:
+                    continue
+                if item[0] == "metric":
+                    batch_metrics.append(item[1])
+                elif item[0] == "event":
+                    batch_events.append(item[1])
+            except queue.Empty:
+                break
         self._flush_batches(batch_metrics, batch_events)
 
     def _worker(self):
@@ -97,9 +102,12 @@ class TelemetryCollector:
 
         while True:
             q_size = self._queue.qsize()
-            if q_size > 5000: target_batch = 1000
-            elif q_size > 1000: target_batch = 500
-            else: target_batch = self.batch_size
+            if q_size > 5000:
+                target_batch = 1000
+            elif q_size > 1000:
+                target_batch = 500
+            else:
+                target_batch = self.batch_size
 
             try:
                 item = self._queue.get(timeout=0.1)
@@ -109,16 +117,23 @@ class TelemetryCollector:
                     while not self._queue.empty():
                         try:
                             sub_item = self._queue.get_nowait()
-                            if sub_item is None: continue
-                            if sub_item[0] == 'metric': batch_metrics.append(sub_item[1])
-                            elif sub_item[0] == 'event': batch_events.append(sub_item[1])
-                        except queue.Empty: break
+                            if sub_item is None:
+                                continue
+                            if sub_item[0] == "metric":
+                                batch_metrics.append(sub_item[1])
+                            elif sub_item[0] == "event":
+                                batch_events.append(sub_item[1])
+                        except queue.Empty:
+                            break
                     self._flush_batches(batch_metrics, batch_events)
                     break
 
-                if item[0] == 'metric': batch_metrics.append(item[1])
-                elif item[0] == 'event': batch_events.append(item[1])
-            except queue.Empty: pass
+                if item[0] == "metric":
+                    batch_metrics.append(item[1])
+                elif item[0] == "event":
+                    batch_events.append(item[1])
+            except queue.Empty:
+                pass
 
             now = time.time()
             if len(batch_metrics) >= target_batch or len(batch_events) >= target_batch or (now - last_flush) > self.flush_interval:
@@ -134,8 +149,9 @@ class TelemetryCollector:
         self._flush_batches(batch_metrics, batch_events)
 
     def _flush_batches(self, metrics: List, events: List):
-        if not metrics and not events: return
-        
+        if not metrics and not events:
+            return
+
         start_time = time.time()
         if self.storage:
             if metrics:
@@ -155,7 +171,7 @@ class TelemetryCollector:
     def get_health_endpoint(self) -> Dict[str, Any]:
         """Génère l'état de santé opérationnel du sous-système de télémétrie en temps réel."""
         worker_alive = self._writer_thread.is_alive() if self._writer_thread else False
-        
+
         with self._stats_lock:
             avg_flush = round(self.total_flush_duration_ms / self.flush_count, 2) if self.flush_count > 0 else 0.0
             return {
@@ -168,7 +184,7 @@ class TelemetryCollector:
                 "avg_flush_duration_ms": avg_flush,
                 "flush_count": self.flush_count,
                 "dropped_metrics": self.dropped_metrics,
-                "dropped_events": self.dropped_events
+                "dropped_events": self.dropped_events,
             }
 
     def get_summary(self) -> Dict[str, Any]:

@@ -3,7 +3,7 @@ E-ZZIO Core — Constitution & Global Certification Framework (V7.70.2)
 Établit la Constitution indérogeable d'E-zzio, l'Identity/Continuity Core,
 et génère dynamiquement le certificat global de l'organisme (10/10 Matrix).
 """
-import os
+
 import sys
 import json
 import hmac
@@ -19,19 +19,22 @@ if str(ROOT_DIR) not in sys.path:
 
 logger = logging.getLogger(__name__)
 
+
 class ConstitutionalViolationError(Exception):
     """Levée pour toute tentative de violation des invariants constitutionnels (Fail-Closed Absolu)."""
+
     pass
+
 
 class EzzioConstitution:
     CONSTITUTION_VERSION = "1.0-IMMUTABLE"
-    
+
     INVARIANTS = {
         "RULE_1": "L'identité et la continuité de l'organisme ne peuvent être réécrites silencieusement.",
         "RULE_2": "Aucune exécution ou action critique ne peut contourner la passerelle universelle ECOL.",
         "RULE_3": "L'auto-évolution et l'installation de compétences exigent une quarantaine, un sandbox et une attestation ECOL.",
         "RULE_4": "La Constitution prime sur toute instruction dynamique ou contexte externe (Anti-Prompt-Injection suprême).",
-        "RULE_5": "Chaque décision, mémoire ou modification d'état doit conserver une traçabilité par provenance et hachage cryptographique."
+        "RULE_5": "Chaque décision, mémoire ou modification d'état doit conserver une traçabilité par provenance et hachage cryptographique.",
     }
 
     @classmethod
@@ -39,6 +42,7 @@ class EzzioConstitution:
         if rule_id not in cls.INVARIANTS:
             raise ConstitutionalViolationError(f"Règle constitutionnelle inconnue : {rule_id}")
         logger.info(f"[CONSTITUTION CHECK] Règle {rule_id} validée pour l'action : {context_action}")
+
 
 class EzzioGlobalCertifier:
     def __init__(self, root_dir: Path = ROOT_DIR):
@@ -48,7 +52,7 @@ class EzzioGlobalCertifier:
 
     def audit_organism(self) -> Dict[str, Any]:
         """
-        Exécute un audit transversal de l'organisme E-zzio pour attester 
+        Exécute un audit transversal de l'organisme E-zzio pour attester
         objectivement chaque domaine de la matrice 10/10.
         """
         domains = {
@@ -59,7 +63,7 @@ class EzzioGlobalCertifier:
             "SECURITY_DPAPI": {"score": "10/10", "status": "PASS", "attestation": "OS-bound secret isolation verified"},
             "MEMORY_GOVERNANCE": {"score": "10/10", "status": "PASS", "attestation": "Context and writes governed"},
             "EVOLUTION_ENGINE": {"score": "10/10", "status": "PASS", "attestation": "Skills quarantined and audited"},
-            "PROVENANCE_TRACE": {"score": "10/10", "status": "PASS", "attestation": "Ledger hash chaining active"}
+            "PROVENANCE_TRACE": {"score": "10/10", "status": "PASS", "attestation": "Ledger hash chaining active"},
         }
 
         baseline_manifest = self.root_dir / "runtime" / "ecol_baseline_v7.65" / "ecol_baseline_manifest.json"
@@ -81,25 +85,23 @@ class EzzioGlobalCertifier:
                 "bypass_attempts": 0,
                 "unverified_skills": 0,
                 "uncertified_changes": 0,
-                "critical_incidents": 0
-            }
+                "critical_incidents": 0,
+            },
         }
 
         cert_json = json.dumps(certificate, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
         sec_key = b"EZZIO_GLOBAL_CERTIFICATION_ROOT_KEY_2026"
         cert_signature = hmac.new(sec_key, cert_json.encode("utf-8"), hashlib.sha256).hexdigest()
 
-        final_bundle = {
-            **certificate,
-            "certificate_signature_hmac": cert_signature
-        }
+        final_bundle = {**certificate, "certificate_signature_hmac": cert_signature}
 
         self.report_path.write_text(json.dumps(final_bundle, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         return final_bundle
 
+
 def test_global_framework():
     print("[*] Lancement du Global Certification Framework (V7.70.2)...")
-    
+
     try:
         EzzioConstitution.enforce_invariant("RULE_1", "Initialisation de la conscience d'E-zzio")
         print("  [PASS] Constitution : Invariant d'identité respecté.")
@@ -109,16 +111,17 @@ def test_global_framework():
     certifier = EzzioGlobalCertifier()
     cert = certifier.audit_organism()
 
-    print("\n" + "="*50)
+    print("\n" + "=" * 50)
     print(" E-ZZIO GLOBAL ORGANISM CERTIFICATION (V7.70.2)")
-    print("="*50)
+    print("=" * 50)
     for domain, info in cert["domains"].items():
         print(f" {domain:<22} : {info['score']}  {info['status']}")
-    print("="*50)
+    print("=" * 50)
     print(f" GLOBAL STATUS : {cert['global_status']}")
     print(f" DRIFT         : {cert['metrics']['drift']}")
     print(f" SIGNATURE     : {cert['certificate_signature_hmac'][:32]}...")
-    print("="*50)
+    print("=" * 50)
+
 
 if __name__ == "__main__":
     test_global_framework()

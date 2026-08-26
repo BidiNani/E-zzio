@@ -1,12 +1,13 @@
 """
 E-ZZIO V9.1.2 — Opportunity Detector
-Transforme les signaux bruts de l'Evolution Observer en opportunités 
+Transforme les signaux bruts de l'Evolution Observer en opportunités
 d'ingénierie structurées et évaluées.
 """
+
 import json
-from pathlib import Path
 from datetime import datetime, timezone
 from runtime.evolution.observer import EvolutionObserver
+
 
 class OpportunityDetector:
     def __init__(self):
@@ -25,7 +26,7 @@ class OpportunityDetector:
 
     def _map_signal_to_opportunity(self, signal: dict) -> dict:
         sig_type = signal.get("type")
-        
+
         if sig_type == "MISSING_CAPABILITY":
             target = signal.get("target")
             return {
@@ -36,9 +37,9 @@ class OpportunityDetector:
                 "estimated_impact": "HIGH",
                 "risk_level": "LOW",
                 "target_domain": "skills",
-                "recommended_action": f"Générer un plan d'intégration pour le module {target}"
+                "recommended_action": f"Générer un plan d'intégration pour le module {target}",
             }
-            
+
         elif sig_type == "HIGH_FRICTION":
             area = signal.get("area")
             return {
@@ -49,7 +50,7 @@ class OpportunityDetector:
                 "estimated_impact": "MEDIUM",
                 "risk_level": "LOW",
                 "target_domain": "memory_store",
-                "recommended_action": f"Planifier un compactage ou un nettoyage ciblé de {area}"
+                "recommended_action": f"Planifier un compactage ou un nettoyage ciblé de {area}",
             }
 
         return None
@@ -61,8 +62,9 @@ class OpportunityDetector:
             "timestamp_utc": datetime.now(timezone.utc).isoformat(),
             "total_opportunities_detected": len(opps),
             "opportunities": opps,
-            "status": "OPPORTUNITIES_MAPPED"
+            "status": "OPPORTUNITIES_MAPPED",
         }
+
 
 if __name__ == "__main__":
     detector = OpportunityDetector()

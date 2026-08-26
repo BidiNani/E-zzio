@@ -1,6 +1,7 @@
 import sqlite3
 import json
 
+
 class VectorStore:
     def __init__(self, db_path="runtime/agent/ledger/memory.db"):
         self.conn = sqlite3.connect(db_path)
@@ -8,8 +9,7 @@ class VectorStore:
         self.conn.commit()
 
     def add(self, memory_id, vector, content):
-        self.conn.execute("INSERT OR REPLACE INTO memory VALUES (?, ?, ?)", 
-                          (memory_id, json.dumps(vector), content))
+        self.conn.execute("INSERT OR REPLACE INTO memory VALUES (?, ?, ?)", (memory_id, json.dumps(vector), content))
         self.conn.commit()
 
     def search(self, vector):

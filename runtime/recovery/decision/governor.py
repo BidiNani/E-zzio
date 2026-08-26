@@ -1,11 +1,12 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import Dict, Any
+
 
 class ExecutionApproval(str, Enum):
     AUTO_EXECUTE = "AUTO_EXECUTE"
     SUPERVISED_EXECUTE = "SUPERVISED_EXECUTE"
     REQUIRE_HUMAN_APPROVAL = "REQUIRE_HUMAN_APPROVAL"
+
 
 @dataclass(frozen=True)
 class GovernanceDecision:
@@ -13,6 +14,7 @@ class GovernanceDecision:
     action_type: str
     confidence: float
     reason: str
+
 
 class DecisionGovernor:
     """Filtre les actions préconisées selon les seuils de confiance de l'organisation."""
@@ -33,5 +35,5 @@ class DecisionGovernor:
             approval_status=status,
             action_type=action_type,
             confidence=confidence,
-            reason=f"Confidence {confidence} mapped to approval level {status.value}."
+            reason=f"Confidence {confidence} mapped to approval level {status.value}.",
         )

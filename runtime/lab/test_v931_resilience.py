@@ -1,8 +1,8 @@
 """
 Test de certification de la résilience organique V9.3.1
 """
+
 import sys
-import json
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
@@ -14,20 +14,23 @@ from runtime.capabilities.security.drift_detector import CapabilityDriftDetector
 from runtime.capabilities.lifecycle.retire_engine import RetireEngine
 from runtime.capabilities.lifecycle.lifecycle_manager import LifecycleManager
 
+
 def run_certification():
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print(" 🏛️ E-ZZIO V9.3.1 — ORGAN HEALTH & STRESS CERTIFICATION")
-    print("="*60)
+    print("=" * 60)
 
     cap_id = "WEB_RESEARCHER"
-    
+
     # 1. Test du Health Monitor (Endurance)
     monitor = HealthMonitor()
     for i in range(100):
         monitor.record_call(success=True, latency_ms=10.5, ram_usage_mb=150.0)
-    
+
     health_data = monitor.get_health()
-    print(f" Runtime Health (100 calls) : {health_data['health']['status']} ({health_data['health']['success']} success, {health_data['health']['errors']} errors)")
+    print(
+        f" Runtime Health (100 calls) : {health_data['health']['status']} ({health_data['health']['success']} success, {health_data['health']['errors']} errors)"
+    )
 
     # 2. Test du Drift Detector (Attaque par Mutation / Élévation de privilèges)
     detector = CapabilityDriftDetector()
@@ -52,11 +55,12 @@ def run_certification():
     print(" ECOL                       : COMPLIANT")
     print("-" * 60)
     print(" 🟢 STATUS : ORGANIC RESILIENCE VERIFIED")
-    print("="*60 + "\n")
+    print("=" * 60 + "\n")
 
-    assert health_data['health']['status'] == "GREEN"
-    assert drift_res['status'] == "DRIFT_DETECTED"
-    assert retire_res['status'] == "REMOVED_CLEANLY"
+    assert health_data["health"]["status"] == "GREEN"
+    assert drift_res["status"] == "DRIFT_DETECTED"
+    assert retire_res["status"] == "REMOVED_CLEANLY"
+
 
 if __name__ == "__main__":
     run_certification()

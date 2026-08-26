@@ -3,7 +3,7 @@ E-ZZIO Core — Live Global Organism Certifier (V7.73)
 Agrège la télémétrie réelle du Hardware Governor (V7.71), du Model Governor (V7.72),
 et la baseline ECOL pour émettre un certificat global unifié, vivant et cryptographiquement signé.
 """
-import os
+
 import sys
 import json
 import hmac
@@ -18,9 +18,9 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from core.constitution.hardware_resource_governor import HardwareResourceGovernor
-from core.cognition.model_token_governor import ModelTokenGovernor
 
 logger = logging.getLogger(__name__)
+
 
 class LiveOrganismCertifier:
     def __init__(self, root_dir: Path = ROOT_DIR):
@@ -43,7 +43,7 @@ class LiveOrganismCertifier:
             "UNIVERSAL_GATEWAY": {"score": "10/10", "status": "PASS", "detail": "No-bypass enforcement actif"},
             "HARDWARE_COEXISTENCE": {"score": "10/10", "status": "PASS", "detail": hw_telemetry["profile"]},
             "MODEL_TOKEN_GOVERNANCE": {"score": "10/10", "status": "PASS", "detail": "Gaming-aware routing actif"},
-            "SECURITY_DPAPI": {"score": "10/10", "status": "PASS", "detail": "OS-bound secret isolation vérifié"}
+            "SECURITY_DPAPI": {"score": "10/10", "status": "PASS", "detail": "OS-bound secret isolation vérifié"},
         }
 
         certificate = {
@@ -57,8 +57,8 @@ class LiveOrganismCertifier:
                 "drift": "ZERO_DRIFT",
                 "bypass_attempts": 0,
                 "unverified_skills": 0,
-                "gaming_mode": hw_telemetry["gaming_detected"]
-            }
+                "gaming_mode": hw_telemetry["gaming_detected"],
+            },
         }
 
         # Signature HMAC du bundle de certification global
@@ -66,30 +66,29 @@ class LiveOrganismCertifier:
         sec_key = b"EZZIO_GLOBAL_CERTIFICATION_ROOT_KEY_2026"
         cert_signature = hmac.new(sec_key, cert_json.encode("utf-8"), hashlib.sha256).hexdigest()
 
-        final_bundle = {
-            **certificate,
-            "certificate_signature_hmac": cert_signature
-        }
+        final_bundle = {**certificate, "certificate_signature_hmac": cert_signature}
 
         self.report_path.write_text(json.dumps(final_bundle, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         return final_bundle
+
 
 def test_live_certifier():
     print("[*] Génération du certificat d'organisme en direct (V7.73)...")
     certifier = LiveOrganismCertifier()
     cert = certifier.generate_live_certificate()
 
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print(" E-ZZIO LIVE ORGANISM CERTIFICATION DASHBOARD (V7.73)")
-    print("="*60)
+    print("=" * 60)
     for domain, info in cert["domains"].items():
         print(f" {domain:<24} : {info['score']} [{info['status']}] -> {info['detail']}")
-    print("="*60)
+    print("=" * 60)
     print(f" PROFIL HARDWARE ACTIF : {cert['hardware_telemetry']['profile']}")
     print(f" GAMING DÉTECTÉ        : {cert['hardware_telemetry']['gaming_detected']}")
     print(f" GLOBAL STATUS         : {cert['global_status']}")
     print(f" SIGNATURE HMAC        : {cert['certificate_signature_hmac'][:32]}...")
-    print("="*60)
+    print("=" * 60)
+
 
 if __name__ == "__main__":
     test_live_certifier()

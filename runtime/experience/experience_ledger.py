@@ -2,6 +2,7 @@
 E-ZZIO V9.5.0 — Experience Ledger Manager
 Enregistre passivement les succès, les échecs et les patterns comportementaux.
 """
+
 import json
 from pathlib import Path
 from datetime import datetime, timezone
@@ -9,6 +10,7 @@ from datetime import datetime, timezone
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 LEDGER_DIR = ROOT_DIR / "runtime" / "experience" / "ledger"
 PATTERNS_DIR = ROOT_DIR / "runtime" / "experience" / "patterns"
+
 
 class ExperienceLedger:
     def __init__(self):
@@ -23,7 +25,7 @@ class ExperienceLedger:
             "duration_ms": duration_ms,
             "memory_peak_mb": memory_peak_mb,
             "status": "SUCCESS",
-            "confidence_after_execution": confidence
+            "confidence_after_execution": confidence,
         }
         path = LEDGER_DIR / "workflow_success.jsonl"
         with open(path, "a", encoding="utf-8") as f:
@@ -37,7 +39,7 @@ class ExperienceLedger:
             "capability": capability,
             "failure": failure_type,
             "resolution": resolution,
-            "status": "FAILURE"
+            "status": "FAILURE",
         }
         path = LEDGER_DIR / "workflow_failure.jsonl"
         with open(path, "a", encoding="utf-8") as f:
@@ -52,9 +54,6 @@ class ExperienceLedger:
                 data = json.loads(path.read_text(encoding="utf-8"))
             except Exception:
                 data = {}
-        
-        data[pattern_name] = {
-            "updated_utc": datetime.now(timezone.utc).isoformat(),
-            "data": pattern_data
-        }
+
+        data[pattern_name] = {"updated_utc": datetime.now(timezone.utc).isoformat(), "data": pattern_data}
         path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")

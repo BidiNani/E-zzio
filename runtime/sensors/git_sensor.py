@@ -1,8 +1,10 @@
 import subprocess
 from pathlib import Path
 
+
 class GitSensor:
     """Capteur de perception de l'état du dépôt Git."""
+
     def __init__(self, root_dir="."):
         self.root_dir = Path(root_dir).resolve()
 
@@ -29,9 +31,4 @@ class GitSensor:
         except Exception:
             status = "no_git_or_error"
 
-        return {
-            "branch": branch,
-            "status": status,
-            "last_commit": last_commit,
-            "modified_files": modified_files
-        }
+        return {"branch": branch, "status": status, "last_commit": last_commit, "modified_files": modified_files}

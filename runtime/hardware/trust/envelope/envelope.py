@@ -5,6 +5,7 @@ import json
 from dataclasses import dataclass
 from runtime.hardware.trust.revocation.registry import CapabilityRevocationRegistry
 
+
 @dataclass(frozen=True)
 class CapabilityEnvelope:
     token_id: str
@@ -16,6 +17,7 @@ class CapabilityEnvelope:
     trust_score_at_issue: int
     trust_state_at_issue: str
     signature: str
+
 
 class EnvelopeIssuer:
     def __init__(self, revocation_registry: CapabilityRevocationRegistry, secret_seed: str = "EZZIO_HARDENED_ROOT_KEY"):
@@ -37,9 +39,9 @@ class EnvelopeIssuer:
             "issued_at": issued_at,
             "expires_at": expires_at,
             "trust_score": score,
-            "trust_state": state
+            "trust_state": state,
         }
-        
+
         signature = self._sign_payload(payload)
 
         return CapabilityEnvelope(
@@ -51,7 +53,7 @@ class EnvelopeIssuer:
             expires_at=expires_at,
             trust_score_at_issue=score,
             trust_state_at_issue=state,
-            signature=signature
+            signature=signature,
         )
 
     def _sign_payload(self, payload: dict) -> str:
@@ -85,7 +87,7 @@ class EnvelopeIssuer:
             "issued_at": envelope.issued_at,
             "expires_at": envelope.expires_at,
             "trust_score": envelope.trust_score_at_issue,
-            "trust_state": envelope.trust_state_at_issue
+            "trust_state": envelope.trust_state_at_issue,
         }
         if self._sign_payload(payload) != envelope.signature:
             return {"valid": False, "reason": "TOKEN_SIGNATURE_TAMPERED"}

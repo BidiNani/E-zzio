@@ -1,9 +1,10 @@
 """
 E-ZZIO V7.59.4.3 — RPG Memory Lineage Recovery
 Extrait les 17 entrées RPG_MEMORY originales du snapshot V7.58.1,
-génère le manifeste cryptographique et initialise l'espace curatif 
+génère le manifeste cryptographique et initialise l'espace curatif
 `runtime/cognitive/curated/rpg_memory/`.
 """
+
 import sqlite3
 import json
 import hashlib
@@ -14,6 +15,7 @@ ROOT_DIR = Path(r"G:\AI\E-zzio")
 SNAPSHOT_DB = ROOT_DIR / "runtime" / "cognitive" / "snapshots" / "V7.58" / "memory_index.sqlite"
 CURATED_DIR = ROOT_DIR / "runtime" / "cognitive" / "curated" / "rpg_memory"
 AUDIT_REPORT = ROOT_DIR / "runtime" / "audit" / "system" / "v759_rpg_curated_lineage.json"
+
 
 def recover_rpg_lineage():
     if not SNAPSHOT_DB.exists():
@@ -39,19 +41,21 @@ def recover_rpg_lineage():
             entry_bytes = content.encode("utf-8")
             entry_hash = hashlib.sha256(entry_bytes).hexdigest()
 
-            recovered_entries.append({
-                "memory_domain": "RPG_MEMORY",
-                "source_path": source_path,
-                "content": content,
-                "confidence": confidence,
-                "importance": importance,
-                "last_validated": last_validated,
-                "sha256": entry_hash
-            })
+            recovered_entries.append(
+                {
+                    "memory_domain": "RPG_MEMORY",
+                    "source_path": source_path,
+                    "content": content,
+                    "confidence": confidence,
+                    "importance": importance,
+                    "last_validated": last_validated,
+                    "sha256": entry_hash,
+                }
+            )
 
     # Création de l'espace curatif permanent
     CURATED_DIR.mkdir(parents=True, exist_ok=True)
-    
+
     approved_file = CURATED_DIR / "approved_entries.jsonl"
     manifest_file = CURATED_DIR / "rpg_memory_manifest.json"
 
@@ -66,7 +70,7 @@ def recover_rpg_lineage():
         "version": "V7.60",
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "total_entries": len(recovered_entries),
-        "entries_manifest": [{"source": e["source_path"], "sha256": e["sha256"]} for e in recovered_entries]
+        "entries_manifest": [{"source": e["source_path"], "sha256": e["sha256"]} for e in recovered_entries],
     }
 
     manifest_bytes = json.dumps(manifest_data, sort_keys=True).encode("utf-8")
@@ -92,6 +96,7 @@ def recover_rpg_lineage():
     for idx, e in enumerate(recovered_entries[:5], 1):
         print(f"   {idx}. [Source: {e['source_path']}] -> Snippet: {e['content'][:70]}...")
     print("=" * 60)
+
 
 if __name__ == "__main__":
     recover_rpg_lineage()

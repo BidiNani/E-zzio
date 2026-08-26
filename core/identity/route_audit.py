@@ -1,10 +1,12 @@
 """
 Audit robuste des routes E-ZZIO.
 """
+
+
 def audit_routes(app_routes):
     seen = set()
     conflicts = []
-    
+
     for route in app_routes:
         # Clé unique (path, method)
         key = (getattr(route, "path", "/"), getattr(route, "method", "GET"))

@@ -8,9 +8,11 @@ from typing import Any, Callable
 
 logger = logging.getLogger("ezzio.event_bus")
 
+
 @dataclass(frozen=True, slots=True)
 class Event:
     """Événement immuable du Runtime E-ZZIO."""
+
     type: str
     actor: str
     source: str
@@ -20,11 +22,13 @@ class Event:
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     timestamp: float = field(default_factory=time.time)
 
+
 class EzzioEventBus:
     """
     Event Bus V4 Foundation.
     Garanties : événements immuables, historique borné, thread-safe, isolation des erreurs.
     """
+
     def __init__(self, max_history: int = 1000):
         if max_history < 1:
             raise ValueError("max_history doit être >= 1")
@@ -50,8 +54,8 @@ class EzzioEventBus:
         with self._lock:
             self._recent_events.append(event)
             if len(self._recent_events) > self._max_history:
-                del self._recent_events[:len(self._recent_events) - self._max_history]
-            
+                del self._recent_events[: len(self._recent_events) - self._max_history]
+
             # Copie pour éviter un blocage si un subscriber se désinscrit pendant l'itération
             subscribers = tuple(self._subscribers.get(event.type, ()))
 
@@ -64,5 +68,6 @@ class EzzioEventBus:
     def recent_events(self) -> tuple[Event, ...]:
         with self._lock:
             return tuple(self._recent_events)
+
 
 kernel_bus = EzzioEventBus()

@@ -9,6 +9,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from runtime.cli.session import SessionContext
 from runtime.cli.commands import CommandHandler
 
+
 def run_shell():
     session = SessionContext()
     handler = CommandHandler()
@@ -23,19 +24,20 @@ def run_shell():
             user_input = input("ezzio> ").strip()
             if not user_input:
                 continue
-            
+
             session.record(user_input)
             response = handler.handle(user_input)
-            
+
             if response == "EXIT":
                 print("Fermeture de la session interactive. Au revoir.")
                 break
-                
+
             print(response)
             print("-" * 60)
         except (KeyboardInterrupt, EOFError):
             print("\nSession interrompue. Arrêt propre.")
             break
+
 
 if __name__ == "__main__":
     run_shell()

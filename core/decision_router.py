@@ -1,6 +1,7 @@
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 from enum import Enum
 from core.providers.iresearch_provider import IResearchProvider
+
 
 class SearchMode(Enum):
     FAST = "fast"
@@ -8,6 +9,7 @@ class SearchMode(Enum):
     FORENSIC = "forensic"
     GOOGLE = "google"
     LOCAL = "local"
+
 
 class DecisionRouter:
     MODE_PRIORITIES = {
@@ -20,9 +22,7 @@ class DecisionRouter:
 
     def __init__(self, providers: List[IResearchProvider]):
         self.providers = providers
-        self._provider_map: Dict[str, IResearchProvider] = {
-            getattr(p, "name", ""): p for p in providers if hasattr(p, "name")
-        }
+        self._provider_map: Dict[str, IResearchProvider] = {getattr(p, "name", ""): p for p in providers if hasattr(p, "name")}
 
     def _select_providers(self, mode: SearchMode) -> List[IResearchProvider]:
         priority_names = self.MODE_PRIORITIES.get(mode, [])
@@ -41,11 +41,7 @@ class DecisionRouter:
             try:
                 result = await provider.search(query, **kwargs)
                 if result:
-                    return {
-                        "mode": mode.value,
-                        "provider": result.get("provider", provider_name),
-                        "data": result.get("data", {})
-                    }
+                    return {"mode": mode.value, "provider": result.get("provider", provider_name), "data": result.get("data", {})}
             except Exception as e:
                 # Capture explicite du type et de la représentation technique complète
                 err_detail = f"[{provider_name}] {type(e).__name__}: {e!r}"

@@ -4,6 +4,7 @@ from runtime.governance.risk import RiskEngine
 from runtime.governance.rollback import RollbackManager
 from runtime.governance.governance_ledger import GovernanceLedger
 
+
 class GovernanceGate:
     def __init__(self, root_dir: Path, autonomy_budget: float = 100.0):
         self.root_dir = root_dir
@@ -12,7 +13,7 @@ class GovernanceGate:
 
     def evaluate(self, decision: DecisionContract) -> dict:
         """Machine d'état du Gatekeeper : Schema -> Signature -> Risk -> Budget -> Rollback -> Approved/Denied"""
-        
+
         # 1. Enregistrement de la requête
         self.ledger.log_event("ACTION_REQUESTED", decision.decision_id, {"action": decision.action, "target": decision.target})
 
@@ -41,9 +42,5 @@ class GovernanceGate:
         # 6. Approbation finale
         self.budget -= action_cost
         self.ledger.log_event("ACTION_APPROVED", decision.decision_id, {"remaining_budget": self.budget})
-        
-        return {
-            "status": "APPROVED",
-            "permission_token": f"TOKEN-{decision.decision_id}-GRANT",
-            "rollback_manifest": snapshot
-        }
+
+        return {"status": "APPROVED", "permission_token": f"TOKEN-{decision.decision_id}-GRANT", "rollback_manifest": snapshot}

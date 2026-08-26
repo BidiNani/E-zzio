@@ -2,6 +2,7 @@
 E-ZZIO V9.3 — Capability Lifecycle Manager
 Gère la progression biologique des organes à travers les états de validation.
 """
+
 import json
 from pathlib import Path
 from datetime import datetime, timezone
@@ -9,16 +10,8 @@ from datetime import datetime, timezone
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 MANIFESTS_DIR = ROOT_DIR / "runtime" / "capabilities" / "registry" / "manifests"
 
-VALID_STATES = [
-    "DISCOVERED",
-    "QUARANTINE",
-    "SECURITY_SCAN",
-    "SANDBOX_TEST",
-    "APPROVED",
-    "ACTIVE",
-    "MONITORED",
-    "RETIRED"
-]
+VALID_STATES = ["DISCOVERED", "QUARANTINE", "SECURITY_SCAN", "SANDBOX_TEST", "APPROVED", "ACTIVE", "MONITORED", "RETIRED"]
+
 
 class LifecycleManager:
     def __init__(self):
@@ -44,7 +37,7 @@ class LifecycleManager:
             return {"status": "ERROR", "reason": f"Manifeste introuvable pour {capability_id}"}
 
         current_state = manifest.get("status", "DISCOVERED")
-        
+
         # Application de la transition biologique
         manifest["status"] = target_state
         manifest["last_transition_utc"] = datetime.now(timezone.utc).isoformat()
@@ -54,5 +47,5 @@ class LifecycleManager:
             "capability_id": capability_id,
             "previous_state": current_state,
             "current_state": target_state,
-            "status": "TRANSITION_SUCCESS"
+            "status": "TRANSITION_SUCCESS",
         }

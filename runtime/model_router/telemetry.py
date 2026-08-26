@@ -1,9 +1,9 @@
 import json
-import time
 from pathlib import Path
 from datetime import datetime, timezone
 from typing import Optional
 from .schemas import ModelResponse
+
 
 class RouterTelemetry:
     def __init__(self, audit_dir: Optional[Path] = None):
@@ -21,7 +21,7 @@ class RouterTelemetry:
             "tokens_in": response.tokens_evaluated,
             "tokens_out": response.tokens_generated,
             "latency_ms": round(response.latency_ms, 2),
-            "fallback": response.fallback_applied
+            "fallback": response.fallback_applied,
         }
         try:
             with open(self.log_file, "a", encoding="utf-8") as f:

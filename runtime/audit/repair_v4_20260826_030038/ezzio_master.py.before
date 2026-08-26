@@ -1,0 +1,159 @@
+"""E-ZZIO Master Orchestrator.
+
+Cloud-Only strict.
+Aucune bascule locale lorsqu'un appel Cloud est demandé.
+"""
+
+from core.memory_vault import check_memory_intent
+from core.dispatcher import ezzio_dispatcher
+from core.memory import ezzio_memory
+from core import safe_actions
+
+import cloud_brain_broker
+
+
+class EzzioMasterOrchestrator:
+
+    def __init__(self):
+        self.dispatcher = ezzio_dispatcher
+        self.memory = ezzio_memory
+        self.ledger = safe_actions.ledger
+        self.cloud_chat = cloud_brain_broker.cloud_chat
+
+    async def execute_intent(
+        self,
+        user_prompt: str,
+        speed: str = "auto",
+        force_cloud: bool = False,
+    ):
+        vault_res = check_memory_intent(user_prompt)
+
+        if vault_res:
+            return {
+                "organ": "memory_vault",
+                "source": "Deterministic SQLite",
+                "response": {
+                    "response": vault_res,
+                    "text": vault_res,
+                    "model": "sqlite_vault",
+                    "elapsed_ms": 1,
+                },
+            }
+
+        (
+            organ_key,
+            organ_info,
+            score,
+            hits,
+        ) = self.dispatcher.select_organ(user_prompt)
+
+        selected_model = (
+            self.dispatcher.select_model_for_speed(
+                organ_info,
+                speed,
+            )
+        )
+
+        is_code_request = "code" in user_prompt.lower()
+
+        use_cloud = (
+            force_cloud
+            or organ_info.get("priority", 1) >= 8
+            and is_code_request
+        )
+
+        # =====================================================================
+        # CLOUD-ONLY
+        # =====================================================================
+
+        if use_cloud:
+            cloud_res = self.cloud_chat(
+                text=user_prompt,
+                provider="gemini",
+                speed=speed,
+            )
+
+            if not cloud_res.get("ok", False):
+                return {
+                    "organ": organ_key,
+                    "source": (
+                        "Gemini Cloud — FAIL-CLOSED"
+                    ),
+                    "response": cloud_res.get(
+                        "response",
+                        "[FAIL-CLOSED] Gemini indisponible.",
+                    ),
+                    "model": "none",
+                    "primary_model": "none",
+                    "deep_model": "none",
+                    "attempted_models": [],
+                    "fallback_models": [],
+                    "used_fallback": False,
+                    "ok": False,
+                    "route_score": score,
+                    "route_hits": hits,
+                }
+
+            response = (
+                cloud_res.get("response")
+                or cloud_res.get("reply")
+                or cloud_res.get("answer")
+                or ""
+            )
+
+            return {
+                "organ": organ_key,
+                "source": "Gemini Pro (Cloud - Super Cerveau)",
+                "response": response,
+                "model": cloud_res.get(
+                    "model",
+                    selected_model,
+                ),
+                "primary_model": cloud_res.get(
+                    "primary_model",
+                    selected_model,
+                ),
+                "deep_model": cloud_res.get(
+                    "deep_model",
+                    selected_model,
+                ),
+                "attempted_models": cloud_res.get(
+                    "attempted_models",
+                    [selected_model],
+                ),
+                "fallback_models": [],
+                "used_fallback": False,
+                "ok": True,
+                "route_score": score,
+                "route_hits": hits,
+            }
+
+        # =====================================================================
+        # ROUTAGE NORMAL
+        # =====================================================================
+
+        response = await self.dispatcher.route_detailed_async(
+            user_prompt,
+            speed=speed,
+        )
+
+        return {
+            "organ": organ_key,
+            "source": (
+                "Dispatcher Cloud "
+                f"({selected_model})"
+            ),
+            "response": response,
+            "model": selected_model,
+            "primary_model": selected_model,
+            "deep_model": selected_model,
+            "attempted_models": [selected_model],
+            "fallback_models": [],
+            "used_fallback": False,
+            "ok": True,
+            "route_score": score,
+            "route_hits": hits,
+        }
+
+
+ezzio_master = EzzioMasterOrchestrator()

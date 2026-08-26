@@ -6,24 +6,26 @@ import threading
 from pathlib import Path
 from .cpu_topology import DynamicCPUTopology
 
+
 class HardwareGovernorService:
     """
     Service de gouvernance matérielle 100% CPU/RAM (Ryzen 9 5900X).
     Gestion pure de l'affinité CCD0/CCD1, des priorités Win32 et du Heartbeat IPC.
     """
+
     def __init__(self, state_dir: str = None):
         self.base_dir = Path(state_dir) if state_dir else Path(__file__).resolve().parent
         self.ipc_state_file = self.base_dir / "state.json"
         self.topology = DynamicCPUTopology()
         self.process = psutil.Process(os.getpid())
-        
+
         self.current_profile = "IDLE"
         self.evolution_allowed = False
         self._lock = threading.Lock()
-        
+
         self._stop_heartbeat = threading.Event()
         self.heartbeat_thread = threading.Thread(target=self._heartbeat_loop, daemon=True)
-        
+
         self._update_ipc_state("INITIALIZING", self.topology.all_threads, "NORMAL")
         self.heartbeat_thread.start()
 
@@ -44,13 +46,13 @@ class HardwareGovernorService:
                 "total_physical": self.topology.total_physical,
                 "is_ryzen_5900x": self.topology.is_ryzen_5900x,
                 "assigned_affinity_count": len(affinity),
-                "affinity_mask": affinity
+                "affinity_mask": affinity,
             },
             "win32_priority": priority,
             "evolution_allowed": self.evolution_allowed,
-            "memory_rss_mb": round(self.process.memory_info().rss / (1024 * 1024), 2)
+            "memory_rss_mb": round(self.process.memory_info().rss / (1024 * 1024), 2),
         }
-        
+
         try:
             with open(temp_ipc, "w", encoding="utf-8") as f:
                 json.dump(state_data, f, indent=2)
@@ -83,7 +85,7 @@ class HardwareGovernorService:
     def set_profile(self, profile_name: str) -> dict:
         with self._lock:
             profile = profile_name.upper()
-            
+
             if profile == "EVOLUTION" and not self.evolution_allowed:
                 profile = "COMPUTE"
 
@@ -119,7 +121,10 @@ class HardwareGovernorService:
 
                 self.current_profile = profile
                 self._update_ipc_state(profile, affinity_mask, priority_str)
-                print(f"[GOVERNOR CPU] Profil actif : {profile} | Affinity Threads : {len(affinity_mask)} | Priority : {priority_str}", flush=True)
+                print(
+                    f"[GOVERNOR CPU] Profil actif : {profile} | Affinity Threads : {len(affinity_mask)} | Priority : {priority_str}",
+                    flush=True,
+                )
 
             except Exception as e:
                 print(f"[GOVERNOR ERROR] Échec changement de profil {profile} : {e}", flush=True)

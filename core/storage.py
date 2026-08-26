@@ -6,6 +6,7 @@ from typing import Generator
 
 logger = logging.getLogger("ezzio.storage")
 
+
 class StorageEngine:
     @staticmethod
     @contextmanager
@@ -19,7 +20,7 @@ class StorageEngine:
         """
         db_path = Path(db_path)
         db_path.parent.mkdir(parents=True, exist_ok=True)
-        
+
         conn = sqlite3.connect(db_path, timeout=timeout, check_same_thread=False)
         try:
             conn.execute("PRAGMA journal_mode=WAL;")
@@ -33,5 +34,6 @@ class StorageEngine:
             raise
         finally:
             conn.close()
+
 
 storage = StorageEngine()

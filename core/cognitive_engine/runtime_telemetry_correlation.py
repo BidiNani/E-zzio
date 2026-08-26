@@ -1,8 +1,9 @@
 """
 E-ZZIO V7.59.10 — Runtime Operational Telemetry & Ledger Cross-Correlation
-Analyse et corrèle les journaux de décision (router_decisions.jsonl) et de sécurité 
+Analyse et corrèle les journaux de décision (router_decisions.jsonl) et de sécurité
 avec la fenêtre nocturne du 12 août 2026 (00:20:22 -> 03:00:00).
 """
+
 import json
 from pathlib import Path
 from datetime import datetime
@@ -17,8 +18,9 @@ LOG_TARGETS = [
     "runtime/audit/discord/access_granted.jsonl",
     "runtime/audit/discord/access_denied.jsonl",
     "runtime/audit/discord/security_events.jsonl",
-    "runtime/audit/discord/chaos_chain.jsonl"
+    "runtime/audit/discord/chaos_chain.jsonl",
 ]
+
 
 def parse_timestamp(item: dict) -> datetime:
     for key in ["timestamp", "created_at", "time", "date"]:
@@ -30,6 +32,7 @@ def parse_timestamp(item: dict) -> datetime:
             except Exception:
                 continue
     return None
+
 
 def run_correlation():
     print("[*] Lancement de la corrélation opérationnelle des journaux d'exécution...")
@@ -50,12 +53,9 @@ def run_correlation():
                         data = json.loads(line_stripped)
                         dt = parse_timestamp(data)
                         if dt and START_TIME <= dt <= END_TIME:
-                            correlated_events.append({
-                                "source": rel_path,
-                                "line": line_num,
-                                "timestamp": dt.isoformat(),
-                                "payload_snippet": str(data)[:150]
-                            })
+                            correlated_events.append(
+                                {"source": rel_path, "line": line_num, "timestamp": dt.isoformat(), "payload_snippet": str(data)[:150]}
+                            )
                     except json.JSONDecodeError:
                         continue
         except Exception:
@@ -68,7 +68,7 @@ def run_correlation():
         "window_start": START_TIME.isoformat(),
         "window_end": END_TIME.isoformat(),
         "total_operational_events": len(correlated_events),
-        "events": correlated_events
+        "events": correlated_events,
     }
 
     OUTPUT_REPORT.parent.mkdir(parents=True, exist_ok=True)
@@ -87,6 +87,7 @@ def run_correlation():
         print("  -> Aucun événement direct dans la fenêtre dans ces fichiers spécifiques.")
     print("=" * 65)
     print(f" Rapport exporté : {OUTPUT_REPORT}")
+
 
 if __name__ == "__main__":
     run_correlation()

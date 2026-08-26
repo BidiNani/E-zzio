@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 from core.storage import storage
 
+
 class EvidenceStore:
     def __init__(self, db_path: str = "runtime/evidence/evidence.db"):
         self.db_path = Path(db_path)
@@ -23,14 +24,7 @@ class EvidenceStore:
                 )
             """)
 
-    async def store(
-        self,
-        query: str,
-        provider: str,
-        mode: str,
-        data: Any,
-        task_id: Optional[str] = None
-    ) -> int:
+    async def store(self, query: str, provider: str, mode: str, data: Any, task_id: Optional[str] = None) -> int:
         """Persiste une preuve de recherche ou d'exécution."""
         data_json = json.dumps(data, ensure_ascii=False)
         with storage.get_connection(self.db_path) as conn:
@@ -39,7 +33,7 @@ class EvidenceStore:
                 INSERT INTO evidence (query, provider, mode, data, task_id)
                 VALUES (?, ?, ?, ?, ?)
                 """,
-                (query, provider, mode, data_json, task_id)
+                (query, provider, mode, data_json, task_id),
             )
             return cursor.lastrowid
 
@@ -53,7 +47,7 @@ class EvidenceStore:
                 WHERE task_id = ?
                 ORDER BY id ASC
                 """,
-                (task_id,)
+                (task_id,),
             ).fetchall()
 
             results = []
@@ -62,13 +56,7 @@ class EvidenceStore:
                     parsed_data = json.loads(r[4])
                 except Exception:
                     parsed_data = r[4]
-                results.append({
-                    "id": r[0],
-                    "query": r[1],
-                    "provider": r[2],
-                    "mode": r[3],
-                    "data": parsed_data,
-                    "task_id": r[5],
-                    "created_at": r[6]
-                })
+                results.append(
+                    {"id": r[0], "query": r[1], "provider": r[2], "mode": r[3], "data": parsed_data, "task_id": r[5], "created_at": r[6]}
+                )
             return results

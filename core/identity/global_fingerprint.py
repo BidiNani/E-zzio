@@ -1,13 +1,15 @@
 """
 E-ZZIO V7.29 — Global Identity Fingerprint
-Agrège tous les fichiers de configuration, de constitution et de lore 
+Agrège tous les fichiers de configuration, de constitution et de lore
 en une empreinte cryptographique unique et vérifiable.
 """
+
 import hashlib
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 CONFIG_DIR = ROOT_DIR / "config"
+
 
 class GlobalIdentityFingerprint:
     @staticmethod
@@ -28,5 +30,6 @@ class GlobalIdentityFingerprint:
                 hasher.update(file_path.read_bytes())
 
         return hasher.hexdigest()
+
 
 global_fingerprint = GlobalIdentityFingerprint()

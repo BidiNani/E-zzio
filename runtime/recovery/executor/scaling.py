@@ -1,6 +1,7 @@
 from runtime.recovery.executor.base import BaseActionExecutor
 from typing import Dict, Any, Optional
 
+
 class ScalingExecutor(BaseActionExecutor):
     def __init__(self, target_collector: Optional[Any] = None):
         self.target_collector = target_collector
@@ -16,7 +17,7 @@ class ScalingExecutor(BaseActionExecutor):
             "status": "SUCCESS",
             "target": "collector.batch_size",
             "previous_state": {"batch_size": prev_batch},
-            "new_state": {"batch_size": new_batch}
+            "new_state": {"batch_size": new_batch},
         }
 
     def restore(self, previous_state: Dict[str, Any], context: Dict[str, Any]) -> Dict[str, Any]:

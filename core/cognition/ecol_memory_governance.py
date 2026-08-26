@@ -1,13 +1,12 @@
 """
 E-ZZIO Core — Memory Governance Layer (V7.68)
-Gouverne les écritures en mémoire, les injections de contexte et la persistance 
+Gouverne les écritures en mémoire, les injections de contexte et la persistance
 des états de l'agent en s'appuyant sur l'intercepteur runtime ECOL V7.67.
 """
-import os
+
 import sys
 import logging
 from pathlib import Path
-from typing import Dict, Any, List
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -16,6 +15,7 @@ if str(ROOT_DIR) not in sys.path:
 from core.cognition.ecol_runtime_interceptor import EcolRuntimeInterceptor, ExecutionBlockedByEcolError
 
 logger = logging.getLogger(__name__)
+
 
 class EcolMemoryGovernor:
     def __init__(self, interceptor: EcolRuntimeInterceptor = None):
@@ -28,7 +28,7 @@ class EcolMemoryGovernor:
             action="MEMORY_WRITE",
             priority="normal",
             risk_level=risk_level,
-            estimated_cost=estimated_tokens
+            estimated_cost=estimated_tokens,
         )
 
     def create_context_injection_guard(self, risk_level: str = "medium", estimated_tokens: int = 150):
@@ -38,8 +38,9 @@ class EcolMemoryGovernor:
             action="CONTEXT_INJECT",
             priority="normal",
             risk_level=risk_level,
-            estimated_cost=estimated_tokens
+            estimated_cost=estimated_tokens,
         )
+
 
 def test_memory_governance():
     print("[*] Test de la Memory Governance Layer (V7.68)...")
@@ -71,9 +72,10 @@ def test_memory_governance():
     except ExecutionBlockedByEcolError as e:
         print(f"  [PASS] Interception réussie (FAIL CLOSED actif sur la mémoire) : {e}")
 
-    print("\n" + "="*65)
+    print("\n" + "=" * 65)
     print(" MEMORY GOVERNANCE LAYER (V7.68) : DEPLOYED & ENFORCED")
-    print("="*65)
+    print("=" * 65)
+
 
 if __name__ == "__main__":
     test_memory_governance()

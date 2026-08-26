@@ -7,6 +7,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 from runtime.hardware.governor_service import HardwareGovernorService
 from runtime.hardware.adaptive_daemon import AdaptiveHardwareDaemon
 
+
 def test_v49_adaptive_system():
     print("=============================================================", flush=True)
     print(" E-ZZIO V4.9 — Adaptive Hardware Intelligence & Guards Test", flush=True)
@@ -22,12 +23,12 @@ def test_v49_adaptive_system():
     state1 = governor.read_ipc_state()
     hb1 = state1.get("heartbeat", 0)
     print(f"[HEARTBEAT 1] Timestamp : {hb1}", flush=True)
-    
+
     time.sleep(2.5)
     state2 = governor.read_ipc_state()
     hb2 = state2.get("heartbeat", 0)
     print(f"[HEARTBEAT 2] Timestamp : {hb2}", flush=True)
-    
+
     assert hb2 > hb1, "FAIL: Le Heartbeat IPC ne s'est pas actualisé dans state.json !"
     print("[OK] Heartbeat IPC dynamique validé.", flush=True)
 
@@ -52,6 +53,7 @@ def test_v49_adaptive_system():
     print("\n=============================================================", flush=True)
     print(" STATUS : V4.9 ADAPTIVE HARDWARE INTELLIGENCE CERTIFIÉ", flush=True)
     print("=============================================================", flush=True)
+
 
 if __name__ == "__main__":
     test_v49_adaptive_system()

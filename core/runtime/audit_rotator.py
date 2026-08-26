@@ -2,9 +2,11 @@
 E-ZZIO V7.47 — Audit Log Rotator
 Assure la rotation, l'archivage et le nettoyage des fichiers d'audit JSONL.
 """
+
 import shutil
 from pathlib import Path
 from datetime import datetime, timezone
+
 
 class AuditRotator:
     def __init__(self, audit_dir: Path):
@@ -22,11 +24,12 @@ class AuditRotator:
                 timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
                 archive_name = f"{file_path.stem}_{timestamp}.archive"
                 dest_path = self.archive_dir / archive_name
-                
+
                 shutil.move(str(file_path), str(dest_path))
-                file_path.touch() # Recrée un fichier vide propre
+                file_path.touch()  # Recrée un fichier vide propre
                 rotated_files.append(str(file_path.name))
 
         return rotated_files
+
 
 audit_rotator = AuditRotator(Path(r"G:\AI\E-zzio\runtime\audit\discord"))

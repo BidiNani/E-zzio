@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-class IdentityInterface(ABC):
 
+class IdentityInterface(ABC):
     @abstractmethod
     def get_identity(self):
         pass

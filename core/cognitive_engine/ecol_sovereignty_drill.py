@@ -3,12 +3,10 @@ E-ZZIO V7.62.1 — Sovereignty Certification Drill
 Teste l'inviolabilité HMAC, la résistance aux attaques par rejeu, la divergence de manifeste
 et la certification du démarrage à froid (Cold Boot).
 """
-import os
+
 import sys
 import json
 import shutil
-import hmac
-import hashlib
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
@@ -22,9 +20,10 @@ LEDGER_PATH = BUDGET_DIR / "cognitive_budget_ledger.jsonl"
 MANIFEST_PATH = BUDGET_DIR / "ledger_manifest.json"
 SANDBOX_DIR = BUDGET_DIR / "sovereignty_sandbox"
 
+
 def run_sovereignty_drill():
     print("[*] Lancement de la Certification en Souveraineté Cryptographique (V7.62.1)...")
-    
+
     if not LEDGER_PATH.exists():
         print("[!] Erreur : Aucun Ledger actif trouvé. Exécutez d'abord l'initialisation V7.62.")
         return
@@ -33,10 +32,10 @@ def run_sovereignty_drill():
     if SANDBOX_DIR.exists():
         shutil.rmtree(SANDBOX_DIR)
     SANDBOX_DIR.mkdir(parents=True, exist_ok=True)
-    
+
     sandbox_ledger = SANDBOX_DIR / "cognitive_budget_ledger.jsonl"
     sandbox_manifest = SANDBOX_DIR / "ledger_manifest.json"
-    
+
     shutil.copy2(LEDGER_PATH, sandbox_ledger)
     if MANIFEST_PATH.exists():
         shutil.copy2(MANIFEST_PATH, sandbox_manifest)
@@ -134,7 +133,7 @@ def run_sovereignty_drill():
         cold_gov = CognitiveGovernor()
         cold_gov.ledger_path = sandbox_ledger
         cold_gov.manifest_path = sandbox_manifest
-        
+
         cold_gov.verify_ledger_chain()
         results.append({"test": "Cold Boot Verification", "status": "PASS"})
         print("  [PASS] Démarrage à froid certifié : chaînes et manifeste validés à l'initialisation.")
@@ -155,6 +154,7 @@ def run_sovereignty_drill():
         status_icon = "[✓]" if res["status"] == "PASS" else "[X]"
         print(f"  {status_icon} {res['test']} : {res['status']}")
     print("=" * 65)
+
 
 if __name__ == "__main__":
     run_sovereignty_drill()

@@ -21,5 +21,5 @@ __all__ = [
     "AutonomousRecoveryEngine",
     "RollbackManager",
     "RollbackRecord",
-    "RecoveryEventBus"
+    "RecoveryEventBus",
 ]

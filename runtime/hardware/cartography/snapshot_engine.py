@@ -3,6 +3,7 @@ import hashlib
 import time
 from pathlib import Path
 
+
 class CartographySnapshotEngine:
     def __init__(self, snapshots_dir: Path):
         self.snapshots_dir = snapshots_dir
@@ -13,23 +14,18 @@ class CartographySnapshotEngine:
         return {
             "cpu": topology_map.get("cpu", {}),
             "clusters": topology_map.get("clusters", {}),
-            "memory_nodes_count": topology_map.get("memory", {}).get("total_nodes", 1)
+            "memory_nodes_count": topology_map.get("memory", {}).get("total_nodes", 1),
         }
 
     def create_snapshot(self, topology_map: dict, tag: str = "topology") -> tuple:
         """Crée un snapshot signé de la cartographie matérielle."""
         timestamp_str = time.strftime("%Y%m%d_%H%M%S")
         base_name = f"{tag}_{timestamp_str}"
-        
+
         json_path = self.snapshots_dir / f"{base_name}.json"
         hash_path = self.snapshots_dir / f"{base_name}.hash"
 
-        snapshot_data = {
-            "version": "6.13.2",
-            "timestamp": time.time(),
-            "formatted_time": timestamp_str,
-            "topology": topology_map
-        }
+        snapshot_data = {"version": "6.13.2", "timestamp": time.time(), "formatted_time": timestamp_str, "topology": topology_map}
 
         # Écriture du JSON
         json_content = json.dumps(snapshot_data, indent=4, ensure_ascii=False)
@@ -49,22 +45,22 @@ class CartographySnapshotEngine:
     def detect_drift(baseline_map: dict, current_map: dict) -> list:
         """Compare deux cartographies et retourne la liste des dérives structurelles."""
         drifts = []
-        
+
         base_cpu = baseline_map.get("cpu", {})
         curr_cpu = current_map.get("cpu", {})
 
         if base_cpu.get("logical_threads") != curr_cpu.get("logical_threads"):
             drifts.append("LOGICAL_THREADS_MISMATCH")
-            
+
         if base_cpu.get("physical_cores") != curr_cpu.get("physical_cores"):
             drifts.append("PHYSICAL_CORES_MISMATCH")
-            
+
         if base_cpu.get("smt") != curr_cpu.get("smt"):
             drifts.append("SMT_STATE_CHANGED")
 
         base_clusters = baseline_map.get("clusters", {})
         curr_clusters = current_map.get("clusters", {})
-        
+
         if set(base_clusters.keys()) != set(curr_clusters.keys()):
             drifts.append("CCD_TOPOLOGY_STRUCTURE_CHANGED")
 

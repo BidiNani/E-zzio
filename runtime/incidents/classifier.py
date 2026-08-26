@@ -5,11 +5,13 @@ from typing import Dict, Any, List
 
 from .model import IncidentRecord, IncidentSeverity, IncidentCategory
 
+
 class IncidentAction(str, Enum):
     LOG_ONLY = "LOG_ONLY"
     ALERT = "ALERT"
     RECOVER = "RECOVER"
     FORCE_HALT = "FORCE_HALT"
+
 
 @dataclass
 class IncidentClassification:
@@ -25,8 +27,9 @@ class IncidentClassification:
             "recommended_action": self.recommended_action.value if isinstance(self.recommended_action, Enum) else self.recommended_action,
             "priority_score": self.priority_score,
             "tags": self.tags,
-            "rationale": self.rationale
+            "rationale": self.rationale,
         }
+
 
 class IncidentClassifier:
     """
@@ -34,10 +37,11 @@ class IncidentClassifier:
     Analyse les enregistrements d'incidents et recommande une action de gouvernance
     de manière purement analytique, sans droit de mutation sur le noyau V4.2.
     """
+
     def classify(self, record: IncidentRecord) -> IncidentClassification:
         error_type = record.error_type.upper()
         message = record.message.lower()
-        
+
         action = IncidentAction.LOG_ONLY
         score = 10
         tags = ["v4.4", "governance"]
@@ -70,9 +74,5 @@ class IncidentClassifier:
             rationale = "Critical severity incident requiring attention."
 
         return IncidentClassification(
-            incident_id=record.incident_id,
-            recommended_action=action,
-            priority_score=score,
-            tags=tags,
-            rationale=rationale
+            incident_id=record.incident_id, recommended_action=action, priority_score=score, tags=tags, rationale=rationale
         )

@@ -5,8 +5,10 @@ from runtime.reasoning.planner import DeterministicPlanner
 from runtime.action.executor import ActionExecutor
 from runtime.learning.feedback import FeedbackEngine
 
+
 class CognitiveLoop:
     """Complete controlled cognitive cycle engine running step-by-step (run_once)."""
+
     def __init__(self, brain=None):
         self.brain = brain
         self.state = CognitiveState.IDLE
@@ -14,7 +16,7 @@ class CognitiveLoop:
         self.planner = DeterministicPlanner()
         self.executor = ActionExecutor(brain)
         self.feedback_engine = FeedbackEngine()
-        
+
         self.last_observation: Optional[Dict[str, Any]] = None
         self.last_analysis: Optional[Dict[str, Any]] = None
         self.last_decision: Optional[List[Dict[str, Any]]] = None
@@ -29,11 +31,7 @@ class CognitiveLoop:
     def analyze(self, observation: Dict[str, Any]) -> Dict[str, Any]:
         self.state = CognitiveState.ANALYZING
         importance = observation.get("importance", 0.5)
-        analysis = {
-            "importance": importance,
-            "category": observation.get("category", "general"),
-            "requires_action": importance >= 0.5
-        }
+        analysis = {"importance": importance, "category": observation.get("category", "general"), "requires_action": importance >= 0.5}
         self.last_analysis = analysis
         self.event_bus.emit("ANALYSIS_COMPLETED", analysis)
         return analysis
@@ -66,7 +64,7 @@ class CognitiveLoop:
         for res in action_results:
             fb = self.feedback_engine.process_feedback(res)
             total_delta += fb.get("confidence_delta", 0.0)
-            
+
         feedback_summary = {"status": "PROCESSED", "total_confidence_delta": round(total_delta, 2)}
         self.event_bus.emit("LEARNING_FEEDBACK_PROCESSED", feedback_summary)
         self.state = CognitiveState.IDLE

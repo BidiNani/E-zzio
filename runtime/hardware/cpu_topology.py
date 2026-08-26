@@ -1,16 +1,17 @@
-import os
 import platform
 import psutil
+
 
 class DynamicCPUTopology:
     """
     Détection dynamique de la topologie processeur avec spécialisation Ryzen 5900X.
     """
+
     def __init__(self):
         self.total_logical = psutil.cpu_count(logical=True) or 24
         self.total_physical = psutil.cpu_count(logical=False) or 12
         self.vendor_id = platform.processor()
-        
+
         # Spécialisation Ryzen 9 5900X (24 threads / 2 CCDs)
         if self.total_logical == 24 and self.total_physical == 12:
             self.is_ryzen_5900x = True

@@ -11,14 +11,17 @@ SECRETS_PATH = PROJECT_ROOT / "secrets" / ".env"
 
 load_dotenv(SECRETS_PATH)
 
+
 def user_agent():
     return os.getenv("EZZIO_USER_AGENT", "E-ZZIO-local/1.0 (contact: enrik.pani@gmail.com)").strip()
+
 
 def headers_json():
     return {
         "User-Agent": user_agent(),
         "Accept": "application/json",
     }
+
 
 def wikipedia_summary(title, lang="fr", compress=True):
     lang = "en" if lang not in ["fr", "en"] else lang
@@ -31,6 +34,7 @@ def wikipedia_summary(title, lang="fr", compress=True):
         cache_ttl=86400,
     )
     return compact_api_result(result, max_chars=4000) if compress else result
+
 
 def wikipedia_search(query, lang="fr", limit=5, compress=True):
     lang = "en" if lang not in ["fr", "en"] else lang
@@ -52,6 +56,7 @@ def wikipedia_search(query, lang="fr", limit=5, compress=True):
     )
     return compact_api_result(result, max_chars=5000) if compress else result
 
+
 def wikidata_search(query, lang="fr", limit=5, compress=True):
     params = {
         "action": "wbsearchentities",
@@ -70,6 +75,7 @@ def wikidata_search(query, lang="fr", limit=5, compress=True):
     )
     return compact_api_result(result, max_chars=5000) if compress else result
 
+
 def wikidata_sparql(query, compress=True):
     params = {
         "query": query,
@@ -85,6 +91,7 @@ def wikidata_sparql(query, compress=True):
         timeout=35,
     )
     return compact_api_result(result, max_chars=7000) if compress else result
+
 
 def stackexchange_search(query, site="stackoverflow", limit=5, compress=True):
     params = {
@@ -109,6 +116,7 @@ def stackexchange_search(query, site="stackoverflow", limit=5, compress=True):
     )
     return compact_api_result(result, max_chars=6000) if compress else result
 
+
 def arxiv_search(query, limit=5, compress=True):
     params = {
         "search_query": f"all:{query}",
@@ -127,6 +135,7 @@ def arxiv_search(query, limit=5, compress=True):
         timeout=35,
     )
     return compact_api_result(result, max_chars=7000) if compress else result
+
 
 def crossref_search(query, limit=5, compress=True):
     params = {
@@ -147,6 +156,7 @@ def crossref_search(query, limit=5, compress=True):
     )
     return compact_api_result(result, max_chars=7000) if compress else result
 
+
 def openmeteo_forecast(latitude, longitude, compress=True):
     params = {
         "latitude": latitude,
@@ -166,6 +176,7 @@ def openmeteo_forecast(latitude, longitude, compress=True):
     )
     return compact_api_result(result, max_chars=5000) if compress else result
 
+
 def nominatim_search(query, limit=5, compress=True):
     params = {
         "q": query,
@@ -182,6 +193,7 @@ def nominatim_search(query, limit=5, compress=True):
         cache_ttl=86400,
     )
     return compact_api_result(result, max_chars=5000) if compress else result
+
 
 def knowledge_status():
     return {

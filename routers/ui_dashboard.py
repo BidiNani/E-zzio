@@ -244,6 +244,7 @@ setInterval(refreshAll, 20000);
 </html>
 """
 
+
 @router.get("/ui", response_class=HTMLResponse)
 async def get_ui_dashboard():
     return HTML

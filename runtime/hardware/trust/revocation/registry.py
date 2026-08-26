@@ -2,6 +2,7 @@ import json
 import time
 from pathlib import Path
 
+
 class CapabilityRevocationRegistry:
     def __init__(self, storage_dir: Path):
         self.storage_dir = storage_dir
@@ -44,11 +45,7 @@ class CapabilityRevocationRegistry:
     def revoke_token(self, token_id: str, reason: str = "MANUAL_REVOCATION"):
         """Ajoute un jeton à la liste noire (CRL) de manière permanente."""
         self._revoked.add(token_id)
-        record = {
-            "timestamp": time.time(),
-            "token_id": token_id,
-            "reason": reason
-        }
+        record = {"timestamp": time.time(), "token_id": token_id, "reason": reason}
         with open(self.revoked_tokens_file, "a", encoding="utf-8") as f:
             f.write(json.dumps(record, ensure_ascii=False) + "\n")
 

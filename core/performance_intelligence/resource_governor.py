@@ -1,11 +1,13 @@
 """
 E-ZZIO V7.38 — Adaptive Resource Governor
-Gouverneur de ressources : lit l'état matériel (CPU/RAM) et adapte dynamiquement 
+Gouverneur de ressources : lit l'état matériel (CPU/RAM) et adapte dynamiquement
 la topologie (workers, mode d'exécution, budget mémoire).
 """
+
 import os
 import platform
 import ctypes
+
 
 class ResourceGovernor:
     def __init__(self):
@@ -16,6 +18,7 @@ class ResourceGovernor:
         """Lecture native de la mémoire physique disponible (Windows fallback)."""
         if platform.system() == "Windows":
             try:
+
                 class MEMORYSTATUSEX(ctypes.Structure):
                     _fields_ = [
                         ("dwLength", ctypes.c_ulong),
@@ -26,8 +29,9 @@ class ResourceGovernor:
                         ("ullAvailPageFile", ctypes.c_ulonglong),
                         ("ullTotalVirtual", ctypes.c_ulonglong),
                         ("ullAvailVirtual", ctypes.c_ulonglong),
-                        ("sullAvailExtendedVirtual", ctypes.c_ulonglong)
+                        ("sullAvailExtendedVirtual", ctypes.c_ulonglong),
                     ]
+
                 stat = MEMORYSTATUSEX()
                 stat.dwLength = ctypes.sizeof(MEMORYSTATUSEX)
                 ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(stat))
@@ -38,7 +42,7 @@ class ResourceGovernor:
 
     def evaluate_topology(self, simulated_ram_mb: float = None) -> dict:
         ram_mb = simulated_ram_mb if simulated_ram_mb is not None else self.get_available_ram_mb()
-        
+
         # Arbre de décision des politiques de ressources
         if ram_mb < 2048 or self.cpu_threads <= 2:
             mode = "PERFORMANCE_SAFE"
@@ -55,12 +59,13 @@ class ResourceGovernor:
             "free_ram_gb": round(ram_mb / 1024, 2),
             "workers_selected": workers,
             "mode": mode,
-            "allocatable_ram_mb": round(ram_mb * (1.0 - self.memory_budget_margin), 2)
+            "allocatable_ram_mb": round(ram_mb * (1.0 - self.memory_budget_margin), 2),
         }
 
     def enforce_memory_budget(self, requested_mb: float, simulated_ram_mb: float = None) -> bool:
         """Vérifie si une opération peut être lancée sans saturer le système."""
         topology = self.evaluate_topology(simulated_ram_mb)
         return requested_mb <= topology["allocatable_ram_mb"]
+
 
 resource_governor = ResourceGovernor()

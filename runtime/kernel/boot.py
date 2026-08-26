@@ -1,9 +1,14 @@
 from __future__ import annotations
-import sys, json, hashlib, os, uuid
+import sys
+import json
+import hashlib
+import os
+import uuid
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
-if str(PROJECT_ROOT) not in sys.path: sys.path.insert(0, str(PROJECT_ROOT))
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from runtime.events.bus import Event, kernel_bus
 from runtime.kernel.state import RuntimePhase, kernel_state
@@ -26,6 +31,7 @@ def _pid_is_alive(pid: int) -> bool:
         vérifier strictement STILL_ACTIVE (259).
     """
     import os
+
     if pid == os.getpid():
         return True
 
@@ -59,6 +65,7 @@ def _pid_is_alive(pid: int) -> bool:
         except OSError:
             return False
 
+
 class EzzioBootloader:
     def __init__(self):
         self.root = PROJECT_ROOT
@@ -66,15 +73,17 @@ class EzzioBootloader:
         self.constitution_hash = None
         self.lock_path = str(self.root / "runtime" / "kernel" / "boot.lock")
         self.boot_id = str(uuid.uuid4())
-        
+
         self.trust = TrustRegistry(self.root)
         self.capabilities = CapabilityRegistry()
         self.policy = None
         self.governor = None
         self.ledger = ExecutionLedger()
+
     def _acquire_process_lock(self) -> bool:
-        import os, json
-        
+        import os
+        import json
+
         # Étape 1 : Tentative naïve (chemin nominal)
         try:
             with open(self.lock_path, "x", encoding="utf-8") as f:
@@ -157,14 +166,12 @@ class EzzioBootloader:
             raw = const_path.read_bytes()
             self.constitution_hash = hashlib.sha256(raw).hexdigest()
             constitution_data = json.loads(raw.decode("utf-8"))
-            
+
             self.policy = PolicyEngine(constitution_data)
-            hard_limits = constitution_data.get("resource_hard_limits", {
-                "max_cpu_threads_per_worker": 8,
-                "max_ram_mb_per_sandbox": 4096,
-                "max_execution_time_sec": 300,
-                "max_parallel_workers": 8
-            })
+            hard_limits = constitution_data.get(
+                "resource_hard_limits",
+                {"max_cpu_threads_per_worker": 8, "max_ram_mb_per_sandbox": 4096, "max_execution_time_sec": 300, "max_parallel_workers": 8},
+            )
             self.governor = ResourceGovernor(hard_limits)
             return True
 
@@ -174,7 +181,7 @@ class EzzioBootloader:
                 kernel_state.transition(RuntimePhase.PANIC, reason=err_msg)
             except Exception:
                 pass
-            
+
             kernel_state._phase = RuntimePhase.PANIC
             if hasattr(kernel_state, "_panic_reason"):
                 kernel_state._panic_reason = err_msg
@@ -190,7 +197,7 @@ class EzzioBootloader:
                 if hasattr(kernel_state, "_panic_reason"):
                     kernel_state._panic_reason = err_msg
             return False
-            
+
         if kernel_state.current_phase == RuntimePhase.READY:
             self.release_process_lock()
             return False
@@ -204,9 +211,9 @@ class EzzioBootloader:
                 kernel_state._phase = RuntimePhase.PANIC
                 if hasattr(kernel_state, "_panic_reason"):
                     kernel_state._panic_reason = "Constitution failure"
-            
+
             self.release_process_lock()
-            
+
             try:
                 kernel_state.transition(RuntimePhase.HALTED)
             except Exception:
@@ -218,7 +225,7 @@ class EzzioBootloader:
             kernel_state.transition(RuntimePhase.SECURING_VAULT)
         except Exception:
             kernel_state._phase = RuntimePhase.SECURING_VAULT
-        
+
         self.context = RuntimeContext(
             bus=kernel_bus,
             state=kernel_state,
@@ -226,7 +233,7 @@ class EzzioBootloader:
             policy=self.policy,
             capabilities=self.capabilities,
             governor=self.governor,
-            ledger=self.ledger
+            ledger=self.ledger,
         )
 
         try:
@@ -243,6 +250,7 @@ class EzzioBootloader:
             )
         )
         return True
+
 
 if __name__ == "__main__":
     bootloader = EzzioBootloader()

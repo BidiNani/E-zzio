@@ -3,7 +3,7 @@ E-ZZIO V7.59.9 — Active Runtime Convergence Test
 Trace récursivement les dépendances depuis le point d'entrée du boot (core/runtime/boot.py)
 et mesure la convergence avec le manifeste founding_kernel.json.
 """
-import os
+
 import json
 import re
 from pathlib import Path
@@ -13,20 +13,22 @@ KERNEL_REPORT = ROOT_DIR / "runtime" / "audit" / "system" / "founding_kernel.jso
 BOOT_ENTRY = ROOT_DIR / "core" / "runtime" / "boot.py"
 OUTPUT_REPORT = ROOT_DIR / "runtime" / "audit" / "system" / "runtime_convergence_report.json"
 
+
 def get_module_imports(file_path: Path) -> set:
     imports = set()
     try:
         with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
             for line in f:
                 line_stripped = line.strip()
-                if match := re.match(r'^(?:import|from)\s+([a-zA-Z0-9_\.]+)', line_stripped):
-                    parts = match.group(1).split('.')
+                if match := re.match(r"^(?:import|from)\s+([a-zA-Z0-9_\.]+)", line_stripped):
+                    parts = match.group(1).split(".")
                     # Résolution des modules internes core ou runtime
                     if parts[0] in {"core", "runtime"}:
                         imports.add("/".join(parts))
     except Exception:
         pass
     return imports
+
 
 def trace_active_runtime() -> set:
     visited = set()
@@ -60,6 +62,7 @@ def trace_active_runtime() -> set:
                     break
     return active_modules
 
+
 def run_convergence_test():
     print("[*] Évaluation de la convergence active du runtime...")
 
@@ -81,13 +84,13 @@ def run_convergence_test():
     convergence_rate = round((len(converged) / len(kernel_modules)) * 100, 2) if kernel_modules else 0.0
 
     report = {
-        "timestamp": datetime.now(timezone.utc).isoformat() if 'datetime' in globals() else "2026-08-12",
+        "timestamp": datetime.now(timezone.utc).isoformat() if "datetime" in globals() else "2026-08-12",
         "total_kernel_modules": len(kernel_modules),
         "total_active_boot_modules": len(active_runtime_modules),
         "converged_modules_count": len(converged),
         "convergence_rate_percent": convergence_rate,
         "orphaned_kernel_modules": list(orphaned_kernel),
-        "unmapped_active_modules": list(unmapped_active)
+        "unmapped_active_modules": list(unmapped_active),
     }
 
     OUTPUT_REPORT.parent.mkdir(parents=True, exist_ok=True)
@@ -106,6 +109,8 @@ def run_convergence_test():
     print("=" * 65)
     print(f" Rapport exporté : {OUTPUT_REPORT}")
 
+
 if __name__ == "__main__":
     from datetime import datetime, timezone
+
     run_convergence_test()

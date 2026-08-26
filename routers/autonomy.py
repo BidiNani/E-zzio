@@ -5,13 +5,16 @@ from core.schemas import Prompt
 
 router = APIRouter(prefix="/autonomy", tags=["autonomy"])
 
+
 @router.get("/status")
 async def autonomy_status():
     return doctor()
 
+
 @router.post("/doctor")
 async def autonomy_doctor():
     return doctor()
+
 
 @router.post("/plan")
 async def autonomy_plan(prompt: Prompt):

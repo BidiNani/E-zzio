@@ -3,7 +3,7 @@ E-ZZIO Core — Exhaustive Baseline Inventory Audit (V7.65.2 Read-Only)
 Valide l'intégrité globale du répertoire de baseline : vérifie que tous les fichiers
 du manifeste sont conformes et qu'aucun fichier non répertorié (fantôme) n'y subsiste.
 """
-import os
+
 import sys
 import json
 import hashlib
@@ -13,16 +13,19 @@ ROOT_DIR = Path(r"G:\AI\E-zzio")
 BASELINE_DIR = ROOT_DIR / "runtime" / "ecol_baseline_v7.65"
 MANIFEST_PATH = BASELINE_DIR / "ecol_baseline_manifest.json"
 
+
 class ExhaustiveAuditError(Exception):
     """Levée en cas d'anomalie d'inventaire ou de dérive de baseline (Fail-Closed)."""
+
     pass
+
 
 def exhaustive_audit():
     print("[*] Lancement de l'audit d'inventaire exhaustif de la baseline V7.65.2...")
-    
+
     if not BASELINE_DIR.exists():
         raise ExhaustiveAuditError("FAIL CLOSED : Le répertoire de baseline est introuvable.")
-    
+
     if not MANIFEST_PATH.exists():
         raise ExhaustiveAuditError("FAIL CLOSED : Le manifeste de référence est introuvable.")
 
@@ -52,7 +55,7 @@ def exhaustive_audit():
         filename = entry["filename"]
         expected_hash = entry["sha256"]
         expected_size = entry["size_bytes"]
-        
+
         file_path = BASELINE_DIR / filename
         if not file_path.exists():
             raise ExhaustiveAuditError(f"FAIL CLOSED : Fichier requis absent -> {filename}")
@@ -69,10 +72,11 @@ def exhaustive_audit():
 
         print(f"  [✓] {filename} : Intégrité cryptographique validée.")
 
-    print("\n" + "="*65)
+    print("\n" + "=" * 65)
     print(" EXHAUSTIVE BASELINE AUDIT RAPPORT (V7.65.2) : PASS")
     print(" STATUT : RÉPERTOIRE STRICTEMENT CONFORME AU MANIFESTE (ZERO DRIFT)")
-    print("="*65)
+    print("=" * 65)
+
 
 if __name__ == "__main__":
     try:

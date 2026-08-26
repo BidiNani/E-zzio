@@ -1,9 +1,9 @@
 """
 E-ZZIO V7.60.0 — ECOL Integration Audit
-Scanne les répertoires core et runtime pour identifier les points d'appel 
+Scanne les répertoires core et runtime pour identifier les points d'appel
 directs aux LLM, aux anciens routeurs et aux registres de décisions existants.
 """
-import os
+
 import json
 import re
 from pathlib import Path
@@ -20,8 +20,9 @@ SEARCH_PATTERNS = [
     r"requests\.post",
     r"router_decisions",
     r"experience_ledger",
-    r"model_registry"
+    r"model_registry",
 ]
+
 
 def audit_integration():
     print("[*] Lancement de l'audit d'intégration ECOL...")
@@ -47,19 +48,11 @@ def audit_integration():
                         matched_patterns.append(pattern)
 
                 if matched_patterns:
-                    findings.append({
-                        "file": rel_path,
-                        "matched_triggers": matched_patterns,
-                        "size_bytes": path.stat().st_size
-                    })
+                    findings.append({"file": rel_path, "matched_triggers": matched_patterns, "size_bytes": path.stat().st_size})
             except Exception:
                 continue
 
-    report = {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
-        "total_files_flagged": len(findings),
-        "integration_targets": findings
-    }
+    report = {"generated_at": datetime.now(timezone.utc).isoformat(), "total_files_flagged": len(findings), "integration_targets": findings}
 
     OUTPUT_REPORT.parent.mkdir(parents=True, exist_ok=True)
     with open(OUTPUT_REPORT, "w", encoding="utf-8") as f:
@@ -77,6 +70,7 @@ def audit_integration():
         print(f"  ... et {len(findings) - 15} autres fichiers dans le rapport complet.")
     print("=" * 65)
     print(f" Rapport exporté : {OUTPUT_REPORT}")
+
 
 if __name__ == "__main__":
     audit_integration()

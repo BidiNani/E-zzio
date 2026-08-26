@@ -2,7 +2,6 @@ from collections import deque
 
 
 class ExecutionScheduler:
-
     def __init__(self):
 
         self.queue = deque()

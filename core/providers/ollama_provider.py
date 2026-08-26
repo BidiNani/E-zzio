@@ -5,13 +5,14 @@ from typing import Any, Dict, Optional
 from core.providers.iresearch_provider import IResearchProvider
 from core.secrets import load_secrets
 
+
 class OllamaProvider(IResearchProvider):
     name: str = "ollama"
 
     def __init__(self, base_url: Optional[str] = None, model: Optional[str] = None):
         load_secrets()
         self.base_url = base_url or os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434")
-        self.model = model or os.getenv("OLLAMA_MODEL", "qwen3.5:9b")
+        self.model = model or os.getenv("OLLAMA_MODEL", "qwen3:8b")
 
     async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
         """Exécution 100% CPU pure (zéro VRAM, 6 threads, thinking désactivé, budget tokens élevé)."""
@@ -26,8 +27,8 @@ class OllamaProvider(IResearchProvider):
                 "num_thread": int(os.getenv("OLLAMA_NUM_THREAD", "6")),
                 "num_ctx": kwargs.get("num_ctx", 2048),
                 "num_predict": kwargs.get("max_tokens", 1500),  # budget relevé
-                "temperature": kwargs.get("temperature", 0.7)
-            }
+                "temperature": kwargs.get("temperature", 0.7),
+            },
         }
 
         timeout = httpx.Timeout(connect=10.0, read=180.0, write=10.0, pool=10.0)
@@ -59,15 +60,8 @@ class OllamaProvider(IResearchProvider):
                 "model": self.model,
                 "data": {
                     "text": "[Réponse tronquée : budget de tokens insuffisant pour ce modèle en mode raisonnement]",
-                    "raw": last_chunk
-                }
+                    "raw": last_chunk,
+                },
             }
 
-        return {
-            "provider": self.name,
-            "model": self.model,
-            "data": {
-                "text": full_response,
-                "raw": last_chunk
-            }
-        }
+        return {"provider": self.name, "model": self.model, "data": {"text": full_response, "raw": last_chunk}}

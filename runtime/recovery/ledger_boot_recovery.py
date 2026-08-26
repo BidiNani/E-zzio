@@ -1,8 +1,9 @@
 """
 E-ZZIO V7.28.4 — Ledger Boot Recovery (Forensic Hardened)
-Réalise un snapshot forensic avant tout rollback de queue tronquée, 
+Réalise un snapshot forensic avant tout rollback de queue tronquée,
 et applique un contrôle rigoureux et dissocié entre intégrité SHA-256 et signature HMAC.
 """
+
 import os
 import json
 import hashlib
@@ -19,6 +20,7 @@ ENV_PATH = ROOT_DIR / "secrets" / ".env"
 
 load_dotenv(dotenv_path=ENV_PATH, override=True)
 
+
 class LedgerBootRecovery:
     def __init__(self):
         self.secret_key = os.getenv("EZZIO_LEDGER_SECRET", "").encode("utf-8")
@@ -29,7 +31,7 @@ class LedgerBootRecovery:
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "event": "LEDGER_SECURITY_ALERT",
             "reason": reason,
-            "details": details
+            "details": details,
         }
         with open(INCIDENT_PATH, "a", encoding="utf-8") as f:
             f.write(json.dumps(incident, ensure_ascii=False) + "\n")
@@ -130,11 +132,14 @@ class LedgerBootRecovery:
                     f.flush()
                     os.fsync(f.fileno())
                 os.replace(temp_path, LEDGER_PATH)
-                print(f"[Boot Recovery] FORENSIC SNAPSHOT & TAIL ROLLBACK RÉUSSIS : Queue tronquée purgée. {len(valid_lines)} transactions sécurisées.")
+                print(
+                    f"[Boot Recovery] FORENSIC SNAPSHOT & TAIL ROLLBACK RÉUSSIS : Queue tronquée purgée. {len(valid_lines)} transactions sécurisées."
+                )
             except Exception as e:
                 self._log_incident("ATOMIC_SWAP_ERROR", {"error": str(e)})
                 return {"status": "ERROR", "mode": "FAIL_CLOSED"}
 
         return {"status": "HEALTHY", "mode": "NORMAL"}
+
 
 ledger_recovery = LedgerBootRecovery()

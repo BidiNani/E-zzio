@@ -2,13 +2,16 @@ import re
 import json
 from collections import Counter
 
+
 def estimate_tokens(text):
     # Approximation robuste pour modèles locaux : 1 token ≈ 4 caractères en moyenne.
     text = str(text or "")
     return max(1, int(len(text) / 4))
 
+
 def normalize_ws(text):
     return re.sub(r"\s+", " ", str(text or "")).strip()
+
 
 def strip_noise(text):
     text = str(text or "")
@@ -16,20 +19,45 @@ def strip_noise(text):
     text = re.sub(r"[ \t]{2,}", " ", text)
     return text.strip()
 
+
 def split_sentences(text):
     text = strip_noise(text)
     parts = re.split(r"(?<=[.!?])\s+", text)
     return [p.strip() for p in parts if len(p.strip()) > 20]
 
+
 def keywords(text, limit=20):
     words = re.findall(r"[A-Za-zÀ-ÿ0-9_\-]{3,}", str(text).lower())
     stop = {
-        "les", "des", "une", "dans", "pour", "avec", "que", "qui", "sur", "pas",
-        "plus", "aux", "est", "sont", "the", "and", "for", "with", "from", "this",
-        "that", "you", "your", "http", "https"
+        "les",
+        "des",
+        "une",
+        "dans",
+        "pour",
+        "avec",
+        "que",
+        "qui",
+        "sur",
+        "pas",
+        "plus",
+        "aux",
+        "est",
+        "sont",
+        "the",
+        "and",
+        "for",
+        "with",
+        "from",
+        "this",
+        "that",
+        "you",
+        "your",
+        "http",
+        "https",
     }
     words = [w for w in words if w not in stop]
     return [w for w, _ in Counter(words).most_common(limit)]
+
 
 def score_sentence(sentence, keyset):
     s = sentence.lower()
@@ -42,6 +70,7 @@ def score_sentence(sentence, keyset):
     if "http" in s or "api" in s or "error" in s or "warning" in s:
         score += 2
     return score
+
 
 def compress_text(text, max_chars=4000, mode="extractive"):
     original = str(text or "")
@@ -95,9 +124,11 @@ def compress_text(text, max_chars=4000, mode="extractive"):
         "keywords": keywords(original, limit=20),
     }
 
+
 def compress_json(obj, max_chars=6000):
     raw = json.dumps(obj, ensure_ascii=False, indent=2)
     return compress_text(raw, max_chars=max_chars, mode="extractive")
+
 
 def compact_api_result(result, max_chars=6000):
     if not isinstance(result, dict):

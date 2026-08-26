@@ -2,6 +2,7 @@ from runtime.contracts.tool_result import ToolResult
 from runtime.execution.decorators import executor
 from runtime.tools.tool_schema import ToolResult
 
+
 @executor
 class CognitiveReflectorExecutor:
     TOOL_NAME = "llm.cognitive_reflection"

@@ -1,21 +1,26 @@
 from pydantic import BaseModel
 
+
 class Prompt(BaseModel):
     text: str
     speed: str = "auto"
+
 
 class MemoryQuery(BaseModel):
     query: str
     limit: int = 10
 
+
 class CreateFileRequest(BaseModel):
     filename: str
     content: str
+
 
 class CloudGetRequest(BaseModel):
     provider: str
     path: str
     params: dict = {}
+
 
 class KnowledgeRequest(BaseModel):
     provider: str
@@ -25,15 +30,18 @@ class KnowledgeRequest(BaseModel):
     compress: bool = True
     params: dict = {}
 
+
 class CompressRequest(BaseModel):
     text: str
     max_chars: int = 4000
     mode: str = "extractive"
 
+
 class ImagePromptRequest(BaseModel):
     prompt: str
     style: str = "cinematic"
     negative: str = ""
+
 
 class VideoPlanRequest(BaseModel):
     prompt: str
@@ -41,14 +49,17 @@ class VideoPlanRequest(BaseModel):
     fps: int = 8
     style: str = "cinematic"
 
+
 class VideoFromFolderRequest(BaseModel):
     folder: str
     fps: int = 8
     output_name: str = "ezzio_video_cpu.mp4"
 
+
 class MobileManifestRequest(BaseModel):
     app_name: str = "E-ZZIO"
     app_id: str = "com.ezzio.local"
+
 
 class VisionPathRequest(BaseModel):
     path: str

@@ -2,11 +2,13 @@
 E-ZZIO V7.45 — Circuit Breaker & Smart Retry Engine
 Empêche le blocage du bot en cas de panne du noyau et gère les réessais intelligents.
 """
+
 import time
-import functools
+
 
 class CircuitBreakerOpenException(Exception):
     pass
+
 
 class CircuitBreaker:
     def __init__(self, failure_threshold: int = 3, recovery_timeout: float = 5.0):
@@ -33,6 +35,7 @@ class CircuitBreaker:
                 return True
             return False
         return True
+
 
 # Instance globale pour le noyau
 kernel_circuit_breaker = CircuitBreaker()

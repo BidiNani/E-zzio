@@ -1,6 +1,7 @@
 from runtime.recovery.executor.base import BaseActionExecutor
 from typing import Dict, Any
 
+
 class QuarantineExecutor(BaseActionExecutor):
     def __init__(self):
         self.quarantined_handlers = set()
@@ -14,7 +15,7 @@ class QuarantineExecutor(BaseActionExecutor):
             "quarantined_handler": handler,
             "previous_state": {"is_quarantined": False, "handler": handler},
             "new_state": {"is_quarantined": True, "handler": handler},
-            "scope": parameters.get("scope", "immediate_isolation")
+            "scope": parameters.get("scope", "immediate_isolation"),
         }
 
     def restore(self, previous_state: Dict[str, Any], context: Dict[str, Any]) -> Dict[str, Any]:

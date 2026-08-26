@@ -7,6 +7,7 @@ from core.model_registry import FAST_MODEL_POOL, load_latency, save_latency
 
 router = APIRouter(prefix="/models", tags=["models"])
 
+
 def _bench_sync(model):
     started = time.perf_counter()
     response = ollama.chat(
@@ -28,6 +29,7 @@ def _bench_sync(model):
         "response": response["message"]["content"],
     }
 
+
 async def bench_one(model):
     try:
         result = await asyncio.wait_for(
@@ -43,9 +45,11 @@ async def bench_one(model):
             "elapsed_ms": 999999,
         }
 
+
 @router.get("/latency")
 async def latency():
     return load_latency()
+
 
 @router.post("/bench/fast")
 async def bench_fast():

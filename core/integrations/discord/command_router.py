@@ -2,6 +2,7 @@
 E-ZZIO V7.44 — Discord Command Router
 Intercepte les messages Discord, vérifie les droits, et achemine l'intention vers l'Agent Core.
 """
+
 import sys
 from pathlib import Path
 
@@ -16,6 +17,7 @@ try:
     from core.agent.task_engine import task_engine
 except ImportError:
     task_engine = None
+
 
 class DiscordCommandRouter:
     def __init__(self, prefix: str = "!bidi"):
@@ -32,11 +34,11 @@ class DiscordCommandRouter:
             return {
                 "status": "REJECTED",
                 "reason": auth_check["reason"],
-                "reply_to_user": "❌ Accès refusé : Identité non reconnue par le Guardian."
+                "reply_to_user": "❌ Accès refusé : Identité non reconnue par le Guardian.",
             }
 
         # 3. Extraction de l'intention
-        raw_intent = message_content[len(self.prefix):].strip()
+        raw_intent = message_content[len(self.prefix) :].strip()
         command_type = raw_intent.split(" ")[0].upper() if raw_intent else "UNKNOWN"
 
         # 4. Routage vers l'Agent Layer (V7.40)
@@ -51,7 +53,8 @@ class DiscordCommandRouter:
             "command_type": command_type,
             "intent_extracted": raw_intent,
             "execution_plan": execution_plan,
-            "reply_to_user": f"🔄 Intention comprise ({command_type}). Initialisation du plan..."
+            "reply_to_user": f"🔄 Intention comprise ({command_type}). Initialisation du plan...",
         }
+
 
 command_router = DiscordCommandRouter()

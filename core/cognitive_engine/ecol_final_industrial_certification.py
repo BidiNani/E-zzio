@@ -3,13 +3,11 @@ E-ZZIO Core — Final Industrial Certification Drill (V7.65)
 Teste les dernières frontières de confiance (incohérence d'ID, corruption de vault,
 échec DPAPI et disaster recovery complet) pour l'obtention objective du 10/10.
 """
+
 import os
-import sys
 import json
 import ctypes
-import hmac
 import logging
-import hashlib
 import shutil
 from pathlib import Path
 from datetime import datetime, timezone
@@ -18,40 +16,40 @@ logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 
+
 class DPAPIVaultError(Exception):
     pass
 
+
 class DATA_BLOB(ctypes.Structure):
-    _fields_ = [("cbData", ctypes.c_ulong),
-                ("pbData", ctypes.POINTER(ctypes.c_ubyte))]
+    _fields_ = [("cbData", ctypes.c_ulong), ("pbData", ctypes.POINTER(ctypes.c_ubyte))]
+
 
 def _dpapi_encrypt(secret_bytes: bytes) -> bytes:
     if os.name != "nt":
         return secret_bytes
     blob_in = DATA_BLOB(len(secret_bytes), ctypes.cast(secret_bytes, ctypes.POINTER(ctypes.c_ubyte)))
     blob_out = DATA_BLOB()
-    res = ctypes.windll.crypt32.CryptProtectData(
-        ctypes.byref(blob_in), "E-ZZIO Final Sandbox", None, None, None, 0, ctypes.byref(blob_out)
-    )
+    res = ctypes.windll.crypt32.CryptProtectData(ctypes.byref(blob_in), "E-ZZIO Final Sandbox", None, None, None, 0, ctypes.byref(blob_out))
     if not res:
         raise DPAPIVaultError("Échec chiffrement DPAPI.")
     enc = ctypes.string_at(blob_out.pbData, blob_out.cbData)
     ctypes.windll.kernel32.LocalFree(blob_out.pbData)
     return enc
 
+
 def _dpapi_decrypt(encrypted_bytes: bytes) -> bytes:
     if os.name != "nt":
         return encrypted_bytes
     blob_in = DATA_BLOB(len(encrypted_bytes), ctypes.cast(encrypted_bytes, ctypes.POINTER(ctypes.c_ubyte)))
     blob_out = DATA_BLOB()
-    res = ctypes.windll.crypt32.CryptUnprotectData(
-        ctypes.byref(blob_in), None, None, None, None, 0, ctypes.byref(blob_out)
-    )
+    res = ctypes.windll.crypt32.CryptUnprotectData(ctypes.byref(blob_in), None, None, None, None, 0, ctypes.byref(blob_out))
     if not res:
         raise DPAPIVaultError("Échec déchiffrement DPAPI (contexte ou intégrité invalide).")
     dec = ctypes.string_at(blob_out.pbData, blob_out.cbData)
     ctypes.windll.kernel32.LocalFree(blob_out.pbData)
     return dec
+
 
 class FinalCertificationManager:
     def __init__(self, sandbox_dir: Path):
@@ -71,9 +69,7 @@ class FinalCertificationManager:
         vault = {
             "active_key_id": key_id,
             "protection_mode": "WINDOWS_DPAPI_USER_CURRENT",
-            "keys": {
-                key_id: {"status": "ACTIVE", "created_at": datetime.now(timezone.utc).isoformat()}
-            }
+            "keys": {key_id: {"status": "ACTIVE", "created_at": datetime.now(timezone.utc).isoformat()}},
         }
         self.vault_path.write_text(self._canonical_dump(vault) + "\n", encoding="utf-8")
         return raw_secret
@@ -88,12 +84,13 @@ class FinalCertificationManager:
 
         if key_id not in vault.get("keys", {}):
             raise DPAPIVaultError(f"FAIL CLOSED : Tentative d'accès à une clé inconnue ou révoquée '{key_id}'.")
-        
+
         key_file = self.keys_dir / f"{key_id}.dpkey"
         if not key_file.exists():
             raise DPAPIVaultError(f"FAIL CLOSED : Perte physique du fichier de clé '{key_id}.dpkey'.")
-        
+
         return _dpapi_decrypt(key_file.read_bytes())
+
 
 def run_final_certification():
     print("[*] Lancement du Final Industrial Certification Drill (V7.65)...")
@@ -110,7 +107,7 @@ def run_final_certification():
     print("\n--- Test 1 : Unknown Key ID Reference (Fail-Closed) ---")
     try:
         manager.initialize("ECOL-KEY-001")
-        manager.get_secret("ECOL-KEY-999") # Clé inexistante
+        manager.get_secret("ECOL-KEY-999")  # Clé inexistante
         test_results["unknown_key_id_rejection"] = "FAIL: Clé inconnue acceptée !"
         print("  [FAIL] Une clé inexistante a été acceptée !")
     except DPAPIVaultError:
@@ -144,7 +141,7 @@ def run_final_certification():
         backup_dir = ROOT_DIR / "runtime" / "security" / "final_backup_sandbox"
         if backup_dir.exists():
             shutil.rmtree(backup_dir)
-        
+
         # Sauvegarde (Backup)
         shutil.copytree(sandbox, backup_dir)
         print("  * Backup complet du coffre et des clés réalisé.")
@@ -177,7 +174,7 @@ def run_final_certification():
     # ÉVALUATION DYNAMIQUE STRICTE DU TRUST REPORT (10/10 SEULEMENT SI TOUT PASSE)
     # -------------------------------------------------------------
     all_passed = all(val == "PASS" for val in test_results.values())
-    
+
     if all_passed:
         overall_status = "CERTIFIED 10/10 ABSOLUTE — ECOL GOVERNANCE"
         score = "10/10"
@@ -191,17 +188,18 @@ def run_final_certification():
         "version": "V7.65",
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "final_trust_boundary_results": test_results,
-        "overall_governance_status": overall_status
+        "overall_governance_status": overall_status,
     }
 
     report_path = ROOT_DIR / "runtime" / "cognition" / "budget" / "ECOL_TRUST_REPORT.json"
     report_path.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    
-    print(f"\n" + "="*65)
+
+    print("\n" + "=" * 65)
     print(f" RÉSULTAT DE LA CERTIFICATION FINALE : {score}")
     print(f" STATUT : {overall_status}")
     print(f" RAPPORT GÉNÉRÉ : {report_path}")
-    print("="*65)
+    print("=" * 65)
+
 
 if __name__ == "__main__":
     run_final_certification()

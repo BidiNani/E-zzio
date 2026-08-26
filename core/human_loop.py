@@ -1,11 +1,12 @@
 from __future__ import annotations
+from core.identity.canonical_identity import CanonicalIdentity
 
 import json
 import os
 import time
 import uuid
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
 STATE_ROOT = PROJECT_ROOT / "state"
@@ -37,7 +38,7 @@ DEFAULT_MEMORY: Dict[str, Any] = {
     "version": "v2.19-pc-human-loop",
     "identity": {
         "name": "E-ZZIO",
-        "role": "ami IA local d'Enrik sur PC",
+        "role": "Entité souveraine gérée via CanonicalIdentity",
         "style": "humain, prudent, utile, honnête, professionnel",
     },
     "doctrine": {
@@ -62,8 +63,10 @@ DEFAULT_MEMORY: Dict[str, Any] = {
     ],
 }
 
+
 def now() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%S")
+
 
 def safe_read_json(path: Path, default: Any) -> Any:
     try:
@@ -73,9 +76,11 @@ def safe_read_json(path: Path, default: Any) -> Any:
         pass
     return default
 
+
 def safe_write_json(path: Path, data: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
 
 def append_journal(event_type: str, payload: Dict[str, Any]) -> Dict[str, Any]:
     event = {
@@ -97,6 +102,7 @@ def append_journal(event_type: str, payload: Dict[str, Any]) -> Dict[str, Any]:
 
     return event
 
+
 def load_memory() -> Dict[str, Any]:
     memory = safe_read_json(MEMORY_PATH, DEFAULT_MEMORY)
     changed = False
@@ -111,10 +117,12 @@ def load_memory() -> Dict[str, Any]:
 
     return memory
 
+
 def save_memory(memory: Dict[str, Any]) -> Dict[str, Any]:
     memory["version"] = "v2.19-pc-human-loop"
     safe_write_json(MEMORY_PATH, memory)
     return memory
+
 
 def journal_tail(limit: int = 20) -> Dict[str, Any]:
     limit = max(1, min(int(limit), 200))
@@ -143,6 +151,7 @@ def journal_tail(limit: int = 20) -> Dict[str, Any]:
         "journal_path": str(JOURNAL_PATH),
     }
 
+
 def project_health() -> Dict[str, Any]:
     result: Dict[str, Any] = {
         "ok": True,
@@ -159,10 +168,12 @@ def project_health() -> Dict[str, Any]:
             result["ok"] = False
     except Exception as exc:
         result["ok"] = False
-        result["errors"].append({
-            "where": "maintenance_status",
-            "error": str(exc),
-        })
+        result["errors"].append(
+            {
+                "where": "maintenance_status",
+                "error": str(exc),
+            }
+        )
 
     try:
         from core.pc_model_router import router_status
@@ -179,12 +190,15 @@ def project_health() -> Dict[str, Any]:
             result["ok"] = False
     except Exception as exc:
         result["ok"] = False
-        result["errors"].append({
-            "where": "router_status",
-            "error": str(exc),
-        })
+        result["errors"].append(
+            {
+                "where": "router_status",
+                "error": str(exc),
+            }
+        )
 
     return result
+
 
 def perceive(context: str = "") -> Dict[str, Any]:
     memory = load_memory()
@@ -211,6 +225,7 @@ def perceive(context: str = "") -> Dict[str, Any]:
     append_journal("perception", perception)
 
     return perception
+
 
 def choose_intention(perception: Dict[str, Any], user_goal: str = "") -> Dict[str, Any]:
     health = perception.get("health", {})
@@ -250,6 +265,7 @@ def choose_intention(perception: Dict[str, Any], user_goal: str = "") -> Dict[st
 
     return intention
 
+
 def build_plan(perception: Dict[str, Any], intention: Dict[str, Any]) -> Dict[str, Any]:
     maintenance = (perception.get("health") or {}).get("maintenance") or {}
     bad_count = int(maintenance.get("bad_count", 0) or 0)
@@ -257,47 +273,57 @@ def build_plan(perception: Dict[str, Any], intention: Dict[str, Any]) -> Dict[st
 
     steps: List[Dict[str, Any]] = []
 
-    steps.append({
-        "id": "verify_maintenance",
-        "label": "Vérifier l'audit maintenance",
-        "safe": True,
-        "destructive": False,
-        "suggested_endpoint": "/maintenance/status",
-    })
+    steps.append(
+        {
+            "id": "verify_maintenance",
+            "label": "Vérifier l'audit maintenance",
+            "safe": True,
+            "destructive": False,
+            "suggested_endpoint": "/maintenance/status",
+        }
+    )
 
-    steps.append({
-        "id": "verify_brain_gateway",
-        "label": "Vérifier le cerveau routeur PC",
-        "safe": True,
-        "destructive": False,
-        "suggested_endpoint": "/api/brain/status",
-    })
+    steps.append(
+        {
+            "id": "verify_brain_gateway",
+            "label": "Vérifier le cerveau routeur PC",
+            "safe": True,
+            "destructive": False,
+            "suggested_endpoint": "/api/brain/status",
+        }
+    )
 
     if bad_count > 0:
-        steps.append({
-            "id": "inspect_bad_items",
-            "label": "Inspecter les fichiers signalés par l'audit",
-            "safe": True,
-            "destructive": False,
-            "suggested_endpoint": "/maintenance/audit",
-        })
+        steps.append(
+            {
+                "id": "inspect_bad_items",
+                "label": "Inspecter les fichiers signalés par l'audit",
+                "safe": True,
+                "destructive": False,
+                "suggested_endpoint": "/maintenance/audit",
+            }
+        )
 
     if dust_count > 0:
-        steps.append({
-            "id": "dust_dry_run_only",
-            "label": "Préparer un nettoyage poussière en dry-run uniquement",
+        steps.append(
+            {
+                "id": "dust_dry_run_only",
+                "label": "Préparer un nettoyage poussière en dry-run uniquement",
+                "safe": True,
+                "destructive": False,
+                "suggested_script": "G:/AI/E-zzio/scripts/ezzio_clean_dust.ps1",
+            }
+        )
+
+    steps.append(
+        {
+            "id": "record_state",
+            "label": "Journaliser l'état et rester prêt",
             "safe": True,
             "destructive": False,
-            "suggested_script": "G:/AI/E-zzio/scripts/ezzio_clean_dust.ps1",
-        })
-
-    steps.append({
-        "id": "record_state",
-        "label": "Journaliser l'état et rester prêt",
-        "safe": True,
-        "destructive": False,
-        "suggested_file": str(JOURNAL_PATH),
-    })
+            "suggested_file": str(JOURNAL_PATH),
+        }
+    )
 
     plan = {
         "ok": True,
@@ -317,12 +343,14 @@ def build_plan(perception: Dict[str, Any], intention: Dict[str, Any]) -> Dict[st
     append_journal("plan", plan)
     return plan
 
+
 def execute_safe_step(step: Dict[str, Any]) -> Dict[str, Any]:
     step_id = step.get("id")
 
     if step_id == "verify_maintenance":
         try:
             from core.project_janitor import maintenance_status
+
             data = maintenance_status()
             return {
                 "ok": bool(data.get("ok")),
@@ -340,6 +368,7 @@ def execute_safe_step(step: Dict[str, Any]) -> Dict[str, Any]:
     if step_id == "verify_brain_gateway":
         try:
             from core.pc_model_router import router_status
+
             data = router_status()
             return {
                 "ok": bool(data.get("ok")),
@@ -361,6 +390,7 @@ def execute_safe_step(step: Dict[str, Any]) -> Dict[str, Any]:
     if step_id == "inspect_bad_items":
         try:
             from core.project_janitor import audit_project
+
             data = audit_project()
             return {
                 "ok": bool(data.get("ok")),
@@ -379,6 +409,7 @@ def execute_safe_step(step: Dict[str, Any]) -> Dict[str, Any]:
     if step_id == "dust_dry_run_only":
         try:
             from core.project_janitor import quarantine_dust
+
             data = quarantine_dust(apply=False)
             return {
                 "ok": bool(data.get("ok")),
@@ -408,6 +439,7 @@ def execute_safe_step(step: Dict[str, Any]) -> Dict[str, Any]:
         "action": "skipped_unknown_safe_step",
     }
 
+
 def tick(user_goal: str = "", context: str = "", execute: bool = True) -> Dict[str, Any]:
     started = time.time()
 
@@ -420,12 +452,14 @@ def tick(user_goal: str = "", context: str = "", execute: bool = True) -> Dict[s
     if execute:
         for step in plan.get("steps", []):
             if not step.get("safe", False) or step.get("destructive", False):
-                results.append({
-                    "ok": False,
-                    "step_id": step.get("id"),
-                    "skipped": True,
-                    "reason": "unsafe_or_destructive",
-                })
+                results.append(
+                    {
+                        "ok": False,
+                        "step_id": step.get("id"),
+                        "skipped": True,
+                        "reason": "unsafe_or_destructive",
+                    }
+                )
                 continue
             results.append(execute_safe_step(step))
 
@@ -452,12 +486,14 @@ def tick(user_goal: str = "", context: str = "", execute: bool = True) -> Dict[s
     append_journal("tick", output)
     return output
 
+
 def summarize_tick(ok: bool, intention: Dict[str, Any], results: List[Dict[str, Any]]) -> str:
     goal = intention.get("goal", "rester stable")
     if ok:
         return f"E-ZZIO est calme et prêt : {goal}. Les vérifications sûres sont passées."
     failed = [item for item in results if not item.get("ok")]
     return f"E-ZZIO reste prudent : {goal}. {len(failed)} point(s) demandent inspection."
+
 
 def reflect(note: str = "") -> Dict[str, Any]:
     memory = load_memory()
@@ -480,6 +516,7 @@ def reflect(note: str = "") -> Dict[str, Any]:
 
     append_journal("reflection", reflection)
     return reflection
+
 
 def status() -> Dict[str, Any]:
     memory = load_memory()

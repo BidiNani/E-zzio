@@ -3,6 +3,7 @@ import aiosqlite
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
+
 class EvidenceStore:
     def __init__(self, db_path: str = "runtime/evidence/evidence.db"):
         self.db_path = db_path
@@ -26,9 +27,17 @@ class EvidenceStore:
             await db.execute("CREATE INDEX IF NOT EXISTS idx_query ON evidence(query);")
             await db.commit()
 
-    async def store(self, query: str, provider: str, mode: str, data: Dict[str, Any],
-                    task_id: Optional[str] = None, user_id: Optional[str] = None,
-                    channel_id: Optional[str] = None, created_at: Optional[str] = None) -> int:
+    async def store(
+        self,
+        query: str,
+        provider: str,
+        mode: str,
+        data: Dict[str, Any],
+        task_id: Optional[str] = None,
+        user_id: Optional[str] = None,
+        channel_id: Optional[str] = None,
+        created_at: Optional[str] = None,
+    ) -> int:
         """Enregistre une preuve d'audit en garantissant le timestamp created_at."""
         now_ts = created_at or datetime.now(timezone.utc).isoformat()
         async with aiosqlite.connect(self.db_path) as db:
@@ -37,7 +46,7 @@ class EvidenceStore:
                 INSERT INTO evidence (query, provider, mode, data, task_id, user_id, channel_id, created_at)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """,
-                (query, provider, mode, json.dumps(data), task_id, user_id, channel_id, now_ts)
+                (query, provider, mode, json.dumps(data), task_id, user_id, channel_id, now_ts),
             )
             await db.commit()
             return cursor.lastrowid
@@ -62,10 +71,7 @@ class EvidenceStore:
         """Recherche les traces d'investigation par mot-clé."""
         async with aiosqlite.connect(self.db_path) as db:
             db.row_factory = aiosqlite.Row
-            cursor = await db.execute(
-                "SELECT * FROM evidence WHERE query LIKE ? ORDER BY id DESC LIMIT ?",
-                (f"%{query}%", limit)
-            )
+            cursor = await db.execute("SELECT * FROM evidence WHERE query LIKE ? ORDER BY id DESC LIMIT ?", (f"%{query}%", limit))
             rows = await cursor.fetchall()
             results = []
             for r in rows:

@@ -9,9 +9,11 @@ from core.cloud_connectors import (
 
 router = APIRouter(prefix="/cloud", tags=["cloud"])
 
+
 @router.get("/status")
 async def cloud_status():
     return connectors_status()
+
 
 @router.post("/get")
 async def cloud_get(req: CloudGetRequest):

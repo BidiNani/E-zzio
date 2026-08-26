@@ -1,0 +1,17 @@
+{
+  "evidence_id": "EVID-20260823-F2D1C00B",
+  "task_id": "L3_-20260823-33346156",
+  "timestamp_utc": "2026-08-23T14:00:57.918721+00:00",
+  "provider": "concurrent_audit",
+  "model_name": "ezzio_kernel",
+  "agent_version": "ezzio-federated-v1.0",
+  "capability": "memory_ingestion",
+  "policy_status": "APPROVED",
+  "input_context_hash": "9d8d57e3f0cbab05454489306e27aca6636b2879aa0e1099f3c161c89760a8cb",
+  "output_payload_hash": "569a42e3d952b653b17f0c7365f528fd94b3acd950282a704072212e55c339c8",
+  "execution_duration_ms": 10.0,
+  "verification_status": "VERIFIED_VALID",
+  "raw_payload_snippet": "4de409dbb3ebb1a4452c303741b47685b8968350c79026470a66b2b2c31bdf0b",
+  "ledger_decision_id": "DEC-20260823-BC280C0D",
+  "envelope_signature_hmac": "468d79e8523e10fa240ae5ae10e6cda3590b8d22948e78388fda5494dc1458e1"
+}

@@ -5,6 +5,7 @@ from pathlib import Path
 TELEMETRY_DIR = Path("G:/AI/E-zzio/registry/telemetry")
 EVENTS_PATH = TELEMETRY_DIR / "events.jsonl"
 
+
 def log_event(event_type, payload=None):
     TELEMETRY_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -18,6 +19,7 @@ def log_event(event_type, payload=None):
         f.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
     return entry
+
 
 def read_events(limit=100):
     if not EVENTS_PATH.exists():

@@ -37,26 +37,38 @@ for key, value in {
 }.items():
     os.environ[key] = value
 
+
 def intent_of(text: str, has_image: bool) -> str:
     t = (text or "").lower()
 
     if has_image:
         return "vision"
 
-    if any(w in t for w in [
-        "cherche", "recherche", "documente", "source", "sources",
-        "wikipedia", "infos sur", "trouve des infos"
-    ]):
+    if any(w in t for w in ["cherche", "recherche", "documente", "source", "sources", "wikipedia", "infos sur", "trouve des infos"]):
         return "research"
 
-    if any(w in t for w in [
-        "audit", "maintenance", "système", "systeme", "actions en attente",
-        "confirme", "annule", "état rapide", "etat rapide", "configuration",
-        "combien de ram", "gpu", "cpu"
-    ]):
+    if any(
+        w in t
+        for w in [
+            "audit",
+            "maintenance",
+            "système",
+            "systeme",
+            "actions en attente",
+            "confirme",
+            "annule",
+            "état rapide",
+            "etat rapide",
+            "configuration",
+            "combien de ram",
+            "gpu",
+            "cpu",
+        ]
+    ):
         return "system"
 
     return "chat"
+
 
 def ollama(prompt: str, model: str | None = None, timeout: int = 240) -> Dict[str, Any]:
     payload = {
@@ -88,18 +100,21 @@ def ollama(prompt: str, model: str | None = None, timeout: int = 240) -> Dict[st
         "raw": data,
     }
 
+
 def web_research(query: str) -> Dict[str, Any]:
     q = (query or "").strip()
     if not q:
         return {"ok": False, "reply": "Recherche vide.", "sources": []}
 
-    url = "https://fr.wikipedia.org/w/api.php?" + urllib.parse.urlencode({
-        "action": "opensearch",
-        "search": q,
-        "limit": "5",
-        "namespace": "0",
-        "format": "json",
-    })
+    url = "https://fr.wikipedia.org/w/api.php?" + urllib.parse.urlencode(
+        {
+            "action": "opensearch",
+            "search": q,
+            "limit": "5",
+            "namespace": "0",
+            "format": "json",
+        }
+    )
 
     try:
         with urllib.request.urlopen(url, timeout=15) as response:
@@ -168,6 +183,7 @@ Demande :
             "model": fallback["model"],
         }
 
+
 def chat_answer(text: str, intent: str) -> Dict[str, Any]:
     if is_user_correction(text):
         return {
@@ -200,6 +216,7 @@ Message utilisateur :
     model = FAST_MODEL if intent == "system" else CHAT_MODEL
     return ollama(prompt, model, timeout=240)
 
+
 def vision_answer(path: str, text: str) -> Dict[str, Any]:
     try:
         from core.smart_vision import analyze_path
@@ -224,11 +241,13 @@ def vision_answer(path: str, text: str) -> Dict[str, Any]:
             "error": str(exc),
         }
 
+
 def save_upload(filename: str, content: bytes) -> Path:
     safe = "".join(c if c.isalnum() or c in "._-" else "_" for c in (filename or "image.png"))
     target = UPLOAD_DIR / f"chat_{time.strftime('%Y%m%d_%H%M%S')}_{safe}"
     target.write_bytes(content)
     return target
+
 
 def handle_message(text: str = "", image_path: str | None = None) -> Dict[str, Any]:
     started = time.time()
@@ -241,12 +260,7 @@ def handle_message(text: str = "", image_path: str | None = None) -> Dict[str, A
     else:
         result = chat_answer(text, intent)
 
-    raw_reply = (
-        result.get("reply")
-        or result.get("analysis")
-        or result.get("message")
-        or "Réponse vide."
-    )
+    raw_reply = result.get("reply") or result.get("analysis") or result.get("message") or "Réponse vide."
 
     reply = sanitize_reply(raw_reply, text)
 

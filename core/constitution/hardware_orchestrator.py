@@ -3,9 +3,8 @@ E-ZZIO Core — Hardware Orchestration & Resource Governor (V8.2)
 Orchestre activement les threads du Ryzen 9, surveille la pression RAM
 et ajuste dynamiquement les quotas d'exécution des workers d'E-zzio.
 """
-import os
+
 import sys
-import psutil
 import logging
 from pathlib import Path
 from typing import Dict, Any
@@ -19,9 +18,12 @@ from core.cognition.ecol_universal_enforcement import EcolUniversalGateway
 
 logger = logging.getLogger(__name__)
 
+
 class ResourceExhaustionError(Exception):
     """Levée en cas de pression critique sur la RAM ou le CPU (Fail-Closed)."""
+
     pass
+
 
 class HardwareOrchestrator:
     def __init__(self):
@@ -55,7 +57,7 @@ class HardwareOrchestrator:
             "task_description": f"Allocation ressources pour '{task_name}' (Threads: {effective_threads})",
             "priority": "normal" if not is_gaming else "low",
             "risk_level": "low",
-            "estimated_cost": effective_threads * 10
+            "estimated_cost": effective_threads * 10,
         }
 
         def execute_allocation():
@@ -65,17 +67,14 @@ class HardwareOrchestrator:
                 "profile_enforced": telemetry["profile"],
                 "ram_status_gb": available_ram_gb,
                 "gpu_status": telemetry["gpu_policy"],
-                "status": "RESOURCES_ALLOCATED_SUCCESS"
+                "status": "RESOURCES_ALLOCATED_SUCCESS",
             }
 
         # Validation No-Bypass via ECOL
-        result = self.gateway.execute_via_gateway(
-            action="HARDWARE_RESOURCE_ALLOCATE",
-            payload=payload,
-            target_func=execute_allocation
-        )
+        result = self.gateway.execute_via_gateway(action="HARDWARE_RESOURCE_ALLOCATE", payload=payload, target_func=execute_allocation)
 
         return result
+
 
 def test_hardware_orchestrator():
     print("[*] Test de l'Hardware Orchestration Engine (V8.2)...")
@@ -89,9 +88,10 @@ def test_hardware_orchestrator():
     except Exception as e:
         print(f"  [FAIL] Erreur : {e}")
 
-    print("\n" + "="*65)
+    print("\n" + "=" * 65)
     print(" HARDWARE ORCHESTRATION ENGINE (V8.2) : ACTIVE & COEXISTENCE-AWARE")
-    print("="*65)
+    print("=" * 65)
+
 
 if __name__ == "__main__":
     test_hardware_orchestrator()

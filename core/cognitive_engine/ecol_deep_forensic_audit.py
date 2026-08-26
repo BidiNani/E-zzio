@@ -1,9 +1,9 @@
 """
 E-ZZIO V7.61.2 — Full Integration Forensic Audit
-Vérifie la syntaxe, les imports, l'exposition des points legacy et l'intégrité 
+Vérifie la syntaxe, les imports, l'exposition des points legacy et l'intégrité
 du registre budgétaire en mode lecture seule (Correction syntaxique).
 """
-import os
+
 import ast
 import json
 import re
@@ -14,10 +14,11 @@ ROOT_DIR = Path(r"G:\AI\E-zzio")
 CORE_COG_DIR = ROOT_DIR / "core" / "cognition"
 OUTPUT_REPORT = ROOT_DIR / "runtime" / "audit" / "system" / "ecol_deep_forensic_audit_report.json"
 
+
 def audit_syntax_and_imports():
     print("[*] Étape 1/4 : Vérification de la syntaxe et des imports des modules ECOL...")
     module_status = {}
-    
+
     if not CORE_COG_DIR.exists():
         return {"error": "Répertoire core/cognition introuvable."}
 
@@ -26,9 +27,9 @@ def audit_syntax_and_imports():
         try:
             with open(path, "r", encoding="utf-8") as f:
                 code_content = f.read()
-            
+
             ast.parse(code_content, filename=str(path))
-            
+
             imports = []
             tree = ast.parse(code_content)
             for node in ast.walk(tree):
@@ -39,18 +40,12 @@ def audit_syntax_and_imports():
                     module_str = node.module if node.module else ""
                     imports.append(module_str)
 
-            module_status[mod_name] = {
-                "syntax_valid": True,
-                "imports": list(set(imports)),
-                "size_bytes": path.stat().st_size
-            }
+            module_status[mod_name] = {"syntax_valid": True, "imports": list(set(imports)), "size_bytes": path.stat().st_size}
         except Exception as e:
-            module_status[mod_name] = {
-                "syntax_valid": False,
-                "error": str(e)
-            }
-            
+            module_status[mod_name] = {"syntax_valid": False, "error": str(e)}
+
     return module_status
+
 
 def audit_legacy_bypasses():
     print("[*] Étape 2/4 : Cartographie des contournements potentiels (Appels directs hors ECOL)...")
@@ -73,19 +68,17 @@ def audit_legacy_bypasses():
 
                 for pattern in forbidden_patterns:
                     if re.search(pattern, content, re.IGNORECASE):
-                        bypasses.append({
-                            "file": rel_path,
-                            "trigger": pattern
-                        })
+                        bypasses.append({"file": rel_path, "trigger": pattern})
             except Exception:
                 continue
 
     return bypasses
 
+
 def audit_ledger_integrity():
     print("[*] Étape 3/4 : Audit de la structure et de l'intégrité du Token Ledger...")
     ledger_path = ROOT_DIR / "runtime" / "cognition" / "budget" / "cognitive_budget_ledger.jsonl"
-    
+
     if not ledger_path.exists():
         return {"status": "MISSING", "message": "Le registre budgétaire n'a pas encore été initialisé."}
 
@@ -100,12 +93,8 @@ def audit_ledger_integrity():
     except Exception:
         valid_format = False
 
-    return {
-        "status": "EXISTS",
-        "records_count": records_count,
-        "json_format_valid": valid_format,
-        "chained_hash_implemented": False
-    }
+    return {"status": "EXISTS", "records_count": records_count, "json_format_valid": valid_format, "chained_hash_implemented": False}
+
 
 def run_forensic_audit():
     syntax_results = audit_syntax_and_imports()
@@ -117,7 +106,7 @@ def run_forensic_audit():
         "modules_health": syntax_results,
         "unrouted_legacy_calls": bypass_results,
         "ledger_audit": ledger_results,
-        "governance_status": "PENDING_CHAINED_HASH_UPGRADE"
+        "governance_status": "PENDING_CHAINED_HASH_UPGRADE",
     }
 
     OUTPUT_REPORT.parent.mkdir(parents=True, exist_ok=True)
@@ -139,6 +128,7 @@ def run_forensic_audit():
         print(" [OK] Aucun appel direct brut détecté dans le périmètre analysé.")
     print("=" * 65)
     print(f" Rapport forensic exporté : {OUTPUT_REPORT}")
+
 
 if __name__ == "__main__":
     run_forensic_audit()

@@ -1,8 +1,9 @@
 """
 E-ZZIO V9.1.3 — Proposal Engine
-Transforme les opportunités qualifiées en propositions d'évolution formelles 
+Transforme les opportunités qualifiées en propositions d'évolution formelles
 avec plans de rollback, estimation de coûts et traçabilité dans l'Evolution Ledger.
 """
+
 import json
 from pathlib import Path
 from datetime import datetime, timezone
@@ -10,6 +11,7 @@ from runtime.evolution.opportunity_detector import OpportunityDetector
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 EVOLUTION_LEDGER = ROOT_DIR / "runtime" / "evolution" / "evolution_ledger.jsonl"
+
 
 class ProposalEngine:
     def __init__(self):
@@ -29,7 +31,7 @@ class ProposalEngine:
 
     def _build_formal_proposal(self, opportunity: dict) -> dict:
         opp_id = opportunity.get("opportunity_id")
-        date_str = datetime.now(timezone.utc).strftime('%Y%m%d')
+        date_str = datetime.now(timezone.utc).strftime("%Y%m%d")
         proposal_id = f"EVOL-{date_str}-{opp_id.split('-')[-1]}"
 
         # Détermination des coûts et du plan de rollback selon la catégorie
@@ -52,7 +54,7 @@ class ProposalEngine:
             "risk_level": opportunity.get("risk_level"),
             "rollback_plan": rollback,
             "requires_validation": True,
-            "status": "PENDING_VALIDATION"
+            "status": "PENDING_VALIDATION",
         }
 
     def _log_to_ledger(self, proposal: dict):
@@ -68,8 +70,9 @@ class ProposalEngine:
             "total_proposals_generated": len(proposals),
             "proposals": proposals,
             "ledger_path": str(EVOLUTION_LEDGER.relative_to(ROOT_DIR)),
-            "status": "PROPOSALS_SEALED"
+            "status": "PROPOSALS_SEALED",
         }
+
 
 if __name__ == "__main__":
     engine = ProposalEngine()

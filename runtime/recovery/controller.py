@@ -6,9 +6,10 @@ from runtime.events.bus import Event
 from runtime.recovery.actions import RecoveryActions
 from runtime.incidents.registry import IncidentRegistry
 
+
 class RecoveryController:
     """
-    Système immunitaire du Runtime. 
+    Système immunitaire du Runtime.
     Écoute le bus d'événements et déclenche des actions correctives automatiques.
     """
 
@@ -26,10 +27,10 @@ class RecoveryController:
         actor = event.actor
         exec_id = event.correlation_id
         logging.warning(f"[RECOVERY] Intervention suite au Timeout de l'acteur '{actor}' (Exec: {exec_id})")
-        
+
         # 1. Enregistrement incident
         self.incidents.report("ActiveRecoveryTriggered", actor, "MEDIUM", {"action": "WorkspacePurge", "exec_id": exec_id})
-        
+
         # 2. Remédiation : Nettoyage de l'espace de travail
         RecoveryActions.purge_execution_workspace(exec_id)
 
@@ -46,10 +47,12 @@ class RecoveryController:
         RecoveryActions.purge_execution_workspace(exec_id)
 
         # 3. Émission d'un événement de résolution sur le bus
-        self.context.bus.publish(Event(
-            type="AgentQuarantined",
-            actor="RecoveryController",
-            source="recovery.controller",
-            payload={"target_actor": actor, "reason": "Automatic recovery remediation"},
-            correlation_id=exec_id
-        ))
+        self.context.bus.publish(
+            Event(
+                type="AgentQuarantined",
+                actor="RecoveryController",
+                source="recovery.controller",
+                payload={"target_actor": actor, "reason": "Automatic recovery remediation"},
+                correlation_id=exec_id,
+            )
+        )

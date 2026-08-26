@@ -2,6 +2,7 @@
 E-ZZIO V9.7 — Personal Knowledge Manager
 Gère l'apprentissage explicite (Observation -> Pattern -> Confirmation -> Mémoire Permanente).
 """
+
 import json
 from pathlib import Path
 from datetime import datetime, timezone
@@ -9,15 +10,16 @@ from datetime import datetime, timezone
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 KNOWLEDGE_DIR = ROOT_DIR / "runtime" / "knowledge"
 
+
 class PersonalKnowledgeManager:
     def __init__(self):
         self.pref_dir = KNOWLEDGE_DIR / "preferences"
         self.val_dir = KNOWLEDGE_DIR / "validation"
         self.proj_dir = KNOWLEDGE_DIR / "projects"
-        
+
         self.pending_file = self.val_dir / "pending_confirmations.json"
         self.confirmed_file = self.pref_dir / "confirmed_preferences.json"
-        
+
         self._ensure_files()
 
     def _ensure_files(self):
@@ -33,7 +35,7 @@ class PersonalKnowledgeManager:
             "timestamp_utc": datetime.now(timezone.utc).isoformat(),
             "description": description,
             "proposed_value": proposed_value,
-            "status": "PENDING_USER_CONFIRMATION"
+            "status": "PENDING_USER_CONFIRMATION",
         }
         pending[pattern_id] = entry
         self.pending_file.write_text(json.dumps(pending, indent=2, ensure_ascii=False), encoding="utf-8")

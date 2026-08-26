@@ -28,10 +28,5 @@
     "ram": "32GB DDR4 3200MHz",
     "storage": "NVMe SSD (G:\\AI\\E-zzio)"
   },
-  "architecture_tier": "V8.8-ORGANISM-RECONCILIATION",
-  "physical_birth": {
-    "timestamp": "2026-06-09T18:19:57",
-    "artifact": "memory/context.json",
-    "hash_at_birth": "9e1ab83190bccc9ea53ba40f856fbe5e5718bbc45eaf43a0cbd4f42fd4f01657"
-  }
+  "architecture_tier": "V8.8-ORGANISM-RECONCILIATION"
 }

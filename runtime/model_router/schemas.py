@@ -1,15 +1,17 @@
 from dataclasses import dataclass, field
-from typing import Optional, Dict, Any, List
+from typing import Optional, Dict, Any
+
 
 @dataclass
 class ModelRequest:
     prompt: str
-    task: str = "general"               # general, code, vision, reasoning
-    complexity: str = "low"            # low, medium, high, critical
-    latency: str = "normal"             # fast, normal
-    budget: str = "local_first"         # local_first, cloud_first, offline_only
+    task: str = "general"  # general, code, vision, reasoning
+    complexity: str = "low"  # low, medium, high, critical
+    latency: str = "normal"  # fast, normal
+    budget: str = "local_first"  # local_first, cloud_first, offline_only
     system_prompt: Optional[str] = None
     parameters: Dict[str, Any] = field(default_factory=dict)
+
 
 @dataclass
 class ModelResponse:

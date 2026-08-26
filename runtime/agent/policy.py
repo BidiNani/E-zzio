@@ -1,8 +1,10 @@
 from enum import Enum
 
+
 class PolicyDecision(str, Enum):
     ALLOW = "ALLOW"
     DENY = "DENY"
+
 
 class AgentPolicy:
     SAFE_CAPABILITIES = {"sandbox.execute_python"}

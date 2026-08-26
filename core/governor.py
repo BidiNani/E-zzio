@@ -1,20 +1,25 @@
-import re
-
 DESTRUCTIVE_WORDS = [
-    "supprimer", "delete", "effacer", "remove", "rm ", "del ",
-    "format", "formatage", "wipe", "kill", "stop-process",
-    "nettoie tout", "reset", "réinitialise", "reinitialise"
+    "supprimer",
+    "delete",
+    "effacer",
+    "remove",
+    "rm ",
+    "del ",
+    "format",
+    "formatage",
+    "wipe",
+    "kill",
+    "stop-process",
+    "nettoie tout",
+    "reset",
+    "réinitialise",
+    "reinitialise",
 ]
 
-SYSTEM_WORDS = [
-    "registre", "system32", "windows", "program files", "services",
-    "admin", "droits", "firewall", "driver", "gpu", "cuda"
-]
+SYSTEM_WORDS = ["registre", "system32", "windows", "program files", "services", "admin", "droits", "firewall", "driver", "gpu", "cuda"]
 
-TECH_WORDS = [
-    "powershell", "python", "fastapi", "svelte", "api", "script",
-    "backend", "frontend", "uvicorn", "ollama", "json", "logs"
-]
+TECH_WORDS = ["powershell", "python", "fastapi", "svelte", "api", "script", "backend", "frontend", "uvicorn", "ollama", "json", "logs"]
+
 
 def analyze_request(text):
     lowered = str(text).lower()
@@ -77,6 +82,7 @@ def analyze_request(text):
         "needs_confirmation": risk == "high",
         "recommended_mode": "deep" if intent in ["strategic_autonomy"] else "normal",
     }
+
 
 def tactical_plan(text):
     analysis = analyze_request(text)

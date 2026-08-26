@@ -2,9 +2,11 @@
 E-ZZIO V7.37 — Runtime Profiler
 Mesure le temps d'exécution et la consommation mémoire (RAM) d'un module ou d'une fonction.
 """
+
 import time
 import tracemalloc
 from typing import Callable
+
 
 class RuntimeProfiler:
     @staticmethod
@@ -25,13 +27,7 @@ class RuntimeProfiler:
 
         peak_mb = peak_mem / (1024 * 1024)
 
-        return {
-            "result": result,
-            "error": error,
-            "metrics": {
-                "execution_time": round(exec_time, 6),
-                "memory_mb": round(peak_mb, 4)
-            }
-        }
+        return {"result": result, "error": error, "metrics": {"execution_time": round(exec_time, 6), "memory_mb": round(peak_mb, 4)}}
+
 
 runtime_profiler = RuntimeProfiler()

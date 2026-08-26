@@ -1,9 +1,11 @@
 from enum import Enum
 from .capability.registry import CapabilityRegistry
 
+
 class CapabilityResult(str, Enum):
     VALID = "VALID"
     INVALID = "INVALID"
+
 
 class CapabilityGuard:
     def __init__(self):

@@ -57,17 +57,11 @@ class TaskManager:
         }
 
         with storage.get_connection(DB_PATH) as conn:
-            columns = {
-                row[1]
-                for row in conn.execute("PRAGMA table_info(governed_tasks)")
-            }
+            columns = {row[1] for row in conn.execute("PRAGMA table_info(governed_tasks)")}
 
         missing = required - columns
         if missing:
-            raise RuntimeError(
-                "tasks.db incompatible ; colonnes absentes : "
-                f"{sorted(missing)}"
-            )
+            raise RuntimeError(f"tasks.db incompatible ; colonnes absentes : {sorted(missing)}")
 
     def create_task(
         self,
@@ -172,16 +166,11 @@ class TaskManager:
         allowed = ALLOWED_TRANSITIONS.get(current_state, set())
 
         if next_state not in allowed:
-            raise ValueError(
-                f"Transition refusée : {current_state} → {next_state}"
-            )
+            raise ValueError(f"Transition refusée : {current_state} → {next_state}")
 
         if current_state == "AWAITING_APPROVAL" and next_state == "RUNNING":
             if not approval_id:
-                raise PermissionError(
-                    "approval_id obligatoire pour "
-                    "AWAITING_APPROVAL → RUNNING."
-                )
+                raise PermissionError("approval_id obligatoire pour AWAITING_APPROVAL → RUNNING.")
 
         with storage.get_connection(DB_PATH) as conn:
             conn.execute(

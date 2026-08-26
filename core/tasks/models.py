@@ -4,6 +4,7 @@ from enum import Enum
 from typing import Any, Dict, List, Optional
 import uuid
 
+
 class TaskState(str, Enum):
     DRAFT = "DRAFT"
     SCOPED = "SCOPED"
@@ -14,6 +15,7 @@ class TaskState(str, Enum):
     COMPLETED = "COMPLETED"
     FAILED = "FAILED"
     CANCELLED = "CANCELLED"
+
 
 ALLOWED_TRANSITIONS: Dict[TaskState, List[TaskState]] = {
     TaskState.DRAFT: [TaskState.SCOPED, TaskState.CANCELLED],
@@ -27,8 +29,10 @@ ALLOWED_TRANSITIONS: Dict[TaskState, List[TaskState]] = {
     TaskState.CANCELLED: [],
 }
 
+
 class InvalidStateTransitionError(Exception):
     pass
+
 
 @dataclass
 class Task:
@@ -45,8 +49,6 @@ class Task:
 
     def transition_to(self, new_state: TaskState) -> None:
         if new_state not in ALLOWED_TRANSITIONS.get(self.state, []):
-            raise InvalidStateTransitionError(
-                f"Transition interdite : {self.state.value} -> {new_state.value}"
-            )
+            raise InvalidStateTransitionError(f"Transition interdite : {self.state.value} -> {new_state.value}")
         self.state = new_state
         self.updated_at = datetime.now(timezone.utc).isoformat()

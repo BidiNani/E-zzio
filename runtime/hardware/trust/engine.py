@@ -2,6 +2,7 @@ import time
 import json
 from pathlib import Path
 
+
 class TrustEngine:
     def __init__(self, state_file: Path):
         self.state_file = state_file
@@ -9,12 +10,7 @@ class TrustEngine:
 
     def _load_state(self) -> dict:
         if not self.state_file.exists():
-            return {
-                "score": 100,
-                "state": "TRUSTED",
-                "confidence": "HIGH",
-                "history": []
-            }
+            return {"score": 100, "state": "TRUSTED", "confidence": "HIGH", "history": []}
         try:
             return json.loads(self.state_file.read_text(encoding="utf-8"))
         except (json.JSONDecodeError, OSError):
@@ -25,12 +21,12 @@ class TrustEngine:
 
     def evaluate_trust(self, ledger_valid: bool, snapshot_matched: bool, drifts: list) -> dict:
         """
-        Calcule le Trust Score, évalue la machine à états de quarantaine 
+        Calcule le Trust Score, évalue la machine à états de quarantaine
         et consigne les deltas explicables.
         """
         current_data = self._load_state()
         previous_score = current_data["score"]
-        
+
         # 1. Calcul des composantes du score (Max 100)
         score = 0
         events = []
@@ -55,9 +51,11 @@ class TrustEngine:
                 drift_penalty += 10
                 events.append({"type": f"MINOR_DRIFT_{drift}", "impact": -10})
 
-        score = max(0, 50 + 30 + 20 - drift_penalty) # Base 100 max pondérée
-        if not ledger_valid: score = min(score, 40)
-        if not snapshot_matched: score = min(score, 60)
+        score = max(0, 50 + 30 + 20 - drift_penalty)  # Base 100 max pondérée
+        if not ledger_valid:
+            score = min(score, 40)
+        if not snapshot_matched:
+            score = min(score, 60)
 
         # 2. Détermination de l'état de la machine à états (Quarantine State Machine)
         if score >= 85:
@@ -81,7 +79,7 @@ class TrustEngine:
             "current_score": score,
             "previous_state": current_data["state"],
             "current_state": new_state,
-            "events": events
+            "events": events,
         }
 
         current_data["score"] = score
@@ -97,5 +95,5 @@ class TrustEngine:
             "confidence": confidence,
             "routing_allowed": new_state in ["TRUSTED", "RECOVERY"],
             "quarantine_active": new_state == "QUARANTINE",
-            "audit_trail": delta_record
+            "audit_trail": delta_record,
         }

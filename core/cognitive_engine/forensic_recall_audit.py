@@ -4,6 +4,7 @@ E-ZZIO V7.59.2 — Forensic Recall Audit (Read-Only)
 2. Inspection structurelle des entrées SECURITY et de leur source réelle.
 3. Vérification de l'étanchéité face au bruit de laboratoire (SYNTHETIC_NOISE).
 """
+
 import sqlite3
 import json
 from pathlib import Path
@@ -12,21 +13,17 @@ ROOT_DIR = Path(r"G:\AI\E-zzio")
 INDEX_DB = ROOT_DIR / "runtime" / "cognitive" / "index" / "memory_index.sqlite"
 FORENSIC_REPORT = ROOT_DIR / "runtime" / "audit" / "system" / "v759_forensic_recall_report.json"
 
+
 def run_forensic_audit():
     if not INDEX_DB.exists():
-        print(f"[!] Erreur : Base FTS5 introuvable.")
+        print("[!] Erreur : Base FTS5 introuvable.")
         return
 
-    print(f"[*] Lancement de l'autopsie forensique de l'index FTS5...")
+    print("[*] Lancement de l'autopsie forensique de l'index FTS5...")
 
     uri = f"file:{INDEX_DB}?mode=ro"
-    
-    audit_data = {
-        "rpg_memory_autopsy": [],
-        "security_sample": [],
-        "noise_inspection": [],
-        "statistics": {}
-    }
+
+    audit_data = {"rpg_memory_autopsy": [], "security_sample": [], "noise_inspection": [], "statistics": {}}
 
     with sqlite3.connect(uri, uri=True) as conn:
         cursor = conn.cursor()
@@ -39,14 +36,16 @@ def run_forensic_audit():
         """)
         rpg_rows = cursor.fetchall()
         for row in rpg_rows:
-            audit_data["rpg_memory_autopsy"].append({
-                "rowid": row[0],
-                "content_preview": row[1][:120],
-                "source_path": row[2],
-                "confidence": row[3],
-                "importance": row[4],
-                "memory_type": row[5]
-            })
+            audit_data["rpg_memory_autopsy"].append(
+                {
+                    "rowid": row[0],
+                    "content_preview": row[1][:120],
+                    "source_path": row[2],
+                    "confidence": row[3],
+                    "importance": row[4],
+                    "memory_type": row[5],
+                }
+            )
 
         # 2. Échantillon des entrées SECURITY (Top 10 sources)
         cursor.execute("""
@@ -59,11 +58,7 @@ def run_forensic_audit():
         """)
         sec_rows = cursor.fetchall()
         for row in sec_rows:
-            audit_data["security_sample"].append({
-                "source_path": row[0],
-                "count": row[1],
-                "memory_type": row[2]
-            })
+            audit_data["security_sample"].append({"source_path": row[0], "count": row[1], "memory_type": row[2]})
 
         # 3. Inspection des bruits résiduels potentiels (sandbox / fuzz / test)
         cursor.execute("""
@@ -73,11 +68,7 @@ def run_forensic_audit():
         """)
         noise_rows = cursor.fetchall()
         for row in noise_rows:
-            audit_data["noise_inspection"].append({
-                "source_path": row[0],
-                "content_preview": row[1][:100],
-                "memory_type": row[2]
-            })
+            audit_data["noise_inspection"].append({"source_path": row[0], "content_preview": row[1][:100], "memory_type": row[2]})
 
         # Stats globales
         cursor.execute("SELECT COUNT(*) FROM memory_search;")
@@ -95,7 +86,7 @@ def run_forensic_audit():
     print(f" Total enregistrements indexés : {audit_data['statistics']['total_records']}")
     print(f" Entrées RPG_MEMORY détectées : {len(audit_data['rpg_memory_autopsy'])}")
     print("-" * 60)
-    
+
     print("\n[AUTOPSIE] Échantillon des entrées RPG_MEMORY :")
     if audit_data["rpg_memory_autopsy"]:
         for item in audit_data["rpg_memory_autopsy"][:5]:
@@ -111,6 +102,7 @@ def run_forensic_audit():
     print(f"\n[AUTOPSIE] Entrées issues de chemins de test/sandbox dans l'index : {len(audit_data['noise_inspection'])}")
     print("=" * 60)
     print(f" Rapport détaillé généré : {FORENSIC_REPORT}")
+
 
 if __name__ == "__main__":
     run_forensic_audit()

@@ -2,12 +2,14 @@
 E-ZZIO V7.31 — Identity Chain Validator
 Vérifie la continuité cryptographique, l'absence de rupture et l'intégrité de la chaîne d'identité.
 """
+
 import json
 import hashlib
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 CHAIN_FILE = ROOT_DIR / "runtime" / "identity" / "identity_chain.jsonl"
+
 
 class IdentityChainValidator:
     @staticmethod
@@ -26,7 +28,7 @@ class IdentityChainValidator:
             try:
                 block = json.loads(line)
             except Exception:
-                return {"valid": False, "broken_at_block": idx, "error": f"CORRUPTED_JSON_AT_LINE_{idx+1}"}
+                return {"valid": False, "broken_at_block": idx, "error": f"CORRUPTED_JSON_AT_LINE_{idx + 1}"}
 
             b_index = block.get("block_index")
             b_prev = block.get("previous_hash")
@@ -50,11 +52,7 @@ class IdentityChainValidator:
             expected_index += 1
             expected_previous_hash = b_hash
 
-        return {
-            "valid": True,
-            "block_count": len(lines),
-            "last_block_hash": expected_previous_hash,
-            "error": None
-        }
+        return {"valid": True, "block_count": len(lines), "last_block_hash": expected_previous_hash, "error": None}
+
 
 identity_chain_validator = IdentityChainValidator()

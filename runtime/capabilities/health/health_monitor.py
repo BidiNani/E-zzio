@@ -2,11 +2,13 @@
 E-ZZIO V9.3.1 — Capability Health Monitor
 Surveille l'homéostasie, la latence et la dérive de RAM des organes actifs.
 """
+
 import json
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 HEALTH_STATE_PATH = ROOT_DIR / "runtime" / "capabilities" / "health" / "health_state.json"
+
 
 class HealthMonitor:
     def __init__(self):
@@ -24,8 +26,8 @@ class HealthMonitor:
                     "avg_latency_ms": 12.0,
                     "ram_baseline_mb": 150.0,
                     "ram_current_mb": 150.0,
-                    "status": "GREEN"
-                }
+                    "status": "GREEN",
+                },
             }
             self.state_file.write_text(json.dumps(initial, indent=2, ensure_ascii=False), encoding="utf-8")
 
@@ -43,7 +45,7 @@ class HealthMonitor:
             h["success"] += 1
         else:
             h["errors"] += 1
-        
+
         h["avg_latency_ms"] = round((h["avg_latency_ms"] * (h["calls"] - 1) + latency_ms) / h["calls"], 2)
         h["ram_current_mb"] = float(ram_usage_mb)
 

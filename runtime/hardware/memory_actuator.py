@@ -1,21 +1,23 @@
 import time
 import threading
 
+
 class ActiveMemoryActuator:
     """
     Régulateur actif de mémoire E-ZZIO V5.2.
     Ajuste dynamiquement les contraintes du moteur de stockage (ConcurrentSegmentedEngine)
     en fonction de l'indice OOM et de la pente d'allocation mesurés par MemoryIntelligenceEngine.
     """
+
     def __init__(self, engine_ref, memory_engine_ref, check_interval: float = 0.5):
         self.engine = engine_ref
         self.memory_engine = memory_engine_ref
         self.check_interval = check_interval
-        
+
         self._stop_event = threading.Event()
         self._lock = threading.Lock()
         self.current_regulation_tier = "NOMINAL"
-        
+
         self.monitor_thread = threading.Thread(target=self._actuator_loop, daemon=True)
 
     def start(self):
@@ -55,13 +57,16 @@ class ActiveMemoryActuator:
                 self.engine.max_batch_delay = 0.01
 
             if prev_tier != self.current_regulation_tier:
-                print(f"[MEMORY ACTUATOR] Transition : {prev_tier} -> {self.current_regulation_tier} | Batch Size : {self.engine.max_batch_size} | Delay : {self.engine.max_batch_delay}s", flush=True)
+                print(
+                    f"[MEMORY ACTUATOR] Transition : {prev_tier} -> {self.current_regulation_tier} | Batch Size : {self.engine.max_batch_size} | Delay : {self.engine.max_batch_delay}s",
+                    flush=True,
+                )
 
             return {
                 "tier": self.current_regulation_tier,
                 "oom_index": oom_index,
                 "max_batch_size": getattr(self.engine, "max_batch_size", 2000),
-                "max_batch_delay": getattr(self.engine, "max_batch_delay", 0.01)
+                "max_batch_delay": getattr(self.engine, "max_batch_delay", 0.01),
             }
 
     def stop(self):

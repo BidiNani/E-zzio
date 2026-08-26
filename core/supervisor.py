@@ -6,10 +6,8 @@ import json
 import time
 import socket
 from pathlib import Path
-from typing import Any, Dict
 
 import psutil
-import requests
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
 STATE_ROOT = PROJECT_ROOT / "state"
@@ -34,14 +32,17 @@ CPU_ONLY_ENV = {
 for key, value in CPU_ONLY_ENV.items():
     os.environ[key] = value
 
+
 def _now():
     return time.strftime("%Y-%m-%dT%H:%M:%S")
+
 
 def _safe_call(name: str, fn):
     try:
         return {"ok": True, "name": name, "data": fn()}
     except Exception as exc:
         return {"ok": False, "name": name, "error": str(exc)}
+
 
 def lan_ips():
     ips = []
@@ -66,6 +67,7 @@ def lan_ips():
 
     return ips
 
+
 def system_status():
     mem = psutil.virtual_memory()
     disk = psutil.disk_usage(str(PROJECT_ROOT.anchor or "G:/"))
@@ -80,14 +82,14 @@ def system_status():
             "percent": psutil.cpu_percent(interval=0.2),
         },
         "ram": {
-            "total_gb": round(mem.total / (1024 ** 3), 2),
-            "available_gb": round(mem.available / (1024 ** 3), 2),
+            "total_gb": round(mem.total / (1024**3), 2),
+            "available_gb": round(mem.available / (1024**3), 2),
             "used_percent": mem.percent,
         },
         "disk": {
             "root": str(PROJECT_ROOT.anchor or "G:/"),
-            "total_gb": round(disk.total / (1024 ** 3), 2),
-            "free_gb": round(disk.free / (1024 ** 3), 2),
+            "total_gb": round(disk.total / (1024**3), 2),
+            "free_gb": round(disk.free / (1024**3), 2),
             "used_percent": disk.percent,
         },
         "lan_ips": lan_ips(),
@@ -101,6 +103,7 @@ def system_status():
             "EZZIO_NO_SPONSORS": os.environ.get("EZZIO_NO_SPONSORS"),
         },
     }
+
 
 def router_status():
     try:
@@ -118,33 +121,42 @@ def router_status():
 
     return {"error": "router_load_report indisponible"}
 
+
 def forge_status():
     try:
         from core.creative_forge import status
+
         return status()
     except Exception as exc:
         return {"ok": False, "error": str(exc)}
+
 
 def vision_status():
     try:
         from core.vision_bridge import status
+
         return status()
     except Exception as exc:
         return {"ok": False, "error": str(exc)}
 
+
 def omni_status():
     try:
         from core.omni_brain import bridge_status
+
         return bridge_status()
     except Exception as exc:
         return {"ok": False, "error": str(exc)}
 
+
 def model_status():
     try:
         from core.model_registry import status as registry_status
+
         return registry_status()
     except Exception as exc:
         return {"ok": False, "error": str(exc)}
+
 
 def no_ads_policy():
     return {
@@ -156,6 +168,7 @@ def no_ads_policy():
         "data_sale": "forbidden",
         "policy": "E-ZZIO est local-first, sans pub ni tracking.",
     }
+
 
 def supervisor_status():
     checks = {
@@ -183,6 +196,7 @@ def supervisor_status():
         "checks": checks,
     }
 
+
 def write_snapshot():
     data = supervisor_status()
     stamp = time.strftime("%Y%m%d_%H%M%S")
@@ -194,17 +208,21 @@ def write_snapshot():
         "snapshot": data,
     }
 
+
 def recent_snapshots(limit: int = 20):
     files = sorted(SNAPSHOT_ROOT.glob("ezzio_snapshot_*.json"), key=lambda p: p.stat().st_mtime, reverse=True)
     out = []
-    for p in files[:max(1, min(limit, 100))]:
-        out.append({
-            "name": p.name,
-            "path": str(p),
-            "modified": p.stat().st_mtime,
-            "mb": round(p.stat().st_size / (1024 ** 2), 3),
-        })
+    for p in files[: max(1, min(limit, 100))]:
+        out.append(
+            {
+                "name": p.name,
+                "path": str(p),
+                "modified": p.stat().st_mtime,
+                "mb": round(p.stat().st_size / (1024**2), 3),
+            }
+        )
     return {"ok": True, "snapshots": out}
+
 
 def watchdog_once():
     data = supervisor_status()
@@ -241,6 +259,7 @@ def watchdog_once():
     path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
 
     return report
+
 
 def mobile_home_html():
     ips = lan_ips()
@@ -325,4 +344,3 @@ code {{
 </body>
 </html>
 """.strip()
-

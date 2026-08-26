@@ -1,0 +1,17 @@
+{
+  "evidence_id": "EVID-20260823-0E6F7A58",
+  "task_id": "TASK-ROUTE-41187EFF",
+  "timestamp_utc": "2026-08-23T13:31:09.461705+00:00",
+  "provider": "cloud_groq",
+  "model_name": "llama-3.3-70b-versatile",
+  "agent_version": "ezzio-federated-v1.0",
+  "capability": "fast_cloud_chat",
+  "policy_status": "APPROVED",
+  "input_context_hash": "9d2fbb5a3b0c8792a3d677f7d1bc8395f18ef530f025ed288a37a507fc89bd31",
+  "output_payload_hash": "9540703a10d3e591aa81ce13527c3dcbb0ac625797cc9d46a44e09e45c38fd04",
+  "execution_duration_ms": 1.5,
+  "verification_status": "VERIFIED_VALID",
+  "raw_payload_snippet": "{\"cost_adjusted\": 250, \"gaming_coexistence_active\": true, \"provider_domain\": \"cloud_groq\", \"routed_model\": \"llama-3.3-70b-versatile\", \"status\": \"OPTIMIZED_FEDERATED_ROUTE_DISPATCHED\", \"task_type\": \"fa",
+  "ledger_decision_id": null,
+  "envelope_signature_hmac": "cdf28cc34202cbc7079971703b0a91aa715e42a44e8314c9a2214746289a9b53"
+}

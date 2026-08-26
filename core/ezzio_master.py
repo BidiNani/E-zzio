@@ -1,53 +1,66 @@
-from core.memory_vault import check_memory_intent
-import asyncio
-from core.dispatcher import ezzio_dispatcher
-from core.memory import ezzio_memory
-from core import safe_actions
-import sys
-from pathlib import Path
+"""E-ZZIO Master Orchestrator — Mono-Autorité Identitaire et Inférence Directe."""
+from __future__ import annotations
+import time
+from typing import Any, Dict
+from core.cloud_brain_broker import cloud_chat
 
-# Import direct robuste du broker cloud
-sys.path.append(str(Path("G:/AI/E-zzio/core")))
-import cloud_brain_broker
 
-class EzzioMasterOrchestrator:
-    def __init__(self):
-        self.dispatcher = ezzio_dispatcher
-        self.memory = ezzio_memory
-        self.ledger = safe_actions.ledger
-        self.cloud_chat = cloud_brain_broker.cloud_chat
+class EzzioMaster:
+    """Orchestrateur central E-ZZIO."""
 
-    async def execute_intent(self, user_prompt: str, speed: str = "auto", force_cloud: bool = False):
-        vault_res = check_memory_intent(user_prompt)
-        if vault_res:
+    async def execute_intent(
+        self,
+        user_prompt: str,
+        speed: str = "fast",
+        force_cloud: bool = True,
+        session_id: str = "",
+        system_prompt: str = "",
+        **kwargs
+    ) -> Dict[str, Any]:
+        """
+        Exécute la requête utilisateur.
+        L'identité est injectée exclusivement par CanonicalIdentity en aval dans cloud_brain_broker.
+        """
+        start_time = time.perf_counter()
+        
+        try:
+            cloud_res = cloud_chat(
+                text=user_prompt,
+                session_id=session_id,
+                speed=speed
+            )
+            elapsed_ms = int((time.perf_counter() - start_time) * 1000)
+
+            reply = cloud_res.get("response") or cloud_res.get("answer") or cloud_res.get("content") or ""
+            model_name = cloud_res.get("model", "gemini-2.5-flash")
+            
             return {
-                'organ': 'memory_vault',
-                'source': 'Deterministic SQLite',
-                'response': {'response': vault_res, 'text': vault_res, 'model': 'sqlite_vault', 'elapsed_ms': 1}
+                "response": reply,
+                "answer": reply,
+                "content": reply,
+                "message": reply,
+                "source": f"Gemini Cloud ({model_name})",
+                "authority": "CanonicalIdentity",
+                "model": model_name,
+                "elapsed_ms": elapsed_ms,
+                "ok": True,
+                "used_fallback": False
             }
-        organ_key, organ_info, score, hits = self.dispatcher.select_organ(user_prompt)
-        selected_model = self.dispatcher.select_model_for_speed(organ_info, speed)
-        
-        use_cloud = force_cloud or (organ_info.get("priority", 1) >= 8 and "code" in user_prompt.lower())
-        
-        if use_cloud:
-            try:
-                cloud_res = self.cloud_chat(text=user_prompt, provider="gemini")
-                response = cloud_res.get("reply") or str(cloud_res)
-                source = "Gemini Pro (Cloud - Super Cerveau)"
-            except Exception as e:
-                response = await self.dispatcher.route_detailed_async(user_prompt, speed=speed)
-                source = f"Ollama Local (Fallback CPU - {selected_model}) [Erreur Cloud: {e}]"
-        else:
-            response = await self.dispatcher.route_detailed_async(user_prompt, speed=speed)
-            source = f"Ollama Local (Ryzen 9 CPU - {selected_model})"
+        except Exception as exc:
+            fail_msg = f"[FAIL-CLOSED] Liaison Cloud Brain indisponible : {exc}"
+            return {
+                "response": fail_msg,
+                "answer": fail_msg,
+                "content": fail_msg,
+                "message": fail_msg,
+                "source": "Gemini Cloud Fail-Closed",
+                "authority": "CanonicalIdentity",
+                "model": "none",
+                "elapsed_ms": int((time.perf_counter() - start_time) * 1000),
+                "ok": False,
+                "error": str(exc),
+                "used_fallback": False
+            }
 
-        # self.memory.save_interaction(user_prompt, str(response)  # Désactivé : évite le doublon et l\'injection de str(dict), organ_key)
 
-        return {
-            "organ": organ_key,
-            "source": source,
-            "response": response
-        }
-
-ezzio_master = EzzioMasterOrchestrator()
+ezzio_master = EzzioMaster()

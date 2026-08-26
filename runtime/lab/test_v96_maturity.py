@@ -1,6 +1,7 @@
 """
 Test de certification de la maturité opérationnelle V9.6
 """
+
 import sys
 from pathlib import Path
 
@@ -12,16 +13,17 @@ from runtime.experience.analytics.trend_detector import TrendDetector
 from runtime.capabilities.portfolio.portfolio_manager import PortfolioManager
 from runtime.maintenance.cleanup_manager import MaintenanceEngine
 
+
 def run_certification():
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print(" 🏛️ E-ZZIO V9.6 — OPERATIONAL MATURITY BASELINE CERTIFICATION")
-    print("="*60)
+    print("=" * 60)
 
     # 1. Experience Analytics
     detector = TrendDetector()
     trend = detector.analyze_trends()
     print(f" Experience Analytics   : [PASS] -> Tendance : {trend.get('trend_detected')}")
-    if trend.get('suggestion'):
+    if trend.get("suggestion"):
         print(f"   Suggestion Évolution : {trend.get('suggestion')} (Confiance: {trend.get('confidence')})")
 
     # 2. Capability Portfolio
@@ -46,11 +48,12 @@ def run_certification():
     print(" ECOL Violation             : 0")
     print("-" * 60)
     print(" 🟢 STATUS : LIVING SYSTEM OPERATIONAL")
-    print("="*60 + "\n")
+    print("=" * 60 + "\n")
 
-    assert trend['trend_detected'] is not None
-    assert status['portfolio_health'] == "GREEN"
-    assert maint_res['status'] == "COMPLETED_CLEAN"
+    assert trend["trend_detected"] is not None
+    assert status["portfolio_health"] == "GREEN"
+    assert maint_res["status"] == "COMPLETED_CLEAN"
+
 
 if __name__ == "__main__":
     run_certification()

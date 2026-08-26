@@ -2,8 +2,8 @@
 E-ZZIO V7.54 — Cognitive Memory Indexer (FTS5)
 Module en lecture seule sur les sources. Construit un index de recherche lexicale rapide.
 """
+
 import sqlite3
-import json
 import logging
 from pathlib import Path
 from datetime import datetime, timezone
@@ -12,6 +12,7 @@ ROOT_DIR = Path(r"G:\AI\E-zzio")
 INDEX_DB = ROOT_DIR / "runtime" / "cognitive" / "index" / "memory_index.sqlite"
 
 logging.basicConfig(level=logging.INFO, format="[COGNITIVE INDEXER] %(message)s")
+
 
 class CognitiveIndexer:
     def __init__(self):
@@ -45,13 +46,17 @@ class CognitiveIndexer:
         try:
             with sqlite3.connect(self.db_path) as conn:
                 cursor = conn.cursor()
-                cursor.execute("""
+                cursor.execute(
+                    """
                     INSERT INTO memory_search (content, memory_type, source_path, source_hash, confidence, importance, last_validated)
                     VALUES (?, ?, ?, ?, ?, ?, ?)
-                """, (content, memory_type, source_path, source_hash, confidence, importance, timestamp))
+                """,
+                    (content, memory_type, source_path, source_hash, confidence, importance, timestamp),
+                )
                 conn.commit()
         except sqlite3.Error as e:
             logging.error(f"Échec de l'insertion du nœud : {e}")
+
 
 if __name__ == "__main__":
     indexer = CognitiveIndexer()

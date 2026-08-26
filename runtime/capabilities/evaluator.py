@@ -1,10 +1,11 @@
 """
 E-ZZIO V9.2.2 — Capability Evaluator
-Évalue un manifeste de compétence par rapport aux contraintes matérielles 
+Évalue un manifeste de compétence par rapport aux contraintes matérielles
 (Règle HW-001 : sanctuarisation de la GTX 1650) et aux budgets de l'organisme.
 """
-import json
+
 from typing import Dict, Any
+
 
 class CapabilityEvaluator:
     def __init__(self):
@@ -23,7 +24,7 @@ class CapabilityEvaluator:
             return {
                 "skill_id": skill_id,
                 "status": "REJECTED",
-                "reason": f"Violation de la politique matérielle [{self.gpu_sanctuary_rule}] : La compétence exige un GPU local, compromettant la sanctuarisation de la GTX 1650 pour le jeu/système."
+                "reason": f"Violation de la politique matérielle [{self.gpu_sanctuary_rule}] : La compétence exige un GPU local, compromettant la sanctuarisation de la GTX 1650 pour le jeu/système.",
             }
 
         # 2. Vérification du budget mémoire
@@ -31,7 +32,7 @@ class CapabilityEvaluator:
             return {
                 "skill_id": skill_id,
                 "status": "REJECTED",
-                "reason": f"Dépassement de budget : Le coût mémoire ({memory_cost} MB) dépasse la limite autorisée ({self.max_allowed_ram_mb} MB)."
+                "reason": f"Dépassement de budget : Le coût mémoire ({memory_cost} MB) dépasse la limite autorisée ({self.max_allowed_ram_mb} MB).",
             }
 
         # 3. Vérification des permissions dangereuses
@@ -41,15 +42,16 @@ class CapabilityEvaluator:
                 return {
                     "skill_id": skill_id,
                     "status": "REJECTED",
-                    "reason": f"Violation de sécurité ECOL : Permission interdite détectée ('{perm}')."
+                    "reason": f"Violation de sécurité ECOL : Permission interdite détectée ('{perm}').",
                 }
 
         # Évaluation réussie
         return {
             "skill_id": skill_id,
             "status": "APPROVED",
-            "reason": "Évaluation validée : Conforme à la politique HW-001, aux budgets mémoire et aux règles ECOL."
+            "reason": "Évaluation validée : Conforme à la politique HW-001, aux budgets mémoire et aux règles ECOL.",
         }
+
 
 if __name__ == "__main__":
     evaluator = CapabilityEvaluator()

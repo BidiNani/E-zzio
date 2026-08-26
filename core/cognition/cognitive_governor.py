@@ -1,10 +1,10 @@
 """
 E-ZZIO Core — Industrial Cognitive Governor with HMAC Attestation (ECOL V7.62.0)
-Garantit l'intégrité absolue via une chaîne SHA-256 scellée par une signature HMAC-SHA256 
+Garantit l'intégrité absolue via une chaîne SHA-256 scellée par une signature HMAC-SHA256
 et un manifeste d'intégrité global.
 """
+
 import os
-import sys
 import json
 import hmac
 import logging
@@ -16,9 +16,12 @@ from typing import Dict, Any
 
 logger = logging.getLogger(__name__)
 
+
 class LedgerSecurityError(Exception):
     """Levée pour toute infraction à la sécurité du Ledger (fail-closed strict)."""
+
     pass
+
 
 class CognitiveGovernor:
     _class_lock = threading.RLock()
@@ -31,11 +34,11 @@ class CognitiveGovernor:
         self.manifest_path = self.budget_dir / "ledger_manifest.json"
         self.keys_dir = self.budget_dir / ".keys"
         self.key_path = self.keys_dir / "ledger_hmac.secret"
-        
+
         self.budget_dir.mkdir(parents=True, exist_ok=True)
         self.keys_dir.mkdir(parents=True, exist_ok=True)
         self.max_session_budget = 500000
-        
+
         self.runtime_id = "EZZIO-RUNTIME-001"
         self.boot_id = "V7.62.0-SECURE-BOOT"
         self.kernel_version = "V7.62.0"
@@ -65,25 +68,16 @@ class CognitiveGovernor:
             return secret
 
     def _canonical_dump(self, payload: dict) -> str:
-        return json.dumps(
-            payload,
-            sort_keys=True,
-            separators=(",", ":"),
-            ensure_ascii=False
-        )
+        return json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
 
     def _compute_hmac(self, data_str: str) -> str:
         """Calcule le HMAC-SHA256 du payload avec la clé secrète locale."""
-        return hmac.new(
-            self._secret_key,
-            data_str.encode("utf-8"),
-            hashlib.sha256
-        ).hexdigest()
+        return hmac.new(self._secret_key, data_str.encode("utf-8"), hashlib.sha256).hexdigest()
 
     def _get_last_hash_unlocked(self) -> str:
         if not self.ledger_path.exists():
             return "0000000000000000000000000000000000000000000000000000000000000000"
-        
+
         last_hash = "0000000000000000000000000000000000000000000000000000000000000000"
         try:
             with open(self.ledger_path, "r", encoding="utf-8") as f:
@@ -106,9 +100,19 @@ class CognitiveGovernor:
 
             expected_prev_hash = "0000000000000000000000000000000000000000000000000000000000000000"
             required_fields = [
-                "runtime_id", "boot_id", "kernel_version", "timestamp",
-                "task", "priority", "estimated_cost", "decision",
-                "previous_hash", "reason", "record_hash", "hmac_signature", "current_spend_after"
+                "runtime_id",
+                "boot_id",
+                "kernel_version",
+                "timestamp",
+                "task",
+                "priority",
+                "estimated_cost",
+                "decision",
+                "previous_hash",
+                "reason",
+                "record_hash",
+                "hmac_signature",
+                "current_spend_after",
             ]
 
             block_count = 0
@@ -117,7 +121,7 @@ class CognitiveGovernor:
                     stripped = line.strip()
                     if not stripped:
                         continue
-                    
+
                     try:
                         data = json.loads(stripped)
                     except json.JSONDecodeError as jde:
@@ -129,7 +133,7 @@ class CognitiveGovernor:
 
                     if not isinstance(data["estimated_cost"], int) or data["estimated_cost"] < 0:
                         raise LedgerSecurityError(f"Type invalide ligne {line_num} : estimated_cost.")
-                    
+
                     if not isinstance(data["record_hash"], str) or len(data["record_hash"]) != 64:
                         raise LedgerSecurityError(f"Format invalide ligne {line_num} : record_hash.")
 
@@ -150,12 +154,12 @@ class CognitiveGovernor:
                         "priority": data["priority"],
                         "estimated_cost": data["estimated_cost"],
                         "decision": data["decision"],
-                        "previous_hash": stored_prev
+                        "previous_hash": stored_prev,
                     }
-                    
+
                     canonical_payload = self._canonical_dump(payload_to_hash)
                     computed_hash = hashlib.sha256(canonical_payload.encode("utf-8")).hexdigest()
-                    
+
                     if computed_hash != stored_self:
                         raise LedgerSecurityError(f"Altération des données détectée à la ligne {line_num} (Hash mismatch).")
 
@@ -164,10 +168,10 @@ class CognitiveGovernor:
                         **payload_to_hash,
                         "record_hash": stored_self,
                         "reason": data["reason"],
-                        "current_spend_after": data["current_spend_after"]
+                        "current_spend_after": data["current_spend_after"],
                     }
                     computed_hmac = self._compute_hmac(self._canonical_dump(hmac_payload))
-                    
+
                     if not hmac.compare_digest(computed_hmac, stored_hmac):
                         raise LedgerSecurityError(f"Échec de l'attestation HMAC à la ligne {line_num} : Signature invalide ou falsifiée.")
 
@@ -214,16 +218,13 @@ class CognitiveGovernor:
             "kernel_version": self.kernel_version,
             "total_blocks": total_blocks,
             "head_hash": head_hash,
-            "attestation_timestamp": datetime.now(timezone.utc).isoformat()
+            "attestation_timestamp": datetime.now(timezone.utc).isoformat(),
         }
         manifest_str = self._canonical_dump(manifest_data)
         manifest_signature = self._compute_hmac(manifest_str)
-        
-        final_manifest = {
-            **manifest_data,
-            "manifest_signature": manifest_signature
-        }
-        
+
+        final_manifest = {**manifest_data, "manifest_signature": manifest_signature}
+
         try:
             with open(self.manifest_path, "w", encoding="utf-8") as f:
                 f.write(self._canonical_dump(final_manifest) + "\n")
@@ -239,7 +240,7 @@ class CognitiveGovernor:
             current_spend = self._calculate_current_spend_unlocked()
             decision = "ALLOW"
             reason = "Budget cognitif nominal."
-            
+
             if current_spend + estimated_tokens > self.max_session_budget:
                 if priority == "critical":
                     decision = "EMERGENCY_ALLOW"
@@ -247,14 +248,14 @@ class CognitiveGovernor:
                 else:
                     decision = "DENY"
                     reason = f"Budget insuffisant. Restant: {max(0, self.max_session_budget - current_spend)} tokens."
-                    
+
             if risk_level == "high" and priority != "critical":
                 decision = "DENY"
                 reason = "Rejet : Tâche à haut risque non justifiée."
 
             prev_hash = self._get_last_hash_unlocked()
             timestamp = datetime.now(timezone.utc).isoformat()
-            
+
             block_payload = {
                 "runtime_id": self.runtime_id,
                 "boot_id": self.boot_id,
@@ -264,9 +265,9 @@ class CognitiveGovernor:
                 "priority": priority,
                 "estimated_cost": estimated_tokens,
                 "decision": decision,
-                "previous_hash": prev_hash
+                "previous_hash": prev_hash,
             }
-            
+
             record_hash = hashlib.sha256(self._canonical_dump(block_payload).encode("utf-8")).hexdigest()
 
             # Calcul du HMAC-SHA256 complet incluant la signature du bloc
@@ -274,7 +275,7 @@ class CognitiveGovernor:
                 **block_payload,
                 "record_hash": record_hash,
                 "reason": reason,
-                "current_spend_after": current_spend + (estimated_tokens if "ALLOW" in decision or "EMERGENCY" in decision else 0)
+                "current_spend_after": current_spend + (estimated_tokens if "ALLOW" in decision or "EMERGENCY" in decision else 0),
             }
             hmac_signature = self._compute_hmac(self._canonical_dump(hmac_payload))
 
@@ -282,9 +283,9 @@ class CognitiveGovernor:
                 **hmac_payload,
                 "provenance": "LIVE_RECORD",
                 "historical_integrity": "ATTESTED",
-                "hmac_signature": hmac_signature
+                "hmac_signature": hmac_signature,
             }
-            
+
             line_to_write = self._canonical_dump(transaction) + "\n"
 
             try:

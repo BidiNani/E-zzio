@@ -1,10 +1,9 @@
 """
 E-ZZIO V7.60.1 — Active ECOL Gateway & Context Engine
-Implémente la Cognitive Gateway (point d'entrée unique) et le Context Engine 
+Implémente la Cognitive Gateway (point d'entrée unique) et le Context Engine
 (pyramide de réduction de contexte) dans core/cognition/.
 """
-import os
-import json
+
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
@@ -33,12 +32,12 @@ class CognitiveGateway:
         Vérifie l'identité, alloue le budget, optimise le contexte et route vers le modèle.
         """
         logger.debug("Requête reçue par la Gateway | Tâche: %s [Priorité: %s]", task, priority)
-        
+
         # 1. Validation de l'identité et de la gouvernance
         # 2. Évaluation des ressources et du budget cognitif
         # 3. Optimisation du contexte via le Context Engine
         # 4. Exécution sécurisée via le Model Router
-        
+
         return {
             "status": "ACCEPTED",
             "task": task,
@@ -65,7 +64,7 @@ class ContextEngine:
         Construit le contexte minimal optimal en éliminant le bruit inutile.
         """
         logger.debug("Construction du contexte optimal pour la tâche : %s", task_name)
-        
+
         return {
             "level_0_identity": {"hash": "abc123_sealed_identity"},
             "level_1_constitution": {"status": "enforced"},
@@ -74,6 +73,7 @@ class ContextEngine:
             "optimized_token_count": 1200  # Réduit drastiquement par rapport aux 50k bruts
         }
 '''
+
 
 def deploy_active_ecol():
     print("[*] Déploiement des composants actifs de l'ECOL...")
@@ -89,9 +89,10 @@ def deploy_active_ecol():
         f.write(CONTEXT_ENGINE_CODE.strip() + "\n")
     print("  + Implémentation validée : context_engine.py")
 
-    print("\n" + "="*65)
+    print("\n" + "=" * 65)
     print(" ECOL ACTIVE DEPLOYMENT (V7.60.1) SUCCEEDED")
-    print("="*65)
+    print("=" * 65)
+
 
 if __name__ == "__main__":
     deploy_active_ecol()

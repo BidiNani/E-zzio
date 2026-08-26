@@ -2,6 +2,7 @@ import json
 import urllib.request
 from .base import Capability
 
+
 class EmbedderCapability(Capability):
     name = "memory.embed"
     description = "Vectorise du texte via Nomic."

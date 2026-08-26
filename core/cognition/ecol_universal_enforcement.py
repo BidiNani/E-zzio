@@ -4,7 +4,7 @@ Garantit l'immutabilité du contrat runtime (via manifeste et SHA-256),
 impose une passerelle d'exécution universelle (No Bypass) et journalise
 les tentatives d'évolution dans un ledger dédié.
 """
-import os
+
 import sys
 import json
 import hashlib
@@ -17,24 +17,26 @@ ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from core.cognition.ecol_runtime_contract import EcolRuntimeContract, ContractValidationError
-from core.cognition.cognitive_governor import LedgerSecurityError
+from core.cognition.ecol_runtime_contract import EcolRuntimeContract
 
 logger = logging.getLogger(__name__)
 
+
 class UniversalEnforcementError(Exception):
     """Levée pour toute infraction à la politique universelle ou altération du contrat (Fail-Closed)."""
+
     pass
+
 
 class EcolUniversalGateway:
     def __init__(self, root_dir: Path = ROOT_DIR):
         self.root_dir = root_dir
         self.contracts_dir = self.root_dir / "runtime" / "ecol" / "contracts"
         self.evolution_ledger_dir = self.root_dir / "runtime" / "ecol" / "evolution_ledger"
-        
+
         self.contracts_dir.mkdir(parents=True, exist_ok=True)
         self.evolution_ledger_dir.mkdir(parents=True, exist_ok=True)
-        
+
         self.contract = EcolRuntimeContract()
         self._verify_contract_integrity_at_boot()
         self._registered_gateway_actions = set()
@@ -49,13 +51,13 @@ class EcolUniversalGateway:
             logger.info("Scellement initial du contrat runtime V7.70...")
             if not contract_source_path.exists():
                 raise UniversalEnforcementError("FAIL CLOSED : Fichier source ecol_runtime_contract.py introuvable.")
-            
+
             sha256_hash = hashlib.sha256(contract_source_path.read_bytes()).hexdigest().lower()
             manifest_data = {
                 "contract_filename": "ecol_runtime_contract.py",
                 "sha256": sha256_hash,
                 "sealed_at_utc": datetime.now(timezone.utc).isoformat(),
-                "status": "SEALED"
+                "status": "SEALED",
             }
             manifest_path.write_text(json.dumps(manifest_data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
             return
@@ -68,8 +70,7 @@ class EcolUniversalGateway:
 
             if actual_hash != expected_hash:
                 raise UniversalEnforcementError(
-                    f"FAIL CLOSED CRITIQUE : Altération détectée sur le contrat runtime ! "
-                    f"Attendu: {expected_hash} | Trouvé: {actual_hash}"
+                    f"FAIL CLOSED CRITIQUE : Altération détectée sur le contrat runtime ! Attendu: {expected_hash} | Trouvé: {actual_hash}"
                 )
             logger.info("[OK] Intégrité du contrat runtime V7.70 vérifiée (Zero Drift).")
         except Exception as e:
@@ -94,7 +95,7 @@ class EcolUniversalGateway:
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "action": action,
             "source": payload.get("source_component", "unknown"),
-            "status": "PENDING_EVALUATION"
+            "status": "PENDING_EVALUATION",
         }
 
         try:
@@ -130,9 +131,10 @@ class EcolUniversalGateway:
         """Enregistre l'essai dans un fichier journalier indépendant (Evolution Ledger)."""
         date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         ledger_file = self.evolution_ledger_dir / f"evolution_audit_{date_str}.jsonl"
-        
+
         with open(ledger_file, "a", encoding="utf-8") as f:
             f.write(json.dumps(record, sort_keys=True, ensure_ascii=False) + "\n")
+
 
 def test_universal_enforcement():
     print("[*] Test de la V7.70 (Universal Enforcement & Contract Sealing)...")
@@ -155,7 +157,7 @@ def test_universal_enforcement():
         "task_description": "Exécution d'une compétence certifiée",
         "priority": "normal",
         "risk_level": "low",
-        "estimated_cost": 150
+        "estimated_cost": 150,
     }
 
     try:
@@ -172,9 +174,10 @@ def test_universal_enforcement():
     except UniversalEnforcementError as uee:
         print(f"  [PASS] Interception anti-bypass réussie : {uee}")
 
-    print("\n" + "="*65)
+    print("\n" + "=" * 65)
     print(" UNIVERSAL ENFORCEMENT LAYER (V7.70) : DEPLOYED & SEALED")
-    print("="*65)
+    print("=" * 65)
+
 
 if __name__ == "__main__":
     test_universal_enforcement()

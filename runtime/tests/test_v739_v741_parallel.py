@@ -2,6 +2,7 @@
 E-ZZIO V7.39 & V7.41 — Certification Test Suite
 Valide la barrière anti-régression et le moteur de recherche cognitif.
 """
+
 import sys
 from pathlib import Path
 
@@ -12,6 +13,7 @@ if str(ROOT_DIR) not in sys.path:
 from core.evolution_intelligence.regression_detector import regression_detector
 from core.agent.research_engine import research_engine
 
+
 def run_parallel_certification():
     print("============================================================")
     print(" E-ZZIO V7.39 & V7.41 — DUAL LAYER CERTIFICATION")
@@ -20,7 +22,7 @@ def run_parallel_certification():
     # --- TEST V7.39 : REGRESSION DETECTOR ---
     print(" [V7.39] REGRESSION INTELLIGENCE")
     baseline = {"execution_time": 1.0, "memory_mb": 100.0}
-    
+
     # Évolution optimisée (Plus rapide, moins de RAM)
     cand_better = {"execution_time": 0.88, "memory_mb": 92.0}
     res_better = regression_detector.evaluate_regression(baseline, cand_better)
@@ -39,11 +41,11 @@ def run_parallel_certification():
     print(" [V7.41] KNOWLEDGE & RESEARCH ENGINE")
     query = "API Discord Rate Limits"
     research_res = research_engine.execute_research(query)
-    
+
     assert research_res["confidence"] > 0.8, "Score de confiance trop bas."
     assert research_res["stored"] is True, "La synthèse n'a pas été stockée en mémoire."
     assert research_res["sources_checked"] > 0, "Aucune source simulée consultée."
-    
+
     print(f"  -> Requête analysée : '{research_res['query']}'")
     print(f"  -> Sources vérifiées : {research_res['sources_checked']}")
     print(f"  -> Confiance cognitive : {research_res['confidence'] * 100}%")
@@ -53,6 +55,7 @@ def run_parallel_certification():
     print("\n============================================================")
     print(" STATUS : AUTONOMOUS AGENT LAYER (STAGE 1) INITIALIZED")
     print("============================================================\n")
+
 
 if __name__ == "__main__":
     run_parallel_certification()

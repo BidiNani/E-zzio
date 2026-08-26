@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from typing import Dict, Any
 
+
 @dataclass(frozen=True)
 class ToolResult:
     success: bool

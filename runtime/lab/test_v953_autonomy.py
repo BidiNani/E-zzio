@@ -1,6 +1,7 @@
 """
 Test de certification de la Controlled Autonomy Layer V9.5.3
 """
+
 import sys
 from pathlib import Path
 
@@ -10,10 +11,11 @@ if str(ROOT_DIR) not in sys.path:
 
 from runtime.autonomy.policy_engine import ActionPolicyEngine
 
+
 def run_certification():
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print(" 🏛️ E-ZZIO V9.5.3 — CONTROLLED AUTONOMY CERTIFICATION")
-    print("="*60)
+    print("=" * 60)
 
     engine = ActionPolicyEngine()
 
@@ -40,11 +42,12 @@ def run_certification():
     print(" ECOL Violation             : 0")
     print("-" * 60)
     print(" 🟢 STATUS : CONTROLLED AUTONOMY ACTIVE")
-    print("="*60 + "\n")
+    print("=" * 60 + "\n")
 
-    assert res1['action'] == "AUTO_EXECUTE"
-    assert res2['action'] == "PROPOSAL_READY"
-    assert res3['action'] == "DENIED"
+    assert res1["action"] == "AUTO_EXECUTE"
+    assert res2["action"] == "PROPOSAL_READY"
+    assert res3["action"] == "DENIED"
+
 
 if __name__ == "__main__":
     run_certification()

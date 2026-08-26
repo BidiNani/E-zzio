@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+
 class TrustPolicyRegistry:
     def __init__(self, policy_file: Path):
         self.policy_file = policy_file

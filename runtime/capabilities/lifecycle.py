@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class CapabilityState(str, Enum):
     ISSUED = "ISSUED"
     ACTIVE = "ACTIVE"

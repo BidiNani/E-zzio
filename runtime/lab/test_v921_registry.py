@@ -2,6 +2,7 @@
 Validation de la brique V9.2.1 Capability Registry
 Vérifie la gestion de la Constitution des compétences.
 """
+
 import sys
 import json
 from pathlib import Path
@@ -12,13 +13,14 @@ if str(ROOT_DIR) not in sys.path:
 
 from runtime.capabilities.registry import CapabilityRegistry
 
+
 def run_test():
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print(" 🏛️ E-ZZIO V9.2.1 — CAPABILITY REGISTRY TEST")
-    print("="*60)
+    print("=" * 60)
 
     registry = CapabilityRegistry()
-    
+
     # Test d'enregistrement d'un skill test conforme
     test_manifest = {
         "skill_id": "vision_creator",
@@ -26,7 +28,7 @@ def run_test():
         "permissions": ["network", "filesystem_read"],
         "memory_cost_mb": 150,
         "gpu_required": False,
-        "rollback_available": True
+        "rollback_available": True,
     }
 
     success = registry.register_capability(test_manifest)
@@ -36,10 +38,11 @@ def run_test():
     print(json.dumps(full_registry, indent=2))
     print("-" * 60)
     print(f" Compétences actives : {len(full_registry['registered_capabilities'])}")
-    print(f" STATUS              : REGISTRY_SECURED")
-    print("="*60 + "\n")
+    print(" STATUS              : REGISTRY_SECURED")
+    print("=" * 60 + "\n")
 
-    assert len(full_registry['registered_capabilities']) >= 2, "Erreur du registre de compétences"
+    assert len(full_registry["registered_capabilities"]) >= 2, "Erreur du registre de compétences"
+
 
 if __name__ == "__main__":
     run_test()

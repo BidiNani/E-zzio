@@ -4,9 +4,8 @@ Couche adaptatrice universelle et agnostique. Permet aux composants d'E-zzio
 de soumettre des requêtes d'exécution au Cognitive Governor sous un format de contrat strict.
 Ne modifie en aucun cas le noyau ECOL certifié V7.65.
 """
-import os
+
 import sys
-import json
 import logging
 from pathlib import Path
 from typing import Dict, Any, Optional
@@ -19,13 +18,16 @@ from core.cognition.cognitive_governor import CognitiveGovernor, LedgerSecurityE
 
 logger = logging.getLogger(__name__)
 
+
 class ContractValidationError(Exception):
     """Levée en cas d'infraction au schéma du contrat d'intégration V7.66."""
+
     pass
+
 
 class EcolRuntimeContract:
     CONTRACT_VERSION = "V7.66"
-    
+
     VALID_PRIORITIES = {"low", "normal", "high", "critical"}
     VALID_RISK_LEVELS = {"low", "medium", "high", "critical"}
     VALID_SOURCES = {"llm_dispatcher", "tool_runner", "memory_subsystem", "evolution_engine", "system_core"}
@@ -75,26 +77,23 @@ class EcolRuntimeContract:
         priority = payload["priority"]
         risk_level = payload["risk_level"]
         estimated_cost = payload["estimated_cost"]
-        
+
         # Formatage de la tâche pour le Ledger ECOL
         formatted_task = f"[{source.upper()}] {action} : {task_desc}"
 
         # Mappage du risque élevé vers un examen manuel (REVIEW) ou refus direct
         effective_risk = risk_level
         if risk_level == "critical":
-            effective_risk = "high" # Forçage de la politique de risque du gouverneur
+            effective_risk = "high"  # Forçage de la politique de risque du gouverneur
 
         try:
             # 2. Appel au socle de gouvernance certifié ECOL V7.65
             gov_record = self.governor.evaluate_and_record(
-                task=formatted_task,
-                estimated_tokens=estimated_cost,
-                priority=priority,
-                risk_level=effective_risk
+                task=formatted_task, estimated_tokens=estimated_cost, priority=priority, risk_level=effective_risk
             )
 
             decision = gov_record.get("decision", "DENY")
-            
+
             # Post-traitement de la décision si risque moyen/élevé
             if risk_level == "medium" and decision == "ALLOW":
                 # Optionnel : marquer pour révision si nécessaire, ou laisser ALLOW si budget ok
@@ -110,7 +109,7 @@ class EcolRuntimeContract:
                 "reason": gov_record.get("reason"),
                 "current_spend_after": gov_record.get("current_spend_after"),
                 "hmac_signature": gov_record.get("hmac_signature"),
-                "timestamp": gov_record.get("timestamp")
+                "timestamp": gov_record.get("timestamp"),
             }
             return response
 
@@ -119,6 +118,7 @@ class EcolRuntimeContract:
             raise
         except Exception as e:
             raise RuntimeError(f"Erreur critique lors de l'évaluation du contrat runtime : {e}")
+
 
 def test_runtime_contract():
     print("[*] Test d'intégration de la couche de contrat runtime V7.66...")
@@ -132,7 +132,7 @@ def test_runtime_contract():
         "priority": "normal",
         "risk_level": "low",
         "estimated_cost": 350,
-        "context_metadata": {"session_id": "EZZIO-SESS-001"}
+        "context_metadata": {"session_id": "EZZIO-SESS-001"},
     }
 
     result = contract.evaluate_request(valid_payload)
@@ -143,12 +143,12 @@ def test_runtime_contract():
     # Test d'une requête violant le schéma du contrat (Fail-Closed amont)
     print("\n  * Test de rejet amont (Violation de contrat schema)...")
     invalid_payload = {
-        "source_component": "rogue_module", # Source non autorisée
+        "source_component": "rogue_module",  # Source non autorisée
         "action": "UNAUTHORIZED_ACTION",
         "task_description": "Tentative de contournement",
         "priority": "normal",
         "risk_level": "low",
-        "estimated_cost": 100
+        "estimated_cost": 100,
     }
 
     try:
@@ -157,9 +157,10 @@ def test_runtime_contract():
     except ContractValidationError as cve:
         print(f"  [PASS] Contrat respecté : rejet immédiat -> {cve}")
 
-    print("\n" + "="*65)
+    print("\n" + "=" * 65)
     print(" ECOL RUNTIME CONTRACT LAYER (V7.66) : DEPLOYED & VERIFIED")
-    print("="*65)
+    print("=" * 65)
+
 
 if __name__ == "__main__":
     test_runtime_contract()

@@ -12,27 +12,33 @@ from core.omni_brain import (
 
 router = APIRouter(prefix="/omni-bridge", tags=["omni-bridge"])
 
+
 class OmniReplyRequest(BaseModel):
     text: str
     source: str = "api"
     user: str = "enrik"
     mode: str = "fast"
 
+
 @router.get("/status")
 async def omni_bridge_status():
     return bridge_status()
+
 
 @router.get("/truth")
 async def omni_bridge_truth():
     return integration_truth()
 
+
 @router.get("/commands")
 async def omni_bridge_commands():
     return available_commands()
 
+
 @router.get("/mobile/config")
 async def omni_mobile_config():
     return mobile_config()
+
 
 @router.post("/reply")
 async def omni_reply(req: OmniReplyRequest):
@@ -42,6 +48,7 @@ async def omni_reply(req: OmniReplyRequest):
         user=req.user,
         mode=req.mode,
     )
+
 
 @router.post("/mobile/reply")
 async def omni_mobile_reply(request: Request):

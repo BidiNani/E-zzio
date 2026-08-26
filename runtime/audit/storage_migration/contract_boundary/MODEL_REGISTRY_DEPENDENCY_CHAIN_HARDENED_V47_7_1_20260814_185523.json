@@ -1,9 +1,0 @@
-{
-  "component": "MODEL_REGISTRY",
-  "version": "V47.7.1",
-  "scan_mode": "READ_ONLY_HARDENED_DEPENDENCY_CHAIN",
-  "timestamp": "2026-08-14T18:55:23.1123439+02:00",
-  "source": null,
-  "chain_count": 0,
-  "migration_chain": null
-}
