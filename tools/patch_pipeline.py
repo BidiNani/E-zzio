@@ -5,6 +5,7 @@ import traceback
 from typing import Dict, Any
 from tools.guard import is_path_allowed
 
+
 class PatchPipeline:
     """Pipeline industriel pour modifier des fichiers avec validation syntaxique et rollback."""
 
@@ -19,7 +20,7 @@ class PatchPipeline:
         if not allowed:
             return {"success": False, "error": f"SÉCURITÉ: {msg}"}
 
-        if target_path.endswith('.sqlite3'):
+        if target_path.endswith(".sqlite3"):
             return {"success": False, "error": f"SÉCURITÉ: Modification de '{filename}' strictement interdite."}
 
         backup_path = target_path + ".bak"
@@ -30,11 +31,11 @@ class PatchPipeline:
             if file_exists:
                 shutil.copy2(target_path, backup_path)
 
-            with open(tmp_path, 'w', encoding='utf-8') as f:
+            with open(tmp_path, "w", encoding="utf-8") as f:
                 f.write(new_content)
 
             # Auto-Check Syntaxique (Règle 9 : Détection/Correction)
-            if target_path.endswith('.py'):
+            if target_path.endswith(".py"):
                 try:
                     py_compile.compile(tmp_path, doraise=True)
                 except py_compile.PyCompileError as e:
@@ -51,5 +52,5 @@ class PatchPipeline:
                 shutil.copy2(backup_path, target_path)
             return {"success": False, "error": f"Erreur critique I/O : {traceback.format_exc()}"}
 
-patch_pipeline = PatchPipeline()
 
+patch_pipeline = PatchPipeline()

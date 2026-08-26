@@ -7,52 +7,47 @@ PROVIDERS_DIR = ROUTER_DIR / "providers"
 
 # 1. Mise à jour de config.json avec prérequis RAM (GB)
 config_data = {
-  "ollama_host": "http://127.0.0.1:11434",
-  "default_keep_alive": "5m",
-  "catalog": {
-    "qwen3:8b": {
-      "provider": "ollama",
-      "capabilities": ["chat", "general", "orchestration"],
-      "max_complexity": "medium",
-      "required_ram_gb": 6.0
+    "ollama_host": "http://127.0.0.1:11434",
+    "default_keep_alive": "5m",
+    "catalog": {
+        "qwen3:8b": {
+            "provider": "ollama",
+            "capabilities": ["chat", "general", "orchestration"],
+            "max_complexity": "medium",
+            "required_ram_gb": 6.0,
+        },
+        "qwen2.5-coder:7b": {
+            "provider": "ollama",
+            "capabilities": ["code", "scripting"],
+            "max_complexity": "medium",
+            "required_ram_gb": 5.0,
+        },
+        "gemma4e4b:latest": {"provider": "ollama", "capabilities": ["vision", "ocr"], "max_complexity": "low", "required_ram_gb": 5.5},
+        "gemini-3.6-flash": {
+            "provider": "gemini",
+            "capabilities": ["chat", "code", "vision", "general"],
+            "max_complexity": "high",
+            "required_ram_gb": 0.0,
+        },
+        "gemini-2.5-pro": {
+            "provider": "gemini",
+            "capabilities": ["architecture", "reasoning", "complex_code"],
+            "max_complexity": "critical",
+            "required_ram_gb": 0.0,
+        },
+        "Qwen3-Coder-30B-A3B": {
+            "provider": "llama_cpp",
+            "capabilities": ["complex_code", "refactoring"],
+            "model_path": "models/gguf/code/Qwen3-Coder-30B-A3B-Q4_K_M.gguf",
+            "required_ram_gb": 18.0,
+        },
+        "DeepSeek-R1-Distill-Qwen-8B": {
+            "provider": "llama_cpp",
+            "capabilities": ["reasoning", "logic"],
+            "model_path": "models/gguf/reasoning/DeepSeek-R1-Distill-Qwen-8B-Q4_K_M.gguf",
+            "required_ram_gb": 7.0,
+        },
     },
-    "qwen2.5-coder:7b": {
-      "provider": "ollama",
-      "capabilities": ["code", "scripting"],
-      "max_complexity": "medium",
-      "required_ram_gb": 5.0
-    },
-    "gemma4e4b:latest": {
-      "provider": "ollama",
-      "capabilities": ["vision", "ocr"],
-      "max_complexity": "low",
-      "required_ram_gb": 5.5
-    },
-    "gemini-3.6-flash": {
-      "provider": "gemini",
-      "capabilities": ["chat", "code", "vision", "general"],
-      "max_complexity": "high",
-      "required_ram_gb": 0.0
-    },
-    "gemini-2.5-pro": {
-      "provider": "gemini",
-      "capabilities": ["architecture", "reasoning", "complex_code"],
-      "max_complexity": "critical",
-      "required_ram_gb": 0.0
-    },
-    "Qwen3-Coder-30B-A3B": {
-      "provider": "llama_cpp",
-      "capabilities": ["complex_code", "refactoring"],
-      "model_path": "models/gguf/code/Qwen3-Coder-30B-A3B-Q4_K_M.gguf",
-      "required_ram_gb": 18.0
-    },
-    "DeepSeek-R1-Distill-Qwen-8B": {
-      "provider": "llama_cpp",
-      "capabilities": ["reasoning", "logic"],
-      "model_path": "models/gguf/reasoning/DeepSeek-R1-Distill-Qwen-8B-Q4_K_M.gguf",
-      "required_ram_gb": 7.0
-    }
-  }
 }
 (ROUTER_DIR / "config.json").write_text(json.dumps(config_data, indent=2), encoding="utf-8")
 
@@ -75,7 +70,7 @@ class LlamaCppProvider:
             raise FileNotFoundError(f"Fichier GGUF introuvable : {full_path}")
 
         start_time = time.time()
-        
+
         # Mode dégrade via CLI llama.cpp ou binding si installé
         try:
             from llama_cpp import Llama
@@ -149,7 +144,7 @@ class EzzioModelRouter:
         self.root_dir = Path(r"G:\\AI\\E-zzio")
         cfg_file = Path(config_path) if config_path else Path(__file__).parent / "config.json"
         self.config = json.loads(cfg_file.read_text(encoding="utf-8"))
-        
+
         self.catalog = self.config.get("catalog", {})
         self.selector = ModelSelector(self.catalog)
         self.health = ModelHealthChecker(self.config)

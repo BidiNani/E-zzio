@@ -1,6 +1,7 @@
 import pytest
 from core.providers.ollama_provider import OllamaProvider
 
+
 @pytest.mark.asyncio
 async def test_ollama_provider_structure():
     provider = OllamaProvider()

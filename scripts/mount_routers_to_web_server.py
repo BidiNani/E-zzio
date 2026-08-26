@@ -1,4 +1,3 @@
-import re
 from pathlib import Path
 
 ROOT = Path(r"G:\AI\E-zzio")
@@ -12,10 +11,7 @@ content = web_server_file.read_text(encoding="utf-8")
 
 # Vérification si les imports sont déjà présents
 if "runtime.routers.llm" not in content:
-    imports_to_add = (
-        "\nfrom runtime.routers.llm import router as llm_router\n"
-        "from runtime.routers.mobile import router as mobile_router\n"
-    )
+    imports_to_add = "\nfrom runtime.routers.llm import router as llm_router\nfrom runtime.routers.mobile import router as mobile_router\n"
     # Insertion des imports juste sous l'instanciation FastAPI ou en haut des imports
     if "app = FastAPI(" in content:
         content = content.replace("app = FastAPI(", imports_to_add + "app = FastAPI(")
@@ -23,10 +19,7 @@ if "runtime.routers.llm" not in content:
         content = imports_to_add + content
 
 # Vérification du montage des routeurs
-mounts_to_add = (
-    "\napp.include_router(llm_router)\n"
-    "app.include_router(mobile_router)\n"
-)
+mounts_to_add = "\napp.include_router(llm_router)\napp.include_router(mobile_router)\n"
 
 if "app.include_router(llm_router)" not in content:
     if "if __name__ ==" in content:

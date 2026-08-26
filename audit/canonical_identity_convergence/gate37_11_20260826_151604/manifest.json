@@ -1,0 +1,92 @@
+{
+  "gate": "3.7.11",
+  "version": "1.0",
+  "timestamp": "20260826_151604",
+  "mode": "FULL_ADVERSARIAL_REGRESSION",
+  "target_hash": "53e0bd97270b03effdaad438797459c9ce6f1fcfc04e0c26d87042b26636a4d6",
+  "tests": [
+    {
+      "name": "REGRESSION GROQ — HTTP 400",
+      "status": "PASS",
+      "detail": "Attrapé: HTTPStatusError"
+    },
+    {
+      "name": "REGRESSION GROQ — HTTP 401",
+      "status": "PASS",
+      "detail": "Attrapé: HTTPStatusError"
+    },
+    {
+      "name": "REGRESSION GROQ — HTTP 403",
+      "status": "PASS",
+      "detail": "Attrapé: HTTPStatusError"
+    },
+    {
+      "name": "REGRESSION GROQ — HTTP 404",
+      "status": "PASS",
+      "detail": "Attrapé: HTTPStatusError"
+    },
+    {
+      "name": "REGRESSION GROQ — HTTP 429",
+      "status": "PASS",
+      "detail": "Attrapé: HTTPStatusError"
+    },
+    {
+      "name": "REGRESSION GROQ — HTTP 500",
+      "status": "PASS",
+      "detail": "Attrapé: HTTPStatusError"
+    },
+    {
+      "name": "REGRESSION GROQ — timeout",
+      "status": "PASS",
+      "detail": "Attrapé: TimeoutException"
+    },
+    {
+      "name": "REGRESSION GROQ — transport_error",
+      "status": "PASS",
+      "detail": "Attrapé: TransportError"
+    },
+    {
+      "name": "REGRESSION GROQ — Absent 'data'",
+      "status": "PASS",
+      "detail": "Retourne []"
+    },
+    {
+      "name": "REGRESSION GROQ — Empty list 'data=[]'",
+      "status": "PASS",
+      "detail": "Retourne []"
+    },
+    {
+      "name": "REGRESSION GROQ — None 'data=None'",
+      "status": "PASS",
+      "detail": "Exception correcte levée: TypeError"
+    },
+    {
+      "name": "REGRESSION GROQ — Scalar 'data=\"...\"'",
+      "status": "PASS",
+      "detail": "Exception correcte levée: TypeError"
+    },
+    {
+      "name": "REGRESSION GROQ — Dict 'data={...}'",
+      "status": "PASS",
+      "detail": "Exception correcte levée: TypeError"
+    },
+    {
+      "name": "REGRESSION GROQ — Non-dict item in list",
+      "status": "PASS",
+      "detail": "Exception correcte levée: TypeError"
+    },
+    {
+      "name": "REGRESSION OPENROUTER — Nominal",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "REGRESSION TAVILY — Nominal",
+      "status": "PASS",
+      "detail": ""
+    }
+  ],
+  "sentinel_network_calls": 16,
+  "secret_leaks_detected": 0,
+  "verdict": "SUCCESS"
+}

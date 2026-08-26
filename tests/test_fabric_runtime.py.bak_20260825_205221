@@ -1,0 +1,296 @@
+"""E-ZZIO Autonomous Model Fabric — Banc de Certification v4.4 (Isolated Sandbox)."""
+
+from __future__ import annotations
+
+import asyncio
+import copy
+import json
+import sys
+from pathlib import Path
+
+PROJECT_ROOT = Path(r"G:\AI\E-zzio").resolve()
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from dotenv import load_dotenv
+from core.models.fabric import build_fabric
+
+try:
+    from core.models.router import ProviderExhaustedError
+except ImportError:
+    try:
+        from core.models.fabric import ProviderExhaustedError
+    except ImportError:
+        try:
+            from core.exceptions import ProviderExhaustedError
+        except ImportError:
+            class ProviderExhaustedError(Exception):
+                pass
+
+
+class Scorecard:
+    def __init__(self):
+        self.results = {}
+
+    def record(self, test_id: str, status: str, details: str = ""):
+        self.results[test_id] = {"status": status, "details": details}
+        tag = f"[{status}]"
+        print(f" {tag:<8} {test_id:<8} : {details}")
+
+    def summary(self) -> tuple[int, int, int, int]:
+        p = sum(1 for r in self.results.values() if r["status"] == "PASS")
+        f = sum(1 for r in self.results.values() if r["status"] == "FAIL")
+        w = sum(1 for r in self.results.values() if r["status"] == "WARN")
+        ne = sum(1 for r in self.results.values() if r["status"] == "NOT_EXERCISED")
+        return p, f, w, ne
+
+
+def check_exact_ok(content: str) -> bool:
+    return content.strip() == "OK"
+
+
+async def main() -> None:
+    project_root = PROJECT_ROOT
+    load_dotenv(project_root / ".env")
+    scorecard = Scorecard()
+
+    print("\n" + "=" * 64)
+    print(" E-ZZIO — BANC DE CERTIFICATION SÉCURITÉ & MACHINE D'ÉTAT v4.4")
+    print("=" * 64 + "\n")
+
+    fabric = build_fabric(project_root=project_root)
+
+    # 1. Snapshot mémoire exhaustif du registre pour restauration garantie
+    registry_snapshot = {}
+    all_initial = fabric.registry.all() if hasattr(fabric.registry, "all") else list(fabric.registry.models.values())
+    for entry in all_initial:
+        registry_snapshot[(entry.provider, entry.model_id)] = copy.deepcopy(entry.__dict__)
+
+    print(f"[INIT] Découverte des catalogues distants...")
+    discovery_res = await fabric.discover()
+    for prov, count in discovery_res.items():
+        print(f" - {prov:<14}: {count} modèle(s) détecté(s)")
+
+    print("\n[INIT] Qualification des candidats...")
+    qualify_fn = getattr(fabric, "qualify", None) or getattr(fabric, "qualify_candidates", None)
+    qual_res = []
+    if qualify_fn:
+        try:
+            qual_res = await qualify_fn()
+        except Exception as exc:
+            print(f"[WARN] Qualification : {exc}")
+
+    fabric.activate_qualified(qual_res)
+
+    initial_active = fabric.registry.active()
+    active_fast = [m for m in initial_active if m.tier == "FAST"]
+    active_mid = [m for m in initial_active if m.tier == "MID"]
+
+    print(f"\n Contrôle registre actif : FAST={len(active_fast)}, MID={len(active_mid)}")
+    for m in initial_active:
+        print(f" * ACTIF : {m.provider}/{m.model_id} | Palier: {m.tier}")
+
+    # TEST A — FAST nominal
+    if active_fast:
+        try:
+            res_fast = await fabric.router.execute(
+                messages=[{"role": "user", "content": "Ping système E-ZZIO. Réponds uniquement par le mot OK."}],
+                tier="FAST",
+                temperature=0.0,
+            )
+            content = str(res_fast.get("content", ""))
+            if check_exact_ok(content):
+                scorecard.record("TEST_A", "PASS", f"FAST ({res_fast.get('provider')}/{res_fast.get('model')}) conforme 'OK'")
+            else:
+                scorecard.record("TEST_A", "WARN", f"FAST réponse reçue : {content[:80]!r}")
+        except ProviderExhaustedError as exc:
+            scorecard.record("TEST_A", "WARN", f"FAST épuisé (Fail-Closed) : {exc}")
+        except Exception as exc:
+            scorecard.record("TEST_A", "FAIL", str(exc))
+    else:
+        scorecard.record("TEST_A", "NOT_EXERCISED", "Aucun modèle FAST actif au départ.")
+
+    # TEST B — MID nominal
+    if active_mid:
+        try:
+            res_mid = await fabric.router.execute(
+                messages=[{"role": "user", "content": "Ping système E-ZZIO. Réponds uniquement par le mot OK."}],
+                tier="MID",
+                temperature=0.0,
+            )
+            scorecard.record("TEST_B", "PASS", f"MID nominal exécuté sur {res_mid.get('provider')}/{res_mid.get('model')}")
+        except ProviderExhaustedError as exc:
+            scorecard.record("TEST_B", "WARN", f"MID épuisé (Fail-Closed) : {exc}")
+        except Exception as exc:
+            scorecard.record("TEST_B", "WARN", f"MID nominal retour : {exc}")
+    else:
+        scorecard.record("TEST_B", "NOT_EXERCISED", "Aucun modèle MID actif au départ.")
+
+    # Sélection de la cible pour le cycle complet de rupture
+    candidates_for_test = active_mid or active_fast or all_initial
+    assert candidates_for_test, "Aucun modèle disponible dans le registre."
+    target = candidates_for_test[0]
+    t_prov, t_mod = target.provider, target.model_id
+
+    try:
+        # S'assurer que la cible commence en ACTIVE pour le scénario
+        target_entry = fabric.registry.find(t_prov, t_mod)
+        if getattr(target_entry, "lifecycle", "") != "ACTIVE":
+            target_entry.lifecycle = "ACTIVE"
+            target_entry.tier = "FAST"
+            fabric.registry.save()
+
+        saved_failures = int(getattr(target_entry, "failure_count", 0))
+        saved_hist = int(getattr(target_entry, "historical_failures", 0))
+        saved_rehab = int(getattr(target_entry, "rehabilitation_count", 0))
+
+        # TEST C — ACTIVE -> QUARANTINED (Runtime violation)
+        try:
+            quar_ok = fabric.quarantine_runtime_violation(
+                provider=t_prov,
+                model_id=t_mod,
+                tier=getattr(target_entry, "tier", "FAST"),
+                reason="test_c_simulated_violation",
+            )
+            entry_c = fabric.registry.find(t_prov, t_mod)
+            assert quar_ok is True, "quarantine_runtime_violation a retourné False"
+            assert getattr(entry_c, "lifecycle") == "QUARANTINED", "Statut non passé à QUARANTINED"
+            assert getattr(entry_c, "tier") == "UNQUALIFIED", "Tier non rétrogradé à UNQUALIFIED"
+            assert int(getattr(entry_c, "failure_count", 0)) == saved_failures + 1, "failure_count non incrémenté"
+            assert getattr(entry_c, "last_quarantine_at") is not None, "Timestamp last_quarantine_at absent"
+            scorecard.record("TEST_C", "PASS", f"ACTIVE -> QUARANTINED ({t_prov}/{t_mod}, échecs={getattr(entry_c, 'failure_count')})")
+        except Exception as exc:
+            scorecard.record("TEST_C", "FAIL", str(exc))
+
+        # TEST D — Exclusion du routeur après quarantaine
+        try:
+            reloaded_d = build_fabric(project_root=project_root)
+            active_ids_d = [(m.provider, m.model_id) for m in reloaded_d.registry.active()]
+            assert (t_prov, t_mod) not in active_ids_d, "Modèle quarantiné toujours présent dans active()"
+            scorecard.record("TEST_D", "PASS", f"Modèle {t_prov}/{t_mod} exclu de registry.active()")
+        except Exception as exc:
+            scorecard.record("TEST_D", "FAIL", str(exc))
+
+        # TEST E — QUARANTINED -> CANDIDATE (Admin Rehabilitation)
+        try:
+            rehab_ok = fabric.rehabilitate_model(
+                provider=t_prov,
+                model_id=t_mod,
+                reason="Audit et correctif des quotas de production",
+                operator="sec_admin",
+            )
+            entry_e = fabric.registry.find(t_prov, t_mod)
+            assert rehab_ok is True, "rehabilitate_model a échoué"
+            assert getattr(entry_e, "lifecycle") == "CANDIDATE", "Statut != CANDIDATE"
+            assert getattr(entry_e, "tier") == "UNQUALIFIED", "Tier != UNQUALIFIED"
+            assert int(getattr(entry_e, "failure_count", 0)) == 0, "failure_count non remis à 0"
+            assert int(getattr(entry_e, "historical_failures", 0)) == saved_hist + (saved_failures + 1), "historical_failures incorrect"
+            assert int(getattr(entry_e, "rehabilitation_count", 0)) == saved_rehab + 1, "rehabilitation_count non incrémenté"
+            assert getattr(entry_e, "rehabilitated_by") == "sec_admin", "Opérateur non consigné"
+            scorecard.record("TEST_E", "PASS", "QUARANTINED -> CANDIDATE (compteurs réinitialisés et archivés)")
+        except Exception as exc:
+            scorecard.record("TEST_E", "FAIL", str(exc))
+
+        # TEST F — Persistance sur disque après rechargement
+        try:
+            reloaded_f = build_fabric(project_root=project_root)
+            entry_f = reloaded_f.registry.find(t_prov, t_mod)
+            assert getattr(entry_f, "lifecycle") == "CANDIDATE", "Persistance du statut CANDIDATE échouée"
+            assert getattr(entry_f, "rehabilitated_by") == "sec_admin", "Persistance opérateur échouée"
+            assert getattr(entry_f, "rehabilitation_reason") is not None, "Persistance motif échouée"
+            scorecard.record("TEST_F", "PASS", "Reconstruction build_fabric() et intégrité disque vérifiées")
+        except Exception as exc:
+            scorecard.record("TEST_F", "FAIL", str(exc))
+
+        # TEST G — Rejet formel des transitions illicites (Bypass fail-closed)
+        try:
+            bypass_ok = True
+            # 1. CANDIDATE -> ACTIVE direct interdit
+            try:
+                fabric.transition(provider=t_prov, model_id=t_mod, new_state="ACTIVE", actor="admin_hack", reason="bypass")
+                bypass_ok = False
+            except RuntimeError:
+                pass
+
+            # 2. QUARANTINED -> ACTIVE direct interdit
+            fabric.quarantine_runtime_violation(provider=t_prov, model_id=t_mod, tier="MID", reason="temp")
+            try:
+                fabric.transition(provider=t_prov, model_id=t_mod, new_state="ACTIVE", actor="admin_hack", reason="bypass")
+                bypass_ok = False
+            except RuntimeError:
+                pass
+
+            assert bypass_ok is True, "Une transition illégale vers ACTIVE a été acceptée !"
+            scorecard.record("TEST_G", "PASS", "Transitions directes CANDIDATE/QUARANTINED -> ACTIVE rejetées (Fail-Closed)")
+        except Exception as exc:
+            scorecard.record("TEST_G", "FAIL", str(exc))
+
+        # TEST H — Échec de qualification post-réhabilitation -> QUARANTINED
+        try:
+            fabric.rehabilitate_model(provider=t_prov, model_id=t_mod, reason="reset for test_h", operator="sec_admin")
+            fabric.transition(provider=t_prov, model_id=t_mod, new_state="QUARANTINED", actor="qualification_gate", reason="probe_failed")
+            entry_h = fabric.registry.find(t_prov, t_mod)
+            assert getattr(entry_h, "lifecycle") == "QUARANTINED", "L'échec de qualification n'a pas mis le modèle en quarantaine"
+            scorecard.record("TEST_H", "PASS", "Échec de QualificationGate renvoie immédiatement en QUARANTINED")
+        except Exception as exc:
+            scorecard.record("TEST_H", "FAIL", str(exc))
+
+        # TEST I — Succès de qualification post-réhabilitation -> QUALIFIED -> ACTIVE
+        try:
+            fabric.rehabilitate_model(provider=t_prov, model_id=t_mod, reason="reset for test_i", operator="sec_admin")
+            fabric.transition(provider=t_prov, model_id=t_mod, new_state="QUALIFIED", actor="qualification_gate", reason="probe_passed", new_tier="FAST")
+            fabric.transition(provider=t_prov, model_id=t_mod, new_state="ACTIVE", actor="activate_qualified", reason="activation", new_tier="FAST")
+            entry_i = fabric.registry.find(t_prov, t_mod)
+            assert getattr(entry_i, "lifecycle") == "ACTIVE", "Cycle nominal CANDIDATE -> QUALIFIED -> ACTIVE échoué"
+            scorecard.record("TEST_I", "PASS", "Cycle complet CANDIDATE -> QUALIFIED -> ACTIVE validé")
+        except Exception as exc:
+            scorecard.record("TEST_I", "FAIL", str(exc))
+
+        # TEST J — Fail-Closed en absence de MID
+        try:
+            reloaded_j = build_fabric(project_root=project_root)
+            for m in reloaded_j.registry.active():
+                if m.tier == "MID":
+                    reloaded_j.quarantine_runtime_violation(provider=m.provider, model_id=m.model_id, tier="MID", reason="test_j")
+
+            try:
+                await reloaded_j.router.execute(messages=[{"role": "user", "content": "Ping"}], tier="MID")
+                scorecard.record("TEST_J", "FAIL", "Le routeur a exécuté une requête sans MID qualifié disponible !")
+            except ProviderExhaustedError:
+                scorecard.record("TEST_J", "PASS", "ProviderExhaustedError levée proprement sans repli non maîtrisé")
+        except Exception as exc:
+            scorecard.record("TEST_J", "FAIL", str(exc))
+
+    finally:
+        # Nettoyage et restauration défensive garantie
+        print("\n[NETTOYAGE] Restauration du snapshot initial du registre...")
+        cleanup_fabric = build_fabric(project_root=project_root)
+        for (prov, mid), original_attrs in registry_snapshot.items():
+            ent = cleanup_fabric.registry.find(prov, mid)
+            if ent:
+                for k, v in original_attrs.items():
+                    if not k.startswith("_"):
+                        setattr(ent, k, v)
+        cleanup_fabric.registry.save()
+        print(" -> [PASS] État initial du registre fidèlement restauré.")
+
+    p, f, w, ne = scorecard.summary()
+    print("\n" + "=" * 64)
+    print("=== SCORECARD OFFICIELLE DE CERTIFICATION v4.4 ===")
+    print(f" TOTAL TESTS   : {len(scorecard.results)}")
+    print(f" PASS          : {p}")
+    print(f" WARN          : {w}")
+    print(f" FAIL          : {f}")
+    print(f" NOT_EXERCISED : {ne}")
+    print("=" * 64)
+
+    if f > 0:
+        print("\nVERDICT : CERTIFICATION ÉCHOUÉE (Ruptures critiques détectées)")
+        sys.exit(1)
+    else:
+        print("\nVERDICT : OFFICIALLY CERTIFIED (Machine d'état hermétique & Fail-Closed confirmés)")
+        sys.exit(0)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

@@ -12,12 +12,12 @@ if start == -1:
 if start == -1:
     raise SystemExit("generate() introuvable")
 
-end = txt.find("\n    raise ValueError(f\"Provider {provider} non supporté\")", start)
+end = txt.find('\n    raise ValueError(f"Provider {provider} non supporté")', start)
 if end == -1:
     raise SystemExit("fin generate() introuvable")
 end = txt.find("\n", end + 1)
 
-new_block = '''    def generate(self, request=None, **kwargs):
+new_block = """    def generate(self, request=None, **kwargs):
         if request is None:
             request = {}
 
@@ -66,7 +66,7 @@ new_block = '''    def generate(self, request=None, **kwargs):
             )
 
         raise ValueError(f"Provider {provider} non supporté")
-'''
+"""
 
 txt = txt[:start] + new_block + txt[end:]
 p.write_text(txt, encoding="utf-8")

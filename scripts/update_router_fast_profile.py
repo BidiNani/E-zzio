@@ -6,7 +6,7 @@ config_file = ROOT / "runtime" / "model_router" / "config.json"
 
 if config_file.exists():
     config = json.loads(config_file.read_text(encoding="utf-8"))
-    
+
     # 1. Ajustement du catalogue : Définition des rôles
     if "catalog" in config:
         # Modèle rapide pour chat / general
@@ -15,13 +15,9 @@ if config_file.exists():
             "capabilities": ["chat", "general", "fast_reply"],
             "max_complexity": "low",
             "keep_alive": "30m",
-            "options": {
-                "num_ctx": 4096,
-                "num_predict": 200,
-                "temperature": 0.7
-            }
+            "options": {"num_ctx": 4096, "num_predict": 200, "temperature": 0.7},
         }
-        
+
         # Qwen3 restreint au raisonnement / code complexe
         if "qwen3:8b" in config["catalog"]:
             config["catalog"]["qwen3:8b"]["capabilities"] = ["reasoning", "code"]
@@ -29,7 +25,7 @@ if config_file.exists():
                 "num_ctx": 4096,
                 "num_predict": 1024,
                 "temperature": 0.3,
-                "think": False  # Désactivation du thinking superflu par défaut
+                "think": False,  # Désactivation du thinking superflu par défaut
             }
 
     # 2. Ajustement des routes par défaut

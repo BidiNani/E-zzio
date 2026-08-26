@@ -1,20 +1,25 @@
 import pytest
-from core.security.guardrail import PromptGuard, SecurityViolationError
+from core.security.guardrail import SecurityViolationError
 from core.security.quota_manager import QuotaManager
 from core.memory.unified_gateway import UnifiedMemoryGateway
 from core.decision_router import DecisionRouter
 from core.providers.iresearch_provider import IResearchProvider
 from runtime.core.ezzio_core import EzzioCore
 
+
 class MockLocalProvider(IResearchProvider):
     name: str = "ollama"
+
     async def search(self, query: str, **kwargs):
         return {"provider": "ollama", "data": {"text": "Réponse locale de repli"}}
 
+
 class MockGeminiProvider(IResearchProvider):
     name: str = "gemini"
+
     async def search(self, query: str, **kwargs):
         return {"provider": "gemini", "data": {"text": "Réponse Cloud Gemini"}}
+
 
 @pytest.mark.asyncio
 async def test_ezzio_core_security_and_fallback(tmp_path):
@@ -23,11 +28,7 @@ async def test_ezzio_core_security_and_fallback(tmp_path):
     qm = QuotaManager(db_file)
     router = DecisionRouter([MockLocalProvider(), MockGeminiProvider()])
 
-    core = EzzioCore(
-        memory_gateway=mem,
-        quota_manager=qm,
-        decision_router=router
-    )
+    core = EzzioCore(memory_gateway=mem, quota_manager=qm, decision_router=router)
     await core.init()
 
     # 1. Test rejet injection de prompt

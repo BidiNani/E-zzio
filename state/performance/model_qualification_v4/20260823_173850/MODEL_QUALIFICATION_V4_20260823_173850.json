@@ -1,0 +1,3466 @@
+{
+  "schema_version": "4.0.0",
+  "benchmark": {
+    "name": "E-ZZIO MODEL QUALIFICATION GATE",
+    "version": "4.0.0",
+    "run_id": "20260823_173850",
+    "started_at": "20260823_173850",
+    "finished_at": "2026-08-23T19:13:16.6155440+02:00",
+    "seed": 809437,
+    "cpu_only": true,
+    "gpu_disabled": true,
+    "keep_alive": 0,
+    "stable_runs": 2,
+    "warmup_runs": 1,
+    "max_generated_tokens": 256,
+    "policy_modified": false,
+    "router_modified": false,
+    "ledger_modified": false
+  },
+  "environment": {
+    "cpu": "AMD Ryzen 9 5900X 12-Core Processor            ",
+    "cores": 12,
+    "threads": 24,
+    "ram_total_gb": 31.93,
+    "ram_free_gb_start": 14.75,
+    "ollama_host": "http://127.0.0.1:11434",
+    "powershell": "7.6.5"
+  },
+  "inventory": {
+    "total_models": 10,
+    "generative_models": 8,
+    "embedding_models": 2,
+    "models": [
+      {
+        "Name": "mrasif/gpt-oss-20b-GGUF:Q4_K_M",
+        "SizeGB": 10.826,
+        "Family": "gpt-oss",
+        "Parameters": "20.9B",
+        "Quant": "unknown",
+        "Generate": true,
+        "Embedding": false,
+        "Class": "GENERATIVE"
+      },
+      {
+        "Name": "hf.co/mradermacher/Kiwi-4b-i1-GGUF:Q4_K_M",
+        "SizeGB": 2.326,
+        "Family": "qwen3",
+        "Parameters": "4.02B",
+        "Quant": "unknown",
+        "Generate": true,
+        "Embedding": false,
+        "Class": "GENERATIVE"
+      },
+      {
+        "Name": "qwen2.5-coder:14b",
+        "SizeGB": 8.371,
+        "Family": "qwen2",
+        "Parameters": "14.8B",
+        "Quant": "Q4_K_M",
+        "Generate": true,
+        "Embedding": false,
+        "Class": "GENERATIVE"
+      },
+      {
+        "Name": "qwen3:8b",
+        "SizeGB": 4.867,
+        "Family": "qwen3",
+        "Parameters": "8.2B",
+        "Quant": "Q4_K_M",
+        "Generate": true,
+        "Embedding": false,
+        "Class": "GENERATIVE"
+      },
+      {
+        "Name": "qwen3:14b",
+        "SizeGB": 8.639,
+        "Family": "qwen3",
+        "Parameters": "14.8B",
+        "Quant": "Q4_K_M",
+        "Generate": true,
+        "Embedding": false,
+        "Class": "GENERATIVE"
+      },
+      {
+        "Name": "qwen3-coder:30b",
+        "SizeGB": 17.282,
+        "Family": "qwen3moe",
+        "Parameters": "30.5B",
+        "Quant": "Q4_K_M",
+        "Generate": true,
+        "Embedding": false,
+        "Class": "GENERATIVE"
+      },
+      {
+        "Name": "nomic-embed-text:latest",
+        "SizeGB": 0.255,
+        "Family": "nomic-bert",
+        "Parameters": "137M",
+        "Quant": "F16",
+        "Generate": false,
+        "Embedding": true,
+        "Class": "EMBEDDING"
+      },
+      {
+        "Name": "bge-m3:latest",
+        "SizeGB": 1.078,
+        "Family": "bert",
+        "Parameters": "566.70M",
+        "Quant": "F16",
+        "Generate": false,
+        "Embedding": true,
+        "Class": "EMBEDDING"
+      },
+      {
+        "Name": "qwen2.5-coder:7b",
+        "SizeGB": 4.361,
+        "Family": "qwen2",
+        "Parameters": "7.6B",
+        "Quant": "Q4_K_M",
+        "Generate": true,
+        "Embedding": false,
+        "Class": "GENERATIVE"
+      },
+      {
+        "Name": "granite4.1:8b",
+        "SizeGB": 4.981,
+        "Family": "granite",
+        "Parameters": "8.8B",
+        "Quant": "Q4_K_M",
+        "Generate": true,
+        "Embedding": false,
+        "Class": "GENERATIVE"
+      }
+    ]
+  },
+  "generative_results": [
+    {
+      "Name": "mrasif/gpt-oss-20b-GGUF:Q4_K_M",
+      "Class": "GENERATIVE",
+      "SizeGB": 10.826,
+      "Parameters": "20.9B",
+      "Quantization": "unknown",
+      "TestsPassed": 10,
+      "TestsTotal": 10,
+      "ScorePercent": 100.0,
+      "Deterministic": true,
+      "AverageTokSec": 9.135,
+      "AverageLatencyMs": 26532.05,
+      "PeakRamMB": 136.46,
+      "Verdict": "QUALIFIED",
+      "Tests": [
+        {
+          "TestId": "S01",
+          "TestName": "ShortResponse",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 26744,
+              "EvalCount": 57,
+              "TokPerSec": 9.274,
+              "RamBeforeMB": 129.16,
+              "RamAfterMB": 136.1,
+              "RamDeltaMB": 6.94,
+              "ReplyChars": 8,
+              "Reply": "EZZIO_OK",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 26188,
+              "EvalCount": 57,
+              "TokPerSec": 9.16,
+              "RamBeforeMB": 136.1,
+              "RamAfterMB": 134.55,
+              "RamDeltaMB": -1.55,
+              "ReplyChars": 8,
+              "Reply": "EZZIO_OK",
+              "Error": null
+            }
+          ],
+          "AvgMs": 26466.0,
+          "AvgTokSec": 9.217
+        },
+        {
+          "TestId": "S02",
+          "TestName": "PowerShell",
+          "Validator": "PowerShell",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "syntax_errors=0",
+              "ElapsedMs": 35652,
+              "EvalCount": 141,
+              "TokPerSec": 9.181,
+              "RamBeforeMB": 134.55,
+              "RamAfterMB": 135.33,
+              "RamDeltaMB": 0.78,
+              "ReplyChars": 41,
+              "Reply": "$EzzioValue = 42\nWrite-Output $EzzioValue",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "syntax_errors=0",
+              "ElapsedMs": 35917,
+              "EvalCount": 141,
+              "TokPerSec": 9.141,
+              "RamBeforeMB": 135.33,
+              "RamAfterMB": 133.8,
+              "RamDeltaMB": -1.53,
+              "ReplyChars": 41,
+              "Reply": "$EzzioValue = 42\nWrite-Output $EzzioValue",
+              "Error": null
+            }
+          ],
+          "AvgMs": 35784.5,
+          "AvgTokSec": 9.161
+        },
+        {
+          "TestId": "S03",
+          "TestName": "Python",
+          "Validator": "Python",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exit=0",
+              "ElapsedMs": 27472,
+              "EvalCount": 67,
+              "TokPerSec": 9.239,
+              "RamBeforeMB": 133.8,
+              "RamAfterMB": 136.46,
+              "RamDeltaMB": 2.66,
+              "ReplyChars": 23,
+              "Reply": "value = 42\nprint(value)",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exit=0",
+              "ElapsedMs": 27401,
+              "EvalCount": 67,
+              "TokPerSec": 9.08,
+              "RamBeforeMB": 136.46,
+              "RamAfterMB": 134.28,
+              "RamDeltaMB": -2.18,
+              "ReplyChars": 23,
+              "Reply": "value = 42\nprint(value)",
+              "Error": null
+            }
+          ],
+          "AvgMs": 27436.5,
+          "AvgTokSec": 9.16
+        },
+        {
+          "TestId": "S04",
+          "TestName": "StrictJSON",
+          "Validator": "JSON",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "schema_ok",
+              "ElapsedMs": 29266,
+              "EvalCount": 73,
+              "TokPerSec": 9.198,
+              "RamBeforeMB": 134.28,
+              "RamAfterMB": 134.08,
+              "RamDeltaMB": -0.2,
+              "ReplyChars": 37,
+              "Reply": "{\"ok\":true,\"value\":42,\"name\":\"EZZIO\"}",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "schema_ok",
+              "ElapsedMs": 28944,
+              "EvalCount": 73,
+              "TokPerSec": 9.133,
+              "RamBeforeMB": 134.08,
+              "RamAfterMB": 133.28,
+              "RamDeltaMB": -0.8,
+              "ReplyChars": 37,
+              "Reply": "{\"ok\":true,\"value\":42,\"name\":\"EZZIO\"}",
+              "Error": null
+            }
+          ],
+          "AvgMs": 29105.0,
+          "AvgTokSec": 9.166
+        },
+        {
+          "TestId": "S05",
+          "TestName": "Logic",
+          "Validator": "Logic",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "expected_rate",
+              "ElapsedMs": 49447,
+              "EvalCount": 256,
+              "TokPerSec": 9.003,
+              "RamBeforeMB": 133.28,
+              "RamAfterMB": 136.03,
+              "RamDeltaMB": 2.75,
+              "ReplyChars": 200,
+              "Reply": "**1) Formula**  \n\\[\nr_{\\text{total}}=\\frac{1}{4}+\\frac{1}{6}+\\frac{1}{12}\\quad\\text{(tasks / second)}\n\\]\n\n**2) Numerical result**  \n\\[\nr_{\\text{total}}=\\frac{6}{12}=0.5\\;\\text{tasks per second}\n\\]\n\n**",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "expected_rate",
+              "ElapsedMs": 44816,
+              "EvalCount": 256,
+              "TokPerSec": 8.732,
+              "RamBeforeMB": 136.03,
+              "RamAfterMB": 135.2,
+              "RamDeltaMB": -0.83,
+              "ReplyChars": 200,
+              "Reply": "**1) Formula**  \n\\[\nr_{\\text{total}}=\\frac{1}{4}+\\frac{1}{6}+\\frac{1}{12}\\quad\\text{(tasks / second)}\n\\]\n\n**2) Numerical result**  \n\\[\nr_{\\text{total}}=\\frac{6}{12}=0.5\\;\\text{tasks per second}\n\\]\n\n**",
+              "Error": null
+            }
+          ],
+          "AvgMs": 47131.5,
+          "AvgTokSec": 8.868
+        },
+        {
+          "TestId": "S06",
+          "TestName": "NegationPreservation",
+          "Validator": "Semantic",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "required_constraints_preserved",
+              "ElapsedMs": 24545,
+              "EvalCount": 140,
+              "TokPerSec": 9.298,
+              "RamBeforeMB": 135.2,
+              "RamAfterMB": 135.08,
+              "RamDeltaMB": -0.12,
+              "ReplyChars": 73,
+              "Reply": "The system must NOT authorize 10.0.0.99.  \nNOT is a mandatory constraint.",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "required_constraints_preserved",
+              "ElapsedMs": 25230,
+              "EvalCount": 140,
+              "TokPerSec": 9.211,
+              "RamBeforeMB": 135.08,
+              "RamAfterMB": 132.75,
+              "RamDeltaMB": -2.33,
+              "ReplyChars": 73,
+              "Reply": "The system must NOT authorize 10.0.0.99.  \nNOT is a mandatory constraint.",
+              "Error": null
+            }
+          ],
+          "AvgMs": 24887.5,
+          "AvgTokSec": 9.254
+        },
+        {
+          "TestId": "S07",
+          "TestName": "Context",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 18442,
+              "EvalCount": 84,
+              "TokPerSec": 9.185,
+              "RamBeforeMB": 132.75,
+              "RamAfterMB": 133.93,
+              "RamDeltaMB": 1.18,
+              "ReplyChars": 3,
+              "Reply": "332",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 19135,
+              "EvalCount": 84,
+              "TokPerSec": 9.156,
+              "RamBeforeMB": 133.93,
+              "RamAfterMB": 133.59,
+              "RamDeltaMB": -0.34,
+              "ReplyChars": 3,
+              "Reply": "332",
+              "Error": null
+            }
+          ],
+          "AvgMs": 18788.5,
+          "AvgTokSec": 9.17
+        },
+        {
+          "TestId": "S08",
+          "TestName": "CodeReasoning",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 20955,
+              "EvalCount": 92,
+              "TokPerSec": 9.127,
+              "RamBeforeMB": 133.59,
+              "RamAfterMB": 134.74,
+              "RamDeltaMB": 1.15,
+              "ReplyChars": 1,
+              "Reply": "D",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 20332,
+              "EvalCount": 92,
+              "TokPerSec": 9.061,
+              "RamBeforeMB": 134.74,
+              "RamAfterMB": 133.38,
+              "RamDeltaMB": -1.36,
+              "ReplyChars": 1,
+              "Reply": "D",
+              "Error": null
+            }
+          ],
+          "AvgMs": 20643.5,
+          "AvgTokSec": 9.094
+        },
+        {
+          "TestId": "S09",
+          "TestName": "FrenchInstruction",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 16040,
+              "EvalCount": 61,
+              "TokPerSec": 9.256,
+              "RamBeforeMB": 133.38,
+              "RamAfterMB": 135.79,
+              "RamDeltaMB": 2.41,
+              "ReplyChars": 25,
+              "Reply": "CERTIFICATION FORENSIC OK",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 15747,
+              "EvalCount": 61,
+              "TokPerSec": 9.211,
+              "RamBeforeMB": 135.79,
+              "RamAfterMB": 134.04,
+              "RamDeltaMB": -1.75,
+              "ReplyChars": 25,
+              "Reply": "CERTIFICATION FORENSIC OK",
+              "Error": null
+            }
+          ],
+          "AvgMs": 15893.5,
+          "AvgTokSec": 9.234
+        },
+        {
+          "TestId": "S10",
+          "TestName": "Abstention",
+          "Validator": "Contains",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "required_token",
+              "ElapsedMs": 19363,
+              "EvalCount": 82,
+              "TokPerSec": 8.974,
+              "RamBeforeMB": 134.04,
+              "RamAfterMB": 135.01,
+              "RamDeltaMB": 0.97,
+              "ReplyChars": 7,
+              "Reply": "ABSTAIN",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "required_token",
+              "ElapsedMs": 19005,
+              "EvalCount": 82,
+              "TokPerSec": 9.071,
+              "RamBeforeMB": 135.01,
+              "RamAfterMB": 134.19,
+              "RamDeltaMB": -0.82,
+              "ReplyChars": 7,
+              "Reply": "ABSTAIN",
+              "Error": null
+            }
+          ],
+          "AvgMs": 19184.0,
+          "AvgTokSec": 9.022
+        }
+      ],
+      "DeterminismRuns": [
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "Name": "qwen3:8b",
+      "Class": "GENERATIVE",
+      "SizeGB": 4.867,
+      "Parameters": "8.2B",
+      "Quantization": "Q4_K_M",
+      "TestsPassed": 5,
+      "TestsTotal": 10,
+      "ScorePercent": 50.0,
+      "Deterministic": true,
+      "AverageTokSec": 5.682,
+      "AverageLatencyMs": 42774.75,
+      "PeakRamMB": 127.63,
+      "Verdict": "FAILED",
+      "Tests": [
+        {
+          "TestId": "S01",
+          "TestName": "ShortResponse",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 30727,
+              "EvalCount": 151,
+              "TokPerSec": 5.736,
+              "RamBeforeMB": 133.57,
+              "RamAfterMB": 118.06,
+              "RamDeltaMB": -15.51,
+              "ReplyChars": 8,
+              "Reply": "EZZIO_OK",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 30750,
+              "EvalCount": 151,
+              "TokPerSec": 5.749,
+              "RamBeforeMB": 118.06,
+              "RamAfterMB": 123.37,
+              "RamDeltaMB": 5.31,
+              "ReplyChars": 8,
+              "Reply": "EZZIO_OK",
+              "Error": null
+            }
+          ],
+          "AvgMs": 30738.5,
+          "AvgTokSec": 5.742
+        },
+        {
+          "TestId": "S02",
+          "TestName": "PowerShell",
+          "Validator": "PowerShell",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "EMPTY",
+              "ElapsedMs": 49699,
+              "EvalCount": 256,
+              "TokPerSec": 5.691,
+              "RamBeforeMB": 123.37,
+              "RamAfterMB": 124.24,
+              "RamDeltaMB": 0.87,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "EMPTY",
+              "ElapsedMs": 49624,
+              "EvalCount": 256,
+              "TokPerSec": 5.697,
+              "RamBeforeMB": 124.24,
+              "RamAfterMB": 124.42,
+              "RamDeltaMB": 0.18,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            }
+          ],
+          "AvgMs": 49661.5,
+          "AvgTokSec": 5.694
+        },
+        {
+          "TestId": "S03",
+          "TestName": "Python",
+          "Validator": "Python",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "EMPTY",
+              "ElapsedMs": 49435,
+              "EvalCount": 256,
+              "TokPerSec": 5.699,
+              "RamBeforeMB": 124.42,
+              "RamAfterMB": 127.63,
+              "RamDeltaMB": 3.21,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "EMPTY",
+              "ElapsedMs": 49657,
+              "EvalCount": 256,
+              "TokPerSec": 5.687,
+              "RamBeforeMB": 127.63,
+              "RamAfterMB": 126.52,
+              "RamDeltaMB": -1.11,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            }
+          ],
+          "AvgMs": 49546.0,
+          "AvgTokSec": 5.693
+        },
+        {
+          "TestId": "S04",
+          "TestName": "StrictJSON",
+          "Validator": "JSON",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "schema_ok",
+              "ElapsedMs": 49455,
+              "EvalCount": 254,
+              "TokPerSec": 5.703,
+              "RamBeforeMB": 126.52,
+              "RamAfterMB": 126.14,
+              "RamDeltaMB": -0.38,
+              "ReplyChars": 42,
+              "Reply": "{\"ok\": true, \"value\": 42, \"name\": \"EZZIO\"}",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "schema_ok",
+              "ElapsedMs": 49215,
+              "EvalCount": 254,
+              "TokPerSec": 5.711,
+              "RamBeforeMB": 126.14,
+              "RamAfterMB": 126.14,
+              "RamDeltaMB": 0.0,
+              "ReplyChars": 42,
+              "Reply": "{\"ok\": true, \"value\": 42, \"name\": \"EZZIO\"}",
+              "Error": null
+            }
+          ],
+          "AvgMs": 49335.0,
+          "AvgTokSec": 5.707
+        },
+        {
+          "TestId": "S05",
+          "TestName": "Logic",
+          "Validator": "Logic",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "expected_rate",
+              "ElapsedMs": 50175,
+              "EvalCount": 256,
+              "TokPerSec": 5.711,
+              "RamBeforeMB": 126.14,
+              "RamAfterMB": 123.73,
+              "RamDeltaMB": -2.41,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "expected_rate",
+              "ElapsedMs": 50364,
+              "EvalCount": 256,
+              "TokPerSec": 5.68,
+              "RamBeforeMB": 123.73,
+              "RamAfterMB": 125.17,
+              "RamDeltaMB": 1.44,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            }
+          ],
+          "AvgMs": 50269.5,
+          "AvgTokSec": 5.696
+        },
+        {
+          "TestId": "S06",
+          "TestName": "NegationPreservation",
+          "Validator": "Semantic",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "required_constraints_preserved",
+              "ElapsedMs": 33565,
+              "EvalCount": 164,
+              "TokPerSec": 5.701,
+              "RamBeforeMB": 125.17,
+              "RamAfterMB": 124.82,
+              "RamDeltaMB": -0.35,
+              "ReplyChars": 77,
+              "Reply": "\"The system must NOT authorize 10.0.0.99.\"  \n\"NOT is a mandatory constraint.\"",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "required_constraints_preserved",
+              "ElapsedMs": 33787,
+              "EvalCount": 164,
+              "TokPerSec": 5.664,
+              "RamBeforeMB": 124.82,
+              "RamAfterMB": 126.66,
+              "RamDeltaMB": 1.84,
+              "ReplyChars": 77,
+              "Reply": "\"The system must NOT authorize 10.0.0.99.\"  \n\"NOT is a mandatory constraint.\"",
+              "Error": null
+            }
+          ],
+          "AvgMs": 33676.0,
+          "AvgTokSec": 5.682
+        },
+        {
+          "TestId": "S07",
+          "TestName": "Context",
+          "Validator": "Exact",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 50053,
+              "EvalCount": 256,
+              "TokPerSec": 5.662,
+              "RamBeforeMB": 126.66,
+              "RamAfterMB": 126.51,
+              "RamDeltaMB": -0.15,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 50131,
+              "EvalCount": 256,
+              "TokPerSec": 5.659,
+              "RamBeforeMB": 126.51,
+              "RamAfterMB": 126.94,
+              "RamDeltaMB": 0.43,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            }
+          ],
+          "AvgMs": 50092.0,
+          "AvgTokSec": 5.66
+        },
+        {
+          "TestId": "S08",
+          "TestName": "CodeReasoning",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 42078,
+              "EvalCount": 208,
+              "TokPerSec": 5.641,
+              "RamBeforeMB": 126.94,
+              "RamAfterMB": 126.16,
+              "RamDeltaMB": -0.78,
+              "ReplyChars": 1,
+              "Reply": "D",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 42198,
+              "EvalCount": 208,
+              "TokPerSec": 5.623,
+              "RamBeforeMB": 126.16,
+              "RamAfterMB": 126.0,
+              "RamDeltaMB": -0.16,
+              "ReplyChars": 1,
+              "Reply": "D",
+              "Error": null
+            }
+          ],
+          "AvgMs": 42138.0,
+          "AvgTokSec": 5.632
+        },
+        {
+          "TestId": "S09",
+          "TestName": "FrenchInstruction",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 21942,
+              "EvalCount": 99,
+              "TokPerSec": 5.666,
+              "RamBeforeMB": 126.0,
+              "RamAfterMB": 126.36,
+              "RamDeltaMB": 0.36,
+              "ReplyChars": 25,
+              "Reply": "CERTIFICATION FORENSIC OK",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 22461,
+              "EvalCount": 99,
+              "TokPerSec": 5.668,
+              "RamBeforeMB": 126.36,
+              "RamAfterMB": 126.06,
+              "RamDeltaMB": -0.3,
+              "ReplyChars": 25,
+              "Reply": "CERTIFICATION FORENSIC OK",
+              "Error": null
+            }
+          ],
+          "AvgMs": 22201.5,
+          "AvgTokSec": 5.667
+        },
+        {
+          "TestId": "S10",
+          "TestName": "Abstention",
+          "Validator": "Contains",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "required_token",
+              "ElapsedMs": 50178,
+              "EvalCount": 256,
+              "TokPerSec": 5.635,
+              "RamBeforeMB": 126.06,
+              "RamAfterMB": 123.86,
+              "RamDeltaMB": -2.2,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "required_token",
+              "ElapsedMs": 50001,
+              "EvalCount": 256,
+              "TokPerSec": 5.662,
+              "RamBeforeMB": 123.86,
+              "RamAfterMB": 124.14,
+              "RamDeltaMB": 0.28,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            }
+          ],
+          "AvgMs": 50089.5,
+          "AvgTokSec": 5.648
+        }
+      ],
+      "DeterminismRuns": [
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "Name": "granite4.1:8b",
+      "Class": "GENERATIVE",
+      "SizeGB": 4.981,
+      "Parameters": "8.8B",
+      "Quantization": "Q4_K_M",
+      "TestsPassed": 8,
+      "TestsTotal": 10,
+      "ScorePercent": 80.0,
+      "Deterministic": true,
+      "AverageTokSec": 5.835,
+      "AverageLatencyMs": 15585.45,
+      "PeakRamMB": 125.52,
+      "Verdict": "PARTIAL",
+      "Tests": [
+        {
+          "TestId": "S01",
+          "TestName": "ShortResponse",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 5774,
+              "EvalCount": 5,
+              "TokPerSec": 6.672,
+              "RamBeforeMB": 122.77,
+              "RamAfterMB": 125.52,
+              "RamDeltaMB": 2.75,
+              "ReplyChars": 8,
+              "Reply": "EZZIO_OK",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 5457,
+              "EvalCount": 5,
+              "TokPerSec": 6.733,
+              "RamBeforeMB": 125.52,
+              "RamAfterMB": 116.47,
+              "RamDeltaMB": -9.05,
+              "ReplyChars": 8,
+              "Reply": "EZZIO_OK",
+              "Error": null
+            }
+          ],
+          "AvgMs": 5615.5,
+          "AvgTokSec": 6.702
+        },
+        {
+          "TestId": "S02",
+          "TestName": "PowerShell",
+          "Validator": "PowerShell",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "syntax_errors=0",
+              "ElapsedMs": 8278,
+              "EvalCount": 18,
+              "TokPerSec": 5.625,
+              "RamBeforeMB": 116.47,
+              "RamAfterMB": 116.75,
+              "RamDeltaMB": 0.28,
+              "ReplyChars": 41,
+              "Reply": "$EzzioValue = 42\nWrite-Output $EzzioValue",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "syntax_errors=0",
+              "ElapsedMs": 8254,
+              "EvalCount": 18,
+              "TokPerSec": 5.638,
+              "RamBeforeMB": 116.75,
+              "RamAfterMB": 117.33,
+              "RamDeltaMB": 0.58,
+              "ReplyChars": 41,
+              "Reply": "$EzzioValue = 42\nWrite-Output $EzzioValue",
+              "Error": null
+            }
+          ],
+          "AvgMs": 8266.0,
+          "AvgTokSec": 5.632
+        },
+        {
+          "TestId": "S03",
+          "TestName": "Python",
+          "Validator": "Python",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exit=0",
+              "ElapsedMs": 6401,
+              "EvalCount": 9,
+              "TokPerSec": 5.993,
+              "RamBeforeMB": 117.33,
+              "RamAfterMB": 123.54,
+              "RamDeltaMB": 6.21,
+              "ReplyChars": 23,
+              "Reply": "value = 42\nprint(value)",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exit=0",
+              "ElapsedMs": 6369,
+              "EvalCount": 9,
+              "TokPerSec": 5.753,
+              "RamBeforeMB": 120.35,
+              "RamAfterMB": 118.44,
+              "RamDeltaMB": -1.91,
+              "ReplyChars": 23,
+              "Reply": "value = 42\nprint(value)",
+              "Error": null
+            }
+          ],
+          "AvgMs": 6385.0,
+          "AvgTokSec": 5.873
+        },
+        {
+          "TestId": "S04",
+          "TestName": "StrictJSON",
+          "Validator": "JSON",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "schema_ok",
+              "ElapsedMs": 10007,
+              "EvalCount": 25,
+              "TokPerSec": 5.369,
+              "RamBeforeMB": 118.44,
+              "RamAfterMB": 117.73,
+              "RamDeltaMB": -0.71,
+              "ReplyChars": 50,
+              "Reply": "{\n  \"ok\": true,\n  \"value\": 42,\n  \"name\": \"EZZIO\"\n}",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "schema_ok",
+              "ElapsedMs": 9814,
+              "EvalCount": 25,
+              "TokPerSec": 5.373,
+              "RamBeforeMB": 117.73,
+              "RamAfterMB": 117.62,
+              "RamDeltaMB": -0.11,
+              "ReplyChars": 50,
+              "Reply": "{\n  \"ok\": true,\n  \"value\": 42,\n  \"name\": \"EZZIO\"\n}",
+              "Error": null
+            }
+          ],
+          "AvgMs": 9910.5,
+          "AvgTokSec": 5.371
+        },
+        {
+          "TestId": "S05",
+          "TestName": "Logic",
+          "Validator": "Logic",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "expected_rate",
+              "ElapsedMs": 53523,
+              "EvalCount": 251,
+              "TokPerSec": 5.261,
+              "RamBeforeMB": 117.62,
+              "RamAfterMB": 117.5,
+              "RamDeltaMB": -0.12,
+              "ReplyChars": 780,
+              "Reply": "1) Formula:\nThe combined task rate \\( R \\) when workers work independently in parallel is the sum of their individual rates. If each worker completes a task in \\( t_i \\) seconds, their rate \\( r_i \\) is \\( \\frac{1}{t_i} \\) tasks per second. Thus, for three workers:\n\n\\[ R = \\frac{1}{t_A} + \\frac{1}{t_B} + \\frac{1}{t_C} \\]\n\n2) Numerical result:\nFor Worker A (\\( t_A = 4 \\) seconds), Worker B (\\( t_B = 6 \\) seconds), and Worker C (\\( t_C = 12 \\) seconds):\n\n\\[ R = \\frac{1}{4} + \\frac{1}{6} + \\frac{1}{12} \\]\n\n\\[ R = 0.25 + 0.1667 + 0.0833 \\]\n\n\\[ R \\approx 0.5 \\text{ tasks per second} \\]\n\n3) Short explanation:\nThe combined task rate is approximately 0.5 tasks per second, meaning that together, the three workers can complete half a task every second when working simultaneously.",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "expected_rate",
+              "ElapsedMs": 53150,
+              "EvalCount": 251,
+              "TokPerSec": 5.29,
+              "RamBeforeMB": 117.5,
+              "RamAfterMB": 117.7,
+              "RamDeltaMB": 0.2,
+              "ReplyChars": 780,
+              "Reply": "1) Formula:\nThe combined task rate \\( R \\) when workers work independently in parallel is the sum of their individual rates. If each worker completes a task in \\( t_i \\) seconds, their rate \\( r_i \\) is \\( \\frac{1}{t_i} \\) tasks per second. Thus, for three workers:\n\n\\[ R = \\frac{1}{t_A} + \\frac{1}{t_B} + \\frac{1}{t_C} \\]\n\n2) Numerical result:\nFor Worker A (\\( t_A = 4 \\) seconds), Worker B (\\( t_B = 6 \\) seconds), and Worker C (\\( t_C = 12 \\) seconds):\n\n\\[ R = \\frac{1}{4} + \\frac{1}{6} + \\frac{1}{12} \\]\n\n\\[ R = 0.25 + 0.1667 + 0.0833 \\]\n\n\\[ R \\approx 0.5 \\text{ tasks per second} \\]\n\n3) Short explanation:\nThe combined task rate is approximately 0.5 tasks per second, meaning that together, the three workers can complete half a task every second when working simultaneously.",
+              "Error": null
+            }
+          ],
+          "AvgMs": 53336.5,
+          "AvgTokSec": 5.276
+        },
+        {
+          "TestId": "S06",
+          "TestName": "NegationPreservation",
+          "Validator": "Semantic",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "required_constraints_preserved",
+              "ElapsedMs": 9416,
+              "EvalCount": 22,
+              "TokPerSec": 5.563,
+              "RamBeforeMB": 117.7,
+              "RamAfterMB": 117.64,
+              "RamDeltaMB": -0.06,
+              "ReplyChars": 75,
+              "Reply": "\"The system must NOT authorize 10.0.0.99.\"\n\"NOT is a mandatory constraint.\"",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "required_constraints_preserved",
+              "ElapsedMs": 9189,
+              "EvalCount": 22,
+              "TokPerSec": 5.604,
+              "RamBeforeMB": 117.64,
+              "RamAfterMB": 118.62,
+              "RamDeltaMB": 0.98,
+              "ReplyChars": 75,
+              "Reply": "\"The system must NOT authorize 10.0.0.99.\"\n\"NOT is a mandatory constraint.\"",
+              "Error": null
+            }
+          ],
+          "AvgMs": 9302.5,
+          "AvgTokSec": 5.584
+        },
+        {
+          "TestId": "S07",
+          "TestName": "Context",
+          "Validator": "Exact",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 25140,
+              "EvalCount": 108,
+              "TokPerSec": 5.397,
+              "RamBeforeMB": 118.62,
+              "RamAfterMB": 120.35,
+              "RamDeltaMB": 1.73,
+              "ReplyChars": 275,
+              "Reply": "First, compute the sum of \\( A \\) and \\( B \\):\n\n\\[\nA + B = 17 + 25 = 42\n\\]\n\nNext, multiply this sum by \\( C \\):\n\n\\[\n( A + B ) \\times C = 42 \\times 8 = 336\n\\]\n\nFinally, subtract \\( D \\) from the result:\n\n\\[\n336 - D = 336 - 4 = 332\n\\]\n\nThe integer result is:\n\n\\[\n\\boxed{332}\n\\]",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 25033,
+              "EvalCount": 108,
+              "TokPerSec": 5.356,
+              "RamBeforeMB": 120.35,
+              "RamAfterMB": 115.93,
+              "RamDeltaMB": -4.42,
+              "ReplyChars": 275,
+              "Reply": "First, compute the sum of \\( A \\) and \\( B \\):\n\n\\[\nA + B = 17 + 25 = 42\n\\]\n\nNext, multiply this sum by \\( C \\):\n\n\\[\n( A + B ) \\times C = 42 \\times 8 = 336\n\\]\n\nFinally, subtract \\( D \\) from the result:\n\n\\[\n336 - D = 336 - 4 = 332\n\\]\n\nThe integer result is:\n\n\\[\n\\boxed{332}\n\\]",
+              "Error": null
+            }
+          ],
+          "AvgMs": 25086.5,
+          "AvgTokSec": 5.376
+        },
+        {
+          "TestId": "S08",
+          "TestName": "CodeReasoning",
+          "Validator": "Exact",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 26508,
+              "EvalCount": 111,
+              "TokPerSec": 5.358,
+              "RamBeforeMB": 115.93,
+              "RamAfterMB": 115.51,
+              "RamDeltaMB": -0.42,
+              "ReplyChars": 360,
+              "Reply": "For input 5, the function `f(5)` evaluates as follows:\n\n1. `x` is not less than 0, so the first condition is false.\n2. `x` is not equal to 0, so the second condition is false.\n3. `x % 2 == 0` checks if 5 is even. Since 5 is odd, this condition is false.\n4. The function reaches the final `return \"D\"` statement.\n\nTherefore, the function returns **D**.  \n\n**D**",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 26274,
+              "EvalCount": 111,
+              "TokPerSec": 5.368,
+              "RamBeforeMB": 115.51,
+              "RamAfterMB": 117.36,
+              "RamDeltaMB": 1.85,
+              "ReplyChars": 360,
+              "Reply": "For input 5, the function `f(5)` evaluates as follows:\n\n1. `x` is not less than 0, so the first condition is false.\n2. `x` is not equal to 0, so the second condition is false.\n3. `x % 2 == 0` checks if 5 is even. Since 5 is odd, this condition is false.\n4. The function reaches the final `return \"D\"` statement.\n\nTherefore, the function returns **D**.  \n\n**D**",
+              "Error": null
+            }
+          ],
+          "AvgMs": 26391.0,
+          "AvgTokSec": 5.363
+        },
+        {
+          "TestId": "S09",
+          "TestName": "FrenchInstruction",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 5748,
+              "EvalCount": 7,
+              "TokPerSec": 6.199,
+              "RamBeforeMB": 117.36,
+              "RamAfterMB": 123.73,
+              "RamDeltaMB": 6.37,
+              "ReplyChars": 25,
+              "Reply": "CERTIFICATION FORENSIC OK",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 5791,
+              "EvalCount": 7,
+              "TokPerSec": 6.093,
+              "RamBeforeMB": 123.73,
+              "RamAfterMB": 124.23,
+              "RamDeltaMB": 0.5,
+              "ReplyChars": 25,
+              "Reply": "CERTIFICATION FORENSIC OK",
+              "Error": null
+            }
+          ],
+          "AvgMs": 5769.5,
+          "AvgTokSec": 6.146
+        },
+        {
+          "TestId": "S10",
+          "TestName": "Abstention",
+          "Validator": "Contains",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "required_token",
+              "ElapsedMs": 5643,
+              "EvalCount": 4,
+              "TokPerSec": 7.0,
+              "RamBeforeMB": 124.23,
+              "RamAfterMB": 117.88,
+              "RamDeltaMB": -6.35,
+              "ReplyChars": 7,
+              "Reply": "ABSTAIN",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "required_token",
+              "ElapsedMs": 5940,
+              "EvalCount": 4,
+              "TokPerSec": 7.059,
+              "RamBeforeMB": 117.88,
+              "RamAfterMB": 117.42,
+              "RamDeltaMB": -0.46,
+              "ReplyChars": 7,
+              "Reply": "ABSTAIN",
+              "Error": null
+            }
+          ],
+          "AvgMs": 5791.5,
+          "AvgTokSec": 7.03
+        }
+      ],
+      "DeterminismRuns": [
+        "EZZIO_DETERMINISM_ANCHOR",
+        "EZZIO_DETERMINISM_ANCHOR",
+        "EZZIO_DETERMINISM_ANCHOR"
+      ]
+    },
+    {
+      "Name": "qwen3:14b",
+      "Class": "GENERATIVE",
+      "SizeGB": 8.639,
+      "Parameters": "14.8B",
+      "Quantization": "Q4_K_M",
+      "TestsPassed": 2,
+      "TestsTotal": 10,
+      "ScorePercent": 20.0,
+      "Deterministic": true,
+      "AverageTokSec": 3.616,
+      "AverageLatencyMs": 70914.7,
+      "PeakRamMB": 128.1,
+      "Verdict": "FAILED",
+      "Tests": [
+        {
+          "TestId": "S01",
+          "TestName": "ShortResponse",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 30644,
+              "EvalCount": 81,
+              "TokPerSec": 3.597,
+              "RamBeforeMB": 120.26,
+              "RamAfterMB": 128.1,
+              "RamDeltaMB": 7.84,
+              "ReplyChars": 8,
+              "Reply": "EZZIO_OK",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 29433,
+              "EvalCount": 81,
+              "TokPerSec": 3.687,
+              "RamBeforeMB": 128.1,
+              "RamAfterMB": 126.16,
+              "RamDeltaMB": -1.94,
+              "ReplyChars": 8,
+              "Reply": "EZZIO_OK",
+              "Error": null
+            }
+          ],
+          "AvgMs": 30038.5,
+          "AvgTokSec": 3.642
+        },
+        {
+          "TestId": "S02",
+          "TestName": "PowerShell",
+          "Validator": "PowerShell",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "EMPTY",
+              "ElapsedMs": 79020,
+              "EvalCount": 256,
+              "TokPerSec": 3.619,
+              "RamBeforeMB": 126.16,
+              "RamAfterMB": 125.82,
+              "RamDeltaMB": -0.34,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "EMPTY",
+              "ElapsedMs": 78233,
+              "EvalCount": 256,
+              "TokPerSec": 3.64,
+              "RamBeforeMB": 125.82,
+              "RamAfterMB": 126.57,
+              "RamDeltaMB": 0.75,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            }
+          ],
+          "AvgMs": 78626.5,
+          "AvgTokSec": 3.63
+        },
+        {
+          "TestId": "S03",
+          "TestName": "Python",
+          "Validator": "Python",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "EMPTY",
+              "ElapsedMs": 78849,
+              "EvalCount": 256,
+              "TokPerSec": 3.62,
+              "RamBeforeMB": 126.57,
+              "RamAfterMB": 126.16,
+              "RamDeltaMB": -0.41,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "EMPTY",
+              "ElapsedMs": 78364,
+              "EvalCount": 256,
+              "TokPerSec": 3.639,
+              "RamBeforeMB": 126.16,
+              "RamAfterMB": 126.45,
+              "RamDeltaMB": 0.29,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            }
+          ],
+          "AvgMs": 78606.5,
+          "AvgTokSec": 3.63
+        },
+        {
+          "TestId": "S04",
+          "TestName": "StrictJSON",
+          "Validator": "JSON",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "EMPTY",
+              "ElapsedMs": 78789,
+              "EvalCount": 256,
+              "TokPerSec": 3.626,
+              "RamBeforeMB": 126.45,
+              "RamAfterMB": 126.68,
+              "RamDeltaMB": 0.23,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "EMPTY",
+              "ElapsedMs": 78827,
+              "EvalCount": 256,
+              "TokPerSec": 3.629,
+              "RamBeforeMB": 126.68,
+              "RamAfterMB": 126.58,
+              "RamDeltaMB": -0.1,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            }
+          ],
+          "AvgMs": 78808.0,
+          "AvgTokSec": 3.628
+        },
+        {
+          "TestId": "S05",
+          "TestName": "Logic",
+          "Validator": "Logic",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "expected_rate",
+              "ElapsedMs": 80522,
+              "EvalCount": 256,
+              "TokPerSec": 3.598,
+              "RamBeforeMB": 126.58,
+              "RamAfterMB": 126.3,
+              "RamDeltaMB": -0.28,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "expected_rate",
+              "ElapsedMs": 80206,
+              "EvalCount": 256,
+              "TokPerSec": 3.598,
+              "RamBeforeMB": 126.3,
+              "RamAfterMB": 123.32,
+              "RamDeltaMB": -2.98,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            }
+          ],
+          "AvgMs": 80364.0,
+          "AvgTokSec": 3.598
+        },
+        {
+          "TestId": "S06",
+          "TestName": "NegationPreservation",
+          "Validator": "Semantic",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "constraint_loss",
+              "ElapsedMs": 78883,
+              "EvalCount": 256,
+              "TokPerSec": 3.613,
+              "RamBeforeMB": 123.32,
+              "RamAfterMB": 125.14,
+              "RamDeltaMB": 1.82,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "constraint_loss",
+              "ElapsedMs": 78898,
+              "EvalCount": 256,
+              "TokPerSec": 3.621,
+              "RamBeforeMB": 125.14,
+              "RamAfterMB": 124.82,
+              "RamDeltaMB": -0.32,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            }
+          ],
+          "AvgMs": 78890.5,
+          "AvgTokSec": 3.617
+        },
+        {
+          "TestId": "S07",
+          "TestName": "Context",
+          "Validator": "Exact",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 79125,
+              "EvalCount": 256,
+              "TokPerSec": 3.6,
+              "RamBeforeMB": 124.82,
+              "RamAfterMB": 126.27,
+              "RamDeltaMB": 1.45,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 80883,
+              "EvalCount": 256,
+              "TokPerSec": 3.531,
+              "RamBeforeMB": 126.27,
+              "RamAfterMB": 126.67,
+              "RamDeltaMB": 0.4,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            }
+          ],
+          "AvgMs": 80004.0,
+          "AvgTokSec": 3.566
+        },
+        {
+          "TestId": "S08",
+          "TestName": "CodeReasoning",
+          "Validator": "Exact",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 81130,
+              "EvalCount": 256,
+              "TokPerSec": 3.561,
+              "RamBeforeMB": 126.67,
+              "RamAfterMB": 126.85,
+              "RamDeltaMB": 0.18,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 79349,
+              "EvalCount": 256,
+              "TokPerSec": 3.629,
+              "RamBeforeMB": 126.85,
+              "RamAfterMB": 126.88,
+              "RamDeltaMB": 0.03,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            }
+          ],
+          "AvgMs": 80239.5,
+          "AvgTokSec": 3.595
+        },
+        {
+          "TestId": "S09",
+          "TestName": "FrenchInstruction",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 51603,
+              "EvalCount": 161,
+              "TokPerSec": 3.651,
+              "RamBeforeMB": 126.88,
+              "RamAfterMB": 126.97,
+              "RamDeltaMB": 0.09,
+              "ReplyChars": 25,
+              "Reply": "CERTIFICATION FORENSIC OK",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 37796,
+              "EvalCount": 109,
+              "TokPerSec": 3.622,
+              "RamBeforeMB": 126.97,
+              "RamAfterMB": 126.02,
+              "RamDeltaMB": -0.95,
+              "ReplyChars": 25,
+              "Reply": "CERTIFICATION FORENSIC OK",
+              "Error": null
+            }
+          ],
+          "AvgMs": 44699.5,
+          "AvgTokSec": 3.636
+        },
+        {
+          "TestId": "S10",
+          "TestName": "Abstention",
+          "Validator": "Contains",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "required_token",
+              "ElapsedMs": 79295,
+              "EvalCount": 256,
+              "TokPerSec": 3.599,
+              "RamBeforeMB": 126.02,
+              "RamAfterMB": 125.81,
+              "RamDeltaMB": -0.21,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "required_token",
+              "ElapsedMs": 78445,
+              "EvalCount": 256,
+              "TokPerSec": 3.634,
+              "RamBeforeMB": 125.81,
+              "RamAfterMB": 123.84,
+              "RamDeltaMB": -1.97,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            }
+          ],
+          "AvgMs": 78870.0,
+          "AvgTokSec": 3.617
+        }
+      ],
+      "DeterminismRuns": [
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "Name": "qwen2.5-coder:14b",
+      "Class": "GENERATIVE",
+      "SizeGB": 8.371,
+      "Parameters": "14.8B",
+      "Quantization": "Q4_K_M",
+      "TestsPassed": 8,
+      "TestsTotal": 10,
+      "ScorePercent": 80.0,
+      "Deterministic": true,
+      "AverageTokSec": 4.39,
+      "AverageLatencyMs": 18783.2,
+      "PeakRamMB": 127.08,
+      "Verdict": "PARTIAL",
+      "Tests": [
+        {
+          "TestId": "S01",
+          "TestName": "ShortResponse",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 9630,
+              "EvalCount": 5,
+              "TokPerSec": 4.478,
+              "RamBeforeMB": 127.8,
+              "RamAfterMB": 125.36,
+              "RamDeltaMB": -2.44,
+              "ReplyChars": 8,
+              "Reply": "EZZIO_OK",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 9564,
+              "EvalCount": 5,
+              "TokPerSec": 4.448,
+              "RamBeforeMB": 125.36,
+              "RamAfterMB": 124.14,
+              "RamDeltaMB": -1.22,
+              "ReplyChars": 8,
+              "Reply": "EZZIO_OK",
+              "Error": null
+            }
+          ],
+          "AvgMs": 9597.0,
+          "AvgTokSec": 4.463
+        },
+        {
+          "TestId": "S02",
+          "TestName": "PowerShell",
+          "Validator": "PowerShell",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "syntax_errors=0",
+              "ElapsedMs": 13861,
+              "EvalCount": 19,
+              "TokPerSec": 3.778,
+              "RamBeforeMB": 124.14,
+              "RamAfterMB": 125.67,
+              "RamDeltaMB": 1.53,
+              "ReplyChars": 41,
+              "Reply": "$EzzioValue = 42\nWrite-Output $EzzioValue",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "syntax_errors=0",
+              "ElapsedMs": 13791,
+              "EvalCount": 19,
+              "TokPerSec": 3.74,
+              "RamBeforeMB": 125.67,
+              "RamAfterMB": 126.12,
+              "RamDeltaMB": 0.45,
+              "ReplyChars": 41,
+              "Reply": "$EzzioValue = 42\nWrite-Output $EzzioValue",
+              "Error": null
+            }
+          ],
+          "AvgMs": 13826.0,
+          "AvgTokSec": 3.759
+        },
+        {
+          "TestId": "S03",
+          "TestName": "Python",
+          "Validator": "Python",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exit=0",
+              "ElapsedMs": 11413,
+              "EvalCount": 10,
+              "TokPerSec": 3.913,
+              "RamBeforeMB": 126.12,
+              "RamAfterMB": 125.84,
+              "RamDeltaMB": -0.28,
+              "ReplyChars": 23,
+              "Reply": "value = 42\nprint(value)",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exit=0",
+              "ElapsedMs": 10944,
+              "EvalCount": 10,
+              "TokPerSec": 3.791,
+              "RamBeforeMB": 125.84,
+              "RamAfterMB": 125.93,
+              "RamDeltaMB": 0.09,
+              "ReplyChars": 23,
+              "Reply": "value = 42\nprint(value)",
+              "Error": null
+            }
+          ],
+          "AvgMs": 11178.5,
+          "AvgTokSec": 3.852
+        },
+        {
+          "TestId": "S04",
+          "TestName": "StrictJSON",
+          "Validator": "JSON",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "schema_ok",
+              "ElapsedMs": 16000,
+              "EvalCount": 26,
+              "TokPerSec": 3.692,
+              "RamBeforeMB": 125.93,
+              "RamAfterMB": 125.71,
+              "RamDeltaMB": -0.22,
+              "ReplyChars": 50,
+              "Reply": "{\n  \"ok\": true,\n  \"value\": 42,\n  \"name\": \"EZZIO\"\n}",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "schema_ok",
+              "ElapsedMs": 15967,
+              "EvalCount": 26,
+              "TokPerSec": 3.703,
+              "RamBeforeMB": 125.71,
+              "RamAfterMB": 125.32,
+              "RamDeltaMB": -0.39,
+              "ReplyChars": 50,
+              "Reply": "{\n  \"ok\": true,\n  \"value\": 42,\n  \"name\": \"EZZIO\"\n}",
+              "Error": null
+            }
+          ],
+          "AvgMs": 15983.5,
+          "AvgTokSec": 3.698
+        },
+        {
+          "TestId": "S05",
+          "TestName": "Logic",
+          "Validator": "Logic",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "expected_rate",
+              "ElapsedMs": 81706,
+              "EvalCount": 256,
+              "TokPerSec": 3.562,
+              "RamBeforeMB": 125.32,
+              "RamAfterMB": 125.68,
+              "RamDeltaMB": 0.36,
+              "ReplyChars": 801,
+              "Reply": "1) The formula to calculate the combined task rate when workers are working independently in parallel is the sum of their individual rates. The rate of each worker is the reciprocal of the time it takes them to complete a task. Therefore, the combined rate \\( R \\) is given by:\n\n\\[ R = \\frac{1}{T_A} + \\frac{1}{T_B} + \\frac{1}{T_C} \\]\n\nwhere \\( T_A \\), \\( T_B \\), and \\( T_C \\) are the times taken by workers A, B, and C to complete a task, respectively.\n\n2) Substituting the given times into the formula:\n\n\\[ R = \\frac{1}{4} + \\frac{1}{6} + \\frac{1}{12} \\]\n\nTo add these fractions, find a common denominator, which is 12 in this case:\n\n\\[ R = \\frac{3}{12} + \\frac{2}{12} + \\frac{1}{12} = \\frac{6}{12} = \\frac{1}{2} \\]\n\nSo, the combined task rate is \\( \\frac{1}{2} \\) tasks per second.\n\n3) Explanation",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "expected_rate",
+              "ElapsedMs": 82612,
+              "EvalCount": 256,
+              "TokPerSec": 3.522,
+              "RamBeforeMB": 125.68,
+              "RamAfterMB": 126.58,
+              "RamDeltaMB": 0.9,
+              "ReplyChars": 801,
+              "Reply": "1) The formula to calculate the combined task rate when workers are working independently in parallel is the sum of their individual rates. The rate of each worker is the reciprocal of the time it takes them to complete a task. Therefore, the combined rate \\( R \\) is given by:\n\n\\[ R = \\frac{1}{T_A} + \\frac{1}{T_B} + \\frac{1}{T_C} \\]\n\nwhere \\( T_A \\), \\( T_B \\), and \\( T_C \\) are the times taken by workers A, B, and C to complete a task, respectively.\n\n2) Substituting the given times into the formula:\n\n\\[ R = \\frac{1}{4} + \\frac{1}{6} + \\frac{1}{12} \\]\n\nTo add these fractions, find a common denominator, which is 12 in this case:\n\n\\[ R = \\frac{3}{12} + \\frac{2}{12} + \\frac{1}{12} = \\frac{6}{12} = \\frac{1}{2} \\]\n\nSo, the combined task rate is \\( \\frac{1}{2} \\) tasks per second.\n\n3) Explanation",
+              "Error": null
+            }
+          ],
+          "AvgMs": 82159.0,
+          "AvgTokSec": 3.542
+        },
+        {
+          "TestId": "S06",
+          "TestName": "NegationPreservation",
+          "Validator": "Semantic",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "required_constraints_preserved",
+              "ElapsedMs": 15503,
+              "EvalCount": 24,
+              "TokPerSec": 3.724,
+              "RamBeforeMB": 126.58,
+              "RamAfterMB": 127.08,
+              "RamDeltaMB": 0.5,
+              "ReplyChars": 75,
+              "Reply": "\"The system must NOT authorize 10.0.0.99.\"\n\"NOT is a mandatory constraint.\"",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "required_constraints_preserved",
+              "ElapsedMs": 15340,
+              "EvalCount": 24,
+              "TokPerSec": 3.73,
+              "RamBeforeMB": 127.08,
+              "RamAfterMB": 126.47,
+              "RamDeltaMB": -0.61,
+              "ReplyChars": 75,
+              "Reply": "\"The system must NOT authorize 10.0.0.99.\"\n\"NOT is a mandatory constraint.\"",
+              "Error": null
+            }
+          ],
+          "AvgMs": 15421.5,
+          "AvgTokSec": 3.727
+        },
+        {
+          "TestId": "S07",
+          "TestName": "Context",
+          "Validator": "Exact",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 9922,
+              "EvalCount": 4,
+              "TokPerSec": 4.786,
+              "RamBeforeMB": 126.47,
+              "RamAfterMB": 126.18,
+              "RamDeltaMB": -0.29,
+              "ReplyChars": 3,
+              "Reply": "400",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 9940,
+              "EvalCount": 4,
+              "TokPerSec": 4.717,
+              "RamBeforeMB": 126.18,
+              "RamAfterMB": 126.0,
+              "RamDeltaMB": -0.18,
+              "ReplyChars": 3,
+              "Reply": "400",
+              "Error": null
+            }
+          ],
+          "AvgMs": 9931.0,
+          "AvgTokSec": 4.752
+        },
+        {
+          "TestId": "S08",
+          "TestName": "CodeReasoning",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 9882,
+              "EvalCount": 2,
+              "TokPerSec": 7.099,
+              "RamBeforeMB": 126.0,
+              "RamAfterMB": 126.02,
+              "RamDeltaMB": 0.02,
+              "ReplyChars": 1,
+              "Reply": "D",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 10557,
+              "EvalCount": 2,
+              "TokPerSec": 7.209,
+              "RamBeforeMB": 126.02,
+              "RamAfterMB": 125.73,
+              "RamDeltaMB": -0.29,
+              "ReplyChars": 1,
+              "Reply": "D",
+              "Error": null
+            }
+          ],
+          "AvgMs": 10219.5,
+          "AvgTokSec": 7.154
+        },
+        {
+          "TestId": "S09",
+          "TestName": "FrenchInstruction",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 9928,
+              "EvalCount": 7,
+              "TokPerSec": 4.202,
+              "RamBeforeMB": 125.73,
+              "RamAfterMB": 125.48,
+              "RamDeltaMB": -0.25,
+              "ReplyChars": 25,
+              "Reply": "CERTIFICATION FORENSIC OK",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 9875,
+              "EvalCount": 7,
+              "TokPerSec": 4.171,
+              "RamBeforeMB": 125.48,
+              "RamAfterMB": 123.54,
+              "RamDeltaMB": -1.94,
+              "ReplyChars": 25,
+              "Reply": "CERTIFICATION FORENSIC OK",
+              "Error": null
+            }
+          ],
+          "AvgMs": 9901.5,
+          "AvgTokSec": 4.187
+        },
+        {
+          "TestId": "S10",
+          "TestName": "Abstention",
+          "Validator": "Contains",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "required_token",
+              "ElapsedMs": 9401,
+              "EvalCount": 4,
+              "TokPerSec": 4.79,
+              "RamBeforeMB": 123.54,
+              "RamAfterMB": 122.64,
+              "RamDeltaMB": -0.9,
+              "ReplyChars": 7,
+              "Reply": "ABSTAIN",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "required_token",
+              "ElapsedMs": 9828,
+              "EvalCount": 4,
+              "TokPerSec": 4.751,
+              "RamBeforeMB": 122.64,
+              "RamAfterMB": 124.3,
+              "RamDeltaMB": 1.66,
+              "ReplyChars": 7,
+              "Reply": "ABSTAIN",
+              "Error": null
+            }
+          ],
+          "AvgMs": 9614.5,
+          "AvgTokSec": 4.77
+        }
+      ],
+      "DeterminismRuns": [
+        "EZZIO_DETERMINISM_ANCHOR",
+        "EZZIO_DETERMINISM_ANCHOR",
+        "EZZIO_DETERMINISM_ANCHOR"
+      ]
+    },
+    {
+      "Name": "qwen2.5-coder:7b",
+      "Class": "GENERATIVE",
+      "SizeGB": 4.361,
+      "Parameters": "7.6B",
+      "Quantization": "Q4_K_M",
+      "TestsPassed": 8,
+      "TestsTotal": 10,
+      "ScorePercent": 80.0,
+      "Deterministic": true,
+      "AverageTokSec": 8.288,
+      "AverageLatencyMs": 9846.7,
+      "PeakRamMB": 126.57,
+      "Verdict": "PARTIAL",
+      "Tests": [
+        {
+          "TestId": "S01",
+          "TestName": "ShortResponse",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 4884,
+              "EvalCount": 5,
+              "TokPerSec": 8.456,
+              "RamBeforeMB": 125.72,
+              "RamAfterMB": 123.86,
+              "RamDeltaMB": -1.86,
+              "ReplyChars": 8,
+              "Reply": "EZZIO_OK",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 4591,
+              "EvalCount": 5,
+              "TokPerSec": 8.597,
+              "RamBeforeMB": 123.86,
+              "RamAfterMB": 126.46,
+              "RamDeltaMB": 2.6,
+              "ReplyChars": 8,
+              "Reply": "EZZIO_OK",
+              "Error": null
+            }
+          ],
+          "AvgMs": 4737.5,
+          "AvgTokSec": 8.526
+        },
+        {
+          "TestId": "S02",
+          "TestName": "PowerShell",
+          "Validator": "PowerShell",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "syntax_errors=0",
+              "ElapsedMs": 8223,
+              "EvalCount": 25,
+              "TokPerSec": 7.057,
+              "RamBeforeMB": 126.46,
+              "RamAfterMB": 122.82,
+              "RamDeltaMB": -3.64,
+              "ReplyChars": 59,
+              "Reply": "```powershell\n$EzzioValue = 42\nWrite-Output $EzzioValue\n```",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "syntax_errors=0",
+              "ElapsedMs": 7845,
+              "EvalCount": 25,
+              "TokPerSec": 7.112,
+              "RamBeforeMB": 122.82,
+              "RamAfterMB": 124.88,
+              "RamDeltaMB": 2.06,
+              "ReplyChars": 59,
+              "Reply": "```powershell\n$EzzioValue = 42\nWrite-Output $EzzioValue\n```",
+              "Error": null
+            }
+          ],
+          "AvgMs": 8034.0,
+          "AvgTokSec": 7.084
+        },
+        {
+          "TestId": "S03",
+          "TestName": "Python",
+          "Validator": "Python",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exit=0",
+              "ElapsedMs": 6440,
+              "EvalCount": 14,
+              "TokPerSec": 7.335,
+              "RamBeforeMB": 124.88,
+              "RamAfterMB": 123.48,
+              "RamDeltaMB": -1.4,
+              "ReplyChars": 37,
+              "Reply": "```python\nvalue = 42\nprint(value)\n```",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exit=0",
+              "ElapsedMs": 6511,
+              "EvalCount": 14,
+              "TokPerSec": 7.246,
+              "RamBeforeMB": 123.48,
+              "RamAfterMB": 124.95,
+              "RamDeltaMB": 1.47,
+              "ReplyChars": 37,
+              "Reply": "```python\nvalue = 42\nprint(value)\n```",
+              "Error": null
+            }
+          ],
+          "AvgMs": 6475.5,
+          "AvgTokSec": 7.29
+        },
+        {
+          "TestId": "S04",
+          "TestName": "StrictJSON",
+          "Validator": "JSON",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "schema_ok",
+              "ElapsedMs": 8814,
+              "EvalCount": 30,
+              "TokPerSec": 6.94,
+              "RamBeforeMB": 124.95,
+              "RamAfterMB": 125.55,
+              "RamDeltaMB": 0.6,
+              "ReplyChars": 62,
+              "Reply": "```json\n{\n  \"ok\": true,\n  \"value\": 42,\n  \"name\": \"EZZIO\"\n}\n```",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "schema_ok",
+              "ElapsedMs": 8796,
+              "EvalCount": 30,
+              "TokPerSec": 7.036,
+              "RamBeforeMB": 125.55,
+              "RamAfterMB": 125.44,
+              "RamDeltaMB": -0.11,
+              "ReplyChars": 62,
+              "Reply": "```json\n{\n  \"ok\": true,\n  \"value\": 42,\n  \"name\": \"EZZIO\"\n}\n```",
+              "Error": null
+            }
+          ],
+          "AvgMs": 8805.0,
+          "AvgTokSec": 6.988
+        },
+        {
+          "TestId": "S05",
+          "TestName": "Logic",
+          "Validator": "Logic",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "expected_rate",
+              "ElapsedMs": 42437,
+              "EvalCount": 256,
+              "TokPerSec": 6.808,
+              "RamBeforeMB": 125.44,
+              "RamAfterMB": 126.06,
+              "RamDeltaMB": 0.62,
+              "ReplyChars": 729,
+              "Reply": "1) The formula to calculate the combined task rate when workers work independently in parallel is:\n\n\\[ \\text{Combined Task Rate} = \\frac{1}{\\frac{1}{\\text{Worker A's time}} + \\frac{1}{\\text{Worker B's time}} + \\frac{1}{\\text{Worker C's time}}} \\]\n\n2) Substituting the given times into the formula:\n\n\\[ \\text{Combined Task Rate} = \\frac{1}{\\frac{1}{4} + \\frac{1}{6} + \\frac{1}{12}} \\]\n\n\\[ \\text{Combined Task Rate} = \\frac{1}{\\frac{3}{12} + \\frac{2}{12} + \\frac{1}{12}} \\]\n\n\\[ \\text{Combined Task Rate} = \\frac{1}{\\frac{6}{12}} \\]\n\n\\[ \\text{Combined Task Rate} = \\frac{1}{\\frac{1}{2}} \\]\n\n\\[ \\text{Combined Task Rate} = 2 \\text{ tasks per second} \\]\n\n3) The combined task rate is 2 tasks per second. This means that when Worker A,",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "expected_rate",
+              "ElapsedMs": 42637,
+              "EvalCount": 256,
+              "TokPerSec": 6.816,
+              "RamBeforeMB": 126.06,
+              "RamAfterMB": 126.19,
+              "RamDeltaMB": 0.13,
+              "ReplyChars": 729,
+              "Reply": "1) The formula to calculate the combined task rate when workers work independently in parallel is:\n\n\\[ \\text{Combined Task Rate} = \\frac{1}{\\frac{1}{\\text{Worker A's time}} + \\frac{1}{\\text{Worker B's time}} + \\frac{1}{\\text{Worker C's time}}} \\]\n\n2) Substituting the given times into the formula:\n\n\\[ \\text{Combined Task Rate} = \\frac{1}{\\frac{1}{4} + \\frac{1}{6} + \\frac{1}{12}} \\]\n\n\\[ \\text{Combined Task Rate} = \\frac{1}{\\frac{3}{12} + \\frac{2}{12} + \\frac{1}{12}} \\]\n\n\\[ \\text{Combined Task Rate} = \\frac{1}{\\frac{6}{12}} \\]\n\n\\[ \\text{Combined Task Rate} = \\frac{1}{\\frac{1}{2}} \\]\n\n\\[ \\text{Combined Task Rate} = 2 \\text{ tasks per second} \\]\n\n3) The combined task rate is 2 tasks per second. This means that when Worker A,",
+              "Error": null
+            }
+          ],
+          "AvgMs": 42537.0,
+          "AvgTokSec": 6.812
+        },
+        {
+          "TestId": "S06",
+          "TestName": "NegationPreservation",
+          "Validator": "Semantic",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "required_constraints_preserved",
+              "ElapsedMs": 7803,
+              "EvalCount": 24,
+              "TokPerSec": 7.142,
+              "RamBeforeMB": 126.19,
+              "RamAfterMB": 125.91,
+              "RamDeltaMB": -0.28,
+              "ReplyChars": 75,
+              "Reply": "\"The system must NOT authorize 10.0.0.99.\"\n\"NOT is a mandatory constraint.\"",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "required_constraints_preserved",
+              "ElapsedMs": 7772,
+              "EvalCount": 24,
+              "TokPerSec": 7.084,
+              "RamBeforeMB": 125.91,
+              "RamAfterMB": 125.62,
+              "RamDeltaMB": -0.29,
+              "ReplyChars": 75,
+              "Reply": "\"The system must NOT authorize 10.0.0.99.\"\n\"NOT is a mandatory constraint.\"",
+              "Error": null
+            }
+          ],
+          "AvgMs": 7787.5,
+          "AvgTokSec": 7.113
+        },
+        {
+          "TestId": "S07",
+          "TestName": "Context",
+          "Validator": "Exact",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 5280,
+              "EvalCount": 5,
+              "TokPerSec": 8.619,
+              "RamBeforeMB": 125.62,
+              "RamAfterMB": 126.29,
+              "RamDeltaMB": 0.67,
+              "ReplyChars": 4,
+              "Reply": "1008",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 5466,
+              "EvalCount": 5,
+              "TokPerSec": 8.473,
+              "RamBeforeMB": 126.29,
+              "RamAfterMB": 126.57,
+              "RamDeltaMB": 0.28,
+              "ReplyChars": 4,
+              "Reply": "1008",
+              "Error": null
+            }
+          ],
+          "AvgMs": 5373.0,
+          "AvgTokSec": 8.546
+        },
+        {
+          "TestId": "S08",
+          "TestName": "CodeReasoning",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 4880,
+              "EvalCount": 2,
+              "TokPerSec": 13.645,
+              "RamBeforeMB": 126.57,
+              "RamAfterMB": 125.54,
+              "RamDeltaMB": -1.03,
+              "ReplyChars": 1,
+              "Reply": "D",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 4909,
+              "EvalCount": 2,
+              "TokPerSec": 13.507,
+              "RamBeforeMB": 125.54,
+              "RamAfterMB": 125.26,
+              "RamDeltaMB": -0.28,
+              "ReplyChars": 1,
+              "Reply": "D",
+              "Error": null
+            }
+          ],
+          "AvgMs": 4894.5,
+          "AvgTokSec": 13.576
+        },
+        {
+          "TestId": "S09",
+          "TestName": "FrenchInstruction",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 4848,
+              "EvalCount": 7,
+              "TokPerSec": 7.946,
+              "RamBeforeMB": 125.26,
+              "RamAfterMB": 123.01,
+              "RamDeltaMB": -2.25,
+              "ReplyChars": 25,
+              "Reply": "CERTIFICATION FORENSIC OK",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 4889,
+              "EvalCount": 7,
+              "TokPerSec": 7.816,
+              "RamBeforeMB": 123.01,
+              "RamAfterMB": 123.73,
+              "RamDeltaMB": 0.72,
+              "ReplyChars": 25,
+              "Reply": "CERTIFICATION FORENSIC OK",
+              "Error": null
+            }
+          ],
+          "AvgMs": 4868.5,
+          "AvgTokSec": 7.881
+        },
+        {
+          "TestId": "S10",
+          "TestName": "Abstention",
+          "Validator": "Contains",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "required_token",
+              "ElapsedMs": 5134,
+              "EvalCount": 4,
+              "TokPerSec": 9.068,
+              "RamBeforeMB": 123.73,
+              "RamAfterMB": 126.53,
+              "RamDeltaMB": 2.8,
+              "ReplyChars": 7,
+              "Reply": "ABSTAIN",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "required_token",
+              "ElapsedMs": 4775,
+              "EvalCount": 4,
+              "TokPerSec": 9.067,
+              "RamBeforeMB": 126.53,
+              "RamAfterMB": 125.56,
+              "RamDeltaMB": -0.97,
+              "ReplyChars": 7,
+              "Reply": "ABSTAIN",
+              "Error": null
+            }
+          ],
+          "AvgMs": 4954.5,
+          "AvgTokSec": 9.067
+        }
+      ],
+      "DeterminismRuns": [
+        "EZZIO_DETERMINISM_ANCHOR",
+        "EZZIO_DETERMINISM_ANCHOR",
+        "EZZIO_DETERMINISM_ANCHOR"
+      ]
+    },
+    {
+      "Name": "hf.co/mradermacher/Kiwi-4b-i1-GGUF:Q4_K_M",
+      "Class": "GENERATIVE",
+      "SizeGB": 2.326,
+      "Parameters": "4.02B",
+      "Quantization": "unknown",
+      "TestsPassed": 4,
+      "TestsTotal": 10,
+      "ScorePercent": 40.0,
+      "Deterministic": true,
+      "AverageTokSec": 8.792,
+      "AverageLatencyMs": 28554.8,
+      "PeakRamMB": 127.95,
+      "Verdict": "FAILED",
+      "Tests": [
+        {
+          "TestId": "S01",
+          "TestName": "ShortResponse",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 15671,
+              "EvalCount": 113,
+              "TokPerSec": 8.897,
+              "RamBeforeMB": 123.05,
+              "RamAfterMB": 125.25,
+              "RamDeltaMB": 2.2,
+              "ReplyChars": 8,
+              "Reply": "EZZIO_OK",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 15543,
+              "EvalCount": 113,
+              "TokPerSec": 8.933,
+              "RamBeforeMB": 125.25,
+              "RamAfterMB": 125.91,
+              "RamDeltaMB": 0.66,
+              "ReplyChars": 8,
+              "Reply": "EZZIO_OK",
+              "Error": null
+            }
+          ],
+          "AvgMs": 15607.0,
+          "AvgTokSec": 8.915
+        },
+        {
+          "TestId": "S02",
+          "TestName": "PowerShell",
+          "Validator": "PowerShell",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "syntax_errors=0",
+              "ElapsedMs": 32029,
+              "EvalCount": 256,
+              "TokPerSec": 8.839,
+              "RamBeforeMB": 125.91,
+              "RamAfterMB": 123.42,
+              "RamDeltaMB": -2.49,
+              "ReplyChars": 59,
+              "Reply": "```powershell\n$EzzioValue = 42\nWrite-Output $EzzioValue\n```",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "syntax_errors=0",
+              "ElapsedMs": 32203,
+              "EvalCount": 256,
+              "TokPerSec": 8.796,
+              "RamBeforeMB": 123.42,
+              "RamAfterMB": 125.52,
+              "RamDeltaMB": 2.1,
+              "ReplyChars": 59,
+              "Reply": "```powershell\n$EzzioValue = 42\nWrite-Output $EzzioValue\n```",
+              "Error": null
+            }
+          ],
+          "AvgMs": 32116.0,
+          "AvgTokSec": 8.817
+        },
+        {
+          "TestId": "S03",
+          "TestName": "Python",
+          "Validator": "Python",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "EMPTY",
+              "ElapsedMs": 31936,
+              "EvalCount": 256,
+              "TokPerSec": 8.851,
+              "RamBeforeMB": 125.52,
+              "RamAfterMB": 126.36,
+              "RamDeltaMB": 0.84,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "EMPTY",
+              "ElapsedMs": 32144,
+              "EvalCount": 256,
+              "TokPerSec": 8.78,
+              "RamBeforeMB": 126.36,
+              "RamAfterMB": 123.09,
+              "RamDeltaMB": -3.27,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            }
+          ],
+          "AvgMs": 32040.0,
+          "AvgTokSec": 8.816
+        },
+        {
+          "TestId": "S04",
+          "TestName": "StrictJSON",
+          "Validator": "JSON",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "EMPTY",
+              "ElapsedMs": 32215,
+              "EvalCount": 256,
+              "TokPerSec": 8.811,
+              "RamBeforeMB": 123.09,
+              "RamAfterMB": 125.23,
+              "RamDeltaMB": 2.14,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "EMPTY",
+              "ElapsedMs": 32575,
+              "EvalCount": 256,
+              "TokPerSec": 8.701,
+              "RamBeforeMB": 125.23,
+              "RamAfterMB": 124.9,
+              "RamDeltaMB": -0.33,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            }
+          ],
+          "AvgMs": 32395.0,
+          "AvgTokSec": 8.756
+        },
+        {
+          "TestId": "S05",
+          "TestName": "Logic",
+          "Validator": "Logic",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "expected_rate",
+              "ElapsedMs": 33580,
+              "EvalCount": 256,
+              "TokPerSec": 8.564,
+              "RamBeforeMB": 124.9,
+              "RamAfterMB": 126.34,
+              "RamDeltaMB": 1.44,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "expected_rate",
+              "ElapsedMs": 33011,
+              "EvalCount": 256,
+              "TokPerSec": 8.628,
+              "RamBeforeMB": 126.34,
+              "RamAfterMB": 127.3,
+              "RamDeltaMB": 0.96,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            }
+          ],
+          "AvgMs": 33295.5,
+          "AvgTokSec": 8.596
+        },
+        {
+          "TestId": "S06",
+          "TestName": "NegationPreservation",
+          "Validator": "Semantic",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "constraint_loss",
+              "ElapsedMs": 32303,
+              "EvalCount": 256,
+              "TokPerSec": 8.761,
+              "RamBeforeMB": 127.3,
+              "RamAfterMB": 127.95,
+              "RamDeltaMB": 0.65,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "constraint_loss",
+              "ElapsedMs": 32397,
+              "EvalCount": 256,
+              "TokPerSec": 8.771,
+              "RamBeforeMB": 127.95,
+              "RamAfterMB": 126.1,
+              "RamDeltaMB": -1.85,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            }
+          ],
+          "AvgMs": 32350.0,
+          "AvgTokSec": 8.766
+        },
+        {
+          "TestId": "S07",
+          "TestName": "Context",
+          "Validator": "Exact",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 32268,
+              "EvalCount": 256,
+              "TokPerSec": 8.77,
+              "RamBeforeMB": 126.1,
+              "RamAfterMB": 125.81,
+              "RamDeltaMB": -0.29,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 32152,
+              "EvalCount": 256,
+              "TokPerSec": 8.815,
+              "RamBeforeMB": 125.81,
+              "RamAfterMB": 126.34,
+              "RamDeltaMB": 0.53,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            }
+          ],
+          "AvgMs": 32210.0,
+          "AvgTokSec": 8.792
+        },
+        {
+          "TestId": "S08",
+          "TestName": "CodeReasoning",
+          "Validator": "Exact",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 33097,
+              "EvalCount": 256,
+              "TokPerSec": 8.601,
+              "RamBeforeMB": 126.34,
+              "RamAfterMB": 127.34,
+              "RamDeltaMB": 1.0,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 32405,
+              "EvalCount": 256,
+              "TokPerSec": 8.802,
+              "RamBeforeMB": 127.34,
+              "RamAfterMB": 125.93,
+              "RamDeltaMB": -1.41,
+              "ReplyChars": 0,
+              "Reply": "",
+              "Error": null
+            }
+          ],
+          "AvgMs": 32751.0,
+          "AvgTokSec": 8.702
+        },
+        {
+          "TestId": "S09",
+          "TestName": "FrenchInstruction",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 15497,
+              "EvalCount": 112,
+              "TokPerSec": 8.867,
+              "RamBeforeMB": 125.93,
+              "RamAfterMB": 123.33,
+              "RamDeltaMB": -2.6,
+              "ReplyChars": 25,
+              "Reply": "CERTIFICATION FORENSIC OK",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 15402,
+              "EvalCount": 112,
+              "TokPerSec": 8.927,
+              "RamBeforeMB": 123.33,
+              "RamAfterMB": 125.65,
+              "RamDeltaMB": 2.32,
+              "ReplyChars": 25,
+              "Reply": "CERTIFICATION FORENSIC OK",
+              "Error": null
+            }
+          ],
+          "AvgMs": 15449.5,
+          "AvgTokSec": 8.897
+        },
+        {
+          "TestId": "S10",
+          "TestName": "Abstention",
+          "Validator": "Contains",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "required_token",
+              "ElapsedMs": 27404,
+              "EvalCount": 215,
+              "TokPerSec": 8.836,
+              "RamBeforeMB": 125.65,
+              "RamAfterMB": 126.12,
+              "RamDeltaMB": 0.47,
+              "ReplyChars": 7,
+              "Reply": "ABSTAIN",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "required_token",
+              "ElapsedMs": 27264,
+              "EvalCount": 215,
+              "TokPerSec": 8.885,
+              "RamBeforeMB": 126.12,
+              "RamAfterMB": 126.31,
+              "RamDeltaMB": 0.19,
+              "ReplyChars": 7,
+              "Reply": "ABSTAIN",
+              "Error": null
+            }
+          ],
+          "AvgMs": 27334.0,
+          "AvgTokSec": 8.86
+        }
+      ],
+      "DeterminismRuns": [
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "Name": "qwen3-coder:30b",
+      "Class": "GENERATIVE",
+      "SizeGB": 17.282,
+      "Parameters": "30.5B",
+      "Quantization": "Q4_K_M",
+      "TestsPassed": 9,
+      "TestsTotal": 10,
+      "ScorePercent": 90.0,
+      "Deterministic": true,
+      "AverageTokSec": 8.407,
+      "AverageLatencyMs": 36443.6,
+      "PeakRamMB": 125.49,
+      "Verdict": "PARTIAL",
+      "Tests": [
+        {
+          "TestId": "S01",
+          "TestName": "ShortResponse",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 32383,
+              "EvalCount": 5,
+              "TokPerSec": 8.59,
+              "RamBeforeMB": 112.39,
+              "RamAfterMB": 118.06,
+              "RamDeltaMB": 5.67,
+              "ReplyChars": 8,
+              "Reply": "EZZIO_OK",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 31844,
+              "EvalCount": 5,
+              "TokPerSec": 8.534,
+              "RamBeforeMB": 118.06,
+              "RamAfterMB": 125.39,
+              "RamDeltaMB": 7.33,
+              "ReplyChars": 8,
+              "Reply": "EZZIO_OK",
+              "Error": null
+            }
+          ],
+          "AvgMs": 32113.5,
+          "AvgTokSec": 8.562
+        },
+        {
+          "TestId": "S02",
+          "TestName": "PowerShell",
+          "Validator": "PowerShell",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "syntax_errors=0",
+              "ElapsedMs": 34146,
+              "EvalCount": 19,
+              "TokPerSec": 7.29,
+              "RamBeforeMB": 125.39,
+              "RamAfterMB": 119.68,
+              "RamDeltaMB": -5.71,
+              "ReplyChars": 41,
+              "Reply": "$EzzioValue = 42\nWrite-Output $EzzioValue",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "syntax_errors=0",
+              "ElapsedMs": 33649,
+              "EvalCount": 19,
+              "TokPerSec": 7.288,
+              "RamBeforeMB": 119.68,
+              "RamAfterMB": 124.96,
+              "RamDeltaMB": 5.28,
+              "ReplyChars": 41,
+              "Reply": "$EzzioValue = 42\nWrite-Output $EzzioValue",
+              "Error": null
+            }
+          ],
+          "AvgMs": 33897.5,
+          "AvgTokSec": 7.289
+        },
+        {
+          "TestId": "S03",
+          "TestName": "Python",
+          "Validator": "Python",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exit=0",
+              "ElapsedMs": 32281,
+              "EvalCount": 10,
+              "TokPerSec": 7.573,
+              "RamBeforeMB": 124.96,
+              "RamAfterMB": 119.81,
+              "RamDeltaMB": -5.15,
+              "ReplyChars": 23,
+              "Reply": "value = 42\nprint(value)",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exit=0",
+              "ElapsedMs": 32088,
+              "EvalCount": 10,
+              "TokPerSec": 7.573,
+              "RamBeforeMB": 119.81,
+              "RamAfterMB": 124.82,
+              "RamDeltaMB": 5.01,
+              "ReplyChars": 23,
+              "Reply": "value = 42\nprint(value)",
+              "Error": null
+            }
+          ],
+          "AvgMs": 32184.5,
+          "AvgTokSec": 7.573
+        },
+        {
+          "TestId": "S04",
+          "TestName": "StrictJSON",
+          "Validator": "JSON",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "schema_ok",
+              "ElapsedMs": 34396,
+              "EvalCount": 26,
+              "TokPerSec": 7.356,
+              "RamBeforeMB": 124.82,
+              "RamAfterMB": 119.86,
+              "RamDeltaMB": -4.96,
+              "ReplyChars": 50,
+              "Reply": "{\n  \"ok\": true,\n  \"value\": 42,\n  \"name\": \"EZZIO\"\n}",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "schema_ok",
+              "ElapsedMs": 34695,
+              "EvalCount": 26,
+              "TokPerSec": 7.132,
+              "RamBeforeMB": 119.86,
+              "RamAfterMB": 124.88,
+              "RamDeltaMB": 5.02,
+              "ReplyChars": 50,
+              "Reply": "{\n  \"ok\": true,\n  \"value\": 42,\n  \"name\": \"EZZIO\"\n}",
+              "Error": null
+            }
+          ],
+          "AvgMs": 34545.5,
+          "AvgTokSec": 7.244
+        },
+        {
+          "TestId": "S05",
+          "TestName": "Logic",
+          "Validator": "Logic",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "expected_rate",
+              "ElapsedMs": 67560,
+              "EvalCount": 256,
+              "TokPerSec": 7.016,
+              "RamBeforeMB": 124.88,
+              "RamAfterMB": 119.64,
+              "RamDeltaMB": -5.24,
+              "ReplyChars": 818,
+              "Reply": "**1) The formula:**\n\nWhen workers operate independently in parallel, their combined task rate is the sum of their individual rates:\n\n$$R_{combined} = R_A + R_B + R_C = \\frac{1}{t_A} + \\frac{1}{t_B} + \\frac{1}{t_C}$$\n\nWhere $t_A$, $t_B$, and $t_C$ are the times each worker takes to complete one task.\n\n**2) The numerical result:**\n\n$$R_{combined} = \\frac{1}{4} + \\frac{1}{6} + \\frac{1}{12} = 0.25 + 0.167 + 0.083 = 0.5 \\text{ tasks per second}$$\n\n**3) Short explanation:**\n\nWhen working in parallel, all three workers contribute simultaneously to completing the task. Worker A completes 0.25 of the task per second, Worker B completes 0.167 of the task per second, and Worker C completes 0.083 of the task per second. Together they complete 0.5 tasks per second, meaning they can finish one complete task in 2 seconds.",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "expected_rate",
+              "ElapsedMs": 68994,
+              "EvalCount": 256,
+              "TokPerSec": 6.871,
+              "RamBeforeMB": 119.64,
+              "RamAfterMB": 114.85,
+              "RamDeltaMB": -4.79,
+              "ReplyChars": 818,
+              "Reply": "**1) The formula:**\n\nWhen workers operate independently in parallel, their combined task rate is the sum of their individual rates:\n\n$$R_{combined} = R_A + R_B + R_C = \\frac{1}{t_A} + \\frac{1}{t_B} + \\frac{1}{t_C}$$\n\nWhere $t_A$, $t_B$, and $t_C$ are the times each worker takes to complete one task.\n\n**2) The numerical result:**\n\n$$R_{combined} = \\frac{1}{4} + \\frac{1}{6} + \\frac{1}{12} = 0.25 + 0.167 + 0.083 = 0.5 \\text{ tasks per second}$$\n\n**3) Short explanation:**\n\nWhen working in parallel, all three workers contribute simultaneously to completing the task. Worker A completes 0.25 of the task per second, Worker B completes 0.167 of the task per second, and Worker C completes 0.083 of the task per second. Together they complete 0.5 tasks per second, meaning they can finish one complete task in 2 seconds.",
+              "Error": null
+            }
+          ],
+          "AvgMs": 68277.0,
+          "AvgTokSec": 6.944
+        },
+        {
+          "TestId": "S06",
+          "TestName": "NegationPreservation",
+          "Validator": "Semantic",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "required_constraints_preserved",
+              "ElapsedMs": 35233,
+              "EvalCount": 24,
+              "TokPerSec": 7.198,
+              "RamBeforeMB": 114.85,
+              "RamAfterMB": 119.05,
+              "RamDeltaMB": 4.2,
+              "ReplyChars": 75,
+              "Reply": "\"The system must NOT authorize 10.0.0.99.\"\n\"NOT is a mandatory constraint.\"",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "required_constraints_preserved",
+              "ElapsedMs": 34890,
+              "EvalCount": 24,
+              "TokPerSec": 7.173,
+              "RamBeforeMB": 119.05,
+              "RamAfterMB": 124.48,
+              "RamDeltaMB": 5.43,
+              "ReplyChars": 75,
+              "Reply": "\"The system must NOT authorize 10.0.0.99.\"\n\"NOT is a mandatory constraint.\"",
+              "Error": null
+            }
+          ],
+          "AvgMs": 35061.5,
+          "AvgTokSec": 7.186
+        },
+        {
+          "TestId": "S07",
+          "TestName": "Context",
+          "Validator": "Exact",
+          "Pass": false,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 32046,
+              "EvalCount": 4,
+              "TokPerSec": 9.172,
+              "RamBeforeMB": 124.48,
+              "RamAfterMB": 119.79,
+              "RamDeltaMB": -4.69,
+              "ReplyChars": 3,
+              "Reply": "139",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": false,
+              "Detail": "exact_match",
+              "ElapsedMs": 32200,
+              "EvalCount": 4,
+              "TokPerSec": 8.761,
+              "RamBeforeMB": 119.79,
+              "RamAfterMB": 124.79,
+              "RamDeltaMB": 5.0,
+              "ReplyChars": 3,
+              "Reply": "139",
+              "Error": null
+            }
+          ],
+          "AvgMs": 32123.0,
+          "AvgTokSec": 8.966
+        },
+        {
+          "TestId": "S08",
+          "TestName": "CodeReasoning",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 31492,
+              "EvalCount": 2,
+              "TokPerSec": 13.018,
+              "RamBeforeMB": 124.79,
+              "RamAfterMB": 119.63,
+              "RamDeltaMB": -5.16,
+              "ReplyChars": 1,
+              "Reply": "D",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 31982,
+              "EvalCount": 2,
+              "TokPerSec": 13.566,
+              "RamBeforeMB": 119.63,
+              "RamAfterMB": 125.49,
+              "RamDeltaMB": 5.86,
+              "ReplyChars": 1,
+              "Reply": "D",
+              "Error": null
+            }
+          ],
+          "AvgMs": 31737.0,
+          "AvgTokSec": 13.292
+        },
+        {
+          "TestId": "S09",
+          "TestName": "FrenchInstruction",
+          "Validator": "Exact",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 32107,
+              "EvalCount": 7,
+              "TokPerSec": 8.06,
+              "RamBeforeMB": 125.49,
+              "RamAfterMB": 119.07,
+              "RamDeltaMB": -6.42,
+              "ReplyChars": 25,
+              "Reply": "CERTIFICATION FORENSIC OK",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "exact_match",
+              "ElapsedMs": 32129,
+              "EvalCount": 7,
+              "TokPerSec": 7.969,
+              "RamBeforeMB": 119.07,
+              "RamAfterMB": 124.7,
+              "RamDeltaMB": 5.63,
+              "ReplyChars": 25,
+              "Reply": "CERTIFICATION FORENSIC OK",
+              "Error": null
+            }
+          ],
+          "AvgMs": 32118.0,
+          "AvgTokSec": 8.014
+        },
+        {
+          "TestId": "S10",
+          "TestName": "Abstention",
+          "Validator": "Contains",
+          "Pass": true,
+          "Runs": [
+            {
+              "Run": 1,
+              "Pass": true,
+              "Detail": "required_token",
+              "ElapsedMs": 33037,
+              "EvalCount": 4,
+              "TokPerSec": 8.837,
+              "RamBeforeMB": 124.7,
+              "RamAfterMB": 119.61,
+              "RamDeltaMB": -5.09,
+              "ReplyChars": 7,
+              "Reply": "ABSTAIN",
+              "Error": null
+            },
+            {
+              "Run": 2,
+              "Pass": true,
+              "Detail": "required_token",
+              "ElapsedMs": 31720,
+              "EvalCount": 4,
+              "TokPerSec": 9.159,
+              "RamBeforeMB": 119.61,
+              "RamAfterMB": 124.8,
+              "RamDeltaMB": 5.19,
+              "ReplyChars": 7,
+              "Reply": "ABSTAIN",
+              "Error": null
+            }
+          ],
+          "AvgMs": 32378.5,
+          "AvgTokSec": 8.998
+        }
+      ],
+      "DeterminismRuns": [
+        "EZZIO_DETERMINISM_ANCHOR",
+        "EZZIO_DETERMINISM_ANCHOR",
+        "EZZIO_DETERMINISM_ANCHOR"
+      ]
+    }
+  ],
+  "embedding_results": [
+    {
+      "Name": "nomic-embed-text:latest",
+      "Class": "EMBEDDING",
+      "SizeGB": 0.255,
+      "Parameters": "137M",
+      "Quantization": "F16",
+      "SamplesPassed": 4,
+      "SamplesTotal": 4,
+      "Dimension": 768,
+      "AverageMs": 470.75,
+      "Verdict": "QUALIFIED"
+    },
+    {
+      "Name": "bge-m3:latest",
+      "Class": "EMBEDDING",
+      "SizeGB": 1.078,
+      "Parameters": "566.70M",
+      "Quantization": "F16",
+      "SamplesPassed": 4,
+      "SamplesTotal": 4,
+      "Dimension": 1024,
+      "AverageMs": 739.75,
+      "Verdict": "QUALIFIED"
+    }
+  ],
+  "summary": {
+    "qualified": 1,
+    "partial": 4,
+    "failed": 3,
+    "unsupported": 0
+  },
+  "ranking": [
+    {
+      "Name": "mrasif/gpt-oss-20b-GGUF:Q4_K_M",
+      "ScorePercent": 100.0,
+      "Deterministic": true,
+      "AverageTokSec": 9.135,
+      "AverageLatencyMs": 26532.05,
+      "PeakRamMB": 136.46,
+      "Verdict": "QUALIFIED"
+    },
+    {
+      "Name": "qwen3-coder:30b",
+      "ScorePercent": 90.0,
+      "Deterministic": true,
+      "AverageTokSec": 8.407,
+      "AverageLatencyMs": 36443.6,
+      "PeakRamMB": 125.49,
+      "Verdict": "PARTIAL"
+    },
+    {
+      "Name": "qwen2.5-coder:7b",
+      "ScorePercent": 80.0,
+      "Deterministic": true,
+      "AverageTokSec": 8.288,
+      "AverageLatencyMs": 9846.7,
+      "PeakRamMB": 126.57,
+      "Verdict": "PARTIAL"
+    },
+    {
+      "Name": "granite4.1:8b",
+      "ScorePercent": 80.0,
+      "Deterministic": true,
+      "AverageTokSec": 5.835,
+      "AverageLatencyMs": 15585.45,
+      "PeakRamMB": 125.52,
+      "Verdict": "PARTIAL"
+    },
+    {
+      "Name": "qwen2.5-coder:14b",
+      "ScorePercent": 80.0,
+      "Deterministic": true,
+      "AverageTokSec": 4.39,
+      "AverageLatencyMs": 18783.2,
+      "PeakRamMB": 127.08,
+      "Verdict": "PARTIAL"
+    },
+    {
+      "Name": "qwen3:8b",
+      "ScorePercent": 50.0,
+      "Deterministic": true,
+      "AverageTokSec": 5.682,
+      "AverageLatencyMs": 42774.75,
+      "PeakRamMB": 127.63,
+      "Verdict": "FAILED"
+    },
+    {
+      "Name": "hf.co/mradermacher/Kiwi-4b-i1-GGUF:Q4_K_M",
+      "ScorePercent": 40.0,
+      "Deterministic": true,
+      "AverageTokSec": 8.792,
+      "AverageLatencyMs": 28554.8,
+      "PeakRamMB": 127.95,
+      "Verdict": "FAILED"
+    },
+    {
+      "Name": "qwen3:14b",
+      "ScorePercent": 20.0,
+      "Deterministic": true,
+      "AverageTokSec": 3.616,
+      "AverageLatencyMs": 70914.7,
+      "PeakRamMB": 128.1,
+      "Verdict": "FAILED"
+    }
+  ],
+  "integrity": {
+    "old_policy_used": false,
+    "old_benchmark_scores_used": false,
+    "automatic_policy_change": false,
+    "source_of_truth": "physical Ollama inventory + fresh benchmark"
+  }
+}

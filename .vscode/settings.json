@@ -1,0 +1,30 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
+  "terminal.integrated.defaultProfile.windows": "PowerShell 7",
+  "terminal.integrated.profiles.windows": {
+    "PowerShell 7": {
+      "path": "pwsh.exe",
+      "args": [
+        "-NoLogo"
+      ]
+    }
+  },
+  "search.exclude": {
+    ".git": true,
+    "**/__pycache__": true,
+    "runtime/logs": true,
+    "runtime/audit": true
+  },
+  "files.watcherExclude": {
+    "**/.git/**": true,
+    "**/__pycache__/**": true,
+    "runtime/logs/**": true,
+    "runtime/audit/**": true
+  },
+  "python.analysis.exclude": [
+    ".git",
+    "**/__pycache__",
+    "runtime/logs",
+    "runtime/audit"
+  ]
+}

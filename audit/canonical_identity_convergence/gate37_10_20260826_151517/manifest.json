@@ -1,0 +1,46 @@
+{
+  "gate": "3.7.10",
+  "version": "1.0",
+  "timestamp": "20260826_151517",
+  "mode": "SURGICAL_REPAIR_AND_REQUAL",
+  "hash_before": "89b9eb07f48f0a7bfc0df2fbe1304ecc3b217533a30d4e5d2e315780948ddea5",
+  "hash_after": "53e0bd97270b03effdaad438797459c9ce6f1fcfc04e0c26d87042b26636a4d6",
+  "tests": [
+    {
+      "name": "GROQ DEFENSIVE — Absent 'data'",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "GROQ DEFENSIVE — Empty list 'data=[]'",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "GROQ DEFENSIVE — None 'data=None'",
+      "status": "PASS",
+      "detail": "TypeError explicite levée"
+    },
+    {
+      "name": "GROQ DEFENSIVE — Dict 'data={...}'",
+      "status": "PASS",
+      "detail": "TypeError explicite levée"
+    },
+    {
+      "name": "GROQ DEFENSIVE — Scalar 'data=\"...\"'",
+      "status": "PASS",
+      "detail": "TypeError explicite levée"
+    },
+    {
+      "name": "GROQ DEFENSIVE — Non-dict item in list",
+      "status": "PASS",
+      "detail": "TypeError explicite levée"
+    },
+    {
+      "name": "GROQ DEFENSIVE — Nominal path",
+      "status": "PASS",
+      "detail": ""
+    }
+  ],
+  "verdict": "SUCCESS"
+}

@@ -1,0 +1,51 @@
+[project]
+name = "ezzio-os"
+version = "1.0.0"
+description = "E-ZZIO Sovereign Autonomous Intelligence System"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn>=0.30.0",
+    "pydantic>=2.8.0",
+    "aiosqlite>=0.20.0",
+    "python-dotenv>=1.0.0",
+    "httpx>=0.27.0",
+    "requests>=2.31.0",
+    "psutil>=5.9.0",
+    "ollama>=0.3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "ruff>=0.5.0",
+]
+
+[tool.ruff]
+line-length = 140
+target-version = "py311"
+
+src = ["core", "runtime/core", "routers", "interfaces", "tests"]
+exclude = [
+    ".venv",
+    "runtime/test_isolation",
+    "runtime/evidence",
+    "runtime/decisions"
+]
+
+[tool.ruff.lint]
+select = [
+    "W605", # Invalid escape sequence (explicite, ne plus dépendre du seul groupe "W")
+    "E",   # Erreurs standard
+    "F",   # Erreurs logiques Pyflakes
+    "W",   # Warnings
+]
+ignore = [
+    "E501",    # Longueur de ligne libre (prompts/logs)
+    "E402",    # Imports après sys.path (isolation)
+    "E701",    # Multiples déclarations par ligne
+    "E722",    # Bare except legacy
+    "E741",    # Variables à lettre unique
+    "F811",    # Redéfinitions legacy conservées pour rétrocompatibilité
+]

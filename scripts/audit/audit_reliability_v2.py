@@ -11,11 +11,32 @@ AUDIT_DIR.mkdir(parents=True, exist_ok=True)
 EXCLUDED_DIRS = {".venv", ".git", "__pycache__", "node_modules", "archive", "logs", "audit"}
 
 # Bibliothèque standard + dépendances PIP externes principales
-STDLIB_MODULES = set(sys.stdlib_module_names) if hasattr(sys, 'stdlib_module_names') else {
-    "os", "sys", "json", "re", "time", "pathlib", "logging", "asyncio", "subprocess", 
-    "urllib", "typing", "contextlib", "dataclasses", "enum", "math", "hashlib", "hmac", "concurrent"
-}
+STDLIB_MODULES = (
+    set(sys.stdlib_module_names)
+    if hasattr(sys, "stdlib_module_names")
+    else {
+        "os",
+        "sys",
+        "json",
+        "re",
+        "time",
+        "pathlib",
+        "logging",
+        "asyncio",
+        "subprocess",
+        "urllib",
+        "typing",
+        "contextlib",
+        "dataclasses",
+        "enum",
+        "math",
+        "hashlib",
+        "hmac",
+        "concurrent",
+    }
+)
 EXTERNAL_LIBS = {"uvicorn", "fastapi", "pydantic", "psutil", "requests", "aiohttp", "jinja2"}
+
 
 def get_all_files():
     file_map = {}
@@ -28,10 +49,11 @@ def get_all_files():
                 file_map[rel] = full
     return file_map
 
+
 def audit_python_imports(file_path, file_map):
     deps, broken = [], []
     rel_src = file_path.relative_to(ROOT_PATH).as_posix()
-    
+
     try:
         content = file_path.read_text(encoding="utf-8", errors="ignore")
         tree = ast.parse(content, filename=str(file_path))
@@ -65,6 +87,7 @@ def audit_python_imports(file_path, file_map):
 
     return deps, broken
 
+
 def run_audit():
     print("[*] Démarrage de l'audit de fiabilité AST (code applicatif strict)...")
     file_map = get_all_files()
@@ -85,6 +108,7 @@ def run_audit():
     print(f"Imports internes analysés   : {len(all_deps)}")
     print(f"Références brisées réelles  : {len(all_broken)}")
     print(f"[OK] Rapports générés dans  : {AUDIT_DIR}")
+
 
 if __name__ == "__main__":
     run_audit()

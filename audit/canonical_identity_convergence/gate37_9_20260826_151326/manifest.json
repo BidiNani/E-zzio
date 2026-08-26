@@ -1,0 +1,141 @@
+{
+  "gate": "3.7.9",
+  "version": "1.2",
+  "timestamp": "20260826_151326",
+  "mode": "ADVERSARIAL_OFFLINE",
+  "before_hashes": {
+    "core\\providers\\tavily_provider.py": "9d988eeb3312aede331486f48ed6b1ba9054558732984ff126fdee158b3b86fa",
+    "core\\models\\discovery\\groq.py": "89b9eb07f48f0a7bfc0df2fbe1304ecc3b217533a30d4e5d2e315780948ddea5",
+    "core\\models\\discovery\\openrouter.py": "a3a2f81b7ca4a39e973a859bf803c82f7d522a086489219498f15c589c9da997"
+  },
+  "after_hashes": {
+    "core\\providers\\tavily_provider.py": "9d988eeb3312aede331486f48ed6b1ba9054558732984ff126fdee158b3b86fa",
+    "core\\models\\discovery\\groq.py": "89b9eb07f48f0a7bfc0df2fbe1304ecc3b217533a30d4e5d2e315780948ddea5",
+    "core\\models\\discovery\\openrouter.py": "a3a2f81b7ca4a39e973a859bf803c82f7d522a086489219498f15c589c9da997"
+  },
+  "tests": [
+    {
+      "name": "GROQ — HTTP 400",
+      "status": "PASS",
+      "detail": "Levé correctement: HTTPStatusError"
+    },
+    {
+      "name": "GROQ — HTTP 401",
+      "status": "PASS",
+      "detail": "Levé correctement: HTTPStatusError"
+    },
+    {
+      "name": "GROQ — HTTP 403",
+      "status": "PASS",
+      "detail": "Levé correctement: HTTPStatusError"
+    },
+    {
+      "name": "GROQ — HTTP 404",
+      "status": "PASS",
+      "detail": "Levé correctement: HTTPStatusError"
+    },
+    {
+      "name": "GROQ — HTTP 429",
+      "status": "PASS",
+      "detail": "Levé correctement: HTTPStatusError"
+    },
+    {
+      "name": "GROQ — HTTP 500",
+      "status": "PASS",
+      "detail": "Levé correctement: HTTPStatusError"
+    },
+    {
+      "name": "GROQ — TIMEOUT",
+      "status": "PASS",
+      "detail": "Géré par exception: TimeoutException"
+    },
+    {
+      "name": "GROQ — TRANSPORT_ERROR",
+      "status": "PASS",
+      "detail": "Géré par exception: TransportError"
+    },
+    {
+      "name": "GROQ — Payload vide {}",
+      "status": "PASS",
+      "detail": "Retourne une liste sécurisée (taille: 0)"
+    },
+    {
+      "name": "GROQ — Data null",
+      "status": "FAIL",
+      "detail": "Crash inattendu: 'NoneType' object is not iterable"
+    },
+    {
+      "name": "GROQ — Data scalaire",
+      "status": "FAIL",
+      "detail": "Crash inattendu: 'str' object has no attribute 'get'"
+    },
+    {
+      "name": "GROQ — Data dictionnaire",
+      "status": "FAIL",
+      "detail": "Crash inattendu: 'str' object has no attribute 'get'"
+    },
+    {
+      "name": "GROQ — Modèles malformés",
+      "status": "PASS",
+      "detail": "Retourne une liste sécurisée (taille: 3)"
+    },
+    {
+      "name": "GROQ — JSON invalide",
+      "status": "PASS",
+      "detail": "Exception propre levée: JSONDecodeError"
+    },
+    {
+      "name": "GROQ — Clé API Absent",
+      "status": "PASS",
+      "detail": "Comportement déterministe sans crash"
+    },
+    {
+      "name": "GROQ — Clé API Vide",
+      "status": "PASS",
+      "detail": "Comportement déterministe sans crash"
+    },
+    {
+      "name": "GROQ — Clé API Blancs uniquement",
+      "status": "PASS",
+      "detail": "Comportement déterministe sans crash"
+    },
+    {
+      "name": "OPENROUTER — HTTP 401",
+      "status": "PASS",
+      "detail": "Géré proprement"
+    },
+    {
+      "name": "OPENROUTER — Null data payload",
+      "status": "PASS",
+      "detail": "Exception contrôlée: TypeError"
+    },
+    {
+      "name": "TAVILY — Missing Key",
+      "status": "PASS",
+      "detail": "RuntimeError attendu levé"
+    },
+    {
+      "name": "TAVILY — http_error",
+      "status": "PASS",
+      "detail": "Géré par exception: HTTPStatusError"
+    },
+    {
+      "name": "TAVILY — timeout",
+      "status": "PASS",
+      "detail": "Géré par exception: TimeoutException"
+    },
+    {
+      "name": "TAVILY — empty_results",
+      "status": "PASS",
+      "detail": "Exécution complétée sans fuite"
+    },
+    {
+      "name": "TAVILY — missing_results_key",
+      "status": "PASS",
+      "detail": "Exécution complétée sans fuite"
+    }
+  ],
+  "sentinel_network_calls": 23,
+  "secret_leaks_detected": 0,
+  "verdict": "FAIL"
+}

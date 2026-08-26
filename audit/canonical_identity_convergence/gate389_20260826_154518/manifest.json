@@ -1,0 +1,16 @@
+{
+  "gate": "3.8.9",
+  "version": "1.0",
+  "timestamp": "20260826_154518",
+  "mode": "DEFINE_EZZIOROUTER",
+  "hash_before": "4d314625277a77df9096a998c3c633a70f2c33f51a390fa7a1ca0b3018944d0a",
+  "hash_after": "9e9e3bfecdb4abd3dbe9178a158fd209e83515cc78f261ccecb670131f0437a5",
+  "tests": [
+    {
+      "name": "E2E CHAINED IMPORTS",
+      "status": "PASS",
+      "detail": "Registry, Fabric, Router et OmniBrain chargés sans aucune erreur."
+    }
+  ],
+  "verdict": "SUCCESS"
+}

@@ -1,4 +1,3 @@
-import json
 from pathlib import Path
 
 ROOT = Path(r"G:\AI\E-zzio")
@@ -22,7 +21,7 @@ class EzzioModelRouter:
         self.root_dir = Path(r"G:\\AI\\E-zzio")
         cfg_file = Path(config_path) if config_path else Path(__file__).parent / "config.json"
         self.config = json.loads(cfg_file.read_text(encoding="utf-8"))
-        
+
         self.catalog = self.config.get("catalog", {})
         self.selector = ModelSelector(self.catalog)
         self.health = ModelHealthChecker(self.config)

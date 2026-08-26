@@ -1,0 +1,730 @@
+"""E-ZZIO v4.4.1 Structural Closure — isolated certification bench."""
+
+from **future** import annotations
+
+import asyncio
+import copy
+import json
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+PROJECT_ROOT = Path(r"G:\AI\E-zzio").resolve()
+
+if str(PROJECT_ROOT) not in sys.path:
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from dotenv import load_dotenv
+
+from core.models.fabric import build_fabric
+
+try:
+from core.models.router import ProviderExhaustedError
+except ImportError:
+try:
+from core.models.fabric import ProviderExhaustedError
+except ImportError:
+try:
+from core.exceptions import ProviderExhaustedError
+except ImportError:
+class ProviderExhaustedError(Exception):
+pass
+
+class Scorecard:
+def **init**(self) -> None:
+self.results: dict[str, dict[str, str]] = {}
+
+```
+def record(
+    self,
+    test_id: str,
+    status: str,
+    details: str = "",
+) -> None:
+    self.results[test_id] = {
+        "status": status,
+        "details": details,
+    }
+
+    print(
+        f" [{status:<13}] {test_id:<8} : {details}"
+    )
+
+def count(self, status: str) -> int:
+    return sum(
+        1
+        for value in self.results.values()
+        if value["status"] == status
+    )
+```
+
+def model_key(model) -> tuple[str, str]:
+return model.provider, model.model_id
+
+def snapshot_registry(fabric) -> dict:
+snapshot = {}
+
+```
+for model in fabric.registry.all():
+    key = model_key(model)
+
+    state = {}
+    for field in (
+        "lifecycle",
+        "tier",
+        "failure_count",
+        "historical_failures",
+        "rehabilitation_count",
+        "last_quarantine_at",
+        "last_quarantine_reason",
+        "last_quarantine_operator",
+        "rehabilitated_at",
+        "rehabilitated_by",
+        "rehabilitation_reason",
+        "updated_at",
+    ):
+        state[field] = copy.deepcopy(
+            getattr(model, field, None)
+        )
+
+    snapshot[key] = state
+
+return snapshot
+```
+
+def restore_registry(fabric, snapshot: dict) -> None:
+for key, expected in snapshot.items():
+provider, model_id = key
+entry = fabric.registry.find(provider, model_id)
+
+```
+    if entry is None:
+        raise AssertionError(
+            f"Modèle disparu du registre : {provider}/{model_id}"
+        )
+
+    for field, value in expected.items():
+        if hasattr(entry, field):
+            setattr(entry, field, copy.deepcopy(value))
+
+fabric.registry.save()
+```
+
+def verify_registry(fabric, snapshot: dict) -> None:
+current = snapshot_registry(fabric)
+
+```
+if set(current) != set(snapshot):
+    raise AssertionError(
+        "Ensemble de modèles différent après restauration."
+    )
+
+for key, expected in snapshot.items():
+    actual = current[key]
+
+    for field, expected_value in expected.items():
+        actual_value = actual.get(field)
+
+        if actual_value != expected_value:
+            raise AssertionError(
+                f"Restauration incorrecte pour {key} / {field}: "
+                f"attendu={expected_value!r}, "
+                f"obtenu={actual_value!r}"
+            )
+```
+
+def exact_ok(result) -> bool:
+if not isinstance(result, dict):
+return False
+
+```
+return str(result.get("content", "")).strip() == "OK"
+```
+
+async def main() -> None:
+load_dotenv(PROJECT_ROOT / ".env")
+
+```
+scorecard = Scorecard()
+
+print("")
+print("=" * 72)
+print(" E-ZZIO — v4.4.1 STRUCTURAL CLOSURE")
+print("=" * 72)
+print("")
+
+fabric = build_fabric(project_root=PROJECT_ROOT)
+
+original_snapshot = snapshot_registry(fabric)
+
+print(
+    f"[INIT] Modèles snapshotés : {len(original_snapshot)}"
+)
+
+try:
+    # ------------------------------------------------------------------
+    # A — Discovery / qualification
+    # ------------------------------------------------------------------
+
+    try:
+        await fabric.discover()
+
+        qualify_fn = getattr(
+            fabric,
+            "qualify",
+            None,
+        ) or getattr(
+            fabric,
+            "qualify_candidates",
+            None,
+        )
+
+        if qualify_fn is None:
+            raise RuntimeError(
+                "Aucune méthode qualify/qualify_candidates."
+            )
+
+        qualification = await qualify_fn()
+
+        activate_fn = getattr(
+            fabric,
+            "activate_qualified",
+            None,
+        )
+
+        if activate_fn is None:
+            raise RuntimeError(
+                "activate_qualified() absente."
+            )
+
+        activate_fn(qualification)
+
+        active = list(fabric.registry.active())
+
+        fast = [
+            model
+            for model in active
+            if getattr(model, "tier", None) == "FAST"
+        ]
+
+        mid = [
+            model
+            for model in active
+            if getattr(model, "tier", None) == "MID"
+        ]
+
+        print(
+            f"[INIT] ACTIVE : FAST={len(fast)} MID={len(mid)}"
+        )
+
+        if fast:
+            scorecard.record(
+                "TEST_A",
+                "PASS",
+                f"FAST actif : {fast[0].provider}/{fast[0].model_id}",
+            )
+        else:
+            scorecard.record(
+                "TEST_A",
+                "FAIL",
+                "Aucun modèle FAST actif après qualification.",
+            )
+
+        if mid:
+            scorecard.record(
+                "TEST_B",
+                "PASS",
+                f"MID actif : {mid[0].provider}/{mid[0].model_id}",
+            )
+        else:
+            scorecard.record(
+                "TEST_B",
+                "NOT_EXERCISED",
+                "Aucun MID actif.",
+            )
+
+    except Exception as exc:
+        scorecard.record(
+            "TEST_A",
+            "FAIL",
+            f"Initialisation qualification : {exc}",
+        )
+        scorecard.record(
+            "TEST_B",
+            "FAIL",
+            f"Initialisation qualification : {exc}",
+        )
+
+    # ------------------------------------------------------------------
+    # C — Target
+    # ------------------------------------------------------------------
+
+    active_now = list(fabric.registry.active())
+
+    target = None
+
+    for model in active_now:
+        if getattr(model, "tier", None) == "MID":
+            target = model
+            break
+
+    if target is None:
+        for model in active_now:
+            if getattr(model, "tier", None) == "FAST":
+                target = model
+                break
+
+    if target is None:
+        for test_id in (
+            "TEST_C",
+            "TEST_D",
+            "TEST_E",
+            "TEST_F",
+            "TEST_G",
+            "TEST_H",
+            "TEST_I",
+            "TEST_J",
+        ):
+            scorecard.record(
+                test_id,
+                "FAIL",
+                "Aucune cible ACTIVE disponible.",
+            )
+
+        return
+
+    provider = target.provider
+    model_id = target.model_id
+
+    print(
+        f"[TARGET] {provider}/{model_id}"
+    )
+
+    # ------------------------------------------------------------------
+    # C — Runtime quarantine
+    # ------------------------------------------------------------------
+
+    try:
+        before = fabric.registry.find(
+            provider,
+            model_id,
+        )
+
+        old_failure_count = int(
+            getattr(before, "failure_count", 0)
+        )
+
+        result = fabric.quarantine_runtime_violation(
+            provider=provider,
+            model_id=model_id,
+            tier=getattr(target, "tier", "UNQUALIFIED"),
+            reason="v4.4.1_test_runtime_violation",
+        )
+
+        after = fabric.registry.find(
+            provider,
+            model_id,
+        )
+
+        assert result is True
+        assert after.lifecycle == "QUARANTINED"
+        assert after.tier == "UNQUALIFIED"
+        assert after.failure_count == old_failure_count + 1
+
+        scorecard.record(
+            "TEST_C",
+            "PASS",
+            "ACTIVE -> QUARANTINED avec compteur incrémenté.",
+        )
+
+    except Exception as exc:
+        scorecard.record(
+            "TEST_C",
+            "FAIL",
+            str(exc),
+        )
+
+    # ------------------------------------------------------------------
+    # D — active() exclusion
+    # ------------------------------------------------------------------
+
+    try:
+        reloaded = build_fabric(
+            project_root=PROJECT_ROOT
+        )
+
+        active_ids = {
+            model_key(model)
+            for model in reloaded.registry.active()
+        }
+
+        assert (
+            provider,
+            model_id,
+        ) not in active_ids
+
+        scorecard.record(
+            "TEST_D",
+            "PASS",
+            "QUARANTINED absent de registry.active().",
+        )
+
+    except Exception as exc:
+        scorecard.record(
+            "TEST_D",
+            "FAIL",
+            str(exc),
+        )
+
+    # ------------------------------------------------------------------
+    # E — Rehabilitation
+    # ------------------------------------------------------------------
+
+    try:
+        current = fabric.registry.find(
+            provider,
+            model_id,
+        )
+
+        historical_before = int(
+            getattr(current, "historical_failures", 0)
+        )
+
+        failures_before = int(
+            getattr(current, "failure_count", 0)
+        )
+
+        rehab_before = int(
+            getattr(current, "rehabilitation_count", 0)
+        )
+
+        result = fabric.rehabilitate_model(
+            provider=provider,
+            model_id=model_id,
+            reason="v4.4.1 rehabilitation test",
+            operator="sec_admin",
+        )
+
+        after = fabric.registry.find(
+            provider,
+            model_id,
+        )
+
+        assert result is True
+        assert after.lifecycle == "CANDIDATE"
+        assert after.tier == "UNQUALIFIED"
+        assert after.failure_count == 0
+        assert (
+            after.historical_failures
+            == historical_before + failures_before
+        )
+        assert (
+            after.rehabilitation_count
+            == rehab_before + 1
+        )
+        assert after.rehabilitated_by == "sec_admin"
+
+        scorecard.record(
+            "TEST_E",
+            "PASS",
+            "QUARANTINED -> CANDIDATE avec historique conservé.",
+        )
+
+    except Exception as exc:
+        scorecard.record(
+            "TEST_E",
+            "FAIL",
+            str(exc),
+        )
+
+    # ------------------------------------------------------------------
+    # F — Persistence
+    # ------------------------------------------------------------------
+
+    try:
+        reloaded = build_fabric(
+            project_root=PROJECT_ROOT
+        )
+
+        entry = reloaded.registry.find(
+            provider,
+            model_id,
+        )
+
+        assert entry is not None
+        assert entry.lifecycle == "CANDIDATE"
+        assert entry.tier == "UNQUALIFIED"
+        assert entry.rehabilitated_by == "sec_admin"
+
+        scorecard.record(
+            "TEST_F",
+            "PASS",
+            "État de réhabilitation persistant après reload.",
+        )
+
+    except Exception as exc:
+        scorecard.record(
+            "TEST_F",
+            "FAIL",
+            str(exc),
+        )
+
+    # ------------------------------------------------------------------
+    # G — Illegal transition
+    # ------------------------------------------------------------------
+
+    try:
+        bypass = True
+
+        try:
+            fabric.transition(
+                provider=provider,
+                model_id=model_id,
+                new_state="ACTIVE",
+                actor="admin_hack",
+                reason="v4.4.1 bypass attempt",
+            )
+            bypass = False
+        except RuntimeError:
+            pass
+
+        assert bypass
+
+        scorecard.record(
+            "TEST_G",
+            "PASS",
+            "Transition illicite refusée.",
+        )
+
+    except Exception as exc:
+        scorecard.record(
+            "TEST_G",
+            "FAIL",
+            str(exc),
+        )
+
+    # ------------------------------------------------------------------
+    # H — Qualification failure
+    # ------------------------------------------------------------------
+
+    try:
+        fabric.rehabilitate_model(
+            provider=provider,
+            model_id=model_id,
+            reason="reset test H",
+            operator="sec_admin",
+        )
+
+        fabric.transition(
+            provider=provider,
+            model_id=model_id,
+            new_state="QUARANTINED",
+            actor="qualification_gate",
+            reason="v4.4.1 simulated qualification failure",
+        )
+
+        entry = fabric.registry.find(
+            provider,
+            model_id,
+        )
+
+        assert entry.lifecycle == "QUARANTINED"
+        assert entry.tier == "UNQUALIFIED"
+
+        scorecard.record(
+            "TEST_H",
+            "PASS",
+            "Échec qualification -> QUARANTINED.",
+        )
+
+    except Exception as exc:
+        scorecard.record(
+            "TEST_H",
+            "FAIL",
+            str(exc),
+        )
+
+    # ------------------------------------------------------------------
+    # I — Qualification success
+    # ------------------------------------------------------------------
+
+    try:
+        fabric.rehabilitate_model(
+            provider=provider,
+            model_id=model_id,
+            reason="reset test I",
+            operator="sec_admin",
+        )
+
+        fabric.transition(
+            provider=provider,
+            model_id=model_id,
+            new_state="QUALIFIED",
+            actor="qualification_gate",
+            reason="v4.4.1 simulated qualification success",
+            new_tier="FAST",
+        )
+
+        fabric.transition(
+            provider=provider,
+            model_id=model_id,
+            new_state="ACTIVE",
+            actor="activate_qualified",
+            reason="v4.4.1 simulated activation",
+            new_tier="FAST",
+        )
+
+        entry = fabric.registry.find(
+            provider,
+            model_id,
+        )
+
+        assert entry.lifecycle == "ACTIVE"
+        assert entry.tier == "FAST"
+
+        scorecard.record(
+            "TEST_I",
+            "PASS",
+            "CANDIDATE -> QUALIFIED -> ACTIVE validé.",
+        )
+
+    except Exception as exc:
+        scorecard.record(
+            "TEST_I",
+            "FAIL",
+            str(exc),
+        )
+
+    # ------------------------------------------------------------------
+    # J — Fail closed MID
+    # ------------------------------------------------------------------
+
+    try:
+        isolated = build_fabric(
+            project_root=PROJECT_ROOT
+        )
+
+        mid_models = [
+            model
+            for model in isolated.registry.active()
+            if getattr(model, "tier", None) == "MID"
+        ]
+
+        if not mid_models:
+            scorecard.record(
+                "TEST_J",
+                "NOT_EXERCISED",
+                "Aucun MID actif disponible.",
+            )
+        else:
+            for model in mid_models:
+                isolated.quarantine_runtime_violation(
+                    provider=model.provider,
+                    model_id=model.model_id,
+                    tier="MID",
+                    reason="v4.4.1 fail-closed test",
+                )
+
+            try:
+                await isolated.router.execute(
+                    messages=[
+                        {
+                            "role": "user",
+                            "content": "Ping",
+                        }
+                    ],
+                    tier="MID",
+                )
+
+                scorecard.record(
+                    "TEST_J",
+                    "FAIL",
+                    "Le routeur a exécuté sans MID disponible.",
+                )
+
+            except ProviderExhaustedError:
+                scorecard.record(
+                    "TEST_J",
+                    "PASS",
+                    "ProviderExhaustedError : fail-closed confirmé.",
+                )
+
+            except Exception as exc:
+                scorecard.record(
+                    "TEST_J",
+                    "FAIL",
+                    f"Exception inattendue : {exc}",
+                )
+
+finally:
+    # ------------------------------------------------------------------
+    # RESTAURATION TOTALE
+    # ------------------------------------------------------------------
+
+    print("")
+    print("[RESTORE] Restauration intégrale du registre...")
+
+    restore = build_fabric(
+        project_root=PROJECT_ROOT
+    )
+
+    restore_registry(
+        restore,
+        original_snapshot,
+    )
+
+    verify = build_fabric(
+        project_root=PROJECT_ROOT
+    )
+
+    verify_registry(
+        verify,
+        original_snapshot,
+    )
+
+    print(
+        "[PASS] Registre intégralement restauré et vérifié."
+    )
+
+# ----------------------------------------------------------------------
+# SCORECARD
+# ----------------------------------------------------------------------
+
+passed = scorecard.count("PASS")
+failed = scorecard.count("FAIL")
+warned = scorecard.count("WARN")
+skipped = scorecard.count("NOT_EXERCISED")
+
+print("")
+print("=" * 72)
+print("=== SCORECARD v4.4.1 ===")
+print("=" * 72)
+print(f" TOTAL : {len(scorecard.results)}")
+print(f" PASS  : {passed}")
+print(f" WARN  : {warned}")
+print(f" FAIL  : {failed}")
+print(f" SKIP  : {skipped}")
+print("=" * 72)
+
+if failed > 0:
+    print("")
+    print("VERDICT : ÉCHOUÉ")
+    sys.exit(1)
+
+if skipped > 0:
+    print("")
+    print("VERDICT : INCOMPLÈTE")
+    sys.exit(2)
+
+print("")
+print("VERDICT : CERTIFIED")
+print("Machine d'état : INTÈGRE")
+print("Persistance    : CONFORME")
+print("Fail-Closed    : CONFIRMÉ")
+print("Restauration   : INTÉGRALE")
+
+sys.exit(0)
+```
+
+if **name** == "**main**":
+asyncio.run(main())

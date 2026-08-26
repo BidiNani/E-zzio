@@ -1,6 +1,7 @@
 import pytest
 from core.memory.unified_gateway import UnifiedMemoryGateway
 
+
 @pytest.mark.asyncio
 async def test_fts5_memory_search_and_triggers(tmp_path):
     db_file = str(tmp_path / "test_fts5.db")

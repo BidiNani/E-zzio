@@ -1,0 +1,216 @@
+"""E-ZZIO Autonomous Model Fabric — Banc d'essai Runtime & Certification Quarantaine."""
+
+from __future__ import annotations
+
+import asyncio
+from pathlib import Path
+from dotenv import load_dotenv
+
+from core.models.fabric import build_fabric
+from core.models.exceptions import ProviderExhaustedError
+
+
+def require_exact_ok(
+    *,
+    fabric,
+    response: dict,
+    tier: str,
+) -> str:
+    content = str(response.get("content", "")).strip()
+    if content == "OK":
+        return content
+
+    provider = str(response.get("provider", ""))
+    model_id = str(response.get("model", ""))
+    fabric.quarantine_runtime_violation(
+        provider=provider,
+        model_id=model_id,
+        tier=tier,
+        reason=(
+            "exact_ok_contract_violation: "
+            f"received={content[:300]!r}"
+        ),
+    )
+    raise AssertionError(
+        "Contrat de réponse violé : "
+        f"attendu='OK', reçu={content!r}"
+    )
+
+
+async def main() -> None:
+    project_root = Path(r"G:\AI\E-zzio")
+    load_dotenv(project_root / ".env")
+
+    print("=== Démarrage du banc d'essai E-ZZIO Fabric ===\n")
+    fabric = build_fabric(project_root=project_root)
+
+    # [1/4] Découverte
+    print("[1/4] Découverte des catalogues distants...")
+    discovery_res = await fabric.discover()
+    for prov, count in discovery_res.items():
+        print(f" - {prov:<14}: {count} modèle(s) détecté(s)")
+
+    # [2/4] Qualification
+    print("\n[2/4] Qualification des candidats prioritaires...")
+    qual_res = await fabric.qualify()
+    for item in qual_res:
+        m_id = f"{item['provider']}/{item['model_id']}"
+        if item.get("qualified"):
+            print(
+                f" - Qualification de {m_id}...\n"
+                f"   -> [QUALIFIÉ] Palier: {item['tier']} | "
+                f"Latence: {item['latency_ms']:.2f} ms | "
+                f"Score: {item['score']}/100"
+            )
+        else:
+            print(
+                f" - Qualification de {m_id}...\n"
+                f"   -> [ÉCHEC] Palier: {item['tier']} | "
+                f"Latence: {item['latency_ms']:.2f} ms | "
+                f"Score: {item['score']}/100\n"
+                f"      Motifs: {item.get('failures')}"
+            )
+
+    # [3/4] Activation
+    print("\n[3/4] Activation exclusive dans le registre dynamique...")
+    transitions = fabric.activate_qualified(qual_res)
+    if not transitions:
+        print(" - Aucune transition d'activation.")
+    for tr in transitions:
+        print(
+            f" - Transition : {tr['model_id']:<36} "
+            f"[{tr['old_state']} -> {tr['new_state']}] "
+            f"(Tier: {tr['tier']})"
+        )
+
+    active_models = fabric.registry.active()
+    print(f"\n Contrôle registre initial : {len(active_models)} modèle(s) ACTIVE")
+    for m in active_models:
+        print(f" * ACTIF : {m.provider}/{m.model_id} | Palier: {m.tier} | Latence: {m.latency_ms:.2f} ms")
+
+    # [4/4] Inférence cognitive
+    print("\n[4/4] Inférence cognitive avec validation du cloisonnement...")
+
+    # --- Test A : Palier FAST ---
+    print("\n --- Test A : Palier FAST (Attendu: SUCCÈS) ---")
+    response_fast = await fabric.router.execute(
+        messages=[
+            {
+                "role": "user",
+                "content": "Ping système E-ZZIO. Réponds uniquement par le mot OK.",
+            }
+        ],
+        tier="FAST",
+        temperature=0.0,
+    )
+    content_fast = require_exact_ok(
+        fabric=fabric,
+        response=response_fast,
+        tier="FAST",
+    )
+    print(" -> Inférence FAST réussie !")
+    print(f"    Fournisseur utilisé : {response_fast.get('provider')}")
+    print(f"    Modèle actif        : {response_fast.get('model')}")
+    print(f"    Réponse             : {content_fast}")
+
+    # --- Test B : Palier MID ---
+    print("\n --- Test B : Palier MID (Scénario de rupture / Quarantaine) ---")
+    active_mid_initial = [m for m in fabric.registry.active() if m.tier == "MID"]
+
+    if not active_mid_initial:
+        print(" -> [ATTENTION] Aucun modèle MID qualifié d'emblée. Vérification du Fail-Closed initial...")
+        try:
+            await fabric.router.execute(
+                messages=[{"role": "user", "content": "Ping"}],
+                tier="MID",
+                temperature=0.0,
+            )
+            raise AssertionError("FAIL: Le routeur aurait dû lever ProviderExhaustedError.")
+        except ProviderExhaustedError as exc:
+            print(f" -> [PASS] Fail-Closed initial conforme (aucun MID) : {exc}")
+            print(" -> [INFO] Boucle de quarantaine runtime non exercée (aucun modèle MID n'était qualifié).")
+            return
+
+    # Tentative MID #1
+    print(f" -> Modèles MID disponibles initialement : {[f'{m.provider}/{m.model_id}' for m in active_mid_initial]}")
+    violation_occurred = False
+    routed_provider = None
+    routed_model = None
+
+    try:
+        response_mid_1 = await fabric.router.execute(
+            messages=[
+                {
+                    "role": "user",
+                    "content": "Ping système E-ZZIO. Réponds uniquement par le mot OK.",
+                }
+            ],
+            tier="MID",
+            temperature=0.0,
+        )
+        routed_provider = str(response_mid_1.get("provider", ""))
+        routed_model = str(response_mid_1.get("model", ""))
+        print(f" -> Modèle réellement routé MID #1 : {routed_provider}/{routed_model}")
+
+        content_mid_1 = require_exact_ok(
+            fabric=fabric,
+            response=response_mid_1,
+            tier="MID",
+        )
+        print(f" -> Inférence MID #1 conforme ('{content_mid_1}'). Aucune violation détectée.")
+
+    except AssertionError as exc:
+        print(f" -> Détection de violation MID #1 : {exc}")
+        violation_occurred = True
+
+    if violation_occurred:
+        assert routed_provider and routed_model, "Échec d'identification du modèle fautif"
+        print(f"\n --- Vérification de l'isolation post-violation pour {routed_provider}/{routed_model} ---")
+
+        # 1. Rechargement du runtime complet depuis le disque
+        reloaded_fabric = build_fabric(project_root=project_root)
+        
+        quarantined_entry = reloaded_fabric.registry.find(routed_provider, routed_model)
+        assert quarantined_entry is not None, f"Entrée {routed_provider}/{routed_model} introuvable dans le registre rechargé."
+        assert quarantined_entry.lifecycle == "QUARANTINED", (
+            f"Statut attendu 'QUARANTINED', obtenu : {quarantined_entry.lifecycle}"
+        )
+        assert quarantined_entry.tier == "UNQUALIFIED", (
+            f"Tier attendu 'UNQUALIFIED', obtenu : {quarantined_entry.tier}"
+        )
+
+        active_reloaded = reloaded_fabric.registry.active()
+        active_ids = [(m.provider, m.model_id) for m in active_reloaded]
+        assert (routed_provider, routed_model) not in active_ids, (
+            f"Le modèle {routed_provider}/{routed_model} est toujours présent dans active() !"
+        )
+        print(f" -> [PASS ASSERTION] {routed_provider}/{routed_model} est bien QUARANTINED et absent du registre actif rechargé.")
+
+        # 2. Exécution de MID #2 sur reloaded_fabric.router (Isolation runtime prouvée)
+        print(" -> Exécution de MID #2 sur reloaded_fabric.router...")
+        try:
+            response_mid_2 = await reloaded_fabric.router.execute(
+                messages=[
+                    {
+                        "role": "user",
+                        "content": "Ping système E-ZZIO. Réponds uniquement par le mot OK.",
+                    }
+                ],
+                tier="MID",
+                temperature=0.0,
+            )
+            used_2_prov = str(response_mid_2.get("provider", ""))
+            used_2_mod = str(response_mid_2.get("model", ""))
+            assert (used_2_prov != routed_provider or used_2_mod != routed_model), (
+                f"FAIL: Le routeur rechargé a utilisé le modèle mis en quarantaine ({used_2_prov}/{used_2_mod}) !"
+            )
+            print(f" -> [PASS REPLI CONFORME] Routage vers modèle de secours qualifié : {used_2_prov}/{used_2_mod}")
+
+        except ProviderExhaustedError as exc:
+            print(f" -> [PASS FAIL-CLOSED CONFORME] MID #2 rejeté avec succès par reloaded_fabric : {exc}")
+
+    print("\n=== Fin du banc d'essai : Exécution conforme aux contrats ===")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

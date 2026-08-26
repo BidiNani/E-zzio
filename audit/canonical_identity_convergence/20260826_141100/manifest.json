@@ -1,0 +1,29 @@
+{
+  "timestamp": "20260826_141100",
+  "gate": 1,
+  "version": "1.1",
+  "files": {
+    "omni_brain": {
+      "relative_path": "core\\omni_brain.py",
+      "sha256_before": "9cb7613e1024d69c9ddb418c02c35c3f2522de06bd9e26a7e06f97c5f96e8cd8",
+      "backup": "audit\\canonical_identity_convergence\\20260826_141100\\omni_brain.py.before",
+      "sha256_after": "f33ced13f88a40f66cd3c4abdda823925a939c7457164e1b5e1e3e5b257e6939",
+      "status": "SUCCESS"
+    },
+    "deploy_injector": {
+      "relative_path": "scripts\\deploy_context_injector.py",
+      "sha256_before": "07491923155f2175e922ddb22a93414ea67b0ece984e52400e7151a33532485d",
+      "backup": "audit\\canonical_identity_convergence\\20260826_141100\\deploy_context_injector.py.before",
+      "sha256_after": "5ad0810d51a91413a5f013b83a38b28967573756818cf736300623455f9b294c",
+      "status": "SUCCESS"
+    },
+    "router_context": {
+      "relative_path": "runtime\\model_router\\context.py",
+      "sha256_before": "af40da527ca22aadf7d6d2865546084031b9ef36b7948a96115566db739b2e58",
+      "backup": "audit\\canonical_identity_convergence\\20260826_141100\\context.py.before",
+      "sha256_after": "e67fffea8cd596c91abd986513000a1c3e2a98bafeaf7a74351a19ac3e0e7d16",
+      "status": "SUCCESS"
+    }
+  },
+  "verdict": "SUCCESS"
+}

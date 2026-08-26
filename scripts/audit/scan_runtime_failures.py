@@ -61,14 +61,16 @@ for item in prod_items:
         category = "HARDWARE_EXPERIMENTAL"
         severity = "MEDIUM"
 
-    matrix.append({
-        "module_missing": ref_mod,
-        "imported_by": src_rel,
-        "line_number": line_no,
-        "symbols_imported": sorted(list(set(symbols))),
-        "category": category,
-        "severity": severity
-    })
+    matrix.append(
+        {
+            "module_missing": ref_mod,
+            "imported_by": src_rel,
+            "line_number": line_no,
+            "symbols_imported": sorted(list(set(symbols))),
+            "category": category,
+            "severity": severity,
+        }
+    )
 
 MATRIX_OUTPUT.write_text(json.dumps(matrix, indent=2), encoding="utf-8")
 

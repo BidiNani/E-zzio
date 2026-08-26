@@ -12,6 +12,7 @@ from providers.provider_telemetry import provider_telemetry
 
 GEMINI_MODELS = ["gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-2.0-flash"]
 
+
 class GeminiProvider(BaseProvider):
     def __init__(self):
         self.scheduler = KeyScheduler(get_gemini_keys())
@@ -27,10 +28,12 @@ class GeminiProvider(BaseProvider):
             "status": "OPERATIONAL" if active_count > 0 else "POOL_EXHAUSTED",
             "pool_size": len(self.scheduler.keys),
             "active_keys": active_count,
-            "capabilities": self.capabilities()
+            "capabilities": self.capabilities(),
         }
 
-    async def generate(self, prompt: str, model: Optional[str] = "gemini-2.5-flash", image_bytes: Optional[bytes] = None, capability: str = "default") -> ProviderResponse:
+    async def generate(
+        self, prompt: str, model: Optional[str] = "gemini-2.5-flash", image_bytes: Optional[bytes] = None, capability: str = "default"
+    ) -> ProviderResponse:
         target_model = model if model in GEMINI_MODELS else GEMINI_MODELS[0]
         max_retries = max(len(self.scheduler.keys), 1)
         loop = asyncio.get_running_loop()
@@ -48,15 +51,30 @@ class GeminiProvider(BaseProvider):
                     contents.append(types.Part.from_bytes(data=image_bytes, mime_type="image/jpeg"))
 
                 response = await asyncio.wait_for(
-                    loop.run_in_executor(None, lambda: client.models.generate_content(
-                        model=target_model, contents=contents, config=types.GenerateContentConfig(tools=[{"google_search": {}}], temperature=0.8, max_output_tokens=8192)
-                    )), timeout=12.0
+                    loop.run_in_executor(
+                        None,
+                        lambda: client.models.generate_content(
+                            model=target_model,
+                            contents=contents,
+                            config=types.GenerateContentConfig(tools=[{"google_search": {}}], temperature=0.8, max_output_tokens=8192),
+                        ),
+                    ),
+                    timeout=12.0,
                 )
                 elapsed_ms = (time.perf_counter() - start_time) * 1000.0
                 reply = response.text if response and response.text else ""
-                
-                provider_telemetry.record_event("gemini", target_model, capability, True, elapsed_ms, quota_state="available", key_index=idx)
-                return ProviderResponse(ok=True, provider="gemini", model=target_model, content=reply, latency_ms=round(elapsed_ms, 2), metadata={"key_index": idx})
+
+                provider_telemetry.record_event(
+                    "gemini", target_model, capability, True, elapsed_ms, quota_state="available", key_index=idx
+                )
+                return ProviderResponse(
+                    ok=True,
+                    provider="gemini",
+                    model=target_model,
+                    content=reply,
+                    latency_ms=round(elapsed_ms, 2),
+                    metadata={"key_index": idx},
+                )
 
             except asyncio.TimeoutError:
                 provider_telemetry.record_event("gemini", target_model, capability, False, 12000.0, error_type="timeout", key_index=idx)
@@ -66,14 +84,19 @@ class GeminiProvider(BaseProvider):
                 elapsed_ms = (time.perf_counter() - start_time) * 1000.0
                 if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
                     self.scheduler.mark_exhausted(idx, 3600)
-                    provider_telemetry.record_event("gemini", target_model, capability, False, elapsed_ms, error_type="429", quota_state="exhausted", key_index=idx)
+                    provider_telemetry.record_event(
+                        "gemini", target_model, capability, False, elapsed_ms, error_type="429", quota_state="exhausted", key_index=idx
+                    )
                 elif "401" in err_str or "403" in err_str or "API_KEY_INVALID" in err_str:
                     self.scheduler.mark_invalid(idx)
                     provider_telemetry.record_event("gemini", target_model, capability, False, elapsed_ms, error_type="auth", key_index=idx)
                 else:
-                    provider_telemetry.record_event("gemini", target_model, capability, False, elapsed_ms, error_type="network", key_index=idx)
+                    provider_telemetry.record_event(
+                        "gemini", target_model, capability, False, elapsed_ms, error_type="network", key_index=idx
+                    )
                 await asyncio.sleep(0.5)
 
-        provider_telemetry.record_event("gemini", target_model, capability, False, 0.0, error_type="pool_exhausted", quota_state="exhausted")
+        provider_telemetry.record_event(
+            "gemini", target_model, capability, False, 0.0, error_type="pool_exhausted", quota_state="exhausted"
+        )
         return ProviderResponse(ok=False, provider="gemini", model=target_model, error="Épuisement du pool Gemini.")
-

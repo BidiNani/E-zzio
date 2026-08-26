@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 ROOT = Path(r"G:\AI\E-zzio")

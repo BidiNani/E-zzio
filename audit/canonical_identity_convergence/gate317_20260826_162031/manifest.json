@@ -1,0 +1,16 @@
+{
+  "gate": "3.17",
+  "version": "1.0",
+  "timestamp": "20260826_162031",
+  "mode": "FINAL_FAIL_CLOSED_SYNC",
+  "tests": [
+    {
+      "name": "BUILD_FABRIC & SYNC",
+      "status": "PASS",
+      "detail": "Fabric initialisée et routeur synchronisé (2 modèle(s) actif(s))"
+    }
+  ],
+  "verdict": "SUCCESS",
+  "hash_before": "98c4dbe4d44dacf223487646c47efcb88f345a7e98e8b97b43687da4286849cb",
+  "hash_after": "07fa8882fcadfbd6bd02c99ce362fda70790d8291eadfcc49d4188dc6bbaec9e"
+}

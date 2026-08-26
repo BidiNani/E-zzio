@@ -6,10 +6,12 @@ from pathlib import Path
 from datetime import datetime, timezone
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
-if str(ROOT_DIR) not in sys.path: sys.path.insert(0, str(ROOT_DIR))
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
 DB_PATH = ROOT_DIR / "runtime" / "telemetry" / "provider_events.db"
 PERFORMANCE_CACHE_PATH = ROOT_DIR / "runtime" / "metrics" / "provider_performance.json"
+
 
 class DurableTelemetry:
     def __init__(self):
@@ -45,16 +47,30 @@ class DurableTelemetry:
             """)
             conn.commit()
 
-    def record_event(self, provider: str, model: str, capability: str, success: bool, latency_ms: float, error_type: str = None, quota_state: str = "available", key_index: int = 0, request_id: str = "none"):
+    def record_event(
+        self,
+        provider: str,
+        model: str,
+        capability: str,
+        success: bool,
+        latency_ms: float,
+        error_type: str = None,
+        quota_state: str = "available",
+        key_index: int = 0,
+        request_id: str = "none",
+    ):
         timestamp = datetime.now(timezone.utc).isoformat()
         with self._get_connection() as conn:
-            conn.execute("""
-                INSERT INTO provider_events 
+            conn.execute(
+                """
+                INSERT INTO provider_events
                 (timestamp, provider, model, capability, success, latency_ms, error_type, quota_state, key_index, request_id)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, (timestamp, provider, model, capability, 1 if success else 0, latency_ms, error_type, quota_state, key_index, request_id))
+            """,
+                (timestamp, provider, model, capability, 1 if success else 0, latency_ms, error_type, quota_state, key_index, request_id),
+            )
             conn.commit()
-        
+
         self._rebuild_performance_cache_atomic()
 
     def _rebuild_performance_cache_atomic(self):
@@ -66,22 +82,25 @@ class DurableTelemetry:
             cache_data = {
                 "schema_version": "V1.2-HARDENED-TELEMETRY",
                 "updated_at": datetime.now(timezone.utc).isoformat(),
-                "providers": {}
+                "providers": {},
             }
 
             for p in providers:
-                cursor.execute("""
+                cursor.execute(
+                    """
                     SELECT COUNT(*) as calls, SUM(success) as success_count, AVG(latency_ms) as avg_latency
                     FROM provider_events WHERE provider = ?
-                """, (p,))
+                """,
+                    (p,),
+                )
                 row = cursor.fetchone()
                 calls = row["calls"] or 0
                 success = row["success_count"] or 0
                 errors = calls - success
-                
+
                 raw_success_rate = (success / calls) if calls > 0 else 0.5
                 confidence = round(min(1.0, calls / 100.0), 2)
-                
+
                 # Formule de Cold Start (Pondération de fiabilité)
                 effective_reliability = (raw_success_rate * confidence) + (0.5 * (1.0 - confidence))
 
@@ -92,12 +111,13 @@ class DurableTelemetry:
                     "raw_success_rate": round(raw_success_rate, 3),
                     "confidence": confidence,
                     "effective_reliability": round(effective_reliability, 3),
-                    "avg_latency_ms": round(row["avg_latency"] or 0.0, 2)
+                    "avg_latency_ms": round(row["avg_latency"] or 0.0, 2),
                 }
 
             PERFORMANCE_CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
-            tmp_path = PERFORMANCE_CACHE_PATH.with_suffix('.tmp')
+            tmp_path = PERFORMANCE_CACHE_PATH.with_suffix(".tmp")
             tmp_path.write_text(json.dumps(cache_data, indent=2, ensure_ascii=False), encoding="utf-8")
-            os.replace(tmp_path, PERFORMANCE_CACHE_PATH) # Atomic sur Windows
+            os.replace(tmp_path, PERFORMANCE_CACHE_PATH)  # Atomic sur Windows
+
 
 provider_telemetry = DurableTelemetry()

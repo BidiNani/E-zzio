@@ -7,6 +7,7 @@ import shutil
 DB_PATH = r"G:\AI\E-zzio\data\workspace_index.db"
 BACKUP_PATH = r"G:\AI\E-zzio\data\workspace_index.db.bak"
 
+
 class WorkspaceIndex:
     """Moteur d'indexation SQLite industriel pour E-ZZIO (WAL, FTS5, SHA256, Auto-Heal)."""
 
@@ -29,14 +30,14 @@ class WorkspaceIndex:
         """Initialise le schéma relationnel, les versions, la table FTS5 et les triggers."""
         with self._get_connection() as conn:
             cursor = conn.cursor()
-            
+
             # 1. Métadonnées & Versioning
             cursor.execute("""
             CREATE TABLE IF NOT EXISTS schema_metadata (
                 key TEXT PRIMARY KEY,
                 value TEXT
             )""")
-            
+
             # 2. Table principale des fichiers avec soft-delete & SHA256
             cursor.execute("""
             CREATE TABLE IF NOT EXISTS files (
@@ -49,13 +50,13 @@ class WorkspaceIndex:
                 is_deleted INTEGER DEFAULT 0,
                 updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
             )""")
-            
+
             # 3. Table FTS5 (Full-Text Search) pour recherche ultra-rapide
             cursor.execute("""
             CREATE VIRTUAL TABLE IF NOT EXISTS files_fts USING fts5(
                 path, extension, content='files', content_rowid='id'
             )""")
-            
+
             # 4. Triggers de synchronisation FTS5 automatique
             cursor.execute("""
             CREATE TRIGGER IF NOT EXISTS files_ai AFTER INSERT ON files BEGIN
@@ -113,7 +114,7 @@ class WorkspaceIndex:
             cursor = conn.cursor()
             clean_q = query.replace("'", "''").replace('"', '""')
             sql = """
-            SELECT f.path, f.size_kb, f.sha256 
+            SELECT f.path, f.size_kb, f.sha256
             FROM files_fts fts
             JOIN files f ON fts.rowid = f.id
             WHERE files_fts MATCH ? AND f.is_deleted = 0
@@ -124,21 +125,23 @@ class WorkspaceIndex:
                 return cursor.fetchall()
             except sqlite3.OperationalError:
                 # Fallback sécurisé vers LIKE si requête FTS mal formée
-                cursor.execute("SELECT path, size_kb, sha256 FROM files WHERE path LIKE ? AND is_deleted = 0 LIMIT ?", (f"%{query}%", limit))
+                cursor.execute(
+                    "SELECT path, size_kb, sha256 FROM files WHERE path LIKE ? AND is_deleted = 0 LIMIT ?", (f"%{query}%", limit)
+                )
                 return cursor.fetchall()
 
     def sync_incremental(self, root_path="G:\\", batch_size=1000, target_exts={".py", ".ps1", ".gd", ".md", ".txt", ".json", ".cfg"}):
         """Synchronisation incrémentale en streaming (RAM constante) par lots de 1000."""
         self.backup()
         excluded = {".git", "venv", "__pycache__", ".godot", "node_modules", ".vs"}
-        
+
         conn = self._get_connection()
         cursor = conn.cursor()
-        
+
         seen_paths = set()
         batch = []
         start_time = time.time()
-        
+
         for root, dirs, files in os.walk(root_path):
             dirs[:] = [d for d in dirs if d not in excluded]
             for file in files:
@@ -146,16 +149,16 @@ class WorkspaceIndex:
                 if ext in target_exts:
                     full_path = os.path.join(root, file)
                     seen_paths.add(full_path)
-                    
+
                     try:
                         stat = os.stat(full_path)
                         disk_mtime = stat.st_mtime
                         size_kb = round(stat.st_size / 1024, 2)
-                        
+
                         # Interrogation unitaire directe (streaming sans charger toute la BDD en RAM)
                         cursor.execute("SELECT mtime, size_kb, sha256 FROM files WHERE path = ? AND is_deleted = 0", (full_path,))
                         row = cursor.fetchone()
-                        
+
                         if row is None:
                             sha = self.compute_sha256(full_path)
                             batch.append((full_path, ext, size_kb, disk_mtime, sha, 0))
@@ -164,11 +167,12 @@ class WorkspaceIndex:
                             new_sha = self.compute_sha256(full_path)
                             if new_sha != row[2]:
                                 batch.append((full_path, ext, size_kb, disk_mtime, new_sha, 0))
-                        
+
                         # Traitement par lots (Batch Execution)
                         if len(batch) >= batch_size:
                             cursor.execute("BEGIN IMMEDIATE;")
-                            cursor.executemany("""
+                            cursor.executemany(
+                                """
                             INSERT INTO files (path, extension, size_kb, mtime, sha256, is_deleted)
                             VALUES (?, ?, ?, ?, ?, ?)
                             ON CONFLICT(path) DO UPDATE SET
@@ -177,17 +181,20 @@ class WorkspaceIndex:
                                 sha256=excluded.sha256,
                                 is_deleted=0,
                                 updated_at=CURRENT_TIMESTAMP
-                            """, batch)
+                            """,
+                                batch,
+                            )
                             conn.commit()
                             batch.clear()
-                            
+
                     except (PermissionError, FileNotFoundError):
                         continue
 
         # Traitement du dernier lot
         if batch:
             cursor.execute("BEGIN IMMEDIATE;")
-            cursor.executemany("""
+            cursor.executemany(
+                """
             INSERT INTO files (path, extension, size_kb, mtime, sha256, is_deleted)
             VALUES (?, ?, ?, ?, ?, ?)
             ON CONFLICT(path) DO UPDATE SET
@@ -196,7 +203,9 @@ class WorkspaceIndex:
                 sha256=excluded.sha256,
                 is_deleted=0,
                 updated_at=CURRENT_TIMESTAMP
-            """, batch)
+            """,
+                batch,
+            )
             conn.commit()
 
         # Audit & Soft Delete : Marquage sans suppression physique destructrice
@@ -204,10 +213,10 @@ class WorkspaceIndex:
         cursor.execute("INSERT OR REPLACE INTO schema_metadata VALUES ('last_scan', CURRENT_TIMESTAMP)")
         conn.commit()
         conn.close()
-        
+
         elapsed = round(time.time() - start_time, 2)
         print(f"✅ Scan incrémental terminé en {elapsed}s.")
-        
+
         # Auto-vérification post-sync
         if not self.integrity_check():
             print("⚠️ Corruption détectée ! Auto-restauration depuis le backup...")
@@ -218,13 +227,14 @@ class WorkspaceIndex:
         if not self.integrity_check():
             print("❌ Base corrompue ! Restauration d'urgence...")
             return self.restore()
-        
+
         with self._get_connection() as conn:
             print("[*] Supervisor : Analyse des index et optimisation des tables...")
             conn.execute("ANALYZE;")
             conn.execute("PRAGMA optimize;")
         print("✅ Supervisor : BDD en parfaite santé.")
         return True
+
 
 if __name__ == "__main__":
     idx = WorkspaceIndex()

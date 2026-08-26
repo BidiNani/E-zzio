@@ -1,7 +1,7 @@
 import pytest
 from core.memory.unified_gateway import UnifiedMemoryGateway
 from core.router.intent_router import IntentRouter, IntentType
-from runtime.core.ezzio_core import EzzioCore
+
 
 @pytest.mark.asyncio
 async def test_cross_session_memory_search_and_recall(tmp_path):
@@ -17,7 +17,7 @@ async def test_cross_session_memory_search_and_recall(tmp_path):
     # 2. Recherche cross-session
     results = await gateway.search_memory("microkernel", limit=5)
     chat_hist = results.get("chat_history", [])
-    
+
     assert len(chat_hist) >= 1
     assert any("8001" in m.get("content", "") for m in chat_hist)
 

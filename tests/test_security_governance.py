@@ -2,6 +2,7 @@ import pytest
 from core.security.guardrail import PromptGuard, SecurityViolationError
 from core.security.quota_manager import QuotaManager, QuotaExceededError
 
+
 def test_prompt_guard_heuristics():
     guard = PromptGuard()
 
@@ -21,6 +22,7 @@ def test_prompt_guard_heuristics():
 
     clean_text = guard.sanitize("   Requête valide et assainie   ")
     assert clean_text == "Requête valide et assainie"
+
 
 @pytest.mark.asyncio
 async def test_quota_manager_enforcement(tmp_path):

@@ -2,6 +2,7 @@ import time
 import asyncio
 from typing import Optional, Tuple, List, Dict, Any
 
+
 class KeyScheduler:
     def __init__(self, keys: List[str]):
         self.keys = keys
@@ -12,7 +13,7 @@ class KeyScheduler:
     async def get_next_key(self) -> Tuple[Optional[int], Optional[str]]:
         if not self.keys:
             return None, None
-            
+
         if self._lock is None:
             self._lock = asyncio.Lock()
 
@@ -53,7 +54,7 @@ class KeyScheduler:
     def mark_invalid(self, index: int):
         if 0 <= index < len(self.states):
             self.states[index]["status"] = "INVALID"
-            self.states[index]["blocked_until"] = float('inf')
+            self.states[index]["blocked_until"] = float("inf")
 
     def get_active_count(self) -> int:
         now = time.time()

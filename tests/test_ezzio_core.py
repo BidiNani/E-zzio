@@ -2,9 +2,9 @@ import pytest
 from typing import Any, Dict
 from runtime.core.ezzio_core import EzzioCore
 from core.memory.unified_gateway import UnifiedMemoryGateway
-from core.router.intent_router import IntentRouter
-from core.decision_router import DecisionRouter, SearchMode
+from core.decision_router import DecisionRouter
 from core.providers.iresearch_provider import IResearchProvider
+
 
 class MockTestProvider(IResearchProvider):
     def __init__(self, name: str):
@@ -13,11 +13,9 @@ class MockTestProvider(IResearchProvider):
     async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
         return {
             "provider": self.name,
-            "data": {
-                "text": f"Réponse mockée par {self.name}",
-                "results": [{"title": "Lien Mock", "url": "https://test.local"}]
-            }
+            "data": {"text": f"Réponse mockée par {self.name}", "results": [{"title": "Lien Mock", "url": "https://test.local"}]},
         }
+
 
 @pytest.mark.asyncio
 async def test_ezzio_core_autonomous_pipeline(tmp_path):
@@ -25,12 +23,7 @@ async def test_ezzio_core_autonomous_pipeline(tmp_path):
     memory = UnifiedMemoryGateway(db_file)
     await memory.init()
 
-    providers = [
-        MockTestProvider("ollama"),
-        MockTestProvider("tavily"),
-        MockTestProvider("jina"),
-        MockTestProvider("gemini")
-    ]
+    providers = [MockTestProvider("ollama"), MockTestProvider("tavily"), MockTestProvider("jina"), MockTestProvider("gemini")]
     decision_router = DecisionRouter(providers=providers)
     core = EzzioCore(memory_gateway=memory, decision_router=decision_router)
 

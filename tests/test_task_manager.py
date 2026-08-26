@@ -60,9 +60,7 @@ def test_schema_validation_fails_on_wrong_schema(monkeypatch, tmp_path: Path):
     db_path = tmp_path / "bad_tasks.db"
 
     with sqlite3.connect(db_path) as conn:
-        conn.execute(
-            "CREATE TABLE governed_tasks (task_id TEXT PRIMARY KEY)"
-        )
+        conn.execute("CREATE TABLE governed_tasks (task_id TEXT PRIMARY KEY)")
 
     monkeypatch.setattr(manager, "DB_PATH", db_path)
 
@@ -76,14 +74,8 @@ def test_valid_task_transitions_require_approval(monkeypatch, tmp_path: Path):
 
     assert local_manager.transition_task(task_id, "SCOPED")["state"] == "SCOPED"
     assert local_manager.transition_task(task_id, "PLANNED")["state"] == "PLANNED"
-    assert (
-        local_manager.transition_task(task_id, "POLICY_CHECKED")["state"]
-        == "POLICY_CHECKED"
-    )
-    assert (
-        local_manager.transition_task(task_id, "AWAITING_APPROVAL")["state"]
-        == "AWAITING_APPROVAL"
-    )
+    assert local_manager.transition_task(task_id, "POLICY_CHECKED")["state"] == "POLICY_CHECKED"
+    assert local_manager.transition_task(task_id, "AWAITING_APPROVAL")["state"] == "AWAITING_APPROVAL"
 
     with pytest.raises(PermissionError, match="approval_id obligatoire"):
         local_manager.transition_task(task_id, "RUNNING")

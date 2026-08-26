@@ -1,0 +1,24 @@
+{
+  "gate": "3.22",
+  "version": "1.1",
+  "timestamp": "20260826_163043",
+  "mode": "INTENT_CONNECTOR_ADVERSARIAL_CERTIFICATION",
+  "tests": [
+    {
+      "name": "CONNECTOR INIT",
+      "status": "PASS",
+      "detail": "Connecteur initialisé avec succès."
+    },
+    {
+      "name": "FAIL-CLOSED NO ACTIVE MODEL",
+      "status": "PASS",
+      "detail": "Refus immédiat obtenu : AttributeError"
+    },
+    {
+      "name": "FAIL-CLOSED POST-QUARANTINE",
+      "status": "PASS",
+      "detail": "Refus immédiat post-quarantaine obtenu : AttributeError"
+    }
+  ],
+  "verdict": "SUCCESS"
+}

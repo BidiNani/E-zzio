@@ -1,6 +1,7 @@
 import pytest
 from core.memory.unified_gateway import UnifiedMemoryGateway
 
+
 @pytest.mark.asyncio
 async def test_record_and_retrieve_session_history(tmp_path):
     db_file = str(tmp_path / "test_memory.db")
@@ -18,6 +19,7 @@ async def test_record_and_retrieve_session_history(tmp_path):
     assert history[1]["role"] == "assistant"
     assert history[1]["content"] == "Première réponse"
 
+
 @pytest.mark.asyncio
 async def test_search_memory_cross_query(tmp_path):
     db_file = str(tmp_path / "test_memory.db")
@@ -29,10 +31,7 @@ async def test_search_memory_cross_query(tmp_path):
 
     # Stockage d'une preuve d'investigation
     await gateway.evidence_store.store(
-        query="SQLite WAL",
-        provider="tavily",
-        mode="fast",
-        data={"results": [{"title": "Doc WAL", "url": "https://sqlite.org"}]}
+        query="SQLite WAL", provider="tavily", mode="fast", data={"results": [{"title": "Doc WAL", "url": "https://sqlite.org"}]}
     )
 
     search_res = await gateway.search_memory("WAL")

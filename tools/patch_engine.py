@@ -4,17 +4,15 @@ import difflib
 import ast
 from tools.guard import is_path_allowed, check_for_infinite_loop
 
+
 def generate_unified_diff(original_text: str, modified_text: str, file_path: str) -> str:
     """Génère un patch au format Unified Diff standard."""
     orig_lines = original_text.splitlines(keepends=True)
     mod_lines = modified_text.splitlines(keepends=True)
-    
-    diff = difflib.unified_diff(
-        orig_lines, mod_lines,
-        fromfile=f"a/{file_path}",
-        tofile=f"b/{file_path}"
-    )
+
+    diff = difflib.unified_diff(orig_lines, mod_lines, fromfile=f"a/{file_path}", tofile=f"b/{file_path}")
     return "".join(diff)
+
 
 def calculate_confidence_score(file_path: str, new_content: str) -> tuple[float, list[str]]:
     """Calcule le score de confiance global avant validation (0 à 100%)."""
@@ -44,7 +42,7 @@ def calculate_confidence_score(file_path: str, new_content: str) -> tuple[float,
     if os.path.exists(file_path):
         with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
             old_content = f.read()
-        
+
         diff_lines = len(list(difflib.unified_diff(old_content.splitlines(), new_content.splitlines())))
         if diff_lines > 150:
             score -= 15.0
@@ -52,11 +50,12 @@ def calculate_confidence_score(file_path: str, new_content: str) -> tuple[float,
 
     return max(0.0, score), logs
 
+
 def apply_patch_safely(file_path: str, new_content: str) -> str:
     """Applique la modification de manière atomique avec sauvegarde .bak et .patch."""
     # 1. Calcul du Score de Confiance
     score, audit_logs = calculate_confidence_score(file_path, new_content)
-    
+
     if score < 80.0:
         return f"❌ ÉCHEC DE LA GOUVERNANCE (Score de confiance : {score}%)\n" + "\n".join(audit_logs)
 

@@ -1,0 +1,48 @@
+model_list:
+  # --- PALIER FAST (Monitoring, parsing court, latence minimale) ---
+  - model_name: ezzio-fast
+    litellm_params:
+      model: groq/llama-3.1-8b-instant
+      api_key: os.environ/GROQ_API_KEY
+      rpm: 30
+
+  - model_name: ezzio-fast-backup
+    litellm_params:
+      model: gemini/gemini-1.5-flash
+      api_key: os.environ/GEMINI_API_KEY
+
+  # --- PALIER MID (Génération de code unitaire, tests pytest) ---
+  - model_name: ezzio-mid
+    litellm_params:
+      model: gemini/gemini-1.5-flash
+      api_key: os.environ/GEMINI_API_KEY
+
+  - model_name: ezzio-mid-backup
+    litellm_params:
+      model: groq/llama3-70b-8192
+      api_key: os.environ/GROQ_API_KEY
+
+  # --- PALIER HEAVY (Refactoring transverse, architecture, audit) ---
+  - model_name: ezzio-heavy
+    litellm_params:
+      model: gemini/gemini-1.5-pro
+      api_key: os.environ/GEMINI_API_KEY
+
+  - model_name: ezzio-heavy-backup
+    litellm_params:
+      model: groq/llama3-70b-8192
+      api_key: os.environ/GROQ_API_KEY
+
+router_settings:
+  routing_strategy: latency-based-routing
+  fallbacks:
+    - ezzio-fast: ["ezzio-fast-backup"]
+    - ezzio-mid: ["ezzio-mid-backup"]
+    - ezzio-heavy: ["ezzio-heavy-backup"]
+  num_retries: 2
+  timeout: 12
+  allowed_fails: 2
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
+  telemetry: false

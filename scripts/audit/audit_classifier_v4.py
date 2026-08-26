@@ -9,21 +9,57 @@ AUDIT_DIR = ROOT_PATH / "runtime" / "audit" / "reliability"
 AUDIT_DIR.mkdir(parents=True, exist_ok=True)
 
 # Exclusion stricte uniquement des zones mortes et de sortie d'audit
-EXCLUDED_DIRS = {
-    ".venv", ".git", "__pycache__", "node_modules", "archive", "logs",
-    "reliability", "quarantine", "guardian"
-}
+EXCLUDED_DIRS = {".venv", ".git", "__pycache__", "node_modules", "archive", "logs", "reliability", "quarantine", "guardian"}
 
-STDLIB_MODULES = set(sys.stdlib_module_names) if hasattr(sys, 'stdlib_module_names') else {
-    "os", "sys", "json", "re", "time", "pathlib", "logging", "asyncio", "subprocess", 
-    "urllib", "typing", "contextlib", "dataclasses", "enum", "math", "hashlib", "hmac", "concurrent"
-}
+STDLIB_MODULES = (
+    set(sys.stdlib_module_names)
+    if hasattr(sys, "stdlib_module_names")
+    else {
+        "os",
+        "sys",
+        "json",
+        "re",
+        "time",
+        "pathlib",
+        "logging",
+        "asyncio",
+        "subprocess",
+        "urllib",
+        "typing",
+        "contextlib",
+        "dataclasses",
+        "enum",
+        "math",
+        "hashlib",
+        "hmac",
+        "concurrent",
+    }
+)
 
 EXTERNAL_LIBS = {
-    "uvicorn", "fastapi", "pydantic", "psutil", "requests", "aiohttp", "jinja2",
-    "dotenv", "google", "discord", "cpuinfo", "flask", "PIL", "openai", "mss",
-    "pytest", "blake3", "cryptography", "yaml", "httpx", "starlette"
+    "uvicorn",
+    "fastapi",
+    "pydantic",
+    "psutil",
+    "requests",
+    "aiohttp",
+    "jinja2",
+    "dotenv",
+    "google",
+    "discord",
+    "cpuinfo",
+    "flask",
+    "PIL",
+    "openai",
+    "mss",
+    "pytest",
+    "blake3",
+    "cryptography",
+    "yaml",
+    "httpx",
+    "starlette",
 }
+
 
 def get_all_files():
     file_map = {}
@@ -35,6 +71,7 @@ def get_all_files():
                 rel = full.relative_to(ROOT_PATH).as_posix().lower()
                 file_map[rel] = full
     return file_map
+
 
 def resolve_module_path(mod_name, file_path, file_map):
     rel_py = mod_name.replace(".", "/") + ".py"
@@ -57,6 +94,7 @@ def resolve_module_path(mod_name, file_path, file_map):
 
     return False
 
+
 def categorize_source(source_path):
     src_lower = source_path.lower()
     if "quarantine" in src_lower or "archive" in src_lower:
@@ -66,6 +104,7 @@ def categorize_source(source_path):
     else:
         return "REAL_RUNTIME_FAILURE"
 
+
 def run_classification():
     print("[*] Lancement du classificateur AST v4.1 (Correction périmètre audit)...")
     file_map = get_all_files()
@@ -74,7 +113,7 @@ def run_classification():
     for rel_path, full_path in file_map.items():
         if full_path.suffix.lower() != ".py":
             continue
-            
+
         try:
             content = full_path.read_text(encoding="utf-8", errors="ignore")
             tree = ast.parse(content, filename=str(full_path))
@@ -99,20 +138,12 @@ def run_classification():
 
                 if not resolve_module_path(mod_name, full_path, file_map):
                     category = categorize_source(rel_src)
-                    classified_items.append({
-                        "source": rel_src,
-                        "reference": mod_name,
-                        "category": category
-                    })
+                    classified_items.append({"source": rel_src, "reference": mod_name, "category": category})
 
     report_path = AUDIT_DIR / "classification_v4.json"
     report_path.write_text(json.dumps(classified_items, indent=2), encoding="utf-8")
 
-    counts = {
-        "REAL_RUNTIME_FAILURE": 0,
-        "LEGACY_TEST_REFERENCE": 0,
-        "QUARANTINE_REFERENCE": 0
-    }
+    counts = {"REAL_RUNTIME_FAILURE": 0, "LEGACY_TEST_REFERENCE": 0, "QUARANTINE_REFERENCE": 0}
     for item in classified_items:
         counts[item["category"]] += 1
 
@@ -122,6 +153,7 @@ def run_classification():
     print(f"  [HERITAGE] LEGACY_TEST_REFERENCE : {counts['LEGACY_TEST_REFERENCE']}")
     print(f"  [INERTE]   QUARANTINE_REFERENCE  : {counts['QUARANTINE_REFERENCE']}")
     print(f"\n[OK] Classification détaillée exportée dans : {report_path}")
+
 
 if __name__ == "__main__":
     run_classification()

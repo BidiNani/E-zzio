@@ -11,17 +11,56 @@ AUDIT_DIR.mkdir(parents=True, exist_ok=True)
 EXCLUDED_DIRS = {".venv", ".git", "__pycache__", "node_modules", "archive", "logs", "audit"}
 
 # 1. Standard Library
-STDLIB_MODULES = set(sys.stdlib_module_names) if hasattr(sys, 'stdlib_module_names') else {
-    "os", "sys", "json", "re", "time", "pathlib", "logging", "asyncio", "subprocess", 
-    "urllib", "typing", "contextlib", "dataclasses", "enum", "math", "hashlib", "hmac", "concurrent"
-}
+STDLIB_MODULES = (
+    set(sys.stdlib_module_names)
+    if hasattr(sys, "stdlib_module_names")
+    else {
+        "os",
+        "sys",
+        "json",
+        "re",
+        "time",
+        "pathlib",
+        "logging",
+        "asyncio",
+        "subprocess",
+        "urllib",
+        "typing",
+        "contextlib",
+        "dataclasses",
+        "enum",
+        "math",
+        "hashlib",
+        "hmac",
+        "concurrent",
+    }
+)
 
 # 2. Dépendances PIP externes déclarées
 EXTERNAL_LIBS = {
-    "uvicorn", "fastapi", "pydantic", "psutil", "requests", "aiohttp", "jinja2",
-    "dotenv", "google", "discord", "cpuinfo", "flask", "PIL", "openai", "mss",
-    "pytest", "blake3", "cryptography", "yaml", "httpx", "starlette"
+    "uvicorn",
+    "fastapi",
+    "pydantic",
+    "psutil",
+    "requests",
+    "aiohttp",
+    "jinja2",
+    "dotenv",
+    "google",
+    "discord",
+    "cpuinfo",
+    "flask",
+    "PIL",
+    "openai",
+    "mss",
+    "pytest",
+    "blake3",
+    "cryptography",
+    "yaml",
+    "httpx",
+    "starlette",
 }
+
 
 def get_all_files():
     file_map = {}
@@ -33,6 +72,7 @@ def get_all_files():
                 rel = full.relative_to(ROOT_PATH).as_posix().lower()
                 file_map[rel] = full
     return file_map
+
 
 def resolve_module_path(mod_name, file_path, file_map):
     rel_py = mod_name.replace(".", "/") + ".py"
@@ -58,10 +98,11 @@ def resolve_module_path(mod_name, file_path, file_map):
 
     return False
 
+
 def audit_python_imports(file_path, file_map):
     deps, broken = [], []
     rel_src = file_path.relative_to(ROOT_PATH).as_posix()
-    
+
     try:
         content = file_path.read_text(encoding="utf-8", errors="ignore")
         tree = ast.parse(content, filename=str(file_path))
@@ -91,6 +132,7 @@ def audit_python_imports(file_path, file_map):
 
     return deps, broken
 
+
 def run_audit():
     print("[*] Démarrage de l'audit AST v3.0 (PIP Externe + Imports Relatifs)...")
     file_map = get_all_files()
@@ -110,6 +152,7 @@ def run_audit():
     print(f"Imports internes analysés   : {len(all_deps)}")
     print(f"Références brisées réelles  : {len(all_broken)}")
     print(f"[OK] Rapports générés dans  : {AUDIT_DIR}")
+
 
 if __name__ == "__main__":
     run_audit()

@@ -1,11 +1,29 @@
 services:
-  searxng:
-    image: searxng/searxng:latest
-    container_name: ezzio_searxng
-    ports:
-      - "8080:8080"
-    environment:
-      - SEARXNG_BASE_URL=http://localhost:8080
-    volumes:
-      - ./docker/searxng/settings.yml:/etc/searxng/settings.yml:ro
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: ezzio-open-webui
     restart: unless-stopped
+    ports:
+      - "3000:8080"
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      - SCARF_NO_ANALYTICS=true
+      - DO_NOT_TRACK=true
+      - ANONYMIZED_TELEMETRY=false
+      - WEBUI_SECRET_KEY=ezzio_super_secret_session_key_2026
+      - WEBUI_AUTH=true
+    volumes:
+      - open-webui-data:/app/backend/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - ezzio-network
+
+volumes:
+  open-webui-data:
+    name: ezzio_openwebui_storage
+
+networks:
+  ezzio-network:
+    name: ezzio_bridge_net
+    driver: bridge

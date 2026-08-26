@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 ROOT = Path(r"G:\AI\E-zzio")
@@ -47,7 +46,6 @@ files = {
   }
 }
 """,
-
     # 2. Schemas
     "runtime/model_router/schemas.py": """from dataclasses import dataclass, field
 from typing import Optional, Dict, Any, List
@@ -73,9 +71,8 @@ class ModelResponse:
     fallback_applied: bool = False
     metadata: Dict[str, Any] = field(default_factory=dict)
 """,
-
     # 3. Telemetry / Audit
-    "runtime/model_router/telemetry.py": """import json
+    "runtime/model_router/telemetry.py": r"""import json
 import time
 from pathlib import Path
 from datetime import datetime, timezone
@@ -105,9 +102,8 @@ class RouterTelemetry:
         except Exception:
             pass
 """,
-
     # 4. Health Check
-    "runtime/model_router/health.py": """import requests
+    "runtime/model_router/health.py": r"""import requests
 import os
 from pathlib import Path
 from typing import Dict, Any
@@ -131,7 +127,6 @@ class ModelHealthChecker:
         full_path = Path(r"G:\AI\E-zzio") / relative_path
         return full_path.exists()
 """,
-
     # 5. Selector (Decision Engine)
     "runtime/model_router/selector.py": """from typing import List, Dict, Any
 from .schemas import ModelRequest
@@ -177,9 +172,8 @@ class ModelSelector:
 
         return ordered_cascade
 """,
-
     # 6. Provider Ollama
-    "runtime/model_router/providers/ollama.py": """import requests
+    "runtime/model_router/providers/ollama.py": r"""import requests
 import time
 from typing import Dict, Any
 from ..schemas import ModelRequest, ModelResponse
@@ -197,7 +191,7 @@ class OllamaProvider:
             "stream": False,
             "keep_alive": keep_alive
         }
-        
+
         res = requests.post(f"{self.host}/api/generate", json=payload, timeout=90)
         res.raise_for_status()
         data = res.json()
@@ -212,9 +206,8 @@ class OllamaProvider:
             latency_ms=latency
         )
 """,
-
     # 7. Provider Gemini
-    "runtime/model_router/providers/gemini.py": """import os
+    "runtime/model_router/providers/gemini.py": r"""import os
 import time
 import requests
 from ..schemas import ModelRequest, ModelResponse
@@ -229,7 +222,7 @@ class GeminiProvider:
 
         start_time = time.time()
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={self.api_key}"
-        
+
         contents = [{"parts": [{"text": req.prompt}]}]
         if req.system_prompt:
             contents.insert(0, {"role": "user", "parts": [{"text": f"System: {req.system_prompt}"}]})
@@ -241,7 +234,7 @@ class GeminiProvider:
         latency = (time.time() - start_time) * 1000
 
         content = data["candidates"][0]["content"]["parts"][0]["text"]
-        
+
         return ModelResponse(
             content=content,
             model_used=model,
@@ -249,9 +242,8 @@ class GeminiProvider:
             latency_ms=latency
         )
 """,
-
     # 8. Main Router Orchestrator
-    "runtime/model_router/router.py": """import json
+    "runtime/model_router/router.py": r"""import json
 from pathlib import Path
 from typing import Dict, Any, Optional
 
@@ -266,7 +258,7 @@ class EzzioModelRouter:
     def __init__(self, config_path: Optional[str] = None):
         cfg_file = Path(config_path) if config_path else Path(__file__).parent / "config.json"
         self.config = json.loads(cfg_file.read_text(encoding="utf-8"))
-        
+
         self.catalog = self.config.get("catalog", {})
         self.selector = ModelSelector(self.catalog)
         self.health = ModelHealthChecker(self.config)
@@ -309,13 +301,12 @@ class EzzioModelRouter:
 
         raise RuntimeError(f"Échec de la cascade du Model Router. Dernier échec : {last_error}")
 """,
-
     # 9. Package Init
     "runtime/model_router/__init__.py": """from .schemas import ModelRequest, ModelResponse
 from .router import EzzioModelRouter
 
 __all__ = ["ModelRequest", "ModelResponse", "EzzioModelRouter"]
-"""
+""",
 }
 
 for rel_path, content in files.items():

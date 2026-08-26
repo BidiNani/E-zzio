@@ -15,13 +15,13 @@ if "def generate(" in content:
     # Remplacement sécurisé pour accepter **kwargs ou options dynamiques
     # Si la méthode n'a pas déjà **kwargs, on s'assure qu'elle les intercepte
     print("[INFO] Analyse et mise à jour de la méthode generate dans ollama.py...")
-    
+
     # Pattern pour intercepter la définition de generate
     # On injecte **kwargs si absent pour éviter le TypeError
     old_def_pattern = re.compile(r"def generate\(self,\s*prompt,\s*model[^)]*\):")
-    
+
     new_def = "def generate(self, prompt, model, **kwargs):"
-    
+
     if old_def_pattern.search(content):
         content = old_def_pattern.sub(new_def, content)
         print("[OK] Signature de generate() mise à jour avec **kwargs.")
@@ -39,17 +39,17 @@ if "def generate(" in content:
         }
         if "think" in kwargs:
             options["think"] = kwargs["think"]
-            
+
         # Fusion avec d'éventuels kwargs supplémentaires non listés
         for k, v in kwargs.items():
             if k not in options:
                 options[k] = v
     """
-    
+
     if "options =" not in content and "json=" in content:
         # Injection des options dans le payload JSON juste avant l'appel request
         content = content.replace("payload = {", payload_injection + "\n        payload = {")
-        content = content.replace('"options":', '"options": options, #') # Active ou complète le champ options si présent
+        content = content.replace('"options":', '"options": options, #')  # Active ou complète le champ options si présent
 
     provider_file.write_text(content, encoding="utf-8")
     print("[OK] Provider Ollama patché avec succès.")

@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "gemini": {
+      "command": "npx",
+      "env": {
+        "GEMINI_API_KEY": ""
+      },
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-gemini"
+      ]
+    }
+  }
+}

@@ -6,6 +6,7 @@ import datetime
 
 AUDIT_LOG_PATH = r"G:\AI\E-zzio\data\fs_audit.log"
 
+
 def _log_audit(action: str, details: str):
     """Enregistre chaque opération de fichier dans un journal d'audit."""
     try:
@@ -15,6 +16,7 @@ def _log_audit(action: str, details: str):
             f.write(f"[{timestamp}] [{action}] {details}\n")
     except Exception:
         pass
+
 
 def validate_syntax(content: str, file_path: str) -> tuple[bool, str]:
     """Vérifie la syntaxe du contenu avant écriture (Python, JSON)."""
@@ -33,6 +35,7 @@ def validate_syntax(content: str, file_path: str) -> tuple[bool, str]:
             return False, f"JSON invalide: {e}"
     return True, "Format non contrôlé (supposé valide)."
 
+
 def list_directory(folder_path: str, limit: int = 50) -> str:
     """Liste et trie le contenu d'un répertoire sur le disque."""
     if not os.path.exists(folder_path):
@@ -48,6 +51,7 @@ def list_directory(folder_path: str, limit: int = 50) -> str:
     except Exception as e:
         return f"❌ Erreur d'accès au dossier : {e}"
 
+
 def read_file(file_path: str, max_lines: int = 400) -> str:
     """Lit le contenu d'un fichier texte ou code sur le disque."""
     if not os.path.exists(file_path):
@@ -58,6 +62,7 @@ def read_file(file_path: str, max_lines: int = 400) -> str:
         return "".join(lines)
     except Exception as e:
         return f"❌ Erreur lors de la lecture : {e}"
+
 
 def write_file(file_path: str, content: str, make_backup: bool = True, validate: bool = True) -> str:
     """Crée ou écrase un fichier de manière atomique avec backup et validation."""
@@ -86,9 +91,12 @@ def write_file(file_path: str, content: str, make_backup: bool = True, validate:
         return f"✅ Fichier écrit avec succès (Écriture atomique) : {file_path}"
     except Exception as e:
         if os.path.exists(file_path + ".tmp"):
-            try: os.remove(file_path + ".tmp")
-            except: pass
+            try:
+                os.remove(file_path + ".tmp")
+            except:
+                pass
         return f"❌ Erreur lors de l'écriture : {e}"
+
 
 def replace_in_file(file_path: str, old_text: str, new_text: str, count: int = 1, make_backup: bool = True, validate: bool = True) -> str:
     """Remplace une chaîne par une autre avec backup et contrôle d'occurrence."""
@@ -121,6 +129,7 @@ def replace_in_file(file_path: str, old_text: str, new_text: str, count: int = 1
     except Exception as e:
         return f"❌ Erreur lors de la modification : {e}"
 
+
 def restore_backup(file_path: str) -> str:
     """Restaure la version précédente d'un fichier depuis sa sauvegarde .bak."""
     backup_path = file_path + ".bak"
@@ -132,6 +141,7 @@ def restore_backup(file_path: str) -> str:
         return f"✅ Fichier restauré avec succès depuis {backup_path}"
     except Exception as e:
         return f"❌ Erreur lors de la restauration : {e}"
+
 
 def delete_file(file_path: str, make_backup: bool = True) -> str:
     """Supprime un fichier en conservant une copie de secours .bak."""
@@ -146,24 +156,97 @@ def delete_file(file_path: str, make_backup: bool = True) -> str:
     except Exception as e:
         return f"❌ Erreur lors de la suppression : {e}"
 
+
 def copy_file(src: str, dst: str) -> str:
     """Copie un fichier d'un emplacement à un autre."""
     try:
         parent = os.path.dirname(dst)
-        if parent: os.makedirs(parent, exist_ok=True)
+        if parent:
+            os.makedirs(parent, exist_ok=True)
         shutil.copy2(src, dst)
         _log_audit("COPY_FILE", f"De {src} vers {dst}")
         return f"✅ Fichier copié de {src} vers {dst}"
     except Exception as e:
         return f"❌ Erreur lors de la copie : {e}"
 
+
 def move_file(src: str, dst: str) -> str:
     """Déplace un fichier d'un emplacement à un autre."""
     try:
         parent = os.path.dirname(dst)
-        if parent: os.makedirs(parent, exist_ok=True)
+        if parent:
+            os.makedirs(parent, exist_ok=True)
         shutil.move(src, dst)
         _log_audit("MOVE_FILE", f"De {src} vers {dst}")
         return f"✅ Fichier déplacé de {src} vers {dst}"
     except Exception as e:
         return f"❌ Erreur lors du déplacement : {e}"
+
+
+def observe_filesystem(directory_path: str, previous_snapshot: dict = None) -> dict:
+    """Capacité d'observation structurée et strictement en lecture seule du système de fichiers."""
+    normalized_path = os.path.normpath(directory_path)
+    
+    # 1. Protection contre le Path Traversal et chemins interdits
+    if ".." in directory_path or normalized_path.startswith("/etc") or normalized_path.startswith("C:\\Windows"):
+        _log_audit("OBSERVE_DENIED", f"Path traversal ou chemin interdit : {directory_path}")
+        return {"status": "DENIED", "error": "Path traversal or unauthorized path", "directory": directory_path}
+
+    if not os.path.exists(normalized_path) or not os.path.isdir(normalized_path):
+        _log_audit("OBSERVE_NOT_FOUND", f"Répertoire introuvable : {directory_path}")
+        return {"status": "NOT_FOUND", "error": f"Directory not found: {directory_path}", "directory": directory_path}
+
+    # 2. Capture de l'état physique
+    current_files = {}
+    total_size = 0
+    now_ts = datetime.datetime.now().timestamp()
+
+    try:
+        for root, dirs, files in os.walk(normalized_path):
+            for fname in files:
+                fpath = os.path.join(root, fname)
+                rel_path = os.path.relpath(fpath, normalized_path).replace("\\", "/")
+                try:
+                    st = os.stat(fpath)
+                    current_files[rel_path] = {
+                        "size_bytes": st.st_size,
+                        "mtime": st.st_mtime,
+                        "is_dir": False
+                    }
+                    total_size += st.st_size
+                except Exception:
+                    pass
+    except Exception as e:
+        return {"status": "ERROR", "error": str(e), "directory": directory_path}
+
+    current_snapshot = {
+        "status": "SUCCESS",
+        "directory": normalized_path.replace("\\", "/"),
+        "timestamp": now_ts,
+        "files": current_files,
+        "total_files": len(current_files),
+        "total_size_bytes": total_size
+    }
+
+    # 3. Calcul de réconciliation différentielle
+    if previous_snapshot and isinstance(previous_snapshot, dict) and "files" in previous_snapshot:
+        prev_files = previous_snapshot.get("files", {})
+        prev_keys = set(prev_files.keys())
+        curr_keys = set(current_files.keys())
+
+        added = sorted(list(curr_keys - prev_keys))
+        removed = sorted(list(prev_keys - curr_keys))
+        modified = []
+        for k in (curr_keys & prev_keys):
+            if (current_files[k]["size_bytes"] != prev_files[k]["size_bytes"] or
+                abs(current_files[k]["mtime"] - prev_files[k]["mtime"]) > 1e-4):
+                modified.append(k)
+
+        current_snapshot["diff"] = {
+            "added": added,
+            "modified": sorted(modified),
+            "removed": removed
+        }
+
+    _log_audit("OBSERVE_SUCCESS", f"Observé {len(current_files)} fichiers dans {normalized_path}")
+    return current_snapshot

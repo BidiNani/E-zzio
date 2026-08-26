@@ -1,0 +1,25 @@
+{
+  "campaign_id": "campaign_alpha",
+  "completed_missions": [
+    "alpha_01"
+  ],
+  "unlocked_missions": [
+    "alpha_01",
+    "bravo_01"
+  ],
+  "stats": {
+    "victories": 1,
+    "defeats": 0,
+    "total_turns": 6,
+    "total_damage_dealt": 48,
+    "total_damage_taken": 12,
+    "total_enemies_killed": 3
+  },
+  "mission_records": {
+    "alpha_01": {
+      "completed": true,
+      "best_turns": 6,
+      "last_played_victory": true
+    }
+  }
+}

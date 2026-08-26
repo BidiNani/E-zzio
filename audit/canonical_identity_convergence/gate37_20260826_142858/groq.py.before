@@ -1,0 +1,80 @@
+"""Groq dynamic model discovery with flagship model prioritization."""
+
+from __future__ import annotations
+
+from typing import Any
+import httpx
+
+from .base import ProviderDiscovery
+
+
+class GroqDiscovery(ProviderDiscovery):
+
+    provider = "groq"
+    URL = "https://api.groq.com/openai/v1/models"
+
+    FLAGSHIP_PRIORITY = (
+        "qwen/qwen3.6-27b",
+        "deepseek-r1-distill-llama-70b",
+        "llama-3.3-70b-versatile",
+        "llama-3.1-8b-instant",
+        "groq/compound",
+        "gemma2-9b-it",
+    )
+
+    async def discover(
+        self,
+        api_key: str,
+    ) -> list[dict[str, Any]]:
+
+        headers = {"Content-Type": "application/json"}
+        if getattr(self, "api_key", None) and str(self.api_key).strip():
+            headers["Authorization"] = f"Bearer {self.api_key.strip()}"
+        if getattr(self, "api_key", None) and str(self.api_key).strip():
+            headers["Authorization"] = f"Bearer {self.api_key.strip()}"
+        if getattr(self, "api_key", None) and str(self.api_key).strip():
+            headers["Authorization"] = f"Bearer {self.api_key.strip()}"
+        }
+
+        async with httpx.AsyncClient(timeout=15.0) as client:
+            response = await client.get(
+                self.URL,
+                headers=headers,
+            )
+            response.raise_for_status()
+            payload = response.json()
+
+        result = []
+
+        for raw in payload.get("data", []):
+            model_id = str(raw.get("id", ""))
+            if not model_id:
+                continue
+
+            if any(sub in model_id.lower() for sub in ["whisper", "guard", "embed", "tts", "orpheus", "allam"]):
+                continue
+
+            rank = 99
+            for i, flagship in enumerate(self.FLAGSHIP_PRIORITY):
+                if flagship in model_id.lower():
+                    rank = i
+                    break
+
+            is_reasoning = any(k in model_id.lower() for k in ["qwen", "r1", "reason", "qwq", "think"])
+
+            result.append(
+                {
+                    "model_id": model_id,
+                    "display_name": model_id,
+                    "context_window": raw.get("context_window", 8192),
+                    "max_output_tokens": None,
+                    "supports_chat": True,
+                    "supports_json": True,
+                    "supports_tools": True,
+                    "supports_reasoning": is_reasoning,
+                    "priority_rank": rank,
+                }
+            )
+
+        result.sort(key=lambda x: x["priority_rank"])
+        return result

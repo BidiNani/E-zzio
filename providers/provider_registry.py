@@ -5,6 +5,7 @@ Calcule un score de santé et de performance dynamique tout en vérifiant
 l'autorisation Cloud (cloud_guard / EZZIO_CLOUD_ALLOW_SEND).
 Expose des contrats standardisés pour le futur Unified Intelligence Router.
 """
+
 import os
 import json
 from pathlib import Path
@@ -13,10 +14,12 @@ ROOT_DIR = Path("G:/AI/E-zzio").resolve()
 CAPABILITIES_PATH = ROOT_DIR / "runtime" / "models" / "provider_capabilities.json"
 PERFORMANCE_PATH = ROOT_DIR / "runtime" / "metrics" / "provider_performance.json"
 
+
 def _is_cloud_authorized() -> bool:
     """Vérifie si l'émission cloud est globalement autorisée."""
     allow = os.getenv("EZZIO_CLOUD_ALLOW_SEND", "true").lower()
     return allow in ["true", "1", "yes"]
+
 
 def _load_capabilities() -> dict:
     if CAPABILITIES_PATH.exists():
@@ -26,6 +29,7 @@ def _load_capabilities() -> dict:
             pass
     return {}
 
+
 def _load_performance() -> dict:
     if PERFORMANCE_PATH.exists():
         try:
@@ -33,6 +37,7 @@ def _load_performance() -> dict:
         except Exception:
             pass
     return {}
+
 
 def calculate_provider_score(provider_name: str, capability: str) -> float:
     """
@@ -66,6 +71,7 @@ def calculate_provider_score(provider_name: str, capability: str) -> float:
 
     return round(cap_score + succ_score + lat_score + quota_score, 2)
 
+
 def get_provider_contract(provider_name: str) -> dict:
     """
     Expose le contrat standardisé pour un fournisseur à destination du Router.
@@ -87,8 +93,9 @@ def get_provider_contract(provider_name: str) -> dict:
         "capabilities": caps.get("roles", []),
         "avg_latency_ms": perf.get("avg_latency_ms", 0.0),
         "success_rate": perf.get("success_rate", 1.0),
-        "tier": caps.get("tier", "cloud")
+        "tier": caps.get("tier", "cloud"),
     }
+
 
 def get_best_provider(capability: str) -> dict:
     """
@@ -98,11 +105,7 @@ def get_best_provider(capability: str) -> dict:
     authorized = _is_cloud_authorized()
 
     if not authorized:
-        return {
-            "provider": "none",
-            "usable": False,
-            "reason": "Cloud globalement non autorisé (EZZIO_CLOUD_ALLOW_SEND=false)"
-        }
+        return {"provider": "none", "usable": False, "reason": "Cloud globalement non autorisé (EZZIO_CLOUD_ALLOW_SEND=false)"}
 
     scored_providers = []
     for p in caps.keys():
@@ -112,18 +115,15 @@ def get_best_provider(capability: str) -> dict:
             scored_providers.append((p, score, contract))
 
     if not scored_providers:
-        return {
-            "provider": "none",
-            "usable": False,
-            "reason": "Aucun fournisseur cloud utilisable ou quotas épuisés"
-        }
+        return {"provider": "none", "usable": False, "reason": "Aucun fournisseur cloud utilisable ou quotas épuisés"}
 
     # Tri par score décroissant
     scored_providers.sort(key=lambda x: x[1], reverse=True)
     best_p, best_score, best_contract = scored_providers[0]
-    
+
     best_contract["selection_score"] = best_score
     return best_contract
+
 
 if __name__ == "__main__":
     print("[E-ZZIO V7.23.0.6] Dynamic Provider Registry Fusion Test:")
@@ -135,17 +135,21 @@ if __name__ == "__main__":
 
 _instances = {}
 
+
 def get_provider_instance(name: str):
     """Factory d'inversion de dépendance pour l'Intelligence Router."""
     global _instances
     if name not in _instances:
         if name == "gemini":
             from providers.gemini_provider import GeminiProvider
+
             _instances[name] = GeminiProvider()
         elif name == "groq":
             from providers.groq_provider import GroqProvider
+
             _instances[name] = GroqProvider()
         elif name == "ollama":
             from providers.ollama_provider import OllamaProvider
+
             _instances[name] = OllamaProvider()
     return _instances.get(name)

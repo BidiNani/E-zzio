@@ -1,6 +1,8 @@
+from core.identity.canonical_identity import CanonicalIdentity
 import json
 from pathlib import Path
 from typing import Dict, Any, Optional
+
 
 class EzzioContextInjector:
     def __init__(self, root_dir: Optional[Path] = None):
@@ -31,24 +33,28 @@ class EzzioContextInjector:
         return "Intégrité certifiée SHA256."
 
     def build_system_prompt(self, base_system_prompt: Optional[str] = None) -> str:
+        canonical = CanonicalIdentity().build_system_prompt()
+        base_system_prompt = base_system_prompt or canonical
         state = self._get_system_state()
         integrity = self._get_integrity_summary()
 
-        constitution = (
-            "Tu es E-ZZIO, un Personal AI OS autonome exécuté localement sur un processeur AMD Ryzen 9 5900X "
-            "avec un pool de 8 workers Governor (Profil GamingOptimized).\n"
-            f"État Kernel actuel : Status={state.get('status')}, PID={state.get('pid')}, Workers={state.get('workers')}.\n"
-            f"Garde-fou : {integrity}\n"
-            "Réponds de manière concise, technique, concrète et axée sur l'exécution."
+        runtime_context = (
+            f"[CONTEXTE RUNTIME KERNEL]\n"
+            f"- Status: {state.get('status')}\n"
+            f"- PID: {state.get('pid')}\n"
+            f"- Workers: {state.get('workers')}\n"
+            f"- Intégrité: {integrity}"
         )
 
         if base_system_prompt:
-            return f"{constitution}\n\nContexte Tâche : {base_system_prompt}"
-        return constitution
+            return f"{base_system_prompt}\n\n{runtime_context}"
+        return runtime_context
+
 
 # Déploiement du fichier dans runtime/model_router/context.py
 context_file = Path(r"G:\AI\E-zzio\runtime\model_router\context.py")
-context_file.write_text("""import json
+context_file.write_text(
+    """import json
 from pathlib import Path
 from typing import Dict, Any, Optional
 
@@ -70,15 +76,19 @@ class EzzioContextInjector:
         return state
 
     def build_system_prompt(self, base_system_prompt: Optional[str] = None) -> str:
+        canonical = CanonicalIdentity().build_system_prompt()
+        base_system_prompt = base_system_prompt or canonical
         state = self._get_system_state()
         constitution = (
-            "Tu es E-ZZIO, un Personal AI OS autonome exécuté localement sur Ryzen 9 5900X avec 8 workers Governor.\\n"
+            CanonicalIdentity().build_system_prompt() exécuté localement sur Ryzen 9 5900X avec 8 workers Governor.\\n"
             f"État Kernel local : Status={state.get('status')}, PID={state.get('pid')}. Intégrité SHA256 certifiée (531 fichiers).\\n"
             "Réponds toujours avec cette identité système en tête, de façon concise et précise."
         )
         if base_system_prompt:
             return f"{constitution}\\n\\nNote : {base_system_prompt}"
         return constitution
-""", encoding="utf-8")
+""",
+    encoding="utf-8",
+)
 
 print("[OK] Fichier runtime/model_router/context.py créé.")

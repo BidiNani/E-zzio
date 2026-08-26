@@ -1,0 +1,109 @@
+{
+  "gate": "3.16.1",
+  "version": "1.0",
+  "timestamp": "20260826_161939",
+  "mode": "READ_ONLY_FORENSIC",
+  "tests": [
+    {
+      "name": "CORE IMPORT",
+      "status": "PASS",
+      "detail": "core.models.fabric / registry / router importés"
+    },
+    {
+      "name": "BUILD_FABRIC SYMBOL",
+      "status": "PASS",
+      "detail": "<function build_fabric at 0x000001C702360860>"
+    },
+    {
+      "name": "AUTONOMOUS MODEL FABRIC",
+      "status": "PASS",
+      "detail": "<class 'core.models.fabric.AutonomousModelFabric'>"
+    },
+    {
+      "name": "MODEL REGISTRY CLASS",
+      "status": "PASS",
+      "detail": "<class 'core.models.registry.ModelRegistry'>"
+    },
+    {
+      "name": "REGISTRY.active()",
+      "status": "WARN",
+      "detail": "Méthode active ABSENTE"
+    },
+    {
+      "name": "FABRIC INSTANTIATION",
+      "status": "PASS",
+      "detail": "<core.models.fabric.AutonomousModelFabric object at 0x000001C7032B5AC0>"
+    },
+    {
+      "name": "FABRIC.REGISTRY",
+      "status": "PASS",
+      "detail": "ModelRegistry"
+    },
+    {
+      "name": "EZZIO ROUTER CLASS",
+      "status": "PASS",
+      "detail": "<class 'core.models.router.EzzioRouter'>"
+    },
+    {
+      "name": "EZZIOROUTER.execute()",
+      "status": "WARN",
+      "detail": "source indisponible: type object 'EzzioRouter' has no attribute 'execute'"
+    },
+    {
+      "name": "FABRIC.ROUTER",
+      "status": "PASS",
+      "detail": "EzzioRouter"
+    },
+    {
+      "name": "ROUTER.MODEL_LIST",
+      "status": "PASS",
+      "detail": "0 entrée(s)"
+    },
+    {
+      "name": "TEST FILE EXISTS",
+      "status": "PASS",
+      "detail": "tests\\test_fabric_runtime.py"
+    },
+    {
+      "name": "PYTEST STATIC TEST COUNT",
+      "status": "FAIL",
+      "detail": "Aucune fonction test* détectée par AST"
+    },
+    {
+      "name": "PYTEST COLLECTION",
+      "status": "FAIL",
+      "detail": "pytest code 5 = aucun test collecté"
+    },
+    {
+      "name": "FABRIC_SYNC_PRESENT",
+      "status": "PASS",
+      "detail": "True"
+    },
+    {
+      "name": "BUILD_FABRIC_PRESENT",
+      "status": "PASS",
+      "detail": "True"
+    },
+    {
+      "name": "ROUTER_MODEL_LIST",
+      "status": "PASS",
+      "detail": "True"
+    },
+    {
+      "name": "ROUTER_SET_MODEL_LIST",
+      "status": "WARN",
+      "detail": "False"
+    },
+    {
+      "name": "ROUTER_ACTIVE_CHECK",
+      "status": "WARN",
+      "detail": "False"
+    },
+    {
+      "name": "REGISTRY_ACTIVE_REFERENCE",
+      "status": "PASS",
+      "detail": "True"
+    }
+  ],
+  "verdict": "FAIL"
+}

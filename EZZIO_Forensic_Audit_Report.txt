@@ -1,0 +1,731 @@
+==============================================================================
+ E-ZZIO SYSTEM FORENSIC AUDIT REPORT — 2026-08-26 22:42:03
+==============================================================================
+
+[1] INVENTAIRE DES DOMAINES ARCHITECTURAUX
+  [PRESENT] Domain 'core' : 361 fichiers trouvés.
+  [PRESENT] Domain 'identity' trouvé en sous-module dans core/.
+  [PRESENT] Domain 'memory' : 4 fichiers trouvés.
+  [PRESENT] Domain 'cognition' trouvé en sous-module dans core/.
+  [PRESENT] Domain 'runtime' : 7309 fichiers trouvés.
+  [PRESENT] Domain 'agent' trouvé en sous-module dans core/.
+  [PRESENT] Domain 'security' trouvé en sous-module dans core/.
+  [PRESENT] Domain 'providers' : 10 fichiers trouvés.
+  [PRESENT] Domain 'tools' : 43 fichiers trouvés.
+  [PRESENT] Domain 'routers' : 40 fichiers trouvés.
+  [MISSING/ORPHAN] Domain 'interfaces' non trouvé en dossier direct.
+  [PRESENT] Domain 'skills' trouvé en sous-module dans core/.
+  [PRESENT] Domain 'tests' : 131 fichiers trouvés.
+
+[2] DÉTECTION DES STUBS, TODO ET FICHIERS VIDES
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\_pytest\_py\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\anyio\_backends\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\anyio\_core\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\anyio\streams\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\apscheduler\executors\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\apscheduler\jobstores\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\apscheduler\triggers\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\azure\core\tracing\ext\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\boto3\resources\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\botocore\vendored\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\certifi\tests\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\croniter\tests\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\fastapi\dependencies\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\fastapi\openapi\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\fastapi_sso\sso\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\fsspec\implementations\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\granian\utils\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\gunicorn\instrument\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\httpcore\_backends\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\huggingface_hub\inference\_generated\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\huggingface_hub\inference\_mcp\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\huggingface_hub\inference\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\importlib_metadata\compat\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\jsonschema\tests\typing\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\jsonschema\tests\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\jsonschema_specifications\tests\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\a2a_protocol\providers\langflow\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\images\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\integrations\focus\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\integrations\mavvrik_focus\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\integrations\otel\model\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\integrations\otel\plumbing\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\integrations\vantage\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\integrations\test_httpx.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\litellm_core_utils\tokenizers\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\litellm_core_utils\response_header_helpers.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\aws_polly\text_to_speech\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\aws_polly\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\azure\containers\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\base_llm\agents\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\base_llm\sandbox\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\bedrock\chat\mantle\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\bedrock_mantle\responses\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\databricks\responses\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\e2b\sandbox\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\e2b\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\gdc\chat\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\gdc\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\gemini\agents\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\github_copilot\messages\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\hyperbolic\chat\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\hyperbolic\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\inception\chat\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\inception\completion\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\inception\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\lambda_ai\chat\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\lambda_ai\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\mistral\mistral_embedding_transformation.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\morph\chat\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\morph\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\nvidia_riva\audio_transcription\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\nvidia_riva\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\oci\embed\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\openai_like\messages\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\perplexity\embedding\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\sap\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\stability\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\tencent\chat\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\tencent\messages\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\tencent\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\v0\chat\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\v0\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\vercel_ai_gateway\embedding\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\vertex_ai\realtime\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\wandb\chat\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\wandb\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\watsonx\audio_transcription\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\watsonx\chat\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\watsonx\completion\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\watsonx\embed\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\watsonx\passthrough\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\watsonx\rerank\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\watsonx\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\you_com\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\zai\chat\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\llms\zai\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\proxy\agent_endpoints\auth\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\proxy\client\cli\commands\autoroute\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\proxy\container_endpoints\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\proxy\enterprise_billing\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\proxy\logging_endpoints\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\proxy\memory\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\proxy\prompts\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\proxy\realtime_endpoints\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\proxy\shutdown\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\proxy\vector_store_files_endpoints\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\responses\file_search\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\router_utils\response_headers.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm\sandbox\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm_enterprise\enterprise_callbacks\pagerduty\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm_enterprise\enterprise_callbacks\secrets_plugins\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm_enterprise\enterprise_callbacks\send_emails\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm_enterprise\enterprise_callbacks\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm_enterprise\integrations\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm_enterprise\litellm_core_utils\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm_enterprise\proxy\hooks\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm_enterprise\proxy\vector_stores\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm_enterprise\types\enterprise_callbacks\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm_enterprise\types\proxy\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm_enterprise\types\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm_enterprise\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\litellm_proxy_extras\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\markdown_it\cli\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\markdown_it\common\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\mcp\client\auth\extensions\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\mcp\client\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\mcp\shared\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\numpy\_pyinstaller\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\numpy\fft\tests\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\numpy\lib\tests\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\numpy\linalg\tests\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\numpy\ma\tests\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\numpy\matrixlib\tests\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\numpy\polynomial\tests\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\numpy\random\tests\data\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\numpy\random\tests\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\numpy\testing\_private\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\numpy\testing\tests\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\numpy\tests\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\numpy\typing\tests\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\oauthlib\openid\connect\core\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\oauthlib\openid\connect\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\pip\_internal\operations\build\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\pip\_internal\operations\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\pip\_internal\resolution\legacy\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\pip\_internal\resolution\resolvelib\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\pip\_internal\resolution\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\pip\_internal\utils\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\pip\_vendor\urllib3\contrib\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\polars\catalog\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\polars\ml\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\prompt_toolkit\contrib\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\prompt_toolkit\key_binding\bindings\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\pydantic\_internal\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\pydantic\deprecated\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\pythonwin\pywin\dialogs\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\pythonwin\pywin\docking\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\pythonwin\pywin\framework\editor\color\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\pythonwin\pywin\framework\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\pythonwin\pywin\mfc\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\pythonwin\pywin\tools\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\redis\asyncio\http\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\redis\asyncio\multidb\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\redis\auth\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\redis\http\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\redis\multidb\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\referencing\tests\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\rq\contrib\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\sniffio\_tests\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\typing_inspection\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\Africa\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\America\Argentina\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\America\Indiana\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\America\Kentucky\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\America\North_Dakota\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\America\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\Antarctica\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\Arctic\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\Asia\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\Atlantic\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\Australia\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\Brazil\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\Canada\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\Chile\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\Etc\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\Europe\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\Indian\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\Mexico\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\Pacific\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\US\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\tzdata\zoneinfo\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\urllib3\contrib\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\uvicorn\lifespan\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\uvicorn\loops\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\uvicorn\middleware\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\uvicorn\protocols\http\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\uvicorn\protocols\websockets\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\uvicorn\protocols\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\websockets\asyncio\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\websockets\sync\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\win32com\demos\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\win32com\servers\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\win32comext\axscript\server\__init__.py
+  [EMPTY] Fichier vide détecté : G:\AI\E-zzio\.venv\Lib\site-packages\zipp\compat\__init__.py
+  -> Total fichiers Python : 9725 | Fichiers vides : 194 | Fichiers avec TODO/Stubs : 845
+
+[3] ÉTAT RÉEL DU SYSTÈME ET DES PROCESSUS
+  [ACTIVE] Processus Ollama en cours d'exécution (PID: 24480)
+  [INFO] Processus Python actifs : 4
+
+[4] MODÈLES LOCALEMENT DISPONIBLES (OLLAMA)
+  NAME                              ID              SIZE      MODIFIED    
+  ornith-1.5:9b                     e5df7dcdd8a2    6.6 GB    3 hours ago    
+  granite-fast:latest               441e17c19013    5.3 GB    2 days ago     
+  mrasif/gpt-oss-20b-GGUF:Q4_K_M    779e997d7f03    11 GB     4 days ago     
+  qwen3-coder:30b                   06c1097efce0    18 GB     5 days ago     
+  nomic-embed-text:latest           0a109f422b47    274 MB    5 days ago     
+  bge-m3:latest                     790764642607    1.2 GB    5 days ago     
+  granite4.1:8b                     444af1c4b2fe    5.3 GB    10 days ago    
+
+[5] PORTS RÉSEAU ÉCOUTÉS
+  [PORT ACTIVE] Port 11434 écouté par ollama (PID: 24480)
+
+[6] ÉTAT GIT DU WORKSPACE
+  [MODIFIED] Fichiers modifiés non committés :
+     D EZZIO_STRUCTURE_AUDIT_V810.json
+     D audit/bad_capability_imports.txt
+     D audit/filesystem.json
+     D audit/python_compile_failures.txt
+     D bench_cpu_load.py
+     D benchmark_chat.py
+     D blast_radius_scanner.py
+     D bridge/brain/20260610_111729_b5d6a1d737.json
+     D bridge/brain/20260610_111823_04709b37aa.json
+     D bridge/brain/20260610_112027_e238b6ac28.json
+     D bridge/brain/20260610_112143_c55f709a7b.json
+     D bridge/brain/20260610_112153_2ebc400d14.json
+     D bridge/brain/20260610_112207_b1aff27a93.json
+     D bridge/brain/20260610_112221_bfc1d7562a.json
+     D bridge/brain/20260610_112526_84c2de63c7.json
+     D bridge/brain/20260610_112539_0b249401ba.json
+     D bridge/brain/20260610_112613_eeb5fa1537.json
+     D bridge/brain/20260610_112625_e650db26b0.json
+     D bridge/brain/20260610_112635_fb02474825.json
+     D bridge/brain/20260610_112643_b1d590a678.json
+     D bridge/brain/20260610_112655_2c1f382d69.json
+     D bridge/inbox/20260610_012849_7efef2b884.json
+     D bridge/inbox/20260610_111710_31a0aba4f0.json
+     D bridge/inbox/20260610_111808_ffb5f3338d.json
+     D bridge/inbox/20260610_112012_afc3ac7330.json
+     D bridge/inbox/20260610_112027_da037a43e4.json
+     D bridge/inbox/20260610_112104_1fcd7605f9.json
+     D bridge/inbox/20260610_112104_7adabbdacc.json
+     D bridge/inbox/20260610_112104_9b28000e2b.json
+     D bridge/inbox/20260610_112112_ff1de9fa19.json
+     D bridge/inbox/20260610_112120_bf95530d08.json
+     D bridge/inbox/20260610_112128_3c92edfc67.json
+     D bridge/inbox/20260610_112128_fe815b5ee1.json
+     D bridge/inbox/20260610_112143_c2fd6be30a.json
+     D bridge/inbox/20260610_112153_1b802f2346.json
+     D bridge/inbox/20260610_112207_6e74e7c533.json
+     D bridge/inbox/20260610_112513_25dfeedab3.json
+     D bridge/inbox/20260610_112526_742bf59e29.json
+     D bridge/inbox/20260610_112601_5057010a27.json
+     D bridge/inbox/20260610_112613_2ac2c528dd.json
+     D bridge/inbox/20260610_112625_e5c71d5c8e.json
+     D bridge/inbox/20260610_112635_02e0e2f6e4.json
+     D bridge/inbox/20260610_112643_a2bc8f04a6.json
+     D bridge/inbox/20260610_112655_076deed2b9.json
+     D bridge/inbox/20260610_112655_1217f4371b.json
+     D bridge/inbox/20260610_112655_1e8724d213.json
+     D bridge/inbox/20260610_112655_1eedc8421d.json
+     D bridge/inbox/20260610_112655_25f0b374de.json
+     D bridge/inbox/20260610_112655_6d133ac9a0.json
+     D bridge/inbox/20260610_112655_919197fdfa.json
+     D bridge/inbox/20260610_112655_a6052f7a19.json
+     D bridge/inbox/20260610_112655_c58ab35f51.json
+     D bridge/inbox/20260610_112655_e1e29b55f7.json
+     D bridge/inbox/20260610_112655_fd867c5c22.json
+     D bridge/inbox/20260610_112908_0ce6191a1f.json
+     D bridge/inbox/20260610_112908_37583502bf.json
+     D bridge/inbox/20260610_112908_47a353d1d3.json
+     D bridge/inbox/20260610_112908_c250f569ae.json
+     D bridge/inbox/20260610_112908_eb84076541.json
+     D bridge/inbox/20260610_112955_084db5ef2e.json
+     D bridge/inbox/20260610_112955_0997df25d1.json
+     D bridge/inbox/20260610_112955_3bcfc5c351.json
+     D bridge/inbox/20260610_112955_7d3a9fb7a8.json
+     D bridge/inbox/20260610_112955_b1c2a287e0.json
+     D bridge/inbox/20260610_112955_d4359ee042.json
+     D bridge/inbox/20260610_112955_ee24985f80.json
+     D bridge/inbox/20260610_112955_f00edda99c.json
+     D bridge/mobile/20260610_012849_7aa3ec662f.json
+     D bridge/mobile/20260610_112143_98b187f378.json
+     D bridge/mobile/20260610_112153_d3c118c064.json
+     D bridge/mobile/20260610_112207_e437cd1ac1.json
+     D bridge/mobile/20260610_112221_9ca3261b22.json
+     D bridge/mobile/20260610_112526_f4272bd2b3.json
+     D bridge/mobile/20260610_112613_58cd8ef6c3.json
+     D bridge/mobile/20260610_112625_564283920f.json
+     D bridge/mobile/20260610_112635_b6b70c7695.json
+     D bridge/mobile/20260610_112643_53d49c38b0.json
+     D bridge/mobile/20260610_112655_5fe1514146.json
+     D bridge/mobile/20260610_112655_6b4d1d75eb.json
+     D bridge/mobile/20260610_112655_70b95d47c0.json
+     D bridge/mobile/20260610_112655_70e60fab2b.json
+     D bridge/outbox/20260610_012849_ca7350564a.json
+     D bridge/outbox/20260610_012849_cbf1ca91d5.json
+     D bridge/outbox/20260610_111729_3bb2bf29d6.json
+     D bridge/outbox/20260610_111823_5912ae2821.json
+     D bridge/outbox/20260610_112027_36e8115e68.json
+     D bridge/outbox/20260610_112027_46d31da4ac.json
+     D bridge/outbox/20260610_112104_04efc668a0.json
+     D bridge/outbox/20260610_112104_214b8e3f45.json
+     D bridge/outbox/20260610_112112_2a827290a6.json
+     D bridge/outbox/20260610_112120_8e3bcf6ee3.json
+     D bridge/outbox/20260610_112128_0d06704d81.json
+     D bridge/outbox/20260610_112128_98a6c02eed.json
+     D bridge/outbox/20260610_112143_3198d2a203.json
+     D bridge/outbox/20260610_112153_b961f63bca.json
+     D bridge/outbox/20260610_112207_e96bfd2b77.json
+     D bridge/outbox/20260610_112221_31c6383137.json
+     D bridge/outbox/20260610_112526_3ed1c95f40.json
+     D bridge/outbox/20260610_112539_80d6f6ef9a.json
+     D bridge/outbox/20260610_112613_81e13b1958.json
+     D bridge/outbox/20260610_112625_b74dcc7791.json
+     D bridge/outbox/20260610_112635_cb43fbe161.json
+     D bridge/outbox/20260610_112643_b371b073d1.json
+     D bridge/outbox/20260610_112655_647c377aac.json
+     D bridge/outbox/20260610_112655_854d7832b1.json
+     D bridge/outbox/20260610_112655_8d55b38d11.json
+     D bridge/outbox/20260610_112655_8dc43c1e45.json
+     D bridge/outbox/20260610_112655_c1f8f7432b.json
+     D bridge/outbox/20260610_112655_c26e9b9dc8.json
+     D bridge/outbox/20260610_112655_cd6f05333d.json
+     D bridge/outbox/20260610_112655_d3eea67df4.json
+     D bridge/outbox/20260610_112655_e36fc211c5.json
+     D bridge/outbox/20260610_112655_e67ffd76fb.json
+     D bridge/outbox/20260610_112655_f171536749.json
+     D bridge/outbox/20260610_112703_e3452f1b65.json
+     D bridge/outbox/20260610_112908_1fc696c22d.json
+     D bridge/outbox/20260610_112908_21d8629637.json
+     D bridge/outbox/20260610_112908_54ab89ce60.json
+     D bridge/outbox/20260610_112908_78b7d04e29.json
+     D bridge/outbox/20260610_112908_d6c7a48d6f.json
+     D bridge/outbox/20260610_112955_26f08c500d.json
+     D bridge/outbox/20260610_112955_343e05e9d8.json
+     D bridge/outbox/20260610_112955_54c967d713.json
+     D bridge/outbox/20260610_112955_639ed8c545.json
+     D bridge/outbox/20260610_112955_7a1906a8b8.json
+     D bridge/outbox/20260610_112955_8f0b6993e6.json
+     D bridge/outbox/20260610_112955_c68fb132ba.json
+     D bridge/outbox/20260610_112955_f371219372.json
+     D certify_v4.ps1
+     D check_schema.py
+     D check_status.py
+     M config/persona.json
+     M contracts/config_port.py
+     D core_scanner.py
+     D debug_ollama.py
+     M docker-compose.yml
+     M ezzio-ui/package-lock.json
+     D ezzio_certify.py
+     D ezzio_certify_100.ps1
+     D ezzio_daily_report.py
+     D ezzio_drift_detector.py
+     D ezzio_fix_pid_check.ps1
+     M ezzio_kernel.py
+     D ezzio_lock_baseline.py
+     D ezzio_long_run_monitor.py
+     D ezzio_long_run_v893.py
+     D ezzio_memory_intelligence.py
+     D ezzio_observatory.py
+     D ezzio_override_ledger.py
+     D ezzio_structural_certify.py
+     D ezzio_structure_audit.py
+     D ezzio_temporal_certificate.py
+     D interfaces/api/server.py
+     D interfaces/discord/bot.py
+     D ollama_local_archive/__init__.py
+     M ollama_local_archive/adaptive_governor.py
+     M ollama_local_archive/windows_telemetry.py
+     M persona.full.md
+     D phase_a_stabilization.ps1
+     D providers/__init__.py
+     M providers/base_provider.py
+     D providers/cloud_gateway.py
+     M providers/gemini_provider.py
+     M providers/groq_provider.py
+     M providers/key_scheduler.py
+     M providers/ollama_provider.py
+     M providers/provider_health.py
+     M providers/provider_registry.py
+     M providers/provider_response.py
+     M providers/provider_telemetry.py
+     M providers/secrets_loader.py
+     M pytest.ini
+     M recovery/certified_state/capability.py
+     M recovery/certified_state/microkernel.py
+     D registry/build/build_manifest.json
+     D registry/build/persona.coding.md
+     D registry/build/persona.discord.md
+     D registry/build/persona.full.md
+     D registry/build/persona.production.md
+     D registry/build/persona.terminal.md
+     M registry/personality/identity.md
+     M registry/personality/traits.md
+     M run_ezzio.py
+     D runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/01_database_autopsy.py
+     D runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/02_direct_store_test.py
+     D runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/03_message_event_store.py
+     D runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/04_working_memory.py
+     D runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/05_persistence_write.py
+     D runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/06_persistence_read.py
+     D runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/07_imports.py
+     D runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/__init__.py
+     D runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/syntax_runtime_core_message_py.py
+     D runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/syntax_runtime_memory___init___py.py
+     D runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/syntax_runtime_memory_events_py.py
+     D runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/syntax_runtime_memory_session_py.py
+     D runtime_temp_forensic/EZZIO_MEMORY_FORENSIC_20260809_222237/syntax_runtime_memory_sqlite_store_py.py
+     M scripts/audit/audit_classifier_v4.py
+     M scripts/audit/audit_reliability.py
+     M scripts/audit/audit_reliability_v2.py
+     M scripts/audit/audit_reliability_v3.py
+     M scripts/audit/deploy_vague1.py
+     M scripts/audit/deploy_vague_final.py
+     M scripts/audit/deploy_vagues_2_3_4.py
+     M scripts/audit/fix_audit_package.py
+     M scripts/audit/fix_runtime_audit_final.py
+     M scripts/audit/scan_runtime_failures.py
+     M scripts/connect_context_router.py
+     M scripts/deploy_context_injector.py
+     M scripts/deploy_model_router_v1.1.py
+     M scripts/deploy_model_router_v1.py
+     M scripts/enable_fast_mode.py
+     M scripts/mount_routers_to_web_server.py
+     M scripts/patch_ollama_provider.py
+     M scripts/patch_router_llm_contract.py
+     M scripts/test_provider_isolated.py
+     M scripts/update_router_fast_profile.py
+     D skill_manager.py
+     M state/cloud_brain/audit.jsonl
+     M state/cloud_brain/usage.jsonl
+     M state/performance/model_policy.json
+     D state/snapshots/ezzio_snapshot_20260610_113159.json
+     D state/snapshots/ezzio_snapshot_20260610_113242.json
+     D state/snapshots/ezzio_snapshot_20260610_123200.json
+     D test_all_stack.py
+     D tests/__init__.py
+     M tests/conftest.py
+     M tests/test_api_chat_endpoint.py
+     M tests/test_api_research_endpoint.py
+     M tests/test_config_provider.py
+     M tests/test_decision_router.py
+     M tests/test_discord_memory_recall.py
+     M tests/test_ezzio_core.py
+     M tests/test_ezzio_core_security.py
+     M tests/test_fts5_memory.py
+     M tests/test_gemini_and_google_gateway.py
+     M tests/test_google_and_evidence.py
+     M tests/test_intent_router.py
+     M tests/test_memory_purge.py
+     M tests/test_ollama_provider.py
+     M tests/test_recovery_sovereignty.py
+     M tests/test_research_router.py
+     M tests/test_security_governance.py
+     M tests/test_simple_rag.py
+     M tests/test_talent_analyser.py
+     M tests/test_task_manager.py
+     M tests/test_unified_memory_gateway.py
+     D tools/__init__.py
+     M tools/exec_tools.py
+     M tools/fs_tools.py
+     M tools/guard.py
+     D tools/index_api.py
+     M tools/index_engine_v5_5.py
+     M tools/legacy_root_scripts/restore_contracts.py
+     M tools/patch_engine.py
+     M tools/patch_pipeline.py
+     D tools/voice_converter/convert_native_voice.py
+     D tools/voice_converter/test_loader.py
+     M tools/workspace_index_v2.py
+     M tools/workspace_index_v3.py
+     M web_server.py
+    ?? .agents/
+    ?? .dockerignore
+    ?? .trae/
+    ?? .traerules
+    ?? .vscode/
+    ?? =
+    ?? AG_Forensic_Verifier_V3.py
+    ?? Dockerfile
+    ?? "E-ZZIO \342\200\224 MASTER SPEC  CONSTITUTION.md"
+    ?? "E-ZZIO \342\200\224 Remplacement certifi\303\251 du canonicalizer Gate 2.md"
+    ?? E-ZZIO_POST_CLEANUP_PRODUCTION_BASELINE.md
+    ?? EZZIO_AUTOHEAL_v5.2.0.ps1
+    ?? EZZIO_Build_Autonomous_Model_Fabric_v1.0.0.ps1
+    ?? EZZIO_Build_Autonomous_Model_Fabric_v1.1.0.ps1
+    ?? EZZIO_CanonicalIdentity_Install_v1.0.4.ps1
+    ?? EZZIO_CanonicalIdentity_Install_v1.0.5.ps1
+    ?? EZZIO_CanonicalIdentity_Install_v1.0.6.ps1
+    ?? EZZIO_Cleanup_Forensic.ps1
+    ?? EZZIO_DISASTER_RECOVERY.md
+    ?? EZZIO_Forensic_Credential_Vault_Map_v1.0.0.ps1
+    ?? EZZIO_Forensic_Credential_Vault_Map_v1.1.0.ps1
+    ?? EZZIO_Forensic_Runtime_Chain_Discovery.ps1
+    ?? EZZIO_Forensic_State_Audit.ps1
+    ?? EZZIO_HUMAN_INTERVENTIONS.md
+    ?? EZZIO_LiteLLM_Credential_Inspection_v1.0.0.ps1
+    ?? EZZIO_LiteLLM_Credential_Inspection_v1.0.1.ps1
+    ?? EZZIO_LiteLLM_Credential_Inspection_v1.0.2.backup.ps1
+    ?? EZZIO_LiteLLM_Credential_Inspection_v1.0.2.ps1
+    ?? EZZIO_LiteLLM_Credential_Inspection_v1.0.3.ps1
+    ?? EZZIO_Local_Bridge.ps1
+    ?? EZZIO_Model_Qualification_Diagnostic_v3.0.8.ps1
+    ?? EZZIO_Model_Qualification_Gate_v4.0.1.ps1
+    ?? EZZIO_Model_Qualification_Gate_v4.0.ps1
+    ?? EZZIO_Model_Qualification_Gate_v4.2.py
+    ?? EZZIO_Model_Qualification_Gate_v4.3.0.ps1
+    ?? EZZIO_Model_Qualification_Gate_v4.3.1.ps1
+    ?? EZZIO_Model_Qualification_Gate_v4.3.2.ps1
+    ?? EZZIO_Model_Qualification_Gate_v4.3.3.ps1
+    ?? EZZIO_Model_Qualification_Gate_v4.3.4.ps1
+    ?? EZZIO_Model_Qualification_Gate_v4.4.0.ps1
+    ?? EZZIO_Model_Qualification_Gate_v4_3_0.ps1
+    ?? EZZIO_Ollama_Partial_Cleaner_v1.0.0.ps1
+    ?? EZZIO_Ollama_Partial_Cleaner_v1.0.1.ps1
+    ?? EZZIO_Pipeline.ps1
+    ?? EZZIO_Python_311_to_312_Migration_Forensic_v1.6.3.ps1
+    ?? EZZIO_Python_Runtime_Operational_Normalization_v2.0.ps1
+    ?? EZZIO_Python_Runtime_Operational_Normalization_v2.1.ps1
+    ?? EZZIO_Q4KM_Acquisition_Gate_v1.1.0.ps1
+    ?? EZZIO_RECOVERY_v5.1.0.ps1
+    ?? EZZIO_Runtime_Normalization_Forensic_v1.0.ps1
+    ?? EZZIO_STRUCTURAL_REPAIR_v5.0.0.ps1
+    ?? EZZIO_Start_Server.ps1
+    ?? EZZIO_V16_2_HUMAN_INTERVENTIONS.md
+    ?? PRODUCTION_FREEZE_V16_4.md
+    ?? PRODUCTION_RUNBOOK.md
+    ?? TAILSCALE_FINALIZATION_REQUIRED.md
+    ?? V6_ABSOLUTE_RECOVERY.ps1
+    ?? _patch_cloud_brain_broker.py`
+    ?? artifacts/
+    ?? audit/FINAL_CANONICAL_REPAIR_20260826_192805/
+    ?? audit/canonical_identity_convergence/
+    ?? audit/canonical_identity_v1.0.6_20260826_135223/
+    ?? audit/canonical_identity_v105_20260826_134519/
+    ?? audit/canonical_sealed_20260826_194741/
+    ?? audit/canonical_sealed_20260826_194835/
+    ?? audit/contract_repair_backup_20260826_025737/
+    ?? audit/identity_injection_backup_20260826_133004/
+    ?? audit/identity_injection_backup_20260826_133115/
+    ?? audit/identity_repair_20260826_192405/
+    ?? audit/snapshot_consumers_reconcile_20260826_190027/
+    ?? audit/snapshot_identity_v2_20260826_184954/
+    ?? audit/snapshot_identity_v2_20260826_185024/
+    ?? audit/snapshot_phase1_identity_20260826_190043/
+    ?? audit/snapshot_phase2_signatures_20260826_190159/
+    ?? audit/snapshot_phase2_signatures_20260826_190230/
+    ?? audit/snapshot_pre_fabric_connect_20260826_181659/
+    ?? audit/snapshot_pre_forensic_restore_20260826_180311/
+    ?? audit/snapshot_pre_forensic_restore_20260826_180408/
+    ?? audit/snapshot_pre_restore_20260826_180137/
+    ?? audit/snapshot_pre_restore_20260826_180233/
+    ?? capcap/
+    ?? config/litellm_config.yaml
+    ?? config/llm_providers.json
+    ?? core/agent/agent_guard.py
+    ?? core/agent/agent_provider.py
+    ?? core/agent/codebase_indexer.py
+    ?? core/agent/coding_agent_loop.py
+    ?? core/agent/patch_engine.py
+    ?? core/agent/tools_registry.py
+    ?? dashboard_jarvis.py
+    ?? deploy_free_only_hardened.ps1
+    ?? docs/OPERATIONS.md
+    ?? ezzio_prod.ps1
+    ?? forensic_validation/
+    ?? hud_mock.html
+    ?? hud_tunnel.html
+    ?? install.cmd
+    ?? manifest.json
+    ?? pyproject.toml
+    ?? requirements-model-fabric.txt
+    ?? run_gateway.ps1
+    ?? run_model_qualification_fair_battery.ps1
+    ?? run_model_qualification_glm.ps1
+    ?? run_model_qualification_tri_match.ps1
+    ?? run_model_qualification_v440.ps1
+    ?? scripts/AG_Forensic_Verifier_V3.py
+    ?? scripts/EZZIO_Cleanup_Forensic.ps1
+    ?? scripts/EZZIO_Master_Orchestrator.ps1
+    ?? scripts/EZZIO_Master_Orchestrator_V2.ps1
+    ?? scripts/EZZIO_Master_Orchestrator_V3.ps1
+    ?? scripts/EZZIO_Quality_100_Certification.ps1
+    ?? scripts/audit_secrets.py
+    ?? scripts/backup_ezzio.py
+    ?? scripts/benchmark_production.py
+    ?? scripts/certified_run.ps1
+    ?? scripts/cleanup_engine.py
+    ?? scripts/cleanup_v2_1_engine.py
+    ?? scripts/cleanup_v2_engine.py
+    ?? scripts/ezzio_smoke_test.py
+    ?? scripts/forensic_archive/
+    ?? scripts/full_production_verification_flow.py
+    ?? scripts/live_user_acceptance.py
+    ?? scripts/quality_gate.py
+    ?? scripts/run_certification.py
+    ?? scripts/run_master_final_certification.py
+    ?? scripts/run_productization_master_certification.py
+    ?? scripts/run_v15_execution.py
+    ?? scripts/start_ezzio.py
+    ?? scripts/status_production.py
+    ?? scripts/stop_ezzio.py
+    ?? scripts/supervise_ezzio.ps1
+    ?? scripts/test_strict_warnings.ps1
+    ?? scripts/watchdog_ezzio.py
+    ?? start_docker.ps1
+    ?? start_ezzio.ps1
+    ?? start_ezzio_secure.ps1
+    ?? state/cloud_brain/cache/
+    ?? state/performance/model_qualification_v4/
+    ?? tests/test_action_verification_engine.py
+    ?? tests/test_adversarial_full_matrix.py
+    ?? tests/test_agent_demonstration_proof.py
+    ?? tests/test_agent_loop_operational.py
+    ?? tests/test_agent_research_task.py
+    ?? tests/test_api_operational_e2e.py
+    ?? tests/test_api_websocket.py
+    ?? tests/test_cognitive_memory.py
+    ?? tests/test_core_think_fallback.py
+    ?? tests/test_discord_lifecycle.py
+    ?? tests/test_discord_operational_path.py
+    ?? tests/test_ezzio_chat_cog.py
+    ?? tests/test_fabric_runtime.py
+    ?? tests/test_fabric_runtime.py.bak_20260825_183835
+    ?? tests/test_fabric_runtime.py.bak_20260825_184141
+    ?? tests/test_fabric_runtime.py.bak_20260825_184422
+    ?? tests/test_fabric_runtime.py.bak_20260825_184455
+    ?? tests/test_fabric_runtime.py.bak_20260825_184651
+    ?? tests/test_fabric_runtime.py.bak_20260825_190443
+    ?? tests/test_fabric_runtime.py.bak_20260825_190559
+    ?? tests/test_fabric_runtime.py.bak_20260825_190818
+    ?? tests/test_fabric_runtime.py.bak_20260825_191025
+    ?? tests/test_fabric_runtime.py.bak_20260825_192448
+    ?? tests/test_fabric_runtime.py.bak_20260825_193153
+    ?? tests/test_fabric_runtime.py.bak_20260825_193307
+    ?? tests/test_fabric_runtime.py.bak_20260825_193455
+    ?? tests/test_fabric_runtime.py.bak_20260825_193634
+    ?? tests/test_fabric_runtime.py.bak_20260825_193752
+    ?? tests/test_fabric_runtime.py.bak_20260825_193900
+    ?? tests/test_fabric_runtime.py.bak_20260825_194046
+    ?? tests/test_fabric_runtime.py.bak_20260825_194309
+    ?? tests/test_fabric_runtime.py.bak_20260825_194336
+    ?? tests/test_fabric_runtime.py.bak_20260825_194607
+    ?? tests/test_fabric_runtime.py.bak_20260825_203335
+    ?? tests/test_fabric_runtime.py.bak_20260825_203539
+    ?? tests/test_fabric_runtime.py.bak_20260825_203916
+    ?? tests/test_fabric_runtime.py.bak_20260825_204457
+    ?? tests/test_fabric_runtime.py.bak_20260825_205221
+    ?? tests/test_fabric_runtime.py.bak_20260825_205622
+    ?? tests/test_filesystem_observation_operational.py
+    ?? tests/test_forensic_drift_detector.py
+    ?? tests/test_gateway_routing.py
+    ?? tests/test_health_readiness_matrix.py
+    ?? tests/test_intent_fabric_integration.py
+    ?? tests/test_intent_router_v2.py
+    ?? tests/test_memory_longrun_operational.py
+    ?? tests/test_model_operational_execution.py
+    ?? tests/test_model_router_failure_matrix.py
+    ?? tests/test_observability.py
+    ?? tests/test_operational_control_plane.py
+    ?? tests/test_operational_startup.py
+    ?? tests/test_phase3_concurrency.py
+    ?? tests/test_phase3_contracts_and_recovery.py
+    ?? tests/test_phase3_deployability.py
+    ?? tests/test_phase3_determinism_and_performance.py
+    ?? tests/test_phase6_adversarial_tasks.py
+    ?? tests/test_phase7_adversarial_real.py
+    ?? tests/test_phase7_control_plane_and_hud.py
+    ?? tests/test_phase7_real_cognitive_memory.py
+    ?? tests/test_phase7_real_research_and_tools.py
+    ?? tests/test_phase7_real_user_task.py
+    ?? tests/test_phase7_startup_and_trace.py
+    ?? tests/test_phase7_task_persistence_recovery.py
+    ?? tests/test_phase8_full_product_suite.py
+    ?? tests/test_phase8_human_chat_and_task.py
+    ?? tests/test_phase8_memory_continuity_and_research.py
+    ?? tests/test_phase8_task_ux_progress.py
+    ?? tests/test_phase9_live_acceptance_suite.py
+    ?? tests/test_rag_fts5_advanced.py
+    ?? tests/test_real_agent_task_execution.py
+    ?? tests/test_real_tool_execution.py
+    ?? tests/test_real_user_task_e2e.py
+    ?? tests/test_research_operational_execution.py
+    ?? tests/test_research_source_truth.py
+    ?? tests/test_scope_resolver.py
+    ?? tests/test_self_awareness.py
+    ?? tests/test_synthesis_full_e2e.py
+    ?? tests/test_task_forensic_trace.py
+    ?? tests/test_task_recovery.py
+    ?? tests/test_tool_registry_operational.py
+    ?? tests/test_trace_reconstruction.py
+    ?? tests/test_user_facing_task_api.py
+    ?? tests/test_user_interface_operational.py
+    ?? tests/test_voice_gateway.py
+    ?? tests/test_voice_hardware_contract.py
+    ?? tests/test_webhook_rate_limit.py
+    ?? tests/v17/
+    ?? tests/v18/
+    ?? tests/v19/
+    ?? tmp_identity_repair_gate.py
+    ?? tools/diagnostics/
+    ?? tools/semantic_model/
+    ?? uv.lock
+    ?? v17/
+    ?? v18/
+    ?? v19/
+    ?? venv_recovery_evidence.txt
+  [HEAD] Dernier commit : c18551e chore(canonical): freeze E-zzio routing on gemini-3.5-flash-lite

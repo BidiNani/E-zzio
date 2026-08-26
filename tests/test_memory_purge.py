@@ -1,6 +1,7 @@
 import pytest
 from core.memory.unified_gateway import UnifiedMemoryGateway
 
+
 @pytest.mark.asyncio
 async def test_memory_purge_operations(tmp_path):
     db_file = str(tmp_path / "test_purge.db")

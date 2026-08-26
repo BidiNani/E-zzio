@@ -1,0 +1,262 @@
+#!/usr/bin/env python3
+"""Validation opérationnelle du cycle de vie E-ZZIO Fabric."""
+
+from __future__ import annotations
+
+import asyncio
+import sys
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from dotenv import load_dotenv
+
+from core.models.errors import ProviderExhaustedError
+from core.models.fabric import build_fabric
+from core.models.qualification.gate import QualificationGate
+
+
+load_dotenv(PROJECT_ROOT / "secrets" / ".env", override=True)
+
+def require_exact_ok(response: dict) -> str:
+    content = str(response.get("content", "")).strip()
+    if content != "OK":
+        raise AssertionError(
+            "Contrat de réponse violé : "
+            f"attendu='OK', reçu={content!r}"
+        )
+    return content
+
+
+
+async def qualify_candidates(fabric) -> list[dict]:
+    print("\n[2/4] Qualification des candidats prioritaires...")
+
+    gate = QualificationGate()
+    qualification_results: list[dict] = []
+
+    for provider in ("gemini", "groq"):
+        available = fabric.discoveries.get(provider, [])
+
+        if not available:
+            print(f" - [SKIP] Aucun modèle découvert pour {provider.upper()}")
+            continue
+
+        endpoint = fabric.router.ENDPOINTS.get(provider)
+
+        if not endpoint:
+            print(f" - [SKIP] Endpoint absent pour {provider.upper()}")
+            continue
+
+        # Teste jusqu'aux 3 premiers modèles disponibles
+        for model_meta in available[:3]:
+            model_id = model_meta["model_id"]
+            slot = fabric.key_pool.acquire(provider)
+
+            if slot is None:
+                print(f" - [SKIP] Clés épuisées pour {provider.upper()}")
+                break
+
+            try:
+                print(f" - Qualification de {provider}/{model_id}...")
+
+                result = await gate.qualify_openai_compatible(
+                    provider=provider,
+                    model=model_meta,
+                    api_key=slot.secret_value,
+                    endpoint=endpoint,
+                )
+
+                qualification_results.append(result)
+
+                if result.get("qualified"):
+                    print(
+                        f"   -> [QUALIFIÉ] "
+                        f"Palier: {result.get('tier')} | "
+                        f"Latence: {result.get('latency_ms')} ms | "
+                        f"Score: {result.get('score')}/100"
+                    )
+                    fabric.key_pool.mark_success(slot)
+                else:
+                    print(
+                        f"   -> [ÉCHEC] "
+                        f"Palier: {result.get('tier')} | "
+                        f"Latence: {result.get('latency_ms')} ms | "
+                        f"Score: {result.get('score')}/100"
+                    )
+                    print(
+                        f"      Motifs: {result.get('failures', [])}"
+                    )
+                    fabric.key_pool.mark_failure(slot)
+
+            except Exception as exc:
+                print(f"   -> Exception sur {model_id}: {exc}")
+                fabric.key_pool.mark_failure(slot)
+
+    return qualification_results
+
+
+async def main() -> None:
+    print(
+        "=== Démarrage du banc d'essai "
+        "E-ZZIO Fabric ==="
+    )
+
+    fabric = build_fabric(project_root=PROJECT_ROOT)
+
+    print("\n[1/4] Découverte des catalogues distants...")
+
+    discovered = await fabric.discover_all()
+
+    if not hasattr(fabric, "discoveries"):
+        fabric.discoveries = discovered
+
+    for provider, models in discovered.items():
+        print(
+            f" - {provider.upper():<12} : "
+            f"{len(models)} modèle(s) détecté(s)"
+        )
+
+    qualification_results = await qualify_candidates(fabric)
+
+    print(
+        "\n[3/4] Activation exclusive "
+        "dans le registre dynamique..."
+    )
+
+    try:
+        transitions = fabric.activate_qualified(
+            qualification_results,
+            exclusive_per_tier=True,
+        )
+    except TypeError:
+        transitions = fabric.activate_qualified(
+            qualification_results
+        )
+
+    if transitions:
+        for transition in transitions:
+            print(
+                f" - Transition : "
+                f"{transition.get('model', '<inconnu>'):<35} "
+                f"[{transition.get('old_state')} -> "
+                f"{transition.get('new_state')}] "
+                f"(Tier: {transition.get('tier')})"
+            )
+    else:
+        print(" - Aucune transition d'activation.")
+
+    status = fabric.status()
+
+    print(
+        f"\n Contrôle registre : "
+        f"{status.get('active_models', 0)} modèle(s) ACTIVE"
+    )
+
+    for active in status.get("models", []):
+        print(
+            f" * ACTIF : "
+            f"{active.get('provider')}/"
+            f"{active.get('model')} | "
+            f"Palier: {active.get('tier')} | "
+            f"Latence: {active.get('latency_ms')} ms"
+        )
+
+    print(
+        "\n[4/4] Inférence cognitive "
+        "avec validation du cloisonnement..."
+    )
+
+    print(
+        "\n --- Test A : Palier FAST "
+        "(Attendu: SUCCÈS) ---"
+    )
+
+    try:
+        response = await fabric.router.execute(
+            messages=[
+                {
+                    "role": "user",
+                    "content": (
+                        "Ping système E-ZZIO. "
+                        "Réponds uniquement par le mot OK."
+                    ),
+                }
+            ],
+            tier="FAST",
+            temperature=0.0,
+        )
+
+        print(" -> Inférence FAST réussie !")
+        print(
+            f"    Fournisseur utilisé : "
+            f"{response.get('provider')}"
+        )
+        print(
+            f"    Modèle actif        : "
+            f"{response.get('model')}"
+        )
+        print(
+            f"    Créneau clé         : "
+            f"{response.get('slot', '<non exposé>')}"
+        )
+        content = require_exact_ok(response)
+        print(
+            f"    Réponse             : "
+            f"{content}"
+        )
+
+    except Exception as exc:
+        print(f" -> ÉCHEC inattendu FAST : {exc}")
+        raise
+
+    print(
+        "\n --- Test B : Palier MID "
+        "(Attendu: SUCCÈS si modèle MID actif) ---"
+    )
+
+    try:
+        response = await fabric.router.execute(
+            messages=[
+                {
+                    "role": "user",
+                    "content": (
+                        "Ping système E-ZZIO. "
+                        "Réponds uniquement par le mot OK."
+                    ),
+                }
+            ],
+            tier="MID",
+            temperature=0.0,
+        )
+
+        print(" -> Inférence MID réussie !")
+        print(
+            f"    Fournisseur utilisé : "
+            f"{response.get('provider')}"
+        )
+        print(
+            f"    Modèle actif        : "
+            f"{response.get('model')}"
+        )
+        content = require_exact_ok(response)
+        print(
+            f"    Réponse             : "
+            f"{content}"
+        )
+
+    except ProviderExhaustedError as exc:
+        print(
+            " -> [PASS - FAIL-CLOSED CONFORME] "
+            f"{exc}"
+        )
+
+    except Exception as exc:
+        print(f" -> Échec anormal MID : {exc}")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

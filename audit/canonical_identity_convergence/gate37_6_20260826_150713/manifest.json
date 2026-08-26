@@ -1,0 +1,300 @@
+{
+  "gate": "3.7.6",
+  "version": "1.1",
+  "timestamp": "20260826_150713",
+  "mode": "READ_ONLY",
+  "analysis": {
+    "core/providers/tavily_provider.py": {
+      "current": {
+        "classes": {
+          "TavilyProvider": {
+            "bases": [
+              "IResearchProvider"
+            ],
+            "class_attrs": {},
+            "methods": {
+              "__init__": {
+                "async": false,
+                "args": [
+                  "self",
+                  "api_key: Optional[str]"
+                ],
+                "returns": null
+              },
+              "search": {
+                "async": true,
+                "args": [
+                  "self",
+                  "query: str"
+                ],
+                "returns": "Dict[str, Any]"
+              }
+            }
+          }
+        }
+      },
+      "snapshot": {
+        "classes": {
+          "TavilyProvider": {
+            "bases": [
+              "IResearchProvider"
+            ],
+            "class_attrs": {},
+            "methods": {
+              "__init__": {
+                "async": false,
+                "args": [
+                  "self",
+                  "api_key: Optional[str]"
+                ],
+                "returns": null
+              },
+              "search": {
+                "async": true,
+                "args": [
+                  "self",
+                  "query: str"
+                ],
+                "returns": "Dict[str, Any]"
+              }
+            }
+          }
+        }
+      }
+    },
+    "core/models/discovery/groq.py": {
+      "current": {
+        "classes": {
+          "GroqDiscovery": {
+            "bases": [
+              "ProviderDiscovery"
+            ],
+            "class_attrs": {
+              "provider": "'groq'",
+              "URL": "'https://api.groq.com/openai/v1/models'"
+            },
+            "methods": {
+              "__init__": {
+                "async": false,
+                "args": [
+                  "self",
+                  "api_key: str | None"
+                ],
+                "returns": null
+              },
+              "discover": {
+                "async": true,
+                "args": [
+                  "self",
+                  "api_key: str | None"
+                ],
+                "returns": "list[dict[str, Any]]"
+              }
+            }
+          }
+        }
+      },
+      "snapshot": {
+        "classes": {}
+      }
+    },
+    "core/models/discovery/openrouter.py": {
+      "current": {
+        "classes": {
+          "OpenRouterDiscovery": {
+            "bases": [
+              "ProviderDiscovery"
+            ],
+            "class_attrs": {
+              "provider": "'openrouter'",
+              "URL": "'https://openrouter.ai/api/v1/models'"
+            },
+            "methods": {
+              "__init__": {
+                "async": false,
+                "args": [
+                  "self",
+                  "api_key: str | None"
+                ],
+                "returns": null
+              },
+              "discover": {
+                "async": true,
+                "args": [
+                  "self",
+                  "api_key: str | None"
+                ],
+                "returns": "list[dict[str, Any]]"
+              }
+            }
+          }
+        }
+      },
+      "snapshot": {
+        "classes": {}
+      }
+    }
+  },
+  "call_sites": {
+    "discover": [
+      {
+        "file": "core\\models\\fabric.py",
+        "line": 156
+      },
+      {
+        "file": "core\\models\\fabric.py",
+        "line": 341
+      },
+      {
+        "file": "core\\models\\fabric.py",
+        "line": 72
+      }
+    ],
+    "search": [
+      {
+        "file": "ezzio_kernel.py",
+        "line": 260
+      },
+      {
+        "file": "core\\decision_router.py",
+        "line": 42
+      },
+      {
+        "file": "core\\memory_vault.py",
+        "line": 28
+      },
+      {
+        "file": "core\\memory_vault.py",
+        "line": 45
+      },
+      {
+        "file": "core\\memory_vault.py",
+        "line": 30
+      },
+      {
+        "file": "core\\memory_vault.py",
+        "line": 47
+      },
+      {
+        "file": "core\\research_router.py",
+        "line": 36
+      },
+      {
+        "file": "routers\\research.py",
+        "line": 56
+      },
+      {
+        "file": "runtime\\debug_ollama.py",
+        "line": 18
+      },
+      {
+        "file": "runtime\\diagnose_ollama.py",
+        "line": 17
+      },
+      {
+        "file": "scripts\\patch_ollama_provider.py",
+        "line": 25
+      },
+      {
+        "file": "core\\cognitive_engine\\ecol_deep_forensic_audit.py",
+        "line": 70
+      },
+      {
+        "file": "core\\cognitive_engine\\ecol_integration_audit.py",
+        "line": 47
+      },
+      {
+        "file": "core\\cognitive_engine\\temporal_memory_archaeology.py",
+        "line": 37
+      },
+      {
+        "file": "core\\intents\\fabric_connector.py",
+        "line": 69
+      },
+      {
+        "file": "core\\router\\intent_router.py",
+        "line": 50
+      },
+      {
+        "file": "core\\router\\intent_router.py",
+        "line": 55
+      },
+      {
+        "file": "core\\router\\intent_router.py",
+        "line": 60
+      },
+      {
+        "file": "core\\router\\intent_router.py",
+        "line": 65
+      },
+      {
+        "file": "core\\router\\intent_router.py",
+        "line": 70
+      },
+      {
+        "file": "core\\router\\intent_router.py",
+        "line": 75
+      },
+      {
+        "file": "core\\skills\\research_skill.py",
+        "line": 15
+      },
+      {
+        "file": "core\\cognition\\compression\\integrity_gate.py",
+        "line": 107
+      },
+      {
+        "file": "core\\cognition\\compression\\integrity_gate.py",
+        "line": 107
+      },
+      {
+        "file": "core\\models\\discovery\\gemini.py",
+        "line": 28
+      },
+      {
+        "file": "runtime\\agent\\controller.py",
+        "line": 33
+      },
+      {
+        "file": "runtime\\core\\ezzio_core.py",
+        "line": 136
+      },
+      {
+        "file": "runtime\\core\\ezzio_core.py",
+        "line": 144
+      },
+      {
+        "file": "tools\\diagnostics\\bench_cpu_load.py",
+        "line": 10
+      },
+      {
+        "file": "tools\\diagnostics\\debug_ollama.py",
+        "line": 12
+      },
+      {
+        "file": "tools\\diagnostics\\test_all_stack.py",
+        "line": 66
+      },
+      {
+        "file": "tools\\diagnostics\\test_all_stack.py",
+        "line": 77
+      },
+      {
+        "file": "tools\\diagnostics\\test_all_stack.py",
+        "line": 88
+      },
+      {
+        "file": "v17\\sanitization\\sanitizer.py",
+        "line": 25
+      }
+    ]
+  },
+  "diffs": {},
+  "verdict": "WARN",
+  "discrepancies": [],
+  "warnings": [
+    "core/models/discovery/groq.py:: Classe GroqDiscovery absente dans le snapshot.",
+    "core/models/discovery/openrouter.py:: Classe OpenRouterDiscovery absente dans le snapshot."
+  ],
+  "ast_global_errors": 0
+}

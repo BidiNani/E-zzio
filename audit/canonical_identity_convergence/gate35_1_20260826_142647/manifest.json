@@ -1,0 +1,39 @@
+{
+  "timestamp": "20260826_142647",
+  "gate": "3.5.1",
+  "version": "1.0",
+  "files": {
+    "truth_guard": {
+      "relative_path": "core\\ezzio_truth_guard.py",
+      "sha256_before": "48b9fcecdf15060bc9798a54e5b0b0e9254c2c7710b990c772fde4efea686a1f",
+      "backup": "audit\\canonical_identity_convergence\\gate35_1_20260826_142647\\ezzio_truth_guard.py.before"
+    },
+    "human_loop": {
+      "relative_path": "core\\human_loop.py",
+      "sha256_before": "5feaa8a806e21e878881b82dca295c1a2c77399320079aba8221336dab193f6a",
+      "backup": "audit\\canonical_identity_convergence\\gate35_1_20260826_142647\\human_loop.py.before"
+    },
+    "omni_brain": {
+      "relative_path": "core\\omni_brain.py",
+      "sha256_before": "f33ced13f88a40f66cd3c4abdda823925a939c7457164e1b5e1e3e5b257e6939",
+      "backup": "audit\\canonical_identity_convergence\\gate35_1_20260826_142647\\omni_brain.py.before"
+    },
+    "pc_model_router": {
+      "relative_path": "core\\pc_model_router.py",
+      "sha256_before": "35838cc0c2f81939e315463cb447895ff7a5d29f11da4d8bfd88975fb813f026",
+      "backup": "audit\\canonical_identity_convergence\\gate35_1_20260826_142647\\pc_model_router.py.before"
+    },
+    "pc_optimizer": {
+      "relative_path": "core\\pc_optimizer.py",
+      "sha256_before": "604e5ad61585f6911b966e7747e1b08389a3f7951077464515821c7693374235",
+      "backup": "audit\\canonical_identity_convergence\\gate35_1_20260826_142647\\pc_optimizer.py.before"
+    },
+    "response_guard": {
+      "relative_path": "core\\response_guard.py",
+      "sha256_before": "15ac1cd8cc2dbab5d49f3834d4368add98d1c2024c2a140fdc8ff51de6ad60dc",
+      "backup": "audit\\canonical_identity_convergence\\gate35_1_20260826_142647\\response_guard.py.before"
+    }
+  },
+  "verdict": "FAILED",
+  "error": "unterminated string literal (detected at line 103) (pc_model_router.py, line 103)"
+}

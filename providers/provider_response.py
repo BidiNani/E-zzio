@@ -3,8 +3,10 @@ E-ZZIO V7.24.0 — Provider Response Contract
 Objet typé unifié pour toutes les réponses des fournisseurs cloud.
 Élimine les dictionnaires libres et isole le routeur des SDKs tiers.
 """
+
 from dataclasses import dataclass, field
 from typing import Optional, Dict, Any, List
+
 
 @dataclass
 class ProviderResponse:

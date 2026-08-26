@@ -6,15 +6,20 @@ from core.providers.jina_provider import JinaProvider
 from core.providers.tavily_provider import TavilyProvider
 from core.providers.gemini_provider import GeminiProvider
 
+
 class DummyProviderSuccess(IResearchProvider):
     name = "dummy_ok"
+
     async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
         return {"provider": "dummy_ok", "results": [f"Result for {query}"]}
 
+
 class DummyProviderFail(IResearchProvider):
     name = "dummy_fail"
+
     async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
         raise ConnectionError("Service injoignable")
+
 
 @pytest.mark.asyncio
 async def test_research_router_fallback_flow():
@@ -28,11 +33,13 @@ async def test_research_router_fallback_flow():
     assert res["provider"] == "dummy_ok"
     assert "Result for test sovereign query" in res["results"]
 
+
 @pytest.mark.asyncio
 async def test_research_router_no_providers():
     router = ResearchRouter(providers=[])
     with pytest.raises(RuntimeError, match="Aucun fournisseur de recherche configuré."):
         await router.search("test")
+
 
 @pytest.mark.asyncio
 async def test_jina_provider_structure():
@@ -40,11 +47,13 @@ async def test_jina_provider_structure():
     assert provider.base_url == "https://s.jina.ai"
     assert provider.name == "jina"
 
+
 @pytest.mark.asyncio
 async def test_tavily_provider_structure():
     provider = TavilyProvider(api_key="test")
     assert provider.base_url == "https://api.tavily.com/search"
     assert provider.name == "tavily"
+
 
 @pytest.mark.asyncio
 async def test_gemini_provider_structure():

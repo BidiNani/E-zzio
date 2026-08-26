@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 ROOT = Path(r"G:\AI\E-zzio")
@@ -55,7 +54,7 @@ secret_provider = SecretProvider()
 
     def validate_operation(self, payload: dict) -> bool:
         return self.active
-"""
+""",
 }
 
 for fname, content in files.items():

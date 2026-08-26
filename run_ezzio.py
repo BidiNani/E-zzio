@@ -7,11 +7,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from runtime.agent.loop import AgentLoop
 from runtime.router.cognitive_router import CognitiveRouter
 
+
 def main():
     parser = argparse.ArgumentParser(description="E-ZZIO Sovereign Runtime CLI")
     parser.add_argument("action", choices=["run", "router-test", "status"], help="Action à exécuter")
     parser.add_argument("--objective", type=str, default="Exécuter une tâche souveraine de maintenance", help="Objectif de l'agent")
-    
+
     args = parser.parse_args()
 
     print("============================================================")
@@ -49,6 +50,7 @@ def main():
         print("  - Constitution : ACTIVE (Registry Core)")
         print("  - Système Immunitaire : ACTIF (IncidentRegistry)")
         print("[SUCCESS] Système intègre et opérationnel.")
+
 
 if __name__ == "__main__":
     main()

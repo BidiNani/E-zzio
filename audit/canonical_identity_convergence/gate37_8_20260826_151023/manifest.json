@@ -1,0 +1,37 @@
+{
+  "gate": "3.7.8",
+  "timestamp": "20260826_151023",
+  "mode": "OFFLINE_BEHAVIORAL",
+  "tests": [
+    {
+      "name": "GROQ — SUCCESS PATH & FILTERING",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "GROQ — EMPTY PAYLOAD",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "OPENROUTER — SUCCESS PATH & ARCHITECTURE",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "TAVILY — SUCCESS PATH",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "TAVILY — MISSING KEY",
+      "status": "PASS",
+      "detail": ""
+    }
+  ],
+  "sentinel_network_calls": 3,
+  "secret_leaks_detected": 0,
+  "verdict": "SUCCESS",
+  "zero_real_network": "PASS",
+  "zero_secret_leak": "PASS"
+}

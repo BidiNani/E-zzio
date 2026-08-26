@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 ROOT = Path(r"G:\AI\E-zzio")
@@ -46,7 +45,6 @@ __all__ = ["ExecutionTrace"]
     def add_span(self, name: str, data: dict = None) -> None:
         self.spans.append({"name": name, "data": data or {}})
 """,
-
     # --- VAGUE 3 : MÉMOIRE & SKILLS ---
     "runtime/memory/gateway.py": """class MemoryGateway:
     def __init__(self):
@@ -79,7 +77,6 @@ __all__ = ["ExecutionTrace"]
     "tools/index_api.py": """def index_api():
     return {"status": "indexed"}
 """,
-
     # --- VAGUE 4 : COGNITION & TOPOLOGY ---
     "runtime/cognition/core.py": """class EzzioBrain:
     def __init__(self):
@@ -94,7 +91,7 @@ __all__ = ["ExecutionTrace"]
 
     def discover(self):
         return []
-"""
+""",
 }
 
 for rel_path, content in files.items():

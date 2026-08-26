@@ -6,6 +6,7 @@ Responsabilité:
 - Aucun stockage permanent
 - Aucun affichage de valeur sensible
 """
+
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -13,17 +14,17 @@ from dotenv import load_dotenv
 ROOT_DIR = Path("G:/AI/E-zzio").resolve()
 ENV_PATH = ROOT_DIR / "secrets" / ".env"
 
+
 def _load_environment():
     """
     Charge uniquement l'environnement provider.
     """
     if ENV_PATH.exists():
-        load_dotenv(
-            dotenv_path=ENV_PATH,
-            override=False
-        )
+        load_dotenv(dotenv_path=ENV_PATH, override=False)
+
 
 _load_environment()
+
 
 def _collect_key_pool(prefix: str, maximum: int = 5):
     """
@@ -43,11 +44,13 @@ def _collect_key_pool(prefix: str, maximum: int = 5):
             keys.append(value.strip())
     return list(dict.fromkeys(keys))
 
+
 def get_gemini_keys():
     """
     Retourne le pool Gemini actif.
     """
     return _collect_key_pool("GEMINI_API_KEY")
+
 
 def get_groq_keys():
     """
@@ -55,12 +58,10 @@ def get_groq_keys():
     """
     return _collect_key_pool("GROQ_API_KEY")
 
+
 def provider_secret_status():
-    return {
-        "gemini_keys": len(get_gemini_keys()),
-        "groq_keys": len(get_groq_keys()),
-        "env_loaded": ENV_PATH.exists()
-    }
+    return {"gemini_keys": len(get_gemini_keys()), "groq_keys": len(get_groq_keys()), "env_loaded": ENV_PATH.exists()}
+
 
 if __name__ == "__main__":
     status = provider_secret_status()

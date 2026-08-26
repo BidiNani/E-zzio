@@ -9,6 +9,7 @@ from providers.provider_response import ProviderResponse
 from providers.key_scheduler import KeyScheduler
 from providers.provider_telemetry import provider_telemetry
 
+
 class GroqProvider(BaseProvider):
     def __init__(self):
         self.scheduler = KeyScheduler(get_groq_keys())
@@ -25,26 +26,31 @@ class GroqProvider(BaseProvider):
             "status": "OPERATIONAL" if active_count > 0 else "POOL_EXHAUSTED",
             "pool_size": len(self.scheduler.keys),
             "active_keys": active_count,
-            "capabilities": self.capabilities()
+            "capabilities": self.capabilities(),
         }
 
-    async def generate(self, prompt: str, model: Optional[str] = "llama-3.3-70b-versatile", image_bytes: Optional[bytes] = None, capability: str = "default") -> ProviderResponse:
+    async def generate(
+        self,
+        prompt: str,
+        model: Optional[str] = "llama-3.3-70b-versatile",
+        image_bytes: Optional[bytes] = None,
+        capability: str = "default",
+    ) -> ProviderResponse:
         max_retries = max(len(self.scheduler.keys), 1)
 
         for attempt in range(max_retries):
             idx, key = await self.scheduler.get_next_key()
             if key is None:
                 break
-                
+
             start_time = time.perf_counter()
             headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
             payload = {
-                "model": model, 
+                "model": model,
                 "messages": [
-                    {"role": "system", "content": "Tu es E-ZZIO, un agent autonome technique et direct."},
-                    {"role": "user", "content": prompt}
-                ], 
-                "temperature": 0.7
+                    {"role": "system", "content": prompt},
+                ],
+                "temperature": 0.7,
             }
 
             try:
@@ -55,17 +61,28 @@ class GroqProvider(BaseProvider):
                             data = await resp.json()
                             content = data["choices"][0]["message"]["content"]
                             provider_telemetry.record_event("groq", model, capability, True, elapsed_ms, key_index=idx)
-                            return ProviderResponse(ok=True, provider="groq", model=model, content=content, latency_ms=round(elapsed_ms, 2), metadata={"key_index": idx})
+                            return ProviderResponse(
+                                ok=True,
+                                provider="groq",
+                                model=model,
+                                content=content,
+                                latency_ms=round(elapsed_ms, 2),
+                                metadata={"key_index": idx},
+                            )
                         elif resp.status == 429:
                             self.scheduler.mark_exhausted(idx, 120)
-                            provider_telemetry.record_event("groq", model, capability, False, elapsed_ms, error_type="429", quota_state="exhausted", key_index=idx)
+                            provider_telemetry.record_event(
+                                "groq", model, capability, False, elapsed_ms, error_type="429", quota_state="exhausted", key_index=idx
+                            )
                         elif resp.status in [401, 403]:
                             self.scheduler.mark_invalid(idx)
                             provider_telemetry.record_event("groq", model, capability, False, elapsed_ms, error_type="auth", key_index=idx)
                         else:
-                            provider_telemetry.record_event("groq", model, capability, False, elapsed_ms, error_type=f"http_{resp.status}", key_index=idx)
+                            provider_telemetry.record_event(
+                                "groq", model, capability, False, elapsed_ms, error_type=f"http_{resp.status}", key_index=idx
+                            )
                         await asyncio.sleep(0.5)
-            except Exception as e:
+            except Exception:
                 provider_telemetry.record_event("groq", model, capability, False, 0.0, error_type="network", key_index=idx)
 
         provider_telemetry.record_event("groq", model, capability, False, 0.0, error_type="pool_exhausted", quota_state="exhausted")
