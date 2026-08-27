@@ -1,4 +1,4 @@
-"""E-ZZIO Autonomous Agent — Unified Router Bridge with Gemini 3.5 Flash-Lite & Auto-Purge."""
+"""E-ZZIO Autonomous Agent — Unified Router Bridge with Strict Fail-Closed Boundaries."""
 from __future__ import annotations
 import os
 import re
@@ -16,7 +16,14 @@ logging.getLogger("LiteLLM").setLevel(logging.ERROR)
 logger = logging.getLogger(__name__)
 
 
+class RouteIntegrityError(RuntimeError):
+    """Levée lorsqu'une route ou un modèle non autorisé/invalide est sollicité (Terminal)."""
+    pass
+
+
 class AgentProviderAdapter:
+    AUTHORIZED_MODELS = {"cloud_gemini", "local_primary", "local_fallback"}
+
     def __init__(self, backend: str = "cloud_gemini"):
         self.backend = backend
         self.router = self._build_canonical_router()
@@ -81,6 +88,20 @@ class AgentProviderAdapter:
         elif model_name == "local_fallback":
             self._ensure_single_resident_model("ornith-ezzio")
 
+    def _is_terminal_route_error(self, error: Exception) -> bool:
+        """Détecte si l'erreur provient d'une route ou d'un modèle invalide (Fail-Closed)."""
+        msg = str(error).lower()
+        terminal_patterns = [
+            "badrequesterror",
+            "not found",
+            "no healthy deployments",
+            "model_not_found",
+            "does not exist",
+            "invalid model",
+            "unknown model",
+        ]
+        return any(pat in msg for pat in terminal_patterns)
+
     def chat_completion(
         self,
         messages: List[Dict[str, str]],
@@ -88,6 +109,14 @@ class AgentProviderAdapter:
         speed: str = "fast"
     ) -> str:
         target_model = "cloud_gemini" if force_cloud else self.backend
+
+        # 1. Validation de premier niveau (Fail-Closed immédiat)
+        if target_model not in self.AUTHORIZED_MODELS:
+            raise RouteIntegrityError(
+                f"[FAIL-CLOSED] Route ou modèle non autorisé : '{target_model}'. "
+                f"Modèles autorisés : {self.AUTHORIZED_MODELS}"
+            )
+
         self._prepare_backend_memory(target_model)
 
         call_kwargs: Dict[str, Any] = {
@@ -102,11 +131,17 @@ class AgentProviderAdapter:
             response = self.router.completion(**call_kwargs)
             return self._extract_content(response)
         except Exception as primary_exc:
-            logger.warning("[ROUTER] Échec sur %s (%s). Repli automatique...", target_model, primary_exc)
+            # 2. Interception des erreurs terminales de configuration/route
+            if self._is_terminal_route_error(primary_exc):
+                logger.error("[ROUTER-SECURITY] Erreur de route terminale sur %s : %s", target_model, primary_exc)
+                raise RouteIntegrityError(
+                    f"[FAIL-CLOSED] Rejet strict sur route invalide '{target_model}' : {primary_exc}"
+                ) from primary_exc
 
-            fallback_order = ["cloud_gemini", "local_primary", "local_fallback"]
-            if target_model in fallback_order:
-                fallback_order.remove(target_model)
+            # 3. Repli autorisé uniquement en cas de panne de disponibilité opérationnelle
+            logger.warning("[ROUTER] Indisponibilité transitoire de %s (%s). Repli autorisé...", target_model, primary_exc)
+
+            fallback_order = [m for m in ["cloud_gemini", "local_primary", "local_fallback"] if m != target_model]
 
             for fallback_model in fallback_order:
                 self._prepare_backend_memory(fallback_model)
@@ -119,13 +154,15 @@ class AgentProviderAdapter:
                     fb_kwargs["think"] = False
 
                 try:
-                    logger.info("[ROUTER] Tentative de repli sur %s...", fallback_model)
+                    logger.info("[ROUTER] Repli vers %s...", fallback_model)
                     response = self.router.completion(**fb_kwargs)
                     return self._extract_content(response)
                 except Exception as fb_exc:
+                    if self._is_terminal_route_error(fb_exc):
+                        raise RouteIntegrityError(f"[FAIL-CLOSED] Route de repli invalide : {fb_exc}") from fb_exc
                     logger.warning("[ROUTER] Échec du repli %s (%s)", fallback_model, fb_exc)
 
-            raise RuntimeError(f"[FAIL-CLOSED] Tous les backends ont échoué : {primary_exc}")
+            raise RuntimeError(f"[FAIL-CLOSED] Épuisement de tous les paliers autorisés : {primary_exc}")
 
     def _extract_content(self, response: Any) -> str:
         raw_text = ""
