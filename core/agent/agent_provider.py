@@ -59,7 +59,7 @@ class AgentProviderAdapter:
         return EzzioRouter(model_list=model_list)
 
     def _ensure_single_resident_model(self, target_ollama_model: str) -> None:
-        """Décharge tout modèle Ollama actif qui n'est pas le modèle cible."""
+        """Décharge tout modèle Ollama actif qui n'est pas la cible sans masquer les pannes."""
         try:
             req_ps = urllib.request.Request("http://127.0.0.1:11434/api/ps", method="GET")
             with urllib.request.urlopen(req_ps, timeout=2.0) as resp:
@@ -80,7 +80,8 @@ class AgentProviderAdapter:
                     with urllib.request.urlopen(req_unload, timeout=3.0):
                         pass
         except Exception as exc:
-            logger.debug("[OLLAMA-AUTO-PURGE] Contrôle ignoré : %s", exc)
+            logger.error("[OLLAMA-AUTO-PURGE-FAIL] Démon Ollama injoignable pour la purge : %s", exc)
+            raise ConnectionError(f"Démon Ollama injoignable pour l'isolation mémoire : {exc}") from exc
 
     def _prepare_backend_memory(self, model_name: str) -> None:
         if model_name == "local_primary":
@@ -110,7 +111,6 @@ class AgentProviderAdapter:
     ) -> str:
         target_model = "cloud_gemini" if force_cloud else self.backend
 
-        # 1. Validation de premier niveau (Fail-Closed immédiat)
         if target_model not in self.AUTHORIZED_MODELS:
             raise RouteIntegrityError(
                 f"[FAIL-CLOSED] Route ou modèle non autorisé : '{target_model}'. "
@@ -131,14 +131,12 @@ class AgentProviderAdapter:
             response = self.router.completion(**call_kwargs)
             return self._extract_content(response)
         except Exception as primary_exc:
-            # 2. Interception des erreurs terminales de configuration/route
             if self._is_terminal_route_error(primary_exc):
                 logger.error("[ROUTER-SECURITY] Erreur de route terminale sur %s : %s", target_model, primary_exc)
                 raise RouteIntegrityError(
                     f"[FAIL-CLOSED] Rejet strict sur route invalide '{target_model}' : {primary_exc}"
                 ) from primary_exc
 
-            # 3. Repli autorisé uniquement en cas de panne de disponibilité opérationnelle
             logger.warning("[ROUTER] Indisponibilité transitoire de %s (%s). Repli autorisé...", target_model, primary_exc)
 
             fallback_order = [m for m in ["cloud_gemini", "local_primary", "local_fallback"] if m != target_model]
