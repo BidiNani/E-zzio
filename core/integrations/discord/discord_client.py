@@ -212,7 +212,7 @@ async def on_message(message):
             payload = {
                     "text": clean_prompt,
                     "session_id": f"disc_user_{message.author.id}",
-                    "force_cloud": False,
+                    "force_cloud": True,
                     "speed": "fast"
                 }
 
@@ -257,11 +257,13 @@ async def on_message(message):
             else:
                 await message.reply(error_reply)
 
-    await bot.process_commands(message)
+    # await bot.process_commands(message) # Neutralisé pour éviter les doublons
 
 
 if __name__ == "__main__":
     bot.run(DISCORD_TOKEN)
+
+
 
 
 

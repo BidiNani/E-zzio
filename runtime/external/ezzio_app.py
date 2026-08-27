@@ -1,43 +1,52 @@
-import os
-from flask import Flask, request, Response, stream_with_context
-from openai import OpenAI
+"""E-ZZIO External Runtime — Unified Sovereign Bridge via CognitiveGateway."""
+from __future__ import annotations
+import logging
+import traceback
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from core.cognition.cognitive_gateway import CognitiveGateway
 
-app = Flask(__name__)
+app = FastAPI(title="E-ZZIO External Runtime Bridge")
+gateway = CognitiveGateway(backend="cloud_gemini")
 
-# Client OpenRouter
-client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=os.environ.get("OPENROUTER_API_KEY", ""))
+class ChatRequest(BaseModel):
+    text: str
+    session_id: str | None = "default"
+    force_cloud: bool | None = True
+    speed: str | None = "fast"
+    image_url: str | None = None
 
-# LE BON MODÈLE (SANS LE :free)
-MODEL_NAME = "meta-llama/llama-3.3-70b-instruct"
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "ok": True}
 
-
-@app.route("/")
-def index():
-    return "E-zzio Core est en ligne !"
-
-
-@app.route("/chat", methods=["POST"])
-def chat():
-    data = request.json
-    user_message = data.get("message", "")
-
+@app.post("/master/chat")
+async def master_chat(req: ChatRequest):
     try:
-        response_stream = client.chat.completions.create(
-            model=MODEL_NAME, messages=[{"role": "user", "content": user_message}], stream=True
+        # Routage souverain avec injection automatique de CanonicalIdentity
+        target_backend = "cloud_gemini" if req.force_cloud else "local_primary"
+        result = gateway.ask(
+            task=req.text,
+            backend=target_backend,
+            context_payload={"force_cloud": req.force_cloud}
         )
-
-        def generate():
-            for chunk in response_stream:
-                content = chunk.choices[0].delta.content
-                if content:
-                    yield content
-
-        return Response(stream_with_context(generate()), mimetype="text/plain")
-
-    except Exception as e:
-        return f"Erreur API : {str(e)}", 500
-
+        
+        if result.get("status") == "ACCEPTED":
+            return {
+                "response": result.get("result", ""),
+                "ok": True
+            }
+        else:
+            raise HTTPException(
+                status_code=500,
+                detail=result.get("error", "Échec d'inférence cognitive")
+            )
+    except Exception as exc:
+        print("\n--- [E-ZZIO ERREUR INTERNE CAPTURÉE] ---")
+        traceback.print_exc()
+        print("------------------------------------------\n")
+        raise HTTPException(status_code=500, detail=str(exc))
 
 if __name__ == "__main__":
-    print(f"🚀 [E-zzio] Serveur Flask initialisé (Modèle : {MODEL_NAME})")
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8001)
