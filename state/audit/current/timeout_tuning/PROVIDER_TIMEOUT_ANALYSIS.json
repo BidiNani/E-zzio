@@ -1,0 +1,20 @@
+{
+  "gemini": {
+    "before_sec": 30.0,
+    "after_sec": 15.0,
+    "p99_margin_ratio": "5.8x",
+    "status": "SAFE"
+  },
+  "groq": {
+    "before_sec": 15.0,
+    "after_sec": 8.0,
+    "p99_margin_ratio": "4.1x",
+    "status": "SAFE"
+  },
+  "ollama": {
+    "before_sec": 30.0,
+    "after_sec": 5.0,
+    "p99_margin_ratio": "Local Socket",
+    "status": "SAFE"
+  }
+}

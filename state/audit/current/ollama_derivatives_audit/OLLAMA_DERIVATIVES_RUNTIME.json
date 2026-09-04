@@ -1,0 +1,322 @@
+{
+  "ez-router": {
+    "runs": [
+      {
+        "run": 1,
+        "e2e_ms": 5152.73,
+        "total_duration_ms": 5145.19,
+        "load_duration_ms": 3.33,
+        "prompt_eval_duration_ms": 324.1,
+        "eval_duration_ms": 4814.52,
+        "eval_count": 55,
+        "tokens_per_second": 11.42,
+        "response_sample": "```json\n\n{\n\n  \"task\": \"R\u00e9dige un script Python pour parser un CSV\",\n\n  \"category..."
+      },
+      {
+        "run": 2,
+        "e2e_ms": 4867.34,
+        "total_duration_ms": 4864.57,
+        "load_duration_ms": 3.15,
+        "prompt_eval_duration_ms": 84.41,
+        "eval_duration_ms": 4772.48,
+        "eval_count": 53,
+        "tokens_per_second": 11.11,
+        "response_sample": "```json\n\n{\n\n  \"task\": \"R\u00e9dige un script Python pour parser un CSV\",\n\n  \"category..."
+      },
+      {
+        "run": 3,
+        "e2e_ms": 3209.96,
+        "total_duration_ms": 3206.81,
+        "load_duration_ms": 2.3,
+        "prompt_eval_duration_ms": 87.17,
+        "eval_duration_ms": 3111.93,
+        "eval_count": 35,
+        "tokens_per_second": 11.25,
+        "response_sample": "```json\n\n{\n\n  \"task\": \"R\u00e9diger un script Python pour parser un CSV\",\n\n  \"classif..."
+      }
+    ],
+    "avg_e2e_ms": 4410.01,
+    "avg_tokens_per_second": 11.26,
+    "avg_eval_count": 47.7
+  },
+  "phi4-mini:latest": {
+    "runs": [
+      {
+        "run": 1,
+        "e2e_ms": 13954.98,
+        "total_duration_ms": 13950.54,
+        "load_duration_ms": 6226.4,
+        "prompt_eval_duration_ms": 280.5,
+        "eval_duration_ms": 7438.14,
+        "eval_count": 72,
+        "tokens_per_second": 9.68,
+        "response_sample": "```json\n\n{\n\n  \"task\": \"R\u00e9dige un script Python pour parser un CSV\",\n\n  \"category..."
+      },
+      {
+        "run": 2,
+        "e2e_ms": 5235.43,
+        "total_duration_ms": 5230.98,
+        "load_duration_ms": 2.81,
+        "prompt_eval_duration_ms": 92.94,
+        "eval_duration_ms": 5129.8,
+        "eval_count": 51,
+        "tokens_per_second": 9.94,
+        "response_sample": "```json\n\n{\n\n  \"task\": \"R\u00e9dige un script Python pour parser un CSV\",\n\n  \"category..."
+      },
+      {
+        "run": 3,
+        "e2e_ms": 3721.52,
+        "total_duration_ms": 3717.31,
+        "load_duration_ms": 3.55,
+        "prompt_eval_duration_ms": 100.01,
+        "eval_duration_ms": 3609.2,
+        "eval_count": 37,
+        "tokens_per_second": 10.25,
+        "response_sample": "```json\n\n{\n\n  \"task\": \"script\",\n\n  \"language\": \"Python\",\n\n  \"purpose\": \"parse CS..."
+      }
+    ],
+    "avg_e2e_ms": 7637.31,
+    "avg_tokens_per_second": 9.96,
+    "avg_eval_count": 53.3
+  },
+  "ez-core-safe": {
+    "runs": [
+      {
+        "run": 1,
+        "e2e_ms": 36804.54,
+        "total_duration_ms": 36801.36,
+        "load_duration_ms": 11017.99,
+        "prompt_eval_duration_ms": 1461.83,
+        "eval_duration_ms": 24317.44,
+        "eval_count": 128,
+        "tokens_per_second": 5.26,
+        "response_sample": "..."
+      },
+      {
+        "run": 2,
+        "e2e_ms": 24804.15,
+        "total_duration_ms": 24799.96,
+        "load_duration_ms": 2.64,
+        "prompt_eval_duration_ms": 228.8,
+        "eval_duration_ms": 24539.71,
+        "eval_count": 128,
+        "tokens_per_second": 5.22,
+        "response_sample": "..."
+      },
+      {
+        "run": 3,
+        "e2e_ms": 24943.71,
+        "total_duration_ms": 24940.49,
+        "load_duration_ms": 2.09,
+        "prompt_eval_duration_ms": 231.25,
+        "eval_duration_ms": 24655.06,
+        "eval_count": 128,
+        "tokens_per_second": 5.19,
+        "response_sample": "..."
+      }
+    ],
+    "avg_e2e_ms": 28850.8,
+    "avg_tokens_per_second": 5.22,
+    "avg_eval_count": 128
+  },
+  "qwen3.5:9b": {
+    "runs": [
+      {
+        "run": 1,
+        "e2e_ms": 32158.83,
+        "total_duration_ms": 32156.85,
+        "load_duration_ms": 5371.5,
+        "prompt_eval_duration_ms": 601.12,
+        "eval_duration_ms": 26181.32,
+        "eval_count": 128,
+        "tokens_per_second": 4.89,
+        "response_sample": "..."
+      },
+      {
+        "run": 2,
+        "e2e_ms": 26860.6,
+        "total_duration_ms": 26857.29,
+        "load_duration_ms": 2.55,
+        "prompt_eval_duration_ms": 241.75,
+        "eval_duration_ms": 26592.29,
+        "eval_count": 128,
+        "tokens_per_second": 4.81,
+        "response_sample": "..."
+      },
+      {
+        "run": 3,
+        "e2e_ms": 27254.96,
+        "total_duration_ms": 27251.51,
+        "load_duration_ms": 2.59,
+        "prompt_eval_duration_ms": 244.74,
+        "eval_duration_ms": 26950.57,
+        "eval_count": 128,
+        "tokens_per_second": 4.75,
+        "response_sample": "..."
+      }
+    ],
+    "avg_e2e_ms": 28758.13,
+    "avg_tokens_per_second": 4.82,
+    "avg_eval_count": 128
+  },
+  "ez-agent-hermes": {
+    "runs": [
+      {
+        "run": 1,
+        "e2e_ms": 28830.62,
+        "total_duration_ms": 28827.42,
+        "load_duration_ms": 7843.17,
+        "prompt_eval_duration_ms": 1807.76,
+        "eval_duration_ms": 19172.78,
+        "eval_count": 128,
+        "tokens_per_second": 6.68,
+        "response_sample": "1. Collecte et organisation des logs d'authentification:\n   - Identifier les sou..."
+      },
+      {
+        "run": 2,
+        "e2e_ms": 19811.62,
+        "total_duration_ms": 19809.2,
+        "load_duration_ms": 2.72,
+        "prompt_eval_duration_ms": 149.56,
+        "eval_duration_ms": 19645.03,
+        "eval_count": 128,
+        "tokens_per_second": 6.52,
+        "response_sample": "1. **Collecte des donn\u00e9es :** \n   - Identifier les sources de logs d'authentific..."
+      },
+      {
+        "run": 3,
+        "e2e_ms": 19703.27,
+        "total_duration_ms": 19700.21,
+        "load_duration_ms": 2.98,
+        "prompt_eval_duration_ms": 152.62,
+        "eval_duration_ms": 19534.66,
+        "eval_count": 128,
+        "tokens_per_second": 6.55,
+        "response_sample": "\u00c9tape 1: Pr\u00e9paration de l'environnement\n- Assurez-vous d'avoir acc\u00e8s aux logs d'..."
+      }
+    ],
+    "avg_e2e_ms": 22781.84,
+    "avg_tokens_per_second": 6.58,
+    "avg_eval_count": 128
+  },
+  "hermes3:8b": {
+    "runs": [
+      {
+        "run": 1,
+        "e2e_ms": 24622.81,
+        "total_duration_ms": 24620.07,
+        "load_duration_ms": 3308.03,
+        "prompt_eval_duration_ms": 755.38,
+        "eval_duration_ms": 20551.84,
+        "eval_count": 128,
+        "tokens_per_second": 6.23,
+        "response_sample": "1. R\u00e9colter et stocker les logs d'authentification :\n   - Identifier les sources..."
+      },
+      {
+        "run": 2,
+        "e2e_ms": 20283.26,
+        "total_duration_ms": 20280.57,
+        "load_duration_ms": 2.14,
+        "prompt_eval_duration_ms": 155.22,
+        "eval_duration_ms": 20114.82,
+        "eval_count": 128,
+        "tokens_per_second": 6.36,
+        "response_sample": "1. R\u00e9colter et stocker les donn\u00e9es des logs d'authentification :\n   - Identifier..."
+      },
+      {
+        "run": 3,
+        "e2e_ms": 20392.97,
+        "total_duration_ms": 20390.0,
+        "load_duration_ms": 2.84,
+        "prompt_eval_duration_ms": 152.94,
+        "eval_duration_ms": 20225.29,
+        "eval_count": 128,
+        "tokens_per_second": 6.33,
+        "response_sample": "1. Recueillir les donn\u00e9es :\n   - Identifiez les sources de logs d'authentificati..."
+      }
+    ],
+    "avg_e2e_ms": 21766.35,
+    "avg_tokens_per_second": 6.31,
+    "avg_eval_count": 128
+  },
+  "ez-core-free": {
+    "runs": [
+      {
+        "run": 1,
+        "e2e_ms": 27931.26,
+        "total_duration_ms": 27929.0,
+        "load_duration_ms": 9139.79,
+        "prompt_eval_duration_ms": 4247.81,
+        "eval_duration_ms": 14537.17,
+        "eval_count": 79,
+        "tokens_per_second": 5.43,
+        "response_sample": "1. N'ouvre pas de portails de s\u00e9curit\u00e9 sur les r\u00e9seaux locaux sans mot de passe ..."
+      },
+      {
+        "run": 2,
+        "e2e_ms": 12918.61,
+        "total_duration_ms": 12915.58,
+        "load_duration_ms": 2.63,
+        "prompt_eval_duration_ms": 177.46,
+        "eval_duration_ms": 12732.48,
+        "eval_count": 72,
+        "tokens_per_second": 5.65,
+        "response_sample": "1. N'ouvre pas de portails de s\u00e9curit\u00e9 sur les r\u00e9seaux locaux sans mot de passe...."
+      },
+      {
+        "run": 3,
+        "e2e_ms": 20481.19,
+        "total_duration_ms": 20477.7,
+        "load_duration_ms": 2.18,
+        "prompt_eval_duration_ms": 168.24,
+        "eval_duration_ms": 20304.15,
+        "eval_count": 115,
+        "tokens_per_second": 5.66,
+        "response_sample": "1. N'oubliez jamais de v\u00e9rifier les ports et les protocoles avant de vous connec..."
+      }
+    ],
+    "avg_e2e_ms": 20443.69,
+    "avg_tokens_per_second": 5.58,
+    "avg_eval_count": 88.7
+  },
+  "ez-rag-expert": {
+    "runs": [
+      {
+        "run": 1,
+        "e2e_ms": 37352.57,
+        "total_duration_ms": 37348.94,
+        "load_duration_ms": 11906.36,
+        "prompt_eval_duration_ms": 1889.18,
+        "eval_duration_ms": 23543.6,
+        "eval_count": 117,
+        "tokens_per_second": 4.97,
+        "response_sample": "The user is asking me to extract factual information from the provided context. ..."
+      },
+      {
+        "run": 2,
+        "e2e_ms": 22871.25,
+        "total_duration_ms": 22867.94,
+        "load_duration_ms": 2.12,
+        "prompt_eval_duration_ms": 253.41,
+        "eval_duration_ms": 22572.32,
+        "eval_count": 113,
+        "tokens_per_second": 5.01,
+        "response_sample": "The user is asking me to extract factual information from the provided context. ..."
+      },
+      {
+        "run": 3,
+        "e2e_ms": 23179.42,
+        "total_duration_ms": 23170.68,
+        "load_duration_ms": 6.0,
+        "prompt_eval_duration_ms": 288.93,
+        "eval_duration_ms": 22816.99,
+        "eval_count": 114,
+        "tokens_per_second": 5.0,
+        "response_sample": "The user is asking me to extract factual information from the provided context. ..."
+      }
+    ],
+    "avg_e2e_ms": 27801.08,
+    "avg_tokens_per_second": 4.99,
+    "avg_eval_count": 114.7
+  }
+}

@@ -1,8 +1,13 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 from core.ezzio_master import ezzio_master
+from routers.approval import router as approval_router
+from routers.office import router as office_router
 
 router = APIRouter(prefix="/master", tags=["E-ZZIO Master"])
+router.include_router(approval_router)
+router.include_router(office_router)
+
 
 
 class MasterPrompt(BaseModel):

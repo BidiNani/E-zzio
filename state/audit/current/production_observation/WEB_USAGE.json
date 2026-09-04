@@ -1,0 +1,6 @@
+{
+  "primary_search": "Tavily (Operational)",
+  "fallback_search_reader": "Jina (Operational)",
+  "local_reader": "SafeWebFetcher (Operational)",
+  "status": "STABLE"
+}

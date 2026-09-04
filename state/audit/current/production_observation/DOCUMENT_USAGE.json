@@ -1,0 +1,13 @@
+{
+  "formats_supported": [
+    "PDF",
+    "DOCX",
+    "XLSX",
+    "CSV",
+    "HTML",
+    "TXT",
+    "ZIP"
+  ],
+  "pipeline": "UniversalDocumentEngine",
+  "status": "STABLE"
+}

@@ -1,0 +1,5 @@
+{
+  "metrics_source": "GET /metrics",
+  "router_telemetry": "Active",
+  "zero_interference_with_model_router": true
+}

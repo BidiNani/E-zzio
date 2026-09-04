@@ -1,0 +1,13 @@
+{
+  "scenario": "Gemini 429 RateLimit Cooldown",
+  "trigger": "Simulated 429 Circuit Breaker sur gemini_pool",
+  "behavior": "Bascule instantanée sur Groq Cloud Same-Role (groq/compound-mini)",
+  "result": {
+    "ok": true,
+    "final_provider": "groq",
+    "final_model": "groq/compound-mini",
+    "latency_ms": 974.01,
+    "ollama_used": false
+  },
+  "proof": "OBSERVED"
+}

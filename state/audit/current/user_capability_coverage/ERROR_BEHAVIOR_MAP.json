@@ -1,0 +1,20 @@
+{
+  "missing_credential": {
+    "behavior": "FAIL_CLOSED with clear error explanation, zero secret leaked"
+  },
+  "provider_unavailable_5xx": {
+    "behavior": "Circuit breaker triggers cooldown -> Instant failover to secondary provider"
+  },
+  "provider_quota_429": {
+    "behavior": "Quota-Aware deprioritization -> Fallback to healthy model / Groq absorber"
+  },
+  "invalid_input": {
+    "behavior": "HTTP 400 / Validation error with structured payload"
+  },
+  "unsupported_format": {
+    "behavior": "Rejected safely before memory/AST ingestion with format list"
+  },
+  "network_timeout": {
+    "behavior": "15s/30s strict timeout -> Circuit breaker failure increment -> Fallback"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "RUN_ID": "V2A_qwen3_5_9b_TOOLS_TO02_r1_1788180786",
+  "MODEL": "qwen3.5:9b",
+  "TASK": "TOOLS",
+  "SUB_ID": "TO02",
+  "RUN_NUM": 1,
+  "IS_COLD": false,
+  "PROMPT_HASH": "d494d14cdeb7",
+  "THREADS": 4,
+  "CONTEXT": 4096,
+  "GPU": 0,
+  "START_TIMESTAMP": "2026-08-31T12:53:06.850871+00:00",
+  "END_TIMESTAMP": "2026-08-31T12:53:20.721801+00:00",
+  "STATUS": "OK",
+  "QUALITY": "FAIL",
+  "LOAD_MS": 2.25,
+  "TTFT_MS": 1958.08,
+  "PROMPT_TOKENS": 54,
+  "PROMPT_EVAL_TOK_S": 27.58,
+  "OUTPUT_TOKENS": 64,
+  "GEN_TOK_S": 5.48,
+  "TOTAL_E2E_MS": 13870.68,
+  "RAM_BEFORE": {
+    "used_gb": 22.37,
+    "avail_gb": 9.55,
+    "pct": 70.1
+  },
+  "RAM_PEAK": {
+    "used_gb": 22.54,
+    "avail_gb": 9.39,
+    "pct": 70.6
+  },
+  "RAM_AFTER": {
+    "used_gb": 22.54,
+    "avail_gb": 9.39,
+    "pct": 70.6
+  },
+  "ERROR": "",
+  "TEXT_SNIPPET": ""
+}

@@ -1,0 +1,29 @@
+{
+  "gemini-3.1-flash-lite": {
+    "role": "FAST",
+    "status": "HEALTHY",
+    "quota_margin": "+13"
+  },
+  "gemini-3.6-flash": {
+    "role": "GENERAL",
+    "status": "HEALTHY",
+    "quota_margin": "+3"
+  },
+  "gemini-3.7-flash": {
+    "role": "CODING",
+    "status": "HEALTHY",
+    "quota_margin": "+2"
+  },
+  "gemini-3.1-pro-preview": {
+    "role": "DEEP_REASONING",
+    "status": "HEALTHY"
+  },
+  "groq/compound-mini": {
+    "role": "FAST_FALLBACK",
+    "status": "OPERATIONAL"
+  },
+  "phi4-mini:latest": {
+    "role": "LOCAL_LAST_RESORT",
+    "status": "OPERATIONAL"
+  }
+}

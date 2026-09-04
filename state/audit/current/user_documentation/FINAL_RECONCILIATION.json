@@ -1,0 +1,12 @@
+{
+  "invariants": {
+    "production_code_changed": false,
+    "routing_changed": false,
+    "secrets_exposed": false,
+    "second_model_authority": false,
+    "second_memory_authority": false,
+    "second_security_authority": false,
+    "second_runtime": false
+  },
+  "verdict": "USER_DOCUMENTATION_COMPLETE"
+}

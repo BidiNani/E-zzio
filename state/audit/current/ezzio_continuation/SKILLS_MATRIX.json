@@ -1,0 +1,72 @@
+[
+  {
+    "name": "skill_web_search",
+    "purpose": "Recherche web d'actualité et documentation avec citations",
+    "required_provider": "tavily / knowledge_connectors",
+    "local_fallback": "wikipedia_connector",
+    "permission": "READ_WEB"
+  },
+  {
+    "name": "skill_web_read",
+    "purpose": "Extraction et assainissement markdown de pages web distantes",
+    "required_provider": "jina / safe_fetcher",
+    "local_fallback": "safe_fetcher + universal_reader",
+    "permission": "READ_WEB"
+  },
+  {
+    "name": "skill_code_search",
+    "purpose": "Recherche syntaxique et symbolique dans le dépôt",
+    "required_provider": "codebase_indexer / ripgrep",
+    "local_fallback": "PowerShell Select-String",
+    "permission": "READ_FS"
+  },
+  {
+    "name": "skill_repository_map",
+    "purpose": "Cartographie complète de l'arborescence et des modules",
+    "required_provider": "file_scanner",
+    "local_fallback": "PowerShell Get-ChildItem",
+    "permission": "READ_FS"
+  },
+  {
+    "name": "skill_benchmark_runner",
+    "purpose": "Exécution de bancs de test TTFT, latence et débit",
+    "required_provider": "runtime/run_benchmark_*.py",
+    "local_fallback": "PowerShell run_cpu_benchmark_*.ps1",
+    "permission": "EXEC_TEST"
+  },
+  {
+    "name": "skill_document_analysis",
+    "purpose": "Analyse et extraction de documents multi-formats",
+    "required_provider": "core/perception/universal_reader.py",
+    "local_fallback": "universal_reader local (PDF, DOCX, XLSX)",
+    "permission": "READ_FS"
+  },
+  {
+    "name": "skill_file_generation",
+    "purpose": "Génération et patch de fichiers de code et de conf",
+    "required_provider": "tools/patch_engine.py",
+    "local_fallback": "Python standard file I/O",
+    "permission": "WRITE_FS"
+  },
+  {
+    "name": "skill_memory_search",
+    "purpose": "Recherche sémantique et textuelle dans la mémoire souveraine",
+    "required_provider": "UnifiedMemoryGateway (SQLite WAL + FTS5)",
+    "local_fallback": "FTS5 direct query",
+    "permission": "READ_MEMORY"
+  },
+  {
+    "name": "skill_model_inspection",
+    "purpose": "Inspection de la télémétrie des backends LLM et quotas",
+    "required_provider": "ModelRouter / gemini_pool telemetry",
+    "local_fallback": "ollama list / ps",
+    "permission": "READ_TELEMETRY"
+  },
+  {
+    "name": "skill_ollama_management",
+    "purpose": "Pilotage des cycles de vie des modèles locaux",
+    "required_provider": "ollama_provider / CLI",
+    "local_fallback": "ollama CLI",
+    "permission": "MANAGE_LOCAL_MODELS"
+  }
+]

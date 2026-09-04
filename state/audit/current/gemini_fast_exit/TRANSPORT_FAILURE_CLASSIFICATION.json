@@ -1,0 +1,13 @@
+{
+  "transport_exceptions": [
+    "httpx.TimeoutException",
+    "httpx.ConnectError",
+    "httpx.NetworkError",
+    "httpx.ConnectTimeout",
+    "httpx.ReadTimeout"
+  ],
+  "behavior_on_transport": "FAST_EXIT_IMMEDIATE (candidate loop breaks after 1st failure)",
+  "behavior_on_429": "CANDIDATE_ROTATION_PRESERVED",
+  "behavior_on_401": "SLOT_QUARANTINE_PRESERVED",
+  "behavior_on_5xx": "SERVER_ERROR_POLICY_PRESERVED"
+}

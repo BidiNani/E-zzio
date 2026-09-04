@@ -1,0 +1,11 @@
+{
+  "global_p95_ms": 38586.43,
+  "cloud_llm_nominal_p95_ms": 2575.09,
+  "gemini_nominal_p95_ms": 2575.09,
+  "groq_nominal_p95_ms": 1957.65,
+  "ollama_nominal_p95_ms": 0.0,
+  "web_p95_ms": 961.38,
+  "document_p95_ms": 5.86,
+  "voice_p95_ms": 979.49,
+  "verdict": "P95_EXPLAINED (Cascade multi-target failover timeout accumulation during concurrent cloud 429/413 events)"
+}

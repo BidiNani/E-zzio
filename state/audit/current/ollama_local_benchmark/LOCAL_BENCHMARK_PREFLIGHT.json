@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-08-31T13:53:00+02:00",
+  "cpu": "AMD Ryzen 9 5900X (12C/24T)",
+  "ram_total_gb": 31.93,
+  "gpu_excluded": "NVIDIA GeForce GTX 1650 (4 GB)",
+  "ollama_version": "0.33.2",
+  "models": [
+    "phi4-mini:latest",
+    "nemotron-3-nano:4b",
+    "hermes3:8b",
+    "qwen3.5:9b"
+  ],
+  "ram_initial": {
+    "used_gb": 18.79,
+    "available_gb": 13.14,
+    "percent": 58.8
+  }
+}

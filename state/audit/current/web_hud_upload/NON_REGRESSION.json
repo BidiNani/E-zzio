@@ -1,0 +1,7 @@
+{
+  "discord_intact": true,
+  "cli_sdk_intact": true,
+  "fastapi_intact": true,
+  "web_hud_chat_intact": true,
+  "cache_and_singleflight_intact": true
+}

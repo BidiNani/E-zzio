@@ -1,0 +1,11 @@
+{
+  "test_name": "5 Consecutive FAST Requests",
+  "selections": [
+    "gemini-3.1-flash-lite",
+    "gemini-3.1-flash-lite",
+    "gemini-3.1-flash-lite",
+    "gemini-3.1-flash-lite",
+    "gemini-3.1-flash-lite"
+  ],
+  "zero_flapping_proven": true
+}

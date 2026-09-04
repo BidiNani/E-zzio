@@ -1,0 +1,17 @@
+{
+  "metadata": {
+    "generated_at": "2026-08-31T18:15:00+02:00",
+    "standard": "EVIDENCE RULE v1.1",
+    "repository": "G:/AI/E-zzio",
+    "mission": "CACHE_STAMPEDE_SUPPRESSION_VIA_ASYNC_SINGLEFLIGHT"
+  },
+  "invariants_checked": {
+    "model_router_authority": "UNIQUE (core/cognition/model_router.py)",
+    "memory_authority": "UNIQUE (core/memory/unified_gateway.py)",
+    "security_vault_authority": "UNIQUE (core/security/unified_vault.py)",
+    "second_runtime": false,
+    "second_model_authority": false,
+    "second_memory_authority": false,
+    "docker_required": false
+  }
+}

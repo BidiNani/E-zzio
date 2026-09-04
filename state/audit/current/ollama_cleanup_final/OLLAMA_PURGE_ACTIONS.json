@@ -1,0 +1,47 @@
+[
+  {
+    "model": "ez-router:latest",
+    "command": "ollama rm ez-router:latest",
+    "returncode": 0,
+    "stdout": "deleted 'ez-router:latest'",
+    "stderr": "\u001b[?25l\u001b[?2026h\u001b[?25l\u001b[1G\u001b[K\u001b[?25h\u001b[?2026l\u001b[2K\u001b[1G\u001b[?25h",
+    "duration_ms": 93.5,
+    "success": true
+  },
+  {
+    "model": "ez-core-safe:latest",
+    "command": "ollama rm ez-core-safe:latest",
+    "returncode": 0,
+    "stdout": "deleted 'ez-core-safe:latest'",
+    "stderr": "\u001b[?25l\u001b[?2026h\u001b[?25l\u001b[1G\u001b[K\u001b[?25h\u001b[?2026l\u001b[2K\u001b[1G\u001b[?25h",
+    "duration_ms": 90.02,
+    "success": true
+  },
+  {
+    "model": "ez-agent-hermes:latest",
+    "command": "ollama rm ez-agent-hermes:latest",
+    "returncode": 0,
+    "stdout": "deleted 'ez-agent-hermes:latest'",
+    "stderr": "\u001b[?25l\u001b[?2026h\u001b[?25l\u001b[1G\u001b[K\u001b[?25h\u001b[?2026l\u001b[2K\u001b[1G\u001b[?25h",
+    "duration_ms": 88.48,
+    "success": true
+  },
+  {
+    "model": "ez-core-free:latest",
+    "command": "ollama rm ez-core-free:latest",
+    "returncode": 0,
+    "stdout": "deleted 'ez-core-free:latest'",
+    "stderr": "\u001b[?25l\u001b[?2026h\u001b[?25l\u001b[1G\u001b[K\u001b[?25h\u001b[?2026l\u001b[2K\u001b[1G\u001b[?25h",
+    "duration_ms": 250.7,
+    "success": true
+  },
+  {
+    "model": "ez-rag-expert:latest",
+    "command": "ollama rm ez-rag-expert:latest",
+    "returncode": 0,
+    "stdout": "deleted 'ez-rag-expert:latest'",
+    "stderr": "\u001b[?25l\u001b[?2026h\u001b[?25l\u001b[1G\u001b[K\u001b[?25h\u001b[?2026l\u001b[2K\u001b[1G\u001b[?25h",
+    "duration_ms": 658.47,
+    "success": true
+  }
+]

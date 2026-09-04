@@ -1,0 +1,52 @@
+{
+  "web_server.py": {
+    "total_dependencies_count": 16,
+    "reachable_files": [
+      "core/__init__.py",
+      "core/ezzio_master.py",
+      "core/schemas.py",
+      "core/sdk.py",
+      "routers/capabilities.py",
+      "routers/generators.py",
+      "routers/master.py",
+      "routers/memory.py",
+      "routers/perception.py",
+      "runtime/execution/worker_bootstrap.py",
+      "runtime/model_router/__init__.py",
+      "runtime/model_router/router.py",
+      "runtime/model_router/schemas.py",
+      "runtime/routers/llm.py",
+      "runtime/routers/mobile.py",
+      "src/ezzio/__init__.py",
+      "web_server.py"
+    ]
+  },
+  "runtime/external/ezzio_app.py": {
+    "total_dependencies_count": 4,
+    "reachable_files": [
+      "core/__init__.py",
+      "core/ezzio_master.py",
+      "core/sdk.py",
+      "core/secrets.py",
+      "runtime/external/ezzio_app.py"
+    ]
+  },
+  "core/integrations/discord/discord_client.py": {
+    "total_dependencies_count": 4,
+    "reachable_files": [
+      "core/__init__.py",
+      "core/ezzio_master.py",
+      "core/integrations/discord/discord_client.py",
+      "core/sdk.py",
+      "runtime/adapters/config/dotenv_provider.py"
+    ]
+  },
+  "core/sdk.py": {
+    "total_dependencies_count": 2,
+    "reachable_files": [
+      "core/__init__.py",
+      "core/ezzio_master.py",
+      "core/sdk.py"
+    ]
+  }
+}

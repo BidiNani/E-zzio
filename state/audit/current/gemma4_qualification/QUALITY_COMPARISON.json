@@ -1,0 +1,5 @@
+{
+  "gemma_26b_quality": "GOOD (Clean responses on general QA and Python coding, follows instructions)",
+  "gemma_31b_quality": "EXCELLENT (Strong reasoning, concise and accurate syntax)",
+  "gemini_baseline_quality": "SOVEREIGN_BENCHMARK (Flagship capabilities)"
+}

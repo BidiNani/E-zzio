@@ -1,0 +1,53 @@
+{
+  "matrix": [
+    {
+      "capability": "Recherche Web",
+      "jina": "OUI (s.jina.ai)",
+      "tavily": "OUI (api.tavily.com - EXCELLENT)",
+      "searxng": "OUI (si instance active)",
+      "safe_fetcher": "NON"
+    },
+    {
+      "capability": "Lecture URL",
+      "jina": "OUI (r.jina.ai)",
+      "tavily": "Partiel (extraits)",
+      "searxng": "NON",
+      "safe_fetcher": "OUI (Direct HTTP local)"
+    },
+    {
+      "capability": "Extraction Markdown",
+      "jina": "OUI (Nettoyé)",
+      "tavily": "Extraits JSON",
+      "searxng": "Extraits texte",
+      "safe_fetcher": "OUI (via UniversalReader)"
+    },
+    {
+      "capability": "Citations & URLs",
+      "jina": "OUI",
+      "tavily": "OUI (Titres, URLs, Scores)",
+      "searxng": "OUI",
+      "safe_fetcher": "OUI (Source épinglée)"
+    },
+    {
+      "capability": "Local / Hors-ligne",
+      "jina": "NON (Cloud)",
+      "tavily": "NON (Cloud)",
+      "searxng": "OUI (Self-hosted)",
+      "safe_fetcher": "OUI (Direct)"
+    },
+    {
+      "capability": "Clé API Requise",
+      "jina": "OUI (Optionnel/Bearer)",
+      "tavily": "OUI (Obligatoire)",
+      "searxng": "NON",
+      "safe_fetcher": "NON"
+    },
+    {
+      "capability": "Latence mesurée",
+      "jina": "4.73s",
+      "tavily": "1.61s (TRÈS RAPIDE)",
+      "searxng": "N/A (Hors-ligne)",
+      "safe_fetcher": "0.28s (INSTANTANÉ)"
+    }
+  ]
+}

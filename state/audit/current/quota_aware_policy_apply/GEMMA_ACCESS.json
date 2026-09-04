@@ -1,0 +1,12 @@
+{
+  "gemma_4_26b": {
+    "status": "WORKBENCH_AND_LOCAL_RESOURCE",
+    "direct_gemini_api_endpoint": false,
+    "action": "Non intégré dans ModelRouter pour éviter les erreurs d'endpoint distant, réservé aux environnements Ollama/Workbench"
+  },
+  "gemma_4_31b": {
+    "status": "WORKBENCH_AND_LOCAL_RESOURCE",
+    "direct_gemini_api_endpoint": false,
+    "action": "Non intégré dans ModelRouter pour préserver la robustesse nominale"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "active_slots": 1,
+  "available_slots": 1,
+  "cooldown_behavior": "Immediate exponential backoff on 429/5xx (10s, 20s, 30s)",
+  "cause_of_low_calls": "Single initial 503 in rapid batch placed gemini_pool in cooldown for the duration of subsequent requests in the loop"
+}

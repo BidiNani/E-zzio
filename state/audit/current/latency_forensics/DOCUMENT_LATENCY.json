@@ -1,0 +1,8 @@
+{
+  "txt_median_ms": 4.64,
+  "csv_median_ms": 2.6,
+  "docx_median_ms": 3.13,
+  "pdf_median_ms": 2.84,
+  "overall_median_ms": 3.3,
+  "category": "HIGH_SPEED_IN_MEMORY"
+}

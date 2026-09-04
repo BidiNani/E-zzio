@@ -1,0 +1,86 @@
+{
+  "metadata": {
+    "timestamp": "2026-08-31T18:39:00+02:00",
+    "standard": "EVIDENCE RULE v1.1",
+    "source": "User Quota Observation Window",
+    "scope": "Agent vs Model vs Provider Quota Distinction"
+  },
+  "observations": {
+    "antigravity_agent": {
+      "used": 0,
+      "limit": 60,
+      "type": "AGENT_LIMIT",
+      "status": "HEALTHY"
+    },
+    "gemini_3_1_flash_lite": {
+      "used": 2,
+      "limit": 15,
+      "type": "REQUEST_WINDOW",
+      "status": "HEALTHY",
+      "margin": 13
+    },
+    "gemini_3_6_flash": {
+      "used": 2,
+      "limit": 5,
+      "type": "REQUEST_WINDOW",
+      "status": "HEALTHY",
+      "margin": 3
+    },
+    "gemini_3_7_flash": {
+      "used": 3,
+      "limit": 5,
+      "type": "REQUEST_WINDOW",
+      "status": "MEDIUM_MARGIN",
+      "margin": 2
+    },
+    "gemini_3_flash": {
+      "used": 3,
+      "limit": 5,
+      "type": "REQUEST_WINDOW",
+      "status": "MEDIUM_MARGIN",
+      "margin": 2
+    },
+    "gemini_3_5_flash_lite": {
+      "used": 20,
+      "limit": 15,
+      "type": "REQUEST_WINDOW",
+      "status": "EXHAUSTED_IN_WINDOW",
+      "margin": -5
+    },
+    "gemini_3_5_flash": {
+      "used": 7,
+      "limit": 5,
+      "type": "REQUEST_WINDOW",
+      "status": "EXHAUSTED_IN_WINDOW",
+      "margin": -2
+    },
+    "gemini_2_5_flash_lite": {
+      "used": 2,
+      "limit": 10,
+      "type": "REQUEST_WINDOW",
+      "status": "HEALTHY",
+      "margin": 8
+    },
+    "gemini_2_5_flash": {
+      "used": 6,
+      "limit": 5,
+      "type": "REQUEST_WINDOW",
+      "status": "EXHAUSTED_IN_WINDOW",
+      "margin": -1
+    },
+    "gemma_4_26b": {
+      "used": 1,
+      "limit": 30,
+      "type": "REQUEST_WINDOW",
+      "status": "VERY_HEALTHY",
+      "margin": 29
+    },
+    "gemma_4_31b": {
+      "used": 1,
+      "limit": 30,
+      "type": "REQUEST_WINDOW",
+      "status": "VERY_HEALTHY",
+      "margin": 29
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "model_id": "gemma-4-31b-it",
+  "api_access": "PROVEN",
+  "http_status": 200,
+  "latency_ms": 1221.1,
+  "streaming": true,
+  "tools": false,
+  "vision": false,
+  "structured_output": true,
+  "reply": "The user said \"Hello, answer with OK\".\nT"
+}

@@ -1,0 +1,24 @@
+{
+  "scenarios": [
+    {
+      "scenario": "CACHE_HIT",
+      "result": "0 token consommé, aucun appel provider, 0.95ms",
+      "status": "PROVEN"
+    },
+    {
+      "scenario": "CACHE_MISS_DIRECT_SUCCESS",
+      "result": "Exécution provider + enregistrement cache",
+      "status": "PROVEN"
+    },
+    {
+      "scenario": "CACHE_MISS_AFTER_FAILOVER",
+      "result": "Exécution repli réussie + enregistrement avec provider final réel",
+      "status": "PROVEN"
+    },
+    {
+      "scenario": "PARTIAL_OR_FAILED_RESPONSE",
+      "result": "Zéro écriture en cache (intégrité garantie)",
+      "status": "PROVEN"
+    }
+  ]
+}

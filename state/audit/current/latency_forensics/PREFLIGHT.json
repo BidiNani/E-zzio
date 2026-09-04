@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-08-31T19:26:00+02:00",
+  "standard": "EVIDENCE RULE v1.1",
+  "repository": "G:/AI/E-zzio",
+  "mission": "LATENCY_P95_FORENSIC_AUTOPSY",
+  "invariants": {
+    "production_code_changed": false,
+    "single_model_router": true,
+    "single_memory_gateway": true,
+    "single_secrets_vault": true,
+    "second_runtime": false,
+    "forensic_mode": true
+  }
+}

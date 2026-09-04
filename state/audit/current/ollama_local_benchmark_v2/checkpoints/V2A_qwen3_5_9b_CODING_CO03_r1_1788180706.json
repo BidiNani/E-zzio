@@ -1,0 +1,40 @@
+{
+  "RUN_ID": "V2A_qwen3_5_9b_CODING_CO03_r1_1788180706",
+  "MODEL": "qwen3.5:9b",
+  "TASK": "CODING",
+  "SUB_ID": "CO03",
+  "RUN_NUM": 1,
+  "IS_COLD": false,
+  "PROMPT_HASH": "81b699b90991",
+  "THREADS": 4,
+  "CONTEXT": 4096,
+  "GPU": 0,
+  "START_TIMESTAMP": "2026-08-31T12:51:46.033214+00:00",
+  "END_TIMESTAMP": "2026-08-31T12:52:12.496442+00:00",
+  "STATUS": "OK",
+  "QUALITY": "FAIL",
+  "LOAD_MS": 2.25,
+  "TTFT_MS": 968.89,
+  "PROMPT_TOKENS": 26,
+  "PROMPT_EVAL_TOK_S": 26.83,
+  "OUTPUT_TOKENS": 150,
+  "GEN_TOK_S": 5.94,
+  "TOTAL_E2E_MS": 26462.89,
+  "RAM_BEFORE": {
+    "used_gb": 22.05,
+    "avail_gb": 9.87,
+    "pct": 69.1
+  },
+  "RAM_PEAK": {
+    "used_gb": 22.16,
+    "avail_gb": 9.76,
+    "pct": 69.4
+  },
+  "RAM_AFTER": {
+    "used_gb": 22.16,
+    "avail_gb": 9.76,
+    "pct": 69.4
+  },
+  "ERROR": "",
+  "TEXT_SNIPPET": ""
+}

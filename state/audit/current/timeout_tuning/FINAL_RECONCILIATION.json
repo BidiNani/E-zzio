@@ -1,0 +1,11 @@
+{
+  "invariants": {
+    "single_model_router": true,
+    "single_memory_gateway": true,
+    "single_secrets_vault": true,
+    "second_runtime": false,
+    "routing_changed": false,
+    "secrets_exposed": false
+  },
+  "verdict": "TIMEOUT_TUNING_SUCCESS"
+}

@@ -1,0 +1,15 @@
+{
+  "scenarios": [
+    {
+      "scenario": "Leader Failover (429 Primary)",
+      "behavior": "Le Leader traverse la chaîne de failover jusqu'à Ollama phi4-mini:latest et transmet la réponse finale réussie aux 4 Waiters en attente",
+      "duplicate_failover_chains": 0,
+      "waiters_success": true
+    },
+    {
+      "scenario": "Leader Total Outage (FAIL_CLOSED)",
+      "behavior": "Le Leader résout la Future avec le statut FAIL_CLOSED (ok=False) pour tous les Waiters sans blocage",
+      "waiters_notified": true
+    }
+  ]
+}

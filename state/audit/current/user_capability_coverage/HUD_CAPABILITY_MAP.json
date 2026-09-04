@@ -1,0 +1,17 @@
+{
+  "interface": "Web HUD Dashboard (runtime/web/index.html)",
+  "role": "READ_ONLY_OBSERVER_AND_CHAT",
+  "observe_features": [
+    "Gemini Pool Slots (total, healthy, cooldown)",
+    "Groq Cloud Status & Same-Role Readiness",
+    "Ollama Sovereign Last Resort (Nominal = 0)",
+    "Response Cache Hit Rate & Avoided Calls",
+    "Singleflight In-Flight, Leaders & Waiters",
+    "Explainable Model Selection ('Pourquoi cette cible ?')",
+    "Active & Recent Telemetry Anomalies"
+  ],
+  "act_features": [
+    "Interactive Chat via POST /master/chat"
+  ],
+  "status": "OPERATIONAL"
+}

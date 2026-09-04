@@ -1,0 +1,112 @@
+[
+  {
+    "name": "gemini_pool",
+    "implementation": "core/models/gemini_pool.py",
+    "type": "cloud_llm_pool",
+    "status": "ACTIVE",
+    "code_reachable": true,
+    "runtime_reachable": true,
+    "production_active": true,
+    "auth_variable": "GEMINI_API_KEY",
+    "description": "Gestionnaire souverain de pool multi-projets Google Gemini (Rotation, Invalidation 401/403, 429 Retry-After, Thinking levels)."
+  },
+  {
+    "name": "ollama",
+    "implementation": "core/providers/ollama_provider.py",
+    "type": "local_llm_runtime",
+    "status": "ACTIVE",
+    "code_reachable": true,
+    "runtime_reachable": true,
+    "production_active": true,
+    "auth_variable": "OLLAMA_BASE_URL",
+    "description": "Provider local d'inférence souveraine Ollama (CPU/GPU local, privacy, offline fallback)."
+  },
+  {
+    "name": "nvidia_nim",
+    "implementation": "core/providers/nvidia_nim_provider.py",
+    "type": "cloud_llm_vision",
+    "status": "DORMANT",
+    "code_reachable": true,
+    "runtime_reachable": false,
+    "production_active": false,
+    "auth_variable": "NVIDIA_API_KEY",
+    "description": "Microservices NVIDIA NIM (Build.NVIDIA) pour LLM et vision multimodale."
+  },
+  {
+    "name": "jina",
+    "implementation": "core/providers/jina_provider.py",
+    "type": "web_reader_cloud",
+    "status": "DORMANT",
+    "code_reachable": true,
+    "runtime_reachable": false,
+    "production_active": false,
+    "auth_variable": "JINA_API_KEY",
+    "description": "Jina Reader & Embedding API pour l'extraction de pages web et enrichissement markdown."
+  },
+  {
+    "name": "tavily",
+    "implementation": "core/providers/tavily_provider.py",
+    "type": "web_search_cloud",
+    "status": "DORMANT",
+    "code_reachable": true,
+    "runtime_reachable": false,
+    "production_active": false,
+    "auth_variable": "TAVILY_API_KEY",
+    "description": "Moteur de recherche web agentique Tavily API."
+  },
+  {
+    "name": "searxng",
+    "implementation": "core/providers/searxng_provider.py",
+    "type": "web_search_local",
+    "status": "DORMANT",
+    "code_reachable": true,
+    "runtime_reachable": false,
+    "production_active": false,
+    "auth_variable": "SEARXNG_BASE_URL",
+    "description": "Metamoteur de recherche souverain auto-hébergé SearXNG."
+  },
+  {
+    "name": "google_gmail",
+    "implementation": "core/providers/google_gmail_provider.py",
+    "type": "cloud_tool",
+    "status": "DORMANT",
+    "code_reachable": true,
+    "runtime_reachable": false,
+    "production_active": false,
+    "auth_variable": "GEMINI_API_KEY",
+    "description": "Connecteur opérationnel Google Workspace Gmail."
+  },
+  {
+    "name": "google_calendar",
+    "implementation": "core/providers/google_calendar_provider.py",
+    "type": "cloud_tool",
+    "status": "DORMANT",
+    "code_reachable": true,
+    "runtime_reachable": false,
+    "production_active": false,
+    "auth_variable": "GEMINI_API_KEY",
+    "description": "Connecteur opérationnel Google Workspace Calendar."
+  },
+  {
+    "name": "google_docs",
+    "implementation": "core/providers/google_docs_provider.py",
+    "type": "cloud_tool",
+    "status": "DORMANT",
+    "code_reachable": true,
+    "runtime_reachable": false,
+    "production_active": false,
+    "auth_variable": "GEMINI_API_KEY",
+    "description": "Connecteur opérationnel Google Workspace Docs."
+  },
+  {
+    "name": "google_drive",
+    "implementation": "core/providers/google_drive_provider.py",
+    "type": "cloud_tool",
+    "status": "DORMANT",
+    "code_reachable": true,
+    "runtime_reachable": false,
+    "production_active": false,
+    "auth_variable": "GEMINI_API_KEY",
+    "description": "Connecteur opérationnel Google Workspace Drive."
+  }
+]

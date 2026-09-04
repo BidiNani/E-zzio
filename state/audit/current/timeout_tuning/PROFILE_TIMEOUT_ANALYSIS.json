@@ -1,0 +1,18 @@
+{
+  "FAST": {
+    "configured_timeout_sec": 15.0,
+    "safety_margin": "Generous"
+  },
+  "GENERAL": {
+    "configured_timeout_sec": 15.0,
+    "safety_margin": "Generous"
+  },
+  "CODING": {
+    "configured_timeout_sec": 15.0,
+    "safety_margin": "Adequate for reasoning tokens"
+  },
+  "DEEP": {
+    "configured_timeout_sec": 15.0,
+    "safety_margin": "Adequate"
+  }
+}

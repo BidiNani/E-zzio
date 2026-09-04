@@ -1,0 +1,18 @@
+{
+  "external_block": "Antigravity = BLOCKED_BY_EXTERNAL_QUOTA",
+  "device": "emulator-5554 (Android 9.0 API 28 x86_64)",
+  "desktop": "PASS (OPERATIONAL)",
+  "fatal_crashes": 0,
+  "frozen_core": "3/3 PASS (INTACT)",
+  "debuggable": false,
+  "version": "9.0.1",
+  "ai_office": "PASS (VERIFIED)",
+  "android_device_runtime": "PASS (VERIFIED_ON_DEVICE)",
+  "security": "PASS (0 SECRETS DETECTED)",
+  "android_build": "PASS (COMPILED_RELEASE_APK)",
+  "timestamp": "2026-09-04T19:14:28.4231282+02:00",
+  "package_id": "ai.ezzio.office",
+  "status": "100_PERCENT_VERIFIED_PRODUCT_RELEASE",
+  "offline": "PASS (OPERATIONAL)",
+  "regression": "111/111 PASS"
+}

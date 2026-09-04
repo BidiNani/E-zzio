@@ -1,0 +1,8 @@
+{
+  "head_commit": "dde4d186ce8cee1bdcfa42f6850763adb08b25f8",
+  "head_commit_short": "dde4d18",
+  "tree_hash": "dd025aa6d5c3a783f906be1238f7dd98cba0a6b6",
+  "branch": "checkpoint/voice-capabilities-hardware-agent-20260816",
+  "author_date": "2026-09-04 15:05:11 +0200",
+  "commit_message": "fix(registry): r\u00e9trocompatibilit\u00e9 sch\u00e9ma 6.1 (routing -> selected) pour EzzioSDK"
+}

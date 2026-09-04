@@ -1,0 +1,40 @@
+{
+  "RUN_ID": "V2A_nemotron-3-nano_4b_AGENT_AG01_r1_1788181229",
+  "MODEL": "nemotron-3-nano:4b",
+  "TASK": "AGENT",
+  "SUB_ID": "AG01",
+  "RUN_NUM": 1,
+  "IS_COLD": false,
+  "PROMPT_HASH": "c926a045b3ec",
+  "THREADS": 4,
+  "CONTEXT": 4096,
+  "GPU": 0,
+  "START_TIMESTAMP": "2026-08-31T13:00:29.785879+00:00",
+  "END_TIMESTAMP": "2026-08-31T13:00:45.680410+00:00",
+  "STATUS": "OK",
+  "QUALITY": "PASS",
+  "LOAD_MS": 2.44,
+  "TTFT_MS": 3115.57,
+  "PROMPT_TOKENS": 85,
+  "PROMPT_EVAL_TOK_S": 27.28,
+  "OUTPUT_TOKENS": 128,
+  "GEN_TOK_S": 10.18,
+  "TOTAL_E2E_MS": 15893.97,
+  "RAM_BEFORE": {
+    "used_gb": 19.99,
+    "avail_gb": 11.94,
+    "pct": 62.6
+  },
+  "RAM_PEAK": {
+    "used_gb": 20.16,
+    "avail_gb": 11.76,
+    "pct": 63.2
+  },
+  "RAM_AFTER": {
+    "used_gb": 20.16,
+    "avail_gb": 11.76,
+    "pct": 63.2
+  },
+  "ERROR": "",
+  "TEXT_SNIPPET": "{\n  \"root_cause\": \"PostgreSQL disk reached 100% usage at 14:02, causing unexpected log dump.\",\n  \"severity"
+}

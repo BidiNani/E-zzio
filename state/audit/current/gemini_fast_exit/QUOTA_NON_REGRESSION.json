@@ -1,0 +1,4 @@
+{
+  "rate_limit_policy": "INTACT",
+  "quota_aware_intact": true
+}

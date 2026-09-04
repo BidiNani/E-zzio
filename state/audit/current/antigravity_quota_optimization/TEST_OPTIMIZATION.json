@@ -1,0 +1,22 @@
+{
+  "gating_policy": {
+    "level_1_targeted": {
+      "trigger": "Chaque modification unitaire",
+      "scope": "pytest tests/test_<specific_module>.py",
+      "execution_time": "< 2.0s",
+      "quota_impact": "0 tokens"
+    },
+    "level_2_contract_regression": {
+      "trigger": "Modification d'un connecteur ou d'une interface",
+      "scope": "pytest tests/ -k 'contract or gateway'",
+      "execution_time": "< 8.0s",
+      "quota_impact": "0 tokens"
+    },
+    "level_3_full_suite_gate": {
+      "trigger": "Porte de validation finale avant commit/merge",
+      "scope": "pytest (330 tests)",
+      "execution_time": "~35.0s",
+      "quota_impact": "0 tokens (Exécuté en local sans charge LLM)"
+    }
+  }
+}

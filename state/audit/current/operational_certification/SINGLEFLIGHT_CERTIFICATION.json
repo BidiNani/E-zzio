@@ -1,0 +1,6 @@
+{
+  "concurrent_calls": 10,
+  "coalescing_active": true,
+  "total_latency_ms": 229.24,
+  "status": "OPERATIONAL"
+}

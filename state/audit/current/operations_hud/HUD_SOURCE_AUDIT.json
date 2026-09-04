@@ -1,0 +1,7 @@
+{
+  "existing_web_server": "G:/AI/E-zzio/web_server.py",
+  "existing_template": "G:/AI/E-zzio/runtime/web/index.html",
+  "metrics_source": "GET /metrics",
+  "health_source": "GET /health",
+  "action": "Amélioration in-place du tableau de bord existant avec rafraîchissement asynchrone toutes les 3s"
+}

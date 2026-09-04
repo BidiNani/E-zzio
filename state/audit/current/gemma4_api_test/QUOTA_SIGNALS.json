@@ -1,0 +1,6 @@
+{
+  "http_429_received": false,
+  "retry_after_received": null,
+  "antigravity_quota_touche": false,
+  "quota_domain": "Google Generative Language API (GEMINI_API_KEY)"
+}

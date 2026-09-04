@@ -1,0 +1,42 @@
+{
+  "fast": {
+    "requests": 10,
+    "cache_hits": 2,
+    "cloud_primary": 4,
+    "cloud_failovers": 3,
+    "ollama_fallbacks": 1,
+    "latency_mean_ms": 593.67,
+    "latency_median_ms": 562.59,
+    "latency_p95_ms": 1288.36
+  },
+  "general": {
+    "requests": 3,
+    "cache_hits": 1,
+    "cloud_primary": 0,
+    "cloud_failovers": 2,
+    "ollama_fallbacks": 0,
+    "latency_mean_ms": 449.03,
+    "latency_median_ms": 637.77,
+    "latency_p95_ms": 708.63
+  },
+  "coding": {
+    "requests": 1,
+    "cache_hits": 0,
+    "cloud_primary": 0,
+    "cloud_failovers": 1,
+    "ollama_fallbacks": 0,
+    "latency_mean_ms": 1837.07,
+    "latency_median_ms": 1837.07,
+    "latency_p95_ms": 1837.07
+  },
+  "deep_reasoning": {
+    "requests": 1,
+    "cache_hits": 0,
+    "cloud_primary": 0,
+    "cloud_failovers": 1,
+    "ollama_fallbacks": 0,
+    "latency_mean_ms": 864.96,
+    "latency_median_ms": 864.96,
+    "latency_p95_ms": 864.96
+  }
+}

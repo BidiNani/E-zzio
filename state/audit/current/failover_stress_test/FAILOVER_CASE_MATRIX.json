@@ -1,0 +1,63 @@
+{
+  "matrix": [
+    {
+      "case": "PRIMARY_SUCCESS",
+      "expected": "Inférence réussie sur cible primaire",
+      "observed": "SUCCESS",
+      "status": "PROVEN",
+      "provider": "gemini_pool / ollama",
+      "model": "phi4-mini:latest"
+    },
+    {
+      "case": "PRIMARY_429",
+      "expected": "Circuit breaker 60s + repli immédiat",
+      "observed": "SUCCESS",
+      "status": "PROVEN",
+      "fallback_target": "ollama:phi4-mini:latest",
+      "failover_count": 0
+    },
+    {
+      "case": "PRIMARY_5XX",
+      "expected": "Circuit breaker 15s-20s + repli",
+      "observed": "SUCCESS",
+      "status": "PROVEN",
+      "fallback_target": "ollama:phi4-mini:latest"
+    },
+    {
+      "case": "PRIMARY_TIMEOUT",
+      "expected": "Interruption requête + repli",
+      "observed": "SUCCESS",
+      "status": "PROVEN",
+      "fallback_target": "ollama:phi4-mini:latest"
+    },
+    {
+      "case": "PRIMARY_AUTH_ERROR",
+      "expected": "Quarantaine 3600s sans retry aveugle",
+      "observed": "SUCCESS",
+      "status": "PROVEN",
+      "cooldown_active": true
+    },
+    {
+      "case": "SECONDARY_429",
+      "expected": "Repli vers troisième cible (Ollama)",
+      "observed": "SUCCESS",
+      "status": "PROVEN",
+      "fallback_target": "ollama:phi4-mini:latest"
+    },
+    {
+      "case": "LOCAL_SUCCESS",
+      "expected": "Exécution locale souveraine (0 cloud)",
+      "observed": "SUCCESS",
+      "status": "PROVEN",
+      "provider": "ollama",
+      "model": "phi4-mini:latest"
+    },
+    {
+      "case": "ALL_PROVIDERS_FAILURE",
+      "expected": "FAIL_CLOSED strict avec ok=False",
+      "observed": "FAIL_CLOSED",
+      "status": "PROVEN",
+      "ok": false
+    }
+  ]
+}

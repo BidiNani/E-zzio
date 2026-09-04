@@ -1,0 +1,9 @@
+{
+  "search_backend": "duckduckgo_html",
+  "search_results_count": 3,
+  "crawl_status": true,
+  "ssrf_protection_verified": true,
+  "latency_search_ms": 1038.98,
+  "latency_crawl_ms": 394.44,
+  "status": "OPERATIONAL"
+}

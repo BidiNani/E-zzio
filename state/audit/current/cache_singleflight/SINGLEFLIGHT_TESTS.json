@@ -1,0 +1,18 @@
+{
+  "benchmark_10_concurrent_cold": {
+    "concurrent_requests": 10,
+    "cold_cache": true,
+    "leader_requests": 1,
+    "waiter_requests": 9,
+    "duplicate_generations": 0,
+    "all_responses_identical": true,
+    "total_latency_ms": 935.96,
+    "verdict": "SINGLEFLIGHT_PROVEN"
+  },
+  "benchmark_subsequent_request": {
+    "request_number": 11,
+    "status": "CACHE_HIT",
+    "latency_ms": 0.74,
+    "source": "cache"
+  }
+}

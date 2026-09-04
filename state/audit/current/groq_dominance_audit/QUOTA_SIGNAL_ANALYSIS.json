@@ -1,0 +1,5 @@
+{
+  "antigravity_ui_signal": "0/60 agent quota observed in IDE",
+  "gemini_api_runtime_signal": "HTTP 429/503 status codes and Retry-After headers received directly from Google API",
+  "separation": "STRICT_SEPARATION_CONFIRMED"
+}

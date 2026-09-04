@@ -1,0 +1,37 @@
+{
+  "checkpoint_workflow": {
+    "stages": [
+      {
+        "id": "CP1",
+        "name": "INVENTORY",
+        "artifact": "CAPABILITIES_PHYSICAL.json & MODELS_INVENTORY.json",
+        "reusable": true
+      },
+      {
+        "id": "CP2",
+        "name": "STATIC_AUDIT",
+        "artifact": "CAPABILITIES_MATRIX.json & PROVIDERS_INVENTORY.json",
+        "reusable": true
+      },
+      {
+        "id": "CP3",
+        "name": "RUNTIME_EVIDENCE",
+        "artifact": "kokoro_runtime_evidence.json / benchmarks",
+        "reusable": true
+      },
+      {
+        "id": "CP4",
+        "name": "RECONCILIATION",
+        "artifact": "INVARIANTS.md & FORGOTTEN_CAPABILITIES.json",
+        "reusable": true
+      },
+      {
+        "id": "CP5",
+        "name": "FINAL_CANONICAL",
+        "artifact": "capabilities_registry.json & EZZIO_CAPABILITIES.md",
+        "reusable": true
+      }
+    ],
+    "resume_strategy": "Lors d'une nouvelle mission, charger directement le checkpoint CP(N) validé plutôt que de rejouer CP1 à CP(N-1)."
+  }
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "INTERFACE": "Discord Natural / Streaming API",
+    "REQUEST_PAYLOAD_SPEED": "fast",
+    "ROUTER_DECISION": "gemini-3.5-flash-lite",
+    "OBSERVED_MODEL_IN_SSE": "gemini-3.5-flash-lite",
+    "OBSERVED_PROVIDER": "gemini_pool",
+    "ROUND_TRIP_MS": 912.41,
+    "STATUS": "MATCH_CONFIRMED"
+  },
+  {
+    "INTERFACE": "CLI / SDK Direct Core Gateway (fast)",
+    "REQUEST_PAYLOAD_SPEED": "fast",
+    "ROUTER_DECISION": "gemini-3.5-flash-lite",
+    "OBSERVED_MODEL_IN_SSE": "gemini-3.5-flash-lite",
+    "OBSERVED_PROVIDER": "gemini_pool",
+    "ROUND_TRIP_MS": 1055.01,
+    "STATUS": "MATCH_CONFIRMED"
+  },
+  {
+    "INTERFACE": "Coding Agent Loop / Orchestrator",
+    "REQUEST_PAYLOAD_SPEED": "coding",
+    "ROUTER_DECISION": "gemini-3.7-flash",
+    "OBSERVED_MODEL_IN_SSE": "gemini-3.7-flash",
+    "OBSERVED_PROVIDER": "gemini_pool",
+    "ROUND_TRIP_MS": 0.01,
+    "STATUS": "MATCH_CONFIRMED"
+  },
+  {
+    "INTERFACE": "Local Offline Policy (Ollama)",
+    "REQUEST_PAYLOAD_SPEED": "local_only",
+    "ROUTER_DECISION": "qwen2.5-coder:7b",
+    "OBSERVED_MODEL_IN_SSE": "qwen2.5-coder:7b",
+    "OBSERVED_PROVIDER": "ollama",
+    "ROUND_TRIP_MS": 0.01,
+    "STATUS": "MATCH_CONFIRMED"
+  }
+]

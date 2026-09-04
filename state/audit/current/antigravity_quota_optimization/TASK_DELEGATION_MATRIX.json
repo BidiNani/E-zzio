@@ -1,0 +1,107 @@
+[
+  {
+    "task": "Vérification existence fichier/dossier",
+    "category": "FILESYSTEM",
+    "preferred_tool": "PowerShell Test-Path",
+    "antigravity_required": false,
+    "quota_cost": "0"
+  },
+  {
+    "task": "Inventaire fichiers / arborescence",
+    "category": "FILESYSTEM",
+    "preferred_tool": "PowerShell Get-ChildItem / fd",
+    "antigravity_required": false,
+    "quota_cost": "0"
+  },
+  {
+    "task": "Recherche textuelle / regex",
+    "category": "SEARCH",
+    "preferred_tool": "ripgrep / Select-String",
+    "antigravity_required": false,
+    "quota_cost": "0"
+  },
+  {
+    "task": "Validation syntaxique JSON / YAML",
+    "category": "VALIDATION",
+    "preferred_tool": "Python json.load() / ConvertFrom-Json",
+    "antigravity_required": false,
+    "quota_cost": "0"
+  },
+  {
+    "task": "Calcul de hash MD5 / SHA256",
+    "category": "SECURITY",
+    "preferred_tool": "Get-FileHash / hashlib",
+    "antigravity_required": false,
+    "quota_cost": "0"
+  },
+  {
+    "task": "Vérification modèles Ollama installés",
+    "category": "INSPECTION",
+    "preferred_tool": "ollama list",
+    "antigravity_required": false,
+    "quota_cost": "0"
+  },
+  {
+    "task": "Exécution de tests unitaires",
+    "category": "TESTING",
+    "preferred_tool": "pytest -k <module>",
+    "antigravity_required": false,
+    "quota_cost": "0"
+  },
+  {
+    "task": "Linting et formatage de code",
+    "category": "QUALITY",
+    "preferred_tool": "ruff check / ruff format",
+    "antigravity_required": false,
+    "quota_cost": "0"
+  },
+  {
+    "task": "Extraction et formatage CSV / Tableaux",
+    "category": "DATA",
+    "preferred_tool": "Python script dédié",
+    "antigravity_required": false,
+    "quota_cost": "0"
+  },
+  {
+    "task": "Agrégation de métriques de benchmark",
+    "category": "BENCHMARK",
+    "preferred_tool": "Python scripts/reconcile_*.py",
+    "antigravity_required": false,
+    "quota_cost": "0"
+  },
+  {
+    "task": "Triage rapide de texte / classification",
+    "category": "LOCAL_AI",
+    "preferred_tool": "Ollama phi4-mini / nemotron-3-nano",
+    "antigravity_required": false,
+    "quota_cost": "0"
+  },
+  {
+    "task": "Génération de squelette de code standard",
+    "category": "LOCAL_AI",
+    "preferred_tool": "Ollama qwen3.5:9b / hermes3:8b",
+    "antigravity_required": false,
+    "quota_cost": "0"
+  },
+  {
+    "task": "Audit architectural souverain",
+    "category": "HIGH_COGNITION",
+    "preferred_tool": "Antigravity (Gemini 3.7 Flash)",
+    "antigravity_required": true,
+    "quota_cost": "PREMIUM"
+  },
+  {
+    "task": "Preuve formelle & réconciliation complexe",
+    "category": "HIGH_COGNITION",
+    "preferred_tool": "Antigravity (Gemini 3.1 Pro / 3.7 Flash)",
+    "antigravity_required": true,
+    "quota_cost": "PREMIUM"
+  },
+  {
+    "task": "Refactorisation multi-fichiers critique",
+    "category": "HIGH_COGNITION",
+    "preferred_tool": "Antigravity (Gemini 3.7 Flash)",
+    "antigravity_required": true,
+    "quota_cost": "PREMIUM"
+  }
+]

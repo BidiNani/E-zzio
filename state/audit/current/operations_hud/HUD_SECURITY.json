@@ -1,0 +1,7 @@
+{
+  "api_keys_in_payload": 0,
+  "tokens_in_payload": 0,
+  "auth_headers_in_payload": 0,
+  "private_paths_scrubbed": true,
+  "status": "SECURITY_VALIDATED_PASS"
+}

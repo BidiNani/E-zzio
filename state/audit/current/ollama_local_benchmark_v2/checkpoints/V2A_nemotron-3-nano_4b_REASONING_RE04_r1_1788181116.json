@@ -1,0 +1,40 @@
+{
+  "RUN_ID": "V2A_nemotron-3-nano_4b_REASONING_RE04_r1_1788181116",
+  "MODEL": "nemotron-3-nano:4b",
+  "TASK": "REASONING",
+  "SUB_ID": "RE04",
+  "RUN_NUM": 1,
+  "IS_COLD": false,
+  "PROMPT_HASH": "7bf6a16719fa",
+  "THREADS": 4,
+  "CONTEXT": 4096,
+  "GPU": 0,
+  "START_TIMESTAMP": "2026-08-31T12:58:36.177222+00:00",
+  "END_TIMESTAMP": "2026-08-31T12:58:38.661267+00:00",
+  "STATUS": "OK",
+  "QUALITY": "FAIL",
+  "LOAD_MS": 2.1,
+  "TTFT_MS": 1542.67,
+  "PROMPT_TOKENS": 45,
+  "PROMPT_EVAL_TOK_S": 29.17,
+  "OUTPUT_TOKENS": 8,
+  "GEN_TOK_S": 10.95,
+  "TOTAL_E2E_MS": 2484.11,
+  "RAM_BEFORE": {
+    "used_gb": 18.41,
+    "avail_gb": 13.51,
+    "pct": 57.7
+  },
+  "RAM_PEAK": {
+    "used_gb": 18.59,
+    "avail_gb": 13.34,
+    "pct": 58.2
+  },
+  "RAM_AFTER": {
+    "used_gb": 18.59,
+    "avail_gb": 13.34,
+    "pct": 58.2
+  },
+  "ERROR": "",
+  "TEXT_SNIPPET": ""
+}

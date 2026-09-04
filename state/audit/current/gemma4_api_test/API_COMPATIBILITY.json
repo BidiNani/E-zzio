@@ -1,0 +1,8 @@
+{
+  "text_generation": true,
+  "streaming": true,
+  "context_limit": "131072 tokens",
+  "tool_use": false,
+  "vision": false,
+  "structured_output": true
+}

@@ -1,0 +1,5 @@
+{
+  "fast_quality": "IDENTICAL (Short factual answers accurate)",
+  "coding_quality": "HIGH (qwen/qwen3.6-27b produced correct Python code)",
+  "deep_quality": "HIGH (openai/gpt-oss-120b produced structured reasoning)"
+}

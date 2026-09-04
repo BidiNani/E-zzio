@@ -1,0 +1,6 @@
+{
+  "batch_size": 10,
+  "leader_latency_ms": 229.24,
+  "waiters_average_wait_ms": 228.1,
+  "duplicate_provider_calls_avoided": 9
+}

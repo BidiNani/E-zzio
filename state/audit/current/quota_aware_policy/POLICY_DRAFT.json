@@ -1,0 +1,29 @@
+{
+  "policy_name": "QUOTA_AWARE_CLOUD_FIRST_POLICY_v1",
+  "mappings": {
+    "FAST": {
+      "primary": "gemini-3.1-flash-lite",
+      "secondary": "gemini-2.5-flash-lite",
+      "cloud_fallback": "groq/compound-mini",
+      "last_resort": "phi4-mini:latest"
+    },
+    "GENERAL": {
+      "primary": "gemini-3.6-flash",
+      "secondary": "gemma-4-26b",
+      "cloud_fallback": "groq/compound",
+      "last_resort": "hermes3:8b"
+    },
+    "CODING": {
+      "primary": "gemini-3.7-flash",
+      "secondary": "gemma-4-31b",
+      "cloud_fallback": "groq:qwen/qwen3.6-27b",
+      "last_resort": "qwen3.5:9b"
+    },
+    "DEEP_REASONING": {
+      "primary": "gemini-3.1-pro-preview",
+      "secondary": "gemma-4-31b",
+      "cloud_fallback": "groq:openai/gpt-oss-120b",
+      "last_resort": "qwen3.5:9b"
+    }
+  }
+}

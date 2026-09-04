@@ -1,0 +1,7 @@
+{
+  "nominal_calls": 0,
+  "fallback_calls": 1,
+  "local_only_calls": 0,
+  "total_calls": 1,
+  "rule_enforced": "OLLAMA_LAST_RESORT_PROVEN"
+}

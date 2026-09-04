@@ -1,0 +1,24 @@
+{
+  "TESTS_DISCOVERED": 330,
+  "TESTS_SELECTED": 8,
+  "TESTS_EXECUTED": 8,
+  "TESTS_PASSED": 8,
+  "TESTS_FAILED": 0,
+  "TESTS_SKIPPED": 0,
+  "COMMANDS_VERIFIED": [
+    "/ask",
+    "/status",
+    "/generate_sheet",
+    "/generate_pdf",
+    "/vision",
+    "on_message_conversational"
+  ],
+  "SECURITY_INVARIANTS": {
+    "SECOND_RUNTIME": 0,
+    "SECOND_MODEL_AUTHORITY": 0,
+    "SECOND_MEMORY_AUTHORITY": 0,
+    "SECOND_SECURITY_AUTHORITY": 0,
+    "SECOND_IDENTITY_AUTHORITY": 0,
+    "FROZEN_CORE_DRIFT": 0
+  }
+}

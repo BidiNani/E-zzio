@@ -1,0 +1,9 @@
+{
+  "models": [
+    "gemma-4-26b (1/30)",
+    "gemma-4-31b (1/30)"
+  ],
+  "reachability_verified": true,
+  "measured_latency": "465ms - 494ms via Google Gemini API",
+  "recommendation": "Huge quota reservoir (29/30 remaining) to be used as high-margin general/coding cloud engines"
+}

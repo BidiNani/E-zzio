@@ -1,0 +1,16 @@
+{
+  "simulated_events": 0,
+  "derived_metrics": [
+    "cache_hit_rate_percent",
+    "median_latency_ms",
+    "p95_latency_ms"
+  ],
+  "unknown_metrics": [
+    "server_side_token_balance"
+  ],
+  "findings_no_action": 7,
+  "findings_observe": 1,
+  "findings_optimize": 0,
+  "findings_bug": 0,
+  "verdict": "NATURAL_BASELINE_CLEAN"
+}

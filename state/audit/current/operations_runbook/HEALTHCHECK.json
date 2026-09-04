@@ -1,0 +1,10 @@
+{
+  "endpoint": "GET /health",
+  "expected_status": 200,
+  "expected_components": [
+    "model_router",
+    "memory_gateway",
+    "secrets_vault",
+    "cache"
+  ]
+}

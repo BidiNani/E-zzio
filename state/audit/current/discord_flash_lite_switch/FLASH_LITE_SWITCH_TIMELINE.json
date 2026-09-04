@@ -1,0 +1,16 @@
+{
+  "RUN_ID": 1,
+  "PROMPT": "Bonjour E-ZzIO, quel mod\u00e8le utilises-tu pour me r\u00e9pondre ?",
+  "RESOLVED_MODEL": "gemini-3.5-flash-lite",
+  "REQUEST_START": 0.0,
+  "GATEWAY_START": 0.0012,
+  "MODEL_RESOLUTION_MS": 0.1,
+  "PROVIDER_REQUEST_START": 0.002,
+  "FIRST_TOKEN_RECEIVED": 721.89,
+  "FIRST_VISIBLE": 722.19,
+  "LAST_TOKEN_RECEIVED": 1003.43,
+  "REQUEST_COMPLETE": 1005.43,
+  "TTFT_MS": 721.89,
+  "TOTAL_E2E_MS": 1005.43,
+  "RESPONSE_PREVIEW": "Je tourne en local sur Ollama, propuls\u00e9 par le Ryzen 9, avec"
+}

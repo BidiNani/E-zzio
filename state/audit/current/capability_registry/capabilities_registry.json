@@ -1,0 +1,1000 @@
+{
+  "metadata": {
+    "registry_version": "1.0.0",
+    "repository": "G:\\AI\\E-zzio",
+    "generated_at": "2026-08-31T17:25:00+02:00",
+    "standard": "EVIDENCE RULE v1.1",
+    "authorities": {
+      "routing": "core/cognition/model_router.py",
+      "memory": "core/memory/unified_gateway.py (UnifiedMemoryGateway)",
+      "security": "core/security/secrets_vault.py (SecretsVault)"
+    }
+  },
+  "providers": [
+    {
+      "name": "gemini_pool",
+      "implementation": "core/models/gemini_pool.py",
+      "type": "cloud_llm_pool",
+      "status": "ACTIVE",
+      "code_reachable": true,
+      "runtime_reachable": true,
+      "production_active": true,
+      "auth_variable": "GEMINI_API_KEY",
+      "description": "Gestionnaire souverain de pool multi-projets Google Gemini (Rotation, Invalidation 401/403, 429 Retry-After, Thinking levels)."
+    },
+    {
+      "name": "ollama",
+      "implementation": "core/providers/ollama_provider.py",
+      "type": "local_llm_runtime",
+      "status": "ACTIVE",
+      "code_reachable": true,
+      "runtime_reachable": true,
+      "production_active": true,
+      "auth_variable": "OLLAMA_BASE_URL",
+      "description": "Provider local d'inférence souveraine Ollama (CPU/GPU local, privacy, offline fallback)."
+    },
+    {
+      "name": "nvidia_nim",
+      "implementation": "core/providers/nvidia_nim_provider.py",
+      "type": "cloud_llm_vision",
+      "status": "DORMANT",
+      "code_reachable": true,
+      "runtime_reachable": false,
+      "production_active": false,
+      "auth_variable": "NVIDIA_API_KEY",
+      "description": "Microservices NVIDIA NIM (Build.NVIDIA) pour LLM et vision multimodale."
+    },
+    {
+      "name": "jina",
+      "implementation": "core/providers/jina_provider.py",
+      "type": "web_reader_cloud",
+      "status": "DORMANT",
+      "code_reachable": true,
+      "runtime_reachable": false,
+      "production_active": false,
+      "auth_variable": "JINA_API_KEY",
+      "description": "Jina Reader & Embedding API pour l'extraction de pages web et enrichissement markdown."
+    },
+    {
+      "name": "tavily",
+      "implementation": "core/providers/tavily_provider.py",
+      "type": "web_search_cloud",
+      "status": "DORMANT",
+      "code_reachable": true,
+      "runtime_reachable": false,
+      "production_active": false,
+      "auth_variable": "TAVILY_API_KEY",
+      "description": "Moteur de recherche web agentique Tavily API."
+    },
+    {
+      "name": "searxng",
+      "implementation": "core/providers/searxng_provider.py",
+      "type": "web_search_local",
+      "status": "DORMANT",
+      "code_reachable": true,
+      "runtime_reachable": false,
+      "production_active": false,
+      "auth_variable": "SEARXNG_BASE_URL",
+      "description": "Metamoteur de recherche souverain auto-hébergé SearXNG."
+    },
+    {
+      "name": "google_gmail",
+      "implementation": "core/providers/google_gmail_provider.py",
+      "type": "cloud_tool",
+      "status": "DORMANT",
+      "code_reachable": true,
+      "runtime_reachable": false,
+      "production_active": false,
+      "auth_variable": "GEMINI_API_KEY",
+      "description": "Connecteur opérationnel Google Workspace Gmail."
+    },
+    {
+      "name": "google_calendar",
+      "implementation": "core/providers/google_calendar_provider.py",
+      "type": "cloud_tool",
+      "status": "DORMANT",
+      "code_reachable": true,
+      "runtime_reachable": false,
+      "production_active": false,
+      "auth_variable": "GEMINI_API_KEY",
+      "description": "Connecteur opérationnel Google Workspace Calendar."
+    },
+    {
+      "name": "google_docs",
+      "implementation": "core/providers/google_docs_provider.py",
+      "type": "cloud_tool",
+      "status": "DORMANT",
+      "code_reachable": true,
+      "runtime_reachable": false,
+      "production_active": false,
+      "auth_variable": "GEMINI_API_KEY",
+      "description": "Connecteur opérationnel Google Workspace Docs."
+    },
+    {
+      "name": "google_drive",
+      "implementation": "core/providers/google_drive_provider.py",
+      "type": "cloud_tool",
+      "status": "DORMANT",
+      "code_reachable": true,
+      "runtime_reachable": false,
+      "production_active": false,
+      "auth_variable": "GEMINI_API_KEY",
+      "description": "Connecteur opérationnel Google Workspace Drive."
+    }
+  ],
+  "credentials": [
+    {
+      "variable_name": "GEMINI_API_KEY",
+      "source": "ENV_OR_VAULT",
+      "present": true,
+      "loaded_via": "SecretsVault / .env",
+      "referenced_by_code": true,
+      "runtime_used": true,
+      "rotation": true,
+      "status": "ACTIVE"
+    },
+    {
+      "variable_name": "GEMINI_API_KEY_2",
+      "source": "ENV_OR_VAULT",
+      "present": false,
+      "loaded_via": "GeminiPoolManager",
+      "referenced_by_code": true,
+      "runtime_used": true,
+      "rotation": true,
+      "status": "DORMANT_SLOT"
+    },
+    {
+      "variable_name": "GEMINI_PROJECT_B_KEY",
+      "source": "ENV_OR_VAULT",
+      "present": false,
+      "loaded_via": "GeminiPoolManager",
+      "referenced_by_code": true,
+      "runtime_used": true,
+      "rotation": true,
+      "status": "DORMANT_SLOT"
+    },
+    {
+      "variable_name": "OLLAMA_BASE_URL",
+      "source": "ENV",
+      "present": true,
+      "loaded_via": "ollama_provider.py",
+      "referenced_by_code": true,
+      "runtime_used": true,
+      "rotation": false,
+      "status": "ACTIVE"
+    },
+    {
+      "variable_name": "OLLAMA_MODEL",
+      "source": "ENV",
+      "present": true,
+      "loaded_via": "ollama_provider.py",
+      "referenced_by_code": true,
+      "runtime_used": true,
+      "rotation": false,
+      "status": "ACTIVE"
+    },
+    {
+      "variable_name": "OLLAMA_TEMPERATURE",
+      "source": "ENV",
+      "present": true,
+      "loaded_via": "ollama_provider.py",
+      "referenced_by_code": true,
+      "runtime_used": true,
+      "rotation": false,
+      "status": "ACTIVE"
+    },
+    {
+      "variable_name": "TAVILY_API_KEY",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "tavily_provider.py",
+      "referenced_by_code": true,
+      "runtime_used": false,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "NVIDIA_API_KEY",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "nvidia_nim_provider.py",
+      "referenced_by_code": true,
+      "runtime_used": false,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "JINA_API_KEY",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "jina_provider.py",
+      "referenced_by_code": true,
+      "runtime_used": false,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "SEARXNG_BASE_URL",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "searxng_provider.py",
+      "referenced_by_code": true,
+      "runtime_used": false,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "REDDIT_CLIENT_ID",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "knowledge_connectors.py",
+      "referenced_by_code": true,
+      "runtime_used": false,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "REDDIT_CLIENT_SECRET",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "knowledge_connectors.py",
+      "referenced_by_code": true,
+      "runtime_used": false,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "REDDIT_USERNAME",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "knowledge_connectors.py",
+      "referenced_by_code": true,
+      "runtime_used": false,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "REDDIT_PASSWORD",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "knowledge_connectors.py",
+      "referenced_by_code": true,
+      "runtime_used": false,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "REDDIT_USER_AGENT",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "knowledge_connectors.py",
+      "referenced_by_code": true,
+      "runtime_used": false,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "BLIZZARD_CLIENT_ID",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "knowledge_connectors.py",
+      "referenced_by_code": true,
+      "runtime_used": false,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "BLIZZARD_CLIENT_SECRET",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "knowledge_connectors.py",
+      "referenced_by_code": true,
+      "runtime_used": false,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "BLIZZARD_REGION",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "knowledge_connectors.py",
+      "referenced_by_code": true,
+      "runtime_used": false,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "GITHUB_TOKEN",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "knowledge_connectors.py",
+      "referenced_by_code": true,
+      "runtime_used": false,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "DISCORD_BOT_TOKEN",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "discord_bot.py",
+      "referenced_by_code": true,
+      "runtime_used": false,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "EZZIO_USER_AGENT",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "knowledge_connectors.py",
+      "referenced_by_code": true,
+      "runtime_used": true,
+      "rotation": false,
+      "status": "DEFAULT_FALLBACK"
+    },
+    {
+      "variable_name": "STACKEXCHANGE_KEY",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "knowledge_connectors.py",
+      "referenced_by_code": true,
+      "runtime_used": false,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "CROSSREF_MAILTO",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "knowledge_connectors.py",
+      "referenced_by_code": true,
+      "runtime_used": false,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "EZZIO_MASTER_KEY",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "ezzio_master.py",
+      "referenced_by_code": true,
+      "runtime_used": true,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "EZZIO_LEDGER_SECRET",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "decision_ledger.py",
+      "referenced_by_code": true,
+      "runtime_used": true,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "EZZIO_API_KEY",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "api.py",
+      "referenced_by_code": true,
+      "runtime_used": true,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "EZZIO_ACTIVE_MODEL",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "config.py",
+      "referenced_by_code": true,
+      "runtime_used": true,
+      "rotation": false,
+      "status": "DORMANT"
+    },
+    {
+      "variable_name": "EZZIO_API_PORT",
+      "source": "ENV",
+      "present": false,
+      "loaded_via": "api.py",
+      "referenced_by_code": true,
+      "runtime_used": true,
+      "rotation": false,
+      "status": "DORMANT"
+    }
+  ],
+  "models": [
+    {
+      "name": "nemotron-3-nano:4b",
+      "provider": "ollama",
+      "tier": "FAST",
+      "physical_present": true,
+      "configured": false,
+      "code_reachable": false,
+      "runtime_reachable": true,
+      "runtime_proven": true,
+      "production_active": true,
+      "status": "ACTIVE",
+      "role": "Fast lightweight local candidate / Guardrail"
+    },
+    {
+      "name": "hermes3:8b",
+      "provider": "ollama",
+      "tier": "GENERAL",
+      "physical_present": true,
+      "configured": false,
+      "code_reachable": false,
+      "runtime_reachable": true,
+      "runtime_proven": true,
+      "production_active": true,
+      "status": "ACTIVE",
+      "role": "General conversation local fallback"
+    },
+    {
+      "name": "qwen3.5:9b",
+      "provider": "ollama",
+      "tier": "MID_REASONING",
+      "physical_present": true,
+      "configured": false,
+      "code_reachable": false,
+      "runtime_reachable": true,
+      "runtime_proven": true,
+      "production_active": true,
+      "status": "ACTIVE",
+      "role": "Local reasoning & structured output"
+    },
+    {
+      "name": "phi4-mini:latest",
+      "provider": "ollama",
+      "tier": "FAST_REASONING",
+      "physical_present": true,
+      "configured": false,
+      "code_reachable": false,
+      "runtime_reachable": true,
+      "runtime_proven": true,
+      "production_active": true,
+      "status": "ACTIVE",
+      "role": "Math & concise logical tasks"
+    },
+    {
+      "name": "nomic-embed-text:latest",
+      "provider": "ollama",
+      "tier": "EMBEDDING",
+      "physical_present": true,
+      "configured": true,
+      "code_reachable": true,
+      "runtime_reachable": true,
+      "runtime_proven": true,
+      "production_active": true,
+      "status": "ACTIVE",
+      "role": "Memory vectorization & semantic search"
+    },
+    {
+      "name": "bge-m3:latest",
+      "provider": "ollama",
+      "tier": "EMBEDDING_MULTILINGUAL",
+      "physical_present": true,
+      "configured": true,
+      "code_reachable": true,
+      "runtime_reachable": true,
+      "runtime_proven": true,
+      "production_active": true,
+      "status": "ACTIVE",
+      "role": "Dense/sparse dense memory indexing"
+    },
+    {
+      "name": "granite4.1:8b",
+      "provider": "ollama",
+      "tier": "FAST",
+      "physical_present": false,
+      "configured": true,
+      "code_reachable": false,
+      "runtime_reachable": false,
+      "runtime_proven": false,
+      "production_active": false,
+      "status": "CONFIGURED_ONLY",
+      "role": "Configured chat route (uninstalled)"
+    },
+    {
+      "name": "qwen3-coder:30b",
+      "provider": "ollama",
+      "tier": "HEAVY",
+      "physical_present": false,
+      "configured": true,
+      "code_reachable": false,
+      "runtime_reachable": false,
+      "runtime_proven": false,
+      "production_active": false,
+      "status": "CONFIGURED_ONLY",
+      "role": "Configured coding route (uninstalled)"
+    },
+    {
+      "name": "mrasif/gpt-oss-20b-GGUF:Q4_K_M",
+      "provider": "ollama",
+      "tier": "MID",
+      "physical_present": false,
+      "configured": true,
+      "code_reachable": false,
+      "runtime_reachable": false,
+      "runtime_proven": false,
+      "production_active": false,
+      "status": "CONFIGURED_ONLY",
+      "role": "Configured reasoning route (uninstalled)"
+    },
+    {
+      "name": "gemini-3.7-flash",
+      "provider": "gemini_pool",
+      "tier": "TIER_1_AGENTIC_CODING",
+      "physical_present": false,
+      "configured": true,
+      "code_reachable": true,
+      "runtime_reachable": true,
+      "runtime_proven": true,
+      "production_active": true,
+      "status": "ACTIVE",
+      "role": "Sovereign Default: Coding, Agents, Tools, Complex Architecture"
+    },
+    {
+      "name": "gemini-3.5-flash",
+      "provider": "gemini_pool",
+      "tier": "TIER_2_GENERAL",
+      "physical_present": false,
+      "configured": true,
+      "code_reachable": true,
+      "runtime_reachable": true,
+      "runtime_proven": true,
+      "production_active": true,
+      "status": "ACTIVE",
+      "role": "General conversation, analysis, high-throughput"
+    },
+    {
+      "name": "gemini-3.5-flash-lite",
+      "provider": "gemini_pool",
+      "tier": "TIER_3_FAST",
+      "physical_present": false,
+      "configured": true,
+      "code_reachable": true,
+      "runtime_reachable": true,
+      "runtime_proven": true,
+      "production_active": true,
+      "status": "ACTIVE",
+      "role": "Ultra-low latency gateway, fast triage, subagents"
+    },
+    {
+      "name": "gemini-3.1-pro-preview",
+      "provider": "gemini_pool",
+      "tier": "TIER_4_DEEP_REASONING",
+      "physical_present": false,
+      "configured": true,
+      "code_reachable": true,
+      "runtime_reachable": true,
+      "runtime_proven": true,
+      "production_active": true,
+      "status": "ACTIVE",
+      "role": "Deep formal reasoning, complex verification"
+    },
+    {
+      "name": "gemini-3.1-flash-lite",
+      "provider": "gemini_pool",
+      "tier": "TIER_3_LEGACY_FAST",
+      "physical_present": false,
+      "configured": true,
+      "code_reachable": true,
+      "runtime_reachable": true,
+      "runtime_proven": false,
+      "production_active": false,
+      "status": "GOVERNED_SUNSET_2027",
+      "role": "Legacy fast model, sunset scheduled 2027-05-07"
+    },
+    {
+      "name": "gemini-3.6-flash",
+      "provider": "gemini_pool",
+      "tier": "TIER_5_PREVIOUS_GEN",
+      "physical_present": false,
+      "configured": true,
+      "code_reachable": true,
+      "runtime_reachable": true,
+      "runtime_proven": false,
+      "production_active": false,
+      "status": "GOVERNED_FALLBACK",
+      "role": "Previous generation compatibility fallback"
+    },
+    {
+      "name": "gemini-3.1-flash-image",
+      "provider": "gemini_pool",
+      "tier": "TIER_IMAGE",
+      "physical_present": false,
+      "configured": true,
+      "code_reachable": true,
+      "runtime_reachable": true,
+      "runtime_proven": false,
+      "production_active": false,
+      "status": "GOVERNED_SPECIALIZED",
+      "role": "Nano Banana 2: Image synthesis & editing"
+    },
+    {
+      "name": "gemini-3-pro-image",
+      "provider": "gemini_pool",
+      "tier": "TIER_IMAGE_PRO",
+      "physical_present": false,
+      "configured": true,
+      "code_reachable": true,
+      "runtime_reachable": true,
+      "runtime_proven": false,
+      "production_active": false,
+      "status": "GOVERNED_SPECIALIZED",
+      "role": "Nano Banana Pro: High-fidelity image synthesis"
+    },
+    {
+      "name": "gemini-omni-1.1-flash",
+      "provider": "gemini_pool",
+      "tier": "TIER_VIDEO",
+      "physical_present": false,
+      "configured": true,
+      "code_reachable": true,
+      "runtime_reachable": true,
+      "runtime_proven": false,
+      "production_active": false,
+      "status": "GOVERNED_SPECIALIZED",
+      "role": "Omni Flash: 4K video generation & edition"
+    },
+    {
+      "name": "qwen2.5-coder:7b",
+      "provider": "ollama",
+      "tier": "LOCAL_FALLBACK",
+      "physical_present": false,
+      "configured": false,
+      "code_reachable": false,
+      "runtime_reachable": false,
+      "runtime_proven": false,
+      "production_active": false,
+      "status": "STALE_FALLBACK_REFERENCE",
+      "role": "ModelRouter.LOCAL_FALLBACK_MODEL (uninstalled)"
+    },
+    {
+      "name": "qwen2.5:3b",
+      "provider": "ollama",
+      "tier": "LOCAL_LOW_COMPLEXITY",
+      "physical_present": false,
+      "configured": false,
+      "code_reachable": false,
+      "runtime_reachable": false,
+      "runtime_proven": false,
+      "production_active": false,
+      "status": "STALE_FALLBACK_REFERENCE",
+      "role": "ModelRouter select_engine complexity < 0.3 (uninstalled)"
+    },
+    {
+      "name": "gemma4e4b:latest",
+      "provider": "ollama",
+      "tier": "BENCHMARK_CANDIDATE",
+      "physical_present": false,
+      "configured": false,
+      "code_reachable": false,
+      "runtime_reachable": false,
+      "runtime_proven": false,
+      "production_active": false,
+      "status": "STALE_BENCHMARK_REFERENCE",
+      "role": "Candidate testé en sandbox CPU externe"
+    },
+    {
+      "name": "qwen2.5vl:3b",
+      "provider": "ollama",
+      "tier": "VISION_LOCAL",
+      "physical_present": false,
+      "configured": false,
+      "code_reachable": false,
+      "runtime_reachable": false,
+      "runtime_proven": false,
+      "production_active": false,
+      "status": "STALE_FALLBACK_REFERENCE",
+      "role": "Vision fallback reference (uninstalled)"
+    }
+  ],
+  "tools": [
+    {
+      "name": "file_scanner",
+      "file": "core/file_scanner.py",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "codebase_indexer",
+      "file": "core/codebase_indexer.py",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "universal_file_reader",
+      "file": "core/perception/universal_reader.py",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "patch_engine",
+      "file": "tools/patch_engine.py",
+      "status": "ACTIVE"
+    }
+  ],
+  "web": [
+    {
+      "name": "safe_fetcher",
+      "file": "core/perception/safe_fetcher.py",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "wikipedia_connector",
+      "file": "core/knowledge_connectors.py",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "tavily_search",
+      "file": "core/providers/tavily_provider.py",
+      "status": "DORMANT"
+    },
+    {
+      "name": "searxng_search",
+      "file": "core/providers/searxng_provider.py",
+      "status": "DORMANT"
+    },
+    {
+      "name": "jina_reader",
+      "file": "core/providers/jina_provider.py",
+      "status": "DORMANT"
+    }
+  ],
+  "vision": [
+    {
+      "name": "vision_engine",
+      "file": "core/perception/vision_engine.py",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "smart_vision",
+      "file": "core/smart_vision.py",
+      "status": "ACTIVE"
+    }
+  ],
+  "voice": [
+    {
+      "name": "kokoro_tts",
+      "file": "core/voice/voice_gateway.py",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "audio_engine_stt",
+      "file": "core/perception/audio_engine.py",
+      "status": "ACTIVE"
+    }
+  ],
+  "documents": [
+    {
+      "format": "PDF",
+      "support": "NATIVE_ROBUST",
+      "engine": "core/perception/universal_reader.py"
+    },
+    {
+      "format": "DOCX",
+      "support": "NATIVE_ROBUST",
+      "engine": "core/perception/universal_reader.py"
+    },
+    {
+      "format": "XLSX",
+      "support": "NATIVE_ROBUST",
+      "engine": "core/perception/universal_reader.py"
+    },
+    {
+      "format": "PPTX",
+      "support": "NATIVE_ROBUST",
+      "engine": "core/perception/universal_reader.py"
+    },
+    {
+      "format": "CSV/TSV",
+      "support": "NATIVE_ROBUST",
+      "engine": "core/perception/universal_reader.py"
+    },
+    {
+      "format": "JSON/JSONL",
+      "support": "NATIVE_ROBUST",
+      "engine": "core/perception/universal_reader.py"
+    },
+    {
+      "format": "TXT/MD",
+      "support": "NATIVE_ROBUST",
+      "engine": "core/perception/universal_reader.py"
+    },
+    {
+      "format": "ZIP/TAR",
+      "support": "SECURITY_CAPPED",
+      "engine": "core/perception/universal_reader.py"
+    }
+  ],
+  "interfaces": [
+    {
+      "name": "Discord Connector",
+      "file": "src/ezzio/connectors/discord_bot.py",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "Web HUD",
+      "file": "src/ezzio/ui/index.html",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "CLI PC Commander",
+      "file": "core/pc_commander.py",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "HTTP REST API",
+      "file": "src/ezzio/api.py",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "Python SDK",
+      "file": "core/sdk.py",
+      "status": "ACTIVE"
+    }
+  ],
+  "profiles": {
+    "fast": {
+      "model": "gemini-3.5-flash-lite",
+      "provider": "gemini_pool",
+      "tier": "FAST",
+      "target_latency": "~1.1s"
+    },
+    "general": {
+      "model": "gemini-3.5-flash",
+      "provider": "gemini_pool",
+      "tier": "GENERAL",
+      "target_latency": "~2.0s"
+    },
+    "coding": {
+      "model": "gemini-3.7-flash",
+      "provider": "gemini_pool",
+      "tier": "AGENTIC_CODING",
+      "target_latency": "~3.5s"
+    },
+    "agentic": {
+      "model": "gemini-3.7-flash",
+      "provider": "gemini_pool",
+      "tier": "AGENTIC_CODING",
+      "target_latency": "~3.5s"
+    },
+    "architecture": {
+      "model": "gemini-3.7-flash",
+      "provider": "gemini_pool",
+      "tier": "AGENTIC_CODING",
+      "target_latency": "~3.5s"
+    },
+    "deep_reasoning": {
+      "model": "gemini-3.1-pro-preview",
+      "provider": "gemini_pool",
+      "tier": "DEEP_REASONING",
+      "target_latency": "~5.0s"
+    },
+    "local_fallback": {
+      "model": "qwen2.5-coder:7b",
+      "provider": "ollama",
+      "tier": "LOCAL_FALLBACK",
+      "target_latency": "variable"
+    }
+  },
+  "rotation": {
+    "gemini_key_pool": {
+      "manager_class": "GeminiPoolManager",
+      "source_file": "core/models/gemini_pool.py",
+      "variable_patterns": [
+        "GEMINI_API_KEY",
+        "GEMINI_API_KEY_2..19",
+        "GEMINI_PROJECT_<ID>_KEY*"
+      ],
+      "pool_size": 19,
+      "multi_project_supported": true,
+      "rotation_implemented": true,
+      "rotation_strategy": "Least-Used-Project + Round-Robin Keys with 429 Retry-After & 401/403 Invalidation",
+      "runtime_used": true,
+      "secrets_exposed": false
+    }
+  },
+  "verification": {
+    "physical_models_count": 6,
+    "configured_only_models_count": 3,
+    "cloud_governed_models_count": 9,
+    "stale_models_count": 4,
+    "providers_count": 10,
+    "active_providers": 2,
+    "dormant_providers": 8,
+    "forgotten_capabilities_count": 9
+  },
+  "forgotten": [
+    {
+      "capability": "Firecrawl Web Crawler",
+      "type": "web_crawler",
+      "evidence_source": "Spécifications d'extraction web universelle / Ingestion documentation",
+      "observation": "Aucun fichier firecrawl_provider.py ou module firecrawl présent dans core/providers/",
+      "status": "FORGOTTEN"
+    },
+    {
+      "capability": "Crawl4AI Local Crawler",
+      "type": "web_crawler",
+      "evidence_source": "Spécifications de crawling web local",
+      "observation": "Aucun module crawl4ai ou intégration locale présente dans core/providers/",
+      "status": "FORGOTTEN"
+    },
+    {
+      "capability": "Exa AI Search API",
+      "type": "web_search",
+      "evidence_source": "Notes de recherche sémantique externe",
+      "observation": "Aucun provider Exa dans core/providers/",
+      "status": "FORGOTTEN"
+    },
+    {
+      "capability": "Serper Google Search API",
+      "type": "web_search",
+      "evidence_source": "Spécifications multi-search fallback",
+      "observation": "Aucun provider Serper dans core/providers/",
+      "status": "FORGOTTEN"
+    },
+    {
+      "capability": "Brave Search API",
+      "type": "web_search",
+      "evidence_source": "Spécifications de recherche souveraine",
+      "observation": "Aucun provider Brave dans core/providers/",
+      "status": "FORGOTTEN"
+    },
+    {
+      "capability": "Perplexity Search API",
+      "type": "web_search",
+      "evidence_source": "Architecture de recherche LLM externe",
+      "observation": "Aucun provider Perplexity dans core/providers/",
+      "status": "FORGOTTEN"
+    },
+    {
+      "capability": "Chatterbox-Nano TTS",
+      "type": "voice_tts",
+      "evidence_source": "docs/KNOWN_FALSE_CLAIMS.md item 1",
+      "observation": "Revendiqué dans rapports v6.0 mais 0 commit Git et 0 fichier source (réfuté)",
+      "status": "FORGOTTEN_REFUTED"
+    },
+    {
+      "capability": "VibeVoice TTS",
+      "type": "voice_tts",
+      "evidence_source": "docs/KNOWN_FALSE_CLAIMS.md item 2",
+      "observation": "Revendiqué dans catalogue préliminaire mais 0 fichier source (réfuté)",
+      "status": "FORGOTTEN_REFUTED"
+    },
+    {
+      "capability": "LTX-Video Local ComfyUI",
+      "type": "video_generation",
+      "evidence_source": "docs/KNOWN_FALSE_CLAIMS.md item 4",
+      "observation": "Exige > 12 Go VRAM alors que GPU GTX 1650 a 4 Go VRAM (inopérant localement)",
+      "status": "HARDWARE_LIMITED"
+    }
+  ],
+  "stale_references": [
+    {
+      "name": "qwen2.5-coder:7b",
+      "source": "core/cognition/model_router.py:32",
+      "reason": "LOCAL_FALLBACK_MODEL uninstalled"
+    },
+    {
+      "name": "qwen2.5:3b",
+      "source": "core/cognition/model_router.py:70",
+      "reason": "Low-complexity fallback uninstalled"
+    },
+    {
+      "name": "granite4.1:8b",
+      "source": "runtime/model_router/config.json:3",
+      "reason": "Ollama route configured but model uninstalled"
+    },
+    {
+      "name": "qwen3-coder:30b",
+      "source": "runtime/model_router/config.json:10",
+      "reason": "Ollama route configured but model uninstalled"
+    },
+    {
+      "name": "mrasif/gpt-oss-20b-GGUF:Q4_K_M",
+      "source": "runtime/model_router/config.json:7",
+      "reason": "Ollama route configured but model uninstalled"
+    }
+  ]
+}

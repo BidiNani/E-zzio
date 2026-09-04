@@ -1,0 +1,82 @@
+[
+  {
+    "req_idx": 1,
+    "profile": "fast",
+    "primary": "gemini_pool:gemini-3.1-flash-lite",
+    "selected": "gemini_pool:gemini-3.1-flash-lite",
+    "reason": "HEALTHY_PRIMARY",
+    "latency_ms": 1212.51
+  },
+  {
+    "req_idx": 2,
+    "profile": "coding",
+    "primary": "gemini_pool:gemini-3.7-flash",
+    "selected": "groq:qwen/qwen3.6-27b",
+    "reason": "GEMINI_HTTP_503_COOLDOWN_TRIGGER",
+    "latency_ms": 5997.23
+  },
+  {
+    "req_idx": 3,
+    "profile": "coding",
+    "primary": "gemini_pool:gemini-3.7-flash",
+    "selected": "groq:qwen/qwen3.6-27b",
+    "reason": "CIRCUIT_BREAKER_COOLDOWN_ACTIVE",
+    "latency_ms": 2598.6
+  },
+  {
+    "req_idx": 4,
+    "profile": "deep",
+    "primary": "gemini_pool:gemini-3.1-pro-preview",
+    "selected": "groq:openai/gpt-oss-120b",
+    "reason": "CIRCUIT_BREAKER_COOLDOWN_ACTIVE",
+    "latency_ms": 2677.01
+  },
+  {
+    "req_idx": 5,
+    "profile": "fast",
+    "primary": "cache",
+    "selected": "cache:gemini-3.1-flash-lite",
+    "reason": "CACHE_HIT",
+    "latency_ms": 0.94
+  },
+  {
+    "req_idx": 6,
+    "profile": "fast",
+    "primary": "gemini_pool:gemini-3.1-flash-lite",
+    "selected": "groq:groq/compound-mini",
+    "reason": "CIRCUIT_BREAKER_COOLDOWN_ACTIVE",
+    "latency_ms": 991.41
+  },
+  {
+    "req_idx": 7,
+    "profile": "general",
+    "primary": "gemini_pool:gemini-3.6-flash",
+    "selected": "groq:groq/compound",
+    "reason": "CIRCUIT_BREAKER_COOLDOWN_ACTIVE",
+    "latency_ms": 2572.41
+  },
+  {
+    "req_idx": 8,
+    "profile": "fast",
+    "primary": "gemini_pool:gemini-3.1-flash-lite",
+    "selected": "groq:groq/compound-mini",
+    "reason": "CIRCUIT_BREAKER_COOLDOWN_ACTIVE",
+    "latency_ms": 869.9
+  },
+  {
+    "req_idx": 9,
+    "profile": "general",
+    "primary": "gemini_pool:gemini-3.6-flash",
+    "selected": "groq:groq/compound",
+    "reason": "CIRCUIT_BREAKER_COOLDOWN_ACTIVE",
+    "latency_ms": 2137.44
+  },
+  {
+    "req_idx": 10,
+    "profile": "general",
+    "primary": "cache",
+    "selected": "cache:groq/compound",
+    "reason": "CACHE_HIT",
+    "latency_ms": 1.08
+  }
+]

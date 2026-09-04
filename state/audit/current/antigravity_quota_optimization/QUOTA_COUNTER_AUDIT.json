@@ -1,0 +1,47 @@
+{
+  "metadata": {
+    "generated_at": "2026-08-31T17:35:00+02:00",
+    "standard": "EVIDENCE RULE v1.1",
+    "scope": "Contre-expertise métrologique du gain de quota Antigravity / Gemini"
+  },
+  "provenance_analysis": {
+    "claimed_metric": "MEASURED_QUOTA_SAVED = 72.1%",
+    "exact_source": "CONTEXT_DUPLICATION.json: line 12 (gain.token_reduction_pct)",
+    "formula": "(52000 - 14500) / 52000 = 72.115%",
+    "true_nature": "ESTIMATED_INPUT_TOKEN_REDUCTION (Non-direct quota measure)",
+    "reclassification": "DERIVED_ESTIMATE"
+  },
+  "metrological_matrix": {
+    "prompts_reduction": {
+      "value": "58.6%",
+      "nature": "DERIVED_WORKFLOW_ESTIMATE",
+      "status": "ESTIMATED"
+    },
+    "input_context_reduction": {
+      "value": "72.1%",
+      "nature": "ESTIMATED_TOKEN_SAVINGS",
+      "status": "REPRODUCED_CALCULATION"
+    },
+    "output_reduction": {
+      "value": "45.0%",
+      "nature": "ESTIMATED_VERBOSITY_SAVINGS",
+      "status": "ESTIMATED"
+    },
+    "cloud_calls_reduction": {
+      "value": "72.0%",
+      "nature": "DERIVED_FROM_12_LOCAL_TASKS",
+      "status": "DERIVED"
+    },
+    "antigravity_task_share_reduction": {
+      "value": "100% -> 28%",
+      "nature": "TASK_CLASSIFICATION_MODEL",
+      "status": "ESTIMATED"
+    },
+    "quota_directly_measured": {
+      "value": "UNAVAILABLE",
+      "nature": "NO_BACKEND_METER_API",
+      "status": "UNVERIFIED"
+    }
+  },
+  "verdict": "QUOTA_SAVING_ESTIMATED"
+}

@@ -1,0 +1,49 @@
+{
+  "ez-router:latest": {
+    "from": "phi4-mini:latest",
+    "parameters": {
+      "num_ctx": "2048",
+      "temperature": "0",
+      "top_p": "0.9"
+    },
+    "system_prompt": "Tu es le routeur interne d'E-ZZIO. Ton unique r\u00f4le est de classifier la requ\u00eate utilisateur et d'orienter vers le bon mod\u00e8le en JSON strict.",
+    "analysis": "Pure prompt wrapper. Le ModelRouter natif E-ZZIO (core/cognition/model_router.py) execute la classification en Python pur sans aucun appel LLM. Doublon complet."
+  },
+  "ez-core-safe:latest": {
+    "from": "qwen3.5:9b",
+    "parameters": {
+      "num_ctx": "8192",
+      "temperature": "0.2",
+      "top_p": "0.95"
+    },
+    "system_prompt": "Tu es le moteur cognitif principal et securise d'E-ZZIO.",
+    "analysis": "Pure prompt wrapper sur qwen3.5:9b. Inactive en production (remplace par Gemini Cloud ou Qwen2.5-Coder:7b / Qwen3.5 natif avec prompt injecte au runtime)."
+  },
+  "ez-core-free:latest": {
+    "from": "sha256:3c08d6616a9a087cf283d0dfc25f4a6e87f5d96c9444158ba6d5be9b16ea9825",
+    "parameters": {
+      "num_ctx": "8192",
+      "temperature": "0.7"
+    },
+    "system_prompt": "Tu es l'instance debridee et libre d'E-ZZIO.",
+    "analysis": "Poids autonomes (5.34 GB) derives de Llama-3.1-8B-Abliterated. Inactive en production, aucune route d'execution sovereign."
+  },
+  "ez-agent-hermes:latest": {
+    "from": "hermes3:8b",
+    "parameters": {
+      "num_ctx": "8192",
+      "temperature": "0.3"
+    },
+    "system_prompt": "Tu es l'agent d'execution et d'orchestration d'outils d'E-ZZIO.",
+    "analysis": "Pure prompt wrapper sur Hermes-3-8B. Le systeme sovereign injecte dynamiquement les system prompts et tool-calls dans Hermes3 canonique sans necessiter un tag custom."
+  },
+  "ez-rag-expert:latest": {
+    "from": "sha256:85292217f0aa4bca0d39e31d4da76f3f0193132e4d2a13cc7abeb89d81d2df52",
+    "parameters": {
+      "num_ctx": "16384",
+      "temperature": "0.1"
+    },
+    "system_prompt": "Tu es le specialiste de synthese et d'extraction RAG d'E-ZZIO.",
+    "analysis": "Poids autonomes (6.10 GB) avec layer projecteur. Inactive en production (le RAG sovereign utilise bge-m3 + Gemini 3.5 Flash-Lite / Qwen local)."
+  }
+}

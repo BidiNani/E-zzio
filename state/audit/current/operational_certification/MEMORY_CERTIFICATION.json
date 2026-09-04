@@ -1,0 +1,6 @@
+{
+  "gateway": "UnifiedMemoryGateway",
+  "storage": "SQLite-WAL",
+  "fts5_bm25": true,
+  "status": "OPERATIONAL"
+}

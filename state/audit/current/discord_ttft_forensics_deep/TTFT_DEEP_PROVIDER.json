@@ -1,0 +1,23 @@
+{
+  "endpoint": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent",
+  "exposed_headers": [
+    "content-type",
+    "vary",
+    "date",
+    "server",
+    "alt-svc",
+    "x-xss-protection",
+    "x-frame-options"
+  ],
+  "server_timing_header_present": false,
+  "queue_time_exposed": false,
+  "prefill_time_exposed": false,
+  "decode_time_exposed": false,
+  "usage_metadata_exposed": true,
+  "usage_metadata_fields": [
+    "promptTokenCount",
+    "candidatesTokenCount",
+    "totalTokenCount"
+  ],
+  "telemetry_verdict": "Google API returns token counts in usageMetadata but DOES NOT expose internal queue, prefill, or decode durations in headers or SSE events."
+}

@@ -1,0 +1,16 @@
+{
+  "formats_supported": [
+    "PDF",
+    "DOCX",
+    "XLSX",
+    "CSV",
+    "TSV",
+    "HTML",
+    "TXT",
+    "ZIP"
+  ],
+  "max_size_mb": 50,
+  "anti_zip_slip": true,
+  "anti_zip_bomb": true,
+  "status": "OPERATIONAL"
+}

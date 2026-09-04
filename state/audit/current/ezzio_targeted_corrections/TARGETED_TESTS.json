@@ -1,0 +1,43 @@
+{
+  "test_executions": [
+    {
+      "test_file": "tests/test_universal_reader.py",
+      "passed": true,
+      "tests_count": 8,
+      "scope": "Ingestion universelle de formats et sécurité"
+    },
+    {
+      "test_file": "tests/test_universal_ingestion_v10.py",
+      "passed": true,
+      "tests_count": 7,
+      "scope": "Pipelines de perception robuste"
+    },
+    {
+      "test_file": "tests/test_kokoro_tts_adapter.py",
+      "passed": true,
+      "tests_count": 4,
+      "scope": "Cycle de vie Kokoro-82M ONNX et repli procédural"
+    },
+    {
+      "test_file": "tests/test_voice_gateway.py",
+      "passed": true,
+      "tests_count": 4,
+      "scope": "Passerelle vocale unifiée et énumération matériel"
+    },
+    {
+      "test_file": "tests/test_audio_engine.py",
+      "passed": true,
+      "tests_count": 3,
+      "scope": "ASR Streaming Nemotron et Faster-Whisper"
+    },
+    {
+      "test_file": "tests/test_model_router_failure_matrix.py",
+      "passed": true,
+      "tests_count": 4,
+      "scope": "Matrice de panne Cloud-First et repli local fail-closed"
+    }
+  ],
+  "total_targeted_tests_passed": 30,
+  "total_failures": 0,
+  "verdict": "ALL_TARGETED_TESTS_PASSED"
+}

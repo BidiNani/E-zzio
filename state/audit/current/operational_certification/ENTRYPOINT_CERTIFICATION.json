@@ -1,0 +1,29 @@
+{
+  "discord": {
+    "status": "OPERATIONAL",
+    "guard": "Guardian active",
+    "commands": [
+      "!bidi",
+      "!bidi recall",
+      "!bidi status"
+    ]
+  },
+  "http_api": {
+    "status": "OPERATIONAL",
+    "endpoints_count": 23,
+    "health": "200 OK"
+  },
+  "cli_sdk": {
+    "status": "OPERATIONAL",
+    "file": "ezzio_cli.py",
+    "modes": [
+      "interactive",
+      "task"
+    ]
+  },
+  "web_hud": {
+    "status": "OPERATIONAL",
+    "url": "http://127.0.0.1:8001",
+    "upload": "Drag & Drop integrated"
+  }
+}

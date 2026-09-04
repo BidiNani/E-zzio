@@ -1,0 +1,171 @@
+{
+  "schema": "6.1",
+  "provider": "groq",
+  "source": "groq_openai_compatible_models_list",
+  "endpoint": "https://api.groq.com/openai/v1/models",
+  "generated_at_utc": "2026-09-02T23:01:05.5127061Z",
+  "dynamic_discovery": true,
+  "gemini_pool": null,
+  "groq_pool": {
+    "total_keys": 2,
+    "healthy_keys": 2,
+    "failed_keys": 0,
+    "keys": [
+      {
+        "key_name": "GROQ_API_KEY",
+        "healthy": true,
+        "model_count": 14
+      },
+      {
+        "key_name": "GROQ_API_KEY_2",
+        "healthy": true,
+        "model_count": 14
+      }
+    ]
+  },
+  "availability": {
+    "healthy_keys": 2,
+    "total_keys": 2,
+    "common_models": 14
+  },
+  "selected": {
+    "primary": "openai/gpt-oss-120b",
+    "fast_cloud": "openai/gpt-oss-20b",
+    "ultra_fast_cloud": "openai/gpt-oss-20b",
+    "escalation": "openai/gpt-oss-120b"
+  },
+  "common_groq_models": [
+    "allam-2-7b",
+    "canopylabs/orpheus-arabic-saudi",
+    "canopylabs/orpheus-v1-english",
+    "groq/compound",
+    "groq/compound-mini",
+    "meta-llama/llama-prompt-guard-2-22m",
+    "meta-llama/llama-prompt-guard-2-86m",
+    "openai/gpt-oss-120b",
+    "openai/gpt-oss-20b",
+    "openai/gpt-oss-safeguard-20b",
+    "qwen/qwen3.6-27b",
+    "qwen/qwen3.8-27b",
+    "whisper-large-v3",
+    "whisper-large-v3-turbo"
+  ],
+  "text_chat_models": [
+    "allam-2-7b",
+    "canopylabs/orpheus-arabic-saudi",
+    "canopylabs/orpheus-v1-english",
+    "groq/compound",
+    "groq/compound-mini",
+    "openai/gpt-oss-120b",
+    "openai/gpt-oss-20b",
+    "qwen/qwen3.6-27b",
+    "qwen/qwen3.8-27b"
+  ],
+  "specialized_models": [
+    "meta-llama/llama-prompt-guard-2-22m",
+    "meta-llama/llama-prompt-guard-2-86m",
+    "openai/gpt-oss-safeguard-20b",
+    "whisper-large-v3",
+    "whisper-large-v3-turbo"
+  ],
+  "groq_models": [
+    {
+      "id": "allam-2-7b",
+      "object": "model",
+      "owned_by": "SDAIA",
+      "category": "text_chat",
+      "created": 1737672203
+    },
+    {
+      "id": "canopylabs/orpheus-arabic-saudi",
+      "object": "model",
+      "owned_by": "Canopy Labs",
+      "category": "text_chat",
+      "created": 1765926439
+    },
+    {
+      "id": "canopylabs/orpheus-v1-english",
+      "object": "model",
+      "owned_by": "Canopy Labs",
+      "category": "text_chat",
+      "created": 1766186316
+    },
+    {
+      "id": "groq/compound",
+      "object": "model",
+      "owned_by": "Groq",
+      "category": "text_chat",
+      "created": 1756949530
+    },
+    {
+      "id": "groq/compound-mini",
+      "object": "model",
+      "owned_by": "Groq",
+      "category": "text_chat",
+      "created": 1756949707
+    },
+    {
+      "id": "meta-llama/llama-prompt-guard-2-22m",
+      "object": "model",
+      "owned_by": "Meta",
+      "category": "specialized",
+      "created": 1748632101
+    },
+    {
+      "id": "meta-llama/llama-prompt-guard-2-86m",
+      "object": "model",
+      "owned_by": "Meta",
+      "category": "specialized",
+      "created": 1748632165
+    },
+    {
+      "id": "openai/gpt-oss-120b",
+      "object": "model",
+      "owned_by": "OpenAI",
+      "category": "text_chat",
+      "created": 1754408224
+    },
+    {
+      "id": "openai/gpt-oss-20b",
+      "object": "model",
+      "owned_by": "OpenAI",
+      "category": "text_chat",
+      "created": 1754407957
+    },
+    {
+      "id": "openai/gpt-oss-safeguard-20b",
+      "object": "model",
+      "owned_by": "OpenAI",
+      "category": "specialized",
+      "created": 1761708789
+    },
+    {
+      "id": "qwen/qwen3.6-27b",
+      "object": "model",
+      "owned_by": "Alibaba Cloud",
+      "category": "text_chat",
+      "created": 1778288776
+    },
+    {
+      "id": "qwen/qwen3.8-27b",
+      "object": "model",
+      "owned_by": "Alibaba Cloud",
+      "category": "text_chat",
+      "created": 1786984846
+    },
+    {
+      "id": "whisper-large-v3",
+      "object": "model",
+      "owned_by": "OpenAI",
+      "category": "specialized",
+      "created": 1693721698
+    },
+    {
+      "id": "whisper-large-v3-turbo",
+      "object": "model",
+      "owned_by": "OpenAI",
+      "category": "specialized",
+      "created": 1728413088
+    }
+  ]
+}

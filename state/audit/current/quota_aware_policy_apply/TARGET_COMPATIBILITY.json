@@ -1,0 +1,60 @@
+{
+  "targets_tested": [
+    {
+      "model": "gemini-3.1-flash-lite",
+      "role": "FAST",
+      "latency_ms": 733.76,
+      "margin": 13,
+      "quality": "EXCELLENT",
+      "status": "QUALIFIED_PRIMARY"
+    },
+    {
+      "model": "gemini-3.6-flash",
+      "role": "GENERAL",
+      "latency_ms": 3436.14,
+      "margin": 3,
+      "quality": "EXCELLENT_SYNTHESIS",
+      "status": "QUALIFIED_PRIMARY"
+    },
+    {
+      "model": "gemini-3.7-flash",
+      "role": "CODING",
+      "latency_ms": 4026.37,
+      "margin": 2,
+      "quality": "AGENTIC_STATE_OF_ART",
+      "status": "QUALIFIED_PRIMARY"
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "role": "DEEP_REASONING",
+      "latency_ms": 5934.32,
+      "margin": "PREVIEW",
+      "quality": "HIGH_REASONING",
+      "status": "QUALIFIED_PRIMARY"
+    },
+    {
+      "model": "groq/compound-mini",
+      "role": "FAST",
+      "latency_ms": 459.06,
+      "status": "QUALIFIED_CLOUD_FALLBACK"
+    },
+    {
+      "model": "groq/compound",
+      "role": "GENERAL",
+      "latency_ms": 528.68,
+      "status": "QUALIFIED_CLOUD_FALLBACK"
+    },
+    {
+      "model": "groq:qwen/qwen3.6-27b",
+      "role": "CODING",
+      "latency_ms": 353.84,
+      "status": "QUALIFIED_CLOUD_FALLBACK"
+    },
+    {
+      "model": "groq:openai/gpt-oss-120b",
+      "role": "DEEP_REASONING",
+      "latency_ms": 410.03,
+      "status": "QUALIFIED_CLOUD_FALLBACK"
+    }
+  ]
+}

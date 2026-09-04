@@ -1,0 +1,29 @@
+{
+  "matrix": [
+    {
+      "profile": "FAST",
+      "primary_cloud": "Gemini 3.5 Flash-Lite",
+      "cloud_fallback": "Groq compound-mini",
+      "local_last_resort": "phi4-mini:latest"
+    },
+    {
+      "profile": "GENERAL",
+      "primary_cloud": "Gemini 3.5 Flash",
+      "cloud_fallback": "Groq compound",
+      "local_last_resort": "hermes3:8b"
+    },
+    {
+      "profile": "CODING",
+      "primary_cloud": "Gemini 3.7 Flash",
+      "cloud_fallback": "Groq qwen3.6-27b",
+      "local_last_resort": "qwen3.5:9b"
+    },
+    {
+      "profile": "DEEP_REASONING",
+      "primary_cloud": "Gemini 3.1 Pro Preview",
+      "cloud_fallback": "Groq gpt-oss-120b",
+      "local_last_resort": "qwen3.5:9b"
+    }
+  ],
+  "degradation_policy": "NO_BLIND_DEGRADATION (Rôles stricts préservés à travers tous les niveaux de repli)"
+}

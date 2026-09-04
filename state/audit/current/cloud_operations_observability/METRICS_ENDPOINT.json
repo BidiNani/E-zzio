@@ -1,0 +1,12 @@
+{
+  "endpoint": "GET /metrics",
+  "handler": "web_server.metrics_endpoint",
+  "sections": [
+    "system",
+    "providers_health",
+    "cognitive",
+    "circuit_breaker",
+    "memory"
+  ],
+  "cognitive_source": "model_router.get_telemetry_state()"
+}

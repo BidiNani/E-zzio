@@ -1,0 +1,11 @@
+{
+  "sample_size": 20,
+  "percentiles": {
+    "p50_median_ms": 29.52,
+    "p90_ms": 11016.37,
+    "p95_ms": 49195.89,
+    "p99_ms": 49195.89,
+    "max_ms": 49195.89
+  },
+  "statistical_distortion": "Avec N=20, le 95ème percentile correspond à la 19ème/20ème valeur, qui est l'unique outlier extrême (Req #2). 70% des requêtes ont été servies en < 30ms."
+}

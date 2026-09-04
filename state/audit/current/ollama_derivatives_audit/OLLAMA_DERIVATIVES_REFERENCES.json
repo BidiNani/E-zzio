@@ -1,0 +1,22 @@
+{
+  "total_references_count": 84,
+  "production_router_references": {
+    "file": "core/cognition/model_router.py",
+    "count": 0,
+    "details": "ModelRouter active routes: gemini-3.5-flash-lite, gemini-3.5-flash, gemini-3.7-flash, gemini-3.1-pro-preview, qwen2.5-coder:7b. ZERO reference to ez-*."
+  },
+  "prototype_config_references": {
+    "file": "src/ezzio/config.py",
+    "count": 5,
+    "details": "LangGraph experimental configuration defaults (ROUTER_MODEL='ez-router', CORE_SAFE_MODEL='ez-core-safe', etc.). Unrouted from sovereign Discord / CLI runtime."
+  },
+  "test_and_tool_references": {
+    "files": [
+      "tools/benchmark_ez_ollama.py",
+      "scripts/audit_ollama_inventory.py",
+      "core/scripts/setup_ollama_models.py"
+    ],
+    "count": 79,
+    "details": "Model creation scripts and benchmarking utilities."
+  }
+}

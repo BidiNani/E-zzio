@@ -1,0 +1,112 @@
+[
+  {
+    "provider": "Google Gemini",
+    "model": "gemini-3.7-flash",
+    "role": "CODING / AGENTIC",
+    "auth": "GEMINI_API_KEY",
+    "runtime": "ACTIVE",
+    "latency_p50": "650ms",
+    "failover": "groq:openai/gpt-oss-120b",
+    "quota_signal": "429 Retry-After",
+    "status": "ACTIVE"
+  },
+  {
+    "provider": "Google Gemini",
+    "model": "gemini-3.5-flash",
+    "role": "GENERAL CHAT",
+    "auth": "GEMINI_API_KEY",
+    "runtime": "ACTIVE",
+    "latency_p50": "600ms",
+    "failover": "groq:groq/compound",
+    "quota_signal": "429 Retry-After",
+    "status": "ACTIVE"
+  },
+  {
+    "provider": "Google Gemini",
+    "model": "gemini-3.5-flash-lite",
+    "role": "FAST GATEWAY",
+    "auth": "GEMINI_API_KEY",
+    "runtime": "ACTIVE",
+    "latency_p50": "450ms",
+    "failover": "groq:groq/compound-mini",
+    "quota_signal": "429 Retry-After",
+    "status": "ACTIVE"
+  },
+  {
+    "provider": "Google Gemini",
+    "model": "gemini-3.1-pro-preview",
+    "role": "DEEP REASONING",
+    "auth": "GEMINI_API_KEY",
+    "runtime": "ACTIVE",
+    "latency_p50": "1200ms",
+    "failover": "groq:qwen/qwen3.6-27b",
+    "quota_signal": "429 Retry-After",
+    "status": "ACTIVE"
+  },
+  {
+    "provider": "Google Gemini",
+    "model": "gemini-3.1-flash-image",
+    "role": "IMAGE GENERATION",
+    "auth": "GEMINI_API_KEY",
+    "runtime": "ACTIVE",
+    "latency_p50": "2500ms",
+    "failover": "gemini-3-pro-image",
+    "quota_signal": "429 Retry-After",
+    "status": "ACTIVE"
+  },
+  {
+    "provider": "Google Gemini",
+    "model": "gemini-omni-1.1-flash",
+    "role": "VIDEO GENERATION",
+    "auth": "GEMINI_API_KEY",
+    "runtime": "ACTIVE",
+    "latency_p50": "5000ms",
+    "failover": "None (Unique tier)",
+    "quota_signal": "429 Retry-After",
+    "status": "ACTIVE"
+  },
+  {
+    "provider": "Groq Cloud",
+    "model": "groq/compound",
+    "role": "SAME-ROLE GENERAL",
+    "auth": "GROQ_API_KEY",
+    "runtime": "ACTIVE",
+    "latency_p50": "380ms",
+    "failover": "ollama:hermes3:8b",
+    "quota_signal": "429 Retry-After",
+    "status": "ACTIVE"
+  },
+  {
+    "provider": "Groq Cloud",
+    "model": "groq/compound-mini",
+    "role": "SAME-ROLE FAST",
+    "auth": "GROQ_API_KEY",
+    "runtime": "ACTIVE",
+    "latency_p50": "220ms",
+    "failover": "ollama:phi4-mini:latest",
+    "quota_signal": "429 Retry-After",
+    "status": "ACTIVE"
+  },
+  {
+    "provider": "Groq Cloud",
+    "model": "openai/gpt-oss-120b",
+    "role": "SAME-ROLE CODING",
+    "auth": "GROQ_API_KEY",
+    "runtime": "ACTIVE",
+    "latency_p50": "490ms",
+    "failover": "ollama:qwen3.5:9b",
+    "quota_signal": "429 Retry-After",
+    "status": "ACTIVE"
+  },
+  {
+    "provider": "DuckDuckGo / Tavily",
+    "model": "Search Engine",
+    "role": "WEB RECHERCHE",
+    "auth": "TAVILY_API_KEY / None",
+    "runtime": "ACTIVE",
+    "latency_p50": "720ms",
+    "failover": "SafeWebFetcher",
+    "quota_signal": "HTTP 429",
+    "status": "ACTIVE"
+  }
+]

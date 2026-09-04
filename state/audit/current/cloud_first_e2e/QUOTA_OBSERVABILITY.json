@@ -1,0 +1,9 @@
+{
+  "metrics_observed": {
+    "cloud_calls": "Comptabilisées par le ModelRouter",
+    "cache_hits": "0 token, 0 appel réseau (0.75ms)",
+    "fallbacks": "Traçabilité des bascules same-role",
+    "ollama_calls": "0 en mode nominal, activé uniquement en dernier recours"
+  },
+  "unknown": "Solde de tokens restant côté serveur Google/Groq (non exposé par l'API)"
+}

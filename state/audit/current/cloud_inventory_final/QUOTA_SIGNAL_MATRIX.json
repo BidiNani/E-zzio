@@ -1,0 +1,7 @@
+{
+  "antigravity_quota": "OUT_OF_BAND (IDE Platform Limit, not exposed to runtime)",
+  "gemini_api_quota": "RUNTIME_MANAGED (HTTP 429 status + Retry-After headers parsed by GeminiPool)",
+  "groq_provider_limit": "RUNTIME_MANAGED (HTTP 429 status + Retry-After headers parsed by ModelRouter)",
+  "tavily_limit": "RUNTIME_MANAGED (HTTP 429 fallback to DuckDuckGo)",
+  "jina_limit": "RUNTIME_MANAGED (HTTP 429 fallback to SafeWebFetcher)"
+}

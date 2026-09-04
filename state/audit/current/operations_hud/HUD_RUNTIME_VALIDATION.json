@@ -1,0 +1,10 @@
+{
+  "web_server_status": "READY",
+  "http_endpoints_healthy": [
+    "GET /",
+    "GET /metrics",
+    "GET /health",
+    "POST /master/chat"
+  ],
+  "zero_side_effects_on_router": true
+}

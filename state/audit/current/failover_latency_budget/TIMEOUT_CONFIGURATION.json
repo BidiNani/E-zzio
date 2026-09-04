@@ -1,0 +1,25 @@
+{
+  "gemini_provider": {
+    "client_timeout_sec": 30.0,
+    "candidate_models_count": 3,
+    "max_potential_duration_sec": 90.0,
+    "actual_nominal_duration_ms": 650.0
+  },
+  "groq_provider": {
+    "client_timeout_sec": 15.0,
+    "candidate_models_count": 1,
+    "max_potential_duration_sec": 15.0,
+    "actual_nominal_duration_ms": 380.0
+  },
+  "ollama_provider": {
+    "client_timeout_sec": 30.0,
+    "candidate_models_count": 1,
+    "max_potential_duration_sec": 30.0,
+    "actual_nominal_duration_ms": 0.0
+  },
+  "circuit_breaker": {
+    "cooldown_429_sec": 60.0,
+    "cooldown_5xx_sec": 15.0,
+    "cooldown_auth_sec": 3600.0
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "status": "METROLOGY_RECONCILED",
+  "classifications": {
+    "ASK_TTFT": "REPRODUCED (Mesur\u00e9 ind\u00e9pendamment \u00e0 5.4675 s)",
+    "ASK_FIRST_VISIBLE": "REPRODUCED (Delta 0.3 ms post-premier token)",
+    "ASK_TOTAL": "REPRODUCED (5.4680 s)",
+    "CONCURRENT_2_METRICS_DISPATCH": "PROVEN (0.82 ms)",
+    "CONCURRENT_5_METRICS_DISPATCH": "PROVEN (1.44 ms)",
+    "CONCURRENT_2_CHAT_E2E": "PROVEN (Historique consolid\u00e9 ~730 ms)",
+    "CONCURRENT_5_CHAT_E2E": "PROVEN (Historique consolid\u00e9 ~755 ms)",
+    "STATUS_TOTAL": "PROVEN (0.263 ms)",
+    "PDF_TOTAL": "PROVEN (2.353 ms)",
+    "XLSX_TOTAL": "PROVEN (5.795 ms)",
+    "ERROR_RECOVERY": "PROVEN (Moyenne 657.82 ms sur 5 runs, variance 564-898 ms)",
+    "HTTP_CONNECTION_REUSE": "PROVEN (Cold 1.527 ms -> Warm 0.263 ms)"
+  },
+  "invalidated_or_unverified_metrics": [
+    {
+      "metric": "V2_REPORT_CONCURRENT_2 (0.82 ms)",
+      "reason": "Mesurait le dispatch t\u00e9l\u00e9m\u00e9trique GET /metrics et non l'inf\u00e9rence cognitive compl\u00e8te /master/chat. Reclass\u00e9 INCOMPARABLE avec le benchmark initial et requalifi\u00e9 s\u00e9par\u00e9ment.",
+      "action": "D\u00e9sambigu\u00efs\u00e9 en CONCURRENT_2_METRICS_DISPATCH (0.82 ms) et CONCURRENT_2_CHAT_E2E (731.5 ms)."
+    },
+    {
+      "metric": "V2_REPORT_TIMELINE INTERMEDIATE_RENDERS [6.6712s, 7.8745s]",
+      "reason": "M\u00e9lange synth\u00e9tique de deux runs diff\u00e9rents lors de l'enregistrement du rapport pr\u00e9c\u00e9dent (run court de 5.4s avec valeurs r\u00e9siduelles d'un run long de 10s).",
+      "action": "Invalid\u00e9 et remplac\u00e9 par DISCORD_V2_METROLOGY_TIMELINE.json issu strictement d'un run unique coh\u00e9rent."
+    },
+    {
+      "metric": "V2_REPORT_TTFT_BEFORE (Identique \u00e0 TTFT_AFTER \u00e0 5467.50 ms)",
+      "reason": "La valeur 'BEFORE' \u00e9tait recopi\u00e9e du run d'audit pr\u00e9c\u00e9dent et n'\u00e9tait pas une remesure en direct avec rollback physique du code.",
+      "action": "Class\u00e9 NOT_REMEASURABLE pour l'\u00e9tat BEFORE historique, et REPRODUCED pour l'\u00e9tat V2 actuel."
+    }
+  ]
+}

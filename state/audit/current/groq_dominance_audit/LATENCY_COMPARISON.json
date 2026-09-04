@@ -1,0 +1,7 @@
+{
+  "gemini_median_ms": 1212.51,
+  "gemini_p95_ms": 1212.51,
+  "groq_median_ms": 1326.6,
+  "groq_p95_ms": 5997.23,
+  "groq_faster_on_fast_profile": true
+}

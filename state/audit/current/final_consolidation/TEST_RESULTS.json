@@ -1,0 +1,7 @@
+{
+  "nominal_cloud_calls": 1,
+  "cache_hit_calls": 1,
+  "singleflight_runs": 10,
+  "pytest_suite": "9 passed in test_model_router_failover_and_cache.py and test_model_router_failure_matrix.py",
+  "status": "ALL_TESTS_PASS"
+}

@@ -1,0 +1,5 @@
+{
+  "candidate_attempts_on_transport_timeout": 3,
+  "time_wasted_on_timeouts_sec": 45.0,
+  "behavior": "3 serialized candidate timeouts of 15s each"
+}

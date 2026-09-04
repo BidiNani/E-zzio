@@ -1,0 +1,40 @@
+{
+  "RUN_ID": "V2A_phi4-mini_latest_FAST_ROUTING_FR01_r1_1788181402",
+  "MODEL": "phi4-mini:latest",
+  "TASK": "FAST_ROUTING",
+  "SUB_ID": "FR01",
+  "RUN_NUM": 1,
+  "IS_COLD": true,
+  "PROMPT_HASH": "4bd7a9f46cd2",
+  "THREADS": 4,
+  "CONTEXT": 4096,
+  "GPU": 0,
+  "START_TIMESTAMP": "2026-08-31T13:03:22.856175+00:00",
+  "END_TIMESTAMP": "2026-08-31T13:03:32.169645+00:00",
+  "STATUS": "OK",
+  "QUALITY": "PASS",
+  "LOAD_MS": 4587.45,
+  "TTFT_MS": 742.1,
+  "PROMPT_TOKENS": 43,
+  "PROMPT_EVAL_TOK_S": 57.94,
+  "OUTPUT_TOKENS": 48,
+  "GEN_TOK_S": 12.65,
+  "TOTAL_E2E_MS": 9313.22,
+  "RAM_BEFORE": {
+    "used_gb": 14.78,
+    "avail_gb": 17.15,
+    "pct": 46.3
+  },
+  "RAM_PEAK": {
+    "used_gb": 17.69,
+    "avail_gb": 14.24,
+    "pct": 55.4
+  },
+  "RAM_AFTER": {
+    "used_gb": 17.69,
+    "avail_gb": 14.24,
+    "pct": 55.4
+  },
+  "ERROR": "",
+  "TEXT_SNIPPET": "```json\n{\n  \"category\": \"chart generation|code|chat\",\n  \"confidence\": 0.95,\n  \"task\": \"Generate 2026 sales chart\",\n  \"year\": 2026\n}\n```"
+}

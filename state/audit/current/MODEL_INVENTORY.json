@@ -1,0 +1,30 @@
+{
+  "timestamp": 1788131306.7179403,
+  "production_models": [
+    "phi4-mini:latest",
+    "qwen3.5:9b",
+    "hermes3:8b",
+    "bge-m3:latest"
+  ],
+  "specialized_models": [
+    "nomic-embed-text:latest",
+    "ez-router:latest",
+    "ez-core-safe:latest",
+    "ez-core-free:latest",
+    "ez-agent-hermes:latest",
+    "ez-rag-expert:latest"
+  ],
+  "experimental_models": [
+    "ornith-1.5:9b",
+    "ministral-3:8b",
+    "gemma4:e4b-it-q4_K_M"
+  ],
+  "legacy_models": [
+    "mannix/llama3.1-8b-abliterated:q5_K_M"
+  ],
+  "delete_candidates": [
+    "mannix/llama3.1-8b-abliterated:q5_K_M"
+  ],
+  "deletion_executed": false,
+  "status": "PHYSICALLY_VERIFIED"
+}

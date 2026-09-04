@@ -1,0 +1,5 @@
+{
+  "gemma_26b_streaming": "SUPPORTED",
+  "gemma_31b_streaming": "SUPPORTED",
+  "stream_integrity": "STABLE"
+}

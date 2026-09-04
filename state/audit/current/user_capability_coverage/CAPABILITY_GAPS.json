@@ -1,0 +1,13 @@
+{
+  "user_access_gaps": [
+    "L'upload direct de fichiers n'a pas encore de bouton 'Glisser-Déposer' dédié dans l'UI du Web HUD (accessible via POST /perception/upload et Discord)."
+  ],
+  "implementation_gaps": [],
+  "configuration_gaps": [
+    "Google Workspace OAuth tokens optionnels en attente de provisioning utilisateur dans secrets/.env."
+  ],
+  "documentation_gaps": [
+    "La documentation utilisateur mériterait un guide récapitulatif des commandes Discord (!bidi recall, !bidi status)."
+  ],
+  "e2e_proof_gaps": []
+}

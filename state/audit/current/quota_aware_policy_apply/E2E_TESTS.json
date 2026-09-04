@@ -1,0 +1,6 @@
+{
+  "discord": "stream_ezzio_chat() -> ModelRouter (Delegated)",
+  "http_api": "POST /master/chat -> 494ms ACCEPTED (Delegated)",
+  "cli_sdk": "CognitiveGateway.ask_async() -> 559ms ACCEPTED (Delegated)",
+  "web_hud": "Télémétrie et métriques unifiées"
+}

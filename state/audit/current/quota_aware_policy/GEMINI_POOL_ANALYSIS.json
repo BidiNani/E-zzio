@@ -1,0 +1,5 @@
+{
+  "pool_structure": "5 active keys in project_default",
+  "circuit_breaker": "429 cooldown per key and per model",
+  "recommendation": "Expand model selection candidate lists in pool acquisition to favor healthy margin models (gemini-3.1-flash-lite, gemini-3.6-flash, gemma-4)"
+}

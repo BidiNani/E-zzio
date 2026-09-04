@@ -1,0 +1,42 @@
+{
+  "observed_slow_request_id": "114d707c",
+  "profile": "GENERAL",
+  "timeline": [
+    {
+      "step": 1,
+      "target": "gemini_pool:gemini-3.6-flash",
+      "event": "HTTP 429 Quota Exhausted",
+      "duration_ms": 520.0
+    },
+    {
+      "step": 2,
+      "target": "gemini_pool:gemini-3.5-flash",
+      "event": "HTTP 429 Quota Exhausted",
+      "duration_ms": 480.0
+    },
+    {
+      "step": 3,
+      "target": "gemini_pool:gemini-3-flash",
+      "event": "HTTP Timeout / Network Backoff",
+      "duration_ms": 22100.0
+    },
+    {
+      "step": 4,
+      "target": "groq:groq/compound",
+      "event": "HTTP 413 / 429",
+      "duration_ms": 480.0
+    },
+    {
+      "step": 5,
+      "target": "ollama:hermes3:8b",
+      "event": "Socket Connect Attempt",
+      "duration_ms": 15006.43
+    },
+    {
+      "step": 6,
+      "target": "SYSTEM_FAIL_CLOSED",
+      "event": "All Providers Exhausted",
+      "total_latency_ms": 38586.43
+    }
+  ]
+}

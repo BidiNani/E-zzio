@@ -1,0 +1,5 @@
+{
+  "recommendation_type": "TIMEOUT_TUNING_CANDIDATE (FOR FUTURE POLISH)",
+  "description": "Ajuster les timeouts individuels HTTP (Gemini: 8s, Groq: 6s, Ollama: 5s) permettrait de garantir un Fail-Closed en < 15s en cas de panne cloud totale sans réduire la robustesse nominale.",
+  "current_action": "NO_CODE_CHANGE_DURING_FREEZE"
+}

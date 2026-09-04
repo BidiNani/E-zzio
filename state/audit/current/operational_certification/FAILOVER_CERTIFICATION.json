@@ -1,0 +1,6 @@
+{
+  "circuit_breaker": "Active",
+  "cloud_secondary": "Groq Same-Role",
+  "sovereign_fallback": "Ollama Last Resort",
+  "status": "OPERATIONAL"
+}

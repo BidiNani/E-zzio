@@ -1,0 +1,8 @@
+{
+  "gemini_candidate_timeouts_ms": 45000.0,
+  "groq_generation_ms": 4195.89,
+  "cache_overhead_ms": 0.0,
+  "singleflight_overhead_ms": 0.0,
+  "network_overhead_ms": 0.0,
+  "total_ms": 49195.89
+}

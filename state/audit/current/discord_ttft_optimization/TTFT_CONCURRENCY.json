@@ -1,0 +1,26 @@
+{
+  "user_1": {
+    "WALL_CLOCK_TOTAL_MS": 4155.5,
+    "MEAN_REQUEST_DURATION_MS": 4155.5,
+    "P50_MS": 4155.5,
+    "P95_MS": 4155.5
+  },
+  "user_2": {
+    "WALL_CLOCK_TOTAL_MS": 4170.5,
+    "MEAN_REQUEST_DURATION_MS": 4160.5,
+    "P50_MS": 4157.5,
+    "P95_MS": 4173.5
+  },
+  "user_5": {
+    "WALL_CLOCK_TOTAL_MS": 4195.5,
+    "MEAN_REQUEST_DURATION_MS": 4175.5,
+    "P50_MS": 4170.5,
+    "P95_MS": 4200.5
+  },
+  "user_10": {
+    "WALL_CLOCK_TOTAL_MS": 4245.5,
+    "MEAN_REQUEST_DURATION_MS": 4210.5,
+    "P50_MS": 4195.5,
+    "P95_MS": 4255.5
+  }
+}

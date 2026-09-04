@@ -1,0 +1,11 @@
+{
+  "quick_start": "5 minutes chrono documenté",
+  "workflows": [
+    "Chat",
+    "Document Ingestion",
+    "Web Search",
+    "Image Analysis",
+    "Voice Pipeline"
+  ],
+  "status": "VALIDATED"
+}

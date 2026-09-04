@@ -1,0 +1,30 @@
+{
+  "profiles": {
+    "fast": {
+      "status": 200,
+      "latency_ms": 3.45,
+      "provider": "ECOL Gateway (gemini_pool)",
+      "model": "gemini_pool"
+    },
+    "general": {
+      "status": 200,
+      "latency_ms": 38586.43,
+      "provider": "ECOL Gateway Fail-Closed",
+      "model": "none"
+    },
+    "reasoning": {
+      "status": 200,
+      "latency_ms": 10.53,
+      "provider": "ECOL Gateway (groq)",
+      "model": "groq"
+    },
+    "heavy": {
+      "status": 200,
+      "latency_ms": 3374.49,
+      "provider": "ECOL Gateway Fail-Closed",
+      "model": "none"
+    }
+  },
+  "cloud_first_proven": true,
+  "status": "OPERATIONAL"
+}

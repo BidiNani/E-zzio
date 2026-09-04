@@ -1,0 +1,4 @@
+{
+  "rule": "Cache Lookup is ALWAYS Step 0. Hit returns in 0.75ms without consulting quota or triggering any network request.",
+  "singleflight": "Coalesces concurrent misses so only 1 healthy cloud call is made."
+}

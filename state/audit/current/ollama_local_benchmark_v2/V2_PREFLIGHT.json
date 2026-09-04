@@ -1,0 +1,28 @@
+{
+  "campaign": "V2A",
+  "timestamp": "2026-08-31T12:43:34.790394+00:00",
+  "campaign_v1": "ABORTED/INVALIDATED",
+  "host": {
+    "cpu": "AMD Ryzen 9 5900X (12C/24T)",
+    "ram_total_gb": 31.93,
+    "gpu_excluded": "NVIDIA GTX 1650 4GB"
+  },
+  "config": {
+    "threads": 4,
+    "ctx": 4096,
+    "gpu": 0,
+    "timeout_s": 180.0,
+    "seed": 42
+  },
+  "execution_order": [
+    "hermes3:8b",
+    "qwen3.5:9b",
+    "nemotron-3-nano:4b",
+    "phi4-mini:latest"
+  ],
+  "ram_baseline": {
+    "used_gb": 14.62,
+    "avail_gb": 17.31,
+    "pct": 45.8
+  }
+}

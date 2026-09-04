@@ -1,0 +1,6 @@
+{
+  "gemini_candidate_retries": 3,
+  "redundant_delays_detected": false,
+  "artificial_sleeps": 0,
+  "status": "IMMEDIATE_ROTATION"
+}

@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-09-01T10:59:00+02:00",
+  "standard": "EVIDENCE RULE v1.1",
+  "repository": "G:/AI/E-zzio",
+  "mission": "GEMMA_4_API_TEST",
+  "invariants": {
+    "production_code_changed": false,
+    "single_model_router": true,
+    "single_memory_gateway": true,
+    "single_secrets_vault": true,
+    "second_runtime": false,
+    "secrets_exposed": false
+  },
+  "gemini_api_key_present": true,
+  "endpoint_tested": "https://generativelanguage.googleapis.com/v1beta/models",
+  "auth_method": "API_KEY_QUERY_PARAM"
+}

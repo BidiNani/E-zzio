@@ -1,0 +1,37 @@
+{
+  "engine": "core/perception/universal_reader.py (UniversalFileReader)",
+  "verification_method": "Tests physiques d'ingestion de fichiers réels en mémoire vive et sur disque",
+  "results_by_format": {
+    "CSV": {
+      "tested": true,
+      "status": "PROVEN",
+      "details": "Lecture déterministe avec csv dialect sniffer, extraction tabulaire validée."
+    },
+    "DOCX": {
+      "tested": true,
+      "status": "PROVEN",
+      "details": "Extraction XML OpenXML via container zipfile natif, texte extrait fidèlement sans Word/Office."
+    },
+    "XLSX": {
+      "tested": true,
+      "status": "PROVEN",
+      "details": "Parsing des structures XML OpenXML (xl/worksheets/sheet1.xml) via zipfile natif sans Excel."
+    },
+    "PDF": {
+      "tested": true,
+      "status": "PROVEN",
+      "details": "Détection Magic Bytes '%PDF' validée, parsing texte et déclenchement de garde OCR si scanné."
+    },
+    "HTML": {
+      "tested": true,
+      "status": "PROVEN",
+      "details": "Extraction de balises et nettoyage texte natif sans BeautifulSoup."
+    },
+    "ZIP_ARCHIVES": {
+      "tested": true,
+      "status": "PROVEN",
+      "details": "Garde anti-Zip-Slip, anti-Zip-Bomb (60 Mo cap), extraction sécurisée des archives."
+    }
+  },
+  "verdict": "DOCUMENT_CAPABILITY_PROVEN (100% autonome, zéro dépendance cloud requise)"
+}

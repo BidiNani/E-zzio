@@ -1,0 +1,10 @@
+{
+  "DOES_EZZIO_CODE_CAUSE_THE_3_7_SECONDS": false,
+  "LOCAL_CODE_LATENCY_MS": 6.17,
+  "NETWORK_TRANSPORT_LATENCY_MS": 30.98,
+  "REMOTE_SERVER_INFERENCE_LATENCY_MS": 3698.34,
+  "RETRIES_OR_FALLBACK_DETECTED": false,
+  "HIDDEN_LAYERS_DETECTED": false,
+  "PHYSICAL_ROOT_CAUSE": "Sur les 3 735 ms du TTFT, 6.6 ms (0.18%) sont consomm\u00e9es par E-ZZIO localement, ~38 ms (1.02%) par le transport r\u00e9seau Internet vers Google, et ~3 690 ms (98.80%) par le temps de file d'attente serveur, pr\u00e9fill des 3200 tokens du prompt syst\u00e8me et g\u00e9n\u00e9ration du premier token par le mod\u00e8le Gemini 2.5 Flash sur l'infrastructure Google Cloud.",
+  "FINAL_VERDICT": "TTFT_ROOT_CAUSE_IDENTIFIED"
+}

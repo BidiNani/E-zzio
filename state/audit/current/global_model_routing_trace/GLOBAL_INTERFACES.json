@@ -1,0 +1,79 @@
+[
+  {
+    "INTERFACE_NAME": "Discord Natural Message",
+    "ENTRYPOINT": "core/integrations/discord/discord_client.py:on_message",
+    "MODULE": "core.integrations.discord.discord_client",
+    "ACTIVE_OR_INACTIVE": "ACTIVE",
+    "PIPELINE": "Discord MESSAGE_CREATE -> on_message -> stream_ezzio_chat -> POST /master/chat/stream -> CognitiveGateway -> ModelRouter -> gemini-3.5-flash-lite",
+    "ROUTER": "ModelRouter.select_engine(task_type='fast')",
+    "PROVIDER": "gemini_pool",
+    "MODEL": "gemini-3.5-flash-lite",
+    "EVIDENCE_LEVEL": "PROVEN"
+  },
+  {
+    "INTERFACE_NAME": "Discord /ask Slash Command",
+    "ENTRYPOINT": "core/integrations/discord/discord_client.py:slash_ask",
+    "MODULE": "core.integrations.discord.discord_client",
+    "ACTIVE_OR_INACTIVE": "ACTIVE",
+    "PIPELINE": "Discord /ask interaction -> slash_ask -> stream_ezzio_chat -> POST /master/chat/stream -> CognitiveGateway -> ModelRouter -> gemini-3.5-flash-lite",
+    "ROUTER": "ModelRouter.select_engine(task_type='fast')",
+    "PROVIDER": "gemini_pool",
+    "MODEL": "gemini-3.5-flash-lite",
+    "EVIDENCE_LEVEL": "PROVEN"
+  },
+  {
+    "INTERFACE_NAME": "HTTP Streaming API (/master/chat/stream)",
+    "ENTRYPOINT": "runtime/external/ezzio_app.py:master_chat_stream",
+    "MODULE": "runtime.external.ezzio_app",
+    "ACTIVE_OR_INACTIVE": "ACTIVE",
+    "PIPELINE": "HTTP POST /master/chat/stream -> master_chat_stream -> ModelRouter.select_engine -> _stream_gemini_sse -> gemini-3.5-flash-lite",
+    "ROUTER": "ModelRouter.select_engine(task_type=req.speed or 'fast')",
+    "PROVIDER": "gemini_pool",
+    "MODEL": "gemini-3.5-flash-lite",
+    "EVIDENCE_LEVEL": "PROVEN"
+  },
+  {
+    "INTERFACE_NAME": "Web Neural HUD (Open WebUI Bridge)",
+    "ENTRYPOINT": "runtime/web/index.html -> runtime/external/ezzio_app.py",
+    "MODULE": "runtime.external.ezzio_app",
+    "ACTIVE_OR_INACTIVE": "ACTIVE",
+    "PIPELINE": "Browser Web UI -> fetch('/master/chat/stream') -> CognitiveGateway -> ModelRouter -> gemini-3.5-flash-lite",
+    "ROUTER": "ModelRouter.select_engine(task_type='fast')",
+    "PROVIDER": "gemini_pool",
+    "MODEL": "gemini-3.5-flash-lite",
+    "EVIDENCE_LEVEL": "PROVEN"
+  },
+  {
+    "INTERFACE_NAME": "CLI / SDK Direct Core Gateway",
+    "ENTRYPOINT": "core/sdk.py & core/cognition/cognitive_gateway.py:ask_async",
+    "MODULE": "core.cognition.cognitive_gateway",
+    "ACTIVE_OR_INACTIVE": "ACTIVE",
+    "PIPELINE": "Python SDK -> CognitiveGateway.ask_async() -> ModelRouter.select_engine() -> gemini_pool / ollama",
+    "ROUTER": "ModelRouter.select_engine(task_type=speed or 'fast')",
+    "PROVIDER": "gemini_pool",
+    "MODEL": "gemini-3.5-flash-lite",
+    "EVIDENCE_LEVEL": "PROVEN"
+  },
+  {
+    "INTERFACE_NAME": "Coding Agent Loop / Autonomous Orchestrator",
+    "ENTRYPOINT": "core/agent/coding_agent_loop.py",
+    "MODULE": "core.agent.coding_agent_loop",
+    "ACTIVE_OR_INACTIVE": "ACTIVE",
+    "PIPELINE": "Agent Loop -> CognitiveGateway -> ModelRouter.select_engine(task_type='coding') -> gemini-3.7-flash",
+    "ROUTER": "ModelRouter.select_engine(task_type='coding')",
+    "PROVIDER": "gemini_pool",
+    "MODEL": "gemini-3.7-flash",
+    "EVIDENCE_LEVEL": "PROVEN"
+  },
+  {
+    "INTERFACE_NAME": "Legacy FastAPI Server (web_server.py)",
+    "ENTRYPOINT": "web_server.py",
+    "MODULE": "web_server",
+    "ACTIVE_OR_INACTIVE": "LEGACY_STANDALONE",
+    "PIPELINE": "Legacy endpoints -> quarantined/standalone routers",
+    "ROUTER": "Standalone",
+    "PROVIDER": "gemini_pool",
+    "MODEL": "gemini-3.5-flash",
+    "EVIDENCE_LEVEL": "CODE-PROVEN"
+  }
+]

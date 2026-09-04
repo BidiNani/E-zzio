@@ -1,0 +1,9 @@
+{
+  "pool_structure": "Project-based multi-slot management",
+  "project_count": 1,
+  "active_slots": 1,
+  "cooldown_slots": 0,
+  "key_slots_count": 1,
+  "selection_algorithm": "Least-Requests Project Slot Rotation",
+  "multi_key_rotation": "Supported via GEMINI_API_KEY_2..19 and GEMINI_PROJECT_<NAME>_KEY"
+}

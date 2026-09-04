@@ -1,0 +1,16 @@
+{
+  "status": "CONSISTENT_WITH_CODE",
+  "capabilities_tracked": [
+    "web_search",
+    "web_reader",
+    "pdf",
+    "docx",
+    "xlsx",
+    "stt",
+    "tts",
+    "gemini_pool",
+    "groq",
+    "ollama"
+  ],
+  "mismatches": 0
+}

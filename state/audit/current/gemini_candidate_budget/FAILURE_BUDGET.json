@@ -1,0 +1,6 @@
+{
+  "current_worst_case_gemini_to_groq_sec": 53.0,
+  "observed_worst_case_sec": 49.195,
+  "target_optimal_worst_case_sec": "< 20.0s",
+  "cause": "3 x 15s Gemini candidate sequential loop"
+}

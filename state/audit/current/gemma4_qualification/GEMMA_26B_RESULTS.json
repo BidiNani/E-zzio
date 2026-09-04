@@ -1,0 +1,91 @@
+{
+  "model_id": "gemma-4-26b-a4b-it",
+  "stats": {
+    "p50_ms": 5807.5,
+    "max_ms": 5912.68,
+    "success_rate": 100.0,
+    "count": 10
+  },
+  "detailed_results": [
+    {
+      "task_id": "gen_01",
+      "role": "GENERAL",
+      "status": 200,
+      "latency_ms": 5912.68,
+      "reply_snippet": "*   Topic: Special Theory of Relativity (Relativité restrein",
+      "success": true
+    },
+    {
+      "task_id": "gen_02",
+      "role": "GENERAL",
+      "status": 200,
+      "latency_ms": 5745.85,
+      "reply_snippet": "*   Topic: Differences between HTTP/2 and HTTP/3.\n*   Langua",
+      "success": true
+    },
+    {
+      "task_id": "gen_03",
+      "role": "GENERAL",
+      "status": 200,
+      "latency_ms": 5807.5,
+      "reply_snippet": "*   Topic: Microservices architecture principles.\n*   Langua",
+      "success": true
+    },
+    {
+      "task_id": "code_01",
+      "role": "CODING",
+      "status": 200,
+      "latency_ms": 5780.41,
+      "reply_snippet": "*   Language: Python.\n*   Task: Write an asynchronous functi",
+      "success": true
+    },
+    {
+      "task_id": "code_02",
+      "role": "CODING",
+      "status": 200,
+      "latency_ms": 5852.11,
+      "reply_snippet": "*   Goal: Implement a basic LRU (Least Recently Used) cache ",
+      "success": true
+    },
+    {
+      "task_id": "code_03",
+      "role": "CODING",
+      "status": 200,
+      "latency_ms": 5761.89,
+      "reply_snippet": "*   Target: SQLite.\n*   Feature: BM25 search.\n*   Context: F",
+      "success": true
+    },
+    {
+      "task_id": "deep_01",
+      "role": "DEEP_REASONING",
+      "status": 200,
+      "latency_ms": 5747.58,
+      "reply_snippet": "*   Premise 1: \"Tous les Zorgs sont des Vlorgs\" (All Zorgs a",
+      "success": true
+    },
+    {
+      "task_id": "deep_02",
+      "role": "DEEP_REASONING",
+      "status": 200,
+      "latency_ms": 5838.87,
+      "reply_snippet": "*   *Topic:* CAP Theorem trade-offs.\n*   *Context:* Distribu",
+      "success": true
+    },
+    {
+      "task_id": "struct_01",
+      "role": "STRUCTURED_OUTPUT",
+      "status": 200,
+      "latency_ms": 5856.16,
+      "reply_snippet": "*   Input: \"Retourne uniquement un JSON valide avec les clés",
+      "success": true
+    },
+    {
+      "task_id": "long_01",
+      "role": "LONG_CONTEXT_LIGHT",
+      "status": 200,
+      "latency_ms": 5130.08,
+      "reply_snippet": "*   Input text: \"E-ZzIO est une plateforme cognitive unifiée",
+      "success": true
+    }
+  ]
+}

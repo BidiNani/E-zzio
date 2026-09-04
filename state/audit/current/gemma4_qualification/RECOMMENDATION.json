@@ -1,0 +1,6 @@
+{
+  "gemma_26b_recommended_role": "GENERAL_SECONDARY_FALLBACK (Open-Weights Cloud)",
+  "gemma_31b_recommended_role": "REASONING_OR_CODING_SECONDARY_FALLBACK (Open-Weights Cloud)",
+  "integration_recommended": "CANDIDATE_FOR_FUTURE_POOL_EXPANSION",
+  "current_routing_status": "STRICTLY_FROZEN"
+}

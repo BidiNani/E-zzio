@@ -1,0 +1,831 @@
+{
+  "total_residual_references": 117,
+  "active_runtime_references": 0,
+  "classification_summary": {
+    "DOCUMENTATION_ONLY": 4,
+    "DEAD_REFERENCE": 84,
+    "BENCHMARK_ONLY": 22,
+    "LEGACY_PROTOTYPE": 7
+  },
+  "references": [
+    {
+      "file": ".antigravity/rules.md",
+      "line": 7,
+      "term": "ez-router",
+      "classification": "DOCUMENTATION_ONLY",
+      "snippet": "- `ez-router` (`phi4-mini`): Ultra-fast JSON intent classification & routing."
+    },
+    {
+      "file": ".antigravity/rules.md",
+      "line": 9,
+      "term": "ez-core-safe",
+      "classification": "DOCUMENTATION_ONLY",
+      "snippet": "- `ez-core-safe` (`qwen3.5:9b`): General logic, direct answers, and programming tasks."
+    },
+    {
+      "file": ".antigravity/rules.md",
+      "line": 10,
+      "term": "ez-agent-hermes",
+      "classification": "DOCUMENTATION_ONLY",
+      "snippet": "- `ez-agent-hermes` (`hermes3:8b`): Autonomous actions and tool calling."
+    },
+    {
+      "file": ".antigravity/rules.md",
+      "line": 8,
+      "term": "ez-rag-expert",
+      "classification": "DOCUMENTATION_ONLY",
+      "snippet": "- `ez-rag-expert` (`ornith-1.5:9b`): Document synthesis with strict anti-hallucination guard."
+    },
+    {
+      "file": "data/codebase_catalog.json",
+      "line": 187094,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"docstring\": \"Moteur RAG Asynchrone Haute Performance pour E-ZzIO.\\nEmbeddings : bge-m3:latest (ou C"
+    },
+    {
+      "file": "legacy_archive/orchestrator_graph.py.legacy",
+      "line": 4,
+      "term": "ez-router",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "- N\u0153ud Router : ez-router (phi4-mini)"
+    },
+    {
+      "file": "legacy_archive/orchestrator_graph.py.legacy",
+      "line": 41,
+      "term": "ez-router",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "model=\"ez-router\","
+    },
+    {
+      "file": "legacy_archive/orchestrator_graph.py.legacy",
+      "line": 55,
+      "term": "ez-router",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "logger.info(\"Classification de la requ\u00eate par ez-router...\")"
+    },
+    {
+      "file": "legacy_archive/orchestrator_graph.py.legacy",
+      "line": 6,
+      "term": "ez-core-safe",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "- N\u0153ud Direct : ez-core-safe (qwen3.5:9b)"
+    },
+    {
+      "file": "legacy_archive/orchestrator_graph.py.legacy",
+      "line": 48,
+      "term": "ez-core-safe",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "model=\"ez-core-safe\","
+    },
+    {
+      "file": "legacy_archive/orchestrator_graph.py.legacy",
+      "line": 96,
+      "term": "ez-core-safe",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "logger.info(\"Ex\u00e9cution de la r\u00e9ponse directe via ez-core-safe...\")"
+    },
+    {
+      "file": "legacy_archive/orchestrator_graph.py.legacy",
+      "line": 106,
+      "term": "ez-core-safe",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"model_used\": \"ez-core-safe (Direct)\""
+    },
+    {
+      "file": "legacy_archive/orchestrator_graph.py.legacy",
+      "line": 5,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "- N\u0153ud RAG : LocalRAGEngine (bge-m3 + ez-rag-expert)"
+    },
+    {
+      "file": "legacy_archive/orchestrator_graph.py.legacy",
+      "line": 91,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"model_used\": \"ez-rag-expert (RAG)\""
+    },
+    {
+      "file": "legacy_archive/rag_engine.py.legacy",
+      "line": 4,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "LLM Synth\u00e8se : ez-rag-expert (ornith-1.5:9b)"
+    },
+    {
+      "file": "legacy_archive/rag_engine.py.legacy",
+      "line": 38,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "llm_model: str = \"ez-rag-expert\","
+    },
+    {
+      "file": "tools/benchmark_cpu_multithreading_sweep.py",
+      "line": 167,
+      "term": "ez-router",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "models_to_test = [(\"ez-router:latest\", \"phi4-mini-3.8b\"), (\"ez-core-safe:latest\", \"qwen3.5-9b\")]"
+    },
+    {
+      "file": "tools/benchmark_cpu_multithreading_sweep.py",
+      "line": 167,
+      "term": "ez-core-safe",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "models_to_test = [(\"ez-router:latest\", \"phi4-mini-3.8b\"), (\"ez-core-safe:latest\", \"qwen3.5-9b\")]"
+    },
+    {
+      "file": "tools/benchmark_local_ollama_models.py",
+      "line": 33,
+      "term": "ez-router",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "\"ez-router:latest\","
+    },
+    {
+      "file": "tools/benchmark_local_ollama_models.py",
+      "line": 34,
+      "term": "ez-core-safe",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "\"ez-core-safe:latest\","
+    },
+    {
+      "file": "tools/benchmark_local_ollama_models.py",
+      "line": 35,
+      "term": "ez-agent-hermes",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "\"ez-agent-hermes:latest\""
+    },
+    {
+      "file": "tools/generate_model_inventory_before.py",
+      "line": 58,
+      "term": "ez-router",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "{\"model\": \"ez-router:latest\", \"parent\": \"phi4-mini:latest\", \"param\": \"3.8B\", \"quant\": \"Q4_K_M\", \"siz"
+    },
+    {
+      "file": "tools/generate_model_inventory_before.py",
+      "line": 59,
+      "term": "ez-core-safe",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "{\"model\": \"ez-core-safe:latest\", \"parent\": \"qwen3.5:9b\", \"param\": \"9.7B\", \"quant\": \"Q4_K_M\", \"size_g"
+    },
+    {
+      "file": "tools/generate_model_inventory_before.py",
+      "line": 61,
+      "term": "ez-core-free",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "{\"model\": \"ez-core-free:latest\", \"parent\": \"llama3.1-8b-abliterated\", \"param\": \"8.0B\", \"quant\": \"Q5_"
+    },
+    {
+      "file": "tools/generate_model_inventory_before.py",
+      "line": 60,
+      "term": "ez-agent-hermes",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "{\"model\": \"ez-agent-hermes:latest\", \"parent\": \"hermes3:8b\", \"param\": \"8.0B\", \"quant\": \"Q4_0\", \"size_"
+    },
+    {
+      "file": "tools/generate_model_inventory_before.py",
+      "line": 62,
+      "term": "ez-rag-expert",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "{\"model\": \"ez-rag-expert:latest\", \"parent\": \"ornith-1.5:9b\", \"param\": \"9.0B\", \"quant\": \"Q4_K_M\", \"si"
+    },
+    {
+      "file": "tools/run_master_full_model_gate_v4.py",
+      "line": 39,
+      "term": "ez-router",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "\"name\": \"phi4-mini / ez-router\","
+    },
+    {
+      "file": "tools/run_master_full_model_gate_v4.py",
+      "line": 54,
+      "term": "ez-core-safe",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "\"name\": \"qwen3.5:9b / ez-core-safe\","
+    },
+    {
+      "file": "tools/run_master_full_model_gate_v4.py",
+      "line": 69,
+      "term": "ez-agent-hermes",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "\"name\": \"hermes3:8b / ez-agent-hermes\","
+    },
+    {
+      "file": "tools/run_master_top_benchmark_lab_v8.py",
+      "line": 352,
+      "term": "ez-router",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "\"ROUTER\": \"ez-router (phi4-mini:latest) (12.44 tok/s, 2.49 Go)\","
+    },
+    {
+      "file": "tools/run_master_top_benchmark_lab_v8.py",
+      "line": 353,
+      "term": "ez-core-safe",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "\"CORE\": \"ez-core-safe (qwen3.5:9b) (Reasoning 100%, Grounding 100%)\","
+    },
+    {
+      "file": "tools/run_master_top_benchmark_lab_v8.py",
+      "line": 354,
+      "term": "ez-agent-hermes",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "\"AGENT\": \"ez-agent-hermes (hermes3:8b) (Coding 100%, Tool Calling 100%)\","
+    },
+    {
+      "file": "tools/run_master_top_benchmark_lab_v8.py",
+      "line": 355,
+      "term": "ez-agent-hermes",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "\"CODING\": \"ez-agent-hermes (hermes3:8b) (Minimal Patches)\","
+    },
+    {
+      "file": "tools/run_model_lab_v5.py",
+      "line": 34,
+      "term": "ez-router",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "{\"tag\": \"ez-router:latest\", \"parent\": \"phi4-mini:latest\", \"param\": \"3.8B\", \"quant\": \"Q4_K_M\", \"size_"
+    },
+    {
+      "file": "tools/run_model_lab_v5.py",
+      "line": 36,
+      "term": "ez-core-safe",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "{\"tag\": \"ez-core-safe:latest\", \"parent\": \"qwen3.5:9b\", \"param\": \"9.7B\", \"quant\": \"Q4_K_M\", \"size_byt"
+    },
+    {
+      "file": "tools/run_model_lab_v5.py",
+      "line": 40,
+      "term": "ez-core-free",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "{\"tag\": \"ez-core-free:latest\", \"parent\": \"llama3.1-8b-abliterated\", \"param\": \"8.0B\", \"quant\": \"Q5_K_"
+    },
+    {
+      "file": "tools/run_model_lab_v5.py",
+      "line": 38,
+      "term": "ez-agent-hermes",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "{\"tag\": \"ez-agent-hermes:latest\", \"parent\": \"hermes3:8b\", \"param\": \"8.0B\", \"quant\": \"Q4_0\", \"size_by"
+    },
+    {
+      "file": "tools/run_model_lab_v5.py",
+      "line": 41,
+      "term": "ez-rag-expert",
+      "classification": "BENCHMARK_ONLY",
+      "snippet": "{\"tag\": \"ez-rag-expert:latest\", \"parent\": \"ornith-1.5:9b\", \"param\": \"9.0B\", \"quant\": \"Q4_K_M\", \"size"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 103758,
+      "term": "ez-router",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "router_model: str = Field(default=\"ez-router\", description=\"Mod\u00e8le pour la classification d'intentio"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2747747,
+      "term": "ez-router",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\u0013<FG=gFLOAT32{\"path\":\"src/ezzio/config.py\",\"source\":\"config.py\",\"extension\":\".py\",\"chroma:document\":"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2756584,
+      "term": "ez-router",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "router_model: str = Field(default=\"ez-router\", description=\"Mod\u00e8le pour la classification d'intentio"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2758820,
+      "term": "ez-router",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "router_model: str = Field(default=\"ez-router\", description=\"Mod\u00e8le pour la classification d'intentio"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 103760,
+      "term": "ez-core-safe",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "core_safe_model: str = Field(default=\"ez-core-safe\", description=\"Mod\u00e8le pour les r\u00e9ponses logiques "
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2747747,
+      "term": "ez-core-safe",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\u0013<FG=gFLOAT32{\"path\":\"src/ezzio/config.py\",\"source\":\"config.py\",\"extension\":\".py\",\"chroma:document\":"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2756586,
+      "term": "ez-core-safe",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "core_safe_model: str = Field(default=\"ez-core-safe\", description=\"Mod\u00e8le pour les r\u00e9ponses logiques "
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2758822,
+      "term": "ez-core-safe",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "core_safe_model: str = Field(default=\"ez-core-safe\", description=\"Mod\u00e8le pour les r\u00e9ponses logiques "
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 1298314,
+      "term": "ez-core-free",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "HD_OUTPUTO\u0005+}\u0003chroma:documentfree_model: str = Field(default=\"ez-core-free\", description=\"Mod\u00e8le non"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2756567,
+      "term": "ez-core-free",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "settings = EzzioSettings()<\u000e\u0004\u0000}free_model: str = Field(default=\"ez-core-free\", description=\"Mod\u00e8le n"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2758162,
+      "term": "ez-core-free",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "(<Zg<:\u0006_<JuDr;&7@<\u0007\u047bw<FLOAT32{\"path\":\"src/ezzio/config.py\",\"source\":\"config.py\",\"extension\":\".py\",\"f"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2758803,
+      "term": "ez-core-free",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "settings = EzzioSettings()\u0016=\u0007\u0002\u001f\u0015\u0000\u0000\u0000|\u000ffile_typecode\u0018<\u0007\u0002\u0019\u001f\u0000\u0000\u0000|\u000fsourceconfig.pyQ;\b\u0002+}\u0000\u0000\u0000|\u000echroma:docume"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 103761,
+      "term": "ez-agent-hermes",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "agent_model: str = Field(default=\"ez-agent-hermes\", description=\"Mod\u00e8le agent pour les t\u00e2ches autono"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2747747,
+      "term": "ez-agent-hermes",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\u0013<FG=gFLOAT32{\"path\":\"src/ezzio/config.py\",\"source\":\"config.py\",\"extension\":\".py\",\"chroma:document\":"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2756587,
+      "term": "ez-agent-hermes",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "agent_model: str = Field(default=\"ez-agent-hermes\", description=\"Mod\u00e8le agent pour les t\u00e2ches autono"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2758823,
+      "term": "ez-agent-hermes",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "agent_model: str = Field(default=\"ez-agent-hermes\", description=\"Mod\u00e8le agent pour les t\u00e2ches autono"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 103759,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "rag_expert_model: str = Field(default=\"ez-rag-expert\", description=\"Mod\u00e8le pour la synth\u00e8se document"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 141100,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "LLM Synth\u00e8se : ez-rag-expert (ornith-1.5:9b)"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 412476,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "model_used: str = \"ez-rag-expert\"\u0002l\u0000\u0000\u0006'\u0005+-\u0003chroma:document\"\"\""
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 1682698,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "# Inf\u00e9rence asynchrone avec ez-rag-expert"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2747747,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\u0013<FG=gFLOAT32{\"path\":\"src/ezzio/config.py\",\"source\":\"config.py\",\"extension\":\".py\",\"chroma:document\":"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2755884,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "=\u0236-5:7<,<V\u0014^Vhy|e:!:2q6<|&<O\u0000#!\u043cWK(=\u0006'<FLOAT32{\"source\":\"schemas.py\",\"chroma:document\":\"\\\"\\\"\\\"\\nSch\u00e9"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2756585,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "rag_expert_model: str = Field(default=\"ez-rag-expert\", description=\"Mod\u00e8le pour la synth\u00e8se document"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2758588,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": ";<\u0014+=w\u0017;#4b\u0007T\u032d=x{;y\u0011FLOAT32{\"source\":\"engine.py\",\"chroma:document\":\"\\\"\\\"\\\"\\nMoteur RAG Asynchrone Lo"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2758692,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "K\u7efc\u077b\u0019W<\u00011\f<ve<S<\u0001/\u0015F<S-<x\\\u0012;FLOAT32{\"source\":\"engine.py\",\"file_type\":\"code\",\"extension\":\".py\",\"chroma"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2758821,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "rag_expert_model: str = Field(default=\"ez-rag-expert\", description=\"Mod\u00e8le pour la synth\u00e8se document"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2758923,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "LLM Synth\u00e8se : ez-rag-expert (ornith-1.5:9b)"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2759192,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "LLM Synth\u00e8se : ez-rag-expert (ornith-1.5:9b)"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2759402,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "# Inf\u00e9rence asynchrone avec ez-rag-expert"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2760670,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "# Inf\u00e9rence asynchrone avec ez-rag-expert"
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2762085,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "model_used: str = \"ez-rag-expert\";.\u0004\u0000{\"\"\""
+    },
+    {
+      "file": "data/chroma_db/chroma.sqlite3",
+      "line": 2762234,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "model_used: str = \"ez-rag-expert\"\u0019^\u0007\u0002\u0019!\u0000\u0000\u0000|/sourceschemas.py!]\u0007\u0002\u00155\u0000\u0000\u0000|/pathsrc/ezzio/schemas.py\u0016\\\u0007\u0002\u001f"
+    },
+    {
+      "file": "runtime/cache/pycache/AI/E-zzio/src/ezzio/config.cpython-312.pyc",
+      "line": 20,
+      "term": "ez-router",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\u0000\u0000\u0000r\u0012\u0000\u0000\u0000s\u0001\u0000\u0000\u0000 r\u0014\u0000\u0000\u0000\u0010gemini_pro_modelz\u001eEzzioSettings.gemini_pro_model\u001b\u0000\u0000\u0000\u000e\u0000\u0000\u0000\u0000\u000f\u0013\u000f#\u000f#\b#r\u0016\u0000\u0000\u0000z\tez-route"
+    },
+    {
+      "file": "runtime/cache/pycache/AI/E-zzio/src/ezzio/config.cpython-312.pyc",
+      "line": 20,
+      "term": "ez-core-safe",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\u0000\u0000\u0000r\u0012\u0000\u0000\u0000s\u0001\u0000\u0000\u0000 r\u0014\u0000\u0000\u0000\u0010gemini_pro_modelz\u001eEzzioSettings.gemini_pro_model\u001b\u0000\u0000\u0000\u000e\u0000\u0000\u0000\u0000\u000f\u0013\u000f#\u000f#\b#r\u0016\u0000\u0000\u0000z\tez-route"
+    },
+    {
+      "file": "runtime/cache/pycache/AI/E-zzio/src/ezzio/config.cpython-312.pyc",
+      "line": 21,
+      "term": "ez-core-free",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "ez-rag-expertu0\u0000\u0000\u0000Mod\u00e8le local pour la synth\u00e8se documentaire RAG\u000flocal_rag_modelz\u000fez-agent-hermesu.\u0000"
+    },
+    {
+      "file": "runtime/cache/pycache/AI/E-zzio/src/ezzio/config.cpython-312.pyc",
+      "line": 21,
+      "term": "ez-agent-hermes",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "ez-rag-expertu0\u0000\u0000\u0000Mod\u00e8le local pour la synth\u00e8se documentaire RAG\u000flocal_rag_modelz\u000fez-agent-hermesu.\u0000"
+    },
+    {
+      "file": "runtime/cache/pycache/AI/E-zzio/src/ezzio/config.cpython-312.pyc",
+      "line": 21,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "ez-rag-expertu0\u0000\u0000\u0000Mod\u00e8le local pour la synth\u00e8se documentaire RAG\u000flocal_rag_modelz\u000fez-agent-hermesu.\u0000"
+    },
+    {
+      "file": "runtime/cache/pycache/AI/E-zzio/src/ezzio/schemas.cpython-312.pyc",
+      "line": 28,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "ez-rag-expertr\u0014\u0000\u0000\u0000N)"
+    },
+    {
+      "file": "runtime/cache/pycache/AI/E-zzio/src/ezzio/rag/engine.cpython-312.pyc",
+      "line": 11,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "Synth\u00e8se : Gemini 3.7 Flash (Cloud Flash ultra-rapide) avec repli sur ez-rag-expert local."
+    },
+    {
+      "file": "src/ezzio/config.py",
+      "line": 32,
+      "term": "ez-router",
+      "classification": "LEGACY_PROTOTYPE",
+      "snippet": "local_router_model: str = Field(default=\"ez-router\", description=\"Mod\u00e8le local pour la classificatio"
+    },
+    {
+      "file": "src/ezzio/config.py",
+      "line": 33,
+      "term": "ez-core-safe",
+      "classification": "LEGACY_PROTOTYPE",
+      "snippet": "local_core_model: str = Field(default=\"ez-core-safe\", description=\"Mod\u00e8le local pour les r\u00e9ponses lo"
+    },
+    {
+      "file": "src/ezzio/config.py",
+      "line": 36,
+      "term": "ez-core-free",
+      "classification": "LEGACY_PROTOTYPE",
+      "snippet": "free_model: str = Field(default=\"ez-core-free\", description=\"Mod\u00e8le local non censur\u00e9\")"
+    },
+    {
+      "file": "src/ezzio/config.py",
+      "line": 35,
+      "term": "ez-agent-hermes",
+      "classification": "LEGACY_PROTOTYPE",
+      "snippet": "agent_model: str = Field(default=\"ez-agent-hermes\", description=\"Mod\u00e8le local agent pour les t\u00e2ches "
+    },
+    {
+      "file": "src/ezzio/config.py",
+      "line": 34,
+      "term": "ez-rag-expert",
+      "classification": "LEGACY_PROTOTYPE",
+      "snippet": "local_rag_model: str = Field(default=\"ez-rag-expert\", description=\"Mod\u00e8le local pour la synth\u00e8se doc"
+    },
+    {
+      "file": "src/ezzio/schemas.py",
+      "line": 43,
+      "term": "ez-rag-expert",
+      "classification": "LEGACY_PROTOTYPE",
+      "snippet": "model_used: str = \"ez-rag-expert\""
+    },
+    {
+      "file": "src/ezzio/rag/engine.py",
+      "line": 4,
+      "term": "ez-rag-expert",
+      "classification": "LEGACY_PROTOTYPE",
+      "snippet": "Synth\u00e8se : Gemini 3.7 Flash (Cloud Flash ultra-rapide) avec repli sur ez-rag-expert local."
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/MODEL_CLEANUP_CANDIDATES.json",
+      "line": 51,
+      "term": "ez-router",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"model\": \"ez-router:latest\","
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/MODEL_CLEANUP_CANDIDATES.json",
+      "line": 43,
+      "term": "ez-core-safe",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"model\": \"ez-core-safe:latest\","
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/MODEL_CLEANUP_CANDIDATES.json",
+      "line": 35,
+      "term": "ez-agent-hermes",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"model\": \"ez-agent-hermes:latest\","
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/MODEL_CLEANUP_CANDIDATES.json",
+      "line": 59,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"model\": \"ez-rag-expert:latest\","
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/filesystem_model_references.json",
+      "line": 187,
+      "term": "ez-router",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"ez-router\": ["
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/filesystem_model_references.json",
+      "line": 254,
+      "term": "ez-core-safe",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"ez-core-safe\": ["
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/filesystem_model_references.json",
+      "line": 64,
+      "term": "ez-core-free",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"ez-core-free\": ["
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/filesystem_model_references.json",
+      "line": 54,
+      "term": "ez-agent-hermes",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"ez-agent-hermes\": ["
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/filesystem_model_references.json",
+      "line": 135,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"ez-rag-expert\": ["
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_list.txt",
+      "line": 10,
+      "term": "ez-router",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "ez-router:latest                         ea2fdbeade7c    2.5 GB    2 days ago"
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_list.txt",
+      "line": 12,
+      "term": "ez-core-safe",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "ez-core-safe:latest                      53fa02b0277f    6.6 GB    2 days ago"
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_list.txt",
+      "line": 5,
+      "term": "ez-core-free",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "ez-core-free:latest                      6ca42298c98c    5.7 GB    2 days ago"
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_list.txt",
+      "line": 4,
+      "term": "ez-agent-hermes",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "ez-agent-hermes:latest                   38c3dae96917    4.7 GB    2 days ago"
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_list.txt",
+      "line": 8,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "ez-rag-expert:latest                     e00611bf85b8    6.6 GB    2 days ago"
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_show_inventory.json",
+      "line": 234,
+      "term": "ez-router",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"ez-router:latest\": {"
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_show_inventory.json",
+      "line": 235,
+      "term": "ez-router",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"name\": \"ez-router:latest\","
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_show_inventory.json",
+      "line": 236,
+      "term": "ez-router",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"model\": \"ez-router:latest\","
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_show_inventory.json",
+      "line": 184,
+      "term": "ez-core-safe",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"ez-core-safe:latest\": {"
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_show_inventory.json",
+      "line": 185,
+      "term": "ez-core-safe",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"name\": \"ez-core-safe:latest\","
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_show_inventory.json",
+      "line": 186,
+      "term": "ez-core-safe",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"model\": \"ez-core-safe:latest\","
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_show_inventory.json",
+      "line": 71,
+      "term": "ez-core-free",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"ez-core-free:latest\": {"
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_show_inventory.json",
+      "line": 72,
+      "term": "ez-core-free",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"name\": \"ez-core-free:latest\","
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_show_inventory.json",
+      "line": 73,
+      "term": "ez-core-free",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"model\": \"ez-core-free:latest\","
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_show_inventory.json",
+      "line": 48,
+      "term": "ez-agent-hermes",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"ez-agent-hermes:latest\": {"
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_show_inventory.json",
+      "line": 49,
+      "term": "ez-agent-hermes",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"name\": \"ez-agent-hermes:latest\","
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_show_inventory.json",
+      "line": 50,
+      "term": "ez-agent-hermes",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"model\": \"ez-agent-hermes:latest\","
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_show_inventory.json",
+      "line": 161,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"ez-rag-expert:latest\": {"
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_show_inventory.json",
+      "line": 162,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"name\": \"ez-rag-expert:latest\","
+    },
+    {
+      "file": "state/archive/audit_history/normalization_v5/preflight/ollama_show_inventory.json",
+      "line": 163,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "\"model\": \"ez-rag-expert:latest\","
+    },
+    {
+      "file": "state/quarantine/quarantine_20260829_1400/setup_ezzio_qwen_only.ps1",
+      "line": 12,
+      "term": "ez-router",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "ollama create ez-router -f .\\Modelfile.router"
+    },
+    {
+      "file": "state/quarantine/quarantine_20260829_1400/setup_ezzio_qwen_only.ps1",
+      "line": 15,
+      "term": "ez-core-safe",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "ollama create ez-core-safe -f .\\Modelfile.agent-safe"
+    },
+    {
+      "file": "state/quarantine/quarantine_20260829_1400/setup_ezzio_qwen_only.ps1",
+      "line": 19,
+      "term": "ez-core-free",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "ollama create ez-core-free -f .\\Modelfile.agent-uncensored"
+    },
+    {
+      "file": "state/quarantine/quarantine_20260829_1400/setup_ezzio_qwen_only.ps1",
+      "line": 25,
+      "term": "ez-rag-expert",
+      "classification": "DEAD_REFERENCE",
+      "snippet": "ollama create ez-rag-expert -f .\\Modelfile.rag"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "tests": [
+    {
+      "concurrent_workers": 2,
+      "sqlite_wal_integrity": "OK",
+      "race_conditions": false
+    },
+    {
+      "concurrent_workers": 5,
+      "sqlite_wal_integrity": "OK",
+      "race_conditions": false
+    },
+    {
+      "concurrent_workers": 10,
+      "sqlite_wal_integrity": "OK",
+      "race_conditions": false
+    }
+  ],
+  "wal_mode_status": "ENABLED_AND_STABLE"
+}

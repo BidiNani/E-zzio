@@ -1,0 +1,24 @@
+{
+  "apk": {
+    "path": "G:\\AI\\E-zzio\\dist\\android\\E-ZzIO-v9.0.0.apk",
+    "exists": true,
+    "size_bytes": 3167,
+    "sha256": "ca507dfed259590f7565f1e754f3a6ca87af447a6544c7678d7e4ca690ec8e32"
+  },
+  "desktop_launcher": {
+    "path": "G:\\AI\\E-zzio\\tools\\launch_desktop.ps1",
+    "exists": true
+  },
+  "android_builder": {
+    "path": "G:\\AI\\E-zzio\\tools\\build_android_apk.ps1",
+    "exists": true
+  },
+  "icon": {
+    "path": "G:\\AI\\E-zzio\\assets\\ui\\icon.svg",
+    "exists": true
+  },
+  "asset_manifest": {
+    "path": "G:\\AI\\E-zzio\\assets\\ASSET_LICENSES.json",
+    "exists": true
+  }
+}

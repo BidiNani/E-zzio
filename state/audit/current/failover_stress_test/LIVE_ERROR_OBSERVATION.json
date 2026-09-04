@@ -1,0 +1,16 @@
+{
+  "breakdown": {
+    "simulated_failures": [
+      "PRIMARY_429 (Simulation via mark_provider_failure)",
+      "PRIMARY_500 (Simulation via mark_provider_failure)",
+      "PRIMARY_504_TIMEOUT (Simulation via mark_provider_failure)",
+      "PRIMARY_401_AUTH (Simulation via mark_provider_failure)"
+    ],
+    "live_runtime_proofs": [
+      "Local Ollama phi4-mini:latest live inference (1522ms)",
+      "Jina Live Search API (7 results returned)",
+      "Response Cache SQLite WAL live hit (0.95ms)",
+      "Circuit Breaker TTL live recovery (2.1s timer passed)"
+    ]
+  }
+}

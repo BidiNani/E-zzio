@@ -1,0 +1,17 @@
+{
+  "metadata": {
+    "generated_at": "2026-08-31T18:08:00+02:00",
+    "standard": "EVIDENCE RULE v1.1",
+    "repository": "G:/AI/E-zzio",
+    "mode": "FALSIFICATION_AND_STRESS_TEST"
+  },
+  "invariants_checked": {
+    "model_router_authority": "UNIQUE",
+    "memory_authority": "UNIQUE (UnifiedMemoryGateway)",
+    "security_vault_authority": "UNIQUE (SecretsVault)",
+    "second_runtime": false,
+    "second_model_authority": false,
+    "second_memory_authority": false,
+    "docker_required": false
+  }
+}

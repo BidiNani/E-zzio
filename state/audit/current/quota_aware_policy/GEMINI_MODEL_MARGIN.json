@@ -1,0 +1,76 @@
+{
+  "models": [
+    {
+      "model": "gemini-3.1-flash-lite",
+      "used": 2,
+      "limit": 15,
+      "margin": 13,
+      "latency_measured": "722 ms",
+      "recommendation": "PRIMARY_FAST_CANDIDATE"
+    },
+    {
+      "model": "gemini-3.6-flash",
+      "used": 2,
+      "limit": 5,
+      "margin": 3,
+      "latency_measured": "577 ms",
+      "recommendation": "PRIMARY_GENERAL_CANDIDATE"
+    },
+    {
+      "model": "gemini-3.7-flash",
+      "used": 3,
+      "limit": 5,
+      "margin": 2,
+      "latency_measured": "509 ms",
+      "recommendation": "PRIMARY_CODING_CANDIDATE"
+    },
+    {
+      "model": "gemini-3-flash",
+      "used": 3,
+      "limit": 5,
+      "margin": 2,
+      "latency_measured": "510 ms",
+      "recommendation": "SECONDARY_GENERAL_CANDIDATE"
+    },
+    {
+      "model": "gemini-3.5-flash-lite",
+      "used": 20,
+      "limit": 15,
+      "margin": -5,
+      "latency_measured": "583 ms",
+      "recommendation": "COOLDOWN_AVOID_OVERLOAD"
+    },
+    {
+      "model": "gemini-3.5-flash",
+      "used": 7,
+      "limit": 5,
+      "margin": -2,
+      "latency_measured": "386 ms",
+      "recommendation": "COOLDOWN_AVOID_OVERLOAD"
+    },
+    {
+      "model": "gemini-2.5-flash-lite",
+      "used": 2,
+      "limit": 10,
+      "margin": 8,
+      "latency_measured": "510 ms",
+      "recommendation": "BACKUP_FAST_CANDIDATE"
+    },
+    {
+      "model": "gemma-4-26b",
+      "used": 1,
+      "limit": 30,
+      "margin": 29,
+      "latency_measured": "465 ms",
+      "recommendation": "HIGH_MARGIN_GENERAL_CANDIDATE"
+    },
+    {
+      "model": "gemma-4-31b",
+      "used": 1,
+      "limit": 30,
+      "margin": 29,
+      "latency_measured": "494 ms",
+      "recommendation": "HIGH_MARGIN_CODING_DEEP_CANDIDATE"
+    }
+  ]
+}

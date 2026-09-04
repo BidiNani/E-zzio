@@ -1,0 +1,17 @@
+{
+  "interfaces": [
+    "Web HUD (http://127.0.0.1:8000)",
+    "Discord Bot",
+    "HTTP API (/master/chat)",
+    "CLI SDK"
+  ],
+  "supported_capabilities": [
+    "Chat",
+    "Code",
+    "Web Search",
+    "Document Ingestion (8 formats)",
+    "Memory FTS5",
+    "Voice TTS/STT",
+    "Vision Multimodal"
+  ]
+}

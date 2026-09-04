@@ -1,0 +1,3842 @@
+[
+  {
+    "RUN_ID": "V2A_hermes3_8b_FAST_ROUTING_FR01_r1_1788180217",
+    "MODEL": "hermes3:8b",
+    "TASK": "FAST_ROUTING",
+    "SUB_ID": "FR01",
+    "RUN_NUM": 1,
+    "IS_COLD": true,
+    "PROMPT_HASH": "4bd7a9f46cd2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:43:37.035356+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:43:45.598941+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 4835.03,
+    "TTFT_MS": 1967.4,
+    "PROMPT_TOKENS": 53,
+    "PROMPT_EVAL_TOK_S": 26.94,
+    "OUTPUT_TOKENS": 12,
+    "GEN_TOK_S": 7.61,
+    "TOTAL_E2E_MS": 8562.91,
+    "RAM_BEFORE": {
+      "used_gb": 14.61,
+      "avail_gb": 17.31,
+      "pct": 45.8
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.59,
+      "avail_gb": 12.34,
+      "pct": 61.3
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.59,
+      "avail_gb": 12.34,
+      "pct": 61.3
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "{\"category\":\"chart\",\"confidence\":1.0}"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_FAST_ROUTING_FR01_r2_1788180225",
+    "MODEL": "hermes3:8b",
+    "TASK": "FAST_ROUTING",
+    "SUB_ID": "FR01",
+    "RUN_NUM": 2,
+    "IS_COLD": false,
+    "PROMPT_HASH": "4bd7a9f46cd2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:43:45.598941+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:43:47.605443+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 3.45,
+    "TTFT_MS": 164.09,
+    "PROMPT_TOKENS": 53,
+    "PROMPT_EVAL_TOK_S": 322.99,
+    "OUTPUT_TOKENS": 12,
+    "GEN_TOK_S": 7.27,
+    "TOTAL_E2E_MS": 2006.12,
+    "RAM_BEFORE": {
+      "used_gb": 19.59,
+      "avail_gb": 12.34,
+      "pct": 61.3
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.61,
+      "avail_gb": 12.32,
+      "pct": 61.4
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.61,
+      "avail_gb": 12.32,
+      "pct": 61.4
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "{\"category\":\"chart\",\"confidence\":1.0}"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_FAST_ROUTING_FR01_r3_1788180227",
+    "MODEL": "hermes3:8b",
+    "TASK": "FAST_ROUTING",
+    "SUB_ID": "FR01",
+    "RUN_NUM": 3,
+    "IS_COLD": false,
+    "PROMPT_HASH": "4bd7a9f46cd2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:43:47.606008+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:43:49.591815+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 3.13,
+    "TTFT_MS": 149.02,
+    "PROMPT_TOKENS": 53,
+    "PROMPT_EVAL_TOK_S": 355.66,
+    "OUTPUT_TOKENS": 12,
+    "GEN_TOK_S": 7.32,
+    "TOTAL_E2E_MS": 1985.38,
+    "RAM_BEFORE": {
+      "used_gb": 19.61,
+      "avail_gb": 12.32,
+      "pct": 61.4
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.58,
+      "avail_gb": 12.35,
+      "pct": 61.3
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.58,
+      "avail_gb": 12.35,
+      "pct": 61.3
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "{\"category\":\"chart\",\"confidence\":1.0}"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_REASONING_RE01_r1_1788180229",
+    "MODEL": "hermes3:8b",
+    "TASK": "REASONING",
+    "SUB_ID": "RE01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "a57a9641cce9",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:43:49.592375+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:43:53.916519+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.64,
+    "TTFT_MS": 1979.02,
+    "PROMPT_TOKENS": 54,
+    "PROMPT_EVAL_TOK_S": 27.29,
+    "OUTPUT_TOKENS": 16,
+    "GEN_TOK_S": 7.54,
+    "TOTAL_E2E_MS": 4323.68,
+    "RAM_BEFORE": {
+      "used_gb": 19.58,
+      "avail_gb": 12.35,
+      "pct": 61.3
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.57,
+      "avail_gb": 12.35,
+      "pct": 61.3
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.57,
+      "avail_gb": 12.35,
+      "pct": 61.3
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "To solve this problem, we need to determine how long it will take for Train"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_REASONING_RE02_r1_1788180233",
+    "MODEL": "hermes3:8b",
+    "TASK": "REASONING",
+    "SUB_ID": "RE02",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "e861d3e9e520",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:43:53.917643+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:43:56.369836+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.75,
+    "TTFT_MS": 1193.8,
+    "PROMPT_TOKENS": 36,
+    "PROMPT_EVAL_TOK_S": 30.16,
+    "OUTPUT_TOKENS": 8,
+    "GEN_TOK_S": 7.81,
+    "TOTAL_E2E_MS": 2451.92,
+    "RAM_BEFORE": {
+      "used_gb": 19.57,
+      "avail_gb": 12.35,
+      "pct": 61.3
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.59,
+      "avail_gb": 12.34,
+      "pct": 61.4
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.59,
+      "avail_gb": 12.34,
+      "pct": 61.4
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "To find the probability of picking an apple"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_REASONING_RE03_r1_1788180236",
+    "MODEL": "hermes3:8b",
+    "TASK": "REASONING",
+    "SUB_ID": "RE03",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "a370fa887f5c",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:43:56.370389+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:43:58.323842+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 3.58,
+    "TTFT_MS": 1262.23,
+    "PROMPT_TOKENS": 35,
+    "PROMPT_EVAL_TOK_S": 27.73,
+    "OUTPUT_TOKENS": 4,
+    "GEN_TOK_S": 8.28,
+    "TOTAL_E2E_MS": 1952.41,
+    "RAM_BEFORE": {
+      "used_gb": 19.59,
+      "avail_gb": 12.34,
+      "pct": 61.4
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.65,
+      "avail_gb": 12.27,
+      "pct": 61.6
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.65,
+      "avail_gb": 12.27,
+      "pct": 61.6
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "If 5 machines"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_REASONING_RE04_r1_1788180238",
+    "MODEL": "hermes3:8b",
+    "TASK": "REASONING",
+    "SUB_ID": "RE04",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "7bf6a16719fa",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:43:58.324392+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:44:00.566321+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 3.32,
+    "TTFT_MS": 1183.51,
+    "PROMPT_TOKENS": 36,
+    "PROMPT_EVAL_TOK_S": 30.42,
+    "OUTPUT_TOKENS": 7,
+    "GEN_TOK_S": 8.18,
+    "TOTAL_E2E_MS": 2241.08,
+    "RAM_BEFORE": {
+      "used_gb": 19.65,
+      "avail_gb": 12.27,
+      "pct": 61.6
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.69,
+      "avail_gb": 12.23,
+      "pct": 61.7
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.69,
+      "avail_gb": 12.23,
+      "pct": 61.7
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "The fifth daughter is Sophie."
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_REASONING_RE05_r1_1788180240",
+    "MODEL": "hermes3:8b",
+    "TASK": "REASONING",
+    "SUB_ID": "RE05",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "10ee331e187f",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:44:00.566877+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:44:02.313588+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.1,
+    "TTFT_MS": 1114.66,
+    "PROMPT_TOKENS": 32,
+    "PROMPT_EVAL_TOK_S": 28.71,
+    "OUTPUT_TOKENS": 4,
+    "GEN_TOK_S": 9.47,
+    "TOTAL_E2E_MS": 1746.29,
+    "RAM_BEFORE": {
+      "used_gb": 19.69,
+      "avail_gb": 12.23,
+      "pct": 61.7
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.69,
+      "avail_gb": 12.24,
+      "pct": 61.7
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.69,
+      "avail_gb": 12.24,
+      "pct": 61.7
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "Let's approach this"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_CODING_CO01_r1_1788180242",
+    "MODEL": "hermes3:8b",
+    "TASK": "CODING",
+    "SUB_ID": "CO01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c899f97f0058",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:44:02.314600+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:44:31.761041+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.29,
+    "TTFT_MS": 983.24,
+    "PROMPT_TOKENS": 29,
+    "PROMPT_EVAL_TOK_S": 29.49,
+    "OUTPUT_TOKENS": 200,
+    "GEN_TOK_S": 7.08,
+    "TOTAL_E2E_MS": 29446.41,
+    "RAM_BEFORE": {
+      "used_gb": 19.69,
+      "avail_gb": 12.24,
+      "pct": 61.7
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.65,
+      "avail_gb": 12.27,
+      "pct": 61.6
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.65,
+      "avail_gb": 12.27,
+      "pct": 61.6
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "Here's a Python function that checks if a given sentence is a palindrome, ignoring case, spaces, and punctuation:\n\n```python\nimport re\n\ndef is_palindrome_sentence(s: str) -> bool:\n    # Remove spaces "
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_CODING_CO02_r1_1788180271",
+    "MODEL": "hermes3:8b",
+    "TASK": "CODING",
+    "SUB_ID": "CO02",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c7b39342bd06",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:44:31.761634+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:45:01.498970+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 3.05,
+    "TTFT_MS": 1122.24,
+    "PROMPT_TOKENS": 32,
+    "PROMPT_EVAL_TOK_S": 28.51,
+    "OUTPUT_TOKENS": 200,
+    "GEN_TOK_S": 7.04,
+    "TOTAL_E2E_MS": 29736.8,
+    "RAM_BEFORE": {
+      "used_gb": 19.65,
+      "avail_gb": 12.27,
+      "pct": 61.6
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.69,
+      "avail_gb": 12.24,
+      "pct": 61.7
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.69,
+      "avail_gb": 12.24,
+      "pct": 61.7
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "To correctly compute the median of any unsorted list, you need to handle the case when the number of elements is odd or even. Here's the corrected code:\n\n```python\ndef find_median(nums):\n    sorted_nu"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_CODING_CO03_r1_1788180301",
+    "MODEL": "hermes3:8b",
+    "TASK": "CODING",
+    "SUB_ID": "CO03",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "81b699b90991",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:45:01.499519+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:45:23.808502+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.41,
+    "TTFT_MS": 821.51,
+    "PROMPT_TOKENS": 25,
+    "PROMPT_EVAL_TOK_S": 30.43,
+    "OUTPUT_TOKENS": 150,
+    "GEN_TOK_S": 7.04,
+    "TOTAL_E2E_MS": 22308.89,
+    "RAM_BEFORE": {
+      "used_gb": 19.69,
+      "avail_gb": 12.24,
+      "pct": 61.7
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.75,
+      "avail_gb": 12.18,
+      "pct": 61.9
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.75,
+      "avail_gb": 12.18,
+      "pct": 61.9
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "Here's an efficient implementation of the Fibonacci function in Python using dynamic programming:\n\n```python\ndef fib(n: int) -> int:\n    if n <= 0:\n        return 0\n    elif n == 1:\n        return 1\n "
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_CODING_CO04_r1_1788180323",
+    "MODEL": "hermes3:8b",
+    "TASK": "CODING",
+    "SUB_ID": "CO04",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "720c9387b464",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:45:23.809233+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:45:50.376521+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.09,
+    "TTFT_MS": 1184.28,
+    "PROMPT_TOKENS": 36,
+    "PROMPT_EVAL_TOK_S": 30.4,
+    "OUTPUT_TOKENS": 177,
+    "GEN_TOK_S": 7.03,
+    "TOTAL_E2E_MS": 26566.99,
+    "RAM_BEFORE": {
+      "used_gb": 19.75,
+      "avail_gb": 12.18,
+      "pct": 61.9
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.67,
+      "avail_gb": 12.25,
+      "pct": 61.6
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.67,
+      "avail_gb": 12.25,
+      "pct": 61.6
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "{\n  \"method\": \"POST\",\n  \"path\": \"/api/v1/auth/login\",\n  \"body_required_fields\": [\n    \"username\",\n    \"password\"\n  ],\n  \"responses\": {\n    \"200\": {\n      \"description\": \"Successful login\",\n      \"body"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_TOOLS_TO01_r1_1788180350",
+    "MODEL": "hermes3:8b",
+    "TASK": "TOOLS",
+    "SUB_ID": "TO01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "fa2478c3d555",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:45:50.377095+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:45:57.318609+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 1.64,
+    "TTFT_MS": 2746.45,
+    "PROMPT_TOKENS": 70,
+    "PROMPT_EVAL_TOK_S": 25.49,
+    "OUTPUT_TOKENS": 29,
+    "GEN_TOK_S": 7.29,
+    "TOTAL_E2E_MS": 6940.78,
+    "RAM_BEFORE": {
+      "used_gb": 19.67,
+      "avail_gb": 12.25,
+      "pct": 61.6
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.7,
+      "avail_gb": 12.22,
+      "pct": 61.7
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.7,
+      "avail_gb": 12.22,
+      "pct": 61.7
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "{\"tool\":\"sql_query\",\"parameters\":{\"table\":\"clients\",\"filter\":\"city='Paris' AND active=1\",\"columns\":\"id,name\"}}"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_TOOLS_TO02_r1_1788180357",
+    "MODEL": "hermes3:8b",
+    "TASK": "TOOLS",
+    "SUB_ID": "TO02",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "d494d14cdeb7",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:45:57.319188+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:46:00.471779+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.24,
+    "TTFT_MS": 1127.4,
+    "PROMPT_TOKENS": 53,
+    "PROMPT_EVAL_TOK_S": 47.01,
+    "OUTPUT_TOKENS": 14,
+    "GEN_TOK_S": 7.66,
+    "TOTAL_E2E_MS": 3152.58,
+    "RAM_BEFORE": {
+      "used_gb": 19.7,
+      "avail_gb": 12.22,
+      "pct": 61.7
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.71,
+      "avail_gb": 12.21,
+      "pct": 61.7
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.71,
+      "avail_gb": 12.21,
+      "pct": 61.7
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "{\"tool\":\"weather_lookup\",\"parameters\":{\"city\":\"Lyon\"}}"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_TOOLS_TO03_r1_1788180360",
+    "MODEL": "hermes3:8b",
+    "TASK": "TOOLS",
+    "SUB_ID": "TO03",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "5dbd6a2b5a5a",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:46:00.472337+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:46:03.454532+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 3.73,
+    "TTFT_MS": 975.02,
+    "PROMPT_TOKENS": 55,
+    "PROMPT_EVAL_TOK_S": 56.41,
+    "OUTPUT_TOKENS": 14,
+    "GEN_TOK_S": 7.72,
+    "TOTAL_E2E_MS": 2982.16,
+    "RAM_BEFORE": {
+      "used_gb": 19.71,
+      "avail_gb": 12.21,
+      "pct": 61.7
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.74,
+      "avail_gb": 12.19,
+      "pct": 61.8
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.74,
+      "avail_gb": 12.19,
+      "pct": 61.8
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "{\"tool\":\"calculator\",\"parameters\":{\"expression\":\"15*14\"}}"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_AGENT_AG01_r1_1788180363",
+    "MODEL": "hermes3:8b",
+    "TASK": "AGENT",
+    "SUB_ID": "AG01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c926a045b3ec",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:46:03.455114+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:46:25.325211+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 1.64,
+    "TTFT_MS": 2705.99,
+    "PROMPT_TOKENS": 71,
+    "PROMPT_EVAL_TOK_S": 26.24,
+    "OUTPUT_TOKENS": 128,
+    "GEN_TOK_S": 6.75,
+    "TOTAL_E2E_MS": 21869.31,
+    "RAM_BEFORE": {
+      "used_gb": 19.74,
+      "avail_gb": 12.19,
+      "pct": 61.8
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.83,
+      "avail_gb": 12.09,
+      "pct": 62.1
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.83,
+      "avail_gb": 12.09,
+      "pct": 62.1
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "{\"root_cause\":\"The PostgreSQL database experienced a sudden and unexpected log dump, causing the disk to become 100% full at 14:02. This is likely due to a misconfiguration or malfunction in the loggi"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_AGENT_AG01_r2_1788180385",
+    "MODEL": "hermes3:8b",
+    "TASK": "AGENT",
+    "SUB_ID": "AG01",
+    "RUN_NUM": 2,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c926a045b3ec",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:46:25.325771+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:46:43.883221+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 1.72,
+    "TTFT_MS": 150.77,
+    "PROMPT_TOKENS": 71,
+    "PROMPT_EVAL_TOK_S": 470.92,
+    "OUTPUT_TOKENS": 128,
+    "GEN_TOK_S": 7.03,
+    "TOTAL_E2E_MS": 18556.91,
+    "RAM_BEFORE": {
+      "used_gb": 19.83,
+      "avail_gb": 12.09,
+      "pct": 62.1
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.82,
+      "avail_gb": 12.1,
+      "pct": 62.1
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.82,
+      "avail_gb": 12.1,
+      "pct": 62.1
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "{\"root_cause\":\"The PostgreSQL database experienced a sudden and unexpected log dump, causing the disk to become 100% full at 14:02. This is likely due to a misconfiguration or malfunction in the loggi"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_AGENT_AG01_r3_1788180403",
+    "MODEL": "hermes3:8b",
+    "TASK": "AGENT",
+    "SUB_ID": "AG01",
+    "RUN_NUM": 3,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c926a045b3ec",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:46:43.883789+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:47:02.127272+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 3.09,
+    "TTFT_MS": 142.39,
+    "PROMPT_TOKENS": 71,
+    "PROMPT_EVAL_TOK_S": 498.63,
+    "OUTPUT_TOKENS": 128,
+    "GEN_TOK_S": 7.15,
+    "TOTAL_E2E_MS": 18243.03,
+    "RAM_BEFORE": {
+      "used_gb": 19.82,
+      "avail_gb": 12.1,
+      "pct": 62.1
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.84,
+      "avail_gb": 12.08,
+      "pct": 62.2
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.84,
+      "avail_gb": 12.08,
+      "pct": 62.2
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "{\"root_cause\":\"The PostgreSQL database experienced a sudden and unexpected log dump, causing the disk to become 100% full at 14:02. This is likely due to a misconfiguration or malfunction in the loggi"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_LONG_CONTEXT_LC01_r1_1788180422",
+    "MODEL": "hermes3:8b",
+    "TASK": "LONG_CONTEXT",
+    "SUB_ID": "LC01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "ff6fc7b6bdc2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:47:02.127812+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:47:38.436500+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 3.23,
+    "TTFT_MS": 24786.17,
+    "PROMPT_TOKENS": 636,
+    "PROMPT_EVAL_TOK_S": 25.66,
+    "OUTPUT_TOKENS": 80,
+    "GEN_TOK_S": 7.07,
+    "TOTAL_E2E_MS": 36308.6,
+    "RAM_BEFORE": {
+      "used_gb": 19.84,
+      "avail_gb": 12.08,
+      "pct": 62.2
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.98,
+      "avail_gb": 11.94,
+      "pct": 62.6
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.98,
+      "avail_gb": 11.94,
+      "pct": 62.6
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "Extracted data:\n\nMARKER_A: 94821\nMARKER_B: 37190\nMARKER_C: 58204\nMARKER_D: 12048\n\nThe technical documentation appears to be focused on four main topics related to distributed systems and microservices"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_LONG_CONTEXT_LC01_r2_1788180458",
+    "MODEL": "hermes3:8b",
+    "TASK": "LONG_CONTEXT",
+    "SUB_ID": "LC01",
+    "RUN_NUM": 2,
+    "IS_COLD": false,
+    "PROMPT_HASH": "ff6fc7b6bdc2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:47:38.437049+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:47:50.274713+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.7,
+    "TTFT_MS": 137.51,
+    "PROMPT_TOKENS": 636,
+    "PROMPT_EVAL_TOK_S": 4625.12,
+    "OUTPUT_TOKENS": 80,
+    "GEN_TOK_S": 6.96,
+    "TOTAL_E2E_MS": 11837.13,
+    "RAM_BEFORE": {
+      "used_gb": 19.98,
+      "avail_gb": 11.94,
+      "pct": 62.6
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.9,
+      "avail_gb": 12.02,
+      "pct": 62.3
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.9,
+      "avail_gb": 12.02,
+      "pct": 62.3
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "Extracted data:\n\nMARKER_A: 94821\nMARKER_B: 37190\nMARKER_C: 58204\nMARKER_D: 12048\n\nThe technical documentation appears to be focused on four main topics related to distributed systems and microservices"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_LONG_CONTEXT_LC01_r3_1788180470",
+    "MODEL": "hermes3:8b",
+    "TASK": "LONG_CONTEXT",
+    "SUB_ID": "LC01",
+    "RUN_NUM": 3,
+    "IS_COLD": false,
+    "PROMPT_HASH": "ff6fc7b6bdc2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:47:50.275284+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:48:02.598430+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.12,
+    "TTFT_MS": 152.1,
+    "PROMPT_TOKENS": 636,
+    "PROMPT_EVAL_TOK_S": 4181.46,
+    "OUTPUT_TOKENS": 80,
+    "GEN_TOK_S": 6.68,
+    "TOTAL_E2E_MS": 12322.3,
+    "RAM_BEFORE": {
+      "used_gb": 19.9,
+      "avail_gb": 12.02,
+      "pct": 62.3
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.92,
+      "avail_gb": 12.01,
+      "pct": 62.4
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.92,
+      "avail_gb": 12.01,
+      "pct": 62.4
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "Extracted data:\n\nMARKER_A: 94821\nMARKER_B: 37190\nMARKER_C: 58204\nMARKER_D: 12048\n\nThe technical documentation appears to be focused on four main topics related to distributed systems and microservices"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_LONG_GENERATION_LG01_r1_1788180482",
+    "MODEL": "hermes3:8b",
+    "TASK": "LONG_GENERATION",
+    "SUB_ID": "LG01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "03f67641510d",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:48:02.599027+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:48:31.012120+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.41,
+    "TTFT_MS": 1227.74,
+    "PROMPT_TOKENS": 35,
+    "PROMPT_EVAL_TOK_S": 28.51,
+    "OUTPUT_TOKENS": 202,
+    "GEN_TOK_S": 7.49,
+    "TOTAL_E2E_MS": 28412.32,
+    "RAM_BEFORE": {
+      "used_gb": 19.92,
+      "avail_gb": 12.01,
+      "pct": 62.4
+    },
+    "RAM_PEAK": {
+      "used_gb": 20.07,
+      "avail_gb": 11.86,
+      "pct": 62.9
+    },
+    "RAM_AFTER": {
+      "used_gb": 20.07,
+      "avail_gb": 11.86,
+      "pct": 62.9
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "For a 10-person dev team, the choice between a modular monolith and microservices architecture depends on the specific needs and goals of the project. A modular monolith, which separates concerns into"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_LONG_GENERATION_LG01_r2_1788180511",
+    "MODEL": "hermes3:8b",
+    "TASK": "LONG_GENERATION",
+    "SUB_ID": "LG01",
+    "RUN_NUM": 2,
+    "IS_COLD": false,
+    "PROMPT_HASH": "03f67641510d",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:48:31.012704+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:49:05.335913+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.64,
+    "TTFT_MS": 131.98,
+    "PROMPT_TOKENS": 35,
+    "PROMPT_EVAL_TOK_S": 265.19,
+    "OUTPUT_TOKENS": 256,
+    "GEN_TOK_S": 7.54,
+    "TOTAL_E2E_MS": 34322.84,
+    "RAM_BEFORE": {
+      "used_gb": 20.07,
+      "avail_gb": 11.86,
+      "pct": 62.9
+    },
+    "RAM_PEAK": {
+      "used_gb": 20.14,
+      "avail_gb": 11.78,
+      "pct": 63.1
+    },
+    "RAM_AFTER": {
+      "used_gb": 20.14,
+      "avail_gb": 11.78,
+      "pct": 63.1
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "For a 10-person dev team, the choice between a modular monolith and microservices architecture depends on the specific needs and goals of the project. A modular monolith, which consists of a single ap"
+  },
+  {
+    "RUN_ID": "V2A_hermes3_8b_LONG_GENERATION_LG01_r3_1788180545",
+    "MODEL": "hermes3:8b",
+    "TASK": "LONG_GENERATION",
+    "SUB_ID": "LG01",
+    "RUN_NUM": 3,
+    "IS_COLD": false,
+    "PROMPT_HASH": "03f67641510d",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:49:05.336480+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:49:39.453272+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.18,
+    "TTFT_MS": 130.38,
+    "PROMPT_TOKENS": 35,
+    "PROMPT_EVAL_TOK_S": 268.45,
+    "OUTPUT_TOKENS": 256,
+    "GEN_TOK_S": 7.58,
+    "TOTAL_E2E_MS": 34116.25,
+    "RAM_BEFORE": {
+      "used_gb": 20.14,
+      "avail_gb": 11.78,
+      "pct": 63.1
+    },
+    "RAM_PEAK": {
+      "used_gb": 20.18,
+      "avail_gb": 11.75,
+      "pct": 63.2
+    },
+    "RAM_AFTER": {
+      "used_gb": 20.18,
+      "avail_gb": 11.75,
+      "pct": 63.2
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "For a 10-person dev team, the choice between a modular monolith and microservices architecture depends on the specific needs and goals of the project. A modular monolith, which consists of a single ap"
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_FAST_ROUTING_FR01_r1_1788180583",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "FAST_ROUTING",
+    "SUB_ID": "FR01",
+    "RUN_NUM": 1,
+    "IS_COLD": true,
+    "PROMPT_HASH": "4bd7a9f46cd2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:49:43.854997+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:50:02.555626+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 8636.1,
+    "TTFT_MS": 1864.28,
+    "PROMPT_TOKENS": 57,
+    "PROMPT_EVAL_TOK_S": 30.57,
+    "OUTPUT_TOKENS": 48,
+    "GEN_TOK_S": 5.99,
+    "TOTAL_E2E_MS": 18700.57,
+    "RAM_BEFORE": {
+      "used_gb": 14.78,
+      "avail_gb": 17.14,
+      "pct": 46.3
+    },
+    "RAM_PEAK": {
+      "used_gb": 21.25,
+      "avail_gb": 10.67,
+      "pct": 66.6
+    },
+    "RAM_AFTER": {
+      "used_gb": 21.25,
+      "avail_gb": 10.67,
+      "pct": 66.6
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_FAST_ROUTING_FR01_r2_1788180602",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "FAST_ROUTING",
+    "SUB_ID": "FR01",
+    "RUN_NUM": 2,
+    "IS_COLD": false,
+    "PROMPT_HASH": "4bd7a9f46cd2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:50:02.556184+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:50:10.995030+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.2,
+    "TTFT_MS": 225.49,
+    "PROMPT_TOKENS": 57,
+    "PROMPT_EVAL_TOK_S": 252.78,
+    "OUTPUT_TOKENS": 48,
+    "GEN_TOK_S": 6.0,
+    "TOTAL_E2E_MS": 8438.41,
+    "RAM_BEFORE": {
+      "used_gb": 21.25,
+      "avail_gb": 10.67,
+      "pct": 66.6
+    },
+    "RAM_PEAK": {
+      "used_gb": 21.3,
+      "avail_gb": 10.63,
+      "pct": 66.7
+    },
+    "RAM_AFTER": {
+      "used_gb": 21.3,
+      "avail_gb": 10.63,
+      "pct": 66.7
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_FAST_ROUTING_FR01_r3_1788180610",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "FAST_ROUTING",
+    "SUB_ID": "FR01",
+    "RUN_NUM": 3,
+    "IS_COLD": false,
+    "PROMPT_HASH": "4bd7a9f46cd2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:50:10.995612+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:50:19.409141+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 3.11,
+    "TTFT_MS": 252.96,
+    "PROMPT_TOKENS": 57,
+    "PROMPT_EVAL_TOK_S": 225.33,
+    "OUTPUT_TOKENS": 48,
+    "GEN_TOK_S": 6.04,
+    "TOTAL_E2E_MS": 8413.17,
+    "RAM_BEFORE": {
+      "used_gb": 21.3,
+      "avail_gb": 10.63,
+      "pct": 66.7
+    },
+    "RAM_PEAK": {
+      "used_gb": 21.29,
+      "avail_gb": 10.63,
+      "pct": 66.7
+    },
+    "RAM_AFTER": {
+      "used_gb": 21.29,
+      "avail_gb": 10.63,
+      "pct": 66.7
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_REASONING_RE01_r1_1788180619",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "REASONING",
+    "SUB_ID": "RE01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "a57a9641cce9",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:50:19.409719+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:50:24.389080+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 3.32,
+    "TTFT_MS": 2207.71,
+    "PROMPT_TOKENS": 63,
+    "PROMPT_EVAL_TOK_S": 28.54,
+    "OUTPUT_TOKENS": 16,
+    "GEN_TOK_S": 6.33,
+    "TOTAL_E2E_MS": 4979.36,
+    "RAM_BEFORE": {
+      "used_gb": 21.29,
+      "avail_gb": 10.63,
+      "pct": 66.7
+    },
+    "RAM_PEAK": {
+      "used_gb": 21.4,
+      "avail_gb": 10.52,
+      "pct": 67.0
+    },
+    "RAM_AFTER": {
+      "used_gb": 21.4,
+      "avail_gb": 10.52,
+      "pct": 67.0
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_REASONING_RE02_r1_1788180624",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "REASONING",
+    "SUB_ID": "RE02",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "e861d3e9e520",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:50:24.389626+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:50:27.093577+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.36,
+    "TTFT_MS": 1298.91,
+    "PROMPT_TOKENS": 37,
+    "PROMPT_EVAL_TOK_S": 28.49,
+    "OUTPUT_TOKENS": 8,
+    "GEN_TOK_S": 6.73,
+    "TOTAL_E2E_MS": 2703.59,
+    "RAM_BEFORE": {
+      "used_gb": 21.4,
+      "avail_gb": 10.52,
+      "pct": 67.0
+    },
+    "RAM_PEAK": {
+      "used_gb": 21.5,
+      "avail_gb": 10.42,
+      "pct": 67.4
+    },
+    "RAM_AFTER": {
+      "used_gb": 21.5,
+      "avail_gb": 10.42,
+      "pct": 67.4
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_REASONING_RE03_r1_1788180627",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "REASONING",
+    "SUB_ID": "RE03",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "a370fa887f5c",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:50:27.094151+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:50:29.222950+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.45,
+    "TTFT_MS": 1401.4,
+    "PROMPT_TOKENS": 40,
+    "PROMPT_EVAL_TOK_S": 28.54,
+    "OUTPUT_TOKENS": 4,
+    "GEN_TOK_S": 7.79,
+    "TOTAL_E2E_MS": 2128.55,
+    "RAM_BEFORE": {
+      "used_gb": 21.5,
+      "avail_gb": 10.42,
+      "pct": 67.4
+    },
+    "RAM_PEAK": {
+      "used_gb": 21.61,
+      "avail_gb": 10.32,
+      "pct": 67.7
+    },
+    "RAM_AFTER": {
+      "used_gb": 21.61,
+      "avail_gb": 10.32,
+      "pct": 67.7
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_REASONING_RE04_r1_1788180629",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "REASONING",
+    "SUB_ID": "RE04",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "7bf6a16719fa",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:50:29.223528+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:50:31.905261+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.24,
+    "TTFT_MS": 1235.1,
+    "PROMPT_TOKENS": 37,
+    "PROMPT_EVAL_TOK_S": 29.96,
+    "OUTPUT_TOKENS": 8,
+    "GEN_TOK_S": 6.56,
+    "TOTAL_E2E_MS": 2681.64,
+    "RAM_BEFORE": {
+      "used_gb": 21.61,
+      "avail_gb": 10.32,
+      "pct": 67.7
+    },
+    "RAM_PEAK": {
+      "used_gb": 21.71,
+      "avail_gb": 10.22,
+      "pct": 68.0
+    },
+    "RAM_AFTER": {
+      "used_gb": 21.71,
+      "avail_gb": 10.22,
+      "pct": 68.0
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_REASONING_RE05_r1_1788180631",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "REASONING",
+    "SUB_ID": "RE05",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "10ee331e187f",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:50:31.905860+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:50:33.917170+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.09,
+    "TTFT_MS": 1281.34,
+    "PROMPT_TOKENS": 34,
+    "PROMPT_EVAL_TOK_S": 26.53,
+    "OUTPUT_TOKENS": 4,
+    "GEN_TOK_S": 7.79,
+    "TOTAL_E2E_MS": 2011.28,
+    "RAM_BEFORE": {
+      "used_gb": 21.71,
+      "avail_gb": 10.22,
+      "pct": 68.0
+    },
+    "RAM_PEAK": {
+      "used_gb": 21.81,
+      "avail_gb": 10.12,
+      "pct": 68.3
+    },
+    "RAM_AFTER": {
+      "used_gb": 21.81,
+      "avail_gb": 10.12,
+      "pct": 68.3
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_CODING_CO01_r1_1788180633",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "CODING",
+    "SUB_ID": "CO01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c899f97f0058",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:50:33.917755+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:51:10.713587+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 1.66,
+    "TTFT_MS": 1144.32,
+    "PROMPT_TOKENS": 30,
+    "PROMPT_EVAL_TOK_S": 26.22,
+    "OUTPUT_TOKENS": 200,
+    "GEN_TOK_S": 5.65,
+    "TOTAL_E2E_MS": 36795.53,
+    "RAM_BEFORE": {
+      "used_gb": 21.81,
+      "avail_gb": 10.12,
+      "pct": 68.3
+    },
+    "RAM_PEAK": {
+      "used_gb": 21.94,
+      "avail_gb": 9.98,
+      "pct": 68.7
+    },
+    "RAM_AFTER": {
+      "used_gb": 21.94,
+      "avail_gb": 9.98,
+      "pct": 68.7
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "```python\ndef is_palindrome_sentence(s: str) -> bool:\n    \"\"\"\n    Check if a sentence is a palindrome, ignoring case, spaces, and punctuation.\n\n    Args:\n        s (str): The input sentence to check.\n"
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_CODING_CO02_r1_1788180670",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "CODING",
+    "SUB_ID": "CO02",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c7b39342bd06",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:51:10.714150+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:51:46.032596+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.89,
+    "TTFT_MS": 1263.35,
+    "PROMPT_TOKENS": 33,
+    "PROMPT_EVAL_TOK_S": 26.12,
+    "OUTPUT_TOKENS": 200,
+    "GEN_TOK_S": 5.91,
+    "TOTAL_E2E_MS": 35318.0,
+    "RAM_BEFORE": {
+      "used_gb": 21.94,
+      "avail_gb": 9.98,
+      "pct": 68.7
+    },
+    "RAM_PEAK": {
+      "used_gb": 22.05,
+      "avail_gb": 9.87,
+      "pct": 69.1
+    },
+    "RAM_AFTER": {
+      "used_gb": 22.05,
+      "avail_gb": 9.87,
+      "pct": 69.1
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_CODING_CO03_r1_1788180706",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "CODING",
+    "SUB_ID": "CO03",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "81b699b90991",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:51:46.033214+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:52:12.496442+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.25,
+    "TTFT_MS": 968.89,
+    "PROMPT_TOKENS": 26,
+    "PROMPT_EVAL_TOK_S": 26.83,
+    "OUTPUT_TOKENS": 150,
+    "GEN_TOK_S": 5.94,
+    "TOTAL_E2E_MS": 26462.89,
+    "RAM_BEFORE": {
+      "used_gb": 22.05,
+      "avail_gb": 9.87,
+      "pct": 69.1
+    },
+    "RAM_PEAK": {
+      "used_gb": 22.16,
+      "avail_gb": 9.76,
+      "pct": 69.4
+    },
+    "RAM_AFTER": {
+      "used_gb": 22.16,
+      "avail_gb": 9.76,
+      "pct": 69.4
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_CODING_CO04_r1_1788180732",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "CODING",
+    "SUB_ID": "CO04",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "720c9387b464",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:52:12.496994+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:52:47.813655+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 1.59,
+    "TTFT_MS": 1237.97,
+    "PROMPT_TOKENS": 37,
+    "PROMPT_EVAL_TOK_S": 29.89,
+    "OUTPUT_TOKENS": 200,
+    "GEN_TOK_S": 5.91,
+    "TOTAL_E2E_MS": 35316.53,
+    "RAM_BEFORE": {
+      "used_gb": 22.16,
+      "avail_gb": 9.76,
+      "pct": 69.4
+    },
+    "RAM_PEAK": {
+      "used_gb": 22.26,
+      "avail_gb": 9.67,
+      "pct": 69.7
+    },
+    "RAM_AFTER": {
+      "used_gb": 22.26,
+      "avail_gb": 9.67,
+      "pct": 69.7
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_TOOLS_TO01_r1_1788180767",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "TOOLS",
+    "SUB_ID": "TO01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "fa2478c3d555",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:52:47.814248+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:53:06.850286+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.25,
+    "TTFT_MS": 2413.33,
+    "PROMPT_TOKENS": 71,
+    "PROMPT_EVAL_TOK_S": 29.42,
+    "OUTPUT_TOKENS": 96,
+    "GEN_TOK_S": 5.85,
+    "TOTAL_E2E_MS": 19035.79,
+    "RAM_BEFORE": {
+      "used_gb": 22.26,
+      "avail_gb": 9.67,
+      "pct": 69.7
+    },
+    "RAM_PEAK": {
+      "used_gb": 22.37,
+      "avail_gb": 9.55,
+      "pct": 70.1
+    },
+    "RAM_AFTER": {
+      "used_gb": 22.37,
+      "avail_gb": 9.55,
+      "pct": 70.1
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_TOOLS_TO02_r1_1788180786",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "TOOLS",
+    "SUB_ID": "TO02",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "d494d14cdeb7",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:53:06.850871+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:53:20.721801+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.25,
+    "TTFT_MS": 1958.08,
+    "PROMPT_TOKENS": 54,
+    "PROMPT_EVAL_TOK_S": 27.58,
+    "OUTPUT_TOKENS": 64,
+    "GEN_TOK_S": 5.48,
+    "TOTAL_E2E_MS": 13870.68,
+    "RAM_BEFORE": {
+      "used_gb": 22.37,
+      "avail_gb": 9.55,
+      "pct": 70.1
+    },
+    "RAM_PEAK": {
+      "used_gb": 22.54,
+      "avail_gb": 9.39,
+      "pct": 70.6
+    },
+    "RAM_AFTER": {
+      "used_gb": 22.54,
+      "avail_gb": 9.39,
+      "pct": 70.6
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_TOOLS_TO03_r1_1788180800",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "TOOLS",
+    "SUB_ID": "TO03",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "5dbd6a2b5a5a",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:53:20.722378+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:53:33.692068+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 1.63,
+    "TTFT_MS": 2052.14,
+    "PROMPT_TOKENS": 60,
+    "PROMPT_EVAL_TOK_S": 29.24,
+    "OUTPUT_TOKENS": 64,
+    "GEN_TOK_S": 5.99,
+    "TOTAL_E2E_MS": 12969.37,
+    "RAM_BEFORE": {
+      "used_gb": 22.54,
+      "avail_gb": 9.39,
+      "pct": 70.6
+    },
+    "RAM_PEAK": {
+      "used_gb": 22.62,
+      "avail_gb": 9.31,
+      "pct": 70.8
+    },
+    "RAM_AFTER": {
+      "used_gb": 22.62,
+      "avail_gb": 9.31,
+      "pct": 70.8
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_AGENT_AG01_r1_1788180813",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "AGENT",
+    "SUB_ID": "AG01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c926a045b3ec",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:53:33.692629+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:53:58.113964+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.26,
+    "TTFT_MS": 2504.46,
+    "PROMPT_TOKENS": 76,
+    "PROMPT_EVAL_TOK_S": 30.35,
+    "OUTPUT_TOKENS": 128,
+    "GEN_TOK_S": 5.9,
+    "TOTAL_E2E_MS": 24420.87,
+    "RAM_BEFORE": {
+      "used_gb": 22.62,
+      "avail_gb": 9.31,
+      "pct": 70.8
+    },
+    "RAM_PEAK": {
+      "used_gb": 22.66,
+      "avail_gb": 9.26,
+      "pct": 71.0
+    },
+    "RAM_AFTER": {
+      "used_gb": 22.66,
+      "avail_gb": 9.26,
+      "pct": 71.0
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_AGENT_AG01_r2_1788180838",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "AGENT",
+    "SUB_ID": "AG01",
+    "RUN_NUM": 2,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c926a045b3ec",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:53:58.114549+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:54:20.635644+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.17,
+    "TTFT_MS": 217.37,
+    "PROMPT_TOKENS": 76,
+    "PROMPT_EVAL_TOK_S": 349.63,
+    "OUTPUT_TOKENS": 128,
+    "GEN_TOK_S": 5.8,
+    "TOTAL_E2E_MS": 22521.42,
+    "RAM_BEFORE": {
+      "used_gb": 22.66,
+      "avail_gb": 9.26,
+      "pct": 71.0
+    },
+    "RAM_PEAK": {
+      "used_gb": 22.92,
+      "avail_gb": 9.01,
+      "pct": 71.8
+    },
+    "RAM_AFTER": {
+      "used_gb": 22.92,
+      "avail_gb": 9.01,
+      "pct": 71.8
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_AGENT_AG01_r3_1788180860",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "AGENT",
+    "SUB_ID": "AG01",
+    "RUN_NUM": 3,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c926a045b3ec",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:54:20.636658+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:54:43.079827+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 1.54,
+    "TTFT_MS": 223.11,
+    "PROMPT_TOKENS": 76,
+    "PROMPT_EVAL_TOK_S": 340.64,
+    "OUTPUT_TOKENS": 128,
+    "GEN_TOK_S": 5.83,
+    "TOTAL_E2E_MS": 22442.09,
+    "RAM_BEFORE": {
+      "used_gb": 22.92,
+      "avail_gb": 9.01,
+      "pct": 71.8
+    },
+    "RAM_PEAK": {
+      "used_gb": 23.07,
+      "avail_gb": 8.86,
+      "pct": 72.3
+    },
+    "RAM_AFTER": {
+      "used_gb": 23.07,
+      "avail_gb": 8.86,
+      "pct": 72.3
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_LONG_CONTEXT_LC01_r1_1788180883",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "LONG_CONTEXT",
+    "SUB_ID": "LC01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "ff6fc7b6bdc2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:54:43.080385+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:55:18.692187+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 1.61,
+    "TTFT_MS": 21823.0,
+    "PROMPT_TOKENS": 650,
+    "PROMPT_EVAL_TOK_S": 29.79,
+    "OUTPUT_TOKENS": 80,
+    "GEN_TOK_S": 5.88,
+    "TOTAL_E2E_MS": 35611.74,
+    "RAM_BEFORE": {
+      "used_gb": 23.07,
+      "avail_gb": 8.86,
+      "pct": 72.3
+    },
+    "RAM_PEAK": {
+      "used_gb": 23.13,
+      "avail_gb": 8.8,
+      "pct": 72.4
+    },
+    "RAM_AFTER": {
+      "used_gb": 23.13,
+      "avail_gb": 8.8,
+      "pct": 72.4
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_LONG_CONTEXT_LC01_r2_1788180918",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "LONG_CONTEXT",
+    "SUB_ID": "LC01",
+    "RUN_NUM": 2,
+    "IS_COLD": false,
+    "PROMPT_HASH": "ff6fc7b6bdc2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:55:18.692746+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:55:32.728842+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.43,
+    "TTFT_MS": 257.45,
+    "PROMPT_TOKENS": 650,
+    "PROMPT_EVAL_TOK_S": 2524.76,
+    "OUTPUT_TOKENS": 80,
+    "GEN_TOK_S": 5.89,
+    "TOTAL_E2E_MS": 14035.52,
+    "RAM_BEFORE": {
+      "used_gb": 23.13,
+      "avail_gb": 8.8,
+      "pct": 72.4
+    },
+    "RAM_PEAK": {
+      "used_gb": 23.08,
+      "avail_gb": 8.85,
+      "pct": 72.3
+    },
+    "RAM_AFTER": {
+      "used_gb": 23.08,
+      "avail_gb": 8.85,
+      "pct": 72.3
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_LONG_CONTEXT_LC01_r3_1788180932",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "LONG_CONTEXT",
+    "SUB_ID": "LC01",
+    "RUN_NUM": 3,
+    "IS_COLD": false,
+    "PROMPT_HASH": "ff6fc7b6bdc2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:55:32.729386+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:55:46.737154+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 1.68,
+    "TTFT_MS": 231.16,
+    "PROMPT_TOKENS": 650,
+    "PROMPT_EVAL_TOK_S": 2811.91,
+    "OUTPUT_TOKENS": 80,
+    "GEN_TOK_S": 5.9,
+    "TOTAL_E2E_MS": 14007.78,
+    "RAM_BEFORE": {
+      "used_gb": 23.08,
+      "avail_gb": 8.85,
+      "pct": 72.3
+    },
+    "RAM_PEAK": {
+      "used_gb": 23.07,
+      "avail_gb": 8.86,
+      "pct": 72.3
+    },
+    "RAM_AFTER": {
+      "used_gb": 23.07,
+      "avail_gb": 8.86,
+      "pct": 72.3
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_LONG_GENERATION_LG01_r1_1788180946",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "LONG_GENERATION",
+    "SUB_ID": "LG01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "03f67641510d",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:55:46.737722+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:56:32.044917+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 1.64,
+    "TTFT_MS": 1261.63,
+    "PROMPT_TOKENS": 37,
+    "PROMPT_EVAL_TOK_S": 29.33,
+    "OUTPUT_TOKENS": 256,
+    "GEN_TOK_S": 5.84,
+    "TOTAL_E2E_MS": 45306.8,
+    "RAM_BEFORE": {
+      "used_gb": 23.07,
+      "avail_gb": 8.86,
+      "pct": 72.3
+    },
+    "RAM_PEAK": {
+      "used_gb": 23.16,
+      "avail_gb": 8.77,
+      "pct": 72.5
+    },
+    "RAM_AFTER": {
+      "used_gb": 23.16,
+      "avail_gb": 8.77,
+      "pct": 72.5
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_LONG_GENERATION_LG01_r2_1788180992",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "LONG_GENERATION",
+    "SUB_ID": "LG01",
+    "RUN_NUM": 2,
+    "IS_COLD": false,
+    "PROMPT_HASH": "03f67641510d",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:56:32.046058+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:57:17.174501+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 1.64,
+    "TTFT_MS": 234.69,
+    "PROMPT_TOKENS": 37,
+    "PROMPT_EVAL_TOK_S": 157.65,
+    "OUTPUT_TOKENS": 256,
+    "GEN_TOK_S": 5.73,
+    "TOTAL_E2E_MS": 45128.02,
+    "RAM_BEFORE": {
+      "used_gb": 23.16,
+      "avail_gb": 8.77,
+      "pct": 72.5
+    },
+    "RAM_PEAK": {
+      "used_gb": 23.38,
+      "avail_gb": 8.54,
+      "pct": 73.2
+    },
+    "RAM_AFTER": {
+      "used_gb": 23.38,
+      "avail_gb": 8.54,
+      "pct": 73.2
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_qwen3_5_9b_LONG_GENERATION_LG01_r3_1788181037",
+    "MODEL": "qwen3.5:9b",
+    "TASK": "LONG_GENERATION",
+    "SUB_ID": "LG01",
+    "RUN_NUM": 3,
+    "IS_COLD": false,
+    "PROMPT_HASH": "03f67641510d",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:57:17.174501+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:58:01.147171+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.21,
+    "TTFT_MS": 223.82,
+    "PROMPT_TOKENS": 37,
+    "PROMPT_EVAL_TOK_S": 165.31,
+    "OUTPUT_TOKENS": 256,
+    "GEN_TOK_S": 5.88,
+    "TOTAL_E2E_MS": 43972.1,
+    "RAM_BEFORE": {
+      "used_gb": 23.38,
+      "avail_gb": 8.54,
+      "pct": 73.2
+    },
+    "RAM_PEAK": {
+      "used_gb": 23.48,
+      "avail_gb": 8.45,
+      "pct": 73.5
+    },
+    "RAM_AFTER": {
+      "used_gb": 23.48,
+      "avail_gb": 8.45,
+      "pct": 73.5
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_FAST_ROUTING_FR01_r1_1788181085",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "FAST_ROUTING",
+    "SUB_ID": "FR01",
+    "RUN_NUM": 1,
+    "IS_COLD": true,
+    "PROMPT_HASH": "4bd7a9f46cd2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:58:05.554936+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:58:17.210364+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 4594.03,
+    "TTFT_MS": 2237.01,
+    "PROMPT_TOKENS": 61,
+    "PROMPT_EVAL_TOK_S": 27.27,
+    "OUTPUT_TOKENS": 48,
+    "GEN_TOK_S": 10.34,
+    "TOTAL_E2E_MS": 11655.15,
+    "RAM_BEFORE": {
+      "used_gb": 14.82,
+      "avail_gb": 17.11,
+      "pct": 46.4
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.83,
+      "avail_gb": 14.1,
+      "pct": 55.8
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.83,
+      "avail_gb": 14.1,
+      "pct": 55.8
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "{\"category"
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_FAST_ROUTING_FR01_r2_1788181097",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "FAST_ROUTING",
+    "SUB_ID": "FR01",
+    "RUN_NUM": 2,
+    "IS_COLD": false,
+    "PROMPT_HASH": "4bd7a9f46cd2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:58:17.210938+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:58:22.199972+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.89,
+    "TTFT_MS": 198.95,
+    "PROMPT_TOKENS": 61,
+    "PROMPT_EVAL_TOK_S": 306.61,
+    "OUTPUT_TOKENS": 48,
+    "GEN_TOK_S": 10.41,
+    "TOTAL_E2E_MS": 4988.81,
+    "RAM_BEFORE": {
+      "used_gb": 17.83,
+      "avail_gb": 14.1,
+      "pct": 55.8
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.91,
+      "avail_gb": 14.02,
+      "pct": 56.1
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.91,
+      "avail_gb": 14.02,
+      "pct": 56.1
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "{\"category"
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_FAST_ROUTING_FR01_r3_1788181102",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "FAST_ROUTING",
+    "SUB_ID": "FR01",
+    "RUN_NUM": 3,
+    "IS_COLD": false,
+    "PROMPT_HASH": "4bd7a9f46cd2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:58:22.200594+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:58:27.374854+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 1.57,
+    "TTFT_MS": 230.23,
+    "PROMPT_TOKENS": 61,
+    "PROMPT_EVAL_TOK_S": 264.95,
+    "OUTPUT_TOKENS": 48,
+    "GEN_TOK_S": 10.13,
+    "TOTAL_E2E_MS": 5174.21,
+    "RAM_BEFORE": {
+      "used_gb": 17.91,
+      "avail_gb": 14.02,
+      "pct": 56.1
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.93,
+      "avail_gb": 14.0,
+      "pct": 56.2
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.93,
+      "avail_gb": 14.0,
+      "pct": 56.2
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "{\"category"
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_REASONING_RE01_r1_1788181107",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "REASONING",
+    "SUB_ID": "RE01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "a57a9641cce9",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:58:27.374854+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:58:31.604027+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.52,
+    "TTFT_MS": 2550.76,
+    "PROMPT_TOKENS": 72,
+    "PROMPT_EVAL_TOK_S": 28.23,
+    "OUTPUT_TOKENS": 16,
+    "GEN_TOK_S": 11.03,
+    "TOTAL_E2E_MS": 4228.55,
+    "RAM_BEFORE": {
+      "used_gb": 17.93,
+      "avail_gb": 14.0,
+      "pct": 56.2
+    },
+    "RAM_PEAK": {
+      "used_gb": 18.09,
+      "avail_gb": 13.84,
+      "pct": 56.7
+    },
+    "RAM_AFTER": {
+      "used_gb": 18.09,
+      "avail_gb": 13.84,
+      "pct": 56.7
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_REASONING_RE02_r1_1788181111",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "REASONING",
+    "SUB_ID": "RE02",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "e861d3e9e520",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:58:31.604579+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:58:34.057133+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.1,
+    "TTFT_MS": 1560.35,
+    "PROMPT_TOKENS": 43,
+    "PROMPT_EVAL_TOK_S": 27.56,
+    "OUTPUT_TOKENS": 8,
+    "GEN_TOK_S": 11.73,
+    "TOTAL_E2E_MS": 2451.93,
+    "RAM_BEFORE": {
+      "used_gb": 18.09,
+      "avail_gb": 13.84,
+      "pct": 56.7
+    },
+    "RAM_PEAK": {
+      "used_gb": 18.25,
+      "avail_gb": 13.68,
+      "pct": 57.2
+    },
+    "RAM_AFTER": {
+      "used_gb": 18.25,
+      "avail_gb": 13.68,
+      "pct": 57.2
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_REASONING_RE03_r1_1788181114",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "REASONING",
+    "SUB_ID": "RE03",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "a370fa887f5c",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:58:34.057133+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:58:36.176673+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.87,
+    "TTFT_MS": 1612.78,
+    "PROMPT_TOKENS": 46,
+    "PROMPT_EVAL_TOK_S": 28.52,
+    "OUTPUT_TOKENS": 4,
+    "GEN_TOK_S": 13.4,
+    "TOTAL_E2E_MS": 2118.95,
+    "RAM_BEFORE": {
+      "used_gb": 18.25,
+      "avail_gb": 13.68,
+      "pct": 57.2
+    },
+    "RAM_PEAK": {
+      "used_gb": 18.41,
+      "avail_gb": 13.52,
+      "pct": 57.7
+    },
+    "RAM_AFTER": {
+      "used_gb": 18.41,
+      "avail_gb": 13.52,
+      "pct": 57.7
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_REASONING_RE04_r1_1788181116",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "REASONING",
+    "SUB_ID": "RE04",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "7bf6a16719fa",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:58:36.177222+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:58:38.661267+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.1,
+    "TTFT_MS": 1542.67,
+    "PROMPT_TOKENS": 45,
+    "PROMPT_EVAL_TOK_S": 29.17,
+    "OUTPUT_TOKENS": 8,
+    "GEN_TOK_S": 10.95,
+    "TOTAL_E2E_MS": 2484.11,
+    "RAM_BEFORE": {
+      "used_gb": 18.41,
+      "avail_gb": 13.51,
+      "pct": 57.7
+    },
+    "RAM_PEAK": {
+      "used_gb": 18.59,
+      "avail_gb": 13.34,
+      "pct": 58.2
+    },
+    "RAM_AFTER": {
+      "used_gb": 18.59,
+      "avail_gb": 13.34,
+      "pct": 58.2
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_REASONING_RE05_r1_1788181118",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "REASONING",
+    "SUB_ID": "RE05",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "10ee331e187f",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:58:38.661836+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:58:40.518847+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.19,
+    "TTFT_MS": 1368.87,
+    "PROMPT_TOKENS": 40,
+    "PROMPT_EVAL_TOK_S": 29.22,
+    "OUTPUT_TOKENS": 4,
+    "GEN_TOK_S": 13.72,
+    "TOTAL_E2E_MS": 1856.9,
+    "RAM_BEFORE": {
+      "used_gb": 18.59,
+      "avail_gb": 13.34,
+      "pct": 58.2
+    },
+    "RAM_PEAK": {
+      "used_gb": 18.75,
+      "avail_gb": 13.18,
+      "pct": 58.7
+    },
+    "RAM_AFTER": {
+      "used_gb": 18.75,
+      "avail_gb": 13.18,
+      "pct": 58.7
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_CODING_CO01_r1_1788181120",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "CODING",
+    "SUB_ID": "CO01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c899f97f0058",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:58:40.519423+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:59:01.952789+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.1,
+    "TTFT_MS": 1511.57,
+    "PROMPT_TOKENS": 43,
+    "PROMPT_EVAL_TOK_S": 28.45,
+    "OUTPUT_TOKENS": 200,
+    "GEN_TOK_S": 10.14,
+    "TOTAL_E2E_MS": 21432.44,
+    "RAM_BEFORE": {
+      "used_gb": 18.75,
+      "avail_gb": 13.18,
+      "pct": 58.7
+    },
+    "RAM_PEAK": {
+      "used_gb": 18.98,
+      "avail_gb": 12.95,
+      "pct": 59.5
+    },
+    "RAM_AFTER": {
+      "used_gb": 18.98,
+      "avail_gb": 12.95,
+      "pct": 59.5
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "Here\u2019s a compact, self\u2011contained implementation that follows the specification:\n\n```python\nimport re\n\ndef is_palindrome_sentence(s: str) -> bool:\n    \"\"\"\n    Return True if the given string reads the "
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_CODING_CO02_r1_1788181141",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "CODING",
+    "SUB_ID": "CO02",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c7b39342bd06",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:59:01.953338+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:59:24.132575+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.83,
+    "TTFT_MS": 1560.42,
+    "PROMPT_TOKENS": 43,
+    "PROMPT_EVAL_TOK_S": 27.56,
+    "OUTPUT_TOKENS": 200,
+    "GEN_TOK_S": 9.81,
+    "TOTAL_E2E_MS": 22178.6,
+    "RAM_BEFORE": {
+      "used_gb": 18.98,
+      "avail_gb": 12.95,
+      "pct": 59.5
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.21,
+      "avail_gb": 12.71,
+      "pct": 60.2
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.21,
+      "avail_gb": 12.71,
+      "pct": 60.2
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "**Corrected implementation**\n\n```python\ndef find_median(nums):\n    \"\"\"\n    Return the median of an unsorted list of numbers.\n\n    The median is:\n      \u2022 the middle element after sorting (odd length)\n "
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_CODING_CO03_r1_1788181164",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "CODING",
+    "SUB_ID": "CO03",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "81b699b90991",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:59:24.133131+00:00",
+    "END_TIMESTAMP": "2026-08-31T12:59:40.127940+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 1.67,
+    "TTFT_MS": 1203.12,
+    "PROMPT_TOKENS": 35,
+    "PROMPT_EVAL_TOK_S": 29.09,
+    "OUTPUT_TOKENS": 150,
+    "GEN_TOK_S": 10.3,
+    "TOTAL_E2E_MS": 15994.43,
+    "RAM_BEFORE": {
+      "used_gb": 19.21,
+      "avail_gb": 12.71,
+      "pct": 60.2
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.33,
+      "avail_gb": 12.59,
+      "pct": 60.6
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.33,
+      "avail_gb": 12.59,
+      "pct": 60.6
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_CODING_CO04_r1_1788181180",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "CODING",
+    "SUB_ID": "CO04",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "720c9387b464",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T12:59:40.128487+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:00:01.795948+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.27,
+    "TTFT_MS": 1857.53,
+    "PROMPT_TOKENS": 51,
+    "PROMPT_EVAL_TOK_S": 27.46,
+    "OUTPUT_TOKENS": 200,
+    "GEN_TOK_S": 10.22,
+    "TOTAL_E2E_MS": 21666.94,
+    "RAM_BEFORE": {
+      "used_gb": 19.33,
+      "avail_gb": 12.59,
+      "pct": 60.6
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.51,
+      "avail_gb": 12.42,
+      "pct": 61.1
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.51,
+      "avail_gb": 12.42,
+      "pct": 61.1
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "{\n  \"method\": \"POST\",\n  \"path\": \"/api/v1/auth"
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_TOOLS_TO01_r1_1788181201",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "TOOLS",
+    "SUB_ID": "TO01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "fa2478c3d555",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:00:01.796522+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:00:14.150677+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.2,
+    "TTFT_MS": 2802.62,
+    "PROMPT_TOKENS": 77,
+    "PROMPT_EVAL_TOK_S": 27.47,
+    "OUTPUT_TOKENS": 96,
+    "GEN_TOK_S": 10.3,
+    "TOTAL_E2E_MS": 12353.7,
+    "RAM_BEFORE": {
+      "used_gb": 19.51,
+      "avail_gb": 12.42,
+      "pct": 61.1
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.67,
+      "avail_gb": 12.25,
+      "pct": 61.6
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.67,
+      "avail_gb": 12.25,
+      "pct": 61.6
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "{\"tool\":\"sql_query\",\"parameters\":{\"table\":\"clients\",\"filter\":\"city="
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_TOOLS_TO02_r1_1788181214",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "TOOLS",
+    "SUB_ID": "TO02",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "d494d14cdeb7",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:00:14.151239+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:00:22.813733+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.26,
+    "TTFT_MS": 2237.9,
+    "PROMPT_TOKENS": 58,
+    "PROMPT_EVAL_TOK_S": 25.92,
+    "OUTPUT_TOKENS": 64,
+    "GEN_TOK_S": 10.31,
+    "TOTAL_E2E_MS": 8662.38,
+    "RAM_BEFORE": {
+      "used_gb": 19.68,
+      "avail_gb": 12.25,
+      "pct": 61.6
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.83,
+      "avail_gb": 12.09,
+      "pct": 62.1
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.83,
+      "avail_gb": 12.09,
+      "pct": 62.1
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "{\"tool\":\"weather_lookup\",\"parameters\":{\"city\":\"Lyon\"}}"
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_TOOLS_TO03_r1_1788181222",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "TOOLS",
+    "SUB_ID": "TO03",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "5dbd6a2b5a5a",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:00:22.814292+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:00:29.785282+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 1.65,
+    "TTFT_MS": 2278.16,
+    "PROMPT_TOKENS": 64,
+    "PROMPT_EVAL_TOK_S": 28.09,
+    "OUTPUT_TOKENS": 47,
+    "GEN_TOK_S": 10.57,
+    "TOTAL_E2E_MS": 6970.53,
+    "RAM_BEFORE": {
+      "used_gb": 19.83,
+      "avail_gb": 12.09,
+      "pct": 62.1
+    },
+    "RAM_PEAK": {
+      "used_gb": 19.99,
+      "avail_gb": 11.94,
+      "pct": 62.6
+    },
+    "RAM_AFTER": {
+      "used_gb": 19.99,
+      "avail_gb": 11.94,
+      "pct": 62.6
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "{\"tool\":\"calculator\",\"parameters\":{\"expression\":\"15*14\"}}"
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_AGENT_AG01_r1_1788181229",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "AGENT",
+    "SUB_ID": "AG01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c926a045b3ec",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:00:29.785879+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:00:45.680410+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.44,
+    "TTFT_MS": 3115.57,
+    "PROMPT_TOKENS": 85,
+    "PROMPT_EVAL_TOK_S": 27.28,
+    "OUTPUT_TOKENS": 128,
+    "GEN_TOK_S": 10.18,
+    "TOTAL_E2E_MS": 15893.97,
+    "RAM_BEFORE": {
+      "used_gb": 19.99,
+      "avail_gb": 11.94,
+      "pct": 62.6
+    },
+    "RAM_PEAK": {
+      "used_gb": 20.16,
+      "avail_gb": 11.76,
+      "pct": 63.2
+    },
+    "RAM_AFTER": {
+      "used_gb": 20.16,
+      "avail_gb": 11.76,
+      "pct": 63.2
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "{\n  \"root_cause\": \"PostgreSQL disk reached 100% usage at 14:02, causing unexpected log dump.\",\n  \"severity"
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_AGENT_AG01_r2_1788181245",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "AGENT",
+    "SUB_ID": "AG01",
+    "RUN_NUM": 2,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c926a045b3ec",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:00:45.680950+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:00:58.646677+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 1.65,
+    "TTFT_MS": 191.82,
+    "PROMPT_TOKENS": 85,
+    "PROMPT_EVAL_TOK_S": 443.12,
+    "OUTPUT_TOKENS": 128,
+    "GEN_TOK_S": 10.2,
+    "TOTAL_E2E_MS": 12965.69,
+    "RAM_BEFORE": {
+      "used_gb": 20.16,
+      "avail_gb": 11.76,
+      "pct": 63.2
+    },
+    "RAM_PEAK": {
+      "used_gb": 20.39,
+      "avail_gb": 11.54,
+      "pct": 63.9
+    },
+    "RAM_AFTER": {
+      "used_gb": 20.39,
+      "avail_gb": 11.54,
+      "pct": 63.9
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_AGENT_AG01_r3_1788181258",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "AGENT",
+    "SUB_ID": "AG01",
+    "RUN_NUM": 3,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c926a045b3ec",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:00:58.647248+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:01:11.638904+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.1,
+    "TTFT_MS": 209.65,
+    "PROMPT_TOKENS": 85,
+    "PROMPT_EVAL_TOK_S": 405.44,
+    "OUTPUT_TOKENS": 128,
+    "GEN_TOK_S": 10.19,
+    "TOTAL_E2E_MS": 12991.17,
+    "RAM_BEFORE": {
+      "used_gb": 20.39,
+      "avail_gb": 11.54,
+      "pct": 63.9
+    },
+    "RAM_PEAK": {
+      "used_gb": 20.56,
+      "avail_gb": 11.37,
+      "pct": 64.4
+    },
+    "RAM_AFTER": {
+      "used_gb": 20.56,
+      "avail_gb": 11.37,
+      "pct": 64.4
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "{\n  \"root_cause\": \"PostgreSQL disk reached 100% usage at 14:02, causing unexpected log dump due to log rotation or"
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_LONG_CONTEXT_LC01_r1_1788181271",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "LONG_CONTEXT",
+    "SUB_ID": "LC01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "ff6fc7b6bdc2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:01:11.639456+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:01:45.242445+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.1,
+    "TTFT_MS": 25328.14,
+    "PROMPT_TOKENS": 767,
+    "PROMPT_EVAL_TOK_S": 30.28,
+    "OUTPUT_TOKENS": 80,
+    "GEN_TOK_S": 9.98,
+    "TOTAL_E2E_MS": 33602.36,
+    "RAM_BEFORE": {
+      "used_gb": 20.56,
+      "avail_gb": 11.37,
+      "pct": 64.4
+    },
+    "RAM_PEAK": {
+      "used_gb": 20.85,
+      "avail_gb": 11.08,
+      "pct": 65.3
+    },
+    "RAM_AFTER": {
+      "used_gb": 20.85,
+      "avail_gb": 11.08,
+      "pct": 65.3
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_LONG_CONTEXT_LC01_r2_1788181305",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "LONG_CONTEXT",
+    "SUB_ID": "LC01",
+    "RUN_NUM": 2,
+    "IS_COLD": false,
+    "PROMPT_HASH": "ff6fc7b6bdc2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:01:45.242986+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:01:53.740876+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 1.65,
+    "TTFT_MS": 202.34,
+    "PROMPT_TOKENS": 767,
+    "PROMPT_EVAL_TOK_S": 3790.65,
+    "OUTPUT_TOKENS": 80,
+    "GEN_TOK_S": 9.88,
+    "TOTAL_E2E_MS": 8497.32,
+    "RAM_BEFORE": {
+      "used_gb": 20.85,
+      "avail_gb": 11.08,
+      "pct": 65.3
+    },
+    "RAM_PEAK": {
+      "used_gb": 20.86,
+      "avail_gb": 11.07,
+      "pct": 65.3
+    },
+    "RAM_AFTER": {
+      "used_gb": 20.86,
+      "avail_gb": 11.07,
+      "pct": 65.3
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_LONG_CONTEXT_LC01_r3_1788181313",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "LONG_CONTEXT",
+    "SUB_ID": "LC01",
+    "RUN_NUM": 3,
+    "IS_COLD": false,
+    "PROMPT_HASH": "ff6fc7b6bdc2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:01:53.741418+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:02:02.255669+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.17,
+    "TTFT_MS": 195.92,
+    "PROMPT_TOKENS": 767,
+    "PROMPT_EVAL_TOK_S": 3914.86,
+    "OUTPUT_TOKENS": 80,
+    "GEN_TOK_S": 9.88,
+    "TOTAL_E2E_MS": 8513.69,
+    "RAM_BEFORE": {
+      "used_gb": 20.86,
+      "avail_gb": 11.07,
+      "pct": 65.3
+    },
+    "RAM_PEAK": {
+      "used_gb": 20.84,
+      "avail_gb": 11.09,
+      "pct": 65.3
+    },
+    "RAM_AFTER": {
+      "used_gb": 20.84,
+      "avail_gb": 11.09,
+      "pct": 65.3
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": ""
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_LONG_GENERATION_LG01_r1_1788181322",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "LONG_GENERATION",
+    "SUB_ID": "LG01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "03f67641510d",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:02:02.256246+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:02:29.524242+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 3.02,
+    "TTFT_MS": 1594.44,
+    "PROMPT_TOKENS": 45,
+    "PROMPT_EVAL_TOK_S": 28.22,
+    "OUTPUT_TOKENS": 256,
+    "GEN_TOK_S": 10.08,
+    "TOTAL_E2E_MS": 27268.01,
+    "RAM_BEFORE": {
+      "used_gb": 20.84,
+      "avail_gb": 11.09,
+      "pct": 65.3
+    },
+    "RAM_PEAK": {
+      "used_gb": 21.01,
+      "avail_gb": 10.91,
+      "pct": 65.8
+    },
+    "RAM_AFTER": {
+      "used_gb": 21.01,
+      "avail_gb": 10.91,
+      "pct": 65.8
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "A modular monolith keeps all services in a single codebase and database, simplifying deployment and reducing inter\u2011service communication latency. For a 10\u2011person team, this model avoids the overhead o"
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_LONG_GENERATION_LG01_r2_1788181349",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "LONG_GENERATION",
+    "SUB_ID": "LG01",
+    "RUN_NUM": 2,
+    "IS_COLD": false,
+    "PROMPT_HASH": "03f67641510d",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:02:29.525063+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:02:52.812709+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.17,
+    "TTFT_MS": 217.76,
+    "PROMPT_TOKENS": 45,
+    "PROMPT_EVAL_TOK_S": 206.65,
+    "OUTPUT_TOKENS": 230,
+    "GEN_TOK_S": 10.07,
+    "TOTAL_E2E_MS": 23287.44,
+    "RAM_BEFORE": {
+      "used_gb": 21.01,
+      "avail_gb": 10.91,
+      "pct": 65.8
+    },
+    "RAM_PEAK": {
+      "used_gb": 21.28,
+      "avail_gb": 10.64,
+      "pct": 66.7
+    },
+    "RAM_AFTER": {
+      "used_gb": 21.28,
+      "avail_gb": 10.64,
+      "pct": 66.7
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "A modular monolith keeps all code in a single repository but isolates functionality through clear module boundaries and shared libraries, making it easier to manage dependencies and deployments for a "
+  },
+  {
+    "RUN_ID": "V2A_nemotron-3-nano_4b_LONG_GENERATION_LG01_r3_1788181372",
+    "MODEL": "nemotron-3-nano:4b",
+    "TASK": "LONG_GENERATION",
+    "SUB_ID": "LG01",
+    "RUN_NUM": 3,
+    "IS_COLD": false,
+    "PROMPT_HASH": "03f67641510d",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:02:52.813263+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:03:18.469305+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.24,
+    "TTFT_MS": 199.21,
+    "PROMPT_TOKENS": 45,
+    "PROMPT_EVAL_TOK_S": 225.89,
+    "OUTPUT_TOKENS": 251,
+    "GEN_TOK_S": 9.96,
+    "TOTAL_E2E_MS": 25655.45,
+    "RAM_BEFORE": {
+      "used_gb": 21.28,
+      "avail_gb": 10.64,
+      "pct": 66.7
+    },
+    "RAM_PEAK": {
+      "used_gb": 21.38,
+      "avail_gb": 10.54,
+      "pct": 67.0
+    },
+    "RAM_AFTER": {
+      "used_gb": 21.38,
+      "avail_gb": 10.54,
+      "pct": 67.0
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "A modular monolith keeps all code in a single repository and a shared database, which simplifies deployment and reduces operational overhead for a small team. Because the whole system is one unit, the"
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_FAST_ROUTING_FR01_r1_1788181402",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "FAST_ROUTING",
+    "SUB_ID": "FR01",
+    "RUN_NUM": 1,
+    "IS_COLD": true,
+    "PROMPT_HASH": "4bd7a9f46cd2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:03:22.856175+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:03:32.169645+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 4587.45,
+    "TTFT_MS": 742.1,
+    "PROMPT_TOKENS": 43,
+    "PROMPT_EVAL_TOK_S": 57.94,
+    "OUTPUT_TOKENS": 48,
+    "GEN_TOK_S": 12.65,
+    "TOTAL_E2E_MS": 9313.22,
+    "RAM_BEFORE": {
+      "used_gb": 14.78,
+      "avail_gb": 17.15,
+      "pct": 46.3
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.69,
+      "avail_gb": 14.24,
+      "pct": 55.4
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.69,
+      "avail_gb": 14.24,
+      "pct": 55.4
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "```json\n{\n  \"category\": \"chart generation|code|chat\",\n  \"confidence\": 0.95,\n  \"task\": \"Generate 2026 sales chart\",\n  \"year\": 2026\n}\n```"
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_FAST_ROUTING_FR01_r2_1788181412",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "FAST_ROUTING",
+    "SUB_ID": "FR01",
+    "RUN_NUM": 2,
+    "IS_COLD": false,
+    "PROMPT_HASH": "4bd7a9f46cd2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:03:32.170287+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:03:36.209536+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.2,
+    "TTFT_MS": 78.83,
+    "PROMPT_TOKENS": 43,
+    "PROMPT_EVAL_TOK_S": 545.48,
+    "OUTPUT_TOKENS": 48,
+    "GEN_TOK_S": 12.84,
+    "TOTAL_E2E_MS": 4038.9,
+    "RAM_BEFORE": {
+      "used_gb": 17.69,
+      "avail_gb": 14.24,
+      "pct": 55.4
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.7,
+      "avail_gb": 14.23,
+      "pct": 55.4
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.7,
+      "avail_gb": 14.23,
+      "pct": 55.4
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "```json\n{\n  \"category\": \"chart generation|code|chat\",\n  \"confidence\": 0.95,\n  \"task\": \"Generate 2026 sales chart\",\n  \"year\": 2026\n}\n```"
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_FAST_ROUTING_FR01_r3_1788181416",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "FAST_ROUTING",
+    "SUB_ID": "FR01",
+    "RUN_NUM": 3,
+    "IS_COLD": false,
+    "PROMPT_HASH": "4bd7a9f46cd2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:03:36.210158+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:03:40.147808+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.27,
+    "TTFT_MS": 77.44,
+    "PROMPT_TOKENS": 43,
+    "PROMPT_EVAL_TOK_S": 555.27,
+    "OUTPUT_TOKENS": 48,
+    "GEN_TOK_S": 13.09,
+    "TOTAL_E2E_MS": 3937.35,
+    "RAM_BEFORE": {
+      "used_gb": 17.7,
+      "avail_gb": 14.23,
+      "pct": 55.4
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.69,
+      "avail_gb": 14.23,
+      "pct": 55.4
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.69,
+      "avail_gb": 14.23,
+      "pct": 55.4
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "```json\n{\n  \"category\": \"chart generation|code|chat\",\n  \"confidence\": 0.95,\n  \"task\": \"Generate 2026 sales chart\",\n  \"year\": 2026\n}\n```"
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_REASONING_RE01_r1_1788181420",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "REASONING",
+    "SUB_ID": "RE01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "a57a9641cce9",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:03:40.148349+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:03:42.348742+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 1.77,
+    "TTFT_MS": 802.23,
+    "PROMPT_TOKENS": 48,
+    "PROMPT_EVAL_TOK_S": 59.83,
+    "OUTPUT_TOKENS": 16,
+    "GEN_TOK_S": 13.31,
+    "TOTAL_E2E_MS": 2200.24,
+    "RAM_BEFORE": {
+      "used_gb": 17.69,
+      "avail_gb": 14.23,
+      "pct": 55.4
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.7,
+      "avail_gb": 14.22,
+      "pct": 55.5
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.7,
+      "avail_gb": 14.22,
+      "pct": 55.5
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "To determine when Train B catches up to Train A, we need to calculate the"
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_REASONING_RE02_r1_1788181422",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "REASONING",
+    "SUB_ID": "RE02",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "e861d3e9e520",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:03:42.349307+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:03:43.661766+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.63,
+    "TTFT_MS": 540.13,
+    "PROMPT_TOKENS": 30,
+    "PROMPT_EVAL_TOK_S": 55.54,
+    "OUTPUT_TOKENS": 8,
+    "GEN_TOK_S": 14.26,
+    "TOTAL_E2E_MS": 1312.3,
+    "RAM_BEFORE": {
+      "used_gb": 17.7,
+      "avail_gb": 14.22,
+      "pct": 55.5
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.71,
+      "avail_gb": 14.22,
+      "pct": 55.5
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.71,
+      "avail_gb": 14.22,
+      "pct": 55.5
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "To find the probability of picking an apple"
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_REASONING_RE03_r1_1788181423",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "REASONING",
+    "SUB_ID": "RE03",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "a370fa887f5c",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:03:43.662325+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:03:44.549988+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.19,
+    "TTFT_MS": 454.86,
+    "PROMPT_TOKENS": 29,
+    "PROMPT_EVAL_TOK_S": 63.76,
+    "OUTPUT_TOKENS": 4,
+    "GEN_TOK_S": 16.77,
+    "TOTAL_E2E_MS": 887.2,
+    "RAM_BEFORE": {
+      "used_gb": 17.71,
+      "avail_gb": 14.22,
+      "pct": 55.5
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.72,
+      "avail_gb": 14.2,
+      "pct": 55.5
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.72,
+      "avail_gb": 14.2,
+      "pct": 55.5
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "If 5 machines"
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_REASONING_RE04_r1_1788181424",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "REASONING",
+    "SUB_ID": "RE04",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "7bf6a16719fa",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:03:44.550547+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:03:45.761173+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.17,
+    "TTFT_MS": 462.32,
+    "PROMPT_TOKENS": 29,
+    "PROMPT_EVAL_TOK_S": 62.73,
+    "OUTPUT_TOKENS": 8,
+    "GEN_TOK_S": 14.65,
+    "TOTAL_E2E_MS": 1210.46,
+    "RAM_BEFORE": {
+      "used_gb": 17.72,
+      "avail_gb": 14.2,
+      "pct": 55.5
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.73,
+      "avail_gb": 14.2,
+      "pct": 55.5
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.73,
+      "avail_gb": 14.2,
+      "pct": 55.5
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "The fifth daughter is Sophie. The question"
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_REASONING_RE05_r1_1788181425",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "REASONING",
+    "SUB_ID": "RE05",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "10ee331e187f",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:03:45.761729+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:03:46.641606+00:00",
+    "STATUS": "OK",
+    "QUALITY": "FAIL",
+    "LOAD_MS": 2.1,
+    "TTFT_MS": 449.54,
+    "PROMPT_TOKENS": 25,
+    "PROMPT_EVAL_TOK_S": 55.61,
+    "OUTPUT_TOKENS": 4,
+    "GEN_TOK_S": 16.76,
+    "TOTAL_E2E_MS": 879.54,
+    "RAM_BEFORE": {
+      "used_gb": 17.73,
+      "avail_gb": 14.2,
+      "pct": 55.5
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.74,
+      "avail_gb": 14.19,
+      "pct": 55.6
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.74,
+      "avail_gb": 14.19,
+      "pct": 55.6
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "If the water lily"
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_CODING_CO01_r1_1788181426",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "CODING",
+    "SUB_ID": "CO01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c899f97f0058",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:03:46.642146+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:04:02.998190+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.17,
+    "TTFT_MS": 412.86,
+    "PROMPT_TOKENS": 23,
+    "PROMPT_EVAL_TOK_S": 55.71,
+    "OUTPUT_TOKENS": 200,
+    "GEN_TOK_S": 12.7,
+    "TOTAL_E2E_MS": 16355.68,
+    "RAM_BEFORE": {
+      "used_gb": 17.74,
+      "avail_gb": 14.19,
+      "pct": 55.6
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.72,
+      "avail_gb": 14.2,
+      "pct": 55.5
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.72,
+      "avail_gb": 14.2,
+      "pct": 55.5
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "Certainly! To check if a sentence is a palindrome while ignoring case, spaces, and punctuation, you can follow these steps:\n\n1. Normalize the string by converting it to lowercase.\n2. Remove all non-al"
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_CODING_CO02_r1_1788181442",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "CODING",
+    "SUB_ID": "CO02",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c7b39342bd06",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:04:02.998765+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:04:19.575172+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.19,
+    "TTFT_MS": 481.75,
+    "PROMPT_TOKENS": 27,
+    "PROMPT_EVAL_TOK_S": 56.05,
+    "OUTPUT_TOKENS": 200,
+    "GEN_TOK_S": 12.58,
+    "TOTAL_E2E_MS": 16575.59,
+    "RAM_BEFORE": {
+      "used_gb": 17.72,
+      "avail_gb": 14.2,
+      "pct": 55.5
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.73,
+      "avail_gb": 14.19,
+      "pct": 55.6
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.73,
+      "avail_gb": 14.19,
+      "pct": 55.6
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "To correctly compute the median of any unsorted list, you need to sort the list first and then find the median. Here is the corrected code:\n\n```python\ndef find_median(nums):\n    # Sort the list\n    nu"
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_CODING_CO03_r1_1788181459",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "CODING",
+    "SUB_ID": "CO03",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "81b699b90991",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:04:19.575734+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:04:32.073759+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.79,
+    "TTFT_MS": 342.73,
+    "PROMPT_TOKENS": 19,
+    "PROMPT_EVAL_TOK_S": 55.44,
+    "OUTPUT_TOKENS": 150,
+    "GEN_TOK_S": 12.55,
+    "TOTAL_E2E_MS": 12497.66,
+    "RAM_BEFORE": {
+      "used_gb": 17.73,
+      "avail_gb": 14.19,
+      "pct": 55.6
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.82,
+      "avail_gb": 14.1,
+      "pct": 55.8
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.82,
+      "avail_gb": 14.1,
+      "pct": 55.8
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "Certainly! To write an efficient Fibonacci function in Python without using naive recursion, we can use dynamic programming. Specifically, we'll use an iterative approach to build up the Fibonacci seq"
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_CODING_CO04_r1_1788181472",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "CODING",
+    "SUB_ID": "CO04",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "720c9387b464",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:04:32.073759+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:04:43.877333+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.44,
+    "TTFT_MS": 531.23,
+    "PROMPT_TOKENS": 30,
+    "PROMPT_EVAL_TOK_S": 56.47,
+    "OUTPUT_TOKENS": 137,
+    "GEN_TOK_S": 12.37,
+    "TOTAL_E2E_MS": 11802.93,
+    "RAM_BEFORE": {
+      "used_gb": 17.82,
+      "avail_gb": 14.1,
+      "pct": 55.8
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.92,
+      "avail_gb": 14.0,
+      "pct": 56.1
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.92,
+      "avail_gb": 14.0,
+      "pct": 56.1
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "```json\n\n{\n\n  \"method\": \"POST\",\n\n  \"path\": \"/api/v1/auth/login\",\n\n  \"body_required_fields\": [\"username\", \"password\"],\n\n  \"responses\": {\n\n    \"200\": {\n\n      \"description\": \"Login successful\",\n\n      \""
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_TOOLS_TO01_r1_1788181483",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "TOOLS",
+    "SUB_ID": "TO01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "fa2478c3d555",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:04:43.877932+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:04:47.239096+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.14,
+    "TTFT_MS": 1026.14,
+    "PROMPT_TOKENS": 60,
+    "PROMPT_EVAL_TOK_S": 58.47,
+    "OUTPUT_TOKENS": 28,
+    "GEN_TOK_S": 13.08,
+    "TOTAL_E2E_MS": 3360.81,
+    "RAM_BEFORE": {
+      "used_gb": 17.92,
+      "avail_gb": 14.0,
+      "pct": 56.1
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.94,
+      "avail_gb": 13.99,
+      "pct": 56.2
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.94,
+      "avail_gb": 13.99,
+      "pct": 56.2
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "```json\n{\"tool\":\"sql_query\",\"parameters\":{\"table\":\"clients\",\"filter\":\"city=Paris AND active=1\"}}\n```"
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_TOOLS_TO02_r1_1788181487",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "TOOLS",
+    "SUB_ID": "TO02",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "d494d14cdeb7",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:04:47.239672+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:04:49.308582+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 1.63,
+    "TTFT_MS": 433.23,
+    "PROMPT_TOKENS": 43,
+    "PROMPT_EVAL_TOK_S": 99.25,
+    "OUTPUT_TOKENS": 19,
+    "GEN_TOK_S": 13.37,
+    "TOTAL_E2E_MS": 2068.58,
+    "RAM_BEFORE": {
+      "used_gb": 17.94,
+      "avail_gb": 13.99,
+      "pct": 56.2
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.94,
+      "avail_gb": 13.99,
+      "pct": 56.2
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.94,
+      "avail_gb": 13.99,
+      "pct": 56.2
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "```json\n{\"tool\":\"weather_lookup\",\"parameters\":{\"city\":\"Lyon\"}}\n```"
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_TOOLS_TO03_r1_1788181489",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "TOOLS",
+    "SUB_ID": "TO03",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "5dbd6a2b5a5a",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:04:49.309163+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:04:51.349068+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.18,
+    "TTFT_MS": 409.07,
+    "PROMPT_TOKENS": 45,
+    "PROMPT_EVAL_TOK_S": 110.01,
+    "OUTPUT_TOKENS": 19,
+    "GEN_TOK_S": 13.25,
+    "TOTAL_E2E_MS": 2039.83,
+    "RAM_BEFORE": {
+      "used_gb": 17.94,
+      "avail_gb": 13.99,
+      "pct": 56.2
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.94,
+      "avail_gb": 13.98,
+      "pct": 56.2
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.94,
+      "avail_gb": 13.98,
+      "pct": 56.2
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "```json\n{\"tool\":\"calculator\",\"parameters\":{\"expression\":\"15*14\"}}\n```"
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_AGENT_AG01_r1_1788181491",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "AGENT",
+    "SUB_ID": "AG01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c926a045b3ec",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:04:51.349636+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:04:58.686333+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.22,
+    "TTFT_MS": 1054.41,
+    "PROMPT_TOKENS": 60,
+    "PROMPT_EVAL_TOK_S": 56.9,
+    "OUTPUT_TOKENS": 77,
+    "GEN_TOK_S": 12.65,
+    "TOTAL_E2E_MS": 7336.27,
+    "RAM_BEFORE": {
+      "used_gb": 17.94,
+      "avail_gb": 13.98,
+      "pct": 56.2
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.94,
+      "avail_gb": 13.98,
+      "pct": 56.2
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.94,
+      "avail_gb": 13.98,
+      "pct": 56.2
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "```json\n{\n  \"root_cause\": \"Unexpected log dump causing high disk usage\",\n  \"severity\": \"CRITICAL\",\n  \"immediate_action\": \"Investigate the cause of the log dump, stop the dump process if possible, and "
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_AGENT_AG01_r2_1788181498",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "AGENT",
+    "SUB_ID": "AG01",
+    "RUN_NUM": 2,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c926a045b3ec",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:04:58.686922+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:05:05.079091+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.37,
+    "TTFT_MS": 76.6,
+    "PROMPT_TOKENS": 60,
+    "PROMPT_EVAL_TOK_S": 783.29,
+    "OUTPUT_TOKENS": 78,
+    "GEN_TOK_S": 12.73,
+    "TOTAL_E2E_MS": 6391.99,
+    "RAM_BEFORE": {
+      "used_gb": 17.94,
+      "avail_gb": 13.98,
+      "pct": 56.2
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.97,
+      "avail_gb": 13.96,
+      "pct": 56.3
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.97,
+      "avail_gb": 13.96,
+      "pct": 56.3
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "```json\n{\n  \"root_cause\": \"Full disk space reached, causing PostgreSQL to dump logs to disk\",\n  \"severity\": \"CRITICAL\",\n  \"immediate_action\": \"Increase disk space, monitor disk usage, and investigate "
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_AGENT_AG01_r3_1788181505",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "AGENT",
+    "SUB_ID": "AG01",
+    "RUN_NUM": 3,
+    "IS_COLD": false,
+    "PROMPT_HASH": "c926a045b3ec",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:05:05.079666+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:05:12.596810+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.51,
+    "TTFT_MS": 80.2,
+    "PROMPT_TOKENS": 60,
+    "PROMPT_EVAL_TOK_S": 748.13,
+    "OUTPUT_TOKENS": 92,
+    "GEN_TOK_S": 12.72,
+    "TOTAL_E2E_MS": 7516.46,
+    "RAM_BEFORE": {
+      "used_gb": 17.97,
+      "avail_gb": 13.96,
+      "pct": 56.3
+    },
+    "RAM_PEAK": {
+      "used_gb": 17.98,
+      "avail_gb": 13.95,
+      "pct": 56.3
+    },
+    "RAM_AFTER": {
+      "used_gb": 17.98,
+      "avail_gb": 13.95,
+      "pct": 56.3
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "```json\n{\n  \"root_cause\": \"Unexpected log dump causing high disk usage\",\n  \"severity\": \"CRITICAL\",\n  \"immediate_action\": \"Investigate the cause of the log dump, stop the log dump process if possible, "
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_LONG_CONTEXT_LC01_r1_1788181512",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "LONG_CONTEXT",
+    "SUB_ID": "LC01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "ff6fc7b6bdc2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:05:12.597358+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:05:26.896854+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.62,
+    "TTFT_MS": 11723.42,
+    "PROMPT_TOKENS": 624,
+    "PROMPT_EVAL_TOK_S": 53.23,
+    "OUTPUT_TOKENS": 28,
+    "GEN_TOK_S": 11.81,
+    "TOTAL_E2E_MS": 14298.86,
+    "RAM_BEFORE": {
+      "used_gb": 17.98,
+      "avail_gb": 13.95,
+      "pct": 56.3
+    },
+    "RAM_PEAK": {
+      "used_gb": 18.06,
+      "avail_gb": 13.87,
+      "pct": 56.6
+    },
+    "RAM_AFTER": {
+      "used_gb": 18.06,
+      "avail_gb": 13.87,
+      "pct": 56.6
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "MARKER_A=94821, MARKER_B=37190, MARKER_C=58204, MARKER_D=12048"
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_LONG_CONTEXT_LC01_r2_1788181526",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "LONG_CONTEXT",
+    "SUB_ID": "LC01",
+    "RUN_NUM": 2,
+    "IS_COLD": false,
+    "PROMPT_HASH": "ff6fc7b6bdc2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:05:26.896854+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:05:29.611912+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.2,
+    "TTFT_MS": 87.26,
+    "PROMPT_TOKENS": 624,
+    "PROMPT_EVAL_TOK_S": 7151.04,
+    "OUTPUT_TOKENS": 28,
+    "GEN_TOK_S": 11.98,
+    "TOTAL_E2E_MS": 2714.42,
+    "RAM_BEFORE": {
+      "used_gb": 18.06,
+      "avail_gb": 13.87,
+      "pct": 56.6
+    },
+    "RAM_PEAK": {
+      "used_gb": 18.05,
+      "avail_gb": 13.87,
+      "pct": 56.5
+    },
+    "RAM_AFTER": {
+      "used_gb": 18.05,
+      "avail_gb": 13.87,
+      "pct": 56.5
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "MARKER_A=94821, MARKER_B=37190, MARKER_C=58204, MARKER_D=12048"
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_LONG_CONTEXT_LC01_r3_1788181529",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "LONG_CONTEXT",
+    "SUB_ID": "LC01",
+    "RUN_NUM": 3,
+    "IS_COLD": false,
+    "PROMPT_HASH": "ff6fc7b6bdc2",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:05:29.613034+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:05:32.226795+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.17,
+    "TTFT_MS": 87.28,
+    "PROMPT_TOKENS": 624,
+    "PROMPT_EVAL_TOK_S": 7149.4,
+    "OUTPUT_TOKENS": 28,
+    "GEN_TOK_S": 12.06,
+    "TOTAL_E2E_MS": 2613.65,
+    "RAM_BEFORE": {
+      "used_gb": 18.05,
+      "avail_gb": 13.87,
+      "pct": 56.5
+    },
+    "RAM_PEAK": {
+      "used_gb": 18.05,
+      "avail_gb": 13.88,
+      "pct": 56.5
+    },
+    "RAM_AFTER": {
+      "used_gb": 18.05,
+      "avail_gb": 13.88,
+      "pct": 56.5
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "MARKER_A=94821, MARKER_B=37190, MARKER_C=58204, MARKER_D=12048"
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_LONG_GENERATION_LG01_r1_1788181532",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "LONG_GENERATION",
+    "SUB_ID": "LG01",
+    "RUN_NUM": 1,
+    "IS_COLD": false,
+    "PROMPT_HASH": "03f67641510d",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:05:32.227340+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:05:44.616676+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.86,
+    "TTFT_MS": 545.6,
+    "PROMPT_TOKENS": 29,
+    "PROMPT_EVAL_TOK_S": 53.15,
+    "OUTPUT_TOKENS": 146,
+    "GEN_TOK_S": 12.54,
+    "TOTAL_E2E_MS": 12389.16,
+    "RAM_BEFORE": {
+      "used_gb": 18.05,
+      "avail_gb": 13.88,
+      "pct": 56.5
+    },
+    "RAM_PEAK": {
+      "used_gb": 18.14,
+      "avail_gb": 13.79,
+      "pct": 56.8
+    },
+    "RAM_AFTER": {
+      "used_gb": 18.14,
+      "avail_gb": 13.79,
+      "pct": 56.8
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "Modular monolith and microservices are two architectural approaches for building software systems. Modular monoliths consist of tightly coupled modules within a single codebase, making them easier to "
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_LONG_GENERATION_LG01_r2_1788181544",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "LONG_GENERATION",
+    "SUB_ID": "LG01",
+    "RUN_NUM": 2,
+    "IS_COLD": false,
+    "PROMPT_HASH": "03f67641510d",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:05:44.617776+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:05:56.531747+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.38,
+    "TTFT_MS": 79.51,
+    "PROMPT_TOKENS": 29,
+    "PROMPT_EVAL_TOK_S": 364.73,
+    "OUTPUT_TOKENS": 146,
+    "GEN_TOK_S": 12.55,
+    "TOTAL_E2E_MS": 11913.59,
+    "RAM_BEFORE": {
+      "used_gb": 18.14,
+      "avail_gb": 13.79,
+      "pct": 56.8
+    },
+    "RAM_PEAK": {
+      "used_gb": 18.11,
+      "avail_gb": 13.82,
+      "pct": 56.7
+    },
+    "RAM_AFTER": {
+      "used_gb": 18.11,
+      "avail_gb": 13.82,
+      "pct": 56.7
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "Modular monolith and microservices are two distinct architectural approaches for building applications. Modular monoliths consist of tightly coupled modules within a single codebase, making them easie"
+  },
+  {
+    "RUN_ID": "V2A_phi4-mini_latest_LONG_GENERATION_LG01_r3_1788181556",
+    "MODEL": "phi4-mini:latest",
+    "TASK": "LONG_GENERATION",
+    "SUB_ID": "LG01",
+    "RUN_NUM": 3,
+    "IS_COLD": false,
+    "PROMPT_HASH": "03f67641510d",
+    "THREADS": 4,
+    "CONTEXT": 4096,
+    "GPU": 0,
+    "START_TIMESTAMP": "2026-08-31T13:05:56.532309+00:00",
+    "END_TIMESTAMP": "2026-08-31T13:06:07.790473+00:00",
+    "STATUS": "OK",
+    "QUALITY": "PASS",
+    "LOAD_MS": 2.92,
+    "TTFT_MS": 74.24,
+    "PROMPT_TOKENS": 29,
+    "PROMPT_EVAL_TOK_S": 390.62,
+    "OUTPUT_TOKENS": 136,
+    "GEN_TOK_S": 12.39,
+    "TOTAL_E2E_MS": 11258.11,
+    "RAM_BEFORE": {
+      "used_gb": 18.11,
+      "avail_gb": 13.82,
+      "pct": 56.7
+    },
+    "RAM_PEAK": {
+      "used_gb": 18.13,
+      "avail_gb": 13.8,
+      "pct": 56.8
+    },
+    "RAM_AFTER": {
+      "used_gb": 18.13,
+      "avail_gb": 13.8,
+      "pct": 56.8
+    },
+    "ERROR": "",
+    "TEXT_SNIPPET": "A modular monolith offers a tightly coupled architecture where components are organized into modules within a single codebase, simplifying development and debugging for a 10-person dev team. This appr"
+  }
+]

@@ -1,0 +1,40 @@
+{
+  "RUN_ID": "V2A_hermes3_8b_AGENT_AG01_r2_1788180385",
+  "MODEL": "hermes3:8b",
+  "TASK": "AGENT",
+  "SUB_ID": "AG01",
+  "RUN_NUM": 2,
+  "IS_COLD": false,
+  "PROMPT_HASH": "c926a045b3ec",
+  "THREADS": 4,
+  "CONTEXT": 4096,
+  "GPU": 0,
+  "START_TIMESTAMP": "2026-08-31T12:46:25.325771+00:00",
+  "END_TIMESTAMP": "2026-08-31T12:46:43.883221+00:00",
+  "STATUS": "OK",
+  "QUALITY": "PASS",
+  "LOAD_MS": 1.72,
+  "TTFT_MS": 150.77,
+  "PROMPT_TOKENS": 71,
+  "PROMPT_EVAL_TOK_S": 470.92,
+  "OUTPUT_TOKENS": 128,
+  "GEN_TOK_S": 7.03,
+  "TOTAL_E2E_MS": 18556.91,
+  "RAM_BEFORE": {
+    "used_gb": 19.83,
+    "avail_gb": 12.09,
+    "pct": 62.1
+  },
+  "RAM_PEAK": {
+    "used_gb": 19.82,
+    "avail_gb": 12.1,
+    "pct": 62.1
+  },
+  "RAM_AFTER": {
+    "used_gb": 19.82,
+    "avail_gb": 12.1,
+    "pct": 62.1
+  },
+  "ERROR": "",
+  "TEXT_SNIPPET": "{\"root_cause\":\"The PostgreSQL database experienced a sudden and unexpected log dump, causing the disk to become 100% full at 14:02. This is likely due to a misconfiguration or malfunction in the loggi"
+}

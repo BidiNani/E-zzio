@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "generated_at": "2026-08-31T18:27:00+02:00",
+    "standard": "EVIDENCE RULE v1.1",
+    "repository": "G:/AI/E-zzio",
+    "scope": "END_TO_END_INTERFACES_VALIDATION"
+  },
+  "entrypoints_identified": {
+    "discord": "core/integrations/discord/discord_client.py (stream_ezzio_chat -> /master/chat/stream)",
+    "http_api": "routers/master.py (POST /master/chat -> ezzio_master -> CognitiveGateway -> ModelRouter)",
+    "cli_sdk": "core/cognition/cognitive_gateway.py & core/cognition/model_router.py",
+    "web_hud": "web_server.py (FastAPI /master/chat /health /metrics)"
+  },
+  "invariants": {
+    "model_router_authority": "UNIQUE (core/cognition/model_router.py)",
+    "memory_authority": "UNIQUE (core/memory/unified_gateway.py)",
+    "secrets_vault_authority": "UNIQUE (core/security/unified_vault.py)",
+    "second_runtime": false,
+    "routing_divergences": false
+  }
+}

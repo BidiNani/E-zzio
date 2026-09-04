@@ -1,0 +1,6 @@
+{
+  "hit_latency_ms": 0.73,
+  "provider_calls": 0,
+  "quota_consumed": 0,
+  "status": "CACHE_FIRST_PROVEN"
+}

@@ -1,0 +1,34 @@
+{
+  "metadata": {
+    "generated_at": "2026-08-31T17:35:00+02:00",
+    "standard": "EVIDENCE RULE v1.1",
+    "repository": "G:/AI/E-zzio"
+  },
+  "locked_architecture": {
+    "model_router_authority": "core/cognition/model_router.py (ModelRouter singleton)",
+    "memory_authority": "core/memory/unified_gateway.py (UnifiedMemoryGateway - SQLite WAL + FTS5)",
+    "secrets_authority": "core/security/secrets_vault.py (SecretsVault)",
+    "second_runtime": false,
+    "production_routing": "Cloud-First Gemini Pool with Local Ollama Fallback"
+  },
+  "governed_models": {
+    "cloud_primary": {
+      "fast": "gemini-3.5-flash-lite",
+      "general": "gemini-3.5-flash",
+      "coding_agentic": "gemini-3.7-flash",
+      "deep_reasoning": "gemini-3.1-pro-preview"
+    },
+    "local_physical": [
+      "nemotron-3-nano:4b",
+      "hermes3:8b",
+      "phi4-mini:latest",
+      "qwen3.5:9b",
+      "nomic-embed-text:latest",
+      "bge-m3:latest"
+    ]
+  },
+  "workbench_status": {
+    "orchestration": "OPTIMIZED (Command-First + Multi-Agent Delegation)",
+    "aion_ui": "DESKTOP_WORKBENCH_INTERFACE_ONLY (Separate from E-ZzIO Core)"
+  }
+}

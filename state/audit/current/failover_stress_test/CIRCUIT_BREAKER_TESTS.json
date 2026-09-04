@@ -1,0 +1,14 @@
+{
+  "parameters": {
+    "cooldown_on_429": "60.0s",
+    "cooldown_on_5xx": "15.0s (incrémental)",
+    "cooldown_on_401_403": "3600.0s (quarantaine)",
+    "circuit_breaker_recovery": "Automatique après expiration du timestamp blocked_until"
+  },
+  "test_results": {
+    "before_cooldown_available": true,
+    "in_cooldown_suppressed": true,
+    "recovered_after_ttl": true,
+    "verdict": "CIRCUIT_BREAKER_PROVEN"
+  }
+}

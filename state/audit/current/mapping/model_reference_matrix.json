@@ -1,0 +1,137 @@
+[
+  {
+    "model": "gemma4:e4b-it-q4_K_M",
+    "size_gb": 8.95,
+    "category": "EXPERIMENTAL",
+    "role": "Modele experimental ou benchmark alternatif (conserve)",
+    "physical_present": true,
+    "delete_candidate": false,
+    "keep": true
+  },
+  {
+    "model": "ministral-3:8b",
+    "size_gb": 5.61,
+    "category": "EXPERIMENTAL",
+    "role": "Modele experimental ou benchmark alternatif (conserve)",
+    "physical_present": true,
+    "delete_candidate": false,
+    "keep": true
+  },
+  {
+    "model": "ez-agent-hermes:latest",
+    "size_gb": 4.34,
+    "category": "SPECIALIZED_ACTIVE",
+    "role": "Variante specialisee avec Modelfile dedie (conserv\u00e9e)",
+    "physical_present": true,
+    "delete_candidate": false,
+    "keep": true
+  },
+  {
+    "model": "ez-core-free:latest",
+    "size_gb": 5.34,
+    "category": "SPECIALIZED_ACTIVE",
+    "role": "Variante specialisee avec Modelfile dedie (conserv\u00e9e)",
+    "physical_present": true,
+    "delete_candidate": false,
+    "keep": true
+  },
+  {
+    "model": "mannix/llama3.1-8b-abliterated:q5_K_M",
+    "size_gb": 5.34,
+    "category": "LEGACY",
+    "role": "Modele de base pour ez-core-free (conserve)",
+    "physical_present": true,
+    "delete_candidate": false,
+    "keep": true
+  },
+  {
+    "model": "hermes3:8b",
+    "size_gb": 4.34,
+    "category": "PRODUCTION",
+    "role": "Noyau de production canonique (Router / Core / Agent / Embeddings)",
+    "physical_present": true,
+    "delete_candidate": false,
+    "keep": true
+  },
+  {
+    "model": "ornith-1.5:9b",
+    "size_gb": 6.1,
+    "category": "EXPERIMENTAL",
+    "role": "Modele experimental ou benchmark alternatif (conserve)",
+    "physical_present": true,
+    "delete_candidate": false,
+    "keep": true
+  },
+  {
+    "model": "ez-rag-expert:latest",
+    "size_gb": 6.1,
+    "category": "SPECIALIZED_ACTIVE",
+    "role": "Variante specialisee avec Modelfile dedie (conserv\u00e9e)",
+    "physical_present": true,
+    "delete_candidate": false,
+    "keep": true
+  },
+  {
+    "model": "ez-core-safe:latest",
+    "size_gb": 6.14,
+    "category": "SPECIALIZED_ACTIVE",
+    "role": "Variante specialisee avec Modelfile dedie (conserv\u00e9e)",
+    "physical_present": true,
+    "delete_candidate": false,
+    "keep": true
+  },
+  {
+    "model": "qwen3.5:9b",
+    "size_gb": 6.14,
+    "category": "PRODUCTION",
+    "role": "Noyau de production canonique (Router / Core / Agent / Embeddings)",
+    "physical_present": true,
+    "delete_candidate": false,
+    "keep": true
+  },
+  {
+    "model": "ez-router:latest",
+    "size_gb": 2.32,
+    "category": "SPECIALIZED_ACTIVE",
+    "role": "Variante specialisee avec Modelfile dedie (conserv\u00e9e)",
+    "physical_present": true,
+    "delete_candidate": false,
+    "keep": true
+  },
+  {
+    "model": "phi4-mini:latest",
+    "size_gb": 2.32,
+    "category": "PRODUCTION",
+    "role": "Noyau de production canonique (Router / Core / Agent / Embeddings)",
+    "physical_present": true,
+    "delete_candidate": false,
+    "keep": true
+  },
+  {
+    "model": "nomic-embed-text:latest",
+    "size_gb": 0.26,
+    "category": "SPECIALIZED_ACTIVE",
+    "role": "Variante specialisee avec Modelfile dedie (conserv\u00e9e)",
+    "physical_present": true,
+    "delete_candidate": false,
+    "keep": true
+  },
+  {
+    "model": "bge-m3:latest",
+    "size_gb": 1.08,
+    "category": "PRODUCTION",
+    "role": "Noyau de production canonique (Router / Core / Agent / Embeddings)",
+    "physical_present": true,
+    "delete_candidate": false,
+    "keep": true
+  },
+  {
+    "model": "qwen2.5vl:3b",
+    "size_gb": 0,
+    "category": "ABSENT_NOT_INSTALLED",
+    "role": "Vision locale absente d'Ollama - NON DECLARE DANS LA BASELINE",
+    "physical_present": false,
+    "delete_candidate": false,
+    "keep": false
+  }
+]

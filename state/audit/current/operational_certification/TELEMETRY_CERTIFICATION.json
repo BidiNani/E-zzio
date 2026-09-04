@@ -1,0 +1,6 @@
+{
+  "endpoint": "GET /metrics",
+  "routing_telemetry": "Active",
+  "anomalies_tracking": true,
+  "status": "OPERATIONAL"
+}

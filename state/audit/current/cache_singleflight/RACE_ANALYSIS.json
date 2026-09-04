@@ -1,0 +1,6 @@
+{
+  "race_window_location": "core/cognition/model_router.py -> Entre le Cache Lookup (Miss) et l'écriture finale du résultat dans response_cache",
+  "current_concurrency_model": "In-process Asyncio Tasks",
+  "behavior_before_fix": "10 requêtes simultanées sur cache froid déclenchaient 2 appels provider concurrents",
+  "root_cause": "Absence de synchronisation des requêtes logiques en vol avant l'achèvement du premier appel provider"
+}

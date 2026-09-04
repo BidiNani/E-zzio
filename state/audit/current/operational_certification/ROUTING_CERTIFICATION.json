@@ -1,0 +1,6 @@
+{
+  "primary": "Gemini Pool (Cloud SOTA)",
+  "secondary_same_role": "Groq Cloud (Absorber)",
+  "last_resort": "Ollama Local (Nominal = 0 calls)",
+  "status": "OPERATIONAL"
+}

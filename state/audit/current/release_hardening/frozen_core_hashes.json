@@ -1,0 +1,5 @@
+{
+  "core/capabilities/capability_policy.py": "89a770354ebfe4233697f944f0963c3873b811af1c7df73e6dacc7aabb389ae2",
+  "core/capabilities/registry.py": "3ee057b327354faa95cf72a0a920a5eed4fa5df77ae87298615ed3860ffb0f68",
+  "core/security/audit_ledger.py": "b26e0d106f0e76121b15b6278f057dea3abc1395aa425d86d383e695dfc21c17"
+}

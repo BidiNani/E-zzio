@@ -1,0 +1,33 @@
+{
+  "target_request": "Req #2 (Théorème de Bayes, profile general)",
+  "total_latency_ms": 49195.89,
+  "step_by_step_breakdown": [
+    {
+      "step": "Gemini Candidate 1 (gemini-3.6-flash)",
+      "duration_ms": 15000.0,
+      "result": "HTTPX_TIMEOUT (15s deadline reached)"
+    },
+    {
+      "step": "Gemini Candidate 2 (gemini-3.5-flash)",
+      "duration_ms": 15000.0,
+      "result": "HTTPX_TIMEOUT (15s deadline reached)"
+    },
+    {
+      "step": "Gemini Candidate 3 (gemini-3-flash)",
+      "duration_ms": 15000.0,
+      "result": "HTTPX_TIMEOUT (15s deadline reached)"
+    },
+    {
+      "step": "Gemini Provider Total Search",
+      "duration_ms": 45000.0,
+      "result": "RuntimeError -> Fallback to Groq triggered"
+    },
+    {
+      "step": "Groq Cloud Fallback (groq/compound)",
+      "duration_ms": 4195.89,
+      "result": "HTTP 200 OK (Successful generation and reply)"
+    }
+  ],
+  "mathematical_match": "45000ms (3 x 15s) + 4195.89ms = 49195.89ms (100% exact match)",
+  "nature": "EXPECTED_BEHAVIOR_UNDER_TRIPLE_TIMEOUT_WITH_EVENTUAL_SUCCESS"
+}

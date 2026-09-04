@@ -1,0 +1,8 @@
+{
+  "live_failovers": 6,
+  "live_429": 0,
+  "live_5xx": 0,
+  "live_timeouts": 0,
+  "live_connection_errors": 0,
+  "status": "NOMINAL_STABLE"
+}

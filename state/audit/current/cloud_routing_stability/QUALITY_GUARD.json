@@ -1,0 +1,5 @@
+{
+  "rule": "ROLE -> QUALITY -> HEALTH -> QUOTA MARGIN -> LATENCY",
+  "enforced": true,
+  "blind_downgrade_prevented": true
+}

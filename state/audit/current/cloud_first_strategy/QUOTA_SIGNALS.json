@@ -1,0 +1,15 @@
+{
+  "signals": {
+    "observed": [
+      "HTTP 429 RateLimit header triggers circuit breaker cooldown",
+      "HTTP 200 with complete response payload",
+      "Zero token consumption verified on Response Cache Hit"
+    ],
+    "estimated": [
+      "Latency savings on Groq / Gemini relative to local execution"
+    ],
+    "unknown": [
+      "Direct Google/Groq backend remaining account token balance (non exposé par l'API)"
+    ]
+  }
+}

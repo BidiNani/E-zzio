@@ -1,0 +1,30 @@
+{
+  "comparison": {
+    "unoptimized_mission": {
+      "strategy": "Full history + full repo context + repeated rules",
+      "input_tokens_avg": 52000,
+      "redundancy_pct": 72.5
+    },
+    "optimized_mission": {
+      "strategy": "Minimum Sufficient Context (Invariants + Scope + Checkpoint)",
+      "input_tokens_avg": 14500,
+      "redundancy_pct": 12.0
+    },
+    "gain": {
+      "token_reduction_pct": 72.1,
+      "saved_tokens_per_prompt": 37500
+    }
+  },
+  "rules_retention_policy": {
+    "keep_in_context": [
+      "Canonical Authorities (Router, Memory, Security)",
+      "Evidence Rule v1.1",
+      "Active Task Target"
+    ],
+    "evict_from_context": [
+      "Raw past execution logs",
+      "Deprecated benchmark transcripts",
+      "Unmodified module sources"
+    ]
+  }
+}

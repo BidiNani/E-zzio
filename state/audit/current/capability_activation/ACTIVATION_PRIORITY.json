@@ -1,0 +1,27 @@
+[
+  {
+    "priority": 1,
+    "capability": "WEB_SEARCH_AND_READER",
+    "status": "READY_NOW"
+  },
+  {
+    "priority": 2,
+    "capability": "DOCUMENT_UNIVERSAL_INGESTION",
+    "status": "READY_NOW"
+  },
+  {
+    "priority": 3,
+    "capability": "EMBEDDING_AND_MEMORY_FTS5",
+    "status": "READY_NOW"
+  },
+  {
+    "priority": 4,
+    "capability": "VOICE_STT_TTS_PIPELINE",
+    "status": "READY_NOW"
+  },
+  {
+    "priority": 5,
+    "capability": "VISION_MULTIMODAL",
+    "status": "READY_NOW"
+  }
+]

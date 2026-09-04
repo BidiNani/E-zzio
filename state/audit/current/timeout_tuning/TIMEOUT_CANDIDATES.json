@@ -1,0 +1,8 @@
+{
+  "gemini_timeout_sec": 15.0,
+  "groq_timeout_sec": 8.0,
+  "ollama_timeout_sec": 5.0,
+  "theoretical_max_cascade_before_sec": 135.0,
+  "theoretical_max_cascade_after_sec": 58.0,
+  "expected_realistic_fail_closed_sec": "< 12.0s"
+}

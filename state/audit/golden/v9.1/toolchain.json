@@ -1,0 +1,13 @@
+{
+  "os": "Windows 11 Pro 64-bit (Build 26200)",
+  "python": "3.12.10 (tags/v3.12.10:0614138)",
+  "openjdk": "17.0.19+10 (Temurin-17.0.19+10)",
+  "git": "2.55.0.windows.5",
+  "gradle_wrapper": "8.2",
+  "android_build_tools": "34.0.0",
+  "android_cmdline_tools": "latest (11076708)",
+  "adb": "1.0.41 (Version 37.0.1-15733141)",
+  "android_emulator": "35.3.16.0",
+  "system_image": "system-images/android-28/default/x86_64",
+  "hypervisor": "Windows Hypervisor Platform (WHPX)"
+}

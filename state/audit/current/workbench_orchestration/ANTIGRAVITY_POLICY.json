@@ -1,0 +1,19 @@
+{
+  "mandate": "Antigravity est le superviseur souverain et le garant architectural d'E-ZzIO.",
+  "reserved_domains": [
+    "Sovereign Architecture & Core Design",
+    "Critical Forensic Counter-Audits",
+    "High-Risk Structural Refactoring",
+    "Multi-System Evidence Reconciliation",
+    "Formal Security Boundaries Enforcement",
+    "Final Task Arbitration & Validation"
+  ],
+  "prohibited_routine_tasks": [
+    "Recherche brute de fichiers et répertoires",
+    "Validation de syntaxe JSON ou YAML",
+    "Calculs de hashes ou de tailles",
+    "Exécution de suites de tests unitaires standards",
+    "Agrégation basique de résultats de benchmarks",
+    "Documentation basique de wrappers de code"
+  ]
+}

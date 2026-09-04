@@ -1,0 +1,35 @@
+{
+  "matrix": [
+    {
+      "factor": "IDENTICAL_KEY",
+      "hit_expected": true,
+      "hit_observed": true
+    },
+    {
+      "factor": "DIFFERENT_PROFILE",
+      "hit_expected": false,
+      "hit_observed": false
+    },
+    {
+      "factor": "DIFFERENT_CONTEXT",
+      "hit_expected": false,
+      "hit_observed": false
+    },
+    {
+      "factor": "DIFFERENT_SYSTEM_PROMPT",
+      "hit_expected": false,
+      "hit_observed": false
+    },
+    {
+      "factor": "DIFFERENT_TOOLSET",
+      "hit_expected": false,
+      "hit_observed": false
+    },
+    {
+      "factor": "DIFFERENT_REPO_REVISION",
+      "hit_expected": false,
+      "hit_observed": false
+    }
+  ],
+  "verdict": "MULTI_FACTOR_INVALIDATION_PROVEN"
+}

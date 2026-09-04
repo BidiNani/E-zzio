@@ -1,0 +1,30 @@
+{
+  "observed_case": "req_02_bayes (GENERAL profile)",
+  "timeline": [
+    {
+      "candidate_index": 1,
+      "model": "gemini-3.6-flash",
+      "timeout_sec": 15.0,
+      "result": "HTTPX_TIMEOUT (15s)"
+    },
+    {
+      "candidate_index": 2,
+      "model": "gemini-3.5-flash",
+      "timeout_sec": 15.0,
+      "result": "HTTPX_TIMEOUT (15s)"
+    },
+    {
+      "candidate_index": 3,
+      "model": "gemini-3-flash",
+      "timeout_sec": 15.0,
+      "result": "HTTPX_TIMEOUT (15s)"
+    },
+    {
+      "failover_step": 4,
+      "target": "groq/compound",
+      "timeout_sec": 8.0,
+      "result": "HTTP 200 OK in 4.195s"
+    }
+  ],
+  "total_elapsed_ms": 49195.89
+}

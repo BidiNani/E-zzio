@@ -1,0 +1,19 @@
+{
+  "providers": {
+    "gemini_pool": {
+      "keys": 5,
+      "status": "ONLINE",
+      "strategy": "Smart Rotation on High Margin Models"
+    },
+    "groq": {
+      "keys": 1,
+      "status": "ONLINE",
+      "latency": "141 - 282 ms",
+      "strategy": "High Speed Same-Role Cloud Fallback"
+    },
+    "ollama": {
+      "status": "LOCAL_STANDBY",
+      "strategy": "Sovereign Last Resort Only"
+    }
+  }
+}

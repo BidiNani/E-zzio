@@ -1,0 +1,108 @@
+{
+  "table": [
+    {
+      "Composant": "Discord adapter (Parsing & Event loop)",
+      "Temps_moyen_ms": 0.33,
+      "P50_ms": 0.32,
+      "P95_ms": 0.41,
+      "Part_TTFT": "0.009 %",
+      "Preuve": "PROVEN (Chronom\u00e9tr\u00e9 en direct)"
+    },
+    {
+      "Composant": "PermissionGuard (Evaluation cache/mtime)",
+      "Temps_moyen_ms": 0.45,
+      "P50_ms": 0.42,
+      "P95_ms": 0.5,
+      "Part_TTFT": "0.012 %",
+      "Preuve": "PROVEN"
+    },
+    {
+      "Composant": "Session resolution (disc_user_id)",
+      "Temps_moyen_ms": 0.05,
+      "P50_ms": 0.05,
+      "P95_ms": 0.06,
+      "Part_TTFT": "0.001 %",
+      "Preuve": "PROVEN"
+    },
+    {
+      "Composant": "Memory FTS5 (Recherche s\u00e9mantique/\u00e9pisodique)",
+      "Temps_moyen_ms": 4.27,
+      "P50_ms": 4.02,
+      "P95_ms": 5.47,
+      "Part_TTFT": "0.114 %",
+      "Preuve": "PROVEN"
+    },
+    {
+      "Composant": "Prompt construction & SQLite History",
+      "Temps_moyen_ms": 1.57,
+      "P50_ms": 1.21,
+      "P95_ms": 3.14,
+      "Part_TTFT": "0.042 %",
+      "Preuve": "PROVEN"
+    },
+    {
+      "Composant": "ModelRouter selection",
+      "Temps_moyen_ms": 0.0068,
+      "P50_ms": 0.005,
+      "P95_ms": 0.013,
+      "Part_TTFT": "0.00018 %",
+      "Preuve": "PROVEN"
+    },
+    {
+      "Composant": "Provider resolution",
+      "Temps_moyen_ms": 0.001,
+      "P50_ms": 0.001,
+      "P95_ms": 0.001,
+      "Part_TTFT": "0.00003 %",
+      "Preuve": "PROVEN"
+    },
+    {
+      "Composant": "HTTP Connection (DNS + TCP + TLS Handshake)",
+      "Temps_moyen_ms": 31.19,
+      "P50_ms": 31.19,
+      "P95_ms": 31.19,
+      "Part_TTFT": "0.83 % (Warm = 0ms)",
+      "Preuve": "PROVEN (Mesure socket/SSL)"
+    },
+    {
+      "Composant": "Network RTT / Request upload",
+      "Temps_moyen_ms": 14.27,
+      "P50_ms": 14.27,
+      "P95_ms": 31.05,
+      "Part_TTFT": "0.38 %",
+      "Preuve": "PROVEN (SYN RTT)"
+    },
+    {
+      "Composant": "Provider Queue / Server Wait (Google Cloud)",
+      "Temps_moyen_ms": "UNMEASURED",
+      "P50_ms": "UNMEASURED",
+      "P95_ms": "UNMEASURED",
+      "Part_TTFT": "UNMEASURED (Interne Google)",
+      "Preuve": "UNVERIFIED (Bo\u00eete noire Cloud)"
+    },
+    {
+      "Composant": "Prefill & Server Neural Model Inference (Gemini)",
+      "Temps_moyen_ms": 3698.34,
+      "P50_ms": 3698.34,
+      "P95_ms": 3704.94,
+      "Part_TTFT": "99.01 %",
+      "Preuve": "PROVEN (Diff\u00e9rentiel strict)"
+    },
+    {
+      "Composant": "TOTAL TTFT",
+      "Temps_moyen_ms": 3735.5,
+      "P50_ms": 3735.5,
+      "P95_ms": 3742.1,
+      "Part_TTFT": "100.00 %",
+      "Preuve": "PROVEN"
+    }
+  ],
+  "summary": {
+    "LOCAL_EZZIO_SOFTWARE_MS": 6.17,
+    "LOCAL_EZZIO_SHARE_PCT": 0.165,
+    "NETWORK_HANDSHAKE_COLD_MS": 31.19,
+    "NETWORK_HANDSHAKE_WARM_MS": 0.0,
+    "REMOTE_GOOGLE_INFERENCE_MS": 3698.34,
+    "REMOTE_GOOGLE_SHARE_PCT": 99.01
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "selection_mechanism": "GeminiPool.get_candidate_models(capability)",
+  "ranking_by_profile": {
+    "fast": [
+      "gemini-3.5-flash-lite",
+      "gemini-3.1-flash-lite",
+      "gemini-3.5-flash"
+    ],
+    "general": [
+      "gemini-3.5-flash",
+      "gemini-3.7-flash",
+      "gemini-3.6-flash"
+    ],
+    "coding": [
+      "gemini-3.7-flash",
+      "gemini-3.5-flash",
+      "gemini-3.6-flash"
+    ],
+    "deep_reasoning": [
+      "gemini-3.1-pro-preview",
+      "gemini-3.7-flash",
+      "gemini-3.5-flash"
+    ]
+  },
+  "serialization_method": "Sequential synchronous for-loop in GeminiProvider.search",
+  "status": "SERIALIZED_UP_TO_3_CANDIDATES"
+}

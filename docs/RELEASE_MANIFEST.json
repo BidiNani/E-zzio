@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "E-ZZIO V9.1 Sovereign Release Manifest",
+  "version": "9.0.1",
+  "build_timestamp": "2026-09-04T19:30:00Z",
+  "source_revision": "dde4d186ce8cee1bdcfa42f6850763adb08b25f8",
+  "source_revision_short": "dde4d18",
+  "git_branch": "checkpoint/voice-capabilities-hardware-agent-20260816",
+  "status": "100_PERCENT_VERIFIED_PRODUCT_RELEASE",
+  "golden_release": true,
+  "immutable_baseline": true,
+  "golden_archive_sha256": "D3351A86D1BF7FAFF5125CE76E54A5106EF788D84259E1BE9B3B4C37EBEE8A7F",
+  "golden_archive_path": "dist/releases/E-ZzIO-V9.1-GOLDEN-SOURCE.zip",
+  "golden_manifest_path": "dist/releases/E-ZzIO-V9.1-GOLDEN-MANIFEST.json",
+  "golden_verifier": "tools/verify_golden_release.ps1",
+  "external_block": "Antigravity = BLOCKED_BY_EXTERNAL_QUOTA",
+  "android_device_execution": {
+    "status": "VERIFIED_OPERATIONAL",
+    "device_target": "emulator-5554 (Android 9.0 API 28 x86_64)",
+    "package": "ai.ezzio.office",
+    "version": "9.0.1",
+    "versionCode": 901,
+    "debuggable": false,
+    "activity": "ai.ezzio.office.MainActivity",
+    "runtime_crashes": 0,
+    "lifecycle_tests": "PASS (start, rotate, background, resume)",
+    "device_screenshot": "state/audit/current/android/device_screenshot.png"
+  },
+  "artifacts": [
+    {
+      "name": "E-ZzIO-V9.1-GOLDEN-SOURCE.zip",
+      "path": "dist/releases/E-ZzIO-V9.1-GOLDEN-SOURCE.zip",
+      "type": "golden_release_archive",
+      "version": "9.0.1",
+      "size_bytes": 301298046,
+      "sha256": "D3351A86D1BF7FAFF5125CE76E54A5106EF788D84259E1BE9B3B4C37EBEE8A7F",
+      "role": "Sealed immutable golden release source code, tests, tools, android and web assets.",
+      "status": "SEALED_GOLDEN_BASELINE"
+    },
+    {
+      "name": "E-ZzIO-v9.1-release.apk",
+      "path": "dist/android/E-ZzIO-v9.1-release.apk",
+      "type": "android_apk_release",
+      "version": "9.0.1",
+      "size_bytes": 4404215,
+      "sha256": "0F62B1A355063BD3436D1513E587E43EB42E77F11A82B260B73CA55595921CDB",
+      "role": "Native compiled Android Release APK with Dalvik bytecode (classes.dex), binary resources (resources.arsc), non-debuggable flag, package ai.ezzio.office, and v2 APK signature.",
+      "status": "VERIFIED_RELEASE_BINARY"
+    },
+    {
+      "name": "E-ZzIO-v9.0.1.apk",
+      "path": "dist/android/E-ZzIO-v9.0.1.apk",
+      "type": "android_apk",
+      "version": "9.0.1",
+      "size_bytes": 4404215,
+      "sha256": "0F62B1A355063BD3436D1513E587E43EB42E77F11A82B260B73CA55595921CDB",
+      "role": "Canonical compiled production Android APK matching release binary.",
+      "status": "VERIFIED_BINARY"
+    },
+    {
+      "name": "E-ZzIO-Android-Source-v9.1.zip",
+      "path": "dist/android/E-ZzIO-Android-Source-v9.1.zip",
+      "type": "android_source_bundle",
+      "version": "9.0.1",
+      "size_bytes": 19836050,
+      "sha256": "AD256EA4334CAE1610797B49FBCED71197D13CD1A63C1B9363E8C4C8C1AA5FBD",
+      "role": "Complete source code bundle for Android Studio import (v9.1).",
+      "status": "OPERATIONAL"
+    },
+    {
+      "name": "E-ZzIO-Android-Source-v9.0.1.zip",
+      "path": "dist/android/E-ZzIO-Android-Source-v9.0.1.zip",
+      "type": "android_source_bundle",
+      "version": "9.0.1",
+      "size_bytes": 19836050,
+      "sha256": "AD256EA4334CAE1610797B49FBCED71197D13CD1A63C1B9363E8C4C8C1AA5FBD",
+      "role": "Complete source code bundle for Android Studio import (v9.0.1).",
+      "status": "OPERATIONAL"
+    },
+    {
+      "name": "launch_desktop.ps1",
+      "path": "tools/launch_desktop.ps1",
+      "type": "desktop_launcher",
+      "version": "9.0.1",
+      "size_bytes": 3012,
+      "sha256": "FD4180615C41DBD14219A7C5D172E722CFF545A182FC5B6974DC7C93F4677947",
+      "role": "Desktop standalone launcher with Chromium/Brave/Edge --app detection.",
+      "status": "OPERATIONAL"
+    },
+    {
+      "name": "build_android_apk.ps1",
+      "path": "tools/build_android_apk.ps1",
+      "type": "android_builder",
+      "version": "9.0.1",
+      "size_bytes": 6107,
+      "sha256": "9A82A1E4E56CCA3AA7AD6F6FAD1B0FEDE60B66C2EF6120F48C2FD8B2BC1C91AB",
+      "role": "Native Android build pipeline compiling via Gradle wrapper with APK verification.",
+      "status": "OPERATIONAL"
+    },
+    {
+      "name": "index.html",
+      "path": "runtime/web/index.html",
+      "type": "living_ai_office_ui",
+      "version": "9.0.1",
+      "size_bytes": 52082,
+      "sha256": "5A4BDA6AF7BADAAAADD0333DAD68A7F131CCD10F76F8AC93485240AA14EDA0DB",
+      "role": "Living AI Office UI with 8 rooms, 10 procedural SVG agents, thought bubbles, and offline fallback.",
+      "status": "OPERATIONAL"
+    },
+    {
+      "name": "manifest.json",
+      "path": "runtime/web/manifest.json",
+      "type": "pwa_manifest",
+      "version": "9.0.1",
+      "size_bytes": 934,
+      "sha256": "C8E8B0B3FB5BB3318EE9B457CA67940349A5CE07B9CF8869285406E0428028C1",
+      "role": "Official PWA manifest for desktop install and mobile home screen.",
+      "status": "OPERATIONAL"
+    },
+    {
+      "name": "sw.js",
+      "path": "runtime/web/sw.js",
+      "type": "service_worker",
+      "version": "9.0.1",
+      "size_bytes": 1760,
+      "sha256": "29255E63AAF591E22A80D451D6018031D023BDBF630B0909237ADBC7DB4ADDF1",
+      "role": "Service Worker offline cache engine for UI resilience.",
+      "status": "OPERATIONAL"
+    },
+    {
+      "name": "icon.svg",
+      "path": "assets/ui/icon.svg",
+      "type": "vector_app_icon",
+      "version": "9.0.1",
+      "size_bytes": 2483,
+      "sha256": "454807EF94AE408095F443D1960A9C862F1EB410C98771190CB67E558DA1F97B",
+      "role": "Original vector brand icon (Apache-2.0).",
+      "status": "OPERATIONAL"
+    },
+    {
+      "name": "ASSET_LICENSES.json",
+      "path": "assets/ASSET_LICENSES.json",
+      "type": "license_manifest",
+      "version": "9.0.1",
+      "size_bytes": 2403,
+      "sha256": "4C34D5270517C1D6E5EEAE53453EC1C49BFD71D48AB5FF1B30FF2A960E63B8E3",
+      "role": "Asset provenance and licensing ledger.",
+      "status": "OPERATIONAL"
+    }
+  ]
+}

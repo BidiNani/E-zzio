@@ -1,0 +1,20 @@
+{
+  "host": "generativelanguage.googleapis.com",
+  "ip_resolved": "172.217.116.4",
+  "dns_resolution_ms": {
+    "mean": 0.2,
+    "min": 0.16,
+    "max": 0.32
+  },
+  "tcp_connect_ms": {
+    "mean": 14.27,
+    "min": 9.13,
+    "max": 31.05
+  },
+  "tls_handshake_ms": {
+    "mean": 16.71,
+    "min": 15.41,
+    "max": 18.58
+  },
+  "cold_connection_establishment_total_ms": 31.19
+}

@@ -1,0 +1,18 @@
+{
+  "source": "core/observability/routing_telemetry.py",
+  "real_time_metrics": [
+    "request_id",
+    "latency_ms",
+    "provider_selected",
+    "model_selected",
+    "cache_status",
+    "singleflight_role"
+  ],
+  "derived_aggregates": [
+    "cache_hit_rate_percent",
+    "cloud_failover_rate_percent",
+    "ollama_fallback_rate_percent",
+    "p95_latency_ms"
+  ],
+  "secrets_scrubbed": true
+}

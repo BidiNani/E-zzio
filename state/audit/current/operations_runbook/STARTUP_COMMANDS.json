@@ -1,0 +1,6 @@
+{
+  "web_server": "python web_server.py (Runs FastAPI on http://127.0.0.1:8000)",
+  "discord_client": "python -m core.integrations.discord.discord_client",
+  "healthcheck": "curl http://127.0.0.1:8000/health",
+  "metrics": "curl http://127.0.0.1:8000/metrics"
+}

@@ -1,0 +1,7 @@
+{
+  "total_requests": 18,
+  "cache_hits": 5,
+  "cache_hit_rate_percent": 27.78,
+  "hit_latency_ms": 0.73,
+  "quota_saved_observation": "5 provider executions avoided locally"
+}

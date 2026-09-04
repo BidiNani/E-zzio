@@ -1,0 +1,24 @@
+{
+  "live_measurements": [
+    {
+      "metric": "Miss Latency",
+      "measured": "3892.64 ms"
+    },
+    {
+      "metric": "Hit Latency",
+      "measured": "0.95 ms (Speedup: >4000x)"
+    },
+    {
+      "metric": "Tokens Consumed on Hit",
+      "measured": "0 tokens"
+    },
+    {
+      "metric": "Cloud Calls on Hit",
+      "measured": "0 calls"
+    },
+    {
+      "metric": "Security Filter Block",
+      "verified": true
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "project_root": "G:\\AI\\E-zzio",
+  "python_executable": "G:\\AI\\E-zzio\\.venv\\Scripts\\python.exe",
+  "android_home": "G:\\tools\\android-sdk",
+  "adb_path": "G:\\tools\\platform-tools\\adb.exe",
+  "avd_home": "C:\\Users\\enrik\\.android\\avd",
+  "avd_name": "test_avd",
+  "security_posture": "FAIL_CLOSED_ZERO_SECRETS"
+}

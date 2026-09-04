@@ -1,0 +1,39 @@
+{
+  "waste_sources": [
+    {
+      "id": "WASTE-01",
+      "name": "REPEATED_FILE_READS",
+      "description": "Relecture de fichiers volumineux et statiques (ex: core/cognition/model_router.py, runtime/model_router/config.json, universal_reader.py) à plusieurs étapes de la même session.",
+      "impact_tokens": "12,000 - 35,000 tokens par mission",
+      "remediation": "Mise en cache locale de l'analyse structurelle (AST + hash) et réutilisation via checkpoints."
+    },
+    {
+      "id": "WASTE-02",
+      "name": "DUPLICATED_PROMPT_CONTEXT",
+      "description": "Injection répétée de l'historique complet, d'anciens logs verbeux ou de règles déjà validées dans chaque invite.",
+      "impact_tokens": "25,000 - 55,000 tokens par invite",
+      "remediation": "Adoption de la stratégie Minimum Sufficient Context (Core Invariants + Scope + Checkpoint Actif)."
+    },
+    {
+      "id": "WASTE-03",
+      "name": "DETERMINISTIC_OPERATIONS_ON_CLOUD_LLM",
+      "description": "Délégation au LLM de vérifications simples (Test-Path, Get-ChildItem, vérification de syntaxe JSON, hash, regex grep) générant des allers-retours conversationnels coûteux.",
+      "impact_tokens": "8 - 12 requêtes cloud évitables par mission",
+      "remediation": "Politique Command-First : Exécution locale via PowerShell / Python / Scripts avant synthèse."
+    },
+    {
+      "id": "WASTE-04",
+      "name": "EXHAUSTIVE_TEST_SUITE_OVERKILL",
+      "description": "Exécution systématique de l'ensemble des 330 tests unitaires après chaque micro-changement au lieu de tests ciblés.",
+      "impact_tokens": "Temps et télémétrie superflue",
+      "remediation": "Gating à 3 niveaux : Tests ciblés composant -> Tests contrat d'impact -> Suite complète uniquement en porte finale."
+    },
+    {
+      "id": "WASTE-05",
+      "name": "INTERMEDIATE_REPORT_CASCADE",
+      "description": "Génération de multiples rapports intermédiaires redondants (raisonnement brut + pré-rapport + réconciliation + rapport final).",
+      "impact_tokens": "6,000 - 15,000 tokens de sortie par mission",
+      "remediation": "Flux condensé : Checkpoint structuré JSON -> Synthèse finale unique."
+    }
+  ]
+}

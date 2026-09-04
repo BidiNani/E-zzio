@@ -1,0 +1,27 @@
+{
+  "authority": "UnifiedMemoryGateway (core/memory/unified_gateway.py)",
+  "storage": "runtime/evidence/evidence.db (SQLite WAL + MMAP 256MB)",
+  "operations": [
+    {
+      "op": "record_message",
+      "entrypoint": "POST /master/chat, Discord messages",
+      "status": "ACTIVE"
+    },
+    {
+      "op": "get_session_history",
+      "entrypoint": "GET /memory/recent",
+      "status": "ACTIVE"
+    },
+    {
+      "op": "search_memory",
+      "entrypoint": "POST /memory/search, !bidi recall",
+      "status": "ACTIVE (FTS5 BM25)"
+    },
+    {
+      "op": "compact_memory",
+      "entrypoint": "POST /memory/compact",
+      "status": "ACTIVE"
+    }
+  ],
+  "status": "OPERATIONAL"
+}

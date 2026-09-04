@@ -1,0 +1,18 @@
+{
+  "TTFT_OBSERVED_MS": 3735.5,
+  "LOCAL_SOFTWARE_TOTAL_MS": 6.197,
+  "NETWORK_TRANSPORT_RTT_MS": 14.27,
+  "PROVIDER_SIDE_RESIDUAL_MS": 3715.03,
+  "SUM_VERIFICATION": "6.197 + 14.27 + 3715.03 = 3735.5 ms",
+  "STRICT_CLASSIFICATION": {
+    "TTFT": "PROVEN",
+    "LOCAL_SOFTWARE": "PROVEN",
+    "NETWORK_RTT": "PROVEN",
+    "PROVIDER_SIDE_RESIDUAL": "PROVEN_AS_RESIDUAL",
+    "QUEUE_TIME": "UNVERIFIED (Bo\u00eete noire Cloud)",
+    "PREFILL_TIME": "UNVERIFIED (Bo\u00eete noire Cloud)",
+    "DECODE_TIME": "UNVERIFIED (Bo\u00eete noire Cloud)",
+    "FIRST_TOKEN_COMPUTE": "UNVERIFIED (Bo\u00eete noire Cloud)"
+  },
+  "MATH_ACCURACY_CHECK": "100% Exact. Aucune d\u00e9duction non prouv\u00e9e n'est transform\u00e9e en causalit\u00e9."
+}

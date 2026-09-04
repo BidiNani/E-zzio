@@ -1,0 +1,12 @@
+{
+  "file": "runtime/web/index.html",
+  "features": [
+    "Cards HUD Opérationnel Cloud avec Tailwind CSS et FontAwesome",
+    "Badge CLOUD-FIRST: ACTIVE en en-tête",
+    "Section 'Pourquoi cette cible ?' expliquant le délestage de 3.5 vers 3.1",
+    "Affichage dynamique de l'état des projets Gemini Pool et Groq",
+    "Visualisation des compteurs de leaders et waiters Singleflight",
+    "Monitoring du maintien d'Ollama à 0 en nominal",
+    "Auto-refresh cyclique léger (setInterval 3000ms)"
+  ]
+}

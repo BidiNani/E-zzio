@@ -1,0 +1,6 @@
+{
+  "template": "runtime/web/index.html",
+  "synchronization": "Poll 3s with /metrics",
+  "cognitive_authority": false,
+  "status": "OPERATIONAL"
+}

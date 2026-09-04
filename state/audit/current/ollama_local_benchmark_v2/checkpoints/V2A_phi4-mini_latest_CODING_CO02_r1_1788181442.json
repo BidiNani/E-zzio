@@ -1,0 +1,40 @@
+{
+  "RUN_ID": "V2A_phi4-mini_latest_CODING_CO02_r1_1788181442",
+  "MODEL": "phi4-mini:latest",
+  "TASK": "CODING",
+  "SUB_ID": "CO02",
+  "RUN_NUM": 1,
+  "IS_COLD": false,
+  "PROMPT_HASH": "c7b39342bd06",
+  "THREADS": 4,
+  "CONTEXT": 4096,
+  "GPU": 0,
+  "START_TIMESTAMP": "2026-08-31T13:04:02.998765+00:00",
+  "END_TIMESTAMP": "2026-08-31T13:04:19.575172+00:00",
+  "STATUS": "OK",
+  "QUALITY": "PASS",
+  "LOAD_MS": 2.19,
+  "TTFT_MS": 481.75,
+  "PROMPT_TOKENS": 27,
+  "PROMPT_EVAL_TOK_S": 56.05,
+  "OUTPUT_TOKENS": 200,
+  "GEN_TOK_S": 12.58,
+  "TOTAL_E2E_MS": 16575.59,
+  "RAM_BEFORE": {
+    "used_gb": 17.72,
+    "avail_gb": 14.2,
+    "pct": 55.5
+  },
+  "RAM_PEAK": {
+    "used_gb": 17.73,
+    "avail_gb": 14.19,
+    "pct": 55.6
+  },
+  "RAM_AFTER": {
+    "used_gb": 17.73,
+    "avail_gb": 14.19,
+    "pct": 55.6
+  },
+  "ERROR": "",
+  "TEXT_SNIPPET": "To correctly compute the median of any unsorted list, you need to sort the list first and then find the median. Here is the corrected code:\n\n```python\ndef find_median(nums):\n    # Sort the list\n    nu"
+}

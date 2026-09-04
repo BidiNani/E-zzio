@@ -1,0 +1,61 @@
+{
+  "fast": {
+    "PROFILE": "fast",
+    "TARGET_MODEL": "gemini-3.5-flash-lite",
+    "PROVIDER": "gemini_pool",
+    "TIER": "FAST",
+    "PRIMARY_INTERFACES": [
+      "Discord natural",
+      "Discord /ask",
+      "Web HUD",
+      "HTTP Streaming API",
+      "SDK Fast Ask"
+    ],
+    "EVIDENCE_LEVEL": "PROVEN"
+  },
+  "general": {
+    "PROFILE": "general",
+    "TARGET_MODEL": "gemini-3.5-flash",
+    "PROVIDER": "gemini_pool",
+    "TIER": "GENERAL",
+    "PRIMARY_INTERFACES": [
+      "General chat query",
+      "Standard SDK query"
+    ],
+    "EVIDENCE_LEVEL": "PROVEN"
+  },
+  "coding": {
+    "PROFILE": "coding",
+    "TARGET_MODEL": "gemini-3.7-flash",
+    "PROVIDER": "gemini_pool",
+    "TIER": "AGENTIC_CODING",
+    "PRIMARY_INTERFACES": [
+      "CodingAgentLoop",
+      "Autonomous Patching"
+    ],
+    "EVIDENCE_LEVEL": "PROVEN"
+  },
+  "deep_reasoning": {
+    "PROFILE": "deep_reasoning",
+    "TARGET_MODEL": "gemini-3.1-pro-preview",
+    "PROVIDER": "gemini_pool",
+    "TIER": "DEEP_REASONING",
+    "PRIMARY_INTERFACES": [
+      "Formal verification",
+      "Complex architecture review"
+    ],
+    "EVIDENCE_LEVEL": "PROVEN"
+  },
+  "local_fallback": {
+    "PROFILE": "local_fallback",
+    "TARGET_MODEL": "qwen2.5-coder:7b",
+    "PROVIDER": "ollama",
+    "TIER": "LOCAL_PRIMARY_BY_POLICY / FALLBACK",
+    "PRIMARY_INTERFACES": [
+      "Offline mode",
+      "Privacy policy",
+      "Cloud fail-closed fallback"
+    ],
+    "EVIDENCE_LEVEL": "PROVEN"
+  }
+}

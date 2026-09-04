@@ -1,0 +1,10 @@
+{
+  "endpoint": "GET /metrics",
+  "extensions_added": [
+    "cognitive.gemini_pool_slots (total, healthy, cooldown)",
+    "cognitive.models_state (fast, general, coding, deep_reasoning avec explications)",
+    "cognitive.last_failover_event (primary, trigger, secondary, final, latency)",
+    "cognitive.operations_telemetry (requêtes, hits, failovers, p95, anomalies)"
+  ],
+  "backward_compatible": true
+}

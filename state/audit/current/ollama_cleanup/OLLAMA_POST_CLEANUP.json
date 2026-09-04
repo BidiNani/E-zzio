@@ -1,0 +1,21 @@
+{
+  "disk_before_bytes": 43093959634,
+  "disk_before_gb": 40.13,
+  "disk_after_bytes": 27463379142,
+  "disk_after_gb": 25.58,
+  "disk_recovered_bytes": 15630580492,
+  "disk_recovered_gb": 14.56,
+  "models_after_count": 10,
+  "models_after": [
+    "ez-agent-hermes:latest",
+    "ez-core-free:latest",
+    "hermes3:8b",
+    "ez-rag-expert:latest",
+    "qwen3.5:9b",
+    "ez-router:latest",
+    "phi4-mini:latest",
+    "ez-core-safe:latest",
+    "nomic-embed-text:latest",
+    "bge-m3:latest"
+  ]
+}

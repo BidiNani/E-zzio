@@ -1,0 +1,64 @@
+{
+  "dormant_providers_audit": [
+    {
+      "name": "tavily",
+      "implementation": "core/providers/tavily_provider.py",
+      "purpose": "Recherche web agentique temps réel & synthèse",
+      "auth_variable": "TAVILY_API_KEY",
+      "credential_present": false,
+      "code_reachable": true,
+      "runtime_reachable": false,
+      "recommendation": "ACTIVATE_ON_KEY_PROVISION",
+      "value_to_ezzio": "HIGH (Capacité de recherche web structurée avec citations)",
+      "local_alternative": "SearXNG local ou Wikipedia knowledge connector"
+    },
+    {
+      "name": "jina",
+      "implementation": "core/providers/jina_provider.py",
+      "purpose": "Reader web haute fidélité (r.jina.ai) & extraction markdown",
+      "auth_variable": "JINA_API_KEY",
+      "credential_present": false,
+      "code_reachable": true,
+      "runtime_reachable": false,
+      "recommendation": "ACTIVATE_ON_KEY_PROVISION",
+      "value_to_ezzio": "HIGH (Nettoyage propre de pages web complexes pour le RAG)",
+      "local_alternative": "core/perception/safe_fetcher.py + universal_reader"
+    },
+    {
+      "name": "searxng",
+      "implementation": "core/providers/searxng_provider.py",
+      "purpose": "Métamoteur de recherche web souverain auto-hébergé",
+      "auth_variable": "SEARXNG_BASE_URL",
+      "credential_present": false,
+      "code_reachable": true,
+      "runtime_reachable": false,
+      "recommendation": "KEEP_DORMANT",
+      "value_to_ezzio": "MEDIUM (Exige une instance SearXNG locale active sans Docker obligatoire)",
+      "local_alternative": "Wikipedia connector / Tavily"
+    },
+    {
+      "name": "nvidia_nim",
+      "implementation": "core/providers/nvidia_nim_provider.py",
+      "purpose": "Inférence cloud microservices NVIDIA (Nemotron-3.5, Llama-Vision)",
+      "auth_variable": "NVIDIA_API_KEY",
+      "credential_present": false,
+      "code_reachable": true,
+      "runtime_reachable": false,
+      "recommendation": "KEEP_DORMANT",
+      "value_to_ezzio": "LOW_TO_MEDIUM (Redondant avec Gemini Pool Tier 1-4)",
+      "local_alternative": "Gemini Pool + Ollama local"
+    },
+    {
+      "name": "google_workspace (gmail, calendar, docs, drive)",
+      "implementation": "core/providers/google_*_provider.py",
+      "purpose": "Outils bureautiques et intégration Google Workspace",
+      "auth_variable": "GEMINI_API_KEY / OAuth Token",
+      "credential_present": false,
+      "code_reachable": true,
+      "runtime_reachable": false,
+      "recommendation": "KEEP_DORMANT_UNTIL_EXPLICIT_MANDATE",
+      "value_to_ezzio": "HIGH_ON_DEMAND (Intégration d'outils agentiques sous autorisation explicite)",
+      "local_alternative": "Système de fichiers local (universal_reader)"
+    }
+  ]
+}

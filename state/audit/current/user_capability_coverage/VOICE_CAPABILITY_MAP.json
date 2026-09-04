@@ -1,0 +1,18 @@
+{
+  "stt": {
+    "engine": "Faster-Whisper / NVIDIA Nemotron Streaming ASR",
+    "input": "Audio WAV/MP3",
+    "status": "ACTIVE"
+  },
+  "tts": {
+    "engine": "Kokoro-82M ONNX (ezzio-procedural-tts fallback)",
+    "output": "Audio WAV 24kHz/16kHz",
+    "status": "ACTIVE"
+  },
+  "interfaces": [
+    "POST /generators/audio/tone",
+    "Perception pipeline",
+    "Discord voice adapter"
+  ],
+  "status": "OPERATIONAL"
+}

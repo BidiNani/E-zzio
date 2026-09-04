@@ -1,0 +1,91 @@
+{
+  "certification": "E-ZZIO_OLLAMA_DETERMINISTIC_5_5",
+  "status": "PASS",
+  "certified_at": "2026-09-02T18:25:14+02:00",
+  "server_pid": 21764,
+  "backend": "ollama",
+  "model": "phi4-mini:latest",
+  "deterministic": {
+    "tests": 5,
+    "pass": 5,
+    "fail": 0,
+    "seed": 42,
+    "temperature": 0.0,
+    "top_k": 1,
+    "top_p": 1.0
+  },
+  "normal_mode": {
+    "status": "PASS",
+    "model": "phi4-mini:latest",
+    "provider": "ollama",
+    "fallback": false
+  },
+  "results": [
+    {
+      "test": 1,
+      "marker": "EZZIO_CERT_DETERMINISTIC_1",
+      "content_ok": true,
+      "provider_ok": true,
+      "model_ok": true,
+      "fallback_ok": true,
+      "content": "EZZIO_CERT_DETERMINISTIC_1",
+      "model": "phi4-mini:latest",
+      "provider": "ollama",
+      "fallback": false
+    },
+    {
+      "test": 2,
+      "marker": "EZZIO_CERT_DETERMINISTIC_2",
+      "content_ok": true,
+      "provider_ok": true,
+      "model_ok": true,
+      "fallback_ok": true,
+      "content": "EZZIO_CERT_DETERMINISTIC_2",
+      "model": "phi4-mini:latest",
+      "provider": "ollama",
+      "fallback": false
+    },
+    {
+      "test": 3,
+      "marker": "EZZIO_CERT_DETERMINISTIC_3",
+      "content_ok": true,
+      "provider_ok": true,
+      "model_ok": true,
+      "fallback_ok": true,
+      "content": "EZZIO_CERT_DETERMINISTIC_3",
+      "model": "phi4-mini:latest",
+      "provider": "ollama",
+      "fallback": false
+    },
+    {
+      "test": 4,
+      "marker": "EZZIO_CERT_DETERMINISTIC_4",
+      "content_ok": true,
+      "provider_ok": true,
+      "model_ok": true,
+      "fallback_ok": true,
+      "content": "EZZIO_CERT_DETERMINISTIC_4",
+      "model": "phi4-mini:latest",
+      "provider": "ollama",
+      "fallback": false
+    },
+    {
+      "test": 5,
+      "marker": "EZZIO_CERT_DETERMINISTIC_5",
+      "content_ok": true,
+      "provider_ok": true,
+      "model_ok": true,
+      "fallback_ok": true,
+      "content": "EZZIO_CERT_DETERMINISTIC_5",
+      "model": "phi4-mini:latest",
+      "provider": "ollama",
+      "fallback": false
+    }
+  ],
+  "contract": {
+    "modelrequest_deterministic": true,
+    "dto_deterministic": true,
+    "router_forwarding": true,
+    "ollama_deterministic": true
+  }
+}

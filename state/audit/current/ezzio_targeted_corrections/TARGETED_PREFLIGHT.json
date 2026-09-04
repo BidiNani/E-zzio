@@ -1,0 +1,70 @@
+{
+  "metadata": {
+    "generated_at": "2026-08-31T17:42:00+02:00",
+    "standard": "EVIDENCE RULE v1.1",
+    "repository": "G:/AI/E-zzio"
+  },
+  "preflight_checks": {
+    "ollama_physical_models": [
+      {
+        "name": "nemotron-3-nano:4b",
+        "size": "2.8 GB",
+        "status": "ONLINE"
+      },
+      {
+        "name": "hermes3:8b",
+        "size": "4.7 GB",
+        "status": "ONLINE"
+      },
+      {
+        "name": "phi4-mini:latest",
+        "size": "2.5 GB",
+        "status": "ONLINE"
+      },
+      {
+        "name": "qwen3.5:9b",
+        "size": "6.6 GB",
+        "status": "ONLINE"
+      },
+      {
+        "name": "nomic-embed-text:latest",
+        "size": "274 MB",
+        "status": "ONLINE"
+      },
+      {
+        "name": "bge-m3:latest",
+        "size": "1.2 GB",
+        "status": "ONLINE"
+      }
+    ],
+    "stale_references_identified": [
+      {
+        "target": "core/cognition/model_router.py",
+        "reference": "qwen2.5-coder:7b",
+        "reason": "Modèle non installé dans Ollama"
+      },
+      {
+        "target": "core/cognition/model_router.py",
+        "reference": "qwen2.5:3b",
+        "reason": "Modèle non installé dans Ollama"
+      },
+      {
+        "target": "runtime/model_router/config.json",
+        "reference": "granite4.1:8b",
+        "reason": "Modèle non installé dans Ollama"
+      },
+      {
+        "target": "runtime/model_router/config.json",
+        "reference": "mrasif/gpt-oss-20b-GGUF:Q4_K_M",
+        "reason": "Modèle non installé dans Ollama"
+      },
+      {
+        "target": "runtime/model_router/config.json",
+        "reference": "qwen3-coder:30b",
+        "reason": "Modèle non installé dans Ollama"
+      }
+    ],
+    "document_pipeline_status": "READY_FOR_VERIFICATION",
+    "voice_pipeline_status": "READY_FOR_VERIFICATION"
+  }
+}

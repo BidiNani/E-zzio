@@ -1,0 +1,26 @@
+{
+  "gemini-3.1-flash-lite": {
+    "calls": 2,
+    "latency_mean_ms": 1212.51
+  },
+  "gemini-3.7-flash": {
+    "calls": 1,
+    "error": "HTTP_503"
+  },
+  "groq/compound-mini": {
+    "calls": 9,
+    "latency_mean_ms": 869.45
+  },
+  "groq/compound": {
+    "calls": 3,
+    "latency_mean_ms": 2354.92
+  },
+  "qwen/qwen3.6-27b": {
+    "calls": 3,
+    "latency_mean_ms": 4323.2
+  },
+  "openai/gpt-oss-120b": {
+    "calls": 2,
+    "latency_mean_ms": 3623.43
+  }
+}

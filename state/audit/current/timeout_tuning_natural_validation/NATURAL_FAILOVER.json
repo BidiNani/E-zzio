@@ -1,0 +1,5 @@
+{
+  "failover_events_observed": 0,
+  "unexpected_failovers": 0,
+  "status": "PRIMARY_CLOUD_STABLE"
+}

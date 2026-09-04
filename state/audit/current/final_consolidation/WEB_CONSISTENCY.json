@@ -1,0 +1,7 @@
+{
+  "primary_search": "Tavily (Verified)",
+  "fallback_search_reader": "Jina (Verified)",
+  "local_reader": "SafeWebFetcher (Verified)",
+  "searxng": "Dormant / Non-blocking",
+  "status": "OPERATIONAL"
+}

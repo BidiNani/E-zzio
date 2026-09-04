@@ -1,0 +1,16 @@
+{
+  "metadata": {
+    "timestamp": "2026-08-31T18:43:00+02:00",
+    "standard": "EVIDENCE RULE v1.1",
+    "repository": "G:/AI/E-zzio",
+    "mission": "CONTROLLED_QUOTA_AWARE_POLICY_APPLY"
+  },
+  "invariants": {
+    "model_router_authority": "UNIQUE (core/cognition/model_router.py)",
+    "memory_authority": "UNIQUE (core/memory/unified_gateway.py)",
+    "security_vault_authority": "UNIQUE (core/security/unified_vault.py)",
+    "second_runtime": false,
+    "second_model_authority": false,
+    "quota_router_created": false
+  }
+}

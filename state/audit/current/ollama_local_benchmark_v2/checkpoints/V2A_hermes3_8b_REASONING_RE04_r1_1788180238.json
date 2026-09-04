@@ -1,0 +1,40 @@
+{
+  "RUN_ID": "V2A_hermes3_8b_REASONING_RE04_r1_1788180238",
+  "MODEL": "hermes3:8b",
+  "TASK": "REASONING",
+  "SUB_ID": "RE04",
+  "RUN_NUM": 1,
+  "IS_COLD": false,
+  "PROMPT_HASH": "7bf6a16719fa",
+  "THREADS": 4,
+  "CONTEXT": 4096,
+  "GPU": 0,
+  "START_TIMESTAMP": "2026-08-31T12:43:58.324392+00:00",
+  "END_TIMESTAMP": "2026-08-31T12:44:00.566321+00:00",
+  "STATUS": "OK",
+  "QUALITY": "PASS",
+  "LOAD_MS": 3.32,
+  "TTFT_MS": 1183.51,
+  "PROMPT_TOKENS": 36,
+  "PROMPT_EVAL_TOK_S": 30.42,
+  "OUTPUT_TOKENS": 7,
+  "GEN_TOK_S": 8.18,
+  "TOTAL_E2E_MS": 2241.08,
+  "RAM_BEFORE": {
+    "used_gb": 19.65,
+    "avail_gb": 12.27,
+    "pct": 61.6
+  },
+  "RAM_PEAK": {
+    "used_gb": 19.69,
+    "avail_gb": 12.23,
+    "pct": 61.7
+  },
+  "RAM_AFTER": {
+    "used_gb": 19.69,
+    "avail_gb": 12.23,
+    "pct": 61.7
+  },
+  "ERROR": "",
+  "TEXT_SNIPPET": "The fifth daughter is Sophie."
+}

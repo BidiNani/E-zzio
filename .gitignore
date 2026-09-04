@@ -98,6 +98,9 @@ _snapshots/
 *.key
 *.p12
 *.pfx
+*.keystore
+*.jks
+release.keystore
 
 _archive/
 _archive_memoire_morte/

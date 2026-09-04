@@ -1,0 +1,17 @@
+{
+  "cloud_multimodal": {
+    "model": "gemini-3.7-flash",
+    "provider": "gemini_pool",
+    "status": "ACTIVE"
+  },
+  "local_vision": {
+    "model": "qwen2.5vl:3b",
+    "engine": "VisionEngine",
+    "status": "ACTIVE"
+  },
+  "interfaces": [
+    "POST /perception/upload",
+    "Discord image attachments"
+  ],
+  "status": "OPERATIONAL"
+}

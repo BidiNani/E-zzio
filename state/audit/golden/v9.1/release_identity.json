@@ -1,0 +1,14 @@
+{
+  "product": "E-ZzIO",
+  "release": "V9.1",
+  "version": "9.0.1",
+  "version_code": 901,
+  "release_type": "GOLDEN_RELEASE",
+  "status": "IMMUTABLE_BASELINE",
+  "source_revision": "dde4d186ce8cee1bdcfa42f6850763adb08b25f8",
+  "source_revision_short": "dde4d18",
+  "branch": "checkpoint/voice-capabilities-hardware-agent-20260816",
+  "certification_date": "2026-09-04T18:36:07.280213+00:00",
+  "certification_status": "100_PERCENT_VERIFIED_PRODUCT_RELEASE",
+  "external_block": "Antigravity = BLOCKED_BY_EXTERNAL_QUOTA"
+}

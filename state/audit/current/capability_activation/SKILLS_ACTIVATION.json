@@ -1,0 +1,10 @@
+{
+  "manifest": "config/skills_manifest.json",
+  "skills_loaded": [
+    "intelligence_router",
+    "fault_tolerant_core",
+    "immutable_ledger",
+    "disaster_recovery"
+  ],
+  "status": "ACTIVE"
+}

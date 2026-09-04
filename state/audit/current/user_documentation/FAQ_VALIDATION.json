@@ -1,0 +1,11 @@
+{
+  "questions_count": 5,
+  "topics_covered": [
+    "Choix du modèle",
+    "Failover Groq",
+    "Fichiers Excel",
+    "Sécurité des données & clés",
+    "Cache technique"
+  ],
+  "status": "VALIDATED"
+}

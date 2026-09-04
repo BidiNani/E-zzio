@@ -1,0 +1,22 @@
+{
+  "nvidia_nim": {
+    "credential_present": true,
+    "role": "SECONDARY_CLOUD_FALLBACK",
+    "status": "CONFIG_OPTIONAL"
+  },
+  "searxng": {
+    "endpoint_configured": false,
+    "role": "LOCAL_META_SEARCH",
+    "status": "CONFIG_OPTIONAL"
+  },
+  "github": {
+    "credential_present": false,
+    "role": "REPO_AGENTIC_INTEGRATION",
+    "status": "CONFIG_OPTIONAL"
+  },
+  "google_workspace": {
+    "credential_present": false,
+    "role": "DRIVE_DOCS_GMAIL_INTEGRATION",
+    "status": "CONFIG_OPTIONAL"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "gemini-3.1-flash-lite": {
+    "p50_ms": 1267.56,
+    "max_ms": 1855.55,
+    "success_rate": 100.0,
+    "count": 10
+  },
+  "gemini-3.6-flash": {
+    "p50_ms": 3501.65,
+    "max_ms": 15302.04,
+    "success_rate": 90.0,
+    "count": 10
+  },
+  "gemini-3.7-flash": {
+    "p50_ms": 0.0,
+    "max_ms": 0.0,
+    "success_rate": 0.0,
+    "count": 10
+  },
+  "gemini-3.1-pro-preview": {
+    "p50_ms": 0.0,
+    "max_ms": 0.0,
+    "success_rate": 0.0,
+    "count": 10
+  }
+}

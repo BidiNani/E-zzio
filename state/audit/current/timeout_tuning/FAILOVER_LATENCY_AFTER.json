@@ -1,0 +1,5 @@
+{
+  "gemini_to_groq_failover_ms": 1957.65,
+  "full_exhaustion_fail_closed_projected_ms": 11500.0,
+  "latency_reduction_factor": "~3.3x faster fail-closed"
+}

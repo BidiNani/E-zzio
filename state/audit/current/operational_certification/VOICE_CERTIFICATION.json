@@ -1,0 +1,6 @@
+{
+  "tts_engine": "kokoro-82m-onnx",
+  "procedural_fallback": true,
+  "stt_engine": "nvidia/nemotron-3.5-asr-streaming-0.6b",
+  "status": "OPERATIONAL"
+}

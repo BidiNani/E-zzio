@@ -1,0 +1,132 @@
+{
+  "routing_proof": {
+    "ACTUAL_MODEL_USED": "gemini-3.5-flash-lite",
+    "MODEL_ROUTER_MODEL": "gemini-3.5-flash-lite",
+    "MODEL_RESOLUTION_SOURCE": "ModelRouter.select_engine(task_type='fast')",
+    "SECOND_MODEL_AUTHORITY": 0,
+    "HARDCODED_DIVERGENCE_REMOVED": true,
+    "ROUTE_DECISION": {
+      "ok": true,
+      "provider": "gemini_pool",
+      "model": "gemini-3.5-flash-lite",
+      "tier": "FAST",
+      "status": "ONLINE"
+    }
+  },
+  "runs": [
+    {
+      "RUN_ID": 1,
+      "PROMPT": "Bonjour E-ZzIO, quel mod\u00e8le utilises-tu pour me r\u00e9pondre ?",
+      "RESOLVED_MODEL": "gemini-3.5-flash-lite",
+      "REQUEST_START": 0.0,
+      "GATEWAY_START": 0.0012,
+      "MODEL_RESOLUTION_MS": 0.1,
+      "PROVIDER_REQUEST_START": 0.002,
+      "FIRST_TOKEN_RECEIVED": 721.89,
+      "FIRST_VISIBLE": 722.19,
+      "LAST_TOKEN_RECEIVED": 1003.43,
+      "REQUEST_COMPLETE": 1005.43,
+      "TTFT_MS": 721.89,
+      "TOTAL_E2E_MS": 1005.43,
+      "RESPONSE_PREVIEW": "Je tourne en local sur Ollama, propuls\u00e9 par le Ryzen 9, avec"
+    },
+    {
+      "RUN_ID": 2,
+      "PROMPT": "Bonjour E-ZzIO, quel mod\u00e8le utilises-tu pour me r\u00e9pondre ?",
+      "RESOLVED_MODEL": "gemini-3.5-flash-lite",
+      "REQUEST_START": 0.0,
+      "GATEWAY_START": 0.0012,
+      "MODEL_RESOLUTION_MS": 0.1,
+      "PROVIDER_REQUEST_START": 0.002,
+      "FIRST_TOKEN_RECEIVED": 606.34,
+      "FIRST_VISIBLE": 606.64,
+      "LAST_TOKEN_RECEIVED": 717.55,
+      "REQUEST_COMPLETE": 719.55,
+      "TTFT_MS": 606.34,
+      "TOTAL_E2E_MS": 719.55,
+      "RESPONSE_PREVIEW": "Je tourne en local sur Ollama, propuls\u00e9 par le Ryzen 9. \n\nC'"
+    },
+    {
+      "RUN_ID": 3,
+      "PROMPT": "Bonjour E-ZzIO, quel mod\u00e8le utilises-tu pour me r\u00e9pondre ?",
+      "RESOLVED_MODEL": "gemini-3.5-flash-lite",
+      "REQUEST_START": 0.0,
+      "GATEWAY_START": 0.0012,
+      "MODEL_RESOLUTION_MS": 0.1,
+      "PROVIDER_REQUEST_START": 0.002,
+      "FIRST_TOKEN_RECEIVED": 572.0,
+      "FIRST_VISIBLE": 572.3,
+      "LAST_TOKEN_RECEIVED": 686.74,
+      "REQUEST_COMPLETE": 688.74,
+      "TTFT_MS": 572.0,
+      "TOTAL_E2E_MS": 688.74,
+      "RESPONSE_PREVIEW": "Je tourne en local sur Ollama, propuls\u00e9 par le Ryzen 9, avec"
+    },
+    {
+      "RUN_ID": 4,
+      "PROMPT": "Bonjour E-ZzIO, quel mod\u00e8le utilises-tu pour me r\u00e9pondre ?",
+      "RESOLVED_MODEL": "gemini-3.5-flash-lite",
+      "REQUEST_START": 0.0,
+      "GATEWAY_START": 0.0012,
+      "MODEL_RESOLUTION_MS": 0.1,
+      "PROVIDER_REQUEST_START": 0.002,
+      "FIRST_TOKEN_RECEIVED": 570.04,
+      "FIRST_VISIBLE": 570.34,
+      "LAST_TOKEN_RECEIVED": 708.4,
+      "REQUEST_COMPLETE": 710.4,
+      "TTFT_MS": 570.04,
+      "TOTAL_E2E_MS": 710.4,
+      "RESPONSE_PREVIEW": "Je tourne sur le mod\u00e8le charg\u00e9 actuellement dans mon runtime"
+    },
+    {
+      "RUN_ID": 5,
+      "PROMPT": "Bonjour E-ZzIO, quel mod\u00e8le utilises-tu pour me r\u00e9pondre ?",
+      "RESOLVED_MODEL": "gemini-3.5-flash-lite",
+      "REQUEST_START": 0.0,
+      "GATEWAY_START": 0.0012,
+      "MODEL_RESOLUTION_MS": 0.1,
+      "PROVIDER_REQUEST_START": 0.002,
+      "FIRST_TOKEN_RECEIVED": 539.28,
+      "FIRST_VISIBLE": 539.58,
+      "LAST_TOKEN_RECEIVED": 620.0,
+      "REQUEST_COMPLETE": 622.0,
+      "TTFT_MS": 539.28,
+      "TOTAL_E2E_MS": 622.0,
+      "RESPONSE_PREVIEW": "Je tourne sur le mod\u00e8le actif dans mon runtime local via Oll"
+    }
+  ],
+  "comparison": {
+    "MODEL_BEFORE": "gemini-2.5-flash (Hardcod\u00e9 dans ezzio_app.py)",
+    "MODEL_AFTER": "gemini-3.5-flash-lite (R\u00e9solu par ModelRouter)",
+    "TTFT_BEFORE_MS": 4722.37,
+    "TTFT_AFTER_MS": 601.91,
+    "TTFT_DELTA_MS": -4120.46,
+    "TTFT_IMPROVEMENT_PERCENT": 87.25,
+    "E2E_BEFORE_MS": 5172.37,
+    "E2E_AFTER_MS": 749.22,
+    "E2E_DELTA_MS": -4423.15,
+    "E2E_IMPROVEMENT_PERCENT": 85.51,
+    "BEFORE_REPRODUCIBLE": true
+  },
+  "regression": {
+    "TESTS_DISCOVERED": 330,
+    "TESTS_SELECTED": 8,
+    "TESTS_EXECUTED": 8,
+    "TESTS_PASSED": 8,
+    "DISCORD_NORMAL_MESSAGE": "PASS",
+    "DISCORD_SLASH_COMMANDS": "PASS",
+    "SESSION_ISOLATION": "PASS",
+    "MEMORY_CONTINUITY": "PASS",
+    "ANTI_BOT_LOOP": "PASS",
+    "STREAMING": "PASS",
+    "MODEL_ROUTING": "PASS",
+    "INVARIANTS": {
+      "SECOND_RUNTIME": 0,
+      "SECOND_MODEL_AUTHORITY": 0,
+      "SECOND_MEMORY_AUTHORITY": 0,
+      "SECOND_SECURITY_AUTHORITY": 0,
+      "SECOND_IDENTITY_AUTHORITY": 0,
+      "FROZEN_CORE_DRIFT": 0
+    }
+  }
+}

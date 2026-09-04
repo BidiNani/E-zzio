@@ -1,0 +1,10 @@
+{
+  "interface": "E-ZZIO Autonomous Agent CLI (ezzio_cli.py)",
+  "usage": "python ezzio_cli.py [--backend cloud_gemini|local_qwen] [--task <text>]",
+  "modes": [
+    "Interactive Shell (E-ZZIO > )",
+    "Single-Task Execution (--task)"
+  ],
+  "pipeline": "CodingAgentHarness -> Trajectory Loop -> ModelRouter",
+  "status": "OPERATIONAL"
+}

@@ -1,0 +1,76 @@
+{
+  "ledger_file": "assets/ASSET_LICENSES.json",
+  "sha256": "4C34D5270517C1D6E5EEAE53453EC1C49BFD71D48AB5FF1B30FF2A960E63B8E3",
+  "icon_file": "assets/ui/icon.svg",
+  "icon_sha256": "454807EF94AE408095F443D1960A9C862F1EB410C98771190CB67E558DA1F97B",
+  "icon_size_bytes": 2483,
+  "license": "Apache-2.0",
+  "third_party_sprites": 0,
+  "procedural_svg_agents": 10,
+  "declared_assets": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "E-ZZIO AI Office Asset Licenses & Provenance Manifest",
+    "version": "9.0.0",
+    "provenance_policy": "STRICT_SOVEREIGN_ORIGINAL",
+    "prohibited_franchises": [
+      "The Escapists",
+      "The Office",
+      "Copyrighted Commercial Sprites",
+      "Proprietary Proprietary Video Games"
+    ],
+    "assets": [
+      {
+        "asset_id": "procedural_svg_agent_avatars",
+        "path": "runtime/web/index.html:generateAvatarSvg",
+        "type": "vector_procedural_svg",
+        "source": "E-ZZIO Sovereign Core Engineering",
+        "author": "E-ZZIO Core Architecture Team",
+        "license": "Apache-2.0 / Sovereign Open-Source",
+        "url": "https://github.com/BidiNani/E-zzio",
+        "version": "9.0.0",
+        "modifications": "Original procedural SVG code generating unique pixel-art styled characters algorithmically in browser",
+        "verified": true,
+        "commercial_use_permitted": true
+      },
+      {
+        "asset_id": "app_launcher_icon_svg",
+        "path": "assets/ui/icon.svg",
+        "type": "vector_svg",
+        "source": "E-ZZIO Sovereign Core Engineering",
+        "author": "E-ZZIO Core Architecture Team",
+        "license": "Apache-2.0 / Sovereign Open-Source",
+        "url": "https://github.com/BidiNani/E-zzio",
+        "version": "9.0.0",
+        "modifications": "Crown and shield gold/cyan vector badge",
+        "verified": true,
+        "commercial_use_permitted": true
+      },
+      {
+        "asset_id": "inter_google_font",
+        "path": "runtime/web/index.html (via Google Fonts CDN)",
+        "type": "typography_webfont",
+        "source": "Google Fonts / Rasmus Andersson",
+        "author": "Rasmus Andersson",
+        "license": "SIL Open Font License 1.1",
+        "url": "https://github.com/rsms/inter",
+        "version": "4.1",
+        "modifications": "None (served via standard link tag)",
+        "verified": true,
+        "commercial_use_permitted": true
+      },
+      {
+        "asset_id": "fira_code_font",
+        "path": "runtime/web/index.html (via Google Fonts CDN)",
+        "type": "typography_webfont",
+        "source": "Google Fonts / Nikita Prokopov",
+        "author": "Nikita Prokopov",
+        "license": "SIL Open Font License 1.1",
+        "url": "https://github.com/tonsky/FiraCode",
+        "version": "6.2",
+        "modifications": "None (served via standard link tag)",
+        "verified": true,
+        "commercial_use_permitted": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "FAST": {
+    "model": "gemini-3.1-flash-lite",
+    "latency_ms": 733.76,
+    "status": "SUCCESS"
+  },
+  "GENERAL": {
+    "model": "gemini-3.6-flash",
+    "latency_ms": 3436.14,
+    "status": "SUCCESS"
+  },
+  "CODING": {
+    "model": "gemini-3.7-flash",
+    "latency_ms": 4026.37,
+    "status": "SUCCESS"
+  },
+  "STABILITY_5_CONSECUTIVE": {
+    "models": [
+      "gemini-3.1-flash-lite",
+      "gemini-3.1-flash-lite",
+      "gemini-3.1-flash-lite",
+      "gemini-3.1-flash-lite",
+      "gemini-3.1-flash-lite"
+    ],
+    "zero_flapping": true
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "pre_tuning_fail_closed_p95_sec": 38.586,
+  "post_tuning_fail_closed_p95_sec": 11.016,
+  "single_outlier_multi_candidate_timeout_sec": 49.195,
+  "nominal_median_ms": 29.52,
+  "verdict": "NO_REGRESSION (Fail-Closed is 3.5x faster, Nominal median is fast, 49s is a clean multi-candidate timeout cascade with successful Groq recovery)"
+}

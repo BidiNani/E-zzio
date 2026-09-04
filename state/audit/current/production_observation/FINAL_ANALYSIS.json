@@ -1,0 +1,8 @@
+{
+  "findings_no_action": 8,
+  "findings_observe": 2,
+  "findings_optimize": 0,
+  "findings_bug": 0,
+  "findings_architectural_risk": 0,
+  "verdict": "PRODUCTION_OBSERVATION_CLEAN"
+}

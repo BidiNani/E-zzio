@@ -1,0 +1,189 @@
+{
+  "sample_size": 20,
+  "gemini_requests": 2,
+  "groq_requests": 3,
+  "ollama_requests": 0,
+  "cache_hits": 0,
+  "requests_details": [
+    {
+      "id": 1,
+      "query": "Quelle est la différence entre un t...",
+      "profile": "fast",
+      "provider": "ECOL Gateway (gemini_pool)",
+      "model": "gemini_pool",
+      "latency_ms": 3757.85,
+      "status": "SUCCESS"
+    },
+    {
+      "id": 2,
+      "query": "Explique succinctement le théorème ...",
+      "profile": "general",
+      "provider": "ECOL Gateway (groq)",
+      "model": "groq",
+      "latency_ms": 49195.89,
+      "status": "SUCCESS"
+    },
+    {
+      "id": 3,
+      "query": "Donne un exemple de décorateur Pyth...",
+      "profile": "reasoning",
+      "provider": "ECOL Gateway (groq)",
+      "model": "groq",
+      "latency_ms": 3368.91,
+      "status": "SUCCESS"
+    },
+    {
+      "id": 4,
+      "query": "Quel est le principe de fonctionnem...",
+      "profile": "heavy",
+      "provider": "ECOL Gateway Fail-Closed",
+      "model": "none",
+      "latency_ms": 11016.37,
+      "status": "SUCCESS"
+    },
+    {
+      "id": 5,
+      "query": "Comment fonctionne la mémoire SQLit...",
+      "profile": "fast",
+      "provider": "ECOL Gateway (gemini_pool)",
+      "model": "gemini_pool",
+      "latency_ms": 4657.36,
+      "status": "SUCCESS"
+    },
+    {
+      "id": 6,
+      "query": "Résume en 3 points les avantages d'...",
+      "profile": "general",
+      "provider": "ECOL Gateway (groq)",
+      "model": "groq",
+      "latency_ms": 3982.91,
+      "status": "SUCCESS"
+    },
+    {
+      "id": 7,
+      "query": "Écris une fonction asynchrone pour ...",
+      "profile": "reasoning",
+      "provider": "ECOL Gateway Fail-Closed",
+      "model": "none",
+      "latency_ms": 286.43,
+      "status": "SUCCESS"
+    },
+    {
+      "id": 8,
+      "query": "Quelle est la vitesse de la lumière...",
+      "profile": "fast",
+      "provider": "ECOL Gateway Fail-Closed",
+      "model": "none",
+      "latency_ms": 29.52,
+      "status": "SUCCESS"
+    },
+    {
+      "id": 9,
+      "query": "Explique ce qu'est la complexité te...",
+      "profile": "general",
+      "provider": "ECOL Gateway Fail-Closed",
+      "model": "none",
+      "latency_ms": 28.66,
+      "status": "SUCCESS"
+    },
+    {
+      "id": 10,
+      "query": "Donne un exemple d'utilisation de S...",
+      "profile": "reasoning",
+      "provider": "ECOL Gateway Fail-Closed",
+      "model": "none",
+      "latency_ms": 46.57,
+      "status": "SUCCESS"
+    },
+    {
+      "id": 11,
+      "query": "Comment fonctionne la tokenisation ...",
+      "profile": "fast",
+      "provider": "ECOL Gateway Fail-Closed",
+      "model": "none",
+      "latency_ms": 30.26,
+      "status": "SUCCESS"
+    },
+    {
+      "id": 12,
+      "query": "Qu'est-ce qu'une table virtuelle FT...",
+      "profile": "fast",
+      "provider": "ECOL Gateway Fail-Closed",
+      "model": "none",
+      "latency_ms": 23.68,
+      "status": "SUCCESS"
+    },
+    {
+      "id": 13,
+      "query": "Présente les différences entre TCP ...",
+      "profile": "general",
+      "provider": "ECOL Gateway Fail-Closed",
+      "model": "none",
+      "latency_ms": 24.16,
+      "status": "SUCCESS"
+    },
+    {
+      "id": 14,
+      "query": "Écris une regex pour valider une ad...",
+      "profile": "reasoning",
+      "provider": "ECOL Gateway Fail-Closed",
+      "model": "none",
+      "latency_ms": 22.7,
+      "status": "SUCCESS"
+    },
+    {
+      "id": 15,
+      "query": "Quelle est la capitale du Japon ?...",
+      "profile": "fast",
+      "provider": "ECOL Gateway Fail-Closed",
+      "model": "none",
+      "latency_ms": 24.87,
+      "status": "SUCCESS"
+    },
+    {
+      "id": 16,
+      "query": "Explique le principe de l'inversion...",
+      "profile": "general",
+      "provider": "ECOL Gateway Fail-Closed",
+      "model": "none",
+      "latency_ms": 28.53,
+      "status": "SUCCESS"
+    },
+    {
+      "id": 17,
+      "query": "Comment implémenter un cache LRU dé...",
+      "profile": "reasoning",
+      "provider": "ECOL Gateway Fail-Closed",
+      "model": "none",
+      "latency_ms": 21.17,
+      "status": "SUCCESS"
+    },
+    {
+      "id": 18,
+      "query": "Quels sont les avantages d'un forma...",
+      "profile": "fast",
+      "provider": "ECOL Gateway Fail-Closed",
+      "model": "none",
+      "latency_ms": 26.71,
+      "status": "SUCCESS"
+    },
+    {
+      "id": 19,
+      "query": "Explique le fonctionnement d'un cir...",
+      "profile": "general",
+      "provider": "ECOL Gateway Fail-Closed",
+      "model": "none",
+      "latency_ms": 22.28,
+      "status": "SUCCESS"
+    },
+    {
+      "id": 20,
+      "query": "Donne un exemple de requêtage FTS5 ...",
+      "profile": "reasoning",
+      "provider": "ECOL Gateway Fail-Closed",
+      "model": "none",
+      "latency_ms": 24.45,
+      "status": "SUCCESS"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "RUN_ID": "V2A_nemotron-3-nano_4b_TOOLS_TO03_r1_1788181222",
+  "MODEL": "nemotron-3-nano:4b",
+  "TASK": "TOOLS",
+  "SUB_ID": "TO03",
+  "RUN_NUM": 1,
+  "IS_COLD": false,
+  "PROMPT_HASH": "5dbd6a2b5a5a",
+  "THREADS": 4,
+  "CONTEXT": 4096,
+  "GPU": 0,
+  "START_TIMESTAMP": "2026-08-31T13:00:22.814292+00:00",
+  "END_TIMESTAMP": "2026-08-31T13:00:29.785282+00:00",
+  "STATUS": "OK",
+  "QUALITY": "PASS",
+  "LOAD_MS": 1.65,
+  "TTFT_MS": 2278.16,
+  "PROMPT_TOKENS": 64,
+  "PROMPT_EVAL_TOK_S": 28.09,
+  "OUTPUT_TOKENS": 47,
+  "GEN_TOK_S": 10.57,
+  "TOTAL_E2E_MS": 6970.53,
+  "RAM_BEFORE": {
+    "used_gb": 19.83,
+    "avail_gb": 12.09,
+    "pct": 62.1
+  },
+  "RAM_PEAK": {
+    "used_gb": 19.99,
+    "avail_gb": 11.94,
+    "pct": 62.6
+  },
+  "RAM_AFTER": {
+    "used_gb": 19.99,
+    "avail_gb": 11.94,
+    "pct": 62.6
+  },
+  "ERROR": "",
+  "TEXT_SNIPPET": "{\"tool\":\"calculator\",\"parameters\":{\"expression\":\"15*14\"}}"
+}

@@ -1,0 +1,130 @@
+{
+  "dist/android/E-ZzIO-v9.1-release.apk": {
+    "path": "dist/android/E-ZzIO-v9.1-release.apk",
+    "type": "android_release_apk",
+    "role": "Primary release APK container (v2 signed, non-debug)",
+    "size_bytes": 4404215,
+    "sha256": "0F62B1A355063BD3436D1513E587E43EB42E77F11A82B260B73CA55595921CDB",
+    "status": "VERIFIED"
+  },
+  "dist/android/E-ZzIO-v9.0.1.apk": {
+    "path": "dist/android/E-ZzIO-v9.0.1.apk",
+    "type": "android_apk",
+    "role": "Canonical production APK matching release binary",
+    "size_bytes": 4404215,
+    "sha256": "0F62B1A355063BD3436D1513E587E43EB42E77F11A82B260B73CA55595921CDB",
+    "status": "VERIFIED"
+  },
+  "dist/android/E-ZzIO-Android-Source-v9.1.zip": {
+    "path": "dist/android/E-ZzIO-Android-Source-v9.1.zip",
+    "type": "android_source_bundle",
+    "role": "Android Studio source project bundle (v9.1)",
+    "size_bytes": 19836050,
+    "sha256": "AD256EA4334CAE1610797B49FBCED71197D13CD1A63C1B9363E8C4C8C1AA5FBD",
+    "status": "VERIFIED"
+  },
+  "dist/android/E-ZzIO-Android-Source-v9.0.1.zip": {
+    "path": "dist/android/E-ZzIO-Android-Source-v9.0.1.zip",
+    "type": "android_source_bundle",
+    "role": "Android Studio source project bundle (v9.0.1)",
+    "size_bytes": 19836050,
+    "sha256": "AD256EA4334CAE1610797B49FBCED71197D13CD1A63C1B9363E8C4C8C1AA5FBD",
+    "status": "VERIFIED"
+  },
+  "tools/launch_desktop.ps1": {
+    "path": "tools/launch_desktop.ps1",
+    "type": "desktop_launcher",
+    "role": "Desktop standalone runner with app-mode detection",
+    "size_bytes": 3012,
+    "sha256": "FD4180615C41DBD14219A7C5D172E722CFF545A182FC5B6974DC7C93F4677947",
+    "status": "VERIFIED"
+  },
+  "tools/build_android_apk.ps1": {
+    "path": "tools/build_android_apk.ps1",
+    "type": "android_builder",
+    "role": "Native Gradle APK packaging and verification tool",
+    "size_bytes": 6107,
+    "sha256": "9A82A1E4E56CCA3AA7AD6F6FAD1B0FEDE60B66C2EF6120F48C2FD8B2BC1C91AB",
+    "status": "VERIFIED"
+  },
+  "tools/certify_100_percent.ps1": {
+    "path": "tools/certify_100_percent.ps1",
+    "type": "certifier",
+    "role": "Master 100% complete product certifier",
+    "size_bytes": 8124,
+    "sha256": "90955AC8B5F1863522CC9B98EB277705E13CA06AA3C6C318B90B12DCF440B119",
+    "status": "VERIFIED"
+  },
+  "tools/certify_release.ps1": {
+    "path": "tools/certify_release.ps1",
+    "type": "certifier",
+    "role": "Continuous release gate certifier",
+    "size_bytes": 5758,
+    "sha256": "3EA11F03C363A316399CE5C0D4AAB88E05BFCEB44FE071BE1E7D37946B893CAD",
+    "status": "VERIFIED"
+  },
+  "runtime/web/index.html": {
+    "path": "runtime/web/index.html",
+    "type": "ai_office_ui",
+    "role": "Living AI Office interface (8 rooms, 10 agents, procedural SVG)",
+    "size_bytes": 52082,
+    "sha256": "5A4BDA6AF7BADAAAADD0333DAD68A7F131CCD10F76F8AC93485240AA14EDA0DB",
+    "status": "VERIFIED"
+  },
+  "runtime/web/manifest.json": {
+    "path": "runtime/web/manifest.json",
+    "type": "pwa_manifest",
+    "role": "Official standalone web application manifest",
+    "size_bytes": 934,
+    "sha256": "C8E8B0B3FB5BB3318EE9B457CA67940349A5CE07B9CF8869285406E0428028C1",
+    "status": "VERIFIED"
+  },
+  "runtime/web/sw.js": {
+    "path": "runtime/web/sw.js",
+    "type": "service_worker",
+    "role": "Service Worker offline resilience caching engine",
+    "size_bytes": 1760,
+    "sha256": "29255E63AAF591E22A80D451D6018031D023BDBF630B0909237ADBC7DB4ADDF1",
+    "status": "VERIFIED"
+  },
+  "assets/ui/icon.svg": {
+    "path": "assets/ui/icon.svg",
+    "type": "brand_asset",
+    "role": "Official vector brand icon (Apache-2.0)",
+    "size_bytes": 2483,
+    "sha256": "454807EF94AE408095F443D1960A9C862F1EB410C98771190CB67E558DA1F97B",
+    "status": "VERIFIED"
+  },
+  "assets/ASSET_LICENSES.json": {
+    "path": "assets/ASSET_LICENSES.json",
+    "type": "license_manifest",
+    "role": "Asset provenance and licensing ledger",
+    "size_bytes": 2403,
+    "sha256": "4C34D5270517C1D6E5EEAE53453EC1C49BFD71D48AB5FF1B30FF2A960E63B8E3",
+    "status": "VERIFIED"
+  },
+  "docs/RELEASE_MANIFEST.json": {
+    "path": "docs/RELEASE_MANIFEST.json",
+    "type": "release_manifest",
+    "role": "Official JSON release manifest",
+    "size_bytes": 6048,
+    "sha256": "089D731B8816199D10F187F2624DCF0DBD387E592C027B4E5EB9275592A95888",
+    "status": "VERIFIED"
+  },
+  "docs/E-ZZIO_V9.1_100_PERCENT_CERTIFICATION.md": {
+    "path": "docs/E-ZZIO_V9.1_100_PERCENT_CERTIFICATION.md",
+    "type": "certification_doc",
+    "role": "100% release certification report",
+    "size_bytes": 4880,
+    "sha256": "6BC226985CEDA3E84279B0535776F14E2323A0EDDBF363C5184737A6D8AEBBFE",
+    "status": "VERIFIED"
+  },
+  "docs/E-ZZIO_V9.1_100_PERCENT_RELEASE_LOCK.md": {
+    "path": "docs/E-ZZIO_V9.1_100_PERCENT_RELEASE_LOCK.md",
+    "type": "release_lock_doc",
+    "role": "100% release lock specification",
+    "size_bytes": 2009,
+    "sha256": "3518CB2155CE40D4AAF6D9A721778BC43AE038E5032F3172DD48301C92B1EEC6",
+    "status": "VERIFIED"
+  }
+}

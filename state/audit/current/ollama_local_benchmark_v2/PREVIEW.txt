@@ -1,0 +1,8 @@
+E-ZZIO LOCAL LLM BENCHMARK V2 — PHASE A
+Campaign V1: ABORTED / INVALIDATED
+Standard: EVIDENCE RULE v1.1
+Host: AMD Ryzen 9 5900X / 32 GB DDR4 / CPU-only
+Config: 4T / ctx=4096 / timeout=180.0s / GPU=0
+Models: ['hermes3:8b', 'qwen3.5:9b', 'nemotron-3-nano:4b', 'phi4-mini:latest']
+Tasks: FAST_ROUTING(x3) REASONING(x5) CODING(x4) TOOLS(x3) AGENT(x3) LONG_CONTEXT(x3) LONG_GENERATION(x3)
+Started: 2026-08-31T12:43:34.790394+00:00

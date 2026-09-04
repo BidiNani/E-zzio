@@ -1,0 +1,13 @@
+{
+  "timestamp": 1788131306.7179403,
+  "second_runtime": 0,
+  "second_model_auth": 0,
+  "second_memory_auth": 0,
+  "second_security_auth": 0,
+  "second_identity_auth": 0,
+  "second_coding_worker": 0,
+  "memory_authority": "core.memory.unified_gateway.UnifiedMemoryGateway",
+  "memory_backend": "SQLite WAL + FTS5 BM25",
+  "security_vault": "core.security.secrets_vault.SecretsVault",
+  "status": "SINGLE_AUTHORITY_VERIFIED"
+}

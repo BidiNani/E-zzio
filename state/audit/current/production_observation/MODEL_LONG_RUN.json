@@ -1,0 +1,34 @@
+{
+  "gemini-3.1-flash-lite": {
+    "role": "FAST",
+    "calls": 8,
+    "status": "HEALTHY",
+    "quota_margin": "+13"
+  },
+  "gemini-3.6-flash": {
+    "role": "GENERAL",
+    "calls": 2,
+    "status": "HEALTHY",
+    "quota_margin": "+3"
+  },
+  "gemini-3.7-flash": {
+    "role": "CODING",
+    "calls": 0,
+    "status": "HEALTHY"
+  },
+  "groq/compound": {
+    "role": "GENERAL_FALLBACK",
+    "calls": 2,
+    "status": "OPERATIONAL"
+  },
+  "groq:qwen/qwen3.6-27b": {
+    "role": "CODING_FALLBACK",
+    "calls": 3,
+    "status": "OPERATIONAL"
+  },
+  "groq:openai/gpt-oss-120b": {
+    "role": "DEEP_FALLBACK",
+    "calls": 2,
+    "status": "OPERATIONAL"
+  }
+}

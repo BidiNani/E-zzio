@@ -1,0 +1,6 @@
+{
+  "events_log": "Append-only JSONL, rotation à 10 000 lignes ou 30 jours",
+  "anomalies_log": "Append-only JSONL, rotation à 1 000 lignes",
+  "in_memory_circular_buffer": "1 000 entrées récentes",
+  "unbounded_growth_prevented": true
+}

@@ -1,0 +1,52 @@
+{
+  "gemini-3.1-flash-lite": {
+    "status": "ACTIVE_PRIMARY (FAST)",
+    "role": "Primary cloud model for fast gateway",
+    "referenced": true
+  },
+  "gemini-3.5-flash-lite": {
+    "status": "FALLBACK_POOL (FAST)",
+    "role": "Candidate replacement in pool",
+    "referenced": true
+  },
+  "gemini-3.6-flash": {
+    "status": "ACTIVE_PRIMARY (GENERAL)",
+    "role": "Primary cloud model for general chat",
+    "referenced": true
+  },
+  "gemini-3.5-flash": {
+    "status": "FALLBACK_POOL (GENERAL)",
+    "role": "Candidate replacement in pool",
+    "referenced": true
+  },
+  "gemini-3-flash": {
+    "status": "FALLBACK_POOL (GENERAL)",
+    "role": "Tertiary candidate in pool",
+    "referenced": true
+  },
+  "gemini-3.7-flash": {
+    "status": "ACTIVE_PRIMARY (CODING/AGENTIC)",
+    "role": "Flagship 1M context agentic model",
+    "referenced": true
+  },
+  "gemini-3.1-pro-preview": {
+    "status": "ACTIVE_PRIMARY (DEEP)",
+    "role": "2M context deep reasoning model",
+    "referenced": true
+  },
+  "gemini-3.1-flash-image": {
+    "status": "ACTIVE_PRIMARY (IMAGE)",
+    "role": "Nano Banana 2 generation",
+    "referenced": true
+  },
+  "gemini-3-pro-image": {
+    "status": "FALLBACK (IMAGE)",
+    "role": "Nano Banana Pro high fidelity",
+    "referenced": true
+  },
+  "gemini-omni-1.1-flash": {
+    "status": "ACTIVE_PRIMARY (VIDEO)",
+    "role": "Gemini Omni Flash 4K video",
+    "referenced": true
+  }
+}

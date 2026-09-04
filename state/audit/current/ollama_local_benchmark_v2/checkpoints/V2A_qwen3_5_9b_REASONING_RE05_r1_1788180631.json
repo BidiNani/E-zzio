@@ -1,0 +1,40 @@
+{
+  "RUN_ID": "V2A_qwen3_5_9b_REASONING_RE05_r1_1788180631",
+  "MODEL": "qwen3.5:9b",
+  "TASK": "REASONING",
+  "SUB_ID": "RE05",
+  "RUN_NUM": 1,
+  "IS_COLD": false,
+  "PROMPT_HASH": "10ee331e187f",
+  "THREADS": 4,
+  "CONTEXT": 4096,
+  "GPU": 0,
+  "START_TIMESTAMP": "2026-08-31T12:50:31.905860+00:00",
+  "END_TIMESTAMP": "2026-08-31T12:50:33.917170+00:00",
+  "STATUS": "OK",
+  "QUALITY": "FAIL",
+  "LOAD_MS": 2.09,
+  "TTFT_MS": 1281.34,
+  "PROMPT_TOKENS": 34,
+  "PROMPT_EVAL_TOK_S": 26.53,
+  "OUTPUT_TOKENS": 4,
+  "GEN_TOK_S": 7.79,
+  "TOTAL_E2E_MS": 2011.28,
+  "RAM_BEFORE": {
+    "used_gb": 21.71,
+    "avail_gb": 10.22,
+    "pct": 68.0
+  },
+  "RAM_PEAK": {
+    "used_gb": 21.81,
+    "avail_gb": 10.12,
+    "pct": 68.3
+  },
+  "RAM_AFTER": {
+    "used_gb": 21.81,
+    "avail_gb": 10.12,
+    "pct": 68.3
+  },
+  "ERROR": "",
+  "TEXT_SNIPPET": ""
+}

@@ -1,0 +1,9 @@
+{
+  "conversational_mode_prefix_required": true,
+  "prefix": "!e ",
+  "direct_message_without_prefix": false,
+  "allowed_guilds": [
+    "1517985912951275590"
+  ],
+  "allow_all_guild_members": false
+}

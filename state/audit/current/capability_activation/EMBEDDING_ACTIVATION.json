@@ -1,0 +1,7 @@
+{
+  "fts5_active": true,
+  "wal_mode": true,
+  "mmap_bytes": 268435456,
+  "latency_query_ms": 7.65,
+  "status": "OPERATIONAL"
+}

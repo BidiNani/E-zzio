@@ -1,0 +1,37 @@
+[
+  {
+    "rank": 1,
+    "title": "Bouton Upload Fichier dans le Web HUD",
+    "type": "EXPOSE_EXISTING_CAPABILITY",
+    "effort": "LOW",
+    "impact": "HIGH"
+  },
+  {
+    "rank": 2,
+    "title": "Guide de Référence Utilisateur des Commandes Discord",
+    "type": "IMPROVE_DOCUMENTATION",
+    "effort": "LOW",
+    "impact": "MEDIUM"
+  },
+  {
+    "rank": 3,
+    "title": "Assistant de Configuration OAuth Workspace",
+    "type": "CONFIGURATION_HELPER",
+    "effort": "MEDIUM",
+    "impact": "MEDIUM"
+  },
+  {
+    "rank": 4,
+    "title": "Prévisualisation des Sources Citées Web dans le HUD",
+    "type": "UI_ENHANCEMENT",
+    "effort": "LOW",
+    "impact": "MEDIUM"
+  },
+  {
+    "rank": 5,
+    "title": "Affichage de la Latence de Synthèse Vocale dans la Télémetrie",
+    "type": "OBSERVABILITY",
+    "effort": "LOW",
+    "impact": "LOW"
+  }
+]

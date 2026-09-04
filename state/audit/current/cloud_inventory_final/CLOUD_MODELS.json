@@ -1,0 +1,28 @@
+{
+  "active_cloud_models": [
+    "gemini-3.7-flash",
+    "gemini-3.5-flash",
+    "gemini-3.5-flash-lite",
+    "gemini-3.1-pro-preview",
+    "gemini-3.6-flash",
+    "gemini-3.1-flash-image",
+    "gemini-3-pro-image",
+    "gemini-omni-1.1-flash",
+    "groq/compound",
+    "groq/compound-mini",
+    "openai/gpt-oss-120b",
+    "qwen/qwen3.6-27b"
+  ],
+  "fallback_cloud_models": [
+    "groq/compound",
+    "groq/compound-mini",
+    "openai/gpt-oss-120b",
+    "llama-3.3-70b-versatile"
+  ],
+  "recovery_targets": [
+    "gemini-3.5-flash",
+    "groq/compound",
+    "ollama:hermes3:8b"
+  ],
+  "stale_cloud_references": 0
+}

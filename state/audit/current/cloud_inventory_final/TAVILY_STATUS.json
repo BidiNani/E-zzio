@@ -1,0 +1,6 @@
+{
+  "credential_present": true,
+  "role": "WEB_SEARCH_AUGMENTATION",
+  "fallback": "DuckDuckGo HTML Engine (Active & Proven)",
+  "status": "ACTIVE"
+}

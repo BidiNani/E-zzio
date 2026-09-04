@@ -1,0 +1,25 @@
+{
+  "live_executions": [
+    {
+      "scenario": "Primary Execution Success",
+      "target": "gemini_pool / ollama",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Primary 429 Simulation",
+      "target": "circuit_breaker -> ollama:phi4-mini:latest",
+      "status": "PASS",
+      "failover_proven": true
+    },
+    {
+      "scenario": "Local Policy Enforcement",
+      "target": "ollama:phi4-mini:latest (no cloud call)",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Total Outage Fail-Closed",
+      "target": "all offline -> FAIL_CLOSED (ok=False)",
+      "status": "PASS"
+    }
+  ]
+}

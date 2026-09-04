@@ -1,0 +1,6 @@
+{
+  "search": "duckduckgo_html",
+  "crawl_markdown": true,
+  "anti_ssrf_enforced": true,
+  "status": "OPERATIONAL"
+}

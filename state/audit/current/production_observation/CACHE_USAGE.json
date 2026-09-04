@@ -1,0 +1,7 @@
+{
+  "total_requests": 15,
+  "hits": 3,
+  "hit_rate_percent": 20.0,
+  "cloud_calls_avoided_by_cache": 3,
+  "hit_latency_ms": 0.73
+}

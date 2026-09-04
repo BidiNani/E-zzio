@@ -1,0 +1,9 @@
+{
+  "role": "SOVEREIGN_LAST_RESORT",
+  "activation_conditions": [
+    "Tous les slots Gemini Pool en état 429/5xx ou hors-ligne",
+    "Groq Cloud en état 429/5xx ou hors-ligne",
+    "Politique explicite LOCAL_ONLY / OFFLINE / PRIVACY passée par l'utilisateur"
+  ],
+  "nominal_execution_allowed": false
+}

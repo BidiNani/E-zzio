@@ -1,0 +1,26 @@
+{
+  "directory": "state/audit/current/",
+  "lifecycle_stages": [
+    {
+      "stage": "DISCOVERY",
+      "output": "CAPABILITIES_PHYSICAL.json & MODELS_INVENTORY.json"
+    },
+    {
+      "stage": "STATIC_AUDIT",
+      "output": "CAPABILITIES_MATRIX.json & PROVIDERS_INVENTORY.json"
+    },
+    {
+      "stage": "RUNTIME_TEST",
+      "output": "kokoro_runtime_evidence.json / benchmarks"
+    },
+    {
+      "stage": "RECONCILIATION",
+      "output": "INVARIANTS.md & FORGOTTEN_CAPABILITIES.json"
+    },
+    {
+      "stage": "FINAL_CANONICAL",
+      "output": "capabilities_registry.json & EZZIO_CAPABILITIES.md"
+    }
+  ],
+  "recovery_rule": "En cas d'interruption, charger directement le dernier checkpoint validé sans réexécuter les étapes précédentes."
+}

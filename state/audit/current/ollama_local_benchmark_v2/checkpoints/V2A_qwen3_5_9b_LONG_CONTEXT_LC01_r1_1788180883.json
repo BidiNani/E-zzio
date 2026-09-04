@@ -1,0 +1,40 @@
+{
+  "RUN_ID": "V2A_qwen3_5_9b_LONG_CONTEXT_LC01_r1_1788180883",
+  "MODEL": "qwen3.5:9b",
+  "TASK": "LONG_CONTEXT",
+  "SUB_ID": "LC01",
+  "RUN_NUM": 1,
+  "IS_COLD": false,
+  "PROMPT_HASH": "ff6fc7b6bdc2",
+  "THREADS": 4,
+  "CONTEXT": 4096,
+  "GPU": 0,
+  "START_TIMESTAMP": "2026-08-31T12:54:43.080385+00:00",
+  "END_TIMESTAMP": "2026-08-31T12:55:18.692187+00:00",
+  "STATUS": "OK",
+  "QUALITY": "FAIL",
+  "LOAD_MS": 1.61,
+  "TTFT_MS": 21823.0,
+  "PROMPT_TOKENS": 650,
+  "PROMPT_EVAL_TOK_S": 29.79,
+  "OUTPUT_TOKENS": 80,
+  "GEN_TOK_S": 5.88,
+  "TOTAL_E2E_MS": 35611.74,
+  "RAM_BEFORE": {
+    "used_gb": 23.07,
+    "avail_gb": 8.86,
+    "pct": 72.3
+  },
+  "RAM_PEAK": {
+    "used_gb": 23.13,
+    "avail_gb": 8.8,
+    "pct": 72.4
+  },
+  "RAM_AFTER": {
+    "used_gb": 23.13,
+    "avail_gb": 8.8,
+    "pct": 72.4
+  },
+  "ERROR": "",
+  "TEXT_SNIPPET": ""
+}

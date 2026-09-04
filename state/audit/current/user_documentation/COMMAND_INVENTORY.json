@@ -1,0 +1,48 @@
+{
+  "discord": [
+    {
+      "command": "!bidi <msg>",
+      "role": "Chat cognition direct"
+    },
+    {
+      "command": "!bidi recall <q>",
+      "role": "Recherche mémoire FTS5"
+    },
+    {
+      "command": "!bidi status",
+      "role": "Statut opérationnel bot"
+    }
+  ],
+  "cli": [
+    {
+      "command": "python ezzio_cli.py",
+      "role": "Shell interactif autonome"
+    },
+    {
+      "command": "python ezzio_cli.py --task <task>",
+      "role": "Exécution de tâche unique"
+    }
+  ],
+  "http_api": [
+    {
+      "endpoint": "POST /master/chat",
+      "role": "Chat cognitif unifié"
+    },
+    {
+      "endpoint": "POST /perception/upload",
+      "role": "Téléversement documentaire universel"
+    },
+    {
+      "endpoint": "POST /perception/perceive",
+      "role": "Perception URL / crawl / multimédia"
+    },
+    {
+      "endpoint": "POST /memory/search",
+      "role": "Recherche textuelle FTS5 BM25"
+    },
+    {
+      "endpoint": "GET /metrics",
+      "role": "Télémétrie opérationnelle"
+    }
+  ]
+}

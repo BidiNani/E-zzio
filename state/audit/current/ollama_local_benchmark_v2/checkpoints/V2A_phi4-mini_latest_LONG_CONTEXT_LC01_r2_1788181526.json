@@ -1,0 +1,40 @@
+{
+  "RUN_ID": "V2A_phi4-mini_latest_LONG_CONTEXT_LC01_r2_1788181526",
+  "MODEL": "phi4-mini:latest",
+  "TASK": "LONG_CONTEXT",
+  "SUB_ID": "LC01",
+  "RUN_NUM": 2,
+  "IS_COLD": false,
+  "PROMPT_HASH": "ff6fc7b6bdc2",
+  "THREADS": 4,
+  "CONTEXT": 4096,
+  "GPU": 0,
+  "START_TIMESTAMP": "2026-08-31T13:05:26.896854+00:00",
+  "END_TIMESTAMP": "2026-08-31T13:05:29.611912+00:00",
+  "STATUS": "OK",
+  "QUALITY": "PASS",
+  "LOAD_MS": 2.2,
+  "TTFT_MS": 87.26,
+  "PROMPT_TOKENS": 624,
+  "PROMPT_EVAL_TOK_S": 7151.04,
+  "OUTPUT_TOKENS": 28,
+  "GEN_TOK_S": 11.98,
+  "TOTAL_E2E_MS": 2714.42,
+  "RAM_BEFORE": {
+    "used_gb": 18.06,
+    "avail_gb": 13.87,
+    "pct": 56.6
+  },
+  "RAM_PEAK": {
+    "used_gb": 18.05,
+    "avail_gb": 13.87,
+    "pct": 56.5
+  },
+  "RAM_AFTER": {
+    "used_gb": 18.05,
+    "avail_gb": 13.87,
+    "pct": 56.5
+  },
+  "ERROR": "",
+  "TEXT_SNIPPET": "MARKER_A=94821, MARKER_B=37190, MARKER_C=58204, MARKER_D=12048"
+}

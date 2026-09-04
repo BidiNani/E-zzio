@@ -1,0 +1,178 @@
+{
+  "tcp_metrics": {
+    "cold_request_ms": 1.527,
+    "warm_requests_ms": [
+      0.341,
+      0.263,
+      0.244,
+      0.239,
+      0.226
+    ],
+    "warm_mean_ms": 0.263,
+    "warm_median_ms": 0.244,
+    "warm_min_ms": 0.226,
+    "warm_max_ms": 0.341
+  },
+  "doc_metrics": {
+    "xlsx_sync_runs_ms": [
+      109.545,
+      5.188,
+      5.161,
+      5.654,
+      5.534
+    ],
+    "xlsx_sync_mean_ms": 26.217,
+    "xlsx_async_thread_runs_ms": [
+      6.116,
+      5.344,
+      5.932,
+      5.644,
+      5.94
+    ],
+    "xlsx_async_thread_mean_ms": 5.795,
+    "pdf_sync_runs_ms": [
+      3.397,
+      2.395,
+      2.282,
+      2.241,
+      2.096
+    ],
+    "pdf_sync_mean_ms": 2.482,
+    "pdf_async_thread_runs_ms": [
+      2.432,
+      2.457,
+      2.425,
+      2.156,
+      2.297
+    ],
+    "pdf_async_thread_mean_ms": 2.353
+  },
+  "err_metrics": {
+    "mean_ms": 657.82,
+    "median_ms": 618.23,
+    "min_ms": 564.21,
+    "max_ms": 898.13,
+    "qualification": "Consolid\u00e9 sur 5 ex\u00e9cutions r\u00e9elles successives (variance 564-898 ms due aux fluctuations de latence cloud distant)"
+  },
+  "concurrency_metrics": {
+    "telemetry_c2": {
+      "mean_wall_clock_ms": 0.546,
+      "median_wall_clock_ms": 0.504,
+      "campaigns": [
+        {
+          "wall_clock_ms": 0.7237999816425145,
+          "durations_ms": [
+            0.4068000125698745,
+            0.2541000139899552
+          ]
+        },
+        {
+          "wall_clock_ms": 0.5042999982833862,
+          "durations_ms": [
+            0.2384000108577311,
+            0.22260000696405768
+          ]
+        },
+        {
+          "wall_clock_ms": 0.47470000572502613,
+          "durations_ms": [
+            0.22270000772550702,
+            0.21329999435693026
+          ]
+        },
+        {
+          "wall_clock_ms": 0.5382999952416867,
+          "durations_ms": [
+            0.21389999892562628,
+            0.28249999741092324
+          ]
+        },
+        {
+          "wall_clock_ms": 0.4896000027656555,
+          "durations_ms": [
+            0.23939998936839402,
+            0.20969999604858458
+          ]
+        }
+      ]
+    },
+    "telemetry_c5": {
+      "mean_wall_clock_ms": 1.198,
+      "median_wall_clock_ms": 1.192,
+      "campaigns": [
+        {
+          "wall_clock_ms": 1.191700022900477,
+          "durations_ms": [
+            0.2117999829351902,
+            0.20280000171624124,
+            0.2959999837912619,
+            0.21040000137872994,
+            0.20229999790899456
+          ]
+        },
+        {
+          "wall_clock_ms": 1.0947000118903816,
+          "durations_ms": [
+            0.2046999870799482,
+            0.1978000218514353,
+            0.19600000814534724,
+            0.19699998665601015,
+            0.23239999427460134
+          ]
+        },
+        {
+          "wall_clock_ms": 1.0984000109601766,
+          "durations_ms": [
+            0.21520000882446766,
+            0.20000000949949026,
+            0.19839999731630087,
+            0.1928999845404178,
+            0.22560000070370734
+          ]
+        },
+        {
+          "wall_clock_ms": 1.3083000085316598,
+          "durations_ms": [
+            0.20909999147988856,
+            0.19990000873804092,
+            0.1962000096682459,
+            0.19540000357665122,
+            0.42790002771653235
+          ]
+        },
+        {
+          "wall_clock_ms": 1.2971000105608255,
+          "durations_ms": [
+            0.35730001400224864,
+            0.22089999401941895,
+            0.20810001296922565,
+            0.22039999021217227,
+            0.2046000154223293
+          ]
+        }
+      ]
+    },
+    "chat_concurrency_historical_baseline": {
+      "c2_wall_clock_ms": 731.5,
+      "c5_wall_clock_ms": 755.1,
+      "qualification": "Mesur\u00e9 lors des sessions de disponibilit\u00e9 r\u00e9seau nominale"
+    }
+  },
+  "pure_single_run_timeline": {
+    "REQUEST_START": 0.0,
+    "DISCORD_ACK": 0.0012,
+    "GATEWAY_START": 0.0025,
+    "PROVIDER_START": 0.0031,
+    "FIRST_TOKEN_RECEIVED": 5.4675,
+    "FIRST_VISIBLE": 5.4678,
+    "LAST_TOKEN_RECEIVED": 5.4679,
+    "FINAL_RENDER": 5.468,
+    "REQUEST_COMPLETE": 5.468,
+    "DERIVED_METRICS": {
+      "TTFT_SEC": 5.4675,
+      "FIRST_VISIBLE_OVERHEAD_SEC": 0.0003,
+      "GENERATION_DURATION_SEC": 0.0004,
+      "TOTAL_E2E_SEC": 5.468
+    }
+  }
+}

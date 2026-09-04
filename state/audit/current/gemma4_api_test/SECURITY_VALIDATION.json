@@ -1,0 +1,6 @@
+{
+  "secrets_exposed_in_stdout": false,
+  "secrets_exposed_in_json": false,
+  "secrets_exposed_in_report": false,
+  "credentials_secure": true
+}

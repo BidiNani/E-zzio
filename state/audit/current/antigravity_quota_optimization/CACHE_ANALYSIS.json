@@ -1,0 +1,41 @@
+{
+  "technical_cache_design": {
+    "scope": "Build & Audit Acceleration (Strictement découplé de la mémoire cognitive souveraine)",
+    "tiers": [
+      {
+        "tier": "TIER_1_FILE_AST",
+        "description": "Cache de parsing AST et d'inventaire de fichiers",
+        "key_components": [
+          "file_path",
+          "mtime",
+          "file_size",
+          "sha256"
+        ],
+        "invalidation": "Sur modification du mtime ou du hash"
+      },
+      {
+        "tier": "TIER_2_AUDIT_ARTIFACTS",
+        "description": "Réutilisation des artefacts vérifiés sous state/audit/current/",
+        "key_components": [
+          "git_commit_sha",
+          "artifact_hash"
+        ],
+        "invalidation": "Sur nouveau commit affectant les modules audités"
+      },
+      {
+        "tier": "TIER_3_STATIC_PROMPT_CACHE",
+        "description": "Cache déterministe pour requêtes d'inspection identiques",
+        "key_components": [
+          "prompt_sha256",
+          "context_sha256",
+          "repo_rev"
+        ],
+        "invalidation": "Sur tout changement de code ou de prompt"
+      }
+    ],
+    "invariants_safeguard": {
+      "second_memory_authority": false,
+      "stale_data_prevention": "Invalidation immédiate si Git HEAD ou mtime change"
+    }
+  }
+}

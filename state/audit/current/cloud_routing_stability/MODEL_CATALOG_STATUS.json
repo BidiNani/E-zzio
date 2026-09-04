@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "timestamp": "2026-08-31T18:47:00+02:00",
+    "standard": "EVIDENCE RULE v1.1",
+    "repository": "G:/AI/E-zzio",
+    "principle": "EXISTENCE_NEQ_PREFERENCE (Tous les modèles valides restent intacts dans le catalogue)"
+  },
+  "models": [
+    {
+      "id": "gemini-3.5-flash-lite",
+      "exists": true,
+      "accessible": true,
+      "configured": true,
+      "runtime_proven": true,
+      "current_status": "TEMPORARILY_DEPRIORITIZED_FOR_QUOTA",
+      "recovery_eligible": true
+    },
+    {
+      "id": "gemini-3.5-flash",
+      "exists": true,
+      "accessible": true,
+      "configured": true,
+      "runtime_proven": true,
+      "current_status": "TEMPORARILY_DEPRIORITIZED_FOR_QUOTA",
+      "recovery_eligible": true
+    },
+    {
+      "id": "gemini-3.1-flash-lite",
+      "exists": true,
+      "accessible": true,
+      "configured": true,
+      "runtime_proven": true,
+      "current_status": "CURRENTLY_PREFERRED_FAST",
+      "recovery_eligible": true
+    },
+    {
+      "id": "gemini-3.6-flash",
+      "exists": true,
+      "accessible": true,
+      "configured": true,
+      "runtime_proven": true,
+      "current_status": "CURRENTLY_PREFERRED_GENERAL",
+      "recovery_eligible": true
+    },
+    {
+      "id": "gemini-3.7-flash",
+      "exists": true,
+      "accessible": true,
+      "configured": true,
+      "runtime_proven": true,
+      "current_status": "CURRENTLY_PREFERRED_CODING",
+      "recovery_eligible": true
+    },
+    {
+      "id": "gemini-3.1-pro-preview",
+      "exists": true,
+      "accessible": true,
+      "configured": true,
+      "runtime_proven": true,
+      "current_status": "CURRENTLY_PREFERRED_DEEP",
+      "recovery_eligible": true
+    },
+    {
+      "id": "gemini-2.5-flash-lite",
+      "exists": true,
+      "accessible": true,
+      "configured": true,
+      "runtime_proven": true,
+      "current_status": "RESERVE_HEALTHY",
+      "recovery_eligible": true
+    },
+    {
+      "id": "gemini-2.5-flash",
+      "exists": true,
+      "accessible": true,
+      "configured": true,
+      "runtime_proven": true,
+      "current_status": "RESERVE",
+      "recovery_eligible": true
+    }
+  ]
+}

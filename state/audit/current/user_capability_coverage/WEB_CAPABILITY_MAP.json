@@ -1,0 +1,28 @@
+{
+  "search_primary": {
+    "name": "Tavily / DuckDuckGo HTML",
+    "user_accessible": true,
+    "status": "ACTIVE"
+  },
+  "search_fallback": {
+    "name": "Jina Search / DuckDuckGo",
+    "user_accessible": true,
+    "status": "ACTIVE"
+  },
+  "url_reader": {
+    "name": "SafeWebFetcher / WebProvider.crawl",
+    "user_accessible": true,
+    "ssrf_protection": true,
+    "status": "ACTIVE"
+  },
+  "url_fallback": {
+    "name": "Jina Reader",
+    "user_accessible": true,
+    "status": "ACTIVE"
+  },
+  "searxng": {
+    "name": "SearXNG Local Instance",
+    "user_accessible": false,
+    "status": "OPTIONAL_DORMANT"
+  }
+}

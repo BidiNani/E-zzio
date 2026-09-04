@@ -1,0 +1,8 @@
+{
+  "TTFT_AFTER_MEAN_MS": 3735.5,
+  "DELTA_MS": -1732.0,
+  "GAIN_PERCENT": 31.68,
+  "PROVIDER_STREAM_CLIENT": "httpx.AsyncClient HTTP/2 Persistent Keep-Alive Pool",
+  "LOCAL_PREPROCESSING_MS": 8.243,
+  "PROVIDER_LATENCY_MS": 3727.26
+}

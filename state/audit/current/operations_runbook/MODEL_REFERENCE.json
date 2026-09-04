@@ -1,0 +1,32 @@
+{
+  "FAST": {
+    "primary": "gemini-3.1-flash-lite",
+    "fallback": "groq/compound-mini",
+    "last_resort": "phi4-mini:latest"
+  },
+  "GENERAL": {
+    "primary": "gemini-3.6-flash",
+    "fallback": "groq/compound",
+    "last_resort": "hermes3:8b"
+  },
+  "CODING": {
+    "primary": "gemini-3.7-flash",
+    "fallback": "qwen/qwen3.6-27b",
+    "last_resort": "qwen3.5:9b"
+  },
+  "DEEP": {
+    "primary": "gemini-3.1-pro-preview",
+    "fallback": "openai/gpt-oss-120b",
+    "last_resort": "qwen3.5:9b"
+  },
+  "IMAGE": {
+    "primary": "gemini-3.1-flash-image",
+    "fallback": "gemini-3-pro-image",
+    "last_resort": "none"
+  },
+  "VIDEO": {
+    "primary": "gemini-omni-1.1-flash",
+    "fallback": "none",
+    "last_resort": "none"
+  }
+}

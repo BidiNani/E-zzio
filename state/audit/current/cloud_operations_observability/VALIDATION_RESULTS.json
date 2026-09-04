@@ -1,0 +1,9 @@
+{
+  "total_requests_executed": 18,
+  "cache_hit_rate": 27.78,
+  "cloud_failover_rate": 5.56,
+  "ollama_fallback_rate": 5.56,
+  "nominal_ollama_calls": 0,
+  "quality_preserved": true,
+  "status": "ALL_CHECKS_PASSED"
+}

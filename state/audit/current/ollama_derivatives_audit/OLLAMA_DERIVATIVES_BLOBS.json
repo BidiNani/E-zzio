@@ -1,0 +1,50 @@
+{
+  "total_blobs_count": 40,
+  "total_blobs_bytes": 27463379142,
+  "total_blobs_gb": 25.58,
+  "ez_models_logical_gb": 24.24,
+  "ez_models_shared_weights_gb": 12.8,
+  "ez_models_unique_blobs_gb": 11.44,
+  "shared_weight_details": [
+    {
+      "ez_model": "ez-router:latest",
+      "canonical_model": "phi4-mini:latest",
+      "blob_sha256": "3c168af18c3ef2fb9dfaefcae5efbbccce05437ea6c2789f2cf05d0e7eecae54",
+      "blob_size_bytes": 2490799744,
+      "blob_size_gb": 2.32,
+      "sharing_status": "IDENTICAL_BLOB"
+    },
+    {
+      "ez_model": "ez-core-safe:latest",
+      "canonical_model": "qwen3.5:9b",
+      "blob_sha256": "dec52a44bb4e3c5443c983fb0bc8fffae1ee5db87a02cbf3a479ff735c02ef59",
+      "blob_size_bytes": 6594246720,
+      "blob_size_gb": 6.14,
+      "sharing_status": "IDENTICAL_BLOB"
+    },
+    {
+      "ez_model": "ez-agent-hermes:latest",
+      "canonical_model": "hermes3:8b",
+      "blob_sha256": "c8985d2334f59ae35ccbbf3e390c584a22adfaea06cc0a7aa5fa9c3be79f187a",
+      "blob_size_bytes": 4661213184,
+      "blob_size_gb": 4.34,
+      "sharing_status": "IDENTICAL_BLOB"
+    }
+  ],
+  "unique_blob_details": [
+    {
+      "ez_model": "ez-core-free:latest",
+      "blob_sha256": "3c08d6616a9a087cf283d0dfc25f4a6e87f5d96c9444158ba6d5be9b16ea9825",
+      "blob_size_bytes": 5732102848,
+      "blob_size_gb": 5.34,
+      "sharing_status": "ORPHANED_EXCLUSIVE_BLOB"
+    },
+    {
+      "ez_model": "ez-rag-expert:latest",
+      "blob_sha256": "85292217f0aa4bca0d39e31d4da76f3f0193132e4d2a13cc7abeb89d81d2df52",
+      "blob_size_bytes": 6554521792,
+      "blob_size_gb": 6.1,
+      "sharing_status": "ORPHANED_EXCLUSIVE_BLOB"
+    }
+  ]
+}

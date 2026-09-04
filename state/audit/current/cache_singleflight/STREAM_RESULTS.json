@@ -1,0 +1,3 @@
+{
+  "policy": "Pour les requêtes en streaming, le Leader gère le flux actif. Les requêtes concurrentes non-streamées peuvent recevoir le buffer final compilé sans concaténation ni corruption."
+}

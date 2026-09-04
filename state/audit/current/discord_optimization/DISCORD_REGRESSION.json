@@ -1,0 +1,33 @@
+{
+  "previous_regression_scope": 15,
+  "current_regression_scope": 17,
+  "total_tests_discovered": 330,
+  "executed_smoke_tests": 17,
+  "passed_tests": 17,
+  "failed_tests": 0,
+  "skipped_tests": 0,
+  "pass_rate_pct": 100.0,
+  "scope_change_explained": true,
+  "previous_15_tests_breakdown": [
+    "tests/test_nvidia_nim_provider.py (3 tests)",
+    "tests/test_capability_policy.py (3 tests)",
+    "tests/test_capability_qualification.py (3 tests)",
+    "tests/test_capability_registry_and_qualifications.py (3 tests)",
+    "tests/test_security_governance.py (3 tests)"
+  ],
+  "new_2_tests": [
+    "tests/test_ezzio_sdk_and_links.py::test_ezzio_sdk_initialization",
+    "tests/test_ezzio_sdk_and_links.py::test_ezzio_sdk_direct_facade"
+  ],
+  "authorities_intact": [
+    "core/cognition/cognitive_gateway.py",
+    "core/cognition/model_router.py",
+    "core/memory/unified_gateway.py",
+    "core/security/secrets_vault.py",
+    "core/identity/canonical_identity.py",
+    "core/capabilities/registry.py"
+  ],
+  "frozen_core_drift": 0,
+  "second_authority_count": 0,
+  "second_memory_count": 0
+}

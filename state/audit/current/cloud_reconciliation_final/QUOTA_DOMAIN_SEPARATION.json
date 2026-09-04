@@ -1,0 +1,14 @@
+{
+  "ANTIGRAVITY_AGENT_QUOTA": {
+    "domain": "IDE Platform Interface (Antigravity)",
+    "signal_type": "UI_ONLY / OUT_OF_BAND",
+    "runtime_accessible_to_ezzio": false,
+    "impact": "Aucun impact sur le runtime backend d'E-ZzIO"
+  },
+  "GEMINI_API_QUOTA": {
+    "domain": "Google Cloud API Runtime",
+    "signal_type": "HTTP 429 + Retry-After Header",
+    "runtime_accessible_to_ezzio": true,
+    "impact": "Déclenche le cooldown du projet slot et la bascule Same-Role sur Groq"
+  }
+}

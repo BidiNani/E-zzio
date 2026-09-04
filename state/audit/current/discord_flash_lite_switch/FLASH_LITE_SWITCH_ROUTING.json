@@ -1,0 +1,14 @@
+{
+  "ACTUAL_MODEL_USED": "gemini-3.5-flash-lite",
+  "MODEL_ROUTER_MODEL": "gemini-3.5-flash-lite",
+  "MODEL_RESOLUTION_SOURCE": "ModelRouter.select_engine(task_type='fast')",
+  "SECOND_MODEL_AUTHORITY": 0,
+  "HARDCODED_DIVERGENCE_REMOVED": true,
+  "ROUTE_DECISION": {
+    "ok": true,
+    "provider": "gemini_pool",
+    "model": "gemini-3.5-flash-lite",
+    "tier": "FAST",
+    "status": "ONLINE"
+  }
+}

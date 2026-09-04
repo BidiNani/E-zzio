@@ -1,0 +1,19 @@
+{
+  "tests": [
+    {
+      "test": "Tavily Failure -> Jina Search",
+      "result": "7 résultats récupérés en 26.3s via s.jina.ai",
+      "status": "PROVEN"
+    },
+    {
+      "test": "SafeWebFetcher Failure -> Jina Reader",
+      "result": "Bascule vers r.jina.ai en repli cloud",
+      "status": "PROVEN"
+    },
+    {
+      "test": "Separation of Concerns",
+      "result": "Le failover Web ne modifie JAMAIS le choix du modèle LLM",
+      "status": "VERIFIED"
+    }
+  ]
+}

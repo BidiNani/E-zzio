@@ -1,0 +1,12 @@
+{
+  "anomalies_detected": [
+    {
+      "type": "LATENCY_SPIKE_FAST",
+      "description": "Latence FAST anormale (2631.87ms) durant le repli Ollama local",
+      "timestamp": "2026-08-31T18:51:22"
+    }
+  ],
+  "flapping_detected": false,
+  "stampede_detected": false,
+  "unexpected_nominal_ollama": false
+}

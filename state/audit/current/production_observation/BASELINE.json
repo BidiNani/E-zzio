@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-08-31T19:01:31+0200",
+  "service": "E-ZZIO Sovereign Core",
+  "version": "v2.6 Canonical",
+  "health": {
+    "status": "ONLINE",
+    "ok": true,
+    "service": "E-ZZIO",
+    "pid": 39464,
+    "worker_pool": {
+      "status": "INITIALIZING",
+      "profile": "GamingOptimized",
+      "max_ram_gb": 10,
+      "active_workers": 8
+    }
+  },
+  "routing_policy": "cloud_first",
+  "primary_provider": "gemini_pool",
+  "fallback_provider": "groq",
+  "local_last_resort": "ollama"
+}

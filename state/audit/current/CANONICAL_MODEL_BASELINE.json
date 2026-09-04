@@ -1,0 +1,16 @@
+{
+  "audit_authority": "STATE_AUDIT_CURRENT",
+  "timestamp": 1788131306.7169428,
+  "baseline_classification": "CURRENT_PRODUCTION_BASELINE",
+  "router": "phi4-mini:latest",
+  "core": "qwen3.5:9b",
+  "agent": "hermes3:8b",
+  "coding": "hermes3:8b",
+  "tools": "hermes3:8b",
+  "vision_local": "NONE (qwen2.5vl:3b absent)",
+  "vision_cloud": "meta/llama-3.2-11b-vision-instruct (NVIDIA NIM)",
+  "embeddings": "bge-m3:latest",
+  "tts_primary": "Kokoro-82M (Configured, runtime NOT_AVAILABLE)",
+  "tts_fast": "Piper (Configured, runtime NOT_AVAILABLE)",
+  "tts_failsafe": "ezzio-procedural-tts (PROVEN, 0.48ms)"
+}

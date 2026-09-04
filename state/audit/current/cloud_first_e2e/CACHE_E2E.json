@@ -1,0 +1,15 @@
+{
+  "run_1_miss": {
+    "source": "gemini_pool",
+    "latency_ms": 775.15,
+    "provider_calls": 1
+  },
+  "run_2_hit": {
+    "source": "cache",
+    "latency_ms": 0.75,
+    "provider_calls": 0,
+    "status": "CACHE_HIT"
+  },
+  "coalescing_singleflight": "1 Leader, N-1 Waiters sous concurrence",
+  "proof": "OBSERVED"
+}

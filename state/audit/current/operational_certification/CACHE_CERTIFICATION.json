@@ -1,0 +1,6 @@
+{
+  "hit_latency_ms": 27.63,
+  "hit_rate_supported": true,
+  "zero_provider_call_on_hit": true,
+  "status": "OPERATIONAL"
+}
