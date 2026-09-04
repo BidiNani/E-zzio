@@ -1,0 +1,19 @@
+{
+  "android_device": {
+    "device_id": "emulator-5554",
+    "model": "Android_SDK_built_for_x86_64",
+    "package": "ai.ezzio.office",
+    "version_name": "9.0.1",
+    "version_code": 901,
+    "debuggable": false,
+    "activity_running": true
+  },
+  "desktop": {
+    "launcher": "tools/launch_desktop.ps1",
+    "service_worker": "runtime/web/sw.js",
+    "status": "OPERATIONAL"
+  },
+  "orchestrator": "CANONICAL_DAG_UNIFIED",
+  "agent_registry": "DYNAMIC_10_FLEET_HEARTBEAT_DECAY",
+  "provenance_triggers": "SQLITE_APPEND_ONLY_IMMUTABLE"
+}
