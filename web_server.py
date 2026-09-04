@@ -9,6 +9,7 @@ from pathlib import Path
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 # 1. Configuration stricte du Path AVANT les imports locaux
 ROOT_PATH = Path(r"G:\AI\E-zzio")
@@ -72,6 +73,11 @@ app.include_router(mobile_router)
 app.include_router(master_router)
 app.include_router(memory_router)
 
+# 6. Montage des fichiers statiques locaux (offline-first UI, CSS, assets)
+web_static_dir = ROOT_PATH / "runtime" / "web"
+if web_static_dir.exists():
+    app.mount("/static", StaticFiles(directory=str(web_static_dir)), name="static")
+
 
 @app.get("/")
 async def get_dashboard():
@@ -81,4 +87,4 @@ async def get_dashboard():
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("web_server:app", host="127.0.0.1", port=8001, log_level="info")
+    uvicorn.run("web_server:app", host="0.0.0.0", port=8001, log_level="info")
