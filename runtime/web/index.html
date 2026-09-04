@@ -5,8 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>E-ZZIO V9.3 — Tactical Sovereign AI Command Center</title>
   <link rel="stylesheet" href="/static/ezzio-tactical.css" />
-  <link rel="stylesheet" href="ezzio-tactical.css" />
   <link rel="stylesheet" href="/static/tailwind.min.css" />
+  <script src="/static/ezzio-office-motion.js"></script>
+  <script src="/static/ezzio-office-canvas.js"></script>
+  <script src="ezzio-office-motion.js"></script>
+  <script src="ezzio-office-canvas.js"></script>
 
   <script>
     if (typeof tailwind !== 'undefined') {
@@ -489,6 +492,33 @@ body {
           </span>
           <span>POLL: <span id="last-poll" class="text-neutral-300">Just now</span></span>
         </div>
+      </div>
+
+      <!-- VIEW SELECTOR & CAMERA HUD (V9.4 LIVING OFFICE) -->
+      <div class="flex flex-wrap items-center justify-between gap-3 bg-ezzio-card/70 border border-ezzio-border px-4 py-2.5 rounded-xl text-xs font-mono">
+        <div class="flex items-center gap-2">
+          <button id="tab-canvas-view" onclick="switchOfficeView('canvas')" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold transition flex items-center gap-1.5 shadow">
+            <span>🏢</span> <span>2.5D LIVING OFFICE</span>
+          </button>
+          <button id="tab-grid-view" onclick="switchOfficeView('grid')" class="px-3 py-1.5 rounded-lg bg-neutral-800 text-neutral-400 hover:text-white transition flex items-center gap-1.5">
+            <span>📊</span> <span>OPERATOR CARDS</span>
+          </button>
+          <button id="tab-showcase" onclick="triggerShowcaseDemo()" class="px-3 py-1.5 rounded-lg bg-purple-950/50 hover:bg-purple-900/50 border border-purple-500/40 text-purple-300 font-bold transition flex items-center gap-1.5" title="Déclencher une séquence vivante de démonstration">
+            <span>🎬</span> <span>SHOWCASE DEMO</span>
+          </button>
+        </div>
+        <div class="flex items-center gap-2" id="canvas-camera-bar">
+          <span class="text-neutral-500">CAMERA:</span>
+          <button onclick="canvasZoom(1.18)" class="px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-200" title="Zoom In">+</button>
+          <button onclick="canvasZoom(0.82)" class="px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-200" title="Zoom Out">-</button>
+          <button onclick="canvasResetCamera()" class="px-2.5 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-200" title="Center Overview">🎯 RECENTRER</button>
+          <span id="canvas-fps" class="text-emerald-400 font-bold ml-2 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/30">60 FPS</span>
+        </div>
+      </div>
+
+      <!-- 2.5D LIVING OFFICE CANVAS CONTAINER -->
+      <div id="office-canvas-container" class="relative w-full h-[520px] bg-[#08090C] border border-ezzio-border rounded-xl overflow-hidden shadow-2xl">
+        <canvas id="office-canvas" class="w-full h-full block"></canvas>
       </div>
 
       <!-- 8 ROOMS GRID (2.5D LIVING PIXEL CARDS) -->
@@ -1372,12 +1402,87 @@ body {
         renderRoomsAndAgents(state);
         renderHUD(state, approvals, diag, providersHealth);
         renderLiveCodeActivity(state.agents);
+        if (officeCanvas && state.agents) {
+          officeCanvas.syncBackendAgents(state.agents);
+        }
         document.getElementById('last-poll').textContent = new Date().toLocaleTimeString();
       }
 
       if (eventsData && eventsData.events) {
         renderEvents(eventsData.events);
       }
+    }
+
+    // 2.5D Canvas Controls & Modes (V9.4)
+    let officeCanvas = null;
+    let currentOfficeView = 'canvas';
+
+    function switchOfficeView(mode) {
+      currentOfficeView = mode;
+      const canvasContainer = document.getElementById('office-canvas-container');
+      const gridContainer = document.getElementById('rooms-grid');
+      const btnCanvas = document.getElementById('tab-canvas-view');
+      const btnGrid = document.getElementById('tab-grid-view');
+      const camBar = document.getElementById('canvas-camera-bar');
+
+      if (mode === 'canvas') {
+        canvasContainer.style.display = 'block';
+        gridContainer.style.display = 'grid';
+        btnCanvas.className = 'px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold transition flex items-center gap-1.5 shadow';
+        btnGrid.className = 'px-3 py-1.5 rounded-lg bg-neutral-800 text-neutral-400 hover:text-white transition flex items-center gap-1.5';
+        camBar.style.display = 'flex';
+        if (officeCanvas) officeCanvas.resize();
+      } else {
+        canvasContainer.style.display = 'none';
+        gridContainer.style.display = 'grid';
+        btnGrid.className = 'px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold transition flex items-center gap-1.5 shadow';
+        btnCanvas.className = 'px-3 py-1.5 rounded-lg bg-neutral-800 text-neutral-400 hover:text-white transition flex items-center gap-1.5';
+        camBar.style.display = 'none';
+      }
+    }
+
+    function canvasZoom(factor) {
+      if (officeCanvas) officeCanvas.camera.targetZoom = Math.max(0.5, Math.min(2.5, officeCanvas.camera.targetZoom * factor));
+    }
+
+    function canvasResetCamera() {
+      if (officeCanvas) {
+        officeCanvas.camera.targetX = 18 * officeCanvas.tileSize;
+        officeCanvas.camera.targetY = 12 * officeCanvas.tileSize;
+        officeCanvas.camera.targetZoom = 1.0;
+        officeCanvas.camera.followAgentId = null;
+      }
+    }
+
+    function toggleImmersiveMode() {
+      const container = document.getElementById('office-canvas-container');
+      if (!document.fullscreenElement) {
+        if (container.requestFullscreen) container.requestFullscreen();
+        else if (container.webkitRequestFullscreen) container.webkitRequestFullscreen();
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    function triggerShowcaseDemo() {
+      if (!officeCanvas) return;
+      const coder = officeCanvas.agents.get('coder_worker');
+      const hermes = officeCanvas.agents.get('hermes_executor');
+      const sec = officeCanvas.agents.get('sec_guard');
+      if (coder) coder.setDestination(18, 12, 'WALK');
+      if (hermes) setTimeout(() => hermes.setDestination(18, 11, 'WALK'), 400);
+      if (sec) {
+        sec.setDestination(7, 5, 'WALK');
+        sec.status = 'WAITING_APPROVAL';
+      }
+      setTimeout(() => {
+        if (coder) coder.setDestination(16, 4, 'WORK');
+        if (hermes) hermes.setDestination(20, 4, 'WORK');
+        if (sec) {
+          sec.setDestination(30, 12, 'WORK');
+          sec.status = 'WORKING';
+        }
+      }, 5000);
     }
 
     // Keyboard Shortcuts (Accessibility)
@@ -1391,6 +1496,37 @@ body {
         refreshState();
       }
     });
+
+    // Initialisation du 2.5D Living Canvas & Animation Loop (V9.4)
+    if (window.OfficeCanvas && document.getElementById('office-canvas')) {
+      try {
+        officeCanvas = new window.OfficeCanvas('office-canvas');
+        fetch('/master/api/v1/office/map')
+          .then(r => r.json())
+          .then(m => {
+            if (m.ok && officeCanvas) officeCanvas.setMap(m);
+          })
+          .catch(() => {
+            fetch('/office/map').then(r => r.json()).then(m => {
+              if (m.ok && officeCanvas) officeCanvas.setMap(m);
+            }).catch(() => {});
+          });
+      } catch (err) {
+        console.warn('Canvas init error', err);
+      }
+    }
+
+    let lastCanvasTime = performance.now();
+    function canvasRenderLoop(now) {
+      const dt = Math.min(0.1, (now - lastCanvasTime) / 1000);
+      lastCanvasTime = now;
+      if (officeCanvas && currentOfficeView !== 'grid') {
+        officeCanvas.update(dt);
+        officeCanvas.render();
+      }
+      requestAnimationFrame(canvasRenderLoop);
+    }
+    requestAnimationFrame(canvasRenderLoop);
 
     // Auto-refresh toutes les 3 secondes
     refreshState().then(() => {

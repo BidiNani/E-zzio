@@ -45,6 +45,14 @@ class AgentVisualState(BaseModel):
     collaborator_id: Optional[str] = None  # Agent partenaire de collaboration
     code_activity: Optional[Dict[str, Any]] = None  # Info repo, branch, last test/file
     terminal_logs: List[str] = Field(default_factory=list)  # Logs de terminal réels
+    # 2.5D Spatial Simulation Fields (V9.4 Living Office)
+    x: float = 0.0
+    y: float = 0.0
+    target_room: Optional[str] = None
+    target_x: Optional[float] = None
+    target_y: Optional[float] = None
+    heading: str = "DOWN"  # "UP", "DOWN", "LEFT", "RIGHT"
+    animation_state: str = "IDLE"  # "IDLE", "WALK", "WORK", "WAIT_APPROVAL", "ERROR", "DONE"
     updated_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
 
@@ -357,6 +365,55 @@ async def get_office_state():
             if reg_agent.terminal_logs:
                 vis_agent.terminal_logs = reg_agent.terminal_logs[-10:]
 
+    # Attribution déterministe des coordonnées spatiales 2.5D et animations (V9.4)
+    for vis_agent in agents:
+        if vis_agent.agent_id == "master_ezzio":
+            vis_agent.x, vis_agent.y = 5.0, 4.0
+            vis_agent.heading = "DOWN"
+            vis_agent.animation_state = "WAIT_APPROVAL" if has_approval_pending else "WORK"
+        elif vis_agent.agent_id == "coder_worker":
+            vis_agent.x, vis_agent.y = 16.0, 4.0
+            vis_agent.heading = "DOWN"
+            vis_agent.animation_state = "WORK"
+        elif vis_agent.agent_id == "hermes_executor":
+            vis_agent.x, vis_agent.y = 20.0, 4.0
+            vis_agent.heading = "LEFT"
+            vis_agent.animation_state = "WORK"
+        elif vis_agent.agent_id == "researcher_scout":
+            vis_agent.x, vis_agent.y = 30.0, 4.0
+            vis_agent.heading = "DOWN"
+            vis_agent.animation_state = "IDLE"
+        elif vis_agent.agent_id == "qa_tester":
+            vis_agent.x, vis_agent.y = 5.0, 12.0
+            vis_agent.heading = "RIGHT"
+            vis_agent.animation_state = "WORK"
+        elif vis_agent.agent_id == "sec_guard":
+            if has_approval_pending:
+                vis_agent.x, vis_agent.y = 7.0, 5.0
+                vis_agent.target_room = "command_center"
+                vis_agent.heading = "UP"
+                vis_agent.animation_state = "WAIT_APPROVAL"
+            else:
+                vis_agent.x, vis_agent.y = 30.0, 12.0
+                vis_agent.heading = "LEFT"
+                vis_agent.animation_state = "WORK"
+        elif vis_agent.agent_id == "docs_scribe":
+            vis_agent.x, vis_agent.y = 5.0, 19.0
+            vis_agent.heading = "RIGHT"
+            vis_agent.animation_state = "WORK"
+        elif vis_agent.agent_id == "devops_dock":
+            vis_agent.x, vis_agent.y = 18.0, 19.0
+            vis_agent.heading = "UP"
+            vis_agent.animation_state = "WORK"
+        elif vis_agent.agent_id == "memory_archivist":
+            vis_agent.x, vis_agent.y = 30.0, 19.0
+            vis_agent.heading = "LEFT"
+            vis_agent.animation_state = "IDLE"
+        elif vis_agent.agent_id == "antigravity_agent":
+            vis_agent.x, vis_agent.y = 14.0, 2.0
+            vis_agent.heading = "DOWN"
+            vis_agent.animation_state = "ERROR"
+
     rooms = [
 
         "command_center",
@@ -449,3 +506,141 @@ async def get_service_worker():
     from fastapi.responses import FileResponse
     sw_path = os.path.join(r"G:\AI\E-zzio\runtime\web", "sw.js")
     return FileResponse(sw_path, media_type="application/javascript")
+
+
+# ==============================================================================
+# V9.4 2.5D SPATIAL MAP SPECIFICATION & CANONICAL LAYOUT
+# ==============================================================================
+class TileCoord(BaseModel):
+    x: float
+    y: float
+
+class RoomDefinition(BaseModel):
+    name: str
+    code: str
+    x: int
+    y: int
+    w: int
+    h: int
+    door: TileCoord
+    desk: TileCoord
+    subdesk: Optional[TileCoord] = None
+    color: str
+    icon: str
+    description: str
+
+class OfficeMapResponse(BaseModel):
+    ok: bool = True
+    grid_width: int = 36
+    grid_height: int = 24
+    tile_size: int = 28
+    rooms: Dict[str, RoomDefinition]
+
+
+CANONICAL_OFFICE_MAP = {
+    "command_center": RoomDefinition(
+        name="COMMAND CENTER",
+        code="command_center",
+        x=1, y=1, w=10, h=7,
+        door=TileCoord(x=11.0, y=4.0),
+        desk=TileCoord(x=5.0, y=4.0),
+        color="#3B82F6",
+        icon="👑",
+        description="Master Governor, Executive Directives & HITL Sanctuary"
+    ),
+    "dev_lab": RoomDefinition(
+        name="DEV LAB",
+        code="dev_lab",
+        x=13, y=1, w=10, h=7,
+        door=TileCoord(x=18.0, y=8.0),
+        desk=TileCoord(x=16.0, y=4.0),
+        subdesk=TileCoord(x=20.0, y=4.0),
+        color="#10B981",
+        icon="💻",
+        description="Autonomous Coding Lab, Self-Healing & Hermes MCP Confinement"
+    ),
+    "research_room": RoomDefinition(
+        name="RESEARCH ROOM",
+        code="research_room",
+        x=25, y=1, w=10, h=7,
+        door=TileCoord(x=24.0, y=4.0),
+        desk=TileCoord(x=30.0, y=4.0),
+        color="#8B5CF6",
+        icon="🔬",
+        description="Knowledge Scout, Deep Web Perception & AST Inspection"
+    ),
+    "test_lab": RoomDefinition(
+        name="TEST LAB",
+        code="test_lab",
+        x=1, y=9, w=10, h=6,
+        door=TileCoord(x=11.0, y=12.0),
+        desk=TileCoord(x=5.0, y=12.0),
+        color="#F59E0B",
+        icon="🧪",
+        description="Continuous Pytest Suite, Regression Gate & Verification"
+    ),
+    "central_hub": RoomDefinition(
+        name="CENTRAL CROSSWAY & HUB",
+        code="central_hub",
+        x=12, y=9, w=12, h=6,
+        door=TileCoord(x=18.0, y=12.0),
+        desk=TileCoord(x=18.0, y=12.0),
+        color="#64748B",
+        icon="🌐",
+        description="Cross-Room Waypoint Corridors & Agent Meeting Hub"
+    ),
+    "security_vault": RoomDefinition(
+        name="SECURITY VAULT",
+        code="security_vault",
+        x=25, y=9, w=10, h=6,
+        door=TileCoord(x=24.0, y=12.0),
+        desk=TileCoord(x=30.0, y=12.0),
+        color="#EF4444",
+        icon="🛡️",
+        description="Cryptographic SHA-256 Audit Ledger & Capability Policy Guard"
+    ),
+    "docs_room": RoomDefinition(
+        name="DOCS ROOM",
+        code="docs_room",
+        x=1, y=16, w=10, h=7,
+        door=TileCoord(x=11.0, y=19.0),
+        desk=TileCoord(x=5.0, y=19.0),
+        color="#06B6D4",
+        icon="📝",
+        description="Architecture Specs, Living Markdown & User Documentation"
+    ),
+    "devops_dock": RoomDefinition(
+        name="DEVOPS DOCK",
+        code="devops_dock",
+        x=13, y=16, w=10, h=7,
+        door=TileCoord(x=18.0, y=15.0),
+        desk=TileCoord(x=18.0, y=19.0),
+        color="#EC4899",
+        icon="🚀",
+        description="FastAPI Runtime Gateway, CI/CD & Android Release Dock"
+    ),
+    "memory_core": RoomDefinition(
+        name="MEMORY CORE",
+        code="memory_core",
+        x=25, y=16, w=10, h=7,
+        door=TileCoord(x=24.0, y=19.0),
+        desk=TileCoord(x=30.0, y=19.0),
+        color="#A855F7",
+        icon="🧠",
+        description="Unified SQLite WAL, FTS5 Search & Vector Cognitive Store"
+    ),
+}
+
+
+@router.get("/api/v1/office/map", response_model=OfficeMapResponse)
+@router.get("/office/map", response_model=OfficeMapResponse)
+async def get_office_map():
+    """Fournit la cartographie spatiale canonique 2.5D du bureau et les coordonnées des pièces."""
+    return OfficeMapResponse(
+        ok=True,
+        grid_width=36,
+        grid_height=24,
+        tile_size=28,
+        rooms=CANONICAL_OFFICE_MAP,
+    )
+
