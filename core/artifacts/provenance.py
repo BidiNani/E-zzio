@@ -1,4 +1,4 @@
-﻿"""
+"""
 E-ZZIO Core V9.2 — Sovereign Artifact Provenance Engine.
 Assure la traçabilité cryptographique absolue (SHA-256) de chaque fichier produit,
 scellé avec la tâche créatrice, l'agent responsable, la décision de politique et l'audit.
@@ -223,6 +223,33 @@ class ArtifactProvenanceEngine:
             "agent_id": data["agent_id"],
             "sealed_at": data["created_at"],
         }
+
+    def get_artifact(self, artifact_id: str) -> Optional[Dict[str, Any]]:
+        """Récupère l'enregistrement scellé d'un artefact."""
+        with self._get_connection() as conn:
+            cur = conn.execute("SELECT * FROM artifact_provenance WHERE artifact_id = ?", (artifact_id,))
+            row = cur.fetchone()
+            if not row:
+                return None
+            cols = [col[0] for col in cur.description]
+            res = dict(zip(cols, row))
+            res["metadata"] = json.loads(res.get("metadata_json", "{}"))
+            return res
+
+    def list_task_artifacts(self, task_id: str) -> List[Dict[str, Any]]:
+        """Récupère tous les artefacts scellés produits par une tâche ou ses sous-tâches."""
+        with self._get_connection() as conn:
+            cur = conn.execute(
+                "SELECT * FROM artifact_provenance WHERE task_id = ? OR parent_task_id = ? ORDER BY created_at ASC",
+                (task_id, task_id),
+            )
+            cols = [col[0] for col in cur.description]
+            artifacts = []
+            for row in cur.fetchall():
+                item = dict(zip(cols, row))
+                item["metadata"] = json.loads(item.get("metadata_json", "{}"))
+                artifacts.append(item)
+            return artifacts
 
 
 artifact_provenance = ArtifactProvenanceEngine()

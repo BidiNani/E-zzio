@@ -1,4 +1,4 @@
-﻿"""
+"""
 E-ZZIO Core V9.2 — Sovereign Multi-Agent DAG Orchestrator.
 Exécute des flux de tâches asynchrones en respectant les graphes de dépendances (DAG),
 la gouvernance cryptographique append-only (AuditLedger) et l'isolation des agents.
@@ -28,20 +28,32 @@ TaskHandler = Callable[[DAGNode], Coroutine[Any, Any, Dict[str, Any]]]
 class DAGOrchestrator:
     """Moteur d'exécution multi-agent pour les graphes de tâches (DAG)."""
 
+    _instance: Optional[DAGOrchestrator] = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance._initialized = False
+        return cls._instance
+
     def __init__(
         self,
         audit_ledger: Optional[AuditLedger] = None,
         max_concurrency: int = 4,
     ):
+        if getattr(self, "_initialized", False):
+            return
         self.audit_ledger = audit_ledger or AuditLedger()
         self.semaphore = asyncio.Semaphore(max_concurrency)
         self.handlers: Dict[str, TaskHandler] = {}
         self._active_dags: Dict[str, TaskDAG] = {}
         self._lock = asyncio.Lock()
+        self._initialized = True
 
     def register_handler(self, action_type: str, handler: TaskHandler) -> None:
         """Enregistre un exécuteur pour un type d'action donné."""
         self.handlers[action_type] = handler
+
 
     async def execute_dag(
         self,
@@ -130,7 +142,11 @@ class DAGOrchestrator:
                     payload={
                         "dag_id": dag.dag_id,
                         "task_id": node.task_id,
+                        "parent_id": node.parent_id,
                         "action_type": node.action_type,
+                        "provider": node.provider,
+                        "policy": node.policy_decision,
+                        "approval_id": node.approval_id,
                         "correlation_id": node.correlation_id,
                     },
                     status="RUNNING",
@@ -158,12 +174,15 @@ class DAGOrchestrator:
                         payload={
                             "dag_id": dag.dag_id,
                             "task_id": node.task_id,
+                            "parent_id": node.parent_id,
+                            "provider": node.provider,
                             "correlation_id": node.correlation_id,
                         },
                         status="COMPLETED",
                     )
                 except Exception:
                     pass
+
 
             except Exception as exc:
                 logger.error("Error executing node %s: %s", node.task_id, exc)
@@ -214,3 +233,6 @@ class DAGOrchestrator:
 
     def get_dag(self, dag_id: str) -> Optional[TaskDAG]:
         return self._active_dags.get(dag_id)
+
+
+dag_orchestrator = DAGOrchestrator()

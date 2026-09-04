@@ -156,16 +156,63 @@ class ModelRouter:
             if close_client:
                 await client.aclose()
 
+    async def probe_groq(self) -> Dict[str, Any]:
+        """Sonde la connectivité au service Groq Cloud."""
+        groq_key = os.getenv("GROQ_API_KEY")
+        if not groq_key:
+            return {"online": False, "latency_ms": 0, "configured": False, "error": "GROQ_API_KEY non fournie"}
+
+        client = self._client or httpx.AsyncClient()
+        close_client = self._client is None
+        start = time.perf_counter()
+        try:
+            url = "https://api.groq.com/openai/v1/models"
+            headers = {"Authorization": f"Bearer {groq_key}"}
+            res = await client.get(url, headers=headers, timeout=5.0)
+            latency_ms = int((time.perf_counter() - start) * 1000)
+            if res.status_code == 200:
+                models = [m.get("id") for m in res.json().get("data", [])]
+                return {"online": True, "latency_ms": latency_ms, "configured": True, "models": models, "error": None}
+            return {"online": False, "latency_ms": latency_ms, "configured": True, "error": f"HTTP {res.status_code}"}
+        except Exception as e:
+            latency_ms = int((time.perf_counter() - start) * 1000)
+            return {"online": False, "latency_ms": latency_ms, "configured": True, "error": str(e)}
+        finally:
+            if close_client:
+                await client.aclose()
+
+    def probe_antigravity(self) -> Dict[str, Any]:
+        """Inspecte le statut du provider Antigravity (fail-closed, blocage quota externe)."""
+        return {
+            "online": False,
+            "status": "BLOCKED_BY_EXTERNAL_QUOTA",
+            "latency_ms": 0,
+            "quota": "EXHAUSTED",
+            "fail_safe": True,
+            "error": "Antigravity = BLOCKED_BY_EXTERNAL_QUOTA",
+        }
+
     async def get_providers_health(self) -> Dict[str, Any]:
-        """Fournit une synthèse complète de la santé de tous les providers configurés."""
+        """Fournit une synthèse complète de la santé de tous les providers configurés (Ollama, Gemini, Groq, Antigravity)."""
         ollama_health = await self.probe_ollama()
         gemini_health = await self.probe_gemini()
+        groq_health = await self.probe_groq()
+        antigravity_health = self.probe_antigravity()
         return {
             "timestamp": time.time(),
             "providers": {
                 "ollama": ollama_health,
                 "gemini": gemini_health,
+                "groq": groq_health,
+                "antigravity": antigravity_health,
             },
-            "primary_available": ollama_health["online"] or gemini_health["online"],
+            "primary_available": ollama_health["online"] or gemini_health["online"] or groq_health["online"],
+            "deterministic_support": {
+                "ollama": "DETERMINISTIC",
+                "gemini": "BEST_EFFORT_DETERMINISTIC",
+                "groq": "BEST_EFFORT_DETERMINISTIC",
+                "antigravity": "UNSUPPORTED",
+            }
         }
+
 

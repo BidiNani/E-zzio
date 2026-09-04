@@ -1,4 +1,4 @@
-﻿"""
+"""
 E-ZZIO Core V9.2 — HITL V2 Differential Inspection Engine.
 Génère des vues différentielles unifiées (Unified Diff) et syntaxiquement formatées
 pour permettre une inspection humaine sans ambiguïté avant décision (APPROVE / REJECT).
@@ -72,15 +72,44 @@ class HITLDiffViewer:
         )
 
     @classmethod
-    def generate_file_diff(cls, file_path: Path | str, proposed_content: str) -> DiffInspectionResult:
+    def generate_file_diff(cls, file_path: Path | str, proposed_content: str | bytes) -> DiffInspectionResult:
         p = Path(file_path)
+        is_binary = isinstance(proposed_content, bytes) or (p.exists() and cls._is_binary_file(p))
+
+        if is_binary:
+            import hashlib
+            orig_hash = hashlib.sha256(p.read_bytes()).hexdigest().upper() if p.exists() else "NONE (NEW FILE)"
+            prop_bytes = proposed_content if isinstance(proposed_content, bytes) else proposed_content.encode("utf-8")
+            prop_hash = hashlib.sha256(prop_bytes).hexdigest().upper()
+            summary = f"Binary mutation: {len(prop_bytes)} bytes (SHA256: {prop_hash[:12]}...)"
+            diff_text = f"Binary files {p.name} differ:\n  Original SHA-256: {orig_hash}\n  Proposed SHA-256: {prop_hash}\n  Proposed size: {len(prop_bytes)} bytes"
+            return DiffInspectionResult(
+                target_path=str(p),
+                diff_unified=diff_text,
+                lines_added=0,
+                lines_removed=0,
+                is_identical=(orig_hash == prop_hash),
+                summary=summary,
+            )
+
         original_text = p.read_text(encoding="utf-8", errors="replace") if p.exists() else ""
+        from_file = f"a/{p.name}" if p.exists() else "/dev/null (NEW FILE)"
+        to_file = f"b/{p.name}" if proposed_content else "/dev/null (DELETED)"
         return cls.generate_text_diff(
             original_text=original_text,
-            new_text=proposed_content,
-            from_file=f"a/{p.name}",
-            to_file=f"b/{p.name}",
+            new_text=str(proposed_content),
+            from_file=from_file,
+            to_file=to_file,
         )
+
+    @staticmethod
+    def _is_binary_file(path: Path) -> bool:
+        try:
+            with open(path, "tr", encoding="utf-8") as f:
+                f.read(1024)
+                return False
+        except (UnicodeDecodeError, Exception):
+            return True
 
     @classmethod
     def generate_payload_diff(cls, params_payload: str | Dict[str, Any]) -> str:

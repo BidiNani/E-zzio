@@ -1,4 +1,4 @@
-﻿"""
+"""
 E-ZZIO Core V9.2 — Sovereign Task DAG Engine.
 Directed Acyclic Graph dependency management and topological task execution.
 """
@@ -44,6 +44,9 @@ class DAGNode:
     dependencies: List[str] = field(default_factory=list)
     parent_id: Optional[str] = None
     agent_id: str = "coder_worker"
+    provider: str = "local_ollama"
+    policy_decision: str = "ALLOW"
+    approval_id: Optional[str] = None
     status: DAGExecutionStatus = DAGExecutionStatus.PENDING
     result: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
@@ -62,6 +65,9 @@ class DAGNode:
             "dependencies": list(self.dependencies),
             "parent_id": self.parent_id,
             "agent_id": self.agent_id,
+            "provider": self.provider,
+            "policy_decision": self.policy_decision,
+            "approval_id": self.approval_id,
             "status": self.status.value,
             "result": self.result,
             "error": self.error,
@@ -71,6 +77,7 @@ class DAGNode:
             "completed_at": self.completed_at,
             "correlation_id": self.correlation_id,
         }
+
 
 
 class TaskDAG:
@@ -91,6 +98,9 @@ class TaskDAG:
         dependencies: Optional[List[str]] = None,
         parent_id: Optional[str] = None,
         agent_id: str = "coder_worker",
+        provider: str = "local_ollama",
+        policy_decision: str = "ALLOW",
+        approval_id: Optional[str] = None,
         max_retries: int = 2,
         correlation_id: Optional[str] = None,
     ) -> DAGNode:
@@ -105,12 +115,16 @@ class TaskDAG:
             dependencies=list(dependencies or []),
             parent_id=parent_id,
             agent_id=agent_id,
+            provider=provider,
+            policy_decision=policy_decision,
+            approval_id=approval_id,
             max_retries=max_retries,
             correlation_id=correlation_id or f"corr_{uuid.uuid4().hex[:12]}",
         )
         self.nodes[task_id] = node
         self.validate()
         return node
+
 
     def get_node(self, task_id: str) -> Optional[DAGNode]:
         return self.nodes.get(task_id)

@@ -1,3 +1,4 @@
+from pathlib import Path
 from fastapi import APIRouter
 from pydantic import BaseModel
 from core.ezzio_master import ezzio_master
@@ -53,7 +54,31 @@ async def get_system_diagnostics():
     # 2. État de la flotte d'agents
     agents = [a.to_dict() for a in agent_registry.list_agents()]
 
-    # 3. État mémoire et processus
+    # 3. État des bases de données SQLite (intégrité & WAL)
+    db_health = {}
+    for db_name, db_file in [
+        ("tasks", "runtime/state/tasks.db"),
+        ("audit", "runtime/evidence/audit_ledger.db"),
+        ("artifacts", "runtime/evidence/artifact_provenance.db"),
+    ]:
+        p = Path(db_file)
+        if p.exists():
+            try:
+                with sqlite3.connect(str(p), timeout=5.0) as conn:
+                    integrity = conn.execute("PRAGMA integrity_check").fetchone()[0]
+                    journal_mode = conn.execute("PRAGMA journal_mode").fetchone()[0]
+                db_health[db_name] = {
+                    "exists": True,
+                    "size_bytes": p.stat().st_size,
+                    "integrity": integrity,
+                    "journal_mode": journal_mode,
+                }
+            except Exception as e:
+                db_health[db_name] = {"exists": True, "error": str(e)}
+        else:
+            db_health[db_name] = {"exists": False}
+
+    # 4. État mémoire et processus
     diag = {
         "ok": True,
         "platform": "E-ZZIO Sovereign AI Operating Platform V9.2",
@@ -68,6 +93,7 @@ async def get_system_diagnostics():
             "total_agents": len(agents),
             "agents": agents,
         },
+        "databases": db_health,
         "frozen_core": {
             "status": "FROZEN_INTACT",
             "pillars_count": 3,
@@ -75,4 +101,42 @@ async def get_system_diagnostics():
         },
     }
     return diag
+
+
+
+@router.get("/api/v1/artifacts/{artifact_id}")
+@router.get("/artifacts/{artifact_id}")
+async def get_artifact_provenance(artifact_id: str):
+    """Retourne la traçabilité cryptographique complète d'un artefact scellé."""
+    from fastapi import HTTPException, status
+    from core.artifacts.provenance import artifact_provenance
+    art = artifact_provenance.get_artifact(artifact_id)
+    if not art:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Artifact '{artifact_id}' non trouvé")
+    verification = artifact_provenance.verify_artifact(artifact_id)
+    return {"ok": True, "artifact": art, "verification": verification}
+
+
+@router.get("/api/v1/tasks/{task_id}/artifacts")
+@router.get("/tasks/{task_id}/artifacts")
+async def list_task_artifacts(task_id: str):
+    """Retourne tous les artefacts scellés associés à une tâche."""
+    from core.artifacts.provenance import artifact_provenance
+    artifacts = artifact_provenance.list_task_artifacts(task_id)
+    return {"ok": True, "task_id": task_id, "artifacts": artifacts, "count": len(artifacts)}
+
+
+@router.get("/api/v1/tasks/dag/{dag_id}")
+@router.get("/tasks/dag/{dag_id}")
+async def get_dag_status(dag_id: str):
+    """Retourne l'état complet du graphe de tâches DAG (nœuds, états, dépendances)."""
+    from fastapi import HTTPException, status
+    from core.orchestration import DAGOrchestrator
+    # Recherche dans les instances actives ou état par défaut
+    orch = DAGOrchestrator()
+    dag = orch.get_dag(dag_id)
+    if not dag:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"DAG '{dag_id}' non trouvé")
+    return {"ok": True, "dag": dag.to_dict()}
+
 
