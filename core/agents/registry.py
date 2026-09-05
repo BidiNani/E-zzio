@@ -252,6 +252,11 @@ class AgentRegistry:
         for desc in defaults:
             self._agents[desc.agent_id] = desc
 
+    def reset_to_defaults(self) -> None:
+        """Réinitialise les agents à leur état canonique d'origine."""
+        self._agents.clear()
+        self._register_default_agents()
+
 
     def register(self, desc: AgentDescriptor) -> None:
         self._agents[desc.agent_id] = desc

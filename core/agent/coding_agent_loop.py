@@ -11,6 +11,15 @@ class CodingAgentHarness:
         self.registry = ToolRegistry(workspace_root)
         self.provider = AgentProviderAdapter(backend=backend, local_model=local_model)
 
+    def evaluate_task_complexity(self, task_description: str) -> str:
+        """Évalue la complexité d'une tâche et route vers le modèle adapté."""
+        desc = task_description.lower()
+        if any(kw in desc for kw in ["refactor", "ast", "architecture", "restructure", "deadlock"]):
+            return "gemini-3.1-pro"
+        elif any(kw in desc for kw in ["cherche", "où est", "trouve", "recherche", "explore", "liste"]):
+            return "gemini-3.5-flash-lite"
+        return "gemini-3.7-flash"
+
     def _optimize_observation(self, observation: str) -> str:
         """Tronque intelligemment l'observation si elle est trop lourde pour un modèle local."""
         max_chars = 2000 if self.provider.backend == "local_ollama" else 10000

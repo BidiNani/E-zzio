@@ -18,6 +18,7 @@ import httpx
 from typing import Any, AsyncIterator, Dict, List, Optional
 
 from core.secrets import load_secrets, get_api_key
+from core.models.gemini_pool import gemini_pool
 from core.providers.iresearch_provider import IResearchProvider
 from core.providers.base_provider import (
     BaseProvider,
@@ -361,7 +362,63 @@ class GeminiProvider(BaseProvider, IResearchProvider):
             logger.warning("[GEMINI STREAM ERROR] %s", exc)
 
     async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
-        """Méthode de recherche canonique compatible IResearchProvider."""
+        """Méthode de recherche canonique compatible IResearchProvider avec support du pool multi-projets."""
+        capability = kwargs.get("capability")
+        if capability:
+            # Mode routé par le pool multi-projets
+            pool_inst = globals().get("gemini_pool")
+            target_model = kwargs.get("model") or self.model
+            
+            # Essayer d'obtenir la cible depuis le pool
+            attempts = 0
+            while attempts < 3:
+                attempts += 1
+                try:
+                    selected_model, key, key_idx, selected_proj = pool_inst.acquire_target(capability, model_override=target_model)
+                except Exception:
+                    break
+
+                url = f"{self.base_url}/{selected_model}:generateContent"
+                payload = self._build_generation_payload(query, **kwargs)
+                try:
+                    async with httpx.AsyncClient(timeout=self.timeout) as client:
+                        response = await client.post(url, json=payload, params={"key": key})
+                        if response.status_code == 200:
+                            data = response.json()
+                            text = ""
+                            candidates = data.get("candidates", [])
+                            if candidates:
+                                parts = candidates[0].get("content", {}).get("parts", [])
+                                text = "".join(p.get("text", "") for p in parts)
+                            return {
+                                "provider": self.name,
+                                "model": selected_model,
+                                "data": {
+                                    "text": text,
+                                    "model": selected_model,
+                                    "telemetry": {
+                                        "project_id": selected_proj.project_id if selected_proj else "default",
+                                        "key_index": key_idx,
+                                    },
+                                    "raw": data,
+                                },
+                            }
+                        else:
+                            pool_inst.handle_error(
+                                project=selected_proj,
+                                key=key,
+                                model=selected_model,
+                                status_code=response.status_code,
+                                headers=dict(response.headers),
+                            )
+                except Exception as exc:
+                    pool_inst.handle_error(
+                        project=selected_proj,
+                        key=key,
+                        model=selected_model,
+                        status_code=500,
+                    )
+
         if not self.api_key:
             raise RuntimeError("GEMINI_API_KEY manquante dans secrets/.env ou variables d'environnement")
 
@@ -378,3 +435,4 @@ class GeminiProvider(BaseProvider, IResearchProvider):
                 "raw": resp.raw or {},
             },
         }
+

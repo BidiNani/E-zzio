@@ -12,15 +12,20 @@ import shutil
 import subprocess
 import pytest
 
+pytestmark = pytest.mark.hardware
+
 
 def get_adb_path():
     cand = Path("G:/tools/platform-tools/adb.exe")
-    if cand.exists():
-        return str(cand)
-    system_adb = shutil.which("adb")
-    if system_adb:
-        return system_adb
-    pytest.skip("ADB introuvable dans G:/tools/platform-tools/adb.exe ou PATH")
+    adb = str(cand) if cand.exists() else shutil.which("adb")
+    if not adb:
+        pytest.skip("ADB introuvable dans G:/tools/platform-tools/adb.exe ou PATH")
+    res = subprocess.run([adb, "devices"], capture_output=True, text=True)
+    lines = [line.strip() for line in res.stdout.splitlines() if line.strip()]
+    devices = [line.split()[0] for line in lines[1:] if "\tdevice" in line or line.endswith("device")]
+    if not devices:
+        pytest.skip("Aucun périphérique Android physique ou AVD en ligne.")
+    return adb
 
 
 def test_android_device_online():

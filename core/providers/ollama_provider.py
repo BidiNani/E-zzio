@@ -34,7 +34,7 @@ class OllamaProvider(BaseProvider, IResearchProvider):
     """Fournisseur canonique Ollama conforme aux contrats BaseProvider et IResearchProvider."""
 
     name: str = "ollama"
-    DEFAULT_MODEL: str = "phi4-mini:latest"
+    DEFAULT_MODEL: str = "qwen2.5:7b"
 
     def __init__(
         self,

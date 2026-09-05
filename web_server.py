@@ -22,6 +22,9 @@ from runtime.routers.llm import router as llm_router
 from runtime.routers.mobile import router as mobile_router
 from routers.master import router as master_router
 from routers.memory import router as memory_router
+from routers.perception import router as perception_router
+from routers.generators import router as generators_router
+from routers.capabilities import router as capabilities_router
 
 
 # 3. Cycle de vie et Gouvernance
@@ -99,6 +102,9 @@ app.include_router(llm_router)
 app.include_router(mobile_router)
 app.include_router(master_router)
 app.include_router(memory_router)
+app.include_router(perception_router)
+app.include_router(generators_router)
+app.include_router(capabilities_router)
 
 # 6. Montage des fichiers statiques locaux (offline-first UI, CSS, assets)
 web_static_dir = ROOT_PATH / "runtime" / "web"

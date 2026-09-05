@@ -1,4 +1,4 @@
-﻿"""
+"""
 tests/test_v9_2_platform.py — Tests de certification de la plateforme souveraine E-ZZIO V9.2.
 Valide le moteur DAG, le registre dynamique d'agents, la traçabilité des artefacts,
 le visualiseur de diff HITL V2, et la résilience des sondes providers.
@@ -71,6 +71,7 @@ async def test_dag_orchestrator_execution_and_cascade_skip(tmp_path: Path):
 # 2. Tests Registre Dynamique d'Agents
 def test_agent_registry_lifecycle_and_heartbeat():
     reg = AgentRegistry()
+    reg.reset_to_defaults()
     assert len(reg.list_agents()) >= 5
 
     coder = reg.get_agent("coder_worker")

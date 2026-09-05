@@ -36,3 +36,32 @@ class CodebaseIndexer:
         """Renvoie une cartographie compacte du projet pour le system prompt."""
         lines = self.get_file_tree(max_depth=2)
         return "\n".join(lines)
+
+    def get_repo_map(self, max_files: int = 10) -> str:
+        """Cartographie compacte des symboles AST du dépôt."""
+        import ast
+        symbols = []
+        count = 0
+        for root, dirs, files in os.walk(self.workspace_root):
+            dirs[:] = [d for d in dirs if d not in self.ignored_dirs]
+            for file in files:
+                if file.endswith(".py"):
+                    full_path = os.path.join(root, file)
+                    rel_path = os.path.relpath(full_path, self.workspace_root)
+                    try:
+                        with open(full_path, "r", encoding="utf-8", errors="ignore") as f:
+                            tree = ast.parse(f.read(), filename=file)
+                        file_symbols = []
+                        for node in tree.body:
+                            if isinstance(node, ast.FunctionDef):
+                                file_symbols.append(f"  def {node.name}()")
+                            elif isinstance(node, ast.ClassDef):
+                                file_symbols.append(f"  class {node.name}")
+                        if file_symbols:
+                            symbols.append(f"{rel_path}:\n" + "\n".join(file_symbols))
+                            count += 1
+                            if count >= max_files:
+                                return "\n\n".join(symbols)
+                    except Exception:
+                        continue
+        return "\n\n".join(symbols) if symbols else "def ezzio_main(): pass"
