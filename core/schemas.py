@@ -65,3 +65,16 @@ class VisionPathRequest(BaseModel):
     path: str
     prompt: str = ""
     mode: str = "auto"
+
+
+class ApprovalDecision(BaseModel):
+    decision: str
+    approver: str = "system"
+    reason: str = ""
+    metadata: dict = {}
+
+
+class CreateRunRequest(BaseModel):
+    prompt: str
+    profile: str = "prive"
+

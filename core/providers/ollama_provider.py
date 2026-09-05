@@ -1,32 +1,289 @@
+"""
+E-ZZIO Core — Ollama Local Provider (Phase 14 Hardening).
+
+Connecteur canonique conforme au contrat BaseProvider et IResearchProvider pour le démon Ollama local
+(http://127.0.0.1:11434).
+Supporte inférence locale CPU/GPU, détection dynamique de disponibilité, streaming,
+coût CostClass.LOCAL garanti à 0€ et compatibilité descendante totale avec IResearchProvider.search().
+Standard : Fail-Closed / Zéro fuite / Mode Offline Souverain.
+"""
+from __future__ import annotations
+
 import os
 import json
+import time
+import asyncio
+import logging
 import httpx
-from typing import Any, Dict, Optional
-from core.providers.iresearch_provider import IResearchProvider
+from typing import Any, AsyncIterator, Dict, List, Optional
+
 from core.secrets import load_secrets
+from core.providers.iresearch_provider import IResearchProvider
+from core.providers.base_provider import (
+    BaseProvider,
+    CostClass,
+    ProviderAvailability,
+    ProviderErrorClass,
+    ProviderResponse,
+)
+
+logger = logging.getLogger("OllamaProvider")
 
 
-class OllamaProvider(IResearchProvider):
+class OllamaProvider(BaseProvider, IResearchProvider):
+    """Fournisseur canonique Ollama conforme aux contrats BaseProvider et IResearchProvider."""
+
     name: str = "ollama"
+    DEFAULT_MODEL: str = "phi4-mini:latest"
 
-    def __init__(self, base_url: Optional[str] = None, model: Optional[str] = None):
+    def __init__(
+        self,
+        base_url: Optional[str] = None,
+        model: Optional[str] = None,
+        timeout: float = 60.0,
+    ) -> None:
         load_secrets()
-        self.base_url = base_url or os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434")
-        self.model = model or os.getenv("OLLAMA_MODEL", "qwen3:8b")
+        self.base_url = (base_url or os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434")).rstrip("/")
+        self.model = model or os.getenv("OLLAMA_MODEL", self.DEFAULT_MODEL)
+        self.timeout = timeout
+
+    def availability(self) -> ProviderAvailability:
+        """Retourne l'état de disponibilité instantanée du démon Ollama local."""
+        try:
+            res = httpx.get(f"{self.base_url}/api/tags", timeout=1.5)
+            if res.status_code == 200:
+                return ProviderAvailability.AVAILABLE
+            return ProviderAvailability.DEGRADED
+        except Exception:
+            return ProviderAvailability.UNAVAILABLE
+
+    def is_available(self) -> bool:
+        """Vérifie si le démon Ollama répond sur le réseau local."""
+        return self.availability() in (ProviderAvailability.AVAILABLE, ProviderAvailability.DEGRADED)
+
+    def cost_class(self, model: Optional[str] = None) -> CostClass:
+        """Inférence locale = 0€ (LOCAL)."""
+        return CostClass.LOCAL
+
+    def capabilities(self, model: Optional[str] = None) -> List[str]:
+        """Retourne les capacités déduites pour les modèles locaux."""
+        target = (model or self.model).lower()
+        caps = ["TEXT", "LOCAL", "INSTRUCTION_FOLLOWING"]
+        if "vision" in target or "llava" in target:
+            caps.extend(["VISION", "MULTIMODAL"])
+        if "code" in target or "coder" in target:
+            caps.append("CODING")
+        if "r1" in target or "reason" in target or "qwen" in target:
+            caps.extend(["REASONING", "CODING"])
+        if "mini" in target or "nano" in target or "instant" in target:
+            caps.append("FAST_INFERENCE")
+        return sorted(list(set(caps)))
+
+    def error_mapping(self, status_code: int, error_body: Optional[str] = None) -> ProviderErrorClass:
+        """Mappe les statuts HTTP du serveur Ollama vers les classes canoniques."""
+        if status_code == 404:
+            return ProviderErrorClass.MODEL_NOT_FOUND
+        elif status_code in (408, 504):
+            return ProviderErrorClass.TIMEOUT
+        elif status_code == 400:
+            return ProviderErrorClass.BAD_REQUEST
+        elif status_code in (500, 502, 503):
+            return ProviderErrorClass.PROVIDER_UNAVAILABLE
+        return ProviderErrorClass.UNKNOWN_ERROR
+
+    async def health(self) -> Dict[str, Any]:
+        """Vérifie la santé du démon Ollama et liste les modèles installés."""
+        start_time = time.perf_counter()
+        url = f"{self.base_url}/api/tags"
+        try:
+            async with httpx.AsyncClient(timeout=3.0) as client:
+                res = await client.get(url)
+                latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
+                if res.status_code == 200:
+                    data = res.json()
+                    models = [m.get("name") for m in data.get("models", [])]
+                    return {
+                        "status": "healthy",
+                        "online": True,
+                        "latency_ms": latency_ms,
+                        "installed_models": models,
+                        "provider": self.name,
+                    }
+                else:
+                    return {
+                        "status": "unhealthy",
+                        "online": False,
+                        "latency_ms": latency_ms,
+                        "error": f"HTTP {res.status_code}",
+                        "provider": self.name,
+                    }
+        except Exception as exc:
+            latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
+            return {
+                "status": "unhealthy",
+                "online": False,
+                "latency_ms": latency_ms,
+                "error": str(exc),
+                "provider": self.name,
+            }
+
+    async def generate(
+        self,
+        prompt: str,
+        system_prompt: Optional[str] = None,
+        model: Optional[str] = None,
+        temperature: float = 0.2,
+        max_tokens: int = 512,
+        **kwargs: Any,
+    ) -> ProviderResponse:
+        """Exécute une inférence locale normalisée."""
+        start_time = time.perf_counter()
+        target_model = model or self.model
+        url = f"{self.base_url}/api/generate"
+
+        payload = {
+            "model": target_model,
+            "prompt": prompt,
+            "stream": False,
+            "options": {
+                "temperature": temperature,
+                "num_predict": max_tokens,
+                "num_thread": int(os.getenv("OLLAMA_NUM_THREAD", "6")),
+            },
+        }
+        if system_prompt:
+            payload["system"] = system_prompt
+
+        try:
+            timeout = httpx.Timeout(connect=5.0, read=self.timeout, write=5.0, pool=5.0)
+            async with httpx.AsyncClient(timeout=timeout) as client:
+                res = await client.post(url, json=payload)
+                latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
+
+                if res.status_code != 200:
+                    err_class = self.error_mapping(res.status_code, res.text)
+                    return ProviderResponse(
+                        content="",
+                        model=target_model,
+                        provider=self.name,
+                        latency_ms=latency_ms,
+                        cost_class=CostClass.LOCAL,
+                        error_class=err_class,
+                        raw={"http_status": res.status_code, "text": res.text},
+                    )
+
+                data = res.json()
+                content = data.get("response", "").strip()
+                prompt_eval = data.get("prompt_eval_count", 0)
+                eval_count = data.get("eval_count", 0)
+
+                return ProviderResponse(
+                    content=content,
+                    model=target_model,
+                    provider=self.name,
+                    finish_reason="stop" if data.get("done") else "length",
+                    usage={
+                        "prompt_tokens": prompt_eval,
+                        "completion_tokens": eval_count,
+                        "total_tokens": prompt_eval + eval_count,
+                    },
+                    latency_ms=latency_ms,
+                    cost_class=CostClass.LOCAL,
+                    error_class=None,
+                    raw=data,
+                )
+        except httpx.ConnectError:
+            latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
+            return ProviderResponse(
+                content="",
+                model=target_model,
+                provider=self.name,
+                latency_ms=latency_ms,
+                cost_class=CostClass.LOCAL,
+                error_class=ProviderErrorClass.PROVIDER_UNAVAILABLE,
+                raw={"error": "Ollama local demon unreachable"},
+            )
+        except httpx.TimeoutException:
+            latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
+            return ProviderResponse(
+                content="",
+                model=target_model,
+                provider=self.name,
+                latency_ms=latency_ms,
+                cost_class=CostClass.LOCAL,
+                error_class=ProviderErrorClass.TIMEOUT,
+                raw={"error": "Ollama local inference timeout"},
+            )
+        except Exception as exc:
+            latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
+            return ProviderResponse(
+                content="",
+                model=target_model,
+                provider=self.name,
+                latency_ms=latency_ms,
+                cost_class=CostClass.LOCAL,
+                error_class=ProviderErrorClass.UNKNOWN_ERROR,
+                raw={"error": str(exc)},
+            )
+
+    async def stream(
+        self,
+        prompt: str,
+        system_prompt: Optional[str] = None,
+        model: Optional[str] = None,
+        temperature: float = 0.2,
+        max_tokens: int = 512,
+        **kwargs: Any,
+    ) -> AsyncIterator[str]:
+        """Diffuse les tokens au fil de leur génération locale."""
+        target_model = model or self.model
+        url = f"{self.base_url}/api/generate"
+        payload = {
+            "model": target_model,
+            "prompt": prompt,
+            "stream": True,
+            "options": {
+                "temperature": temperature,
+                "num_predict": max_tokens,
+                "num_thread": int(os.getenv("OLLAMA_NUM_THREAD", "6")),
+            },
+        }
+        if system_prompt:
+            payload["system"] = system_prompt
+
+        timeout = httpx.Timeout(connect=5.0, read=self.timeout, write=5.0, pool=5.0)
+        try:
+            async with httpx.AsyncClient(timeout=timeout) as client:
+                async with client.stream("POST", url, json=payload) as response:
+                    response.raise_for_status()
+                    async for line in response.aiter_lines():
+                        if not line:
+                            continue
+                        try:
+                            chunk = json.loads(line)
+                            token = chunk.get("response", "")
+                            if token:
+                                yield token
+                            if chunk.get("done", False):
+                                break
+                        except json.JSONDecodeError:
+                            continue
+        except Exception as exc:
+            logger.warning("[OLLAMA STREAM ERROR] %s", exc)
 
     async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
-        """Exécution 100% CPU pure (zéro VRAM, 6 threads, thinking désactivé, budget tokens élevé)."""
+        """Méthode de recherche canonique compatible IResearchProvider."""
         url = f"{self.base_url}/api/generate"
         payload = {
             "model": self.model,
             "prompt": query,
             "stream": True,
-            "think": False,  # désactive le mode raisonnement (thinking) si supporté
+            "think": False,
             "options": {
                 "num_gpu": 0,
                 "num_thread": int(os.getenv("OLLAMA_NUM_THREAD", "6")),
                 "num_ctx": kwargs.get("num_ctx", 2048),
-                "num_predict": kwargs.get("max_tokens", 1500),  # budget relevé
+                "num_predict": kwargs.get("max_tokens", 1500),
                 "temperature": kwargs.get("temperature", 0.7),
             },
         }
@@ -53,7 +310,6 @@ class OllamaProvider(IResearchProvider):
 
         full_response = "".join(accumulated_text).strip()
 
-        # Ne jamais retourner de thinking brut. Si response est vide, c'est une génération tronquée.
         if not full_response:
             return {
                 "provider": self.name,

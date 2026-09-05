@@ -6,7 +6,7 @@ import json
 import logging
 import urllib.request
 import urllib.error
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 from core.security.unified_vault import key_vault
 from core.models.router import EzzioRouter
 
@@ -24,8 +24,9 @@ class RouteIntegrityError(RuntimeError):
 class AgentProviderAdapter:
     AUTHORIZED_MODELS = {"cloud_gemini", "local_primary", "local_fallback"}
 
-    def __init__(self, backend: str = "cloud_gemini"):
+    def __init__(self, backend: str = "cloud_gemini", local_model: Optional[str] = None):
         self.backend = backend
+        self.local_model = local_model
         self.router = self._build_canonical_router()
 
     def _build_canonical_router(self) -> EzzioRouter:
