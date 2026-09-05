@@ -43,7 +43,7 @@ class VoiceGateway:
         """Énumère les périphériques audio d'entrée et sortie disponibles."""
         try:
             import sounddevice as sd
-            return sd.query_devices()
+            return list(sd.query_devices())
         except Exception as e:
             logger.debug("[VOICE HARDWARE] Impossible d'énumérer les périphériques audio : %s", e)
             return []

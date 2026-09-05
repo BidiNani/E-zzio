@@ -157,4 +157,23 @@ class ModelRegistry:
             self.key(provider, model_id)
         )
 
-    
+    def all(self) -> list[ModelRecord]:
+        return list(self._models.values())
+
+    def active(
+        self,
+        *,
+        tier: str | None = None,
+        providers: list[str] | None = None,
+    ) -> list[ModelRecord]:
+        providers_set = {p.lower() for p in providers} if providers else None
+        result = []
+        for model in self._models.values():
+            if model.lifecycle != ModelLifecycle.ACTIVE.value:
+                continue
+            if tier and model.tier != tier:
+                continue
+            if providers_set and model.provider.lower() not in providers_set:
+                continue
+            result.append(model)
+        return result

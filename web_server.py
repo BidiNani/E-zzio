@@ -67,6 +67,33 @@ async def health_check():
     }
 
 
+@app.get("/metrics")
+async def get_metrics():
+    from core.models.provider_health import probe_ollama_status
+    ollama_ok = probe_ollama_status()
+    return {
+        "ok": True,
+        "circuit_breaker": "CLOSED",
+        "providers_health": {
+            "ollama_local": "ONLINE" if ollama_ok else "OFFLINE"
+        }
+    }
+
+
+@app.get("/perception/status")
+async def get_perception_status():
+    return {
+        "ok": True,
+        "status": "ONLINE",
+        "capabilities": [
+            "universal_file_reader",
+            "pdf_extraction",
+            "code_symbol_map",
+            "multimodal_vision"
+        ]
+    }
+
+
 # 5. Injection des routeurs (sans doubler le préfixe pour le master)
 app.include_router(llm_router)
 app.include_router(mobile_router)
