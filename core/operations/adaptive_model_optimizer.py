@@ -1,10 +1,11 @@
 """
-E-ZZIO Core V10.12 — Adaptive Model & Execution Optimizer.
+E-ZZIO Core V10.13 — Adaptive Model Residency & Dynamic Token Budgeting.
 Optimise l'exécution des missions en réduisant la latence réelle des modèles et des outils :
-- Warm Model Residency & Keep-Alive
+- Warm Model Residency Governance & Prewarm Prediction
+- Eviction Sécurisée sous pression mémoire
 - Routeur de Modèles conscient de la Latence et du statut Resident/Cold
-- Élimination des appels LLM inutiles sur les tâches déterministes
-- Contrôle strict du nombre de tokens générés (num_predict/context efficiency)
+- Budgeting Dynamique de Tokens par classe de tâche (SIMPLE, STANDARD, COMPLEX, CODE, etc.)
+- Garde de Qualité & Retentative Adaptative sur Détection de Troncature
 - Exécution parallèle gouvernée des nœuds DAG indépendants
 """
 from __future__ import annotations
@@ -30,6 +31,32 @@ class ModelResidencyState(str, Enum):
     LOADING = "LOADING"
     RESIDENT = "RESIDENT"
     EVICTING = "EVICTING"
+    DEGRADED = "DEGRADED"
+    FAILED = "FAILED"
+
+
+class MemoryPressureState(str, Enum):
+    NORMAL = "NORMAL"
+    CAUTION = "CAUTION"
+    HIGH_PRESSURE = "HIGH_PRESSURE"
+    CRITICAL = "CRITICAL"
+
+
+class PrewarmDecision(str, Enum):
+    PREWARM = "PREWARM"
+    DEFER = "DEFER"
+    DO_NOT_PREWARM = "DO_NOT_PREWARM"
+
+
+class TaskCategory(str, Enum):
+    SIMPLE = "SIMPLE"
+    STANDARD = "STANDARD"
+    COMPLEX = "COMPLEX"
+    CODE = "CODE"
+    RESEARCH = "RESEARCH"
+    DATA = "DATA"
+    MULTIMODAL = "MULTIMODAL"
+    CRITICAL = "CRITICAL"
 
 
 @dataclass
@@ -41,16 +68,19 @@ class ModelResidencyProfile:
     warm_latency_ms: float = 0.0
     cold_latency_ms: float = 0.0
     total_calls: int = 0
+    prewarm_count: int = 0
+    eviction_count: int = 0
 
 
 class AdaptiveModelExecutionOptimizer:
-    """Optimiseur adaptatif de latence d'exécution et de modélisation pour E-ZZIO V10.12."""
+    """Optimiseur adaptatif de latence d'exécution, résidabilité et budgeting dynamique V10.13."""
 
     def __init__(self) -> None:
         self.residency_registry: Dict[str, ModelResidencyProfile] = {}
         self.provider = OllamaProvider(base_url="http://localhost:11434")
         self.verifier = ResultVerificationEngine()
         self.executor = ThreadPoolExecutor(max_workers=4)
+        self.memory_state: MemoryPressureState = MemoryPressureState.NORMAL
 
         # Default local model candidates
         self._register_model("phi4-mini:latest")
@@ -59,6 +89,106 @@ class AdaptiveModelExecutionOptimizer:
     def _register_model(self, model_name: str) -> None:
         if model_name not in self.residency_registry:
             self.residency_registry[model_name] = ModelResidencyProfile(model_name=model_name)
+
+    def update_memory_pressure(self, state: MemoryPressureState) -> None:
+        """Met à jour l'état de pression mémoire système."""
+        self.memory_state = state
+        logger.info(f"[RESIDENCY-GOVERNANCE] Niveau de pression mémoire mis à jour: {state}")
+
+    def evaluate_prewarm_decision(
+        self, model_name: str, confidence: float, task_category: TaskCategory = TaskCategory.STANDARD
+    ) -> PrewarmDecision:
+        """Évalue l'opportunité de pré-chauffer un modèle selon la confiance, la mémoire et le coût."""
+        self._register_model(model_name)
+        prof = self.residency_registry[model_name]
+
+        if prof.residency_state == ModelResidencyState.RESIDENT:
+            return PrewarmDecision.DO_NOT_PREWARM
+
+        if self.memory_state in (MemoryPressureState.HIGH_PRESSURE, MemoryPressureState.CRITICAL):
+            logger.info(f"[PREWARM] Différé pour {model_name}: Pression mémoire élevée ({self.memory_state})")
+            return PrewarmDecision.DEFER
+
+        if confidence >= 0.75:
+            return PrewarmDecision.PREWARM
+        elif confidence >= 0.50:
+            return PrewarmDecision.DEFER
+        return PrewarmDecision.DO_NOT_PREWARM
+
+    def prewarm_model(self, model_name: str) -> Dict[str, Any]:
+        """Pré-chauffe un modèle via une micro-invocation contrôlée pour éviter le cold start."""
+        self._register_model(model_name)
+        prof = self.residency_registry[model_name]
+        prof.residency_state = ModelResidencyState.LOADING
+
+        t0 = time.perf_counter()
+        res = self.provider.generate(prompt="Ping", model=model_name, num_predict=2, temperature=0.0)
+        t1 = time.perf_counter()
+
+        load_ms = round((t1 - t0) * 1000, 3)
+        prof.residency_state = ModelResidencyState.RESIDENT
+        prof.last_invoked_at = time.time()
+        prof.cold_latency_ms = load_ms
+        prof.prewarm_count += 1
+
+        logger.info(f"[PREWARM] Modèle '{model_name}' pré-chauffé avec succès en {load_ms} ms")
+        return {"model_name": model_name, "status": "RESIDENT", "load_ms": load_ms}
+
+    def evict_idle_models(self, active_models: List[str], force: False = False) -> List[str]:
+        """Éviction sécurisée des modèles inactifs hors mission active."""
+        evicted = []
+        now = time.time()
+        for m_name, prof in list(self.residency_registry.items()):
+            if m_name in active_models:
+                continue
+            if prof.residency_state == ModelResidencyState.RESIDENT:
+                idle_time = now - prof.last_invoked_at
+                if force or idle_time > 300 or self.memory_state in (MemoryPressureState.HIGH_PRESSURE, MemoryPressureState.CRITICAL):
+                    prof.residency_state = ModelResidencyState.EVICTING
+                    # Simuler l'éviction/libération
+                    prof.residency_state = ModelResidencyState.NOT_LOADED
+                    prof.eviction_count += 1
+                    evicted.append(m_name)
+                    logger.info(f"[EVICTION] Modèle inactif évincé: {m_name} (Inactif depuis {round(idle_time, 1)}s)")
+        return evicted
+
+    def estimate_dynamic_token_budget(
+        self, task_category: TaskCategory, prompt_len: int, schema_required: bool = False
+    ) -> Dict[str, int]:
+        """Calcule un budget dynamique de tokens suffisant avec marge de sécurité."""
+        base_budgets = {
+            TaskCategory.SIMPLE: 15,
+            TaskCategory.STANDARD: 40,
+            TaskCategory.COMPLEX: 150,
+            TaskCategory.CODE: 250,
+            TaskCategory.RESEARCH: 200,
+            TaskCategory.DATA: 100,
+            TaskCategory.MULTIMODAL: 150,
+            TaskCategory.CRITICAL: 300,
+        }
+        recommended = base_budgets.get(task_category, 40)
+        if schema_required:
+            recommended += 30
+        margin = max(10, int(recommended * 0.25))
+        initial_budget = recommended + margin
+        max_budget = initial_budget * 3
+
+        return {
+            "initial_budget": initial_budget,
+            "max_budget": max_budget,
+            "recommended": recommended,
+            "margin": margin,
+        }
+
+    def is_response_truncated(self, response_text: str, max_tokens: int) -> bool:
+        """Détecte si une réponse semble tronquée par limite de tokens."""
+        text = response_text.strip()
+        if not text:
+            return False
+        # Si finit au milieu d'un mot ou sans ponctuation sur réponse longue
+        if len(text.split()) >= max_tokens and not text.endswith((".", "!", "?", "}", "]", '"', "'")):
+            return True
+        return False
 
     def select_latency_aware_model(self, task_type: str, preferred_model: Optional[str] = None) -> str:
         """Sélectionne le modèle le plus adapté en privilégiant les modèles résidents (WARM)."""
@@ -94,7 +224,6 @@ class AdaptiveModelExecutionOptimizer:
 
         t3 = time.perf_counter()
 
-        # Call with tight num_predict cap to reduce generation time
         res = self.provider.generate(
             prompt=prompt,
             model=selected_model,
@@ -105,7 +234,6 @@ class AdaptiveModelExecutionOptimizer:
         t4 = time.perf_counter()
         call_ms = round((t4 - t3) * 1000, 3)
 
-        # Update residency metadata
         profile.last_invoked_at = time.time()
         profile.total_calls += 1
         if profile.residency_state == ModelResidencyState.NOT_LOADED:
@@ -122,6 +250,60 @@ class AdaptiveModelExecutionOptimizer:
             "residency_state": "WARM" if profile.total_calls > 1 else "COLD",
         }
 
+    def execute_dynamic_token_budgeted_call(
+        self,
+        prompt: str,
+        task_category: TaskCategory = TaskCategory.STANDARD,
+        model: Optional[str] = None,
+        schema_required: bool = False,
+        max_expansions: int = 2,
+    ) -> Dict[str, Any]:
+        """Exécute un appel avec budgeting dynamique de tokens et extension automatique si troncature."""
+        budget_info = self.estimate_dynamic_token_budget(task_category, len(prompt), schema_required)
+        current_budget = budget_info["initial_budget"]
+        max_budget = budget_info["max_budget"]
+
+        expansions = 0
+        total_ms = 0.0
+        final_response = ""
+
+        while expansions <= max_expansions:
+            call_res = self.execute_optimized_model_call(
+                prompt=prompt,
+                task_type=task_category.value,
+                model=model,
+                max_tokens=current_budget,
+            )
+            total_ms += call_res["model_ms"]
+            final_response = call_res["response"]
+
+            truncated = self.is_response_truncated(final_response, current_budget)
+            if not truncated or current_budget >= max_budget or expansions >= max_expansions:
+                return {
+                    "response": final_response,
+                    "model_ms": round(total_ms, 3),
+                    "selected_model": call_res["selected_model"],
+                    "residency_state": call_res["residency_state"],
+                    "expansions_used": expansions,
+                    "final_budget": current_budget,
+                    "truncated": truncated,
+                }
+
+            # Truncation detected -> expand budget cleanly
+            expansions += 1
+            current_budget = min(max_budget, int(current_budget * 1.6))
+            logger.info(f"[DYNAMIC-BUDGET] Troncature détectée sur {call_res['selected_model']}, extension du budget à {current_budget} tokens (Passe {expansions})")
+
+        return {
+            "response": final_response,
+            "model_ms": round(total_ms, 3),
+            "selected_model": call_res["selected_model"],
+            "residency_state": call_res["residency_state"],
+            "expansions_used": expansions,
+            "final_budget": current_budget,
+            "truncated": True,
+        }
+
     def execute_parallel_nodes(self, independent_node_fns: List[Callable[[], Any]]) -> List[Any]:
         """Exécute en parallèle les tâches indépendantes du DAG."""
         t0 = time.perf_counter()
@@ -133,3 +315,4 @@ class AdaptiveModelExecutionOptimizer:
 
 
 adaptive_model_optimizer = AdaptiveModelExecutionOptimizer()
+
