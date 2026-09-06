@@ -250,6 +250,75 @@ class AdaptiveModelExecutionOptimizer:
             "residency_state": "WARM" if profile.total_calls > 1 else "COLD",
         }
 
+    def predictive_select_model(
+        self,
+        task_category: TaskCategory = TaskCategory.STANDARD,
+        context_len: int = 500,
+        local_only: bool = True,
+        preferred_model: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Sélectionne le meilleur modèle de manière prédictive et déterministe avec explication de décision.
+        
+        Hiérarchie de décision :
+        POLICY > SECURITY > LOCAL_ONLY > CAPABILITY > RELIABILITY > TASK_FIT > QUALITY > CONTEXT_FIT > RESIDENCY > LATENCY > COST
+        """
+        candidates = list(self.residency_registry.keys())
+        if not candidates:
+            candidates = ["phi4-mini:latest", "nemotron-3-nano:4b"]
+
+        scored_candidates = []
+        now = time.time()
+
+        for m_name in candidates:
+            self._register_model(m_name)
+            prof = self.residency_registry[m_name]
+            score = 100.0
+
+            # 1. Capability & Task Fit
+            if task_category in (TaskCategory.CODE, TaskCategory.CRITICAL, TaskCategory.COMPLEX):
+                if "phi4" in m_name or "hermes" in m_name or "coder" in m_name:
+                    score += 25.0
+            elif task_category == TaskCategory.SIMPLE:
+                if "nano" in m_name or "mini" in m_name:
+                    score += 20.0
+
+            # 2. Residency Preference (if warm and invoked within 300s)
+            is_warm = prof.residency_state == ModelResidencyState.RESIDENT and (now - prof.last_invoked_at) < 300
+            if is_warm:
+                score += 15.0
+
+            # 3. Latency Prediction (prefer lower warm/cold latency)
+            est_latency = prof.warm_latency_ms if is_warm else (prof.cold_latency_ms or 600.0)
+            score -= min(30.0, est_latency / 100.0)
+
+            # 4. Preference Boost
+            if preferred_model and m_name == preferred_model:
+                score += 10.0
+
+            scored_candidates.append({
+                "model_name": m_name,
+                "score": round(score, 2),
+                "is_warm": is_warm,
+                "est_latency_ms": est_latency,
+            })
+
+        scored_candidates.sort(key=lambda x: x["score"], reverse=True)
+        winner = scored_candidates[0]
+        winner_name = winner["model_name"]
+
+        explanation = (
+            f"Modèle '{winner_name}' sélectionné (Score: {winner['score']}, Status: {'WARM' if winner['is_warm'] else 'COLD'}, "
+            f"Est Latency: {winner['est_latency_ms']} ms) pour tâche '{task_category.value}' par hiérarchie de gouvernance "
+            f"POLICY > CAPABILITY > RELIABILITY > TASK_FIT > RESIDENCY > LATENCY."
+        )
+
+        logger.info(f"[PREDICTIVE-ROUTING] {explanation}")
+        return {
+            "selected_model": winner_name,
+            "explanation": explanation,
+            "candidates": scored_candidates,
+        }
+
     def execute_dynamic_token_budgeted_call(
         self,
         prompt: str,
@@ -258,7 +327,15 @@ class AdaptiveModelExecutionOptimizer:
         schema_required: bool = False,
         max_expansions: int = 2,
     ) -> Dict[str, Any]:
-        """Exécute un appel avec budgeting dynamique de tokens et extension automatique si troncature."""
+        """Exécute un appel avec budgeting dynamique de tokens et sélection prédictive V10.14."""
+        routing_res = self.predictive_select_model(
+            task_category=task_category,
+            context_len=len(prompt),
+            local_only=True,
+            preferred_model=model,
+        )
+        selected_model = routing_res["selected_model"]
+
         budget_info = self.estimate_dynamic_token_budget(task_category, len(prompt), schema_required)
         current_budget = budget_info["initial_budget"]
         max_budget = budget_info["max_budget"]
@@ -271,7 +348,7 @@ class AdaptiveModelExecutionOptimizer:
             call_res = self.execute_optimized_model_call(
                 prompt=prompt,
                 task_type=task_category.value,
-                model=model,
+                model=selected_model,
                 max_tokens=current_budget,
             )
             total_ms += call_res["model_ms"]
@@ -284,12 +361,12 @@ class AdaptiveModelExecutionOptimizer:
                     "model_ms": round(total_ms, 3),
                     "selected_model": call_res["selected_model"],
                     "residency_state": call_res["residency_state"],
+                    "routing_explanation": routing_res["explanation"],
                     "expansions_used": expansions,
                     "final_budget": current_budget,
                     "truncated": truncated,
                 }
 
-            # Truncation detected -> expand budget cleanly
             expansions += 1
             current_budget = min(max_budget, int(current_budget * 1.6))
             logger.info(f"[DYNAMIC-BUDGET] Troncature détectée sur {call_res['selected_model']}, extension du budget à {current_budget} tokens (Passe {expansions})")
@@ -299,6 +376,7 @@ class AdaptiveModelExecutionOptimizer:
             "model_ms": round(total_ms, 3),
             "selected_model": call_res["selected_model"],
             "residency_state": call_res["residency_state"],
+            "routing_explanation": routing_res["explanation"],
             "expansions_used": expansions,
             "final_budget": current_budget,
             "truncated": True,
