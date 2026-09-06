@@ -6,6 +6,18 @@ from .factory import (
     BudgetExceededError,
     SecurityViolationError,
 )
+from .swarm import (
+    SwarmEngine,
+    swarm_engine,
+    AgentSwarm,
+    SwarmMessage,
+    SwarmConflict,
+    SwarmProposal,
+    MessageType,
+    SwarmMode,
+    SwarmState,
+    SwarmLimitError,
+)
 
 __all__ = [
     "AgentRegistry",
@@ -17,4 +29,14 @@ __all__ = [
     "HierarchicalLimitError",
     "BudgetExceededError",
     "SecurityViolationError",
+    "SwarmEngine",
+    "swarm_engine",
+    "AgentSwarm",
+    "SwarmMessage",
+    "SwarmConflict",
+    "SwarmProposal",
+    "MessageType",
+    "SwarmMode",
+    "SwarmState",
+    "SwarmLimitError",
 ]
