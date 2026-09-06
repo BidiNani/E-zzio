@@ -26,6 +26,7 @@ from core.agent.mission_controller import (
 )
 from core.agent.worker_fleet import worker_fleet
 from core.agents.registry import agent_registry
+from core.memory.instance import memory_gateway
 from core.providers.base_provider import ProviderResponse
 
 logger = logging.getLogger("EzzioMaster")
@@ -39,6 +40,8 @@ class EzzioMaster:
         self.fleet = worker_fleet
         self.registry = mission_registry
         self.agent_registry = agent_registry
+        self.memory = memory_gateway
+        self._memory_initialized = False
 
     def _resolve_task_profile(
         self,
@@ -113,13 +116,13 @@ class EzzioMaster:
             return False
             
         action_triggers = [
-            "analyse g:", "analyse mon disque", "analyse ce", "analyse les",
-            "nettoie", "trouve ce qui consomme", "purge le cache",
+            "analyse g:", "analyse mon disque", "analyse ce", "analyse les", "analyse mon environnement", "analyse l'environnement", "analyse le système", "analyse mon pc",
+            "nettoie", "trouve ce qui consomme", "purge le cache", "détecte les caches", "détecter les caches",
             "refais", "implémente", "corrige le bug", "modifie le code", "vibe code",
             "crée ce fichier", "copie ce fichier", "renomme ce fichier", "supprime ce fichier",
             "fais-moi une image", "génère une image", "crée une image",
             "fais-moi un pdf", "génère un rapport", "génère le document",
-            "lance une analyse", "améliore ton", "améliore-toi", "ajoute cet outil",
+            "lance une analyse", "améliore ton", "améliore-toi", "améliore le", "ajoute cet outil",
             "lance les tests", "lance le test", "exécute pytest", "execute pytest", "vérifie la non-régression",
             "audit de sécurité", "audit ledger", "scan de secrets", "vérifie les secrets",
             "scrappe", "extrais la page web", "visite le site",
@@ -170,6 +173,9 @@ class EzzioMaster:
         if not record and active:
             # Si aucune mission spécifiée, prendre la dernière active
             record = active[0]
+        elif not record and all_missions:
+            # Si aucune mission active mais des missions révisées existent, prendre la plus récente
+            record = all_missions[0]
 
         if record:
             prog_str = f"{record.progress} %" if record.progress > 0 else "NON DISPONIBLE"
@@ -252,6 +258,27 @@ class EzzioMaster:
             "used_fallback": False,
         }
 
+    async def _record_assistant_memory(self, res_dict: Dict[str, Any], session_id: str, channel: str) -> Dict[str, Any]:
+        if session_id and res_dict.get("response"):
+            try:
+                if not self._memory_initialized:
+                    await self.memory.init()
+                    self._memory_initialized = True
+                await self.memory.record_message(
+                    session_id=session_id,
+                    role="assistant",
+                    content=res_dict["response"],
+                    metadata={
+                        "channel": channel,
+                        "model": res_dict.get("model"),
+                        "provider": res_dict.get("provider"),
+                        "mission": res_dict.get("mission")
+                    }
+                )
+            except Exception as exc:
+                logger.warning("[EzzioMaster] Memory record assistant response failed: %s", exc)
+        return res_dict
+
     async def execute_intent(
         self,
         user_prompt: str,
@@ -271,13 +298,29 @@ class EzzioMaster:
         """
         start_time = time.perf_counter()
 
+        if session_id:
+            try:
+                if not self._memory_initialized:
+                    await self.memory.init()
+                    self._memory_initialized = True
+                await self.memory.record_message(
+                    session_id=session_id,
+                    role="user",
+                    content=user_prompt,
+                    metadata={"channel": channel, "user_id": user_id}
+                )
+            except Exception as exc:
+                logger.warning("[EzzioMaster] Memory record user prompt failed: %s", exc)
+
         # 1. Vérifier si c'est une requête de statut
         if self._is_status_query(user_prompt):
-            return await self._handle_status_query(user_prompt, channel)
+            res = await self._handle_status_query(user_prompt, channel)
+            return await self._record_assistant_memory(res, session_id, channel)
 
         # 2. Vérifier si c'est une requête d'annulation
         if self._is_cancel_query(user_prompt):
-            return await self._handle_cancel_query(user_prompt, channel)
+            res = await self._handle_cancel_query(user_prompt, channel)
+            return await self._record_assistant_memory(res, session_id, channel)
 
         # 3. Vérifier si c'est une mission d'action pour un Worker Asynchrone
         if self._is_task_action_request(user_prompt):
@@ -319,7 +362,7 @@ class EzzioMaster:
                 f"Je reste disponible pour continuer à échanger."
             )
 
-            return {
+            res_ack = {
                 "response": ack_message,
                 "answer": ack_message,
                 "content": ack_message,
@@ -337,6 +380,7 @@ class EzzioMaster:
                 "used_fallback": False,
                 "is_async_job": True,
             }
+            return await self._record_assistant_memory(res_ack, session_id, channel)
 
         # 4. Requête conversationnelle normale (Explications, architecture, questions générales)
         profile = self._resolve_task_profile(
@@ -370,7 +414,7 @@ class EzzioMaster:
 
             status_ok = bool(reply.strip())
 
-            return {
+            res_conv = {
                 "response": reply,
                 "answer": reply,
                 "content": reply,
@@ -386,6 +430,7 @@ class EzzioMaster:
                 "used_fallback": used_fallback,
                 "federation_trace": raw_trace,
             }
+            return await self._record_assistant_memory(res_conv, session_id, channel)
 
         except Exception as exc:
             elapsed_ms = int((time.perf_counter() - start_time) * 1000)
@@ -396,7 +441,7 @@ class EzzioMaster:
                     cloud_res = cloud_chat(text=user_prompt, session_id=session_id, speed=speed)
                     reply = cloud_res.get("response") or cloud_res.get("answer") or cloud_res.get("content") or ""
                     model_name = cloud_res.get("model", "gemini-2.5-flash")
-                    return {
+                    res_cloud = {
                         "response": reply,
                         "answer": reply,
                         "content": reply,
@@ -411,11 +456,12 @@ class EzzioMaster:
                         "ok": True,
                         "used_fallback": True,
                     }
+                    return await self._record_assistant_memory(res_cloud, session_id, channel)
                 except Exception as cloud_exc:
                     logger.error("[EzzioMaster] Ultimate fallback failed: %s", cloud_exc)
 
             fail_msg = f"[FAIL-CLOSED] Liaison Fédération E-ZZIO indisponible : {exc}"
-            return {
+            res_fail = {
                 "response": fail_msg,
                 "answer": fail_msg,
                 "content": fail_msg,
@@ -431,6 +477,7 @@ class EzzioMaster:
                 "error": str(exc),
                 "used_fallback": False,
             }
+            return await self._record_assistant_memory(res_fail, session_id, channel)
 
 
 ezzio_master = EzzioMaster()
