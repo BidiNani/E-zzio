@@ -70,6 +70,13 @@ class AgentDescriptor:
     registered_at: str = field(default_factory=utc_now)
     code_activity: Optional[Dict[str, Any]] = None
     terminal_logs: List[str] = field(default_factory=list)
+    depth: int = 0
+    max_depth: int = 3
+    budget: float = 100.0
+    budget_used: float = 0.0
+    children_ids: List[str] = field(default_factory=list)
+    ephemeral: bool = False
+    lifecycle_state: str = "READY"
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -95,6 +102,13 @@ class AgentDescriptor:
             "registered_at": self.registered_at,
             "code_activity": self.code_activity,
             "terminal_logs": self.terminal_logs[-20:],  # limiter aux 20 derniers logs
+            "depth": self.depth,
+            "max_depth": self.max_depth,
+            "budget": self.budget,
+            "budget_used": self.budget_used,
+            "children_ids": list(self.children_ids),
+            "ephemeral": self.ephemeral,
+            "lifecycle_state": self.lifecycle_state,
         }
 
 
