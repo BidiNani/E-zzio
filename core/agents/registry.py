@@ -56,6 +56,8 @@ class AgentDescriptor:
     model: str
     provider: str
     tools: List[str] = field(default_factory=list)
+    capabilities: List[str] = field(default_factory=list)
+    risk_level: str = "LOW"
     status: AgentStatus = AgentStatus.IDLE
     current_action: str = "Ready"
     progress: int = 0
@@ -79,6 +81,8 @@ class AgentDescriptor:
             "model": self.model,
             "provider": self.provider,
             "tools": list(self.tools),
+            "capabilities": list(self.capabilities),
+            "risk_level": self.risk_level,
             "status": self.status.value,
             "current_action": self.current_action,
             "progress": self.progress,
@@ -115,7 +119,7 @@ class AgentRegistry:
         self._initialized = True
 
     def _register_default_agents(self) -> None:
-        """Enregistre la flotte canonique souveraine d'E-ZZIO."""
+        """Enregistre la flotte canonique souveraine d'E-ZZIO (13 agents spécialisés + Master)."""
         defaults = [
             AgentDescriptor(
                 agent_id="master_ezzio",
@@ -126,6 +130,8 @@ class AgentRegistry:
                 model="gemini-3.7-flash",
                 provider="cloud_gemini",
                 tools=["CapabilityPolicy", "AuditLedger", "ModelRouter", "UnifiedGateway"],
+                capabilities=["DIALOGUE", "PLANNING", "DELEGATION", "SUPERVISION", "AGGREGATION", "NOTIFICATION"],
+                risk_level="HIGH",
                 is_master=True,
                 current_action="Supervising Platform & Enforcing Frozen Core Policy",
                 bubble="Sovereign OS fully governed.",
@@ -139,6 +145,8 @@ class AgentRegistry:
                 model="qwen3.5:9b",
                 provider="ollama_local",
                 tools=["LocalExecution", "CodePatch", "GitEngine", "Sandbox"],
+                capabilities=["CODE_READ", "CODE_WRITE", "CODE_TEST", "REPOSITORY_INSPECT"],
+                risk_level="MEDIUM",
                 current_action="Platform engineering active",
                 bubble="Autonomous software engineering in progress.",
             ),
@@ -151,6 +159,8 @@ class AgentRegistry:
                 model="phi4-mini:latest",
                 provider="ollama_local",
                 tools=["PytestRunner", "ForensicScanner", "RegressionGate"],
+                capabilities=["TEST_RUN", "VALIDATE_OUTPUT", "REGRESSION_SCAN"],
+                risk_level="LOW",
                 current_action="Monitoring test execution integrity",
                 bubble="100% test integrity enforced.",
             ),
@@ -163,6 +173,8 @@ class AgentRegistry:
                 model="gemma4e4b:latest",
                 provider="ollama_local",
                 tools=["CapabilityGuard", "ApprovalManager", "SecretsVault", "AuditLedger"],
+                capabilities=["SECRETS_SCAN", "INTEGRITY_CHECK", "AUDIT_VERIFY"],
+                risk_level="HIGH",
                 current_action="Audit ledger hash-chain inspection",
                 bubble="Cryptographic verification active.",
             ),
@@ -175,10 +187,87 @@ class AgentRegistry:
                 model="llama-3.3-70b-versatile",
                 provider="cloud_groq",
                 tools=["web.search", "crawl4ai", "ast_grep"],
-                current_action="Hermes capability surface mapped",
-                bubble="Forensics scan completed.",
+                capabilities=["WEB_SEARCH", "READ_DOCUMENT", "ANALYZE_DOCUMENT", "SUMMARIZE"],
+                risk_level="LOW",
+                current_action="Forensics and codebase exploration active",
+                bubble="Knowledge scouting active.",
                 parent_id="master_ezzio",
                 collaborator_id="coder_worker",
+            ),
+            AgentDescriptor(
+                agent_id="web_agent",
+                name="Web Navigator",
+                role="Web Inspection & Online Ingestion Specialist",
+                room="research_room",
+                avatar="pixel_web",
+                model="llama-3.3-70b-versatile",
+                provider="cloud_groq",
+                tools=["web.browse", "html_parser", "crawler"],
+                capabilities=["WEB_BROWSE", "URL_EXTRACT", "WEB_INSPECT"],
+                risk_level="LOW",
+                current_action="Web discovery standing by",
+                bubble="Web ingress interface online.",
+                parent_id="master_ezzio",
+            ),
+            AgentDescriptor(
+                agent_id="system_agent",
+                name="System Sentinel",
+                role="Operating System & Service Diagnostics Specialist",
+                room="devops_dock",
+                avatar="pixel_system",
+                model="llama-3.3-70b-versatile",
+                provider="cloud_groq",
+                tools=["psutil", "system_diagnostics", "service_probe"],
+                capabilities=["SYSTEM_READ", "PROCESS_READ", "SERVICE_READ", "DIAGNOSTICS"],
+                risk_level="MEDIUM",
+                current_action="System heartbeat and process telemetry active",
+                bubble="OS metrics nominal.",
+                parent_id="master_ezzio",
+            ),
+            AgentDescriptor(
+                agent_id="cleaning_agent",
+                name="Cleaning Specialist",
+                role="Disk & Storage Hygiene Specialist",
+                room="devops_dock",
+                avatar="pixel_cleaner",
+                model="llama-3.3-70b-versatile",
+                provider="cloud_groq",
+                tools=["disk_scanner", "cache_cleaner", "policy_evaluator"],
+                capabilities=["SCAN", "CLASSIFY", "REPORT", "APPROVAL", "DELETE", "VERIFY"],
+                risk_level="HIGH",
+                current_action="Disk space and cache monitoring active",
+                bubble="Storage hygiene policy standing by.",
+                parent_id="master_ezzio",
+            ),
+            AgentDescriptor(
+                agent_id="file_agent",
+                name="File Archivist",
+                role="Governed File System Operations Specialist",
+                room="memory_core",
+                avatar="pixel_files",
+                model="qwen3.5:9b",
+                provider="ollama_local",
+                tools=["file_manager", "path_guard", "checksum_engine"],
+                capabilities=["FILE_READ", "FILE_WRITE", "FILE_MOVE", "FILE_ARCHIVE"],
+                risk_level="MEDIUM",
+                current_action="Awaiting file transformation tasks",
+                bubble="Governed file operations ready.",
+                parent_id="master_ezzio",
+            ),
+            AgentDescriptor(
+                agent_id="image_agent",
+                name="Visual Perceiver",
+                role="Multimodal Vision & Graphic Synthesis Specialist",
+                room="research_room",
+                avatar="pixel_vision",
+                model="gemini-2.5-flash",
+                provider="cloud_gemini",
+                tools=["vision_inspect", "image_render", "diagram_draw"],
+                capabilities=["IMAGE_GENERATE", "IMAGE_INSPECT"],
+                risk_level="LOW",
+                current_action="Visual processing ready",
+                bubble="Multimodal perceptual engine idle.",
+                parent_id="master_ezzio",
             ),
             AgentDescriptor(
                 agent_id="docs_scribe",
@@ -188,9 +277,56 @@ class AgentRegistry:
                 avatar="pixel_scribe",
                 model="gemini-3.7-flash",
                 provider="cloud_gemini",
-                tools=["doc_writer", "markdown_validator"],
+                tools=["doc_writer", "markdown_validator", "pdf_exporter"],
+                capabilities=["PDF_CREATE", "MARKDOWN_GENERATE", "REPORT_SYNTHESIZE"],
+                risk_level="LOW",
                 current_action="Compiling Living Workspace specs",
                 bubble="Updating Living Workspace docs...",
+                parent_id="master_ezzio",
+            ),
+            AgentDescriptor(
+                agent_id="model_agent",
+                name="Model Arbitrator",
+                role="Model Qualification & Provider Health Specialist",
+                room="command_center",
+                avatar="pixel_model",
+                model="llama-3.3-70b-versatile",
+                provider="cloud_groq",
+                tools=["provider_probe", "latency_meter", "benchmark_runner"],
+                capabilities=["MODEL_DISCOVERY", "PROVIDER_HEALTH", "QUALIFICATION"],
+                risk_level="LOW",
+                current_action="Tracking provider latency and circuit-breaker states",
+                bubble="Provider routing matrix optimized.",
+                parent_id="master_ezzio",
+            ),
+            AgentDescriptor(
+                agent_id="data_agent",
+                name="Data Transformer",
+                role="Structured Data & Extraction Specialist",
+                room="memory_core",
+                avatar="pixel_data",
+                model="llama-3.3-70b-versatile",
+                provider="cloud_groq",
+                tools=["csv_parser", "json_transform", "sqlite_query"],
+                capabilities=["CSV_PARSE", "JSON_TRANSFORM", "STRUCTURED_EXTRACT"],
+                risk_level="LOW",
+                current_action="Structured schema engines ready",
+                bubble="Data transformation pipelines active.",
+                parent_id="master_ezzio",
+            ),
+            AgentDescriptor(
+                agent_id="automation_agent",
+                name="Automation Engine",
+                role="Governed Script Execution & Task Automator",
+                room="devops_dock",
+                avatar="pixel_automation",
+                model="qwen3.5:9b",
+                provider="ollama_local",
+                tools=["script_runner", "cron_engine", "state_watch"],
+                capabilities=["SCRIPT_EXEC", "SCHEDULED_TASK"],
+                risk_level="HIGH",
+                current_action="Awaiting governed automation schedules",
+                bubble="Automation runner standing by.",
                 parent_id="master_ezzio",
             ),
             AgentDescriptor(
@@ -202,10 +338,11 @@ class AgentRegistry:
                 model="groq_router",
                 provider="cloud_groq",
                 tools=["hermes_mcp_gateway", "fastapi", "sse_bus"],
+                capabilities=["GATEWAY_DISPATCH", "SERVICE_BRIDGE"],
+                risk_level="MEDIUM",
                 current_action="Serving Hermes MCP Gateway on port 8001",
                 bubble="Gateway port 8001 SSE bus listening.",
                 parent_id="master_ezzio",
-                collaborator_id="hermes_executor",
             ),
             AgentDescriptor(
                 agent_id="memory_archivist",
@@ -216,23 +353,11 @@ class AgentRegistry:
                 model="local_fast",
                 provider="local_ollama",
                 tools=["fts5", "sqlite_wal", "vector_cache"],
+                capabilities=["FTS5_SEARCH", "VECTOR_CACHE", "STATE_PERSISTENCE"],
+                risk_level="LOW",
                 current_action="FTS5 indexing quiescent; awaiting semantic queries",
                 bubble="FTS5 indices synchronized and quiescent.",
                 parent_id="master_ezzio",
-            ),
-            AgentDescriptor(
-                agent_id="hermes_executor",
-                name="Hermes Autonomous Worker",
-                role="External Reasoning & Tool Subagent (Governed)",
-                room="dev_lab",
-                avatar="pixel_hermes",
-                model="gemini-3.7-flash",
-                provider="cloud_gemini",
-                tools=["mcp_tools", "browser_view", "fs_read"],
-                current_action="Operating under E-ZZIO MCP Gateway confinement",
-                bubble="Confinement active: executing read ops.",
-                parent_id="coder_worker",
-                collaborator_id="coder_worker",
             ),
             AgentDescriptor(
                 agent_id="antigravity_agent",
@@ -243,6 +368,8 @@ class AgentRegistry:
                 model="antigravity-2.0",
                 provider="agent_antigravity",
                 tools=["agy_cli"],
+                capabilities=["DEEP_REFACTOR"],
+                risk_level="HIGH",
                 status=AgentStatus.ERROR,
                 current_action="Standing by: BLOCKED_BY_EXTERNAL_QUOTA",
                 bubble="Quota limit reached: standby fail-safe mode.",
@@ -257,12 +384,61 @@ class AgentRegistry:
         self._agents.clear()
         self._register_default_agents()
 
-
     def register(self, desc: AgentDescriptor) -> None:
         self._agents[desc.agent_id] = desc
 
     def get_agent(self, agent_id: str) -> Optional[AgentDescriptor]:
         return self._agents.get(agent_id)
+
+    def get_agent_by_role(self, role: str) -> Optional[AgentDescriptor]:
+        """Recherche un agent par identifiant canonique de rôle ou nom de worker."""
+        role_upper = role.upper().replace("-", "_").strip()
+        
+        # Mappages directs pour les rôles demandés
+        role_alias_map = {
+            "CODER_AGENT": "coder_worker",
+            "CODER_WORKER": "coder_worker",
+            "RESEARCH_AGENT": "researcher_scout",
+            "RESEARCH_WORKER": "researcher_scout",
+            "WEB_AGENT": "web_agent",
+            "SYSTEM_AGENT": "system_agent",
+            "SYSTEM_WORKER": "system_agent",
+            "CLEANING_AGENT": "cleaning_agent",
+            "CLEANING_WORKER": "cleaning_agent",
+            "FILE_AGENT": "file_agent",
+            "FILE_WORKER": "file_agent",
+            "IMAGE_AGENT": "image_agent",
+            "IMAGE_WORKER": "image_agent",
+            "DOCUMENT_AGENT": "docs_scribe",
+            "DOCUMENT_WORKER": "docs_scribe",
+            "DOCS_SCRIBE": "docs_scribe",
+            "QA_AGENT": "qa_tester",
+            "QA_WORKER": "qa_tester",
+            "QA_TESTER": "qa_tester",
+            "SECURITY_AGENT": "sec_guard",
+            "SECURITY_WORKER": "sec_guard",
+            "SEC_GUARD": "sec_guard",
+            "MODEL_AGENT": "model_agent",
+            "DATA_AGENT": "data_agent",
+            "AUTOMATION_AGENT": "automation_agent",
+            "MASTER": "master_ezzio",
+        }
+        target_id = role_alias_map.get(role_upper)
+        if target_id and target_id in self._agents:
+            return self._agents[target_id]
+
+        # Recherche floue par agent_id ou role string
+        for agent in self._agents.values():
+            if agent.agent_id.upper() == role_upper:
+                return agent
+            if role_upper in agent.role.upper():
+                return agent
+        return None
+
+    def find_agents_by_capability(self, capability: str) -> List[AgentDescriptor]:
+        """Retourne tous les agents possédant une capacité donnée."""
+        cap_upper = capability.upper().strip()
+        return [a for a in self._agents.values() if cap_upper in [c.upper() for c in a.capabilities]]
 
     def list_agents(self) -> List[AgentDescriptor]:
         return list(self._agents.values())

@@ -57,7 +57,14 @@ def test_qg_canonical_providers_contracts():
 
 
 def test_qg_official_web_server_routers():
-    route_paths = [route.path for route in app.routes]
+    route_paths = []
+    for r in app.routes:
+        if hasattr(r, "path"):
+            route_paths.append(r.path)
+        elif hasattr(r, "original_router"):
+            prefix = getattr(getattr(r, "include_context", None), "prefix", "") or ""
+            for sub_r in getattr(r.original_router, "routes", []):
+                route_paths.append(prefix + getattr(sub_r, "path", ""))
     required = [
         "/health",
         "/perception/status",

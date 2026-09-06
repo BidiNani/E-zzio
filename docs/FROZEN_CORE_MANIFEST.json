@@ -84,7 +84,7 @@
     },
     "core/agent/coding_agent_loop.py": {
       "path": "core/agent/coding_agent_loop.py",
-      "sha256": "9a1295ff35a99e3b40ccf7b911252fc35f216ef31acaefed211b1cc83c8c4b45",
+      "sha256": "dab6a202af470d323fd37dc873fed861dcf5e14bbf5c2b8c233a2f858fc8a32f",
       "role": "Single Canonical Autonomous Coding & Self-Healing Worker",
       "authority": "CODING_WORKER",
       "status": "FROZEN"

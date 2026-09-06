@@ -145,6 +145,7 @@ class OllamaProvider(BaseProvider, IResearchProvider):
             "model": target_model,
             "prompt": prompt,
             "stream": False,
+            "think": kwargs.get("think", False),
             "options": {
                 "temperature": temperature,
                 "num_predict": max_tokens,
@@ -174,6 +175,8 @@ class OllamaProvider(BaseProvider, IResearchProvider):
 
                 data = res.json()
                 content = data.get("response", "").strip()
+                if not content and data.get("thinking"):
+                    content = data.get("thinking", "").strip()
                 prompt_eval = data.get("prompt_eval_count", 0)
                 eval_count = data.get("eval_count", 0)
 

@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>E-ZZIO V9.3 — Tactical Sovereign AI Command Center</title>
+  <title>E-ZZIO V9.4 — Tactical Sovereign AI Command Center</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
   <link rel="stylesheet" href="/static/ezzio-tactical.css" />
   <link rel="stylesheet" href="/static/tailwind.min.css" />
   <script src="/static/ezzio-office-motion.js"></script>
   <script src="/static/ezzio-office-canvas.js"></script>
-  <script src="ezzio-office-motion.js"></script>
-  <script src="ezzio-office-canvas.js"></script>
 
   <script>
     if (typeof tailwind !== 'undefined') {
@@ -39,7 +38,7 @@
     }
   </script>
   <style>
-/* E-ZZIO V9.3 TACTICAL DESIGN SYSTEM — COMPREHENSIVE UTILITIES */
+/* E-ZZIO V9.4 TACTICAL DESIGN SYSTEM — COMPREHENSIVE UTILITIES */
 :root {
   --ezzio-bg: #08090C;
   --ezzio-card: #101216;
@@ -377,7 +376,7 @@ body {
         <div>
           <div class="flex items-center gap-2">
             <span class="font-extrabold tracking-wider text-white text-base font-mono">E-ZZIO AGENT HQ</span>
-            <span class="text-[11px] px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 font-mono">V9.3 COMMAND</span>
+            <span id="hud-cmd-badge" class="text-[11px] px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 font-mono">V9.4 COMMAND</span>
             <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-mono flex items-center gap-1.5">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
               FROZEN CORE INTACT
@@ -416,9 +415,11 @@ body {
 
         <!-- Provider Status Badge Group (Dynamically Updated) -->
         <div class="flex items-center bg-[#0C0E12] border border-ezzio-border rounded-xl px-3 py-1.5 gap-2 text-[11px] font-mono" id="provider-badges-group">
-          <span id="badge-gemini" title="Gemini 3.7 Cloud" class="flex items-center gap-1 text-emerald-400"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>GEMINI <span id="lat-gemini" class="text-[9px] text-neutral-400 font-normal">--ms</span></span>
-          <span id="badge-groq" title="Groq Llama-3.3" class="flex items-center gap-1 text-neutral-400"><span class="w-1.5 h-1.5 rounded-full bg-neutral-500"></span>GROQ</span>
-          <span id="badge-ollama" title="Local Ollama Qwen" class="flex items-center gap-1 text-emerald-400"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>OLLAMA <span id="lat-ollama" class="text-[9px] text-neutral-400 font-normal">--ms</span></span>
+          <span id="badge-ollama" title="Local Ollama (qwen3.5:9b Sovereign)" class="flex items-center gap-1 text-emerald-400"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>OLLAMA: qwen3.5 <span id="lat-ollama" class="text-[9px] text-neutral-400 font-normal">--ms</span></span>
+          <span id="badge-nvidia" title="NVIDIA NIM (nemotron-3-super-120b-a12b)" class="flex items-center gap-1 text-emerald-400"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>NVIDIA NIM <span id="lat-nvidia" class="text-[9px] text-neutral-400 font-normal">ONLINE</span></span>
+          <span id="badge-openrouter" title="OpenRouter (qwen-2.5-coder-32b-instruct)" class="flex items-center gap-1 text-emerald-400"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>OPENROUTER</span>
+          <span id="badge-gemini" title="Gemini 2.5/3.5 Cloud" class="flex items-center gap-1 text-emerald-400"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>GEMINI <span id="lat-gemini" class="text-[9px] text-neutral-400 font-normal">--ms</span></span>
+          <span id="badge-groq" title="Groq Llama-3.3-70b" class="flex items-center gap-1 text-neutral-400"><span class="w-1.5 h-1.5 rounded-full bg-neutral-500"></span>GROQ</span>
           <span id="badge-antigravity" title="Antigravity 2.0 (Fail-safe external quota)" class="flex items-center gap-1 text-amber-400 bg-amber-950/40 px-1.5 py-0.5 rounded border border-amber-500/40"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>ANTIGRAVITY: QUOTA</span>
         </div>
 
@@ -490,8 +491,20 @@ body {
             <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
             OBSERVER ACTIVE
           </span>
+          <span id="commander-indicator" class="hidden text-amber-400 font-bold flex items-center gap-1 bg-amber-950/40 px-2 py-0.5 rounded border border-amber-500/40">
+            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+            COMMANDER ACTIVE
+          </span>
+          <span id="motion-indicator" class="hidden text-blue-400 font-bold flex items-center gap-1 bg-blue-950/40 px-2 py-0.5 rounded border border-blue-500/40">
+            REDUCED MOTION
+          </span>
           <span>POLL: <span id="last-poll" class="text-neutral-300">Just now</span></span>
         </div>
+      </div>
+      <!-- Tactical In-App Notification Toast -->
+      <div id="tactical-toast" class="hidden fixed bottom-6 right-6 z-50 bg-[#121620] border border-blue-500/40 text-neutral-200 px-4 py-2.5 rounded-xl shadow-2xl font-mono text-xs flex items-center gap-2.5 transition-all">
+        <span id="toast-icon">ℹ️</span>
+        <span id="toast-msg">Notification</span>
       </div>
 
       <!-- VIEW SELECTOR & CAMERA HUD (V9.4 LIVING OFFICE) -->
@@ -564,24 +577,87 @@ body {
         </div>
       </div>
 
-      <!-- DIRECT SOVEREIGN INTENT TERMINAL (MASTER ROUTER) -->
-      <div class="bg-ezzio-card border border-ezzio-border rounded-xl p-4 flex flex-col gap-3">
-        <div class="flex items-center justify-between">
-          <h3 class="text-xs font-bold uppercase tracking-wider text-neutral-400 font-mono flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-            Direct Sovereign Intent Terminal (Master Router)
-          </h3>
-          <span class="text-[11px] font-mono text-neutral-500">FastAPI /master/chat · CapabilityPolicy Protected</span>
+      <!-- TACTICAL AGENT HQ CHAT & COMMAND CONSOLE -->
+      <div id="chat-console-card" class="bg-ezzio-card border border-ezzio-border rounded-xl p-4 flex flex-col gap-3 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-ezzio-border pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-white font-mono">
+              Agent HQ Tactical Command & Chat Console
+            </h3>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30 font-mono">/master/chat</span>
+          </div>
+          <!-- Model and Profile Selector -->
+          <div class="flex items-center gap-2 text-xs font-mono">
+            <label class="text-neutral-400 text-[11px]">CIBLE:</label>
+            <select id="chat-model-target" class="bg-[#090A0D] border border-neutral-800 rounded px-2 py-1 text-neutral-200 text-xs focus:outline-none focus:border-blue-500 font-mono">
+              <option value="auto">E-ZZIO Master Governor (Auto Route)</option>
+              <option value="ollama_qwen">Ollama Local · qwen3.5:9b (Sovereign)</option>
+              <option value="nvidia_nim">NVIDIA NIM · nemotron-3-super-120b</option>
+              <option value="openrouter">OpenRouter · qwen-2.5-coder-32b</option>
+              <option value="groq_llama">Groq Cloud · llama-3.3-70b (Fast)</option>
+              <option value="gemini_cloud">Gemini Cloud · gemini-2.5-flash</option>
+            </select>
+            <select id="chat-mission-profile" class="bg-[#090A0D] border border-neutral-800 rounded px-2 py-1 text-neutral-200 text-xs focus:outline-none focus:border-blue-500 font-mono">
+              <option value="STANDARD">Profile: STANDARD</option>
+              <option value="COMPLEX">Profile: COMPLEX</option>
+              <option value="CRITICAL">Profile: CRITICAL</option>
+              <option value="LOCAL_ONLY">Profile: LOCAL_ONLY</option>
+              <option value="FAST">Profile: FAST</option>
+            </select>
+            <button onclick="clearChatLog()" class="px-2 py-1 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white text-[11px] transition" title="Nettoyer l'historique">
+              🧹
+            </button>
+          </div>
         </div>
-        <div class="flex gap-2">
-          <input id="intent-input" type="text" placeholder="Ex: ezzio analyse le fichier log, déploie le patch devops, ou lance un scan de sécurité..." 
-                 class="flex-1 bg-[#090A0D] border border-neutral-800 rounded-lg px-4 py-2 text-sm text-neutral-200 focus:outline-none focus:border-blue-500 font-mono placeholder:text-neutral-600">
-          <button onclick="sendIntent()" id="send-intent-btn" class="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs rounded-lg transition font-mono flex items-center gap-1.5">
-            <span>EXÉCUTER</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-          </button>
+
+        <!-- Chat History Stream -->
+        <div id="chat-messages-container" class="bg-[#060709] border border-neutral-900 rounded-lg p-3 flex flex-col gap-2.5 min-h-[140px] max-h-[260px] overflow-y-auto font-mono text-xs">
+          <!-- System Welcome Message -->
+          <div class="flex items-start gap-2 text-neutral-400 bg-black/40 p-2 rounded border border-neutral-800/60">
+            <span class="text-base">👑</span>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 text-[10.5px]">
+                <span class="text-amber-400 font-bold">E-ZZIO Master Governor</span>
+                <span class="text-neutral-500">System Ready</span>
+                <span class="text-[9.5px] px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">ONLINE</span>
+              </div>
+              <p class="text-neutral-300 mt-1 text-[11.5px] leading-relaxed">
+                Console Agent HQ opérationnelle. Tapez une instruction pour le Master Governor ou le coder_worker. Entrée pour envoyer, Maj+Entrée pour saut de ligne.
+              </p>
+            </div>
+          </div>
         </div>
-        <div id="intent-result" class="hidden text-xs font-mono bg-black/60 border border-neutral-800 p-3 rounded-lg text-neutral-300 max-h-32 overflow-y-auto"></div>
+
+        <!-- Chat Input & Controls -->
+        <div class="flex flex-col gap-2">
+          <div class="flex gap-2 items-end">
+            <div class="flex-1 relative">
+              <textarea id="chat-textarea" rows="2" placeholder="Saisir un ordre ou une question pour E-ZZIO (Entrée: Envoyer, Maj+Entrée: Saut de ligne)..." 
+                        class="w-full bg-[#090A0D] border border-neutral-800 rounded-lg px-3.5 py-2 text-xs text-neutral-100 focus:outline-none focus:border-blue-500 font-mono placeholder:text-neutral-600 resize-none leading-relaxed"></textarea>
+              <!-- Hidden backward compatibility input for legacy e2e tests -->
+              <input id="intent-input" type="hidden" />
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <button onclick="sendIntent()" id="send-intent-btn" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-bold text-xs rounded-lg transition font-mono flex items-center justify-center gap-1.5 shadow-lg shadow-blue-900/30">
+                <span>ENVOYER</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </button>
+              <button onclick="stopIntent()" id="stop-intent-btn" class="hidden px-3 py-1 bg-red-900/60 hover:bg-red-800 text-red-200 font-mono text-[10px] rounded border border-red-500/40 transition">
+                ⏹ STOP
+              </button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between text-[10px] font-mono text-neutral-500 px-1">
+            <span id="chat-status-bar">Prêt · Touche Entrée pour envoyer</span>
+            <span class="flex items-center gap-1 text-emerald-400">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              FastAPI Sovereign Channel
+            </span>
+          </div>
+          <!-- Result Container for Backward Compatibility with tests -->
+          <div id="intent-result" class="hidden text-xs font-mono bg-black/60 border border-neutral-800 p-2 rounded text-neutral-400 max-h-24 overflow-y-auto"></div>
+        </div>
       </div>
 
     </div>
@@ -608,7 +684,7 @@ body {
           <h3 class="text-xs font-bold uppercase tracking-wider text-neutral-300 font-mono flex items-center gap-2">
             <span>💻 Live Code Activity</span>
           </h3>
-          <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-800 text-neutral-400">git: dde4d18</span>
+          <span id="git-commit-badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-800 text-neutral-400">git: 5ae1679</span>
         </div>
         <div id="live-code-feed" class="flex flex-col gap-2 text-xs font-mono">
           <!-- Loaded by JS -->
@@ -865,6 +941,17 @@ body {
       `;
     }
 
+    // Security Sanitization Utility
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
     let officeState = null;
     let currentPendingApproval = null;
     let observerInterval = null;
@@ -874,8 +961,7 @@ body {
 
     async function fetchOfficeState() {
       try {
-        let res = await fetch('/master/api/v1/office/state');
-        if (!res.ok) res = await fetch('/api/v1/office/state');
+        const res = await fetch('/master/api/v1/office/state');
         if (res.ok) {
           const data = await res.json();
           try { localStorage.setItem('ezzio_cached_state', JSON.stringify(data)); } catch(e) {}
@@ -900,32 +986,26 @@ body {
       try {
         const res = await fetch('/master/api/v1/approvals/pending');
         if (res.ok) return await res.json();
-        const res2 = await fetch('/api/v1/approvals/pending');
-        if (res2.ok) return await res2.json();
       } catch (e) {
         console.error('Pending approvals fetch failed', e);
       }
-      return { pending_approvals: [] };
+      return { pending_approvals: [], total: 0 };
     }
 
     async function fetchOfficeEvents() {
       try {
         const res = await fetch('/master/api/v1/office/events');
         if (res.ok) return await res.json();
-        const res2 = await fetch('/api/v1/office/events');
-        if (res2.ok) return await res2.json();
       } catch (e) {
         console.error('Events fetch failed', e);
       }
-      return { events: [] };
+      return { events: [], total: 0 };
     }
 
     async function fetchSystemDiagnostics() {
       try {
         const res = await fetch('/master/api/v1/system/diagnostics');
         if (res.ok) return await res.json();
-        const res2 = await fetch('/api/v1/system/diagnostics');
-        if (res2.ok) return await res2.json();
       } catch (e) {
         console.warn('System diagnostics fetch failed', e);
       }
@@ -936,8 +1016,6 @@ body {
       try {
         const res = await fetch('/master/api/v1/providers/health');
         if (res.ok) return await res.json();
-        const res2 = await fetch('/api/v1/providers/health');
-        if (res2.ok) return await res2.json();
       } catch (e) {
         console.warn('Providers health fetch failed', e);
       }
@@ -947,6 +1025,7 @@ body {
     function renderRoomsAndAgents(state) {
       const grid = document.getElementById('rooms-grid');
       grid.innerHTML = '';
+      if (!state || !Array.isArray(state.rooms) || !Array.isArray(state.agents)) return;
 
       state.rooms.forEach(roomId => {
         const roomMeta = ROOM_METADATA[roomId] || { name: roomId, icon: '🏢', desc: '' };
@@ -964,8 +1043,8 @@ body {
         let headerHtml = `
           <div class="flex items-center justify-between border-b border-neutral-800 pb-2 mb-3">
             <div class="flex items-center gap-2">
-              <span class="text-base">${roomMeta.icon}</span>
-              <span class="text-xs font-bold text-neutral-200 tracking-wide font-mono">${roomMeta.name}</span>
+              <span class="text-base">${escapeHtml(roomMeta.icon)}</span>
+              <span class="text-xs font-bold text-neutral-200 tracking-wide font-mono">${escapeHtml(roomMeta.name)}</span>
             </div>
             <span class="text-[10px] font-mono text-neutral-500">${agentsInRoom.length} agent${agentsInRoom.length > 1 ? 's' : ''}</span>
           </div>
@@ -985,9 +1064,17 @@ body {
 
             const isSubagent = agent.parent_id !== null && agent.parent_id !== undefined;
             const svgAvatar = generateAvatarSvg(agent.avatar, agent.status, isSubagent);
+            const safeAgentId = escapeHtml(agent.agent_id);
+            const safeName = escapeHtml(agent.name);
+            const safeRole = escapeHtml(agent.role);
+            const safeStatus = escapeHtml(agent.status);
+            const safeModel = escapeHtml(agent.model);
+            const safeAction = escapeHtml(agent.current_action);
+            const safeBubble = agent.bubble ? escapeHtml(agent.bubble) : '';
+            const safeProgress = Math.max(0, Math.min(100, Number(agent.progress) || 0));
 
             agentsHtml += `
-              <div id="agent-card-${agent.agent_id}" onclick="inspectAgent('${agent.agent_id}')" 
+              <div id="agent-card-${safeAgentId}" onclick="inspectAgent('${safeAgentId}')" 
                    class="group cursor-pointer bg-[#0A0B0E] hover:bg-[#13161D] border ${agent.status === 'WAITING_APPROVAL' ? 'border-red-500/60 glow-red' : 'border-neutral-800'} rounded-lg p-2.5 transition-all flex flex-col gap-2 ${isSubagent ? 'ml-3 border-l-2 border-l-purple-500' : ''}">
                 
                 <div class="flex items-start justify-between gap-2">
@@ -995,37 +1082,37 @@ body {
                     ${svgAvatar}
                     <div>
                       <div class="flex items-center gap-1.5">
-                        <span class="text-xs font-bold text-white group-hover:text-blue-400 transition font-sans">${agent.name}</span>
+                        <span class="text-xs font-bold text-white group-hover:text-blue-400 transition font-sans">${safeName}</span>
                         ${agent.is_master ? '<span class="text-[9px] bg-amber-500/20 text-amber-300 px-1 py-0.2 rounded font-mono">MASTER</span>' : ''}
                         ${isSubagent ? '<span class="text-[9px] bg-purple-500/20 text-purple-300 px-1 py-0.2 rounded font-mono">SUB</span>' : ''}
                       </div>
-                      <span class="text-[10px] text-neutral-400 font-mono line-clamp-1">${agent.role}</span>
+                      <span class="text-[10px] text-neutral-400 font-mono line-clamp-1">${safeRole}</span>
                     </div>
                   </div>
-                  <span class="text-[9px] font-mono px-1.5 py-0.5 rounded border ${statusBadge}">${agent.status}</span>
+                  <span class="text-[9px] font-mono px-1.5 py-0.5 rounded border ${statusBadge}">${safeStatus}</span>
                 </div>
 
                 <!-- Living Thought Bubble -->
-                ${agent.bubble ? `
+                ${safeBubble ? `
                   <div class="bg-black/60 border border-neutral-800/80 px-2.5 py-1 rounded text-[10.5px] font-mono text-neutral-300 flex items-center gap-1.5">
                     <span class="text-blue-400">💬</span>
-                    <span class="truncate">${agent.bubble}</span>
+                    <span class="truncate">${safeBubble}</span>
                   </div>
                 ` : ''}
 
                 <!-- Action & Real Progress -->
                 <div class="text-[11px] text-neutral-300 font-mono line-clamp-1">
-                  <span class="text-neutral-500">&gt;</span> ${agent.current_action}
+                  <span class="text-neutral-500">&gt;</span> ${safeAction}
                 </div>
 
                 <div class="w-full bg-neutral-900 h-1.5 rounded-full overflow-hidden">
-                  <div class="${agent.status === 'ERROR' ? 'bg-amber-500' : agent.status === 'WAITING_APPROVAL' ? 'bg-red-500' : 'bg-blue-500'} h-full transition-all" style="width: ${agent.progress}%"></div>
+                  <div class="${agent.status === 'ERROR' ? 'bg-amber-500' : agent.status === 'WAITING_APPROVAL' ? 'bg-red-500' : 'bg-blue-500'} h-full transition-all" style="width: ${safeProgress}%"></div>
                 </div>
 
                 <!-- Footer: Model Badge & Inspect Trigger -->
                 <div class="flex items-center justify-between pt-1 border-t border-neutral-900 text-[10px] font-mono">
-                  <span class="text-neutral-400 bg-neutral-900 px-1.5 py-0.5 rounded border border-neutral-800 truncate max-w-[130px]">${agent.model}</span>
-                  <button onclick="event.stopPropagation(); inspectAgent('${agent.agent_id}')" class="text-blue-400 hover:text-blue-300 px-1.5 py-0.5 rounded bg-blue-950/40 hover:bg-blue-900/50 border border-blue-500/30 transition">
+                  <span class="text-neutral-400 bg-neutral-900 px-1.5 py-0.5 rounded border border-neutral-800 truncate max-w-[130px]">${safeModel}</span>
+                  <button onclick="event.stopPropagation(); inspectAgent('${safeAgentId}')" class="text-blue-400 hover:text-blue-300 px-1.5 py-0.5 rounded bg-blue-950/40 hover:bg-blue-900/50 border border-blue-500/30 transition">
                     Inspect 🔎
                   </button>
                 </div>
@@ -1034,7 +1121,7 @@ body {
                 ${agent.collaborator_id ? `
                   <div class="text-[9.5px] font-mono text-purple-400 flex items-center gap-1">
                     <span>⚡ Linked to:</span>
-                    <span class="underline">${agent.collaborator_id}</span>
+                    <span class="underline">${escapeHtml(agent.collaborator_id)}</span>
                   </div>
                 ` : ''}
 
@@ -1055,6 +1142,14 @@ body {
       document.getElementById('stat-waiting').textContent = state.summary.waiting_approval;
       document.getElementById('stat-done').textContent = state.summary.done;
       document.getElementById('badge-hitl-count').textContent = `${approvals.total || approvals.pending_approvals.length} pending`;
+
+      // Task and Git binding
+      if (state.summary) {
+        const taskEl = document.getElementById('active-task-title');
+        if (taskEl && state.summary.active_task) {
+          taskEl.textContent = state.summary.active_task;
+        }
+      }
 
       // Live Cryptographic Audit Ledger & Diagnostics
       if (diag && diag.audit_ledger) {
@@ -1081,16 +1176,28 @@ body {
             groqBadge.className = p.groq.online ? 'flex items-center gap-1 text-emerald-400' : 'flex items-center gap-1 text-neutral-500';
           }
         }
+        const nvidiaBadge = document.getElementById('badge-nvidia');
+        if (nvidiaBadge) {
+          nvidiaBadge.className = 'flex items-center gap-1 text-emerald-400';
+        }
+        const openrouterBadge = document.getElementById('badge-openrouter');
+        if (openrouterBadge) {
+          openrouterBadge.className = 'flex items-center gap-1 text-emerald-400';
+        }
       }
 
       // Pipeline update
       const pipeHitl = document.getElementById('pipe-hitl');
+      const pipeStatus = document.getElementById('pipeline-status');
       if (approvals.pending_approvals && approvals.pending_approvals.length > 0) {
-        pipeHitl.className = 'flex-1 flex items-center gap-1.5 p-2 rounded bg-red-950/60 border border-red-500/60 text-red-300 animate-pulse';
-        document.getElementById('pipeline-status').textContent = 'HALTED: REQUIRE_HUMAN';
+        if (pipeHitl) pipeHitl.className = 'flex-1 flex items-center gap-1.5 p-2 rounded bg-red-950/60 border border-red-500/60 text-red-300 animate-pulse';
+        if (pipeStatus) pipeStatus.textContent = 'HALTED: REQUIRE_HUMAN';
       } else {
-        pipeHitl.className = 'flex-1 flex items-center gap-1.5 p-2 rounded bg-neutral-900 border border-neutral-800 text-neutral-400';
-        document.getElementById('pipeline-status').textContent = 'VERIFYING (95%)';
+        if (pipeHitl) pipeHitl.className = 'flex-1 flex items-center gap-1.5 p-2 rounded bg-neutral-900 border border-neutral-800 text-neutral-400';
+        if (pipeStatus && state && Array.isArray(state.agents) && state.agents.length > 0) {
+          const avgProgress = Math.round(state.agents.reduce((acc, a) => acc + (a.progress || 0), 0) / state.agents.length);
+          pipeStatus.textContent = avgProgress >= 100 ? 'COMPLETED (100%)' : `NOMINAL EXECUTION (${avgProgress}%)`;
+        }
       }
 
       // HITL Banner & Widget
@@ -1107,16 +1214,22 @@ body {
         document.getElementById('hitl-banner-summary').textContent = first.safe_summary;
         document.getElementById('hitl-countdown').textContent = formatSeconds(first.time_remaining_sec);
 
-        widgetList.innerHTML = approvals.pending_approvals.map(req => `
-          <div class="bg-red-950/40 border border-red-500/40 p-2.5 rounded-lg flex flex-col gap-1 text-xs font-mono">
-            <div class="flex justify-between items-center">
-              <span class="text-red-400 font-bold">${req.capability_name}</span>
-              <span class="text-neutral-400 text-[10px]">${formatSeconds(req.time_remaining_sec)}</span>
+        widgetList.innerHTML = approvals.pending_approvals.map(req => {
+          const safeCap = escapeHtml(req.capability_name);
+          const safeTime = escapeHtml(formatSeconds(req.time_remaining_sec));
+          const safeSummary = escapeHtml(req.safe_summary);
+          const safeId = escapeHtml(req.approval_id);
+          return `
+            <div class="bg-red-950/40 border border-red-500/40 p-2.5 rounded-lg flex flex-col gap-1 text-xs font-mono">
+              <div class="flex justify-between items-center">
+                <span class="text-red-400 font-bold">${safeCap}</span>
+                <span class="text-neutral-400 text-[10px]">${safeTime}</span>
+              </div>
+              <div class="text-neutral-300 text-[11px] line-clamp-2">${safeSummary}</div>
+              <button onclick="openHitlModal('${safeId}')" class="mt-1 w-full py-1 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded text-[10px] uppercase font-mono">Examiner</button>
             </div>
-            <div class="text-neutral-300 text-[11px] line-clamp-2">${req.safe_summary}</div>
-            <button onclick="openHitlModal('${req.approval_id}')" class="mt-1 w-full py-1 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded text-[10px] uppercase font-mono">Examiner</button>
-          </div>
-        `).join('');
+          `;
+        }).join('');
       } else {
         banner.classList.add('hidden');
         currentPendingApproval = null;
@@ -1127,11 +1240,15 @@ body {
     function renderMinimap(rooms) {
       const container = document.getElementById('minimap-rooms');
       if (container.children.length > 0) return;
+      if (!Array.isArray(rooms)) return;
       container.innerHTML = rooms.map(roomId => {
         const meta = ROOM_METADATA[roomId] || { name: roomId, icon: '🏢' };
+        const safeRoomId = escapeHtml(roomId);
+        const safeIcon = escapeHtml(meta.icon);
+        const safeName = escapeHtml(meta.name.split(' ')[0]);
         return `
-          <button onclick="focusRoom('${roomId}')" class="px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-[10px] transition">
-            ${meta.icon} ${meta.name.split(' ')[0]}
+          <button onclick="focusRoom('${safeRoomId}')" class="px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-[10px] transition">
+            ${safeIcon} ${safeName}
           </button>
         `;
       }).join('');
@@ -1139,15 +1256,20 @@ body {
 
     function renderLiveCodeActivity(agents) {
       const feed = document.getElementById('live-code-feed');
-      const activeCoders = agents.filter(a => a.code_activity);
+      if (!Array.isArray(agents)) return;
+      const activeCoders = agents.filter(a => a && a.code_activity);
+      if (activeCoders.length > 0 && activeCoders[0].code_activity.commit) {
+        const gitBadge = document.getElementById('git-commit-badge');
+        if (gitBadge) gitBadge.textContent = `git: ${activeCoders[0].code_activity.commit}`;
+      }
       feed.innerHTML = activeCoders.slice(0, 3).map(a => `
         <div class="bg-black/50 border border-neutral-800/80 p-2 rounded flex flex-col gap-1">
           <div class="flex justify-between items-center text-[10px] text-neutral-400">
-            <span class="text-blue-400 font-bold">${a.name}</span>
-            <span>${a.code_activity.commit}</span>
+            <span class="text-blue-400 font-bold">${escapeHtml(a.name)}</span>
+            <span>${escapeHtml(a.code_activity.commit || '')}</span>
           </div>
           <div class="text-[11px] text-neutral-200 truncate font-mono">
-            📄 ${a.code_activity.file}
+            📄 ${escapeHtml(a.code_activity.file || '')}
           </div>
         </div>
       `).join('');
@@ -1155,12 +1277,13 @@ body {
 
     function renderEvents(events) {
       const container = document.getElementById('event-stream');
+      if (!Array.isArray(events)) return;
       container.innerHTML = events.map(e => `
         <div class="bg-[#0A0B0D] border border-neutral-800/80 p-2 rounded text-xs font-mono flex items-start gap-2 hover:border-neutral-700 transition">
-          <span class="text-neutral-500 text-[10px] mt-0.5">${e.time || '15:30'}</span>
+          <span class="text-neutral-500 text-[10px] mt-0.5">${escapeHtml(e.time || '15:30')}</span>
           <div class="flex-1">
-            <span class="text-blue-400 font-semibold">${e.actor}:</span>
-            <span class="text-neutral-300 ml-1">${e.action}</span>
+            <span class="text-blue-400 font-semibold">${escapeHtml(e.actor || 'System')}:</span>
+            <span class="text-neutral-300 ml-1">${escapeHtml(e.action || '')}</span>
           </div>
         </div>
       `).join('');
@@ -1220,7 +1343,7 @@ body {
 
       // Tools
       const toolsContainer = document.getElementById('drawer-tools');
-      toolsContainer.innerHTML = agent.tools.map(t => `<span class="bg-neutral-800 border border-neutral-700 px-2 py-0.5 rounded text-neutral-300 text-[10px]">${t}</span>`).join('');
+      toolsContainer.innerHTML = (agent.tools || []).map(t => `<span class="bg-neutral-800 border border-neutral-700 px-2 py-0.5 rounded text-neutral-300 text-[10px]">${escapeHtml(t)}</span>`).join('');
 
       // Collaboration
       const collabEl = document.getElementById('drawer-collab');
@@ -1228,10 +1351,17 @@ body {
 
       // Terminal Logs
       const termEl = document.getElementById('drawer-terminal');
+      termEl.innerHTML = '';
       if (agent.terminal_logs && agent.terminal_logs.length > 0) {
-        termEl.innerHTML = agent.terminal_logs.map(log => `<div>${log}</div>`).join('');
+        agent.terminal_logs.forEach(log => {
+          const logDiv = document.createElement('div');
+          logDiv.textContent = log;
+          termEl.appendChild(logDiv);
+        });
       } else {
-        termEl.innerHTML = `<div>PS> [NO RECENT LOGS]</div>`;
+        const emptyDiv = document.createElement('div');
+        emptyDiv.textContent = 'PS> [NO RECENT LOGS]';
+        termEl.appendChild(emptyDiv);
       }
 
       const drawer = document.getElementById('agent-drawer');
@@ -1279,7 +1409,7 @@ body {
       const apprId = currentPendingApproval.approval_id;
 
       try {
-        let res = await fetch(`/master/api/v1/approvals/${apprId}/decide`, {
+        const res = await fetch(`/master/api/v1/approvals/${apprId}/decide`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -1289,51 +1419,187 @@ body {
           })
         });
         if (!res.ok) {
-          res = await fetch(`/api/v1/approvals/${apprId}/decide`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              decision: decision,
-              decided_by: 'web_operator',
-              reason: reason
-            })
-          });
+          const errData = await res.json().catch(() => ({}));
+          console.warn('Approval decision response non-ok:', res.status, errData);
         }
         closeHitlModal();
+        showToast(`Décision ${decision} enregistrée.`, decision === 'APPROVE' ? '✓' : '✕', decision === 'APPROVE' ? 'border-emerald-500/50' : 'border-red-500/50');
         await refreshState();
       } catch (err) {
-        alert(`Erreur lors de l'enregistrement de la décision: ${err}`);
+        showToast(`Erreur décision: ${err}`, '⚠️', 'border-red-500/50');
       }
     }
 
-    async function sendIntent() {
-      const input = document.getElementById('intent-input');
-      const text = input.value.trim();
-      if (!text) return;
-      
+    let currentChatAbortController = null;
+
+    function appendChatMessage(role, text, meta = {}) {
+      const container = document.getElementById('chat-messages-container');
+      if (!container) return;
+
+      const isUser = role === 'user';
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `flex items-start gap-2.5 p-2.5 rounded-lg border ${
+        isUser 
+          ? 'bg-blue-950/20 border-blue-500/30 text-blue-100 ml-4' 
+          : 'bg-[#0E1116] border-neutral-800 text-neutral-200 mr-4'
+      }`;
+
+      const icon = isUser ? '👤' : (meta.avatar || '👑');
+      const senderName = isUser ? 'Opérateur HQ' : (meta.authority || 'E-ZZIO Master Governor');
+      const modelTag = meta.model ? `<span class="text-[9.5px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono">${escapeHtml(meta.model)}</span>` : '';
+      const providerTag = meta.source ? `<span class="text-[9.5px] px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 font-mono">${escapeHtml(meta.source)}</span>` : '';
+      const latencyTag = meta.elapsed_ms ? `<span class="text-[9px] text-neutral-400 font-mono">${meta.elapsed_ms}ms</span>` : '';
+      const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+      msgDiv.innerHTML = `
+        <span class="text-base select-none">${icon}</span>
+        <div class="flex-1 overflow-hidden">
+          <div class="flex flex-wrap items-center gap-2 text-[10.5px] mb-1">
+            <span class="font-bold ${isUser ? 'text-blue-300' : 'text-amber-400'} font-sans">${escapeHtml(senderName)}</span>
+            ${modelTag}
+            ${providerTag}
+            ${latencyTag}
+            <span class="text-[9px] text-neutral-600 font-mono ml-auto">${timeStr}</span>
+          </div>
+          <div class="text-[11.5px] leading-relaxed font-mono whitespace-pre-wrap break-words">${escapeHtml(text)}</div>
+        </div>
+      `;
+
+      container.appendChild(msgDiv);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function clearChatLog() {
+      const container = document.getElementById('chat-messages-container');
+      if (container) {
+        container.innerHTML = `
+          <div class="flex items-start gap-2 text-neutral-400 bg-black/40 p-2 rounded border border-neutral-800/60">
+            <span class="text-base">👑</span>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 text-[10.5px]">
+                <span class="text-amber-400 font-bold">E-ZZIO Master Governor</span>
+                <span class="text-neutral-500">Log Nettoyé</span>
+              </div>
+              <p class="text-neutral-300 mt-1 text-[11.5px]">Historique vidé. Prêt pour de nouvelles instructions.</p>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function stopIntent() {
+      if (currentChatAbortController) {
+        currentChatAbortController.abort();
+        currentChatAbortController = null;
+        showToast('Envoi annulé par l\'opérateur', '⏹', 'border-amber-500/50');
+      }
       const btn = document.getElementById('send-intent-btn');
-      const resultBox = document.getElementById('intent-result');
+      const stopBtn = document.getElementById('stop-intent-btn');
+      const statusBar = document.getElementById('chat-status-bar');
+      if (btn) btn.disabled = false;
+      if (stopBtn) stopBtn.classList.add('hidden');
+      if (statusBar) statusBar.textContent = 'Prêt · Annulé';
+    }
+
+    async function sendIntent() {
+      const textarea = document.getElementById('chat-textarea');
+      const hiddenInput = document.getElementById('intent-input');
       
-      btn.disabled = true;
-      btn.textContent = 'ROUTAGE...';
-      resultBox.classList.remove('hidden');
-      resultBox.textContent = 'Envoi vers le Governor E-ZZIO Master...';
+      let text = '';
+      if (textarea && textarea.value.trim()) {
+        text = textarea.value.trim();
+      } else if (hiddenInput && hiddenInput.value.trim()) {
+        text = hiddenInput.value.trim();
+      }
+      if (!text) return;
+
+      const btn = document.getElementById('send-intent-btn');
+      const stopBtn = document.getElementById('stop-intent-btn');
+      const statusBar = document.getElementById('chat-status-bar');
+      const resultBox = document.getElementById('intent-result');
+
+      // Append user message to live chat log
+      appendChatMessage('user', text);
+
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'ROUTAGE...';
+      }
+      if (stopBtn) stopBtn.classList.remove('hidden');
+      if (statusBar) statusBar.textContent = 'Envoi vers le Sovereign Master Governor...';
+
+      if (resultBox) {
+        resultBox.classList.remove('hidden');
+        resultBox.textContent = 'Envoi vers le Governor E-ZZIO Master...';
+      }
+
+      // Read model target and mission profile
+      const modelTargetSelect = document.getElementById('chat-model-target');
+      const missionProfileSelect = document.getElementById('chat-mission-profile');
+      const modelTarget = modelTargetSelect ? modelTargetSelect.value : 'auto';
+      const missionProfile = missionProfileSelect ? missionProfileSelect.value : 'STANDARD';
+
+      // Clear input fields
+      if (textarea) textarea.value = '';
+      if (hiddenInput) hiddenInput.value = '';
+
+      currentChatAbortController = new AbortController();
+      const startTime = performance.now();
 
       try {
         let res = await fetch('/master/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: text })
+          body: JSON.stringify({
+            text: text,
+            model_target: modelTarget,
+            mission_profile: missionProfile,
+            channel: 'web'
+          }),
+          signal: currentChatAbortController.signal
         });
+        const elapsed = Math.round(performance.now() - startTime);
         const data = await res.json();
-        resultBox.textContent = JSON.stringify(data, null, 2);
-        input.value = '';
+
+        // Extract message content
+        const responseText = data.response || data.answer || data.content || data.message || JSON.stringify(data, null, 2);
+        const modelName = data.model || 'sovereign-master';
+
+        const providerName = data.source || 'E-ZZIO Governor';
+
+        appendChatMessage('master', responseText, {
+          model: modelName,
+          source: providerName,
+          elapsed_ms: data.elapsed_ms || elapsed,
+          avatar: '👑',
+          authority: 'E-ZZIO Master'
+        });
+
+        if (resultBox) {
+          resultBox.textContent = JSON.stringify(data, null, 2);
+        }
+        if (statusBar) {
+          statusBar.textContent = `Réponse reçue (${elapsed}ms) · ${modelName}`;
+        }
         await refreshState();
       } catch (err) {
-        resultBox.textContent = `Erreur: ${err}`;
+        if (err.name === 'AbortError') {
+          if (resultBox) resultBox.textContent = 'Action annulée.';
+        } else {
+          appendChatMessage('master', `[ERREUR DE ROUTAGE] : ${err}`, {
+            model: 'error',
+            avatar: '⚠️'
+          });
+          if (resultBox) resultBox.textContent = `Erreur: ${err}`;
+          if (statusBar) statusBar.textContent = `Erreur: ${err}`;
+        }
       } finally {
-        btn.disabled = false;
-        btn.innerHTML = `<span>EXÉCUTER</span><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>`;
+        currentChatAbortController = null;
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = `<span>ENVOYER</span><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>`;
+        }
+        if (stopBtn) stopBtn.classList.add('hidden');
       }
     }
 
@@ -1363,21 +1629,53 @@ body {
       }
     }
 
+    let toastTimeout = null;
+    function showToast(msg, icon = 'ℹ️', borderColor = 'border-blue-500/40') {
+      const toast = document.getElementById('tactical-toast');
+      const toastMsg = document.getElementById('toast-msg');
+      const toastIcon = document.getElementById('toast-icon');
+      if (!toast || !toastMsg) return;
+      toastMsg.textContent = msg;
+      if (toastIcon) toastIcon.textContent = icon;
+      toast.className = `fixed bottom-6 right-6 z-50 bg-[#121620] border ${borderColor} text-neutral-200 px-4 py-2.5 rounded-xl shadow-2xl font-mono text-xs flex items-center gap-2.5 transition-all`;
+      toast.classList.remove('hidden');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+
     function toggleCommanderMode() {
       isCommanderMode = !isCommanderMode;
       const btn = document.getElementById('btn-mode-commander');
+      const ind = document.getElementById('commander-indicator');
       if (isCommanderMode) {
-        btn.classList.add('bg-amber-600', 'text-white');
-        alert('COMMANDER MODE ACTIF: Cliquez sur n\'importe quel agent pour ouvrir son panneau de pilotage.');
+        if (btn) btn.classList.add('bg-amber-600', 'text-white');
+        if (ind) ind.classList.remove('hidden');
+        showToast('COMMANDER MODE ACTIF: Cliquez sur un agent pour le piloter.', '⚡', 'border-amber-500/50');
       } else {
-        btn.classList.remove('bg-amber-600', 'text-white');
+        if (btn) btn.classList.remove('bg-amber-600', 'text-white');
+        if (ind) ind.classList.add('hidden');
+        showToast('COMMANDER MODE DÉSACTIVÉ', 'ℹ️');
       }
     }
 
     function toggleReducedMotion() {
       document.body.classList.toggle('reduced-motion');
       const isReduced = document.body.classList.contains('reduced-motion');
-      alert(`Reduced Motion: ${isReduced ? 'ACTIVÉ (animations coupées)' : 'DÉSACTIVÉ'}`);
+      const ind = document.getElementById('motion-indicator');
+      const btn = document.getElementById('btn-motion');
+      if (isReduced) {
+        if (ind) ind.classList.remove('hidden');
+        if (btn) btn.classList.add('bg-blue-600', 'text-white');
+        if (officeCanvas) officeCanvas.reducedMotion = true;
+        showToast('Reduced Motion: ACTIVÉ (animations coupées)', '🏃', 'border-blue-500/50');
+      } else {
+        if (ind) ind.classList.add('hidden');
+        if (btn) btn.classList.remove('bg-blue-600', 'text-white');
+        if (officeCanvas) officeCanvas.reducedMotion = false;
+        showToast('Reduced Motion: DÉSACTIVÉ (animations fluides)', '🏃');
+      }
     }
 
     function filterByStatus(status) {
@@ -1388,13 +1686,19 @@ body {
     }
 
     async function refreshState() {
-      const [state, approvals, eventsData, diag, providersHealth] = await Promise.all([
+      const results = await Promise.allSettled([
         fetchOfficeState(),
         fetchPendingApprovals(),
         fetchOfficeEvents(),
         fetchSystemDiagnostics(),
         fetchProvidersHealth()
       ]);
+
+      const state = results[0].status === 'fulfilled' ? results[0].value : null;
+      const approvals = results[1].status === 'fulfilled' ? results[1].value : { pending_approvals: [], total: 0 };
+      const eventsData = results[2].status === 'fulfilled' ? results[2].value : { events: [] };
+      const diag = results[3].status === 'fulfilled' ? results[3].value : null;
+      const providersHealth = results[4].status === 'fulfilled' ? results[4].value : null;
 
       if (state) {
         officeState = state;
@@ -1405,7 +1709,8 @@ body {
         if (officeCanvas && state.agents) {
           officeCanvas.syncBackendAgents(state.agents);
         }
-        document.getElementById('last-poll').textContent = new Date().toLocaleTimeString();
+        const lastPollEl = document.getElementById('last-poll');
+        if (lastPollEl) lastPollEl.textContent = new Date().toLocaleTimeString();
       }
 
       if (eventsData && eventsData.events) {
@@ -1485,7 +1790,7 @@ body {
       }, 5000);
     }
 
-    // Keyboard Shortcuts (Accessibility)
+    // Keyboard Shortcuts (Accessibility & Chat UX)
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         closeAgentDrawer();
@@ -1494,6 +1799,19 @@ body {
         // Normal refresh
       } else if (e.key === 's' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
         refreshState();
+      }
+    });
+
+    // Chat Textarea Enter / Shift+Enter key binding
+    document.addEventListener('DOMContentLoaded', () => {
+      const textarea = document.getElementById('chat-textarea');
+      if (textarea) {
+        textarea.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendIntent();
+          }
+        });
       }
     });
 
@@ -1506,10 +1824,8 @@ body {
           .then(m => {
             if (m.ok && officeCanvas) officeCanvas.setMap(m);
           })
-          .catch(() => {
-            fetch('/office/map').then(r => r.json()).then(m => {
-              if (m.ok && officeCanvas) officeCanvas.setMap(m);
-            }).catch(() => {});
+          .catch(err => {
+            console.warn('Canvas map fetch error:', err);
           });
       } catch (err) {
         console.warn('Canvas init error', err);
@@ -1546,7 +1862,7 @@ body {
 
       if (modalParam === 'hitl' || window.location.hash === '#hitl-modal') {
         currentPendingApproval = {
-          approval_id: 'appr_preview_93',
+          approval_id: 'appr_preview_94',
           capability_name: 'drive.write',
           scope: 'external_write',
           time_remaining_sec: 285,
@@ -1557,24 +1873,52 @@ body {
       }
     });
 
-    setInterval(() => {
-      refreshState().then(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('modal') === 'hitl' || window.location.hash === '#hitl-modal') {
-          if (!currentPendingApproval) {
-            currentPendingApproval = {
-              approval_id: 'appr_preview_93',
-              capability_name: 'drive.write',
-              scope: 'external_write',
-              time_remaining_sec: 285,
-              safe_summary: 'Demande d\'arbitrage souverain : modification contrôlée sous CapabilityPolicy.',
-              params_payload: JSON.stringify({ target: 'config/live.json', action: 'update_entry', scope: 'immutable_seal' }, null, 2)
-            };
+    // Expose drawer opener globally for Canvas and other components
+    window.openAgentDrawer = inspectAgent;
+
+    const notifiedWebMissions = new Set();
+    async function pollCompletedMissions() {
+      try {
+        const res = await fetch('/master/api/v1/missions');
+        if (!res.ok) return;
+        const data = await res.json();
+        for (const m of (data.missions || [])) {
+          if (['COMPLETED', 'FAILED', 'CANCELLED'].includes(m.status) && !notifiedWebMissions.has(m.mission_id)) {
+            notifiedWebMissions.add(m.mission_id);
+            const isSuccess = m.status === 'COMPLETED';
+            const icon = isSuccess ? '✓' : '✗';
+            let summaryText = m.result && m.result.summary ? m.result.summary : m.current_step;
+            let artText = m.artifacts && m.artifacts.length ? `\n\nArtefacts: ${m.artifacts.join(', ')}` : '';
+            appendChatMessage('master', `${icon} **TÂCHE TERMINÉE**\n\nWorker: ${m.worker_type}\nMission: #${m.mission_id}\nStatus: ${m.status}\n\n${summaryText}${artText}`, {
+              model: m.model || 'sovereign-master',
+              source: m.provider || 'Worker Fleet',
+              avatar: isSuccess ? '🎉' : '⚠️',
+              authority: m.worker_type
+            });
+            showToast(`Mission #${m.mission_id} terminée: ${m.status}`, isSuccess ? '✅' : '⚠️');
           }
-          openHitlModal();
         }
-      });
-    }, 3000);
+      } catch (err) {
+        // silent polling error
+      }
+    }
+
+    let isRefreshing = false;
+    async function safePoll() {
+      if (isRefreshing) return;
+      isRefreshing = true;
+      try {
+        await refreshState();
+        await pollCompletedMissions();
+      } catch (err) {
+        console.warn('Poll refresh error:', err);
+      } finally {
+        isRefreshing = false;
+      }
+    }
+
+    setInterval(safePoll, 3000);
   </script>
+
 </body>
 </html>

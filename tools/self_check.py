@@ -93,7 +93,14 @@ def check_providers() -> bool:
 def check_web_server() -> bool:
     try:
         from web_server import app
-        route_paths = [route.path for route in app.routes]
+        route_paths = []
+        for r in app.routes:
+            if hasattr(r, "path"):
+                route_paths.append(r.path)
+            elif hasattr(r, "original_router"):
+                prefix = getattr(getattr(r, "include_context", None), "prefix", "") or ""
+                for sub_r in getattr(r.original_router, "routes", []):
+                    route_paths.append(prefix + getattr(sub_r, "path", ""))
         required_paths = ["/health", "/perception/status", "/generators/universal", "/capabilities", "/master/chat"]
         for p in required_paths:
             match = any(p in r for r in route_paths)

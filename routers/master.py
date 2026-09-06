@@ -11,16 +11,31 @@ router.include_router(office_router)
 
 
 
+from typing import Optional
+
 class MasterPrompt(BaseModel):
     text: str
     speed: str = "auto"
     force_cloud: bool = False
+    mission_profile: str = "STANDARD"
+    model_target: Optional[str] = "auto"
+    channel: str = "web"
+    session_id: str = ""
 
 
 @router.post("/chat")
 async def master_chat(prompt: MasterPrompt):
-    result = await ezzio_master.execute_intent(prompt.text, speed=prompt.speed, force_cloud=prompt.force_cloud)
+    result = await ezzio_master.execute_intent(
+        user_prompt=prompt.text,
+        speed=prompt.speed,
+        force_cloud=prompt.force_cloud,
+        session_id=prompt.session_id,
+        mission_profile=prompt.mission_profile,
+        model_target=prompt.model_target,
+        channel=prompt.channel,
+    )
     return result
+
 
 
 @router.get("/api/v1/providers/health")
@@ -138,5 +153,25 @@ async def get_dag_status(dag_id: str):
     if not dag:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"DAG '{dag_id}' non trouvé")
     return {"ok": True, "dag": dag.to_dict()}
+
+
+@router.get("/api/v1/missions")
+@router.get("/missions")
+async def list_missions():
+    """Retourne la liste des missions des workers asynchrones."""
+    from core.agent.mission_controller import mission_registry
+    missions = [m.to_dict() for m in mission_registry.list_missions()]
+    active = [m.to_dict() for m in mission_registry.list_active()]
+    return {"ok": True, "missions": missions, "active": active, "total": len(missions)}
+
+
+@router.post("/api/v1/missions/{mission_id}/cancel")
+@router.post("/missions/{mission_id}/cancel")
+async def cancel_mission_endpoint(mission_id: str):
+    """Annule en toute sécurité une mission en cours."""
+    from core.agent.mission_controller import mission_registry
+    success = mission_registry.cancel(mission_id)
+    return {"ok": success, "mission_id": mission_id, "status": "CANCELLED" if success else "NOT_FOUND"}
+
 
 

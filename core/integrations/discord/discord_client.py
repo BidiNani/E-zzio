@@ -156,6 +156,56 @@ async def proactive_event_loop():
 async def before_proactive_loop():
     await bot.wait_until_ready()
 
+_notified_missions: set[str] = set()
+
+@tasks.loop(seconds=5)
+async def mission_notifier_loop():
+    """Vérifie périodiquement les missions terminées et notifie l'utilisateur."""
+    global http_session
+    try:
+        if http_session is None or http_session.closed:
+            http_session = aiohttp.ClientSession()
+
+        missions_url = LOCAL_API_URL.replace("/master/chat", "/master/api/v1/missions")
+        async with http_session.get(missions_url, timeout=aiohttp.ClientTimeout(total=4.0)) as resp:
+            if resp.status == 200:
+                data = await resp.json()
+                missions = data.get("missions", [])
+                for m in missions:
+                    m_id = m.get("mission_id")
+                    st = m.get("status")
+                    if st in ("COMPLETED", "FAILED", "CANCELLED") and m_id not in _notified_missions:
+                        _notified_missions.add(m_id)
+                        if m.get("channel") == "discord" and OWNER_ID:
+                            owner = bot.get_user(int(OWNER_ID)) or await bot.fetch_user(int(OWNER_ID))
+                            if owner:
+                                status_symbol = "✓" if st == "COMPLETED" else "✗"
+                                banner = (
+                                    f"**E-ZZIO**\n"
+                                    f"━━━━━━━━━━━━━━━━━━\n"
+                                    f"{status_symbol} **TÂCHE TERMINÉE**\n"
+                                    f"━━━━━━━━━━━━━━━━━━\n\n"
+                                    f"**Worker**  : `{m.get('worker_type')}`\n"
+                                    f"**Mission** : `#{m_id}` ({m.get('goal', '')[:60]})\n"
+                                    f"**Status**  : `{st}`\n"
+                                    f"**Model**   : `{m.get('model', 'auto')}`\n"
+                                    f"**Provider**: `{m.get('provider', 'auto')}`\n"
+                                )
+                                res = m.get("result") or {}
+                                if res.get("summary"):
+                                    banner += f"\n**Résultat** :\n{res.get('summary')}\n"
+                                if m.get("artifacts"):
+                                    banner += f"\n**Artifacts** :\n" + "\n".join(f"- `{a}`" for a in m.get("artifacts"))
+                                banner += "\n━━━━━━━━━━━━━━━━━━\n"
+                                await owner.send(banner)
+    except Exception:
+        pass
+
+@mission_notifier_loop.before_loop
+async def before_mission_notifier():
+    await bot.wait_until_ready()
+
+
 @bot.event
 async def on_ready():
     global http_session
@@ -167,8 +217,13 @@ async def on_ready():
 
     if not proactive_event_loop.is_running():
         proactive_event_loop.start()
+
+    if not mission_notifier_loop.is_running():
+        mission_notifier_loop.start()
+
     print(f"[E-ZZIO SENSE] Agent Discord V7.51 en ligne : {bot.user}")
     print(f"[*] Canal d'orchestration persistant : {LOCAL_API_URL}")
+
 
 
 @bot.event
@@ -196,25 +251,46 @@ async def on_message(message):
         return
 
     if is_private:
-        clean_prompt = message.content.strip()
+        raw_prompt = message.content.strip()
     else:
         if not message.content.startswith("!e "):
             return
-        clean_prompt = message.content[3:].strip()
+        raw_prompt = message.content[3:].strip()
 
-    if not clean_prompt and not message.attachments:
+    if not raw_prompt and not message.attachments:
         return
+
+    # Parse profile flag: e.g. !e --profile=COMPLEX <prompt> or -p COMPLEX <prompt>
+    mission_profile = "STANDARD"
+    model_target = "auto"
+    clean_prompt = raw_prompt
+
+    import re
+    profile_match = re.search(r'--(?:profile|p)=([A-Za-z0-9_]+)', clean_prompt)
+    if profile_match:
+        mission_profile = profile_match.group(1).upper()
+        clean_prompt = clean_prompt[:profile_match.start()] + clean_prompt[profile_match.end():]
+        clean_prompt = clean_prompt.strip()
+
+    target_match = re.search(r'--(?:target|model)=([A-Za-z0-9_]+)', clean_prompt)
+    if target_match:
+        model_target = target_match.group(1).lower()
+        clean_prompt = clean_prompt[:target_match.start()] + clean_prompt[target_match.end():]
+        clean_prompt = clean_prompt.strip()
 
     discord_watchdog.record_activity()
 
     async with message.channel.typing():
         try:
             payload = {
-                    "text": clean_prompt,
-                    "session_id": f"disc_user_{message.author.id}",
-                    "force_cloud": True,
-                    "speed": "fast"
-                }
+                "text": clean_prompt,
+                "session_id": f"disc_user_{message.author.id}",
+                "force_cloud": False,
+                "speed": "fast",
+                "mission_profile": mission_profile,
+                "model_target": model_target,
+                "channel": "discord",
+            }
 
             if message.attachments:
                 for attachment in message.attachments:
@@ -231,16 +307,35 @@ async def on_message(message):
                     if isinstance(data, dict):
                         raw_res = data.get("response", "")
                         if isinstance(raw_res, dict):
-                            reply_text = raw_res.get("response") or raw_res.get("answer") or raw_res.get("content") or str(raw_res)
+                            body_text = raw_res.get("response") or raw_res.get("answer") or raw_res.get("content") or str(raw_res)
                         elif isinstance(raw_res, str):
-                            reply_text = raw_res if raw_res.strip() else "Réponse vide du noyau."
+                            body_text = raw_res if raw_res.strip() else "Réponse vide du noyau."
                         else:
-                            reply_text = str(raw_res) if raw_res is not None else "Réponse vide du noyau."
+                            body_text = str(raw_res) if raw_res is not None else "Réponse vide du noyau."
+
+                        # Extraire les métadonnées de fédération pour la bannière
+                        prov = data.get("provider") or "Unknown"
+                        mdl = data.get("model") or "Unknown"
+                        msn = data.get("mission") or mission_profile
+                        latency_s = f"{data.get('elapsed_ms', 0) / 1000.0:.2f}s"
+                        status_str = "SUCCESS" if data.get("ok", True) else "FAIL"
+
+                        # Construction de la bannière unifiée
+                        banner = (
+                            f"**E-ZZIO**\n"
+                            f"━━━━━━━━━━━━━━━━━━\n"
+                            f"**Mission**  : `{msn}`\n"
+                            f"**Provider** : `{prov}`\n"
+                            f"**Model**    : `{mdl}`\n"
+                            f"**Latency**  : `{latency_s}`\n"
+                            f"**Status**   : `{status_str}`\n"
+                            f"━━━━━━━━━━━━━━━━━━\n\n"
+                        )
+                        reply_text = banner + body_text
                     else:
                         reply_text = str(data) if data is not None else "Réponse vide du noyau."
                 else:
                     reply_text = f"Erreur de communication noyau (Code {resp.status})."
-                
 
             chunk_size = 1950
             for i in range(0, len(reply_text), chunk_size):
@@ -256,6 +351,7 @@ async def on_message(message):
                 await message.channel.send(error_reply)
             else:
                 await message.reply(error_reply)
+
 
     # await bot.process_commands(message) # Neutralisé pour éviter les doublons
 

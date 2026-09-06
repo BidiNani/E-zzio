@@ -1,12 +1,15 @@
 """E-ZZIO Coding Agent — Modular Tool Registry with Dynamic Skill Discovery."""
 from __future__ import annotations
 import os
+import json
+import time
 import subprocess
 from typing import Any, Dict, List
 from core.agent.codebase_indexer import CodebaseIndexer
 from core.agent.patch_engine import PatchEngine
 from core.agent.agent_guard import AgentPolicyGuard
 from core.agent.skill_manager import SkillManager
+from core.agent.command_executor import GovernedCommandExecutor, redact_secrets
 
 class ToolRegistry:
     def __init__(self, workspace_root: str):
@@ -15,6 +18,27 @@ class ToolRegistry:
         self.patcher = PatchEngine(workspace_root)
         self.guard = AgentPolicyGuard(workspace_root)
         self.skill_manager = SkillManager(workspace_root)
+        self.executor = GovernedCommandExecutor(workspace_root)
+        self.audit_file = os.path.join(self.workspace_root, "state", "audit", "tool_executions.jsonl")
+
+    def _log_tool_audit(self, tool_name: str, args: Dict[str, Any], status: str, result_summary: str) -> None:
+        """Enregistre l'exécution d'un outil dans le journal d'audit JSONL."""
+        clean_summary = redact_secrets(result_summary)[:1000]
+        clean_args = {k: redact_secrets(str(v))[:200] for k, v in args.items()}
+        entry = {
+            "timestamp": time.time(),
+            "iso_time": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "tool": tool_name,
+            "args": clean_args,
+            "status": status,
+            "summary": clean_summary,
+        }
+        try:
+            os.makedirs(os.path.dirname(self.audit_file), exist_ok=True)
+            with open(self.audit_file, "a", encoding="utf-8") as f:
+                f.write(json.dumps(entry) + "\n")
+        except Exception:
+            pass
 
     def list_tools(self) -> List[Dict[str, Any]]:
         base_tools = [
@@ -88,16 +112,40 @@ class ToolRegistry:
             if "path" in args:
                 allowed, reason = self.guard.evaluate_intent("read_file", args)
                 if not allowed:
+                    self._log_tool_audit(tool_name, args, "DENIED", reason)
                     return f"[RUNTIME POLICY BLOCKED] {reason}"
-            return self.skill_manager.execute_skill(tool_name, args)
+            skill_res = self.skill_manager.execute_skill(tool_name, args)
+            self._log_tool_audit(tool_name, args, "SUCCESS", skill_res)
+            return skill_res
+
+        # Validation des arguments requis pour les outils de base
+        required_params = {
+            "grep_codebase": ["query"],
+            "find_files": ["pattern"],
+            "read_file": ["path"],
+            "read_file_slice": ["path"],
+            "write_file": ["path", "content"],
+            "apply_patch": ["path", "search", "replace"],
+            "run_test_file": ["test_path"],
+            "run_powershell": ["command"],
+        }
+        if tool_name in required_params:
+            for req in required_params[tool_name]:
+                if req == "test_path" and "path" in args:
+                    continue
+                if req not in args:
+                    err = f"[INVALID_ARGUMENTS] Paramètre requis manquant: '{req}' pour l'outil '{tool_name}'"
+                    self._log_tool_audit(tool_name, args, "INVALID_ARGS", err)
+                    return err
 
         allowed, reason = self.guard.evaluate_intent(tool_name, args)
         if not allowed:
+            self._log_tool_audit(tool_name, args, "POLICY_DENIED", reason)
             return f"[RUNTIME POLICY BLOCKED] {reason}"
 
         try:
             if tool_name == "get_codebase_map":
-                return self.indexer.get_compact_map()
+                out = self.indexer.get_compact_map()
 
             elif tool_name == "grep_codebase":
                 query = args.get("query", "").lower()
@@ -114,10 +162,12 @@ class ToolRegistry:
                                             rel = os.path.relpath(full_f, self.workspace_root)
                                             matches.append(f"{rel}:{idx}: {line.strip()}")
                                             if len(matches) >= 30:
-                                                return "\n".join(matches)
+                                                out = "\n".join(matches)
+                                                self._log_tool_audit(tool_name, args, "SUCCESS", out)
+                                                return out
                             except Exception:
                                 continue
-                return "\n".join(matches) if matches else "No matches found."
+                out = "\n".join(matches) if matches else "No matches found."
 
             elif tool_name == "find_files":
                 import fnmatch
@@ -129,14 +179,16 @@ class ToolRegistry:
                         if fnmatch.fnmatch(f, pat):
                             found.append(os.path.relpath(os.path.join(root, f), self.workspace_root))
                             if len(found) >= 40:
-                                return "\n".join(found)
-                return "\n".join(found) if found else "No files found."
+                                out = "\n".join(found)
+                                self._log_tool_audit(tool_name, args, "SUCCESS", out)
+                                return out
+                out = "\n".join(found) if found else "No files found."
 
             elif tool_name == "read_file":
                 path = args.get("path", "")
                 full_path = path if os.path.isabs(path) else os.path.join(self.workspace_root, path)
                 with open(full_path, "r", encoding="utf-8", errors="ignore") as f:
-                    return f.read()
+                    out = f.read()
 
             elif tool_name == "read_file_slice":
                 path = args.get("path", "")
@@ -145,15 +197,15 @@ class ToolRegistry:
                 end = int(args.get("end_line", 100))
                 with open(full_path, "r", encoding="utf-8", errors="ignore") as f:
                     lines = f.readlines()
-                return "".join(lines[max(0, start - 1):end])
+                out = "".join(lines[max(0, start - 1):end])
 
             elif tool_name == "write_file":
                 path = args.get("path", "")
                 content = args.get("content", "")
-                return self.patcher.write_file(path, content)
+                out = self.patcher.write_file(path, content)
 
             elif tool_name == "apply_patch":
-                return self.patcher.apply_search_replace(
+                out = self.patcher.apply_search_replace(
                     rel_path=args.get("path", ""),
                     search_block=args.get("search", ""),
                     replace_block=args.get("replace", "")
@@ -162,30 +214,28 @@ class ToolRegistry:
             elif tool_name == "run_test_file":
                 test_path = args.get("test_path") or args.get("path", "")
                 import sys
-                res = subprocess.run(
-                    [sys.executable, "-m", "pytest", "-q", test_path],
-                    cwd=self.workspace_root,
-                    capture_output=True,
-                    text=True,
-                    timeout=120
-                )
-                output = res.stdout + "\n" + res.stderr
-                return output.strip() or "[SUCCESS] Tests completed with no output."
+                cmd = f'"{sys.executable}" -m pytest -q {test_path}'
+                res = self.executor.execute(cmd, timeout=120)
+                output = (res.get("stdout", "") + "\n" + res.get("stderr", "")).strip()
+                status_header = f"[EXIT_CODE:{res.get('exit_code', 0)}]"
+                out = f"{status_header}\n{output}" if output else f"{status_header}\n[SUCCESS] Tests completed."
 
             elif tool_name == "run_powershell":
                 cmd = args.get("command", "")
-                res = subprocess.run(
-                    ["powershell.exe", "-NoProfile", "-Command", cmd],
-                    cwd=self.workspace_root,
-                    capture_output=True,
-                    text=True,
-                    timeout=60
-                )
-                output = res.stdout + "\n" + res.stderr
-                return output.strip() or "[SUCCESS] Commande exécutée sans retour texte."
+                res = self.executor.execute(cmd, timeout=60)
+                output = (res.get("stdout", "") + "\n" + res.get("stderr", "")).strip()
+                out = output or "[SUCCESS] Commande exécutée sans retour texte."
 
             else:
-                return f"[ERROR] Outil ou Skill inconnu : {tool_name}"
+                err = f"[ERROR] Outil ou Skill inconnu : {tool_name}"
+                self._log_tool_audit(tool_name, args, "UNKNOWN_TOOL", err)
+                return err
+
+            self._log_tool_audit(tool_name, args, "SUCCESS", out)
+            return out
+
         except Exception as exc:
-            return f"[TOOL EXCEPTION] {exc}"
+            err = f"[TOOL EXCEPTION] {exc}"
+            self._log_tool_audit(tool_name, args, "EXCEPTION", err)
+            return err
 

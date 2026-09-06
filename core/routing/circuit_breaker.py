@@ -29,6 +29,16 @@ class CircuitBreaker:
         STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
         STATE_PATH.write_text(json.dumps(self.state_data, indent=2, ensure_ascii=False), encoding="utf-8")
 
+    def get_state(self, provider: str) -> str:
+        """Retourne l'état formel du disjoncteur : CLOSED, OPEN, ou HALF_OPEN."""
+        self.state_data = self._load_state()
+        prov_state = self.state_data.get(provider, {"tripped": False, "failures": 0, "trip_time": 0.0})
+        if not prov_state.get("tripped", False):
+            return "CLOSED"
+        if time.time() - prov_state.get("trip_time", 0.0) > self.timeout:
+            return "HALF_OPEN"
+        return "OPEN"
+
     def is_open(self, provider: str) -> bool:
         self.state_data = self._load_state()  # Rechargement persistant
         prov_state = self.state_data.get(provider, {"tripped": False, "failures": 0, "trip_time": 0.0})
