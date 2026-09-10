@@ -4,7 +4,6 @@ import time
 import asyncio
 import re
 from pathlib import Path
-import ollama
 
 PERSONA_PATH = Path("G:/AI/E-zzio/registry/persona.txt")
 
@@ -33,8 +32,6 @@ ORGAN_OPTIONS = {
 
 FAST_OPTIONS = {"num_ctx": 1024, "num_predict": 120, "temperature": 0.20, "top_k": 18, "top_p": 0.80}
 DEEP_OPTIONS = {"num_ctx": 8192, "num_predict": 900, "temperature": 0.30}
-
-_ollama_lock = asyncio.Semaphore(1)
 
 
 def get_persona():
@@ -77,72 +74,61 @@ def build_messages(prompt, context=None, system_note=None, speed="normal", tacti
     if system_note:
         parts.append(f"Note : {system_note}")
     if context:
-        parts.append(f"Contexte :\n{context}")
+        parts.append(f"Contexte:\n{context}")
     if tactical:
         parts.append(f"Directives tactiques : {tactical}")
     system_content = "\n\n".join(parts)
     return [{"role": "system", "content": system_content.strip()}, {"role": "user", "content": str(prompt)}]
 
 
-def _sync_ollama_chat(model, messages, options):
-    return ollama.chat(model=model, messages=messages, options=options, keep_alive="20m")
-
-
 def clean_reply(text):
     text = text or ""
     # Nettoyage des balises de réflexion pour les modèles comme DeepSeek ou Qwen3
-    text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL | re.IGNORECASE)
+    text = re.sub(r"<think>.*?<>", "", text, flags=re.DOTALL | re.IGNORECASE)
     return text.replace("\x00", "").strip()
 
 
 async def query_model_async(
-    prompt, model="gemini-2.5-flash-lite", context=None, system_note=None, organ_key="presence", speed="normal", timeout_sec=60, tactical=None
+    prompt,
+    model=None,
+    context=None,
+    system_note=None,
+    organ_key="presence",
+    speed="normal",
+    timeout_sec=60,
+    tactical=None,
 ):
+    """Délègue au routeur modèle runtime canonique (§R).
+
+    Nouveau chemin (canonique) :
+        query_model_async() → EzzioModelRouter.generate_async()
+        → coder_federation_router.execute_task()
+        → CanonicalModelRegistry._enforce_model_governance()
+        → Provider (sélectionné, qualifié, audité).
+
+    Compatibilité : les paramètres « model », « organ_key », « speed » et
+    « system_note » sont conservés pour les appelants existants ; seuls les
+    paramètres consommés par le routeur sont transmis.
+    """
+    from runtime.model_router.router import EzzioModelRouter
+
     started = time.perf_counter()
-    messages = build_messages(prompt, context=context, system_note=system_note, speed=speed, tactical=tactical)
-    options = build_options(organ_key=organ_key, speed=speed)
-
-    try:
-        async with _ollama_lock:
-            response = await asyncio.wait_for(
-                asyncio.to_thread(_sync_ollama_chat, model, messages, options),
-                timeout=timeout_sec,
-            )
-        elapsed_ms = int((time.perf_counter() - started) * 1000)
-
-        raw_text = response.get("message", {}).get("content", "")
-        text = clean_reply(raw_text)
-
-        if not text:
-            # Si le texte est toujours vide, on retourne un message d'erreur clair incluant le nom du modèle fautif
-            text = f""
-
-        return {
-            "ok": True,
-            "model": model,
-            "elapsed_ms": elapsed_ms,
-            "text": text,
-            "timeout_sec": timeout_sec,
-            "speed": speed,
-        }
-    except asyncio.TimeoutError:
-        elapsed_ms = int((time.perf_counter() - started) * 1000)
-        return {
-            "ok": False,
-            "model": model,
-            "elapsed_ms": elapsed_ms,
-            "text": f"*(Timeout : Le modèle {model} n'a pas répondu après {timeout_sec}s.)*",
-            "timeout_sec": timeout_sec,
-            "speed": speed,
-        }
-    except Exception as exc:
-        elapsed_ms = int((time.perf_counter() - started) * 1000)
-        return {
-            "ok": False,
-            "model": model,
-            "elapsed_ms": elapsed_ms,
-            "text": f"",
-            "timeout_sec": timeout_sec,
-            "speed": speed,
-        }
-
+    router = EzzioModelRouter()
+    request = {
+        "prompt": prompt,
+        "task": "general",
+        "complexity": "low",
+        "budget": "local_first",
+        "system_prompt": system_note,
+    }
+    response = await router.generate_async(request)
+    elapsed_ms = int((time.perf_counter() - started) * 1000)
+    text = clean_reply(response.get("response", ""))
+    return {
+        "ok": bool(text),
+        "model": response.get("model_used"),
+        "elapsed_ms": response.get("latency_ms", elapsed_ms),
+        "text": text,
+        "timeout_sec": timeout_sec,
+        "speed": speed,
+    }

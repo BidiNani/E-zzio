@@ -1,6 +1,6 @@
 from pathlib import Path
 import pytest
-from core.evidence.store import EvidenceStore
+from core.evidence_store import EvidenceStore
 
 
 @pytest.mark.asyncio

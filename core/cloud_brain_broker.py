@@ -6,7 +6,7 @@ from typing import Any, Dict, Generator
 from core.identity.canonical_identity import CanonicalIdentity
 from core.security.unified_vault import key_vault
 
-TARGET_MODEL = "gemini-3.5-flash-lite"
+TARGET_MODEL = "gemini-3.7-flash"
 
 # Cache global du socle identitaire pour éliminer les I/O disque par requête
 _CACHED_SYSTEM_PROMPT: str | None = None

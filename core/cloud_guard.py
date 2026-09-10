@@ -165,6 +165,10 @@ def get_cache(key, ttl):
 
     age = now() - float(item.get("ts", 0))
     if age > ttl:
+        try:
+            path.unlink(missing_ok=True)  # auto-éviction : un expiré ne repousse jamais
+        except OSError:
+            pass
         return None
 
     item["cache_age_sec"] = round(age, 2)

@@ -32,9 +32,16 @@ class AntigravityFederatedProvider(BaseFederatedProvider):
         return ProviderDomain.AGENT_ANTIGRAVITY
 
     def is_available(self) -> bool:
-        """Returns True if agy binary is present and reachable."""
+        """Returns True when CLI or local Desktop backend is available."""
         try:
-            return Path(self.client.agy_executable).exists() or bool(self.client._locate_agy_binary())
+            cli_available = (
+                Path(self.client.agy_executable).exists()
+                or bool(self.client._locate_agy_binary())
+            )
+
+            desktop_available = self.client.desktop_available()
+
+            return cli_available or desktop_available
         except Exception:
             return False
 
@@ -57,9 +64,37 @@ class AntigravityFederatedProvider(BaseFederatedProvider):
             effort=AntigravityEffortLevel.HIGH if "complex" in request.task_type else AntigravityEffortLevel.MEDIUM,
             timeout_seconds=request.timeout_seconds,
             dangerously_skip_permissions=request.context_metadata.get("auto_approve", False),
+            model_override=request.context_metadata.get("model"),
         )
 
-        resp = self.client.execute_agent_task(agent_req)
+        cli_available = (
+            Path(self.client.agy_executable).exists()
+            or bool(self.client._locate_agy_binary())
+        )
+
+        desktop_available = self.client.desktop_available()
+
+        if cli_available:
+            resp = self.client.execute_agent_task(agent_req)
+        elif desktop_available:
+            resp = self.client.desktop_execute_agent_task(agent_req)
+        else:
+            return FederatedTaskResult(
+                task_id=request.task_id,
+                provider_domain=self.domain,
+                model_name=request.context_metadata.get(
+                    "model",
+                    "antigravity_agent_federated",
+                ),
+                status="FAILED",
+                content="",
+                structured_data={
+                    "error": "ANTIGRAVITY_NO_BACKEND_AVAILABLE",
+                },
+                execution_duration_ms=0.0,
+                cost_estimate_usd=0.0,
+                timestamp_utc=datetime.now(timezone.utc),
+            )
 
         return FederatedTaskResult(
             task_id=resp.task_id,

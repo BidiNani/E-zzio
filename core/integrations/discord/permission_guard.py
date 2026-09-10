@@ -4,6 +4,8 @@ Affiche explicitement les ID reçus dans la console pour un diagnostic sans fail
 """
 
 import json
+import logging
+import os
 from pathlib import Path
 from datetime import datetime, timezone
 
@@ -59,8 +61,9 @@ class DiscordPermissionGuard:
 
             if policy.get("dm_owner_only", True):
                 allowed_users = policy.get("allowed_users", {})
+                owner_id = next(iter(allowed_users.keys()), os.getenv("DISCORD_OWNER_ID", ""))
                 if user_id not in allowed_users:
-                    print(f"[!] REFUS DM : L'utilisateur '{user_id}' n'est pas dans allowed_users.")
+                    print(f"[DISCORD-SECURITY] DM rejeté : ID auteur '{user_id}' != DISCORD_OWNER_ID ({owner_id}).")
                     self._audit_log(
                         "access_denied.jsonl",
                         {"timestamp": timestamp, "user_id": user_id, "username": username, "reason": "DM_UNAUTHORIZED_USER"},

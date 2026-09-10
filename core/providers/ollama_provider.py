@@ -29,12 +29,25 @@ from core.providers.base_provider import (
 
 logger = logging.getLogger("OllamaProvider")
 
+_SHARED_CLIENT: httpx.AsyncClient | None = None
+
+
+def _shared_client() -> httpx.AsyncClient:
+    """Client httpx partagé (keepalive) : 0 handshake TLS/pool par appel."""
+    global _SHARED_CLIENT
+    if _SHARED_CLIENT is None or _SHARED_CLIENT.is_closed:
+        _SHARED_CLIENT = httpx.AsyncClient(
+            timeout=httpx.Timeout(connect=5.0, read=180.0, write=10.0, pool=10.0),
+            limits=httpx.Limits(max_keepalive_connections=10, max_connections=20),
+        )
+    return _SHARED_CLIENT
+
 
 class OllamaProvider(BaseProvider, IResearchProvider):
     """Fournisseur canonique Ollama conforme aux contrats BaseProvider et IResearchProvider."""
 
     name: str = "ollama"
-    DEFAULT_MODEL: str = "qwen2.5:7b"
+    DEFAULT_MODEL: str = "qwen2.5-coder:7b-instruct-q4_K_M"
 
     def __init__(
         self,
@@ -96,27 +109,26 @@ class OllamaProvider(BaseProvider, IResearchProvider):
         start_time = time.perf_counter()
         url = f"{self.base_url}/api/tags"
         try:
-            async with httpx.AsyncClient(timeout=3.0) as client:
-                res = await client.get(url)
-                latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
-                if res.status_code == 200:
-                    data = res.json()
-                    models = [m.get("name") for m in data.get("models", [])]
-                    return {
-                        "status": "healthy",
-                        "online": True,
-                        "latency_ms": latency_ms,
-                        "installed_models": models,
-                        "provider": self.name,
-                    }
-                else:
-                    return {
-                        "status": "unhealthy",
-                        "online": False,
-                        "latency_ms": latency_ms,
-                        "error": f"HTTP {res.status_code}",
-                        "provider": self.name,
-                    }
+            res = await _shared_client().get(url, timeout=3.0)
+            latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
+            if res.status_code == 200:
+                data = res.json()
+                models = [m.get("name") for m in data.get("models", [])]
+                return {
+                    "status": "healthy",
+                    "online": True,
+                    "latency_ms": latency_ms,
+                    "installed_models": models,
+                    "provider": self.name,
+                }
+            else:
+                return {
+                    "status": "unhealthy",
+                    "online": False,
+                    "latency_ms": latency_ms,
+                    "error": f"HTTP {res.status_code}",
+                    "provider": self.name,
+                }
         except Exception as exc:
             latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
             return {
@@ -150,51 +162,54 @@ class OllamaProvider(BaseProvider, IResearchProvider):
                 "temperature": temperature,
                 "num_predict": max_tokens,
                 "num_thread": int(os.getenv("OLLAMA_NUM_THREAD", "6")),
+                "num_ctx": kwargs.get("num_ctx", 2048),
             },
         }
         if system_prompt:
             payload["system"] = system_prompt
+        else:
+            from core.providers.base_provider import SYSTEM_IDENTITY as _IDENTITY
+            payload["system"] = _IDENTITY
 
         try:
             timeout = httpx.Timeout(connect=5.0, read=self.timeout, write=5.0, pool=5.0)
-            async with httpx.AsyncClient(timeout=timeout) as client:
-                res = await client.post(url, json=payload)
-                latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
+            res = await _shared_client().post(url, json=payload, timeout=timeout)
+            latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
 
-                if res.status_code != 200:
-                    err_class = self.error_mapping(res.status_code, res.text)
-                    return ProviderResponse(
-                        content="",
-                        model=target_model,
-                        provider=self.name,
-                        latency_ms=latency_ms,
-                        cost_class=CostClass.LOCAL,
-                        error_class=err_class,
-                        raw={"http_status": res.status_code, "text": res.text},
-                    )
-
-                data = res.json()
-                content = data.get("response", "").strip()
-                if not content and data.get("thinking"):
-                    content = data.get("thinking", "").strip()
-                prompt_eval = data.get("prompt_eval_count", 0)
-                eval_count = data.get("eval_count", 0)
-
+            if res.status_code != 200:
+                err_class = self.error_mapping(res.status_code, res.text)
                 return ProviderResponse(
-                    content=content,
+                    content="",
                     model=target_model,
                     provider=self.name,
-                    finish_reason="stop" if data.get("done") else "length",
-                    usage={
-                        "prompt_tokens": prompt_eval,
-                        "completion_tokens": eval_count,
-                        "total_tokens": prompt_eval + eval_count,
-                    },
                     latency_ms=latency_ms,
                     cost_class=CostClass.LOCAL,
-                    error_class=None,
-                    raw=data,
+                    error_class=err_class,
+                    raw={"http_status": res.status_code, "text": res.text},
                 )
+
+            data = res.json()
+            content = data.get("response", "").strip()
+            if not content and data.get("thinking"):
+                content = data.get("thinking", "").strip()
+            prompt_eval = data.get("prompt_eval_count", 0)
+            eval_count = data.get("eval_count", 0)
+
+            return ProviderResponse(
+                content=content,
+                model=target_model,
+                provider=self.name,
+                finish_reason="stop" if data.get("done") else "length",
+                usage={
+                    "prompt_tokens": prompt_eval,
+                    "completion_tokens": eval_count,
+                    "total_tokens": prompt_eval + eval_count,
+                },
+                latency_ms=latency_ms,
+                cost_class=CostClass.LOCAL,
+                error_class=None,
+                raw=data,
+            )
         except httpx.ConnectError:
             latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
             return ProviderResponse(
@@ -253,11 +268,13 @@ class OllamaProvider(BaseProvider, IResearchProvider):
         }
         if system_prompt:
             payload["system"] = system_prompt
+        else:
+            from core.providers.base_provider import SYSTEM_IDENTITY as _IDENTITY
+            payload["system"] = _IDENTITY
 
         timeout = httpx.Timeout(connect=5.0, read=self.timeout, write=5.0, pool=5.0)
         try:
-            async with httpx.AsyncClient(timeout=timeout) as client:
-                async with client.stream("POST", url, json=payload) as response:
+            async with _shared_client().stream("POST", url, json=payload) as response:
                     response.raise_for_status()
                     async for line in response.aiter_lines():
                         if not line:
@@ -295,8 +312,7 @@ class OllamaProvider(BaseProvider, IResearchProvider):
         accumulated_text = []
         last_chunk = {}
 
-        async with httpx.AsyncClient(timeout=timeout) as client:
-            async with client.stream("POST", url, json=payload) as response:
+        async with _shared_client().stream("POST", url, json=payload) as response:
                 response.raise_for_status()
                 async for line in response.aiter_lines():
                     if not line:

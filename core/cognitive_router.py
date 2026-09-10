@@ -18,37 +18,84 @@ class ModelRouter:
         self.ollama_url = ollama_url.rstrip("/")
         self.gemini_api_key = gemini_api_key or os.getenv("GEMINI_API_KEY")
         self._client = http_client
+        # Gate unifié (§4) : le routeur cognitif legacy consomme l'autorité
+        # canonique. Aucun modèle REJECTED/UNKNOWN ne peut jamais être rendu.
+        try:
+            from core.routing.model_registry import (
+                canonical_model_registry as _reg,
+                ModelQualificationStatus as _S,
+            )
+            self._authorized = {
+                _reg._models[m].raw_model_name
+                for m in _reg._models
+                if _reg._models[m].qualification_status == _S.QUALIFIED
+            } if hasattr(_reg, "_models") else {
+                m.raw_model_name for m in _reg.list_models(qualified_only=True)
+            }
+            self._rejected = {
+                _reg._models[m].raw_model_name
+                for m in _reg._models
+                if _reg._models[m].qualification_status == _S.REJECTED
+            } if hasattr(_reg, "_models") else {
+                m.raw_model_name for m in _reg.list_models(qualified_only=False)
+                if m.qualification_status == _S.REJECTED
+            }
+        except Exception:
+            self._authorized = {"qwen2.5-coder:7b-instruct-q4_K_M",
+                                "gemini-3.7-flash"}
+            self._rejected = {"qwen3.5:9b"}
+
+    def _authorized_ollama(self) -> str:
+        """Renvoie le modèle ollama AUTHORIZED (jamais REJECTED).
+        Fail-closed : si le PRIMARY canonical est rejeté, aucun fallback."""
+        from core.agent.coder_federation import _normalize_model_name
+        primary = "qwen2.5-coder:7b-instruct-q4_K_M"
+        if _normalize_model_name(primary) in self._rejected:
+            raise RoutingIntegrityError(
+                "[FAIL-CLOSED] cognitive_router : PRIMARY ollama REJECTED par "
+                "le registre — aucun fallback autorisé.")
+        return primary
 
     def resolve_route(self, profile: str) -> Dict[str, Any]:
         has_gemini = bool(self.gemini_api_key)
-
+        local_primary = self._authorized_ollama()
+        local_fallback = "phi4-mini:latest"
+        if local_fallback in self._rejected:
+            raise RoutingIntegrityError(
+                "[FAIL-CLOSED] cognitive_router : fallback REJECTED.")
         if profile == "prive":
             return {
-                "primary": {"provider": "ollama", "model": "qwen3.5:9b"},
-                "fallback": {"provider": "ollama", "model": "phi4-mini:latest"},
+                "primary": {"provider": "ollama", "model": local_primary},
+                "fallback": {"provider": "ollama", "model": local_fallback},
             }
 
         if profile in ("raisonnement", "autonome"):
-            primary_prov = "gemini" if has_gemini else "ollama"
-            primary_model = "gemini-3.8-flash" if has_gemini else "qwen3.5:9b"
+            if has_gemini and "gemini-3.7-flash" not in self._rejected:
+                primary_model = "gemini-3.7-flash"
+                primary_prov = "gemini"
+            else:
+                primary_model = local_primary
+                primary_prov = "ollama"
             return {
                 "primary": {"provider": primary_prov, "model": primary_model},
-                "fallback": {"provider": "ollama", "model": "qwen3.5:9b"},
+                "fallback": {"provider": "ollama", "model": local_fallback},
             }
 
         if profile == "rapide":
-            primary_prov = "gemini" if has_gemini else "ollama"
-            primary_model = "gemini-2.5-flash" if has_gemini else "phi4-mini:latest"
+            primary_model = "gemini-3.7-flash" if (has_gemini and
+                "gemini-3.7-flash" not in self._rejected) else local_primary
             return {
-                "primary": {"provider": primary_prov, "model": primary_model},
-                "fallback": {"provider": "ollama", "model": "phi4-mini:latest"},
+                "primary": {"provider": "gemini" if has_gemini else "ollama",
+                            "model": primary_model},
+                "fallback": {"provider": "ollama", "model": local_fallback},
             }
 
-        primary_prov = "gemini" if has_gemini else "ollama"
-        primary_model = "gemini-2.5-flash" if has_gemini else "qwen3.5:9b"
+        primary_model = "gemini-3.7-flash" if (has_gemini and
+            "gemini-3.7-flash" not in self._rejected) else local_primary
         return {
-            "primary": {"provider": primary_prov, "model": primary_model},
-            "fallback": {"provider": "ollama", "model": "phi4-mini:latest"},
+            "primary": {"provider": "gemini" if has_gemini else "ollama",
+                        "model": primary_model},
+            "fallback": {"provider": "ollama", "model": local_fallback},
         }
 
     async def _call_ollama(self, client: httpx.AsyncClient, model: str, prompt: str) -> str:

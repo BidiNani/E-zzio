@@ -70,7 +70,7 @@ class FederatedCognitiveOrchestrator:
         env_cloud = EvidenceEnvelope.create(
             task_id=f"{task_id}-STAGE2",
             provider="cloud_gemini",
-            model_name="gemini-2.5-pro",
+            model_name="gemini-3.1-pro-preview",
             capability="deep_reasoning_synthesis",
             input_prompt=f"{task_description}\nLocal context: {local_analysis_output}",
             output_payload=gemini_reasoning_output,

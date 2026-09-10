@@ -10,7 +10,14 @@ class OpenRouterDiscovery(ProviderDiscovery):
 
     def __init__(self, api_key: str | None = None):
         load_secrets()
-        self.api_key = api_key or os.getenv("OPENROUTER_API_KEY")
+        # Autorité credentials : core/security/unified_vault.py.
+        vault_key = None
+        try:
+            from core.security.unified_vault import key_vault
+            vault_key = key_vault.get_provider_key("openrouter") or None
+        except Exception:
+            vault_key = None
+        self.api_key = api_key or vault_key or os.getenv("OPENROUTER_API_KEY")
 
     async def discover(self, api_key: str | None = None) -> list[dict[str, Any]]:
         headers = {"Content-Type": "application/json"}

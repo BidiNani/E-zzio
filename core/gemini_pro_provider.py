@@ -55,6 +55,10 @@ class GeminiProProvider:
         return os.environ.get("GEMINI_API_KEY")
 
     def execute_advanced_reasoning(self, prompt: str, system_instruction: str = None, max_output_tokens: int = 8192) -> dict:
+        raise PermissionError(
+            "[FAIL-CLOSED] Accès direct GeminiPro interdit hors fédération : "
+            "passer par CoderModelFederationRouter (CanonicalModelRegistry)."
+        )
         if not self.client:
             return {
                 "ok": False,
@@ -69,7 +73,7 @@ class GeminiProProvider:
             )
 
             response = self.client.models.generate_content(
-                model="gemini-2.5-pro", contents=optimization_result["compressed"], config=config
+                model="gemini-3.1-pro-preview", contents=optimization_result["compressed"], config=config
             )
 
             return {

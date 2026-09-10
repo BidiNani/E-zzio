@@ -1,4 +1,6 @@
 """
+DORMANT — types LiteLLM recopiés, non décisionnel.
+Autorité routage : core/agent/coder_federation.py + core/routing/model_registry.py.
 litellm.Router Types - includes RouterConfig, UpdateRouterConfig, ModelInfo etc
 """
 

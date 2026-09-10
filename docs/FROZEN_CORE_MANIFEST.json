@@ -7,7 +7,7 @@
   "components": {
     "web_server.py": {
       "path": "web_server.py",
-      "sha256": "5212e65221cb4e2c0839eb6ac8c66b4376588bf75816654bb54beab56210193d",
+      "sha256": "01a4662baedecd5944d50c3a3a06f2dc7ec8f0926363880d80d678ec1fe46e37",
       "role": "Canonical HTTP Entry Point & FastAPI ASGI Server",
       "authority": "ENTRY_POINT",
       "status": "FROZEN"
@@ -21,35 +21,35 @@
     },
     "core/cognition/cognitive_gateway.py": {
       "path": "core/cognition/cognitive_gateway.py",
-      "sha256": "dc4df93ce1cbab609ac79cab63a7093f5418c0e3b68f9c456172984162034c0f",
+      "sha256": "7a08933e30878d2e09ef947b93f0686e60a77bbe44a8a676a1384ccff0c5ed02",
       "role": "Single Cognitive Intent & Execution Orchestrator",
       "authority": "COGNITIVE_AUTHORITY",
       "status": "FROZEN"
     },
     "core/cognition/model_router.py": {
       "path": "core/cognition/model_router.py",
-      "sha256": "2ee24110a7884e7f20356a9e1c8d85e2d3670b34a8ba16ed5c27f07a31b56a53",
+      "sha256": "970de3869506532ac1a4e1af2d9661155ae40ef5d36dec3dc04278e6ead5442f",
       "role": "Single Model Strategy & Profile Routing Authority",
       "authority": "MODEL_STRATEGY",
       "status": "FROZEN"
     },
     "core/models/gemini_pool.py": {
       "path": "core/models/gemini_pool.py",
-      "sha256": "d892cc76cfd74b7a74f36baa2ce861f714f6742c599be0827caa70cf6c9076fe",
+      "sha256": "73392a4be035e7515324ccc52cdbb0926e28310aedac281834757b4835961d22",
       "role": "Multi-Project Gemini Infrastructure & 429 Rotation",
       "authority": "GEMINI_INFRASTRUCTURE",
       "status": "FROZEN"
     },
     "core/providers/gemini_provider.py": {
       "path": "core/providers/gemini_provider.py",
-      "sha256": "2f931714a96b4b9ea3737f1b66a39a0ba96fa2b6534025c037db85f888c16c04",
+      "sha256": "2c01965e94e4e09ed0f2623ec2ab389f6ba5cf5edb99da1974f10777be533e27",
       "role": "Canonical Gemini Cloud Transport via HTTPX Async",
       "authority": "GEMINI_TRANSPORT",
       "status": "FROZEN"
     },
     "core/memory/unified_gateway.py": {
       "path": "core/memory/unified_gateway.py",
-      "sha256": "303df5ef6235c2beac28c3e676d0fd6ea1d591a4e441f2372ea2c57d8cda6554",
+      "sha256": "051980ab331f34abd8bf2a04bb8df4df9a166bf357dd5c703c0a6531d7eb9bc0",
       "role": "Single Canonical Memory Gateway SQLite WAL + FTS5",
       "authority": "MEMORY_AUTHORITY",
       "status": "FROZEN"
@@ -84,7 +84,7 @@
     },
     "core/agent/coding_agent_loop.py": {
       "path": "core/agent/coding_agent_loop.py",
-      "sha256": "dab6a202af470d323fd37dc873fed861dcf5e14bbf5c2b8c233a2f858fc8a32f",
+      "sha256": "74e8fc4f6ea1ed03b501aad25ca042296c9228d09e82d19374ebe0c6fad04d87",
       "role": "Single Canonical Autonomous Coding & Self-Healing Worker",
       "authority": "CODING_WORKER",
       "status": "FROZEN"

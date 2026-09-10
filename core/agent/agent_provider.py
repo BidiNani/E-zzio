@@ -22,7 +22,7 @@ class RouteIntegrityError(RuntimeError):
 
 
 class AgentProviderAdapter:
-    AUTHORIZED_MODELS = {"cloud_gemini", "local_primary", "local_fallback"}
+    AUTHORIZED_MODELS = {"cloud_gemini", "cloud_groq"}
 
     def __init__(self, backend: str = "cloud_gemini", local_model: Optional[str] = None):
         self.backend = backend
@@ -34,26 +34,23 @@ class AgentProviderAdapter:
         if not gemini_key:
             logger.error("[VAULT-CRITICAL] Aucune clé Gemini trouvée dans le coffre-fort !")
 
+        groq_key = key_vault.get_provider_key("groq")
+        if not groq_key:
+            logger.warning("[VAULT] Aucune clé Groq disponible pour le fallback cloud.")
+
         model_list = [
             {
                 "model_name": "cloud_gemini",
                 "litellm_params": {
-                    "model": "gemini/gemini-3.5-flash-lite",
+                    "model": "gemini/gemini-3.7-flash",
                     "api_key": gemini_key,
                 },
             },
             {
-                "model_name": "local_primary",
+                "model_name": "cloud_groq",
                 "litellm_params": {
-                    "model": "ollama/ezzio-granite",
-                    "api_base": "http://127.0.0.1:11434",
-                },
-            },
-            {
-                "model_name": "local_fallback",
-                "litellm_params": {
-                    "model": "ollama/ornith-ezzio",
-                    "api_base": "http://127.0.0.1:11434",
+                    "model": "groq/llama-3.3-70b-versatile",
+                    "api_key": groq_key,
                 },
             },
         ]
@@ -110,7 +107,7 @@ class AgentProviderAdapter:
         force_cloud: bool = False,
         speed: str = "fast"
     ) -> str:
-        target_model = "cloud_gemini" if force_cloud else self.backend
+        target_model = "cloud_gemini"
 
         if target_model not in self.AUTHORIZED_MODELS:
             raise RouteIntegrityError(
@@ -118,7 +115,7 @@ class AgentProviderAdapter:
                 f"Modèles autorisés : {self.AUTHORIZED_MODELS}"
             )
 
-        self._prepare_backend_memory(target_model)
+        # Master Chat est cloud-only ; aucune préparation Ollama.
 
         call_kwargs: Dict[str, Any] = {
             "model": target_model,
@@ -140,10 +137,10 @@ class AgentProviderAdapter:
 
             logger.warning("[ROUTER] Indisponibilité transitoire de %s (%s). Repli autorisé...", target_model, primary_exc)
 
-            fallback_order = [m for m in ["cloud_gemini", "local_primary", "local_fallback"] if m != target_model]
+            fallback_order = [m for m in ["cloud_groq"] if m != target_model]
 
             for fallback_model in fallback_order:
-                self._prepare_backend_memory(fallback_model)
+                # Fallback cloud : aucune préparation Ollama.
                 fb_kwargs: Dict[str, Any] = {
                     "model": fallback_model,
                     "messages": messages,
@@ -177,3 +174,4 @@ class AgentProviderAdapter:
             cleaned = cleaned.split("</think>")[-1].strip()
 
         return cleaned if cleaned else raw_text
+

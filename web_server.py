@@ -8,6 +8,7 @@ import uvicorn
 from pathlib import Path
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -21,6 +22,8 @@ from runtime.execution.worker_bootstrap import worker_manager
 from runtime.routers.llm import router as llm_router
 from runtime.routers.mobile import router as mobile_router
 from routers.master import router as master_router
+from routers.telemetry import router as telemetry_router, AGENT_VIEW_HTML
+from fastapi.responses import HTMLResponse
 from routers.memory import router as memory_router
 from routers.perception import router as perception_router
 from routers.generators import router as generators_router
@@ -40,6 +43,18 @@ async def lifespan(app: FastAPI):
 
 # 4. Initialisation de l'API
 app = FastAPI(title="E-ZZIO Sovereign API", version="v2.6-autonomic-tactical-core", lifespan=lifespan)
+
+# Desktop / Tauri / Vite local — CORS strictement limité aux origines locales.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:1420",
+        "http://127.0.0.1:1420",
+    ],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type"],
+)
 
 import uuid
 from fastapi import Request
@@ -101,10 +116,16 @@ async def get_perception_status():
 app.include_router(llm_router)
 app.include_router(mobile_router)
 app.include_router(master_router)
+app.include_router(telemetry_router)
 app.include_router(memory_router)
 app.include_router(perception_router)
 app.include_router(generators_router)
 app.include_router(capabilities_router)
+
+
+@app.get("/agent-view", response_class=HTMLResponse, include_in_schema=False)
+async def agent_view_root():
+    return AGENT_VIEW_HTML
 
 # 6. Montage des fichiers statiques locaux (offline-first UI, CSS, assets)
 web_static_dir = ROOT_PATH / "runtime" / "web"

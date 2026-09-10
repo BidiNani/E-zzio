@@ -12,6 +12,10 @@ from core.agent.skill_manager import SkillManager
 from core.agent.command_executor import GovernedCommandExecutor, redact_secrets
 
 class ToolRegistry:
+    # Bornes anti tempête (skill loops, chaînes récursives) — XVI.
+    MAX_CHAIN_DEPTH = 3
+    SKILL_TIMEOUT_SECONDS = 60.0
+
     def __init__(self, workspace_root: str):
         self.workspace_root = workspace_root
         self.indexer = CodebaseIndexer(workspace_root)
@@ -20,6 +24,7 @@ class ToolRegistry:
         self.skill_manager = SkillManager(workspace_root)
         self.executor = GovernedCommandExecutor(workspace_root)
         self.audit_file = os.path.join(self.workspace_root, "state", "audit", "tool_executions.jsonl")
+        self._chain_depth = 0
 
     def _log_tool_audit(self, tool_name: str, args: Dict[str, Any], status: str, result_summary: str) -> None:
         """Enregistre l'exécution d'un outil dans le journal d'audit JSONL."""
@@ -99,11 +104,58 @@ class ToolRegistry:
 
         return base_tools
 
+    def _run_skill_bounded(self, tool_name: str, args: Dict[str, Any]) -> str:
+        """Exécute une skill avec timeout borné (thread dédié, pas de blocage infini)."""
+        import concurrent.futures
+
+        # Pas de `with` : __exit__ attendrait le worker même après timeout.
+        pool = concurrent.futures.ThreadPoolExecutor(max_workers=1)
+        fut = pool.submit(self.skill_manager.execute_skill, tool_name, args)
+        try:
+            out = str(fut.result(timeout=self.SKILL_TIMEOUT_SECONDS))
+            pool.shutdown(wait=True)
+            return out
+        except concurrent.futures.TimeoutError:
+            pool.shutdown(wait=False, cancel_futures=True)
+            return (f"[RUNTIME POLICY BLOCKED] Skill '{tool_name}' dépassant "
+                    f"{self.SKILL_TIMEOUT_SECONDS}s — interrompue.")
+
     def execute_tool(self, tool_name: str, args: Dict[str, Any]) -> str:
         """Alias canonique d'exécution d'outil."""
         return self.execute(tool_name, args)
 
     def execute(self, tool_name: str, args: Dict[str, Any]) -> str:
+        # Garde anti-récursion : une skill appelant execute() ne peut dépasser la profondeur.
+        if self._chain_depth >= self.MAX_CHAIN_DEPTH:
+            self._log_tool_audit(tool_name, args, "DEPTH_EXCEEDED",
+                                 f"profondeur {self._chain_depth} >= {self.MAX_CHAIN_DEPTH}")
+            return f"[RUNTIME POLICY BLOCKED] Profondeur de chaîne maximale atteinte ({self.MAX_CHAIN_DEPTH})."
+        self._chain_depth += 1
+        try:
+            from core.telemetry.agent_tracer import tracer as _tracer
+            _t0 = _tracer.tool_call(tool_name, args)
+        except Exception:
+            _t0 = None
+        try:
+            out = self._execute_inner(tool_name, args)
+        except Exception as exc:
+            try:
+                from core.telemetry.agent_tracer import tracer as _tracer2
+                _tracer2.tool_result(tool_name, _t0 or 0.0, ok=False, result=str(exc))
+            except Exception:
+                pass
+            raise
+        else:
+            try:
+                from core.telemetry.agent_tracer import tracer as _tracer3
+                _tracer3.tool_result(tool_name, _t0 or 0.0, ok=True, result=out)
+            except Exception:
+                pass
+            return out
+        finally:
+            self._chain_depth -= 1
+
+    def _execute_inner(self, tool_name: str, args: Dict[str, Any]) -> str:
         # Vérification si c'est une Skill dynamique
         skills = self.skill_manager.discover_skills()
         skill_names = [s.get("name") for s in skills]
@@ -114,7 +166,7 @@ class ToolRegistry:
                 if not allowed:
                     self._log_tool_audit(tool_name, args, "DENIED", reason)
                     return f"[RUNTIME POLICY BLOCKED] {reason}"
-            skill_res = self.skill_manager.execute_skill(tool_name, args)
+            skill_res = self._run_skill_bounded(tool_name, args)
             self._log_tool_audit(tool_name, args, "SUCCESS", skill_res)
             return skill_res
 

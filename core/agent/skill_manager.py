@@ -39,9 +39,15 @@ class SkillManager:
             return f"[ERROR] Skill introuvable : {skill_name}"
 
         impl_file = target.get("implementation", "skill.py")
-        impl_path = os.path.join(target["_dir"], impl_file)
+        # Confinement : l'implémentation doit rester un .py à l'intérieur du
+        # répertoire de la skill (aucune traversée vers le workspace).
+        if not isinstance(impl_file, str) or not impl_file.endswith(".py"):
+            return f"[ERROR] Implémentation invalide pour la skill {skill_name}."
+        impl_path = os.path.realpath(os.path.join(target["_dir"], impl_file))
+        if os.path.commonpath([impl_path, os.path.realpath(target["_dir"])]) != os.path.realpath(target["_dir"]):
+            return f"[ERROR] Traversée de répertoire refusée pour la skill {skill_name}."
         if not os.path.exists(impl_path):
-            return f"[ERROR] Fichier d'implémentation manquant pour la skill {skill_name}"
+            return f"[ERROR] Fichier d'implémentation manquant pour la skill {skill_name}."
 
         try:
             spec = importlib.util.spec_from_file_location(f"skill_{skill_name}", impl_path)

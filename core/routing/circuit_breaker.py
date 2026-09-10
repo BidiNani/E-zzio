@@ -5,7 +5,10 @@ Sauvegarde et restaure l'état des disjoncteurs pour survivre aux reboots.
 
 import time
 import json
+import logging
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 STATE_PATH = ROOT_DIR / "runtime" / "state" / "circuit_breakers.json"
@@ -67,7 +70,7 @@ class CircuitBreaker:
         if prov_state["failures"] >= self.threshold:
             prov_state["tripped"] = True
             prov_state["trip_time"] = time.time()
-            print(f"[Circuit Breaker] ALERTE PERSISTANTE : '{provider}' disjoncté pour {self.timeout}s.")
+            logger.warning("[Circuit Breaker] ALERTE PERSISTANTE : '%s' disjoncté pour %ss.", provider, self.timeout)
 
         self.state_data[provider] = prov_state
         self._save_state()

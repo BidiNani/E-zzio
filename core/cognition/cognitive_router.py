@@ -37,7 +37,7 @@ class CognitiveTaskClassifier:
         "code_simple": {"domain": ProviderDomain.LOCAL_OLLAMA, "model": "qwen2.5-coder:7b", "fallback": "qwen2.5:3b", "cost_factor": 1.0},
         "classification": {"domain": ProviderDomain.LOCAL_OLLAMA, "model": "granite3.1-dense:8b", "fallback": "qwen2.5:3b", "cost_factor": 0.8},
         # Tâches de raisonnement lourd / Cloud
-        "deep_reasoning": {"domain": ProviderDomain.CLOUD_GEMINI, "model": "gemini-2.5-pro", "fallback": "qwen2.5-coder:7b", "cost_factor": 2.5},
+        "deep_reasoning": {"domain": ProviderDomain.CLOUD_GEMINI, "model": "gemini-3.1-pro-preview", "fallback": "qwen2.5-coder:7b", "cost_factor": 2.5},
         "fast_cloud_chat": {"domain": ProviderDomain.CLOUD_GROQ, "model": "llama-3.3-70b-versatile", "fallback": "qwen2.5:3b", "cost_factor": 0.5},
         # Tâches Agentiques Fédérées (Multi-fichiers, Terminal, Browser, Refactor)
         "agentic_refactor": {"domain": ProviderDomain.AGENT_ANTIGRAVITY, "model": "antigravity_agent", "fallback": "qwen2.5-coder:7b", "cost_factor": 3.0},
