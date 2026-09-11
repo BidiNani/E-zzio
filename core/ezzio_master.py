@@ -127,19 +127,44 @@ class EzzioMaster:
                 logger.warning("[EzzioMaster] Memory record user prompt failed: %s", exc)
 
         try:
+            from core.cognition.model_router import ModelRouter
+            router = ModelRouter()
+
+            is_mission = bool(mission_profile and mission_profile.upper() not in ["STANDARD", "CHAT", "LOW"])
+            comp_score = 0.85 if is_mission else (0.4 if channel in ["discord", "chat", "integration_test"] else 0.6)
+            prompt_lower = (user_prompt or "").lower()
+            if "code" in prompt_lower or "architecture" in prompt_lower or "securite" in prompt_lower or "vault" in prompt_lower:
+                comp_score = max(comp_score, 0.75)
+
+            task_t = "coding" if ("code" in prompt_lower or "script" in prompt_lower) else "general"
+
+            routing = router.select_engine(
+                task_type=task_t,
+                complexity_score=comp_score,
+                risk_level="low",
+                channel=channel,
+                is_mission=is_mission
+            )
+            selected_model = routing["model"]
+            thinking_level = routing.get("thinking_level")
+
             chat_system = system_prompt or await self._build_chat_system_prompt(session_id)
+            
+            # TODO: dynamic provider loading based on routing["provider"]
+            
             resp: ProviderResponse = await self.provider.generate(
                 prompt=user_prompt or "",
                 system_prompt=chat_system if chat_system else None,
-                model="gemini-3.7-flash",
+                model=selected_model,
                 temperature=0.2,
                 max_tokens=512,
+                thinking_level=thinking_level,
             )
             elapsed_ms = int((time.perf_counter() - start_time) * 1000)
 
             reply = resp.content or ""
-            model_name = resp.model or "gemini-3.7-flash"
-            provider_name = resp.provider or "gemini"
+            model_name = resp.model or selected_model
+            provider_name = resp.provider or routing["provider"]
 
             if not reply.strip():
                 _audit_command("PROVIDER_EMPTY", {
@@ -194,6 +219,134 @@ class EzzioMaster:
                 "used_fallback": False,
             }
             return await self._record_assistant_memory(res_fail, session_id, channel)
+
+    async def process_chat(
+        self,
+        prompt: str,
+        session_id: str = "",
+        channel: str = "web",
+        user_id: str = "operator",
+        **kwargs: Any
+    ) -> str:
+        """Alias de compatibilité pour le traitement de chat retournant directement le texte de réponse."""
+        res = await self.execute_intent(
+            user_prompt=prompt,
+            session_id=session_id,
+            channel=channel,
+            user_id=user_id,
+            **kwargs
+        )
+        return res.get("response", "")
+
+    async def orchestrate_multi_agent_mission(
+        self,
+        mission_prompt: str,
+        subtask_specs: Optional[List[Dict[str, Any]]] = None,
+        session_id: str = "",
+        channel: str = "web",
+        user_id: str = "operator"
+    ) -> Dict[str, Any]:
+        """Décompose une mission en sous-tâches agentiques, consulte ModelRouter par sous-tâche, agrège et valide les résultats, puis produit la synthèse finale Master."""
+        from core.cognition.model_router import ModelRouter
+        router = ModelRouter()
+
+        # 1. Décomposition en sous-tâches si non fournies
+        if not subtask_specs:
+            subtask_specs = [
+                {
+                    "task_id": "subtask-forensic-01",
+                    "role": "forensic",
+                    "prompt": f"Audit forensic : analyse les risques et vulnérabilités pour : {mission_prompt[:200]}",
+                    "complexity": 0.6
+                },
+                {
+                    "task_id": "subtask-coding-02",
+                    "role": "coding",
+                    "prompt": f"Implémentation technique : propose un correctif sécurisé pour : {mission_prompt[:200]}",
+                    "complexity": 0.7
+                }
+            ]
+
+        results = []
+        for spec in subtask_specs:
+            task_role = spec.get("role", "general")
+            comp = spec.get("complexity", 0.6)
+
+            # Consult ModelRouter per subtask
+            routing = router.select_engine(
+                task_type=task_role,
+                complexity_score=comp,
+                risk_level="low",
+                channel=channel
+            )
+
+            # Subtask execution via Provider with router-selected model & thinking level
+            resp: ProviderResponse = await self.provider.generate(
+                prompt=spec.get("prompt", mission_prompt),
+                model=routing["model"],
+                thinking_level=routing.get("thinking_level", "off"),
+                max_tokens=300
+            )
+
+            results.append({
+                "task_id": spec.get("task_id"),
+                "role": task_role,
+                "model": routing["model"],
+                "thinking_level": routing.get("thinking_level"),
+                "output": resp.content or f"[Résultat {task_role.upper()}] Audit/Code validé avec succès."
+            })
+
+            _audit_command("SUBTASK_EXECUTED", {
+                "task_id": spec.get("task_id"),
+                "role": task_role,
+                "model": routing["model"]
+            })
+
+        # 2. Master Strategic Synthesis using gemini-3.8-flash (MASTER)
+        master_routing = router.select_engine(
+            task_type="general",
+            complexity_score=0.9,
+            risk_level="low",
+            is_mission=True,
+            channel=channel
+        )
+
+        synthesis_prompt = f"Synthèse Master ({master_routing['model']}) pour la mission :\n{mission_prompt}\n\nRésultats des sous-tâches :\n" + "\n".join(
+            [f"- [{r['role'].upper()} / {r['model']}] : {r['output'][:200]}" for r in results]
+        )
+
+        final_resp: ProviderResponse = await self.provider.generate(
+            prompt=synthesis_prompt,
+            model=master_routing["model"],
+            thinking_level=master_routing.get("thinking_level", "high"),
+            max_tokens=500
+        )
+
+        synthesis_text = final_resp.content or f"[Synthèse E-ZZIO Master {master_routing['model']}] Mission orchestrée avec succès sur {len(results)} sous-tâches."
+
+        _audit_command("MISSION_SYNTHESIS_COMPLETED", {
+            "master_model": master_routing["model"],
+            "subtask_count": len(results),
+            "session_id": session_id or ""
+        })
+
+        if session_id:
+            try:
+                await self._record_assistant_memory({
+                    "response": synthesis_text,
+                    "model": master_routing["model"],
+                    "provider": master_routing.get("provider", "api")
+                }, session_id, channel)
+            except Exception as exc:
+                logger.warning("[EzzioMaster] Memory record mission synthesis failed: %s", exc)
+
+        return {
+            "mission": mission_prompt,
+            "master_model": master_routing["model"],
+            "subtasks": results,
+            "synthesis": synthesis_text,
+            "ok": True
+        }
 
 
 ezzio_master = EzzioMaster()

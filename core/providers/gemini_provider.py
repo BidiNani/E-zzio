@@ -37,9 +37,9 @@ class GeminiProvider(BaseProvider, IResearchProvider):
     name: str = "gemini"
     base_url: str = "https://generativelanguage.googleapis.com/v1beta/models"
     # Défaut stable du provider ; l'autorité de routage
-    # (core/routing/model_registry.py) sélectionne explicitement gemini-3.7-flash.
-    DEFAULT_MODEL: str = "gemini-3.7-flash"
-    FALLBACK_MODELS: List[str] = ["gemini-3.6-flash", "gemini-3.5-flash"]
+    # (core/routing/model_registry.py) est la seule source de vérité.
+    DEFAULT_MODEL: str = "gemini-3.8-flash"
+    FALLBACK_MODELS: List[str] = ["gemini-3.7-flash", "gemini-2.5-flash"]
 
     def __init__(
         self,

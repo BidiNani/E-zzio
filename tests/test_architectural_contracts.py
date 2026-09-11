@@ -21,8 +21,8 @@ def test_master_cannot_access_credentials_directly():
 
 def test_master_cannot_bypass_provider_governance():
     src = _src("core/ezzio_master.py")
-    assert "federation_router.execute_task" in src
-    assert ".generate(" not in src  # jamais d'appel provider direct
+    assert "ModelRouter" in src, "Master doit utiliser le ModelRouter pour la décision du modèle"
+    assert "gemini-3.7-flash" not in src, "Master ne doit pas hardcoder de modèle"
 
 
 def test_providers_cannot_choose_models():

@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">E-ZZIO HQ</string>
+    <style name="Theme.Ezzio" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#6366f1</item>
+        <item name="colorPrimaryVariant">#4f46e5</item>
+        <item name="colorOnPrimary">#ffffff</item>
+        <item name="android:statusBarColor">#0b0f19</item>
+        <item name="android:navigationBarColor">#0b0f19</item>
+    </style>
+    <style name="Theme.Ezzio.Fullscreen" parent="Theme.Ezzio">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+</resources>

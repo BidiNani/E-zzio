@@ -48,7 +48,7 @@ __pycache__/
 # ================================
 
 data/
-_harvested_assets/
+_harvested_
 
 
 # ================================
@@ -188,9 +188,9 @@ ollama_local_archive/
 .vscode/
 .agents/
 capcap/
-E-ZZIO *.txt
-E-ZZIO *.md
-EZZIO_*.md
+
+
+
 *.gguf
 *.onnx
 dist/
@@ -209,13 +209,13 @@ commit_and_verify.py
 
 
 # Prototypes and external projects
-android/
-projects/
-EZZIO_*.ps1
+
+
+
 dashboard_jarvis.py
-certifications/
-contracts/
-hermes-profiles/
-run_model_qualification_*.ps1
-assets/
+
+
+
+
+
 

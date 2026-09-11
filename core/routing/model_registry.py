@@ -30,14 +30,24 @@ class CanonicalModelRecord:
     latency_tier: LatencyTier = LatencyTier.FAST
     qualification_status: ModelQualificationStatus = ModelQualificationStatus.QUALIFIED
     enabled: bool = True
+    role: str = "general"
+    roles: List[str] = field(default_factory=list)
+    thinking_level: str = "off"
+
+    def __post_init__(self):
+        if self.role and self.role not in self.roles:
+            self.roles.append(self.role)
 
 class CanonicalModelRegistry:
     def __init__(self):
         self._models = [
-            CanonicalModelRecord("gemini-3.7-flash", ModelSource.GEMINI),
-            CanonicalModelRecord("gemini-3.6-flash", ModelSource.GEMINI),
-            CanonicalModelRecord("qwen2.5-coder:7b", ModelSource.LOCAL),
-            CanonicalModelRecord("llama-3.3-70b-versatile", ModelSource.GROQ),
+            CanonicalModelRecord("gemini-3.8-flash", ModelSource.GEMINI, role="MASTER", roles=["MASTER", "MASTER_STRATEGIC"], thinking_level="high"),
+            CanonicalModelRecord("gemini-3.7-flash", ModelSource.GEMINI, role="CODING", roles=["CODING"], thinking_level="low"),
+            CanonicalModelRecord("gemini-3.6-flash", ModelSource.GEMINI, role="STANDARD_CHAT", roles=["STANDARD_CHAT", "FAST_CHAT", "FORENSIC"], thinking_level="medium"),
+            CanonicalModelRecord("gemini-3.5-flash", ModelSource.GEMINI, role="REFACTOR", roles=["REFACTOR"], thinking_level="medium"),
+            CanonicalModelRecord("gemini-2.5-flash", ModelSource.GEMINI, role="FALLBACK", roles=["FALLBACK"], thinking_level="off"),
+            CanonicalModelRecord("qwen2.5-coder:7b", ModelSource.LOCAL, role="LOCAL", roles=["LOCAL"]),
+            CanonicalModelRecord("qwen2.5:3b", ModelSource.LOCAL, role="FAST", roles=["FAST"]),
         ]
 
     def list_models(self, qualified_only: bool = True, include_disabled: bool = False):
@@ -48,5 +58,11 @@ class CanonicalModelRegistry:
             if m.name == name:
                 return m
         return CanonicalModelRecord(name=name)
+
+    def get_by_role(self, role: str) -> Optional[CanonicalModelRecord]:
+        for m in self._models:
+            if role in m.roles or m.role == role:
+                return m
+        return None
 
 canonical_model_registry = CanonicalModelRegistry()

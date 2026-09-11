@@ -78,10 +78,10 @@ class RoutingIntegrityError(RuntimeError):
 
 def _normalize_model_name(name: str) -> str:
     if not name:
-        return "gemini-3.6-flash"
+        return "gemini-2.5-flash"
     n = name.lower().strip()
     if "gemini" in n:
-        return "gemini-3.6-flash"
+        return "gemini-2.5-flash"
     if "qwen" in n or "ollama" in n:
         return "qwen2.5-coder:7b"
     return name
@@ -91,7 +91,7 @@ class CoderModelFederationRouter:
     """Passerelle de fédération canonique déléguant vers EzzioMaster."""
 
     DEFAULT_MODELS = {
-        "gemini": "gemini-3.6-flash",
+        "gemini": "gemini-2.5-flash",
         "ollama": "qwen2.5-coder:7b",
         "groq": "llama-3.3-70b-versatile",
     }
@@ -111,7 +111,7 @@ class CoderModelFederationRouter:
     def resolve_candidates(self, profile: TaskProfile) -> RoutingPlan:
         primary = ProviderCandidate(
             provider_name="gemini",
-            model_name="gemini-3.6-flash",
+            model_name="gemini-2.5-flash",
             cost_class=CostClass.CLOUD,
             capabilities=["CODING", "GENERAL"],
             is_local=False,
@@ -126,7 +126,7 @@ class CoderModelFederationRouter:
     ) -> ProviderResponse:
         res = await ezzio_master.execute_intent(user_prompt=prompt, system_prompt=system_prompt)
         content = res.get("response", "")
-        model = res.get("model", "gemini-3.6-flash")
+        model = res.get("model", "gemini-2.5-flash")
         provider = res.get("provider", "gemini")
         return ProviderResponse(
             content=content,

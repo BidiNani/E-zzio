@@ -17,98 +17,10 @@ from threading import Lock
 
 logger = logging.getLogger("EzzioGeminiPool")
 
-# Modèles officiels Gemini 3.x supportés et gouvernés
-OFFICIAL_GEMINI_MODELS = [
-    "gemini-3.7-flash",       # TIER 1 : Agentique, Coding, Outils (1M ctx, 64k out, thinking levels)
-    "gemini-3.5-flash",       # TIER 2 : Généraliste GA, Haut débit
-    "gemini-3.5-flash-lite",  # TIER 3 : Haute fréquence, sous-tâches, extraction (Fast default)
-    "gemini-3.1-flash-lite",  # TIER 3 : Migration programmée -> 2027-05-07
-    "gemini-3.1-pro-preview", # TIER 4 : Raisonnement profond, architecture
-    "gemini-3.6-flash",       # TIER 5 : Previous-generation Flash fallback
-    "gemini-3.1-flash-image", # TIER IMAGE : Nano Banana 2 (Génération/Édition d'images)
-    "gemini-3-pro-image",     # TIER IMAGE : Nano Banana Pro (Haute fidélité)
-    "gemini-omni-1.1-flash",  # TIER VIDÉO : Gemini Omni Flash (Génération/Édition vidéo jusqu'à 4K)
-]
+from core.routing.model_registry import canonical_model_registry
 
-# Registre contractuel du cycle de vie des modèles (Lifecycle Registry)
-MODEL_LIFECYCLE_REGISTRY: Dict[str, Dict[str, Any]] = {
-    "gemini-3.7-flash": {
-        "status": "GA",
-        "tier": "AGENTIC_CODING",
-        "context_window": 1048576,
-        "max_output_tokens": 65536,
-        "thinking_support": ["low", "medium", "high"],
-        "recommended_for": ["complex_coding", "multi_step_agent", "tool_use"]
-    },
-    "gemini-3.5-flash": {
-        "status": "GA",
-        "tier": "GENERAL",
-        "context_window": 1048576,
-        "max_output_tokens": 8192,
-        "recommended_for": ["general_chat", "summarization", "analysis"]
-    },
-    "gemini-3.5-flash-lite": {
-        "status": "GA",
-        "tier": "FAST",
-        "context_window": 1048576,
-        "max_output_tokens": 8192,
-        "recommended_for": ["low_latency_gateway", "fast_extraction", "subagents"]
-    },
-    "gemini-3.1-flash-lite": {
-        "status": "ACTIVE",
-        "tier": "LEGACY_FAST",
-        "shutdown_date": "2027-05-07",
-        "replacement_model": "gemini-3.5-flash-lite",
-        "recommended_for": ["transition_only"]
-    },
-    "gemini-3.1-pro-preview": {
-        "status": "ACTIVE",
-        "tier": "DEEP_REASONING",
-        "context_window": 2097152,
-        "max_output_tokens": 8192,
-        "recommended_for": ["complex_architecture", "formal_verification"]
-    },
-    "gemini-3.6-flash": {
-        "status": "PREVIOUS_GEN",
-        "tier": "FALLBACK_COMPAT",
-        "context_window": 1048576,
-        "max_output_tokens": 8192,
-        "recommended_for": ["compatibility_fallback"]
-    },
-    "gemini-3.1-flash-image": {
-        "status": "GA",
-        "tier": "IMAGE_GENERATION",
-        "codename": "Nano Banana 2",
-        "recommended_for": ["ai_image_synthesis", "image_editing"]
-    },
-    "gemini-3-pro-image": {
-        "status": "GA",
-        "tier": "IMAGE_GENERATION_PRO",
-        "codename": "Nano Banana Pro",
-        "recommended_for": ["high_fidelity_image_synthesis"]
-    },
-    "gemini-omni-1.1-flash": {
-        "status": "GA",
-        "tier": "VIDEO_GENERATION",
-        "release_date": "2026-08-27",
-        "recommended_for": ["video_generation", "image_to_video", "video_extension_4k"]
-    }
-}
-
-# Classement des modèles par profil de capacité
-CAPABILITY_MODEL_RANKING = {
-    "fast": ["gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-3.5-flash"],
-    "extraction": ["gemini-3.5-flash-lite", "gemini-3.1-flash-lite"],
-    "subagent": ["gemini-3.1-flash-lite", "gemini-3.5-flash-lite"],
-    "general": ["gemini-3.5-flash", "gemini-3.7-flash", "gemini-3.6-flash"],
-    "coding": ["gemini-3.7-flash", "gemini-3.5-flash", "gemini-3.6-flash"],
-    "agentic": ["gemini-3.7-flash", "gemini-3.5-flash"],
-    "tools": ["gemini-3.7-flash", "gemini-3.5-flash"],
-    "reasoning": ["gemini-3.1-pro-preview", "gemini-3.7-flash", "gemini-3.5-flash"],
-    "architecture": ["gemini-3.1-pro-preview", "gemini-3.7-flash"],
-    "image": ["gemini-3.1-flash-image", "gemini-3-pro-image"],
-    "video": ["gemini-omni-1.1-flash"],
-}
+# Registre contractuel du cycle de vie des modèles géré par model_registry.py
+# Supression des modèles dupliqués pour respecter la source unique de vérité.
 
 
 @dataclass
@@ -168,9 +80,6 @@ class GeminiPoolManager:
         self._lock = Lock()
         self._unsupported_models: Dict[str, float] = {}  # model -> blocked_until
         self._capability_registry = get_capability_registry()
-        self.OFFICIAL_GEMINI_MODELS = OFFICIAL_GEMINI_MODELS
-        # Preserve canonical capability ranking with dynamic registry augmentations if present
-        self.CAPABILITY_MODEL_RANKING = dict(CAPABILITY_MODEL_RANKING)
         self._load_from_vault_and_env()
 
     def _load_from_vault_and_env(self):
@@ -220,12 +129,37 @@ class GeminiPoolManager:
                 existing.keys.append(GeminiKeySlot(key=env_v.strip()))
 
     def get_candidate_models(self, capability: str = "general") -> List[str]:
-        """Retourne la liste ordonnée des modèles candidats pour une capacité donnée."""
-        ranking = self.CAPABILITY_MODEL_RANKING.get(capability.lower(), self.CAPABILITY_MODEL_RANKING["general"])
+        """Retourne la liste ordonnée des modèles candidats via le registre canonique."""
         now = time.time()
+        
+        # Map capability to role
+        cap_to_role = {
+            "fast": "FAST",
+            "extraction": "FAST",
+            "subagent": "FAST",
+            "general": "MASTER",
+            "coding": "CODING",
+            "agentic": "MASTER",
+            "tools": "MASTER",
+            "reasoning": "MASTER",
+            "architecture": "MASTER"
+        }
+        target_role = cap_to_role.get(capability.lower(), "MASTER")
+        
+        candidates = []
+        for m in canonical_model_registry.list_models():
+            if m.role == target_role and m.source.name == "GEMINI":
+                candidates.append(m.name)
+        
+        if not candidates:
+            # Fallback
+            for m in canonical_model_registry.list_models():
+                if m.role == "MASTER" and m.source.name == "GEMINI":
+                    candidates.append(m.name)
+                    
         return [
-            m for m in ranking
-            if m in self.OFFICIAL_GEMINI_MODELS and self._unsupported_models.get(m, 0.0) <= now
+            m for m in candidates
+            if self._unsupported_models.get(m, 0.0) <= now
         ]
 
     def acquire_execution_target(self, capability: str = "general") -> Tuple[Optional[str], Optional[str], int, Optional[GeminiProjectSlot]]:

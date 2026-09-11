@@ -165,8 +165,27 @@ class VoiceGateway:
             }
 
         try:
-            think_result = await core.think(user_id=user_id, message=user_prompt, session_id=session_id)
-            response_text = think_result.get("response", "")
+            # Routing vocal canonique via EzzioMaster -> ModelRouter (channel='voice')
+            if core and hasattr(core, "execute_intent"):
+                master_res = await core.execute_intent(
+                    user_prompt=user_prompt,
+                    session_id=session_id,
+                    channel="voice",
+                    user_id=user_id
+                )
+                response_text = master_res.get("response", "")
+            elif core and hasattr(core, "think"):
+                think_result = await core.think(user_id=user_id, message=user_prompt, session_id=session_id)
+                response_text = think_result.get("response", "") if isinstance(think_result, dict) else str(think_result)
+            else:
+                from core.ezzio_master import ezzio_master
+                master_res = await ezzio_master.execute_intent(
+                    user_prompt=user_prompt,
+                    session_id=session_id,
+                    channel="voice",
+                    user_id=user_id
+                )
+                response_text = master_res.get("response", "")
         except Exception as e:
             logger.warning("[VOICE] Refus de sécurité ou échec Core (%s) : %s", type(e).__name__, e)
             status_code = "security_violation" if "SecurityViolation" in type(e).__name__ else "core_error"

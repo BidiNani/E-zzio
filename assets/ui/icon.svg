@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCD34D"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#B45309"/>
+    </linearGradient>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Shield Rounded Rect -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" stroke="#1E293B" stroke-width="8"/>
+
+  <!-- Tactical Hex / Shield Outline -->
+  <polygon points="256,48 440,140 440,360 256,460 72,360 72,140" fill="none" stroke="url(#cyanGrad)" stroke-width="8" stroke-dasharray="16 8" opacity="0.4"/>
+
+  <!-- Inner Ambient Glow -->
+  <circle cx="256" cy="240" r="140" fill="#F59E0B" opacity="0.12" filter="url(#glow)"/>
+
+  <!-- Sovereign Crown -->
+  <path d="M 160 320 L 140 200 L 210 240 L 256 160 L 302 240 L 372 200 L 352 320 Z" fill="url(#goldGrad)" stroke="#78350F" stroke-width="6"/>
+  <rect x="156" y="320" width="200" height="28" rx="6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="4"/>
+
+  <!-- Crown Jewels -->
+  <circle cx="256" cy="160" r="12" fill="#38BDF8" stroke="#0369A1" stroke-width="3"/>
+  <circle cx="140" cy="200" r="10" fill="#10B981" stroke="#047857" stroke-width="3"/>
+  <circle cx="372" cy="200" r="10" fill="#10B981" stroke="#047857" stroke-width="3"/>
+  <circle cx="210" cy="334" r="7" fill="#EF4444"/>
+  <circle cx="256" cy="334" r="7" fill="#38BDF8"/>
+  <circle cx="302" cy="334" r="7" fill="#EF4444"/>
+
+  <!-- Brand Typography / Subtext -->
+  <text x="256" y="415" font-family="'Inter', sans-serif" font-size="34" font-weight="800" fill="#E2E8F0" text-anchor="middle" letter-spacing="6">E-ZZIO</text>
+  <text x="256" y="442" font-family="'Fira Code', monospace" font-size="14" font-weight="600" fill="#38BDF8" text-anchor="middle" letter-spacing="3">SOVEREIGN V9.0</text>
+</svg>
