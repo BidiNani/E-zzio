@@ -458,7 +458,7 @@ async def _handle_message(message):
             else:
                 await message.reply(backend_down)
         except Exception as e:
-            logger.error("[DISCORD] Erreur traitement message : %s", e)
+            logger.exception("[DISCORD] Erreur traitement message")
             secret_redactor.sanitize(str(e))
             error_reply = "❌ Erreur interne E-ZZIO."
             if is_private:
