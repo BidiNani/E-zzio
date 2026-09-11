@@ -203,3 +203,7 @@ dist/
 *.zip
 runtime/audit/
 tools/semantic_model/structural_graph/
+.pytest_tmp/
+.git_backup/
+commit_and_verify.py
+

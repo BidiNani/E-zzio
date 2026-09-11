@@ -28,7 +28,7 @@
     },
     "core/cognition/model_router.py": {
       "path": "core/cognition/model_router.py",
-      "sha256": "970de3869506532ac1a4e1af2d9661155ae40ef5d36dec3dc04278e6ead5442f",
+      "sha256": "aedb24eb62d6063518d5a213c711fccf36a54f1c73befdc59f3b653c0f446f6a",
       "role": "Single Model Strategy & Profile Routing Authority",
       "authority": "MODEL_STRATEGY",
       "status": "FROZEN"
