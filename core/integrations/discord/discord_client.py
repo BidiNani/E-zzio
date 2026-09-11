@@ -28,6 +28,7 @@ _http_client = None
 
 # Exceptions reseau unifiees (httpx + aiohttp)
 import httpx as _httpx_lib
+import aiohttp
 DISCORD_NET_ERRORS = (aiohttp.ClientError, asyncio.TimeoutError, _httpx_lib.RequestError, _httpx_lib.TimeoutException)
 
 

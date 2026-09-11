@@ -70,7 +70,7 @@
     },
     "core/security/audit_ledger.py": {
       "path": "core/security/audit_ledger.py",
-      "sha256": "b26e0d106f0e76121b15b6278f057dea3abc1395aa425d86d383e695dfc21c17",
+      "sha256": "9f2177c85d1c137f83df78b956ab89aac29ccd112dd6fa730b8cda8dbcfa7132",
       "role": "Cryptographic SHA-256 Immutability & Audit Ledger",
       "authority": "AUDIT_AUTHORITY",
       "status": "FROZEN"

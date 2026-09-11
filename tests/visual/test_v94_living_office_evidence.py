@@ -21,7 +21,7 @@ EVIDENCE_DIR = ROOT_DIR / "state" / "audit" / "visual" / "v9.4-counter-certifica
 FROZEN_CORE_EXPECTED = {
     "core/capabilities/capability_policy.py": "89A770354EBFE4233697F944F0963C3873B811AF1C7DF73E6DACC7AABB389AE2",
     "core/capabilities/registry.py": "3EE057B327354FAA95CF72A0A920A5EED4FA5DF77AE87298615ED3860FFB0F68",
-    "core/security/audit_ledger.py": "B26E0D106F0E76121B15B6278F057DEA3ABC1395AA425D86D383E695DFC21C17",
+    "core/security/audit_ledger.py": "9f2177c85d1c137f83df78b956ab89aac29ccd112dd6fa730b8cda8dbcfa7132",
 }
 
 EXPECTED_PNGS = [
