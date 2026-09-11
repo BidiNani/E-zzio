@@ -197,3 +197,9 @@ dist/
 *.zip
 runtime/audit/
 tools/semantic_model/structural_graph/
+*.gguf
+*.onnx
+dist/
+*.zip
+runtime/audit/
+tools/semantic_model/structural_graph/
