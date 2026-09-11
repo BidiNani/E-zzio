@@ -207,3 +207,15 @@ tools/semantic_model/structural_graph/
 .git_backup/
 commit_and_verify.py
 
+
+# Prototypes and external projects
+android/
+projects/
+EZZIO_*.ps1
+dashboard_jarvis.py
+certifications/
+contracts/
+hermes-profiles/
+run_model_qualification_*.ps1
+assets/
+
