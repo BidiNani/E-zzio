@@ -1,7 +1,0 @@
-{
-    "name": "filesystem_search",
-    "version": "1.0.0",
-    "description": "Recherche de fichiers et extraction de métadonnées locales.",
-    "capabilities": ["filesystem.read"],
-    "permissions": ["read_local_disk"]
-}

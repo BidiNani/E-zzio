@@ -1,8 +1,0 @@
-{
-  "target_files": [
-    "core/providers/gemini_provider.py",
-    "core/cognition/model_router.py"
-  ],
-  "rollback_command": "git checkout core/providers/gemini_provider.py core/cognition/model_router.py",
-  "complexity": "TRIVIAL (2 lines modified)"
-}

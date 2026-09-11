@@ -1,7 +1,0 @@
-{
-  "concurrent_stampede_runs": 10,
-  "leaders_spawned": 1,
-  "waiters_coalesced": 9,
-  "duplicate_calls": 0,
-  "status": "ZERO_STAMPEDE_VERIFIED"
-}

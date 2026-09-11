@@ -1,9 +1,0 @@
-{
-  "analysis": {
-    "quota_directly_measured": "FALSE (Google / Groq n'exposent pas de compteur physique de quota dans le header de réponse)",
-    "cloud_calls_avoided": "PROVEN (Sur Cache Hit -> 0 appel réseau exécuté)",
-    "cache_hit_latency": "0.95 ms",
-    "normal_request_latency": "1500 - 3800 ms",
-    "quota_saving_mechanism": "Cache technique déterministe + Repli local souverain Ollama"
-  }
-}

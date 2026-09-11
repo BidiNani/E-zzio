@@ -1,9 +1,0 @@
-{
-  "current_health_signals": [
-    "is_available(now) based on blocked_until timestamp",
-    "quota_exhaustions counter",
-    "key invalidation on 401/403",
-    "model 404 block list"
-  ],
-  "missing_signal": "Network connection/transport error did not mark project slot as network-impaired, leading to 2 subsequent redundant 15s timeouts on the same endpoint."
-}

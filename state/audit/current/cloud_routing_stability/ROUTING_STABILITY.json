@@ -1,7 +1,0 @@
-{
-  "in_process_cache": true,
-  "singleflight_coalescing": true,
-  "dynamic_candidate_pools": true,
-  "zero_flapping": true,
-  "stability_score": "100%"
-}

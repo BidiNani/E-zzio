@@ -1,7 +1,0 @@
-{
-  "concurrent_requests": 10,
-  "leader_calls": 1,
-  "waiter_calls": 9,
-  "duplicate_generations": 0,
-  "status": "PROVEN"
-}

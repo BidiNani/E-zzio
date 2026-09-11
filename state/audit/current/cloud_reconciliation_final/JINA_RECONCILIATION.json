@@ -1,9 +1,0 @@
-{
-  "implemented": true,
-  "credential_present": false,
-  "runtime_reachable": "OPTIONAL",
-  "runtime_proven": true,
-  "currently_used": "CONFIG_OPTIONAL",
-  "sovereign_fallback": "SafeWebFetcher with Anti-SSRF (Active & Proven)",
-  "status": "DORMANT_OPTIONAL (SafeWebFetcher handles 100% of live crawl queries)"
-}

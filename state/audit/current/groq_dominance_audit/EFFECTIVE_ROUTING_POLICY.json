@@ -1,6 +1,0 @@
-{
-  "PRIMARY": "Gemini Pool (gemini-3.1-flash-lite, gemini-3.6-flash, gemini-3.7-flash, gemini-3.1-pro-preview)",
-  "SECONDARY": "Groq Same-Role Cloud Fallback (compound-mini, compound, qwen3.6-27b, gpt-oss-120b)",
-  "TERTIARY": "Ollama Local Last Resort (phi4-mini, hermes3, qwen3.5)",
-  "CIRCUIT_BREAKER": "Exponential backoff per provider on 429/5xx"
-}

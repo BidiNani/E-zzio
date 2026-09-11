@@ -1,7 +1,0 @@
-{
-  "gemma_26b_requested": "Gemma 4 26B",
-  "gemma_26b_exact_api_id": "gemma-4-26b-a4b-it",
-  "gemma_31b_requested": "Gemma 4 31B",
-  "gemma_31b_exact_api_id": "gemma-4-31b-it",
-  "catalog_source": "https://generativelanguage.googleapis.com/v1beta/models"
-}

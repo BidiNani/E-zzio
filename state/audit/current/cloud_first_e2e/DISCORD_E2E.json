@@ -1,8 +1,0 @@
-{
-  "interface": "Discord Bot (EzzioBot)",
-  "entrypoint": "stream_ezzio_chat()",
-  "delegation_chain": "Discord -> POST /master/chat/stream -> CognitiveGateway -> ModelRouter -> Provider",
-  "direct_model_selection_by_discord": false,
-  "cloud_first_active": true,
-  "proof": "OBSERVED (Payload force_cloud=True et speed='fast' transmis au routeur unifié)"
-}

@@ -1,8 +1,0 @@
-{
-    "name": "code_analyzer",
-    "description": "Analyse la complexité et compte les fonctions d'un fichier Python du workspace.",
-    "parameters": {
-        "path": "chemin relatif du fichier python à analyser"
-    },
-    "implementation": "skill.py"
-}

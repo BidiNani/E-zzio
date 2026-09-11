@@ -1,5 +1,0 @@
-{
-  "metrics_source": "GET /metrics",
-  "capability_events_logged": true,
-  "zero_second_metrics_authority": true
-}

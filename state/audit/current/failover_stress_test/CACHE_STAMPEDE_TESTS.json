@@ -1,9 +1,0 @@
-{
-  "scenario": "10 simultaneous identical requests on cold cache",
-  "observation": {
-    "expected_ideal": "1 provider call, 9 cache hits (with singleflight lock)",
-    "observed_raw": "2 provider calls, other requests subjected to queue/circuit breaker timeout",
-    "finding": "FINDING: En absence de verrou singleflight distribué, un afflux massif simultané sur cache froid déclenche des appels concurrents avant la première écriture.",
-    "impact": "Faiblesse sous très haute concurrence simultanée (>10 req/s froides exactes). Entièrement toléré par le circuit breaker qui absorbe la charge."
-  }
-}

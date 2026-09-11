@@ -1,8 +1,0 @@
-{
-  "secrets_in_logs": 0,
-  "secrets_in_metrics": 0,
-  "secrets_in_hud": 0,
-  "ssrf_protection": true,
-  "readonly_oauth_scopes": true,
-  "status": "PASS"
-}

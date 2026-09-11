@@ -1,7 +1,0 @@
-{
-  "cache_id": "CCR-e288fbba767bd82f",
-  "sha256": "e288fbba767bd82f8eeac1abcc2defdef52ad3ce782ea69b7c4f7b71079b90c7",
-  "timestamp_utc": "2026-08-23T13:51:51.293628+00:00",
-  "char_length": 56,
-  "original_text": "{\"step\": 24, \"status\": \"ACTIVE\", \"arr\": [0, 1, 2, 3, 4]}"
-}

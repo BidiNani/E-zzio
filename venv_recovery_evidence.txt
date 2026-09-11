@@ -1,7 +1,0 @@
-=== VENV RECOVERY EVIDENCE ===
-Date: 2026-08-18 18:17:28
-
-Python Version    : 3.11.15 (main, Jun 23 2026, 15:20:37) [MSC v.1944 64 bit (AMD64)] sys.executable    : G:\AI\E-zzio\.venv\Scripts\python.exe sys.prefix        : G:\AI\E-zzio\.venv sys.base_prefix   : C:\Users\enrik\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none sys._base_exec    : C:\Users\enrik\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\python.exe  --- pyvenv.cfg --- home = C:\Users\enrik\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none include-system-site-packages = false version = 3.11.15 executable = C:\Users\enrik\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe command = C:\Users\enrik\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -m venv G:\AI\E-zzio\.venv
-
-Pip Version:
-pip 26.2.1 from G:\AI\E-zzio\.venv\Lib\site-packages\pip (python 3.11) 

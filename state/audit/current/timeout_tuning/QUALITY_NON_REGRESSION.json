@@ -1,6 +1,0 @@
-{
-  "response_completeness": "100%",
-  "reasoning_integrity": "100%",
-  "code_generation_integrity": "100%",
-  "status": "NO_REGRESSION"
-}

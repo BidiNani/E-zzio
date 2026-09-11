@@ -1,7 +1,0 @@
-{
-  "QUESTION_1_MODEL_CONFIRMED": "gemini-3.5-flash-lite (100% des 30 requ\u00eates)",
-  "QUESTION_2_TTFT_STABLE": "TRUE (Moyenne: 422.18 ms, M\u00e9diane: 387.47 ms, \u00c9cart-type: 85.33 ms, CV: 20.21%)",
-  "QUESTION_3_PROMPT_SWEEP_STABLE": "TRUE (Croissance lin\u00e9aire mod\u00e9r\u00e9e : 352 ms \u00e0 100 tokens -> 712 ms \u00e0 5000 tokens)",
-  "QUESTION_4_CONCURRENCY_STABLE": "TRUE (Temps total wall-clock stable sous charge simultan\u00e9e jusqu'\u00e0 10 utilisateurs)",
-  "FINAL_VERDICT": "FLASH_LITE_CONFIRMED_STABLE"
-}

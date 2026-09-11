@@ -1,6 +1,0 @@
-{
-  "gmail_readonly": true,
-  "drive_readonly": true,
-  "calendar_readonly": true,
-  "status": "READY_WITH_CONFIG (Awaiting user OAuth tokens in secrets/.env)"
-}

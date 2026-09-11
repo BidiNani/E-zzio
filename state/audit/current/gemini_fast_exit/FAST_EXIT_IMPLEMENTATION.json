@@ -1,5 +1,0 @@
-{
-  "file_modified": "core/providers/gemini_provider.py",
-  "diff_lines": "+5 lines (except (httpx.TimeoutException, httpx.ConnectError, httpx.NetworkError): break)",
-  "complexity": "MINIMAL_SURGICAL"
-}

@@ -1,7 +1,0 @@
-{
-  "concurrent_tasks": 10,
-  "leaders": 1,
-  "waiters": 9,
-  "duplicate_provider_calls": 0,
-  "status": "ZERO_STAMPEDE_VERIFIED"
-}

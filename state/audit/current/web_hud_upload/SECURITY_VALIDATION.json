@@ -1,6 +1,0 @@
-{
-  "client_side_guards": "Max 50MB, whitelist extensions (.pdf, .docx, .xlsx, .csv, .tsv, .html, .txt, .zip, images, audio)",
-  "server_side_guards": "UniversalFileReader magic bytes detection, anti-zip-slip, anti-zip-bomb, disguised executable block (MZ/PE)",
-  "secrets_leakage_in_upload": false,
-  "status": "PASS"
-}

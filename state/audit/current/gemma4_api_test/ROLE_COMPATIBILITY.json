@@ -1,5 +1,0 @@
-{
-  "GEMMA_26B_ROLE_CANDIDATE": "GENERAL_SECONDARY_FALLBACK (Open-Weights Cloud)",
-  "GEMMA_31B_ROLE_CANDIDATE": "REASONING_OR_CODING_SECONDARY_FALLBACK (Open-Weights Cloud)",
-  "routing_action": "RETAIN_FROZEN_ROUTING (No production routing change)"
-}

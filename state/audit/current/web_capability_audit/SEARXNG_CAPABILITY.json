@@ -1,8 +1,0 @@
-{
-  "name": "SearXNG Sovereign Metasearch",
-  "implementation_status": "CODE_READY_RUNTIME_DORMANT",
-  "target_base_url": "http://localhost:8080",
-  "docker_dependency": "OPTIONAL (Une instance Windows native Python/uWSGI ou binaire suffit)",
-  "current_state": "INSTANCE_OFFLINE",
-  "recommendation": "Garder en repli local souverain. Ne pas forcer l'installation de Docker."
-}

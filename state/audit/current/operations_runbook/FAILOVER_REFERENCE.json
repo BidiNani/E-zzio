@@ -1,5 +1,0 @@
-{
-  "order": "Cache -> Gemini Primary -> Groq Same-Role Fallback -> Ollama Sovereign Last Resort -> ECOL Fail-Closed",
-  "fast_exit_on_transport": "Active (15s max on network failure -> immediate Groq failover)",
-  "rotation_on_429": "Active (Rotates key/project slot)"
-}

@@ -1,5 +1,0 @@
-{
-  "before_first_token": "Clean abort",
-  "after_first_token": "Abort without payload concatenation",
-  "status": "SAFE"
-}

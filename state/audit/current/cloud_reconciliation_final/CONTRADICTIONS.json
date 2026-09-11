@@ -1,8 +1,0 @@
-{
-  "A_FAST_model_3.1_vs_3.5": "RÉSOLU : ModelRouter route en priorité 'gemini-3.1-flash-lite' (active primary) avec 'gemini-3.5-flash-lite' comme candidat de transition dans le pool Gemini.",
-  "B_GENERAL_model_3.6_vs_3.5": "RÉSOLU : ModelRouter route en priorité 'gemini-3.6-flash' (active primary) avec 'gemini-3.5-flash' comme candidat de transition dans le pool Gemini.",
-  "C_Tavily_Jina_status": "RÉSOLU : Implémentés et testés, mais actuellement dormants/optionnels car DuckDuckGo et SafeWebFetcher assurent 100% du trafic sans nécessiter de clés tierces.",
-  "D_Gemini_pool_size": "RÉSOLU : 1 projet configuré par défaut ('project_default') capable d'accueillir jusqu'à 20 clés et des projets additionnels dynamiques.",
-  "E_Meaning_of_1104_credentials": "RÉSOLU : 1 104 occurrences d'appels `os.getenv` dans l'AST, correspondant à 45 variables uniques dont 4 sont actives en production.",
-  "F_Groq_models_actually_used": "RÉSOLU : groq/compound-mini, groq/compound, qwen/qwen3.6-27b, openai/gpt-oss-120b sont les 4 cibles Same-Role actives."
-}

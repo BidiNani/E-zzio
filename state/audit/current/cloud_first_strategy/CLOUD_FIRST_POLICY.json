@@ -1,9 +1,0 @@
-{
-  "nominal_path": [
-    "1. Response Cache (HIT -> retour immédiat 0.72ms)",
-    "2. Singleflight Coalescing (fusion des requêtes identiques en vol)",
-    "3. Gemini Pool Cloud-First (4 slots configurés)",
-    "4. Groq Cloud Same-Role Fallback (si 429/5xx sur Gemini)",
-    "5. Ollama Local Fallback (Dernier recours uniquement si tous les clouds sont épuisés)"
-  ]
-}

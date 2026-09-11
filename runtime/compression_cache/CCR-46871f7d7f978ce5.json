@@ -1,7 +1,0 @@
-{
-  "cache_id": "CCR-46871f7d7f978ce5",
-  "sha256": "46871f7d7f978ce51f5b24b0d3e22d908aa12b27c45a2d671cbf5546ecbcfeb2",
-  "timestamp_utc": "2026-08-23T13:41:34.720877+00:00",
-  "char_length": 97,
-  "original_text": "The system relies upon the Global Mutex to prevent deadlocks across concurrent cognitive workers."
-}

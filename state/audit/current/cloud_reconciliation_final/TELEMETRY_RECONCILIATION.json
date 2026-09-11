@@ -1,5 +1,0 @@
-{
-  "declared_in_registry": "Cloud-First with Same-Role Groq and Ollama Last Resort",
-  "observed_in_metrics": "Cloud-First with Same-Role Groq and Ollama Last Resort",
-  "divergence": "NONE (100% Match between /metrics and Code Registry)"
-}

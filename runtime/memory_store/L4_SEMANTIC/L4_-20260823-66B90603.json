@@ -1,1 +1,0 @@
-{"tier": "L4_SEMANTIC", "memory_id": "L4_-20260823-66B90603", "timestamp_utc": "2026-08-23T12:51:54.796896+00:00", "source": "test_source", "importance": 1.0, "compression_ratio": 1.0, "original_sha256": "3da87c205af80aa71f707f8cb104b818b2665a037a593c1831ba9fa0e8bdd970", "content": "tampered fact: 2+2=5", "evidence_id": "EVID-20260823-4CC5BC09"}

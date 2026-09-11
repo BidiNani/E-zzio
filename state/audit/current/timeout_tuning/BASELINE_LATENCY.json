@@ -1,8 +1,0 @@
-{
-  "gemini_nominal_median_ms": 650.0,
-  "gemini_p99_observed_ms": 2575.09,
-  "groq_nominal_median_ms": 380.0,
-  "groq_p99_observed_ms": 1957.65,
-  "ollama_nominal_calls": 0,
-  "previous_fail_closed_p95_sec": 38.586
-}

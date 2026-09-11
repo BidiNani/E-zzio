@@ -1,6 +1,0 @@
-{
-  "healthy_state_primary_used": "gemini_pool (100% proven)",
-  "cooldown_state_fallback_used": "groq (100% proven)",
-  "ollama_called": false,
-  "status": "CONFIRMED"
-}

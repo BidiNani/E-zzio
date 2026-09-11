@@ -1,5 +1,0 @@
-{
-  "cloud_multimodal": "gemini-3.7-flash",
-  "local_vision": "qwen2.5vl:3b",
-  "status": "OPERATIONAL"
-}

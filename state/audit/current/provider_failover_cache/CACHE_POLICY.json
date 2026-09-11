@@ -1,6 +1,0 @@
-{
-  "ttl_default_seconds": 3600.0,
-  "hit_behavior": "Immediate return (source=cache), 0 token consumed, 0 cloud call",
-  "miss_behavior": "ModelRouter execution -> Write on success only",
-  "invalidation": "On TTL expiration, Git HEAD revision change, or explicit invalidate_all()"
-}

@@ -1,6 +1,0 @@
-{
-  "credential_present": true,
-  "role": "DEEP_WEB_READER_AND_SEARCH",
-  "fallback": "SafeWebFetcher with Anti-SSRF (Active & Proven)",
-  "status": "ACTIVE"
-}

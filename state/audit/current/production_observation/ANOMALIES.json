@@ -1,8 +1,0 @@
-{
-  "active_anomalies": 0,
-  "flapping_detected": false,
-  "cache_stampede_detected": false,
-  "unexpected_provider_calls": 0,
-  "unexpected_model_calls": 0,
-  "status": "CLEAN"
-}

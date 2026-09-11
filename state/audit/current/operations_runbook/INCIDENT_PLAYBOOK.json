@@ -1,6 +1,0 @@
-{
-  "gemini_429": "Auto failover to Groq Same-Role (no action needed)",
-  "gemini_transport_timeout": "Fast exit to Groq in 15s (no action needed)",
-  "all_cloud_down": "Falls closed safely without crashing or leaking secrets",
-  "web_server_down": "Restart via 'python web_server.py'"
-}

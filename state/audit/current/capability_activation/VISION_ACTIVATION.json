@@ -1,5 +1,0 @@
-{
-  "primary_vision": "gemini-3.7-flash (Multimodal API)",
-  "local_vision_engine": "qwen2.5vl:3b",
-  "status": "OPERATIONAL"
-}

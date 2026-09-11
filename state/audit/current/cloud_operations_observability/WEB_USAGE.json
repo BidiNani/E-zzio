@@ -1,8 +1,0 @@
-{
-  "primary_search": "Tavily (Active)",
-  "fallback_search": "Jina (Active)",
-  "local_fetcher": "SafeWebFetcher (Active)",
-  "search_calls": 2,
-  "read_calls": 2,
-  "errors": 0
-}

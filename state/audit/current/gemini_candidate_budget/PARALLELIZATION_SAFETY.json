@@ -1,9 +1,0 @@
-{
-  "assessment": "UNSAFE",
-  "reasons": [
-    "Sonder 3 modèles LLM en parallèle pour une seule question utilisateur consommerait 3x plus de tokens.",
-    "Risque de saturation immédiate du Rate Limit (RPM/TPM).",
-    "Gaspillage massif de quota en cas de succès simultané."
-  ],
-  "verdict": "PARALLELIZATION_REJECTED"
-}

@@ -1,8 +1,0 @@
-{
-  "branch": "release/v9.2",
-  "commit": "261935cb39daa059197d2456ec0b2cd71717e533",
-  "tree": "2671de4b8abe95e7ad3f4601ba87c208a63878e1",
-  "baseline_tag": "ezzio-v9.1-golden",
-  "target_tag": "ezzio-v9.2-golden",
-  "is_shallow": false
-}

@@ -1,4 +1,0 @@
-{
-  "command": "git checkout core/providers/gemini_provider.py core/cognition/model_router.py",
-  "status": "VALIDATED"
-}

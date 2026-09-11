@@ -1,9 +1,0 @@
-{
-  "tools": {
-    "google_drive_read": { "provider": "google", "permission": "READ_ONLY", "risk_level": "LOW", "audit_required": true },
-    "gmail_send": { "provider": "google", "permission": "WRITE", "risk_level": "HIGH", "audit_required": true },
-    "local_shell": { "provider": "local", "permission": "EXECUTE", "risk_level": "CRITICAL", "audit_required": true },
-    "gemini_inference": { "provider": "google", "permission": "API_CALL", "risk_level": "LOW", "audit_required": true },
-    "ollama_inference": { "provider": "local", "permission": "API_CALL", "risk_level": "LOW", "audit_required": true }
-  }
-}

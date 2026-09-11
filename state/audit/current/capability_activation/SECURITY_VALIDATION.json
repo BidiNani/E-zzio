@@ -1,6 +1,0 @@
-{
-  "secrets_in_logs": 0,
-  "ssrf_enforced": true,
-  "readonly_scopes_enforced": true,
-  "status": "PASS"
-}

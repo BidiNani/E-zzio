@@ -1,7 +1,0 @@
-{
-  "pdf": "VERIFIED_PYMUPDF",
-  "docx": "VERIFIED_DOCX_LIB",
-  "xlsx": "VERIFIED_OPENPYXL",
-  "stt": "VERIFIED_FASTER_WHISPER",
-  "tts": "VERIFIED_KOKORO_NATIVE"
-}

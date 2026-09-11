@@ -1,8 +1,0 @@
-{
-  "order": [
-    "1. Response Cache Hit (0 call)",
-    "2. Primary Cloud Target (Highest Margin Healthy Model)",
-    "3. Alternate Cloud Target (Same-Role Gemini/Gemma or Groq)",
-    "4. Sovereign Local Ollama (Last Resort Only)"
-  ]
-}

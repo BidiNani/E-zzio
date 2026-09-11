@@ -1,8 +1,0 @@
-{
-  "lifecycle_states": {
-    "HEALTHY": "Modèle avec marge de quota suffisante, sélectionné en premier choix",
-    "LOW_MARGIN": "Modèle avec marge réduite mais utilisable",
-    "TEMPORARILY_DEPRIORITIZED": "Modèle en délestage temporaire suite à saturation de fenêtre (429), substitution fluide par le candidat suivant",
-    "RECOVERED": "Modèle dont la fenêtre ou le cooldown est réinitialisé, redevenant immédiatement éligible sans modification de code"
-  }
-}

@@ -1,5 +1,0 @@
-{
-  "total_failover_events": 2,
-  "chain": "Gemini 429 -> Groq (Success) | All Cloud 429 -> Ollama (Success)",
-  "status": "OPERATIONAL"
-}

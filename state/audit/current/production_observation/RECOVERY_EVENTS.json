@@ -1,7 +1,0 @@
-{
-  "auto_recovery_tested": true,
-  "recovery_latency_sec": 5.1,
-  "runtime_restarted": false,
-  "code_modified": false,
-  "status": "RECOVERY_PROVEN"
-}

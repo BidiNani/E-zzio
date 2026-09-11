@@ -1,7 +1,0 @@
-{
-  "success_rate_before_percent": 100.0,
-  "success_rate_after_percent": 100.0,
-  "false_timeout_increase": false,
-  "quality_regression": false,
-  "verdict": "AB_TEST_PASSED"
-}

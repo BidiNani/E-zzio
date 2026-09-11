@@ -1,7 +1,0 @@
-{
-  "H1_all_candidates_serialized": "PROVEN (for-loop in GeminiProvider.search)",
-  "H2_transport_timeout_breaks_loop": "RECOMMENDED_FUTURE_OPTIMIZATION (If candidate #1 encounters ConnectTimeout/ReadTimeout, break candidate loop immediately and failover to Groq)",
-  "H3_candidate_cap_to_2": "FEASIBLE (Cap candidates to max 2 models per profile -> 2 x 15s = 30s max)",
-  "H4_parallelization": "UNSAFE (Token/quota multiplication)",
-  "H5_current_cost_acceptable": "ACCEPTABLE_FOR_NOW (Fails-closed/recovers safely with Groq 200 OK)"
-}

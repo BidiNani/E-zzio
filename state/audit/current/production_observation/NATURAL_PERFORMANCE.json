@@ -1,8 +1,0 @@
-{
-  "median_latency_ms": 880.98,
-  "p95_latency_ms": 4956.43,
-  "fast_p50_ms": 612.4,
-  "general_p50_ms": 2840.1,
-  "coding_p50_ms": 4210.5,
-  "deep_p50_ms": 5930.2
-}

@@ -1,7 +1,0 @@
-{
-  "cache_id": "CCR-197dde125b8db0ac",
-  "sha256": "197dde125b8db0acd52306d57e98cdb5db08feded3802417abbe89abccc20625",
-  "timestamp_utc": "2026-08-23T13:41:12.555605+00:00",
-  "char_length": 122,
-  "original_text": "As we all know, it is important to note that the primary database server is located at 192.168.1.50 and handles port 5432."
-}

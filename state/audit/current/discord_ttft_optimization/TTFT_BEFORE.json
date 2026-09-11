@@ -1,7 +1,0 @@
-{
-  "TTFT_BEFORE_MEAN_MS": 5467.5,
-  "PROVIDER_STREAM_CLIENT": "httpx.AsyncClient (Cr\u00e9\u00e9/d\u00e9truit \u00e0 chaque requ\u00eate)",
-  "CONNECTION_PROTOCOL": "HTTP/1.1 Cold SSL Handshake",
-  "LOCAL_PREPROCESSING_MS": 9.2,
-  "PROVIDER_LATENCY_MS": 5458.3
-}

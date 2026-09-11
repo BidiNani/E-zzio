@@ -1,6 +1,0 @@
-{
-  "payload_verification": "SUCCESS (JSON valide, conforme aux spécifications)",
-  "auto_refresh_rate_ms": 3000,
-  "no_flapping_in_ui": true,
-  "status": "PROVEN"
-}

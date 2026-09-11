@@ -1,7 +1,0 @@
-{
-  "module": "core/cache/response_cache.py",
-  "storage": "G:/AI/E-zzio/state/cache/response_cache.db (SQLite WAL Mode)",
-  "key_formula": "sha256(prompt | context | profile | system_prompt | toolset | repo_revision)",
-  "security_filter": "Strict rejection of API keys (AIzaSy, sk-, gsk_, RSA keys, etc.)",
-  "nature": "PURELY TECHNICAL (Zero impact on UnifiedMemoryGateway / Zero second memory authority)"
-}

@@ -1,6 +1,0 @@
-{
-  "current_epoch": 2031,
-  "highest_committed_index": 2029,
-  "highest_timestamp_utc": "2026-08-23T23:51:51.528424+00:00",
-  "epoch_signature_hmac": "9542e351ce04293bdc0b2de4e12d89c73335198a39ecd4537800482de4b5f481"
-}

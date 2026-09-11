@@ -1,8 +1,0 @@
-{
-  "MODEL_ROUTER_MODEL": "gemini-3.5-flash-lite",
-  "ACTUAL_PROVIDER_MODEL": "gemini-3.5-flash-lite",
-  "ACTUAL_ENDPOINT": "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:streamGenerateContent",
-  "MODEL_RESOLUTION_SOURCE": "ModelRouter.select_engine(task_type='fast')",
-  "SECOND_MODEL_AUTHORITY": 0,
-  "CONFIRMED_MODEL_MATCH": true
-}

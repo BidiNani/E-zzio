@@ -1,9 +1,0 @@
-{
-  "models_verified": {
-    "groq/compound-mini": "282ms (FAST)",
-    "groq/compound": "255ms (GENERAL)",
-    "qwen/qwen3.6-27b": "141ms (CODING)",
-    "openai/gpt-oss-120b": "376ms (DEEP)"
-  },
-  "recommendation": "Excellent capacity to offload traffic upon Gemini saturation without quality degradation"
-}

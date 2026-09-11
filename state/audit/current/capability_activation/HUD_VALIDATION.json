@@ -1,5 +1,0 @@
-{
-  "hud_template": "runtime/web/index.html",
-  "read_only_observer": true,
-  "zero_decision_logic_in_hud": true
-}

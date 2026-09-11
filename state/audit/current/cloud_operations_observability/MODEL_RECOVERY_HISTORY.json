@@ -1,9 +1,0 @@
-{
-  "models_evaluated": [
-    "gemini-3.1-flash-lite",
-    "gemini-3.5-flash-lite",
-    "gemini-3.6-flash"
-  ],
-  "automatic_recovery_success": true,
-  "restart_required": false
-}

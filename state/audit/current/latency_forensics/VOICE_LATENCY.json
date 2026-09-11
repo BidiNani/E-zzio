@@ -1,5 +1,0 @@
-{
-  "kokoro_onnx_synthesis_ms": 806.01,
-  "procedural_fallback_synthesis_ms": 1.2,
-  "category": "EXPECTED_SLOW_PATH"
-}

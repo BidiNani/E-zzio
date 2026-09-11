@@ -1,7 +1,0 @@
-{
-  "flapping": false,
-  "cache_stampede": false,
-  "unexpected_provider_calls": 0,
-  "unexpected_model_calls": 0,
-  "status": "CLEAN"
-}

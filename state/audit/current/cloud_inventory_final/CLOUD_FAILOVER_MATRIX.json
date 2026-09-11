@@ -1,6 +1,0 @@
-{
-  "primary_cloud": "Google Gemini (gemini_pool)",
-  "same_role_secondary": "Groq Cloud (groq)",
-  "last_resort_local": "Ollama (localhost:11434)",
-  "fail_closed_guard": "ECOL Gateway Fail-Closed (Safe Closed State)"
-}

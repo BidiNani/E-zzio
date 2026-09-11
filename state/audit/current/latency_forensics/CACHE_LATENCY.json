@@ -1,6 +1,0 @@
-{
-  "cache_hit_latency_ms": 0.85,
-  "latency_with_cache_median_ms": 10.53,
-  "latency_without_cache_median_ms": 580.0,
-  "quota_saved_percent": 35.0
-}

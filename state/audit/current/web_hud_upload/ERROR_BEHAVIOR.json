@@ -1,5 +1,0 @@
-{
-  "oversized_file": "Client blocks immediately with 'Fichier trop volumineux. Limite: 50 Mo'",
-  "invalid_extension": "Client blocks immediately with 'Format non supporté'",
-  "server_error": "User-friendly notification with HTTP status and detail without traceback leak"
-}

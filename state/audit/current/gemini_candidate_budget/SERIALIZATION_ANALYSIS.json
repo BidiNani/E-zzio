@@ -1,5 +1,0 @@
-{
-  "why_serialized": "Permet de basculer sur un modèle alternatif du même fournisseur avant d'abandonner Gemini vers Groq.",
-  "drawback": "En cas de panne réseau globale de l'API Google, 3 candidats x 15s = 45s de pénalité avant déclenchement du failover.",
-  "status": "SERIALIZATION_IS_THE_PRIMARY_SOURCE_OF_49s"
-}

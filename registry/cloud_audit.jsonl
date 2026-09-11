@@ -1,1 +1,0 @@
-{"ts": 1781044088.0903325, "type": "cloud_request", "payload": {"provider": "wikipedia", "host": "fr.wikipedia.org", "method": "GET", "url": "https://fr.wikipedia.org/api/rest_v1/page/summary/Intelligence_artificielle", "params": {}, "headers": {"User-Agent": "E-ZZIO-local/1.0 (contact: enrik.pani@gmail.com)", "Accept": "application/json"}, "waited_sec": 0.0}}

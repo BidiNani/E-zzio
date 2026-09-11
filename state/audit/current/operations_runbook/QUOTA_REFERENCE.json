@@ -1,4 +1,0 @@
-{
-  "antigravity_quota": "IDE platform UI limit (separated, out-of-band)",
-  "gemini_api_quota": "HTTP 429 Retry-After signal (runtime managed)"
-}

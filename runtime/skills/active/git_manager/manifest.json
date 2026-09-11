@@ -1,7 +1,0 @@
-{
-    "name": "git_manager",
-    "version": "1.0.0",
-    "description": "Gestion et inspection du dépôt Git local.",
-    "capabilities": ["vcs.git"],
-    "permissions": ["execute_process"]
-}

@@ -1,7 +1,0 @@
-{
-  "chain": "Cache -> Gemini Primary -> Groq Same-Role Fallback -> Ollama Sovereign Last Resort -> ECOL Fail-Closed",
-  "FAST": "gemini-3.1-flash-lite -> groq/compound-mini -> phi4-mini:latest",
-  "GENERAL": "gemini-3.6-flash -> groq/compound -> hermes3:8b",
-  "CODING": "gemini-3.7-flash -> qwen/qwen3.6-27b -> qwen3.5:9b",
-  "DEEP": "gemini-3.1-pro-preview -> openai/gpt-oss-120b -> qwen3.5:9b"
-}

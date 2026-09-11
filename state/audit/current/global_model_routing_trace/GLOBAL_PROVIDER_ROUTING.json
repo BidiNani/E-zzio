@@ -1,5 +1,0 @@
-{
-  "primary": "gemini_pool",
-  "fallback": "ollama",
-  "policy": "cloud_first"
-}

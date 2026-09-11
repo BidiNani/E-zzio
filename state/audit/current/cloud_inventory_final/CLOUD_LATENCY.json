@@ -1,9 +1,0 @@
-{
-  "gemini_p50_ms": 650.0,
-  "gemini_p95_ms": 2575.09,
-  "groq_p50_ms": 380.0,
-  "groq_p95_ms": 1957.65,
-  "web_p50_ms": 719.8,
-  "web_p95_ms": 961.38,
-  "nominal_success_rate": 100.0
-}

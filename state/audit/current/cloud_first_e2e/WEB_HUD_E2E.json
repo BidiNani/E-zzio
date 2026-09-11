@@ -1,7 +1,0 @@
-{
-  "interface": "Web HUD",
-  "entrypoint": "GET /metrics, POST /master/chat",
-  "delegates_to_unified_api": true,
-  "direct_ollama_call": false,
-  "proof": "OBSERVED"
-}

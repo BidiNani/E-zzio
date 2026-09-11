@@ -1,9 +1,0 @@
-[
-  "Discord MESSAGE_CREATE -> on_message -> stream_ezzio_chat -> POST /master/chat/stream -> CognitiveGateway -> ModelRouter -> gemini-3.5-flash-lite",
-  "Discord /ask interaction -> slash_ask -> stream_ezzio_chat -> POST /master/chat/stream -> CognitiveGateway -> ModelRouter -> gemini-3.5-flash-lite",
-  "HTTP POST /master/chat/stream -> master_chat_stream -> ModelRouter.select_engine -> _stream_gemini_sse -> gemini-3.5-flash-lite",
-  "Browser Web UI -> fetch('/master/chat/stream') -> CognitiveGateway -> ModelRouter -> gemini-3.5-flash-lite",
-  "Python SDK -> CognitiveGateway.ask_async() -> ModelRouter.select_engine() -> gemini_pool / ollama",
-  "Agent Loop -> CognitiveGateway -> ModelRouter.select_engine(task_type='coding') -> gemini-3.7-flash",
-  "Legacy endpoints -> quarantined/standalone routers"
-]
