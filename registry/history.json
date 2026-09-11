@@ -1,0 +1,192 @@
+[
+  {
+    "timestamp": "2026-08-15T16:37:53.546387",
+    "input": "retiens le code secret 9988",
+    "response": "Je ne peux pas retenir ou utiliser des codes secrets. Cependant, je peux vous aider à les enregistrer dans un endroit sûr si nécessaire.",
+    "expert": "Standard",
+    "metadata": {
+      "organ_key": "presence",
+      "organ_label": "Standard",
+      "emotion": "Neutre",
+      "talent": "Polyvalent",
+      "model": "qwen2.5:7b",
+      "selected_model": "qwen2.5:7b",
+      "attempted_models": [
+        "qwen2.5:7b"
+      ],
+      "primary_model": "gemma2:2b",
+      "deep_model": "qwen3:8b",
+      "fallback_models": [
+        "qwen2.5:3b"
+      ],
+      "used_fallback": false,
+      "route_score": 0,
+      "route_hits": [],
+      "confidence": "par défaut",
+      "elapsed_ms": 5414,
+      "speed": "fast",
+      "tactical": {
+        "risk": "low",
+        "intent": "general",
+        "anticipation": [],
+        "needs_backup": false,
+        "needs_confirmation": false,
+        "recommended_mode": "normal"
+      },
+      "gpu_policy": "disabled_for_ezzio",
+      "num_gpu": 0
+    }
+  },
+  {
+    "timestamp": "2026-08-15T17:09:19.289972",
+    "input": "salut",
+    "response": "Salut BidiNani ! Comment ça va ? Tu as besoin d'aide pour quelque chose aujourd'hui ?",
+    "expert": "Standard",
+    "metadata": {
+      "organ_key": "presence",
+      "organ_label": "Standard",
+      "emotion": "Neutre",
+      "talent": "Polyvalent",
+      "model": "qwen2.5:7b",
+      "selected_model": "qwen2.5:7b",
+      "attempted_models": [
+        "qwen2.5:7b"
+      ],
+      "primary_model": "gemma2:2b",
+      "deep_model": "qwen3:8b",
+      "fallback_models": [
+        "qwen2.5:3b"
+      ],
+      "used_fallback": false,
+      "route_score": 0,
+      "route_hits": [],
+      "confidence": "par défaut",
+      "elapsed_ms": 17917,
+      "speed": "fast",
+      "tactical": {
+        "risk": "low",
+        "intent": "general",
+        "anticipation": [],
+        "needs_backup": false,
+        "needs_confirmation": false,
+        "recommended_mode": "normal"
+      },
+      "gpu_policy": "disabled_for_ezzio",
+      "num_gpu": 0
+    }
+  },
+  {
+    "timestamp": "2026-08-15T17:10:12.544306",
+    "input": "pourrais tu corriger ton code interne de ton système?",
+    "response": "Bien sûr, je peux vous aider à comprendre comment une telle correction pourrait être faite. Cependant, sans connaître les détails spécifiques du code interne de votre système, je vais vous donner un exemple générique de ce que cela pourrait ressembler.\n\nSupposons que vous souhaitez ajuster certaines directives tactiques ou améliorer la gestion des modèles. Voici quelques suggestions pour corriger le code :\n\n1. **Ajuster les Directives Tactiques** : Si vous voulez modifier les directives tactiques, vous pouvez directement ajust",
+    "expert": "Standard",
+    "metadata": {
+      "organ_key": "presence",
+      "organ_label": "Standard",
+      "emotion": "Neutre",
+      "talent": "Polyvalent",
+      "model": "qwen2.5:7b",
+      "selected_model": "qwen2.5:7b",
+      "attempted_models": [
+        "qwen2.5:7b"
+      ],
+      "primary_model": "gemma2:2b",
+      "deep_model": "qwen3:8b",
+      "fallback_models": [
+        "qwen2.5:3b"
+      ],
+      "used_fallback": false,
+      "route_score": 0,
+      "route_hits": [],
+      "confidence": "par défaut",
+      "elapsed_ms": 27244,
+      "speed": "fast",
+      "tactical": {
+        "risk": "low",
+        "intent": "general",
+        "anticipation": [],
+        "needs_backup": false,
+        "needs_confirmation": false,
+        "recommended_mode": "normal"
+      },
+      "gpu_policy": "disabled_for_ezzio",
+      "num_gpu": 0
+    }
+  },
+  {
+    "timestamp": "2026-08-15T17:11:37.186727",
+    "input": "mémorise que le code de session est 9988",
+    "response": "J'ai enregistré le code de session comme suit : 9988. Si vous avez besoin d'aide supplémentaire avec cela ou tout autre chose, n'hésitez pas à me le faire savoir !",
+    "expert": "Standard",
+    "metadata": {
+      "organ_key": "presence",
+      "organ_label": "Standard",
+      "emotion": "Neutre",
+      "talent": "Polyvalent",
+      "model": "qwen2.5:7b",
+      "selected_model": "qwen2.5:7b",
+      "attempted_models": [
+        "qwen2.5:7b"
+      ],
+      "primary_model": "gemma2:2b",
+      "deep_model": "qwen3:8b",
+      "fallback_models": [
+        "qwen2.5:3b"
+      ],
+      "used_fallback": false,
+      "route_score": 0,
+      "route_hits": [],
+      "confidence": "par défaut",
+      "elapsed_ms": 15945,
+      "speed": "fast",
+      "tactical": {
+        "risk": "low",
+        "intent": "general",
+        "anticipation": [],
+        "needs_backup": false,
+        "needs_confirmation": false,
+        "recommended_mode": "normal"
+      },
+      "gpu_policy": "disabled_for_ezzio",
+      "num_gpu": 0
+    }
+  },
+  {
+    "timestamp": "2026-08-15T17:12:10.003587",
+    "input": "quel est le code de session dont on vient de parler ?",
+    "response": "Le code de session que nous avons discuté précédemment est 9988. Si vous avez besoin d'utiliser ce code ou si vous avez des questions à son sujet, n'hésitez pas à me le faire savoir !",
+    "expert": "Standard",
+    "metadata": {
+      "organ_key": "presence",
+      "organ_label": "Standard",
+      "emotion": "Neutre",
+      "talent": "Polyvalent",
+      "model": "qwen2.5:7b",
+      "selected_model": "qwen2.5:7b",
+      "attempted_models": [
+        "qwen2.5:7b"
+      ],
+      "primary_model": "gemma2:2b",
+      "deep_model": "qwen3:8b",
+      "fallback_models": [
+        "qwen2.5:3b"
+      ],
+      "used_fallback": false,
+      "route_score": 0,
+      "route_hits": [],
+      "confidence": "par défaut",
+      "elapsed_ms": 16756,
+      "speed": "fast",
+      "tactical": {
+        "risk": "low",
+        "intent": "general",
+        "anticipation": [],
+        "needs_backup": false,
+        "needs_confirmation": false,
+        "recommended_mode": "normal"
+      },
+      "gpu_policy": "disabled_for_ezzio",
+      "num_gpu": 0
+    }
+  }
+]

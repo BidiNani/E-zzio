@@ -1,0 +1,6639 @@
+{
+  "audit_timestamp": "2026-08-12T17:47:38.858907",
+  "categories": {
+    "Active Core": [
+      {
+        "path": "config\\constitution.json",
+        "size_bytes": 455
+      },
+      {
+        "path": "core\\actions.py",
+        "size_bytes": 1408
+      },
+      {
+        "path": "core\\autonomy.py",
+        "size_bytes": 4041
+      },
+      {
+        "path": "core\\cloud_brain_broker.py",
+        "size_bytes": 18869
+      },
+      {
+        "path": "core\\cloud_connectors.py",
+        "size_bytes": 5234
+      },
+      {
+        "path": "core\\cloud_guard.py",
+        "size_bytes": 8185
+      },
+      {
+        "path": "core\\comfy_api.py",
+        "size_bytes": 8549
+      },
+      {
+        "path": "core\\creative_forge.py",
+        "size_bytes": 8291
+      },
+      {
+        "path": "core\\dispatcher.py",
+        "size_bytes": 11041
+      },
+      {
+        "path": "core\\ezzio_identity.py",
+        "size_bytes": 4627
+      },
+      {
+        "path": "core\\ezzio_master.py",
+        "size_bytes": 1802
+      },
+      {
+        "path": "core\\ezzio_message_brain.py",
+        "size_bytes": 7859
+      },
+      {
+        "path": "core\\ezzio_truth_guard.py",
+        "size_bytes": 5624
+      },
+      {
+        "path": "core\\gemini_pro_provider.py",
+        "size_bytes": 3214
+      },
+      {
+        "path": "core\\governor.py",
+        "size_bytes": 3739
+      },
+      {
+        "path": "core\\hd_forge.py",
+        "size_bytes": 4956
+      },
+      {
+        "path": "core\\human_chat.py",
+        "size_bytes": 14754
+      },
+      {
+        "path": "core\\human_chat_guard.py",
+        "size_bytes": 4216
+      },
+      {
+        "path": "core\\human_loop.py",
+        "size_bytes": 15620
+      },
+      {
+        "path": "core\\intelligence_router.py",
+        "size_bytes": 11282
+      },
+      {
+        "path": "core\\knowledge_connectors.py",
+        "size_bytes": 6929
+      },
+      {
+        "path": "core\\llm_engine.py",
+        "size_bytes": 6191
+      },
+      {
+        "path": "core\\memory.py",
+        "size_bytes": 2168
+      },
+      {
+        "path": "core\\memory_core.py",
+        "size_bytes": 839
+      },
+      {
+        "path": "core\\model_registry.py",
+        "size_bytes": 4221
+      },
+      {
+        "path": "core\\omnipresence.py",
+        "size_bytes": 9275
+      },
+      {
+        "path": "core\\omni_brain.py",
+        "size_bytes": 20957
+      },
+      {
+        "path": "core\\pc_commander.py",
+        "size_bytes": 16356
+      },
+      {
+        "path": "core\\pc_model_router.py",
+        "size_bytes": 14593
+      },
+      {
+        "path": "core\\pc_optimizer.py",
+        "size_bytes": 13578
+      },
+      {
+        "path": "core\\persona.py",
+        "size_bytes": 953
+      },
+      {
+        "path": "core\\project_janitor.py",
+        "size_bytes": 8465
+      },
+      {
+        "path": "core\\response_guard.py",
+        "size_bytes": 3453
+      },
+      {
+        "path": "core\\safe_actions.py",
+        "size_bytes": 23142
+      },
+      {
+        "path": "core\\schemas.py",
+        "size_bytes": 1135
+      },
+      {
+        "path": "core\\smart_vision.py",
+        "size_bytes": 8536
+      },
+      {
+        "path": "core\\supervisor.py",
+        "size_bytes": 9575
+      },
+      {
+        "path": "core\\telemetry.py",
+        "size_bytes": 866
+      },
+      {
+        "path": "core\\token_compressor.py",
+        "size_bytes": 3915
+      },
+      {
+        "path": "core\\vision_bridge.py",
+        "size_bytes": 7635
+      },
+      {
+        "path": "core\\vision_prompt_guard.py",
+        "size_bytes": 4226
+      },
+      {
+        "path": "core\\__init__.py",
+        "size_bytes": 0
+      },
+      {
+        "path": "core\\agent\\coding_assistant.py",
+        "size_bytes": 1400
+      },
+      {
+        "path": "core\\agent\\research_engine.py",
+        "size_bytes": 1573
+      },
+      {
+        "path": "core\\agent\\task_engine.py",
+        "size_bytes": 1079
+      },
+      {
+        "path": "core\\agent\\writing_engine.py",
+        "size_bytes": 1304
+      },
+      {
+        "path": "core\\authority\\authority_policy.py",
+        "size_bytes": 1608
+      },
+      {
+        "path": "core\\authority\\evolution_ledger.py",
+        "size_bytes": 1775
+      },
+      {
+        "path": "core\\authority\\evolution_request.py",
+        "size_bytes": 1509
+      },
+      {
+        "path": "core\\authority\\promotion_controller.py",
+        "size_bytes": 2219
+      },
+      {
+        "path": "core\\cognition\\capability_selector.py",
+        "size_bytes": 491
+      },
+      {
+        "path": "core\\cognition\\cognitive_gateway.py",
+        "size_bytes": 1417
+      },
+      {
+        "path": "core\\cognition\\cognitive_governor.py",
+        "size_bytes": 13604
+      },
+      {
+        "path": "core\\cognition\\cognitive_orchestrator.py",
+        "size_bytes": 391
+      },
+      {
+        "path": "core\\cognition\\cognitive_router.py",
+        "size_bytes": 4171
+      },
+      {
+        "path": "core\\cognition\\context_engine.py",
+        "size_bytes": 1075
+      },
+      {
+        "path": "core\\cognition\\decision_ledger.py",
+        "size_bytes": 5034
+      },
+      {
+        "path": "core\\cognition\\digital_twin_simulator.py",
+        "size_bytes": 3755
+      },
+      {
+        "path": "core\\cognition\\ecol_evolution_governance.py",
+        "size_bytes": 3824
+      },
+      {
+        "path": "core\\cognition\\ecol_memory_governance.py",
+        "size_bytes": 3542
+      },
+      {
+        "path": "core\\cognition\\ecol_runtime_contract.py",
+        "size_bytes": 7052
+      },
+      {
+        "path": "core\\cognition\\ecol_runtime_interceptor.py",
+        "size_bytes": 5972
+      },
+      {
+        "path": "core\\cognition\\ecol_universal_enforcement.py",
+        "size_bytes": 7997
+      },
+      {
+        "path": "core\\cognition\\explainability_engine.py",
+        "size_bytes": 3964
+      },
+      {
+        "path": "core\\cognition\\learning_engine.py",
+        "size_bytes": 363
+      },
+      {
+        "path": "core\\cognition\\legacy_llm_adapter.py",
+        "size_bytes": 3028
+      },
+      {
+        "path": "core\\cognition\\memory_router.py",
+        "size_bytes": 372
+      },
+      {
+        "path": "core\\cognition\\model_router.py",
+        "size_bytes": 1092
+      },
+      {
+        "path": "core\\cognition\\model_token_governor.py",
+        "size_bytes": 3934
+      },
+      {
+        "path": "core\\cognition\\permanent_benchmark.py",
+        "size_bytes": 5888
+      },
+      {
+        "path": "core\\cognition\\prompt_compressor.py",
+        "size_bytes": 480
+      },
+      {
+        "path": "core\\cognition\\resource_engine.py",
+        "size_bytes": 344
+      },
+      {
+        "path": "core\\cognition\\self_healing_engine.py",
+        "size_bytes": 3836
+      },
+      {
+        "path": "core\\cognition\\token_economy_governor.py",
+        "size_bytes": 4782
+      },
+      {
+        "path": "core\\cognition\\token_optimizer.py",
+        "size_bytes": 471
+      },
+      {
+        "path": "core\\cognition\\uncertainty_engine.py",
+        "size_bytes": 373
+      },
+      {
+        "path": "core\\cognition\\__init__.py",
+        "size_bytes": 327
+      },
+      {
+        "path": "core\\cognitive_engine\\active_runtime_convergence.py",
+        "size_bytes": 4449
+      },
+      {
+        "path": "core\\cognitive_engine\\audit_fts5_index.py",
+        "size_bytes": 3565
+      },
+      {
+        "path": "core\\cognitive_engine\\build_fts5_index.py",
+        "size_bytes": 7688
+      },
+      {
+        "path": "core\\cognitive_engine\\certify_recall.py",
+        "size_bytes": 1651
+      },
+      {
+        "path": "core\\cognitive_engine\\cognitive_domain_archaeology.py",
+        "size_bytes": 3266
+      },
+      {
+        "path": "core\\cognitive_engine\\cognitive_extractor.py",
+        "size_bytes": 6038
+      },
+      {
+        "path": "core\\cognitive_engine\\cognitive_gatekeeper.py",
+        "size_bytes": 3988
+      },
+      {
+        "path": "core\\cognitive_engine\\cognitive_provenance_tracer.py",
+        "size_bytes": 4128
+      },
+      {
+        "path": "core\\cognitive_engine\\confidence_ranker.py",
+        "size_bytes": 0
+      },
+      {
+        "path": "core\\cognitive_engine\\deploy_active_ecol.py",
+        "size_bytes": 3545
+      },
+      {
+        "path": "core\\cognitive_engine\\deploy_ecol.py",
+        "size_bytes": 3609
+      },
+      {
+        "path": "core\\cognitive_engine\\deploy_ecol_adapter.py",
+        "size_bytes": 3814
+      },
+      {
+        "path": "core\\cognitive_engine\\deploy_ecol_governor.py",
+        "size_bytes": 4289
+      },
+      {
+        "path": "core\\cognitive_engine\\deploy_secret_sovereignty.py",
+        "size_bytes": 7273
+      },
+      {
+        "path": "core\\cognitive_engine\\deploy_secret_sovereignty_v763.py",
+        "size_bytes": 7614
+      },
+      {
+        "path": "core\\cognitive_engine\\ecol_baseline_exhaustive_audit.py",
+        "size_bytes": 3477
+      },
+      {
+        "path": "core\\cognitive_engine\\ecol_baseline_verification_drill.py",
+        "size_bytes": 3090
+      },
+      {
+        "path": "core\\cognitive_engine\\ecol_deep_forensic_audit.py",
+        "size_bytes": 5268
+      },
+      {
+        "path": "core\\cognitive_engine\\ecol_dpapi_adversarial_drill.py",
+        "size_bytes": 9194
+      },
+      {
+        "path": "core\\cognitive_engine\\ecol_dpapi_vault.py",
+        "size_bytes": 6730
+      },
+      {
+        "path": "core\\cognitive_engine\\ecol_final_industrial_certification.py",
+        "size_bytes": 8499
+      },
+      {
+        "path": "core\\cognitive_engine\\ecol_integration_audit.py",
+        "size_bytes": 2673
+      },
+      {
+        "path": "core\\cognitive_engine\\ecol_ledger_chaos_audit.py",
+        "size_bytes": 6168
+      },
+      {
+        "path": "core\\cognitive_engine\\ecol_operational_resilience_drill.py",
+        "size_bytes": 5806
+      },
+      {
+        "path": "core\\cognitive_engine\\ecol_sovereignty_drill.py",
+        "size_bytes": 7039
+      },
+      {
+        "path": "core\\cognitive_engine\\embedding_worker.py",
+        "size_bytes": 0
+      },
+      {
+        "path": "core\\cognitive_engine\\forensic_recall_audit.py",
+        "size_bytes": 4539
+      },
+      {
+        "path": "core\\cognitive_engine\\founding_kernel_proof.py",
+        "size_bytes": 5705
+      },
+      {
+        "path": "core\\cognitive_engine\\full_corpus_dry_run.py",
+        "size_bytes": 2561
+      },
+      {
+        "path": "core\\cognitive_engine\\identity_genesis_archaeology.py",
+        "size_bytes": 3497
+      },
+      {
+        "path": "core\\cognitive_engine\\identity_genesis_graph.py",
+        "size_bytes": 3725
+      },
+      {
+        "path": "core\\cognitive_engine\\indexer.py",
+        "size_bytes": 2739
+      },
+      {
+        "path": "core\\cognitive_engine\\inspect_snapshot_db.py",
+        "size_bytes": 2470
+      },
+      {
+        "path": "core\\cognitive_engine\\lore_lineage_probe.py",
+        "size_bytes": 4970
+      },
+      {
+        "path": "core\\cognitive_engine\\memory_health_report.py",
+        "size_bytes": 0
+      },
+      {
+        "path": "core\\cognitive_engine\\memory_validator.py",
+        "size_bytes": 3118
+      },
+      {
+        "path": "core\\cognitive_engine\\migrate_and_harden_ledger.py",
+        "size_bytes": 11359
+      },
+      {
+        "path": "core\\cognitive_engine\\night_mutation_provenance.py",
+        "size_bytes": 4326
+      },
+      {
+        "path": "core\\cognitive_engine\\patch_ecol_pipeline.py",
+        "size_bytes": 3114
+      },
+      {
+        "path": "core\\cognitive_engine\\query_engine.py",
+        "size_bytes": 3130
+      },
+      {
+        "path": "core\\cognitive_engine\\reset_canonical_ledger.py",
+        "size_bytes": 1050
+      },
+      {
+        "path": "core\\cognitive_engine\\rpg_archaeology_scan.py",
+        "size_bytes": 2538
+      },
+      {
+        "path": "core\\cognitive_engine\\rpg_discovery.py",
+        "size_bytes": 2209
+      },
+      {
+        "path": "core\\cognitive_engine\\rpg_lineage_recovery.py",
+        "size_bytes": 3886
+      },
+      {
+        "path": "core\\cognitive_engine\\rpg_memory_qualification.py",
+        "size_bytes": 1888
+      },
+      {
+        "path": "core\\cognitive_engine\\runtime_telemetry_correlation.py",
+        "size_bytes": 3508
+      },
+      {
+        "path": "core\\cognitive_engine\\taxonomy_repair.py",
+        "size_bytes": 6510
+      },
+      {
+        "path": "core\\cognitive_engine\\temporal_memory_archaeology.py",
+        "size_bytes": 3669
+      },
+      {
+        "path": "core\\cognitive_engine\\timeline_file_birth_mutation.py",
+        "size_bytes": 4518
+      },
+      {
+        "path": "core\\cognitive_engine\\upgrade_chained_ledger.py",
+        "size_bytes": 8468
+      },
+      {
+        "path": "core\\cognitive_engine\\v758_rpg_autopsy.py",
+        "size_bytes": 4970
+      },
+      {
+        "path": "core\\cognitive_engine\\validate_taxonomy_repair.py",
+        "size_bytes": 2915
+      },
+      {
+        "path": "core\\cognitive_engine\\__init__.py",
+        "size_bytes": 0
+      },
+      {
+        "path": "core\\constitution\\continuous_organism_certifier.py",
+        "size_bytes": 5349
+      },
+      {
+        "path": "core\\constitution\\extended_organism_certifier.py",
+        "size_bytes": 5319
+      },
+      {
+        "path": "core\\constitution\\ezzio_backup_guardian.py",
+        "size_bytes": 7218
+      },
+      {
+        "path": "core\\constitution\\ezzio_disaster_recovery_test.py",
+        "size_bytes": 5680
+      },
+      {
+        "path": "core\\constitution\\ezzio_genome.json",
+        "size_bytes": 1405
+      },
+      {
+        "path": "core\\constitution\\ezzio_global_framework.py",
+        "size_bytes": 5676
+      },
+      {
+        "path": "core\\constitution\\hardware_orchestrator.py",
+        "size_bytes": 3821
+      },
+      {
+        "path": "core\\constitution\\hardware_resource_governor.py",
+        "size_bytes": 3350
+      },
+      {
+        "path": "core\\constitution\\live_organism_certifier.py",
+        "size_bytes": 4192
+      },
+      {
+        "path": "core\\constitution\\organism_identity.py",
+        "size_bytes": 1928
+      },
+      {
+        "path": "core\\constitution\\snapshot_engine.py",
+        "size_bytes": 0
+      },
+      {
+        "path": "core\\constitution\\snapshot_restore_engine.py",
+        "size_bytes": 8765
+      },
+      {
+        "path": "core\\evolution\\skill_genome_governor.py",
+        "size_bytes": 4707
+      },
+      {
+        "path": "core\\evolution_experience\\experience_ledger.py",
+        "size_bytes": 2199
+      },
+      {
+        "path": "core\\evolution_intelligence\\evolution_scorer.py",
+        "size_bytes": 1046
+      },
+      {
+        "path": "core\\evolution_intelligence\\impact_analyzer.py",
+        "size_bytes": 1221
+      },
+      {
+        "path": "core\\evolution_intelligence\\regression_detector.py",
+        "size_bytes": 1454
+      },
+      {
+        "path": "core\\evolution_simulation\\digital_twin.py",
+        "size_bytes": 1515
+      },
+      {
+        "path": "core\\evolution_simulation\\sandbox_runner.py",
+        "size_bytes": 1565
+      },
+      {
+        "path": "core\\identity\\boot_attestation.py",
+        "size_bytes": 1622
+      },
+      {
+        "path": "core\\identity\\canonical_identity.py",
+        "size_bytes": 1196
+      },
+      {
+        "path": "core\\identity\\global_fingerprint.py",
+        "size_bytes": 1197
+      },
+      {
+        "path": "core\\identity\\identity_boot_check.py",
+        "size_bytes": 927
+      },
+      {
+        "path": "core\\identity\\identity_chain.py",
+        "size_bytes": 1835
+      },
+      {
+        "path": "core\\identity\\identity_chain_validator.py",
+        "size_bytes": 2267
+      },
+      {
+        "path": "core\\identity\\identity_context.py",
+        "size_bytes": 3337
+      },
+      {
+        "path": "core\\identity\\identity_events.py",
+        "size_bytes": 1028
+      },
+      {
+        "path": "core\\identity\\identity_guardian.py",
+        "size_bytes": 3126
+      },
+      {
+        "path": "core\\identity\\identity_persistence.py",
+        "size_bytes": 2441
+      },
+      {
+        "path": "core\\identity\\identity_recovery.py",
+        "size_bytes": 4757
+      },
+      {
+        "path": "core\\identity\\identity_sealer.py",
+        "size_bytes": 835
+      },
+      {
+        "path": "core\\identity\\identity_snapshot.py",
+        "size_bytes": 3255
+      },
+      {
+        "path": "core\\identity\\identity_validator.py",
+        "size_bytes": 1484
+      },
+      {
+        "path": "core\\identity\\intentions_reader.py",
+        "size_bytes": 494
+      },
+      {
+        "path": "core\\identity\\route_audit.py",
+        "size_bytes": 406
+      },
+      {
+        "path": "core\\integrations\\__init__.py",
+        "size_bytes": 4
+      },
+      {
+        "path": "core\\integrations\\discord\\command_router.py",
+        "size_bytes": 2055
+      },
+      {
+        "path": "core\\integrations\\discord\\discord_client.py",
+        "size_bytes": 5254
+      },
+      {
+        "path": "core\\integrations\\discord\\discord_watchdog.py",
+        "size_bytes": 1943
+      },
+      {
+        "path": "core\\integrations\\discord\\permission_guard.py",
+        "size_bytes": 4156
+      },
+      {
+        "path": "core\\integrations\\discord\\__init__.py",
+        "size_bytes": 4
+      },
+      {
+        "path": "core\\memory\\multi_tier_memory.py",
+        "size_bytes": 5438
+      },
+      {
+        "path": "core\\performance_intelligence\\optimization_scorer.py",
+        "size_bytes": 1115
+      },
+      {
+        "path": "core\\performance_intelligence\\resource_governor.py",
+        "size_bytes": 2898
+      },
+      {
+        "path": "core\\performance_intelligence\\resource_monitor.py",
+        "size_bytes": 513
+      },
+      {
+        "path": "core\\performance_intelligence\\runtime_profiler.py",
+        "size_bytes": 995
+      },
+      {
+        "path": "core\\quality_gate\\quality_gate.py",
+        "size_bytes": 1037
+      },
+      {
+        "path": "core\\quality_gate\\static_analyzer.py",
+        "size_bytes": 867
+      },
+      {
+        "path": "core\\recovery\\health_manager.py",
+        "size_bytes": 1538
+      },
+      {
+        "path": "core\\routing\\circuit_breaker.py",
+        "size_bytes": 2424
+      },
+      {
+        "path": "core\\routing\\contracts.py",
+        "size_bytes": 1105
+      },
+      {
+        "path": "core\\routing\\scorer.py",
+        "size_bytes": 1598
+      },
+      {
+        "path": "core\\routing\\__init__.py",
+        "size_bytes": 0
+      },
+      {
+        "path": "core\\runtime\\audit_rotator.py",
+        "size_bytes": 1241
+      },
+      {
+        "path": "core\\runtime\\backend_supervisor.py",
+        "size_bytes": 3735
+      },
+      {
+        "path": "core\\runtime\\boot.py",
+        "size_bytes": 1511
+      },
+      {
+        "path": "core\\runtime\\circuit_breaker.py",
+        "size_bytes": 1195
+      },
+      {
+        "path": "core\\runtime\\cognitive_forensic_scan.py",
+        "size_bytes": 6700
+      },
+      {
+        "path": "core\\runtime\\discord_supervisor.py",
+        "size_bytes": 2290
+      },
+      {
+        "path": "core\\runtime\\resilience_orchestrator.py",
+        "size_bytes": 2029
+      },
+      {
+        "path": "core\\runtime\\soak_monitor.py",
+        "size_bytes": 1106
+      },
+      {
+        "path": "core\\security\\archive_engine.py",
+        "size_bytes": 6122
+      },
+      {
+        "path": "core\\security\\archive_validator.py",
+        "size_bytes": 3369
+      },
+      {
+        "path": "core\\security\\disaster_recovery.py",
+        "size_bytes": 3486
+      },
+      {
+        "path": "core\\security\\file_lock.py",
+        "size_bytes": 2832
+      },
+      {
+        "path": "core\\security\\immutable_audit.py",
+        "size_bytes": 2544
+      },
+      {
+        "path": "core\\security\\ledger_engine.py",
+        "size_bytes": 4585
+      },
+      {
+        "path": "core\\security\\ledger_validator.py",
+        "size_bytes": 3357
+      },
+      {
+        "path": "core\\security\\secret_redactor.py",
+        "size_bytes": 1829
+      },
+      {
+        "path": "core\\talents\\analyser.py",
+        "size_bytes": 337
+      },
+      {
+        "path": "core\\talents\\base_talent.py",
+        "size_bytes": 182
+      },
+      {
+        "path": "core\\tool_gateway\\gateway_controller.py",
+        "size_bytes": 2249
+      },
+      {
+        "path": "core\\tool_gateway\\google_bridge.py",
+        "size_bytes": 3314
+      },
+      {
+        "path": "core\\tool_gateway\\model_router.py",
+        "size_bytes": 2137
+      },
+      {
+        "path": "registry\\core\\constitution.md",
+        "size_bytes": 284
+      },
+      {
+        "path": "registry\\core\\decision_policy.md",
+        "size_bytes": 274
+      },
+      {
+        "path": "registry\\core\\limitations.md",
+        "size_bytes": 176
+      },
+      {
+        "path": "registry\\core\\priorities.md",
+        "size_bytes": 332
+      },
+      {
+        "path": "registry\\core\\reasoning.md",
+        "size_bytes": 528
+      },
+      {
+        "path": "registry\\core\\uncertainty.md",
+        "size_bytes": 301
+      },
+      {
+        "path": "registry\\core\\values.md",
+        "size_bytes": 136
+      },
+      {
+        "path": "runtime\\agent\\constitution_guard.py",
+        "size_bytes": 999
+      },
+      {
+        "path": "runtime\\constitution\\invariants.json",
+        "size_bytes": 623
+      },
+      {
+        "path": "runtime\\core\\cancellation.py",
+        "size_bytes": 700
+      },
+      {
+        "path": "runtime\\core\\context.py",
+        "size_bytes": 165
+      },
+      {
+        "path": "runtime\\core\\events.py",
+        "size_bytes": 2005
+      },
+      {
+        "path": "runtime\\core\\ezzio_core.py",
+        "size_bytes": 1192
+      },
+      {
+        "path": "runtime\\core\\message.py",
+        "size_bytes": 999
+      },
+      {
+        "path": "runtime\\core\\microkernel.py",
+        "size_bytes": 336
+      },
+      {
+        "path": "runtime\\core\\version.py",
+        "size_bytes": 49
+      },
+      {
+        "path": "runtime\\core\\__init__.py",
+        "size_bytes": 23
+      },
+      {
+        "path": "runtime\\governance\\trust_scorer.py",
+        "size_bytes": 2319
+      },
+      {
+        "path": "runtime\\governance\\trust\\scores.json",
+        "size_bytes": 62
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0001\\constitution.json",
+        "size_bytes": 455
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0002\\constitution.json",
+        "size_bytes": 455
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0003\\constitution.json",
+        "size_bytes": 455
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0004\\constitution.json",
+        "size_bytes": 455
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0005\\constitution.json",
+        "size_bytes": 455
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0006\\constitution.json",
+        "size_bytes": 455
+      },
+      {
+        "path": "runtime\\snapshots\\EZZIO_STATE_20260812_150705\\constitution\\ezzio_genome.json",
+        "size_bytes": 1206
+      },
+      {
+        "path": "runtime_temp_forensic\\EZZIO_MEMORY_FORENSIC_20260809_222237\\syntax_runtime_core_message_py.py",
+        "size_bytes": 319
+      }
+    ],
+    "Operational Tools": [
+      {
+        "path": "ezzio_daily_report.py",
+        "size_bytes": 4927
+      },
+      {
+        "path": "ezzio_observatory.py",
+        "size_bytes": 5698
+      },
+      {
+        "path": "certifications\\guardian-runtime-certification-v1.17.1.json",
+        "size_bytes": 1085
+      },
+      {
+        "path": "certifications\\guardian-runtime-certification-v1.17.json",
+        "size_bytes": 218
+      },
+      {
+        "path": "registry\\audit\\report.json",
+        "size_bytes": 1655
+      },
+      {
+        "path": "runtime\\doctor.py",
+        "size_bytes": 1594
+      },
+      {
+        "path": "runtime\\kernel_legacy_v2.py",
+        "size_bytes": 3064
+      },
+      {
+        "path": "runtime\\last_health.json",
+        "size_bytes": 354
+      },
+      {
+        "path": "runtime\\sqlite_v557_certification.py",
+        "size_bytes": 2486
+      },
+      {
+        "path": "runtime\\__init__.py",
+        "size_bytes": 0
+      },
+      {
+        "path": "runtime\\action\\context.py",
+        "size_bytes": 3850
+      },
+      {
+        "path": "runtime\\action\\contracts.py",
+        "size_bytes": 1310
+      },
+      {
+        "path": "runtime\\action\\executor.py",
+        "size_bytes": 1297
+      },
+      {
+        "path": "runtime\\action\\identity.py",
+        "size_bytes": 606
+      },
+      {
+        "path": "runtime\\action\\registry.py",
+        "size_bytes": 11899
+      },
+      {
+        "path": "runtime\\action\\resilience.py",
+        "size_bytes": 1295
+      },
+      {
+        "path": "runtime\\action\\state.py",
+        "size_bytes": 1460
+      },
+      {
+        "path": "runtime\\action\\store.py",
+        "size_bytes": 11682
+      },
+      {
+        "path": "runtime\\action\\__init__.py",
+        "size_bytes": 178
+      },
+      {
+        "path": "runtime\\agent\\capability_guard.py",
+        "size_bytes": 503
+      },
+      {
+        "path": "runtime\\agent\\contracts.py",
+        "size_bytes": 1114
+      },
+      {
+        "path": "runtime\\agent\\controller.py",
+        "size_bytes": 3993
+      },
+      {
+        "path": "runtime\\agent\\executor.py",
+        "size_bytes": 1374
+      },
+      {
+        "path": "runtime\\agent\\ledger_bridge.py",
+        "size_bytes": 639
+      },
+      {
+        "path": "runtime\\agent\\loop.py",
+        "size_bytes": 4728
+      },
+      {
+        "path": "runtime\\agent\\planner.py",
+        "size_bytes": 325
+      },
+      {
+        "path": "runtime\\agent\\policy.py",
+        "size_bytes": 328
+      },
+      {
+        "path": "runtime\\agent\\result.py",
+        "size_bytes": 383
+      },
+      {
+        "path": "runtime\\agent\\retry.py",
+        "size_bytes": 251
+      },
+      {
+        "path": "runtime\\agent\\state_machine.py",
+        "size_bytes": 826
+      },
+      {
+        "path": "runtime\\agent\\verifier.py",
+        "size_bytes": 298
+      },
+      {
+        "path": "runtime\\agent\\__init__.py",
+        "size_bytes": 27
+      },
+      {
+        "path": "runtime\\agent\\capability\\base.py",
+        "size_bytes": 302
+      },
+      {
+        "path": "runtime\\agent\\capability\\embedder.py",
+        "size_bytes": 654
+      },
+      {
+        "path": "runtime\\agent\\capability\\registry.py",
+        "size_bytes": 460
+      },
+      {
+        "path": "runtime\\agent\\capability\\sandbox_exec.py",
+        "size_bytes": 553
+      },
+      {
+        "path": "runtime\\agent\\capability\\__init__.py",
+        "size_bytes": 34
+      },
+      {
+        "path": "runtime\\agent\\ledger\\vector_store.py",
+        "size_bytes": 763
+      },
+      {
+        "path": "runtime\\agent\\ledger\\__init__.py",
+        "size_bytes": 34
+      },
+      {
+        "path": "runtime\\audit\\analyzer.py",
+        "size_bytes": 3255
+      },
+      {
+        "path": "runtime\\audit\\bridge.py",
+        "size_bytes": 811
+      },
+      {
+        "path": "runtime\\audit\\decisions.jsonl",
+        "size_bytes": 203
+      },
+      {
+        "path": "runtime\\audit\\dependency_analyzer.py",
+        "size_bytes": 3900
+      },
+      {
+        "path": "runtime\\audit\\dependency_impact.json",
+        "size_bytes": 4355
+      },
+      {
+        "path": "runtime\\audit\\dependency_scanner.py",
+        "size_bytes": 2800
+      },
+      {
+        "path": "runtime\\audit\\events.py",
+        "size_bytes": 589
+      },
+      {
+        "path": "runtime\\audit\\logger.py",
+        "size_bytes": 2164
+      },
+      {
+        "path": "runtime\\audit\\model_authority_events.jsonl",
+        "size_bytes": 457
+      },
+      {
+        "path": "runtime\\audit\\planner.py",
+        "size_bytes": 1416
+      },
+      {
+        "path": "runtime\\audit\\registry.py",
+        "size_bytes": 708
+      },
+      {
+        "path": "runtime\\audit\\scanner.py",
+        "size_bytes": 4543
+      },
+      {
+        "path": "runtime\\audit\\schema.py",
+        "size_bytes": 569
+      },
+      {
+        "path": "runtime\\audit\\security_events.jsonl",
+        "size_bytes": 60362
+      },
+      {
+        "path": "runtime\\audit\\skill_audit.py",
+        "size_bytes": 863
+      },
+      {
+        "path": "runtime\\audit\\tool_calls.jsonl",
+        "size_bytes": 412119
+      },
+      {
+        "path": "runtime\\audit\\v712_9_test_authority.py",
+        "size_bytes": 1245
+      },
+      {
+        "path": "runtime\\audit\\v712_boot_integrity_verifier.py",
+        "size_bytes": 6024
+      },
+      {
+        "path": "runtime\\audit\\v712_governance_freeze.py",
+        "size_bytes": 3675
+      },
+      {
+        "path": "runtime\\audit\\v713_1_ledger_test.py",
+        "size_bytes": 1595
+      },
+      {
+        "path": "runtime\\audit\\v713_enforcement_simulation.py",
+        "size_bytes": 991
+      },
+      {
+        "path": "runtime\\audit\\v713_negative_authority_test.py",
+        "size_bytes": 1388
+      },
+      {
+        "path": "runtime\\audit\\v722_runtime_probe.py",
+        "size_bytes": 3514
+      },
+      {
+        "path": "runtime\\audit\\v7_active_architecture_extraction.py",
+        "size_bytes": 2549
+      },
+      {
+        "path": "runtime\\audit\\v7_active_runtime_source_locator.py",
+        "size_bytes": 3408
+      },
+      {
+        "path": "runtime\\audit\\v7_affinity_drift_investigation.py",
+        "size_bytes": 4033
+      },
+      {
+        "path": "runtime\\audit\\v7_api_compatibility_audit.py",
+        "size_bytes": 5924
+      },
+      {
+        "path": "runtime\\audit\\v7_architecture_baseline.py",
+        "size_bytes": 2304
+      },
+      {
+        "path": "runtime\\audit\\v7_baseline_drift_monitor.py",
+        "size_bytes": 5436
+      },
+      {
+        "path": "runtime\\audit\\v7_behavioral_adapter_test.py",
+        "size_bytes": 5231
+      },
+      {
+        "path": "runtime\\audit\\v7_behavioral_contract_forensics.py",
+        "size_bytes": 4152
+      },
+      {
+        "path": "runtime\\audit\\v7_certification_harness_migrator.py",
+        "size_bytes": 6638
+      },
+      {
+        "path": "runtime\\audit\\v7_cleanup_approval_gate.py",
+        "size_bytes": 4386
+      },
+      {
+        "path": "runtime\\audit\\V7_CLEANUP_PLAN.json",
+        "size_bytes": 156366
+      },
+      {
+        "path": "runtime\\audit\\v7_cleanup_validator.py",
+        "size_bytes": 5348
+      },
+      {
+        "path": "runtime\\audit\\v7_consumer_contract_alignment_audit.py",
+        "size_bytes": 4139
+      },
+      {
+        "path": "runtime\\audit\\v7_consumer_migration_planner.py",
+        "size_bytes": 3795
+      },
+      {
+        "path": "runtime\\audit\\v7_contract_emission_chain.py",
+        "size_bytes": 4808
+      },
+      {
+        "path": "runtime\\audit\\v7_contract_emission_event_forensics.py",
+        "size_bytes": 4624
+      },
+      {
+        "path": "runtime\\audit\\v7_contract_inspector.py",
+        "size_bytes": 4251
+      },
+      {
+        "path": "runtime\\audit\\v7_contract_provenance_graph.py",
+        "size_bytes": 5791
+      },
+      {
+        "path": "runtime\\audit\\v7_contract_simulation.py",
+        "size_bytes": 6109
+      },
+      {
+        "path": "runtime\\audit\\v7_controlled_cleanup_executor.py",
+        "size_bytes": 4722
+      },
+      {
+        "path": "runtime\\audit\\v7_cryptographic_evidence_bundle.py",
+        "size_bytes": 5871
+      },
+      {
+        "path": "runtime\\audit\\v7_decision_governor_surface_audit.py",
+        "size_bytes": 4451
+      },
+      {
+        "path": "runtime\\audit\\v7_dependency_graph.py",
+        "size_bytes": 3586
+      },
+      {
+        "path": "runtime\\audit\\v7_dependency_integrity_rebuild.py",
+        "size_bytes": 4603
+      },
+      {
+        "path": "runtime\\audit\\v7_dependency_repair_audit.py",
+        "size_bytes": 4160
+      },
+      {
+        "path": "runtime\\audit\\v7_dependency_symbol_usage_analyzer.py",
+        "size_bytes": 4527
+      },
+      {
+        "path": "runtime\\audit\\v7_evidence_reconciliation.py",
+        "size_bytes": 4650
+      },
+      {
+        "path": "runtime\\audit\\v7_execution_chain_scanner.py",
+        "size_bytes": 6970
+      },
+      {
+        "path": "runtime\\audit\\v7_final_harness_alignment.py",
+        "size_bytes": 5899
+      },
+      {
+        "path": "runtime\\audit\\v7_forensic_signature_replay.py",
+        "size_bytes": 6058
+      },
+      {
+        "path": "runtime\\audit\\v7_full_architecture_discovery.py",
+        "size_bytes": 3884
+      },
+      {
+        "path": "runtime\\audit\\v7_full_forensic_scanner.py",
+        "size_bytes": 7137
+      },
+      {
+        "path": "runtime\\audit\\v7_isolation_refactoring_map.py",
+        "size_bytes": 3148
+      },
+      {
+        "path": "runtime\\audit\\v7_logical_cleanup_manifest.py",
+        "size_bytes": 833
+      },
+      {
+        "path": "runtime\\audit\\v7_negative_regression_gate.py",
+        "size_bytes": 4394
+      },
+      {
+        "path": "runtime\\audit\\v7_post_cleanup_audit.py",
+        "size_bytes": 4340
+      },
+      {
+        "path": "runtime\\audit\\v7_quarantine_discovery_audit.py",
+        "size_bytes": 4048
+      },
+      {
+        "path": "runtime\\audit\\v7_quarantine_divergence_check.py",
+        "size_bytes": 3802
+      },
+      {
+        "path": "runtime\\audit\\v7_quarantine_path_resolver.py",
+        "size_bytes": 5359
+      },
+      {
+        "path": "runtime\\audit\\v7_real_cleanup_executor.py",
+        "size_bytes": 8429
+      },
+      {
+        "path": "runtime\\audit\\v7_real_contract_compatibility_test.py",
+        "size_bytes": 6565
+      },
+      {
+        "path": "runtime\\audit\\v7_recovery_restore_planner.py",
+        "size_bytes": 3698
+      },
+      {
+        "path": "runtime\\audit\\v7_registry_audit.py",
+        "size_bytes": 7043
+      },
+      {
+        "path": "runtime\\audit\\v7_report_analyzer.py",
+        "size_bytes": 3785
+      },
+      {
+        "path": "runtime\\audit\\v7_runtime_api_surface_inspector.py",
+        "size_bytes": 4714
+      },
+      {
+        "path": "runtime\\audit\\v7_runtime_behavioral_certification.py",
+        "size_bytes": 5176
+      },
+      {
+        "path": "runtime\\audit\\v7_runtime_execution_proof.py",
+        "size_bytes": 7169
+      },
+      {
+        "path": "runtime\\audit\\v7_runtime_smoke_test.py",
+        "size_bytes": 4616
+      },
+      {
+        "path": "runtime\\audit\\v7_secret_scan.py",
+        "size_bytes": 2733
+      },
+      {
+        "path": "runtime\\audit\\v7_signature_archaeology.py",
+        "size_bytes": 5549
+      },
+      {
+        "path": "runtime\\audit\\v7_signature_audit.py",
+        "size_bytes": 2904
+      },
+      {
+        "path": "runtime\\audit\\v7_signature_normalization_audit.py",
+        "size_bytes": 4029
+      },
+      {
+        "path": "runtime\\audit\\v7_signature_origin_audit.py",
+        "size_bytes": 6981
+      },
+      {
+        "path": "runtime\\audit\\v7_signature_provenance_audit.py",
+        "size_bytes": 5752
+      },
+      {
+        "path": "runtime\\audit\\v7_target_autopsy.py",
+        "size_bytes": 4024
+      },
+      {
+        "path": "runtime\\audit\\v7_test_harness_alignment_audit.py",
+        "size_bytes": 4208
+      },
+      {
+        "path": "runtime\\audit\\v7_true_quarantine_divergence_audit.py",
+        "size_bytes": 6140
+      },
+      {
+        "path": "runtime\\audit\\v7_trust_consolidation_audit.py",
+        "size_bytes": 3440
+      },
+      {
+        "path": "runtime\\audit\\v7_trust_governance_certification.py",
+        "size_bytes": 3684
+      },
+      {
+        "path": "runtime\\audit\\v7_trust_replay_verification.py",
+        "size_bytes": 4982
+      },
+      {
+        "path": "runtime\\audit\\v7_truth_symbol_resolution_audit.py",
+        "size_bytes": 6371
+      },
+      {
+        "path": "runtime\\audit\\__init__.py",
+        "size_bytes": 330
+      },
+      {
+        "path": "runtime\\audit\\dev\\v720_integration_test.py",
+        "size_bytes": 1222
+      },
+      {
+        "path": "runtime\\audit\\dev\\v721_governor_test.py",
+        "size_bytes": 1166
+      },
+      {
+        "path": "runtime\\audit\\discord\\access_denied.jsonl",
+        "size_bytes": 384
+      },
+      {
+        "path": "runtime\\audit\\discord\\access_granted.jsonl",
+        "size_bytes": 438
+      },
+      {
+        "path": "runtime\\audit\\discord\\chaos_chain.jsonl",
+        "size_bytes": 0
+      },
+      {
+        "path": "runtime\\audit\\discord\\clean_chain.jsonl",
+        "size_bytes": 0
+      },
+      {
+        "path": "runtime\\audit\\discord\\security_events.jsonl",
+        "size_bytes": 0
+      },
+      {
+        "path": "runtime\\audit\\full_reuse\\EZZIO_FULL_REUSE_v13_20260809_164021.json",
+        "size_bytes": 153564760
+      },
+      {
+        "path": "runtime\\audit\\full_scan\\classification.json",
+        "size_bytes": 595443
+      },
+      {
+        "path": "runtime\\audit\\full_scan\\configs_inventory.json",
+        "size_bytes": 75967
+      },
+      {
+        "path": "runtime\\audit\\full_scan\\duplicate_candidates.json",
+        "size_bytes": 172567
+      },
+      {
+        "path": "runtime\\audit\\full_scan\\imports_graph.json",
+        "size_bytes": 79617
+      },
+      {
+        "path": "runtime\\audit\\full_scan\\inventory.json",
+        "size_bytes": 991453
+      },
+      {
+        "path": "runtime\\audit\\full_scan\\python_symbols.json",
+        "size_bytes": 112748
+      },
+      {
+        "path": "runtime\\audit\\gates\\v712_entry_gate.py",
+        "size_bytes": 10433
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\ARCHITECTURE_DIRECTIONAL_MAP_V7.json",
+        "size_bytes": 584
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\ARCHITECTURE_PATHWAYS_V7.md",
+        "size_bytes": 4287
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\ARCHITECTURE_REPORT.md",
+        "size_bytes": 2438
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\authority_conflicts.json",
+        "size_bytes": 713
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\dependency_graph.json",
+        "size_bytes": 75858
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\dependency_graph_forensic.json",
+        "size_bytes": 4429942
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\duplicate_candidates.json",
+        "size_bytes": 25877
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\EZZIO_MASTER_ARCHITECTURE_V7.json",
+        "size_bytes": 442
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\FORENSIC_SUMMARY.md",
+        "size_bytes": 545
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\inventory.json",
+        "size_bytes": 330940
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\inventory_forensic.json",
+        "size_bytes": 1294519
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\merge_candidates.json",
+        "size_bytes": 1019
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\obsolete_modules.json",
+        "size_bytes": 1295
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\REAL_EXECUTION_MATRIX_V7.json",
+        "size_bytes": 539656
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_FORENSIC_ANALYSIS.md",
+        "size_bytes": 4892
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_RUNTIME_DEPENDENCIES.json",
+        "size_bytes": 2050
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_RUNTIME_DEPENDENCIES_SUMMARY.md",
+        "size_bytes": 2419
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_TARGETED_AUTOPSY.json",
+        "size_bytes": 17665
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_TARGETED_AUTOPSY_SUMMARY.md",
+        "size_bytes": 15070
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\active_dependency_integrity_v2.json",
+        "size_bytes": 20412
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\affinity_drift_investigation.json",
+        "size_bytes": 2857
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\aligned_behavioral_report.json",
+        "size_bytes": 1106
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\api_compatibility_audit.json",
+        "size_bytes": 1985
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\api_surface_inspection.json",
+        "size_bytes": 4304
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\architecture_baseline.json",
+        "size_bytes": 299950
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\architecture_baseline_v2.json",
+        "size_bytes": 999
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\architecture_baseline_v3.json",
+        "size_bytes": 63826
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\architecture_discovery_report.json",
+        "size_bytes": 3489
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\baseline_drift_report.json",
+        "size_bytes": 330
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\behavioral_certification_report.json",
+        "size_bytes": 796
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\behavioral_symbols.json",
+        "size_bytes": 3255
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\BLOCKED_AFTER_APPROVAL.json",
+        "size_bytes": 325422
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\cleanup_approval_manifest.json",
+        "size_bytes": 739779
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\cleanup_transaction_log.json",
+        "size_bytes": 738246
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\cleanup_validation_result.json",
+        "size_bytes": 512562
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\consumer_alignment_audit.json",
+        "size_bytes": 4231
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\consumer_migration_plan.json",
+        "size_bytes": 740
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\contracts_deep_inspection.json",
+        "size_bytes": 946
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\contracts_inventory.json",
+        "size_bytes": 708
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\contracts_schema_report.md",
+        "size_bytes": 464
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\contract_birth_trace.json",
+        "size_bytes": 3720
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\contract_consumers.json",
+        "size_bytes": 20704
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\CONTRACT_DEEP_INSPECTION.md",
+        "size_bytes": 863
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\contract_emission_chain.json",
+        "size_bytes": 6416
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\contract_emission_event_forensics.json",
+        "size_bytes": 84800
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\CONTRACT_FLOW.md",
+        "size_bytes": 14616
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\contract_generation_trace.json",
+        "size_bytes": 2795
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\contract_provenance_graph.json",
+        "size_bytes": 1995
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\contract_simulation_result.json",
+        "size_bytes": 3418
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\cryptographic_evidence_bundle.json",
+        "size_bytes": 257
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\decision_governor_surface.json",
+        "size_bytes": 532
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\dependency_graph.json",
+        "size_bytes": 3908
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\dependency_repair_audit.json",
+        "size_bytes": 1731
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\evidence_reconciliation_result.json",
+        "size_bytes": 439
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\execution_trace_results.json",
+        "size_bytes": 2035
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\final_harness_certification.json",
+        "size_bytes": 975
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\forensic_signature_replay.json",
+        "size_bytes": 3017
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\FORENSIC_SIGNATURE_REPLAY.md",
+        "size_bytes": 1767
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\harness_migration_certification.json",
+        "size_bytes": 767
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\hmac_authority_spec.py",
+        "size_bytes": 3019
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\HMAC_CAPABILITY_MATRIX.md",
+        "size_bytes": 12779
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\MODEL_DEPENDENCY_TRUTH_REPORT.md",
+        "size_bytes": 853
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\model_reconciliation_report.json",
+        "size_bytes": 676
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\model_registry_autopsy.json",
+        "size_bytes": 268
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\negative_regression_gate_report.json",
+        "size_bytes": 145
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\quarantine_discovery_report.json",
+        "size_bytes": 560462
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\quarantine_path_resolution.json",
+        "size_bytes": 1507
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\real_contract_compatibility_result.json",
+        "size_bytes": 1502
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\recovery_restore_plan.json",
+        "size_bytes": 7405
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\runtime_execution_proof_result.json",
+        "size_bytes": 429
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\secret_forensic_results.json",
+        "size_bytes": 17428
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\signature_archaeology_results.json",
+        "size_bytes": 1547
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\signature_audit_results.json",
+        "size_bytes": 32682
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\signature_normalization_audit.json",
+        "size_bytes": 3121
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\signature_origin_discovery.json",
+        "size_bytes": 1398
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\signature_provenance_result.json",
+        "size_bytes": 238
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\source_locator_results.json",
+        "size_bytes": 5537
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\symbol_usage_analysis.json",
+        "size_bytes": 4965
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\test_harness_alignment_audit.json",
+        "size_bytes": 9613
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\true_quarantine_divergence_report.json",
+        "size_bytes": 347222
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\trust_consolidation_audit.json",
+        "size_bytes": 1318
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\trust_governance_certificate.json",
+        "size_bytes": 534
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\trust_replay_verification.json",
+        "size_bytes": 396
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\truth_resolution_audit.json",
+        "size_bytes": 4747
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7.4_REGISTRY_AUTHORITY_FINAL.md",
+        "size_bytes": 669
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7.7_TRUST_CONSOLIDATION_REPORT.md",
+        "size_bytes": 1372
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\v712_certification_token.json",
+        "size_bytes": 341
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712_ENTRY_GATE_REPORT.md",
+        "size_bytes": 911
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712_MODEL_REGISTRY_REPORT.md",
+        "size_bytes": 8900
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V716_MODEL_FORENSIC_REPORT.md",
+        "size_bytes": 255186
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_10_1_CONTRACT_EMISSION_CHAIN_REPORT.md",
+        "size_bytes": 3547
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_10_2_EMISSION_EVENT_REPORT.md",
+        "size_bytes": 62163
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_10_3_PROVENANCE_GRAPH_REPORT.md",
+        "size_bytes": 2015
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_10_4_TRUST_REPLAY_REPORT.md",
+        "size_bytes": 790
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_10_5_1_AFFINITY_DRIFT_REPORT.md",
+        "size_bytes": 1511
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_10_5_RUNTIME_EXECUTION_PROOF_REPORT.md",
+        "size_bytes": 1599
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_10_6_TRUST_GOVERNANCE_CERTIFICATE.md",
+        "size_bytes": 1098
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_0_2_FULL_ARCHITECTURE_REPORT.md",
+        "size_bytes": 1898
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_0_3_SECRET_FORENSIC_REPORT.md",
+        "size_bytes": 15145
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_0_4_DEPENDENCY_REPORT.md",
+        "size_bytes": 1805
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_0_6_BASELINE_REPORT.md",
+        "size_bytes": 3505
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_0_7_CLEANUP_PLAN.json",
+        "size_bytes": 156366
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_0_8_CLEANUP_VALIDATION_REPORT.md",
+        "size_bytes": 3612
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_0_9_CLEANUP_EXECUTION_REPORT.md",
+        "size_bytes": 683
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_1_0_APPROVAL_GATE_REPORT.md",
+        "size_bytes": 1114
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_1_3_POST_CLEANUP_AUDIT_REPORT.md",
+        "size_bytes": 1067
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_2_1_REPAIR_AUDIT_REPORT.md",
+        "size_bytes": 2008
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_2_2_SYMBOL_USAGE_REPORT.md",
+        "size_bytes": 3429
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_2_3_BIS_RESOLVER_REPORT.md",
+        "size_bytes": 1591
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_2_3_RESTORE_PLAN_REPORT.md",
+        "size_bytes": 3531
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_2_4_SOURCE_LOCATOR_REPORT.md",
+        "size_bytes": 2274
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_2_5_TRUTH_REPORT.md",
+        "size_bytes": 2769
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_2_6_BIS_DISCOVERY_REPORT.md",
+        "size_bytes": 410
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_2_7_FINAL_DIVERGENCE_REPORT.md",
+        "size_bytes": 1309
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_2_INTEGRITY_REPORT.md",
+        "size_bytes": 663
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_3_CERTIFICATION_REPORT.md",
+        "size_bytes": 1082
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_4_BASELINE_DRIFT_REPORT.md",
+        "size_bytes": 872
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_5_10_FINAL_CERTIFICATION_REPORT.md",
+        "size_bytes": 1341
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_5_1_CONTRACT_DIFF_REPORT.md",
+        "size_bytes": 2139
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_5_2_ALIGNED_CERTIFICATION_REPORT.md",
+        "size_bytes": 1487
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_5_3_API_COMPATIBILITY_REPORT.md",
+        "size_bytes": 2019
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_5_4_API_SURFACE_REPORT.md",
+        "size_bytes": 2683
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_5_5_MIGRATION_PLAN_REPORT.md",
+        "size_bytes": 1077
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_5_6_ALIGNMENT_AUDIT_REPORT.md",
+        "size_bytes": 2674
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_5_7_HARNESS_AUDIT_REPORT.md",
+        "size_bytes": 5564
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_5_8_HARNESS_CERTIFICATION_REPORT.md",
+        "size_bytes": 1095
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_5_9_GOVERNOR_SURFACE_REPORT.md",
+        "size_bytes": 738
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_5_BEHAVIORAL_CERTIFICATION_REPORT.md",
+        "size_bytes": 1092
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_6_NEGATIVE_GATE_REPORT.md",
+        "size_bytes": 803
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_CONTRACT_AUTHORITY_SIMULATION.md",
+        "size_bytes": 1217
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_CONTRACT_BIRTH_REPORT.md",
+        "size_bytes": 2749
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_CONTRACT_GENERATION_REPORT.md",
+        "size_bytes": 2404
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_CRYPTOGRAPHIC_EVIDENCE_REPORT.md",
+        "size_bytes": 716
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_EVIDENCE_RECONCILIATION_REPORT.md",
+        "size_bytes": 1052
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_EXECUTION_TRACE_REPORT.md",
+        "size_bytes": 2041
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_REAL_CONTRACT_COMPATIBILITY_REPORT.md",
+        "size_bytes": 1768
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_SIGNATURE_ARCHAEOLOGY_REPORT.md",
+        "size_bytes": 2391
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_SIGNATURE_AUTHORITY_MATRIX.md",
+        "size_bytes": 3303
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_SIGNATURE_AUTHORITY_REPORT.md",
+        "size_bytes": 26070
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_SIGNATURE_ORIGIN_REPORT.md",
+        "size_bytes": 1596
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_SIGNATURE_PROVENANCE_REPORT.md",
+        "size_bytes": 905
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\API_CONTRACT_V3.json",
+        "size_bytes": 1166
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\architecture_baseline_v3.json",
+        "size_bytes": 63826
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\boot_integrity_verification_report.json",
+        "size_bytes": 147
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\governance_freeze_manifest.json",
+        "size_bytes": 1874
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\MODEL_REGISTRY_V1.json",
+        "size_bytes": 20075
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\physical_attestation_verification_report.json",
+        "size_bytes": 1748
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\V712_BOOT_INTEGRITY_REPORT.md",
+        "size_bytes": 432
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\v712_certification_token.json",
+        "size_bytes": 341
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\v712_entry_gate.py",
+        "size_bytes": 10433
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\V712_ENTRY_GATE_REPORT.md",
+        "size_bytes": 911
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\V712_GOVERNANCE_FREEZE_REPORT.md",
+        "size_bytes": 946
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V712\\V712_PHYSICAL_ATTESTATION_REPORT.md",
+        "size_bytes": 1477
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_0_5_ISOLATION_MAP\\refactoring_map.json",
+        "size_bytes": 6479
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_0_5_ISOLATION_MAP\\V7_11_0_5_REFACTORING_MAP_REPORT.md",
+        "size_bytes": 5130
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_0_7_ACTIVE_ARCH\\active_architecture_map.json",
+        "size_bytes": 53945
+      },
+      {
+        "path": "runtime\\audit\\intelligence_scan\\V7_REGISTRY\\V7_11_0_7_ACTIVE_ARCH\\V7_11_0_7_ACTIVE_ARCH_REPORT.md",
+        "size_bytes": 22666
+      },
+      {
+        "path": "runtime\\audit\\microkernel_history\\microkernel_after_2442.py",
+        "size_bytes": 10085
+      },
+      {
+        "path": "runtime\\audit\\microkernel_history\\microkernel_after_final_cert.py",
+        "size_bytes": 10085
+      },
+      {
+        "path": "runtime\\audit\\microkernel_history\\microkernel_before_2442.py",
+        "size_bytes": 10085
+      },
+      {
+        "path": "runtime\\audit\\microkernel_history\\microkernel_before_certification.py",
+        "size_bytes": 10085
+      },
+      {
+        "path": "runtime\\audit\\microkernel_history\\microkernel_before_final_cert.py",
+        "size_bytes": 10085
+      },
+      {
+        "path": "runtime\\audit\\microkernel_history\\__init__.py",
+        "size_bytes": 34
+      },
+      {
+        "path": "runtime\\audit\\refactor_plan\\critical_duplicates.json",
+        "size_bytes": 152591
+      },
+      {
+        "path": "runtime\\audit\\refactor_plan\\MERGE.md",
+        "size_bytes": 2143
+      },
+      {
+        "path": "runtime\\audit\\refactor_plan\\V7_MERGE_PLAN.md",
+        "size_bytes": 1616
+      },
+      {
+        "path": "runtime\\audit\\system\\cognitive_domain_candidates.json",
+        "size_bytes": 92
+      },
+      {
+        "path": "runtime\\audit\\system\\cognitive_provenance_matrix.json",
+        "size_bytes": 63717
+      },
+      {
+        "path": "runtime\\audit\\system\\ecol_deep_forensic_audit_report.json",
+        "size_bytes": 3853
+      },
+      {
+        "path": "runtime\\audit\\system\\ecol_integration_audit_report.json",
+        "size_bytes": 13528
+      },
+      {
+        "path": "runtime\\audit\\system\\extraction_dry_run_report.json",
+        "size_bytes": 131218
+      },
+      {
+        "path": "runtime\\audit\\system\\founding_kernel.json",
+        "size_bytes": 247035
+      },
+      {
+        "path": "runtime\\audit\\system\\fts5_semantic_audit.json",
+        "size_bytes": 768
+      },
+      {
+        "path": "runtime\\audit\\system\\full_cognitive_inventory.json",
+        "size_bytes": 1245658
+      },
+      {
+        "path": "runtime\\audit\\system\\full_corpus_dry_run.json",
+        "size_bytes": 788
+      },
+      {
+        "path": "runtime\\audit\\system\\identity_genesis_autopsy.json",
+        "size_bytes": 46474
+      },
+      {
+        "path": "runtime\\audit\\system\\identity_genesis_graph.json",
+        "size_bytes": 8177
+      },
+      {
+        "path": "runtime\\audit\\system\\identity_genesis_manifest.json",
+        "size_bytes": 3332
+      },
+      {
+        "path": "runtime\\audit\\system\\lore_lineage_report.json",
+        "size_bytes": 2952
+      },
+      {
+        "path": "runtime\\audit\\system\\memory_inventory.json",
+        "size_bytes": 1290
+      },
+      {
+        "path": "runtime\\audit\\system\\mutation_event_graph.json",
+        "size_bytes": 2708970
+      },
+      {
+        "path": "runtime\\audit\\system\\operational_telemetry_correlation.json",
+        "size_bytes": 136
+      },
+      {
+        "path": "runtime\\audit\\system\\provenance_audit_report.json",
+        "size_bytes": 4345
+      },
+      {
+        "path": "runtime\\audit\\system\\rpg_archaeology_lineage.json",
+        "size_bytes": 2
+      },
+      {
+        "path": "runtime\\audit\\system\\rpg_archaeology_report.json",
+        "size_bytes": 4733
+      },
+      {
+        "path": "runtime\\audit\\system\\rpg_discovery_results.json",
+        "size_bytes": 15083
+      },
+      {
+        "path": "runtime\\audit\\system\\rpg_memory_qualification.json",
+        "size_bytes": 652473
+      },
+      {
+        "path": "runtime\\audit\\system\\runtime_convergence_report.json",
+        "size_bytes": 36856
+      },
+      {
+        "path": "runtime\\audit\\system\\temporal_archaeology_report.json",
+        "size_bytes": 20267
+      },
+      {
+        "path": "runtime\\audit\\system\\timeline_birth_mutation_report.json",
+        "size_bytes": 222408
+      },
+      {
+        "path": "runtime\\audit\\system\\v759_forensic_recall_report.json",
+        "size_bytes": 4902
+      },
+      {
+        "path": "runtime\\audit\\system\\v759_rpg_curated_lineage.json",
+        "size_bytes": 252
+      },
+      {
+        "path": "runtime\\audit\\system\\v759_taxonomy_repair_report.json",
+        "size_bytes": 258
+      },
+      {
+        "path": "runtime\\audit\\system\\timeline\\night_20260812_002022_030000\\temporal_changes.json",
+        "size_bytes": 275557
+      },
+      {
+        "path": "runtime\\audit\\v723\\web_server_pre_provider_split.py",
+        "size_bytes": 10964
+      },
+      {
+        "path": "runtime\\budget\\manager.py",
+        "size_bytes": 1739
+      },
+      {
+        "path": "runtime\\budget\\__init__.py",
+        "size_bytes": 2
+      },
+      {
+        "path": "runtime\\capabilities\\audit.py",
+        "size_bytes": 419
+      },
+      {
+        "path": "runtime\\capabilities\\expiry.py",
+        "size_bytes": 1131
+      },
+      {
+        "path": "runtime\\capabilities\\lifecycle.py",
+        "size_bytes": 168
+      },
+      {
+        "path": "runtime\\capabilities\\models.py",
+        "size_bytes": 332
+      },
+      {
+        "path": "runtime\\capabilities\\registry.py",
+        "size_bytes": 1842
+      },
+      {
+        "path": "runtime\\capabilities\\revocation.py",
+        "size_bytes": 392
+      },
+      {
+        "path": "runtime\\capabilities\\service.py",
+        "size_bytes": 4137
+      },
+      {
+        "path": "runtime\\capabilities\\validator.py",
+        "size_bytes": 485
+      },
+      {
+        "path": "runtime\\capabilities\\__init__.py",
+        "size_bytes": 132
+      },
+      {
+        "path": "runtime\\certification\\temporal_history.jsonl",
+        "size_bytes": 381
+      },
+      {
+        "path": "runtime\\certification\\certificates\\CERT_30D.json",
+        "size_bytes": 433
+      },
+      {
+        "path": "runtime\\cli\\commands.py",
+        "size_bytes": 2560
+      },
+      {
+        "path": "runtime\\cli\\session.py",
+        "size_bytes": 240
+      },
+      {
+        "path": "runtime\\cli\\shell.py",
+        "size_bytes": 1367
+      },
+      {
+        "path": "runtime\\cognition\\analyzer.py",
+        "size_bytes": 1728
+      },
+      {
+        "path": "runtime\\cognition\\events.py",
+        "size_bytes": 829
+      },
+      {
+        "path": "runtime\\cognition\\loop.py",
+        "size_bytes": 4040
+      },
+      {
+        "path": "runtime\\cognition\\router.py",
+        "size_bytes": 2430
+      },
+      {
+        "path": "runtime\\cognition\\state.py",
+        "size_bytes": 222
+      },
+      {
+        "path": "runtime\\cognition\\__init__.py",
+        "size_bytes": 200
+      },
+      {
+        "path": "runtime\\cognition\\budget\\approved_hashes.json",
+        "size_bytes": 334
+      },
+      {
+        "path": "runtime\\cognition\\budget\\cognitive_budget_ledger.jsonl",
+        "size_bytes": 18363
+      },
+      {
+        "path": "runtime\\cognition\\budget\\ECOL_TRUST_REPORT.json",
+        "size_bytes": 409
+      },
+      {
+        "path": "runtime\\cognition\\budget\\endurance_metrics_V8.9.3.jsonl",
+        "size_bytes": 375
+      },
+      {
+        "path": "runtime\\cognition\\budget\\ezzio_baseline_V8.9.3.json",
+        "size_bytes": 305
+      },
+      {
+        "path": "runtime\\cognition\\budget\\EZZIO_CONTINUOUS_CERTIFICATE.json",
+        "size_bytes": 1700
+      },
+      {
+        "path": "runtime\\cognition\\budget\\EZZIO_EXTENDED_ORGANISM_CERTIFICATE.json",
+        "size_bytes": 2321
+      },
+      {
+        "path": "runtime\\cognition\\budget\\EZZIO_LIVE_ORGANISM_CERTIFICATE.json",
+        "size_bytes": 1530
+      },
+      {
+        "path": "runtime\\cognition\\budget\\EZZIO_ORGANISM_CERTIFICATE.json",
+        "size_bytes": 1626
+      },
+      {
+        "path": "runtime\\cognition\\budget\\EZZIO_V8.9.4_BASELINE.json",
+        "size_bytes": 882
+      },
+      {
+        "path": "runtime\\cognition\\budget\\health_metrics_history.jsonl",
+        "size_bytes": 333
+      },
+      {
+        "path": "runtime\\cognition\\budget\\human_override_ledger.jsonl",
+        "size_bytes": 369
+      },
+      {
+        "path": "runtime\\cognition\\budget\\incident_recovery_ledger.jsonl",
+        "size_bytes": 639
+      },
+      {
+        "path": "runtime\\cognition\\budget\\ledger_manifest.json",
+        "size_bytes": 339
+      },
+      {
+        "path": "runtime\\cognition\\budget\\long_run_metrics.jsonl",
+        "size_bytes": 561
+      },
+      {
+        "path": "runtime\\cognition\\budget\\organism_benchmark_history.jsonl",
+        "size_bytes": 511
+      },
+      {
+        "path": "runtime\\cognition\\budget\\token_ledger.json",
+        "size_bytes": 163
+      },
+      {
+        "path": "runtime\\cognition\\budget\\unified_decision_ledger.jsonl",
+        "size_bytes": 529
+      },
+      {
+        "path": "runtime\\cognition\\budget\\daily_reports\\report_2026-08-12.json",
+        "size_bytes": 518
+      },
+      {
+        "path": "runtime\\cognition\\decisions\\cognitive_decisions.jsonl",
+        "size_bytes": 0
+      },
+      {
+        "path": "runtime\\cognition\\metrics\\cognition_metrics.jsonl",
+        "size_bytes": 0
+      },
+      {
+        "path": "runtime\\cognition\\state\\cognitive_state.json",
+        "size_bytes": 62
+      },
+      {
+        "path": "runtime\\cognitive\\curated\\rpg_memory\\approved_entries.jsonl",
+        "size_bytes": 0
+      },
+      {
+        "path": "runtime\\cognitive\\curated\\rpg_memory\\rpg_memory_manifest.json",
+        "size_bytes": 252
+      },
+      {
+        "path": "runtime\\cognitive\\index\\index_build_manifest.json",
+        "size_bytes": 37383
+      },
+      {
+        "path": "runtime\\cognitive\\snapshots\\V7.58\\cognitive_provenance_matrix.json",
+        "size_bytes": 63717
+      },
+      {
+        "path": "runtime\\cognitive\\snapshots\\V7.58\\index_build_manifest.json",
+        "size_bytes": 37383
+      },
+      {
+        "path": "runtime\\cognitive\\snapshots\\V7.58\\snapshot_manifest.json",
+        "size_bytes": 621
+      },
+      {
+        "path": "runtime\\config\\security\\discord_acl.json",
+        "size_bytes": 109
+      },
+      {
+        "path": "runtime\\config\\security\\discord_policy.json",
+        "size_bytes": 213
+      },
+      {
+        "path": "runtime\\context\\builder.py",
+        "size_bytes": 2851
+      },
+      {
+        "path": "runtime\\context\\__init__.py",
+        "size_bytes": 2
+      },
+      {
+        "path": "runtime\\contracts\\API_CONTRACT_V3.json",
+        "size_bytes": 1166
+      },
+      {
+        "path": "runtime\\contracts\\authority.py",
+        "size_bytes": 3558
+      },
+      {
+        "path": "runtime\\contracts\\capability.py",
+        "size_bytes": 2606
+      },
+      {
+        "path": "runtime\\contracts\\enforcer.py",
+        "size_bytes": 2559
+      },
+      {
+        "path": "runtime\\contracts\\execution_context.py",
+        "size_bytes": 675
+      },
+      {
+        "path": "runtime\\contracts\\MODEL_REGISTRY_V1.json",
+        "size_bytes": 20075
+      },
+      {
+        "path": "runtime\\contracts\\tool_result.py",
+        "size_bytes": 253
+      },
+      {
+        "path": "runtime\\contracts\\V3_CONTRACT_VERSION.json",
+        "size_bytes": 611
+      },
+      {
+        "path": "runtime\\contracts\\__init__.py",
+        "size_bytes": 256
+      },
+      {
+        "path": "runtime\\decisions\\router_decisions.jsonl",
+        "size_bytes": 1277
+      },
+      {
+        "path": "runtime\\decisions\\archive\\ledger_000001.jsonl",
+        "size_bytes": 23821
+      },
+      {
+        "path": "runtime\\decisions\\archive\\ledger_000001.meta.json",
+        "size_bytes": 431
+      },
+      {
+        "path": "runtime\\ecol\\contracts\\contract_manifest.json",
+        "size_bytes": 217
+      },
+      {
+        "path": "runtime\\ecol\\evolution_ledger\\evolution_audit_2026-08-12.jsonl",
+        "size_bytes": 3982
+      },
+      {
+        "path": "runtime\\ecol_baseline_v7.65\\cognitive_governor.py",
+        "size_bytes": 13604
+      },
+      {
+        "path": "runtime\\ecol_baseline_v7.65\\ecol_baseline_manifest.json",
+        "size_bytes": 655
+      },
+      {
+        "path": "runtime\\ecol_baseline_v7.65\\ECOL_TRUST_REPORT.json",
+        "size_bytes": 409
+      },
+      {
+        "path": "runtime\\events\\bus.py",
+        "size_bytes": 2401
+      },
+      {
+        "path": "runtime\\events\\types.py",
+        "size_bytes": 427
+      },
+      {
+        "path": "runtime\\events\\__init__.py",
+        "size_bytes": 34
+      },
+      {
+        "path": "runtime\\evolution\\authority_policy.json",
+        "size_bytes": 250
+      },
+      {
+        "path": "runtime\\evolution\\candidates\\memory_optimizer.py",
+        "size_bytes": 28
+      },
+      {
+        "path": "runtime\\evolution\\experience\\experience_registry.jsonl",
+        "size_bytes": 274
+      },
+      {
+        "path": "runtime\\evolution\\ledger\\evolution_ledger.jsonl",
+        "size_bytes": 751
+      },
+      {
+        "path": "runtime\\evolution\\promoted\\memory_optimizer.py",
+        "size_bytes": 28
+      },
+      {
+        "path": "runtime\\evolution\\requests\\EVOL-2D5B63.json",
+        "size_bytes": 373
+      },
+      {
+        "path": "runtime\\evolution\\requests\\EVOL-73B188.json",
+        "size_bytes": 393
+      },
+      {
+        "path": "runtime\\execution\\audit_compliance.py",
+        "size_bytes": 3917
+      },
+      {
+        "path": "runtime\\execution\\context.py",
+        "size_bytes": 1071
+      },
+      {
+        "path": "runtime\\execution\\decorators.py",
+        "size_bytes": 839
+      },
+      {
+        "path": "runtime\\execution\\governor.py",
+        "size_bytes": 1356
+      },
+      {
+        "path": "runtime\\execution\\ledger.py",
+        "size_bytes": 3576
+      },
+      {
+        "path": "runtime\\execution\\lifecycle.py",
+        "size_bytes": 198
+      },
+      {
+        "path": "runtime\\execution\\loop_manager.py",
+        "size_bytes": 1081
+      },
+      {
+        "path": "runtime\\execution\\registry.py",
+        "size_bytes": 1054
+      },
+      {
+        "path": "runtime\\execution\\resolver.py",
+        "size_bytes": 462
+      },
+      {
+        "path": "runtime\\execution\\resource.py",
+        "size_bytes": 2225
+      },
+      {
+        "path": "runtime\\execution\\router.py",
+        "size_bytes": 727
+      },
+      {
+        "path": "runtime\\execution\\sandbox.py",
+        "size_bytes": 5693
+      },
+      {
+        "path": "runtime\\execution\\scheduler.py",
+        "size_bytes": 290
+      },
+      {
+        "path": "runtime\\execution\\state.py",
+        "size_bytes": 346
+      },
+      {
+        "path": "runtime\\execution\\supervisor.py",
+        "size_bytes": 1497
+      },
+      {
+        "path": "runtime\\execution\\__init__.py",
+        "size_bytes": 87
+      },
+      {
+        "path": "runtime\\external\\base.py",
+        "size_bytes": 857
+      },
+      {
+        "path": "runtime\\external\\ezzio_app.py",
+        "size_bytes": 1271
+      },
+      {
+        "path": "runtime\\external\\output_guard.py",
+        "size_bytes": 1041
+      },
+      {
+        "path": "runtime\\external\\supervisor.py",
+        "size_bytes": 1996
+      },
+      {
+        "path": "runtime\\external\\__init__.py",
+        "size_bytes": 2
+      },
+      {
+        "path": "runtime\\external\\platform\\killer.py",
+        "size_bytes": 1186
+      },
+      {
+        "path": "runtime\\external\\platform\\windows.py",
+        "size_bytes": 2812
+      },
+      {
+        "path": "runtime\\external\\platform\\__init__.py",
+        "size_bytes": 2
+      },
+      {
+        "path": "runtime\\gateway\\adapter.py",
+        "size_bytes": 3164
+      },
+      {
+        "path": "runtime\\gateway\\health.py",
+        "size_bytes": 604
+      },
+      {
+        "path": "runtime\\gateway\\session.py",
+        "size_bytes": 742
+      },
+      {
+        "path": "runtime\\gateway\\__init__.py",
+        "size_bytes": 243
+      },
+      {
+        "path": "runtime\\governance\\decision.py",
+        "size_bytes": 749
+      },
+      {
+        "path": "runtime\\governance\\gate.py",
+        "size_bytes": 2516
+      },
+      {
+        "path": "runtime\\governance\\governance_ledger.py",
+        "size_bytes": 1161
+      },
+      {
+        "path": "runtime\\governance\\ledger.jsonl",
+        "size_bytes": 1960
+      },
+      {
+        "path": "runtime\\governance\\risk.py",
+        "size_bytes": 823
+      },
+      {
+        "path": "runtime\\governance\\rollback.py",
+        "size_bytes": 777
+      },
+      {
+        "path": "runtime\\governance\\watchdog.py",
+        "size_bytes": 2102
+      },
+      {
+        "path": "runtime\\governance\\__init__.py",
+        "size_bytes": 0
+      },
+      {
+        "path": "runtime\\governance\\tests\\test_governance.py",
+        "size_bytes": 1316
+      },
+      {
+        "path": "runtime\\governance\\trust\\history.jsonl",
+        "size_bytes": 248
+      },
+      {
+        "path": "runtime\\governor\\controller.py",
+        "size_bytes": 2693
+      },
+      {
+        "path": "runtime\\governor\\gemini_bridge.py",
+        "size_bytes": 3170
+      },
+      {
+        "path": "runtime\\governor\\__init__.py",
+        "size_bytes": 34
+      },
+      {
+        "path": "runtime\\guardian\\governor_bridge.py",
+        "size_bytes": 2963
+      },
+      {
+        "path": "runtime\\guardian\\test_governor_bridge.py",
+        "size_bytes": 4315
+      },
+      {
+        "path": "runtime\\guardian\\test_v51_memory.py",
+        "size_bytes": 3256
+      },
+      {
+        "path": "runtime\\guardian\\test_v53_hysteresis.py",
+        "size_bytes": 4132
+      },
+      {
+        "path": "runtime\\guardian\\test_v54_persistent_real_engine.py",
+        "size_bytes": 4871
+      },
+      {
+        "path": "runtime\\guardian\\test_v55_predictive.py",
+        "size_bytes": 3630
+      },
+      {
+        "path": "runtime\\guardian\\test_v56_cognitive.py",
+        "size_bytes": 4314
+      },
+      {
+        "path": "runtime\\guardian\\test_v610_baseline.py",
+        "size_bytes": 1197
+      },
+      {
+        "path": "runtime\\guardian\\test_v610_granular.py",
+        "size_bytes": 1019
+      },
+      {
+        "path": "runtime\\guardian\\test_v611_5_regression.py",
+        "size_bytes": 2995
+      },
+      {
+        "path": "runtime\\guardian\\test_v611_discovery.py",
+        "size_bytes": 990
+      },
+      {
+        "path": "runtime\\guardian\\test_v611_fault_injection.py",
+        "size_bytes": 1501
+      },
+      {
+        "path": "runtime\\guardian\\test_v611_hardening.py",
+        "size_bytes": 1087
+      },
+      {
+        "path": "runtime\\guardian\\test_v611_ledger_integrity.py",
+        "size_bytes": 1147
+      },
+      {
+        "path": "runtime\\guardian\\test_v611_validator.py",
+        "size_bytes": 1623
+      },
+      {
+        "path": "runtime\\guardian\\test_v612_1_hardening.py",
+        "size_bytes": 3714
+      },
+      {
+        "path": "runtime\\guardian\\test_v612_2_battery.py",
+        "size_bytes": 6849
+      },
+      {
+        "path": "runtime\\guardian\\test_v612_3_execution.py",
+        "size_bytes": 2825
+      },
+      {
+        "path": "runtime\\guardian\\test_v612_4_transaction.py",
+        "size_bytes": 2542
+      },
+      {
+        "path": "runtime\\guardian\\test_v612_router.py",
+        "size_bytes": 1787
+      },
+      {
+        "path": "runtime\\guardian\\test_v613_0_mapper.py",
+        "size_bytes": 1944
+      },
+      {
+        "path": "runtime\\guardian\\test_v613_1_numa.py",
+        "size_bytes": 1443
+      },
+      {
+        "path": "runtime\\guardian\\test_v613_2_snapshot.py",
+        "size_bytes": 2404
+      },
+      {
+        "path": "runtime\\guardian\\test_v613_3_registry.py",
+        "size_bytes": 2562
+      },
+      {
+        "path": "runtime\\guardian\\test_v614_1_policy.py",
+        "size_bytes": 3774
+      },
+      {
+        "path": "runtime\\guardian\\test_v614_2_envelope.py",
+        "size_bytes": 3992
+      },
+      {
+        "path": "runtime\\guardian\\test_v614_3_revocation.py",
+        "size_bytes": 3115
+      },
+      {
+        "path": "runtime\\guardian\\test_v614_trust.py",
+        "size_bytes": 2338
+      },
+      {
+        "path": "runtime\\guardian\\test_v615_0_admission.py",
+        "size_bytes": 3625
+      },
+      {
+        "path": "runtime\\guardian\\test_v615_3_models.py",
+        "size_bytes": 4598
+      },
+      {
+        "path": "runtime\\guardian\\test_v615_governor.py",
+        "size_bytes": 3292
+      },
+      {
+        "path": "runtime\\guardian\\test_v616_attestation.py",
+        "size_bytes": 4498
+      },
+      {
+        "path": "runtime\\guardian\\test_v617_2_resolver.py",
+        "size_bytes": 1024
+      },
+      {
+        "path": "runtime\\guardian\\test_v61_e2e_real.py",
+        "size_bytes": 5273
+      },
+      {
+        "path": "runtime\\guardian\\test_v62_adaptive.py",
+        "size_bytes": 2758
+      },
+      {
+        "path": "runtime\\guardian\\test_v631_chaos_advanced.py",
+        "size_bytes": 3676
+      },
+      {
+        "path": "runtime\\guardian\\test_v63_chaos.py",
+        "size_bytes": 3642
+      },
+      {
+        "path": "runtime\\guardian\\test_v64_hardening.py",
+        "size_bytes": 5208
+      },
+      {
+        "path": "runtime\\guardian\\test_v65_autonomous.py",
+        "size_bytes": 4553
+      },
+      {
+        "path": "runtime\\guardian\\test_v661_production.py",
+        "size_bytes": 6542
+      },
+      {
+        "path": "runtime\\guardian\\test_v66_production.py",
+        "size_bytes": 5593
+      },
+      {
+        "path": "runtime\\guardian\\test_v67_operational.py",
+        "size_bytes": 6772
+      },
+      {
+        "path": "runtime\\guardian\\test_v68_resource_governor.py",
+        "size_bytes": 3741
+      },
+      {
+        "path": "runtime\\guardian\\test_v68_ryzen.py",
+        "size_bytes": 2116
+      },
+      {
+        "path": "runtime\\guardian\\test_v691_ledger.py",
+        "size_bytes": 1360
+      },
+      {
+        "path": "runtime\\guardian\\test_v692_native_affinity.py",
+        "size_bytes": 1099
+      },
+      {
+        "path": "runtime\\guardian\\test_v69_stabilization.py",
+        "size_bytes": 1322
+      },
+      {
+        "path": "runtime\\guardian\\__init__.py",
+        "size_bytes": 91
+      },
+      {
+        "path": "runtime\\hardware\\adaptive_daemon.py",
+        "size_bytes": 1559
+      },
+      {
+        "path": "runtime\\hardware\\adaptive_learning_governor.py",
+        "size_bytes": 5841
+      },
+      {
+        "path": "runtime\\hardware\\cognitive_memory_governor.py",
+        "size_bytes": 9375
+      },
+      {
+        "path": "runtime\\hardware\\cpu_topology.py",
+        "size_bytes": 1471
+      },
+      {
+        "path": "runtime\\hardware\\governor_service.py",
+        "size_bytes": 5583
+      },
+      {
+        "path": "runtime\\hardware\\guardian_actuator_audit.jsonl",
+        "size_bytes": 1280
+      },
+      {
+        "path": "runtime\\hardware\\memory_actuator.py",
+        "size_bytes": 2978
+      },
+      {
+        "path": "runtime\\hardware\\memory_actuator_v53.py",
+        "size_bytes": 5997
+      },
+      {
+        "path": "runtime\\hardware\\memory_actuator_v54.py",
+        "size_bytes": 8776
+      },
+      {
+        "path": "runtime\\hardware\\memory_intelligence.py",
+        "size_bytes": 2429
+      },
+      {
+        "path": "runtime\\hardware\\production_kernel_v66.py",
+        "size_bytes": 13905
+      },
+      {
+        "path": "runtime\\hardware\\production_kernel_v661.py",
+        "size_bytes": 14930
+      },
+      {
+        "path": "runtime\\hardware\\state.json",
+        "size_bytes": 654
+      },
+      {
+        "path": "runtime\\hardware\\test_governor_ipc.py",
+        "size_bytes": 2450
+      },
+      {
+        "path": "runtime\\hardware\\test_pure_cpu.py",
+        "size_bytes": 1468
+      },
+      {
+        "path": "runtime\\hardware\\test_v492_adaptive_matrix.py",
+        "size_bytes": 4685
+      },
+      {
+        "path": "runtime\\hardware\\test_v49_adaptive.py",
+        "size_bytes": 2655
+      },
+      {
+        "path": "runtime\\hardware\\test_v51_gpu_ipc.py",
+        "size_bytes": 2941
+      },
+      {
+        "path": "runtime\\hardware\\test_v52_actuator.py",
+        "size_bytes": 3573
+      },
+      {
+        "path": "runtime\\hardware\\__init__.py",
+        "size_bytes": 712
+      },
+      {
+        "path": "runtime\\hardware\\audit\\null_audit.py",
+        "size_bytes": 78
+      },
+      {
+        "path": "runtime\\hardware\\cartography\\mapper.py",
+        "size_bytes": 1990
+      },
+      {
+        "path": "runtime\\hardware\\cartography\\numa.py",
+        "size_bytes": 1776
+      },
+      {
+        "path": "runtime\\hardware\\cartography\\snapshot_engine.py",
+        "size_bytes": 2755
+      },
+      {
+        "path": "runtime\\hardware\\cartography\\registry\\hardware_registry.json",
+        "size_bytes": 2710
+      },
+      {
+        "path": "runtime\\hardware\\cartography\\registry\\registry.py",
+        "size_bytes": 3511
+      },
+      {
+        "path": "runtime\\hardware\\cartography\\registry\\snapshots\\initial_baseline_20260811_140804.json",
+        "size_bytes": 1719
+      },
+      {
+        "path": "runtime\\hardware\\cartography\\snapshots\\certified_baseline_20260811_140625.json",
+        "size_bytes": 1718
+      },
+      {
+        "path": "runtime\\hardware\\evidence\\ledger.py",
+        "size_bytes": 2858
+      },
+      {
+        "path": "runtime\\hardware\\evidence\\validator.py",
+        "size_bytes": 2065
+      },
+      {
+        "path": "runtime\\hardware\\router\\executor.py",
+        "size_bytes": 3589
+      },
+      {
+        "path": "runtime\\hardware\\router\\gate.py",
+        "size_bytes": 1330
+      },
+      {
+        "path": "runtime\\hardware\\router\\router.py",
+        "size_bytes": 4550
+      },
+      {
+        "path": "runtime\\hardware\\router\\transaction.py",
+        "size_bytes": 2532
+      },
+      {
+        "path": "runtime\\hardware\\ryzen_optimizer\\affinity.py",
+        "size_bytes": 1551
+      },
+      {
+        "path": "runtime\\hardware\\ryzen_optimizer\\governor.py",
+        "size_bytes": 3781
+      },
+      {
+        "path": "runtime\\hardware\\ryzen_optimizer\\topology.py",
+        "size_bytes": 1207
+      },
+      {
+        "path": "runtime\\hardware\\topology\\discovery.py",
+        "size_bytes": 1107
+      },
+      {
+        "path": "runtime\\hardware\\trust\\engine.py",
+        "size_bytes": 3662
+      },
+      {
+        "path": "runtime\\hardware\\trust\\trust_state.json",
+        "size_bytes": 759
+      },
+      {
+        "path": "runtime\\hardware\\trust\\envelope\\envelope.py",
+        "size_bytes": 4033
+      },
+      {
+        "path": "runtime\\hardware\\trust\\execution\\admission\\controller.py",
+        "size_bytes": 4680
+      },
+      {
+        "path": "runtime\\hardware\\trust\\execution\\admission\\models.py",
+        "size_bytes": 686
+      },
+      {
+        "path": "runtime\\hardware\\trust\\execution\\attestation\\collector.py",
+        "size_bytes": 1486
+      },
+      {
+        "path": "runtime\\hardware\\trust\\execution\\attestation\\models.py",
+        "size_bytes": 1165
+      },
+      {
+        "path": "runtime\\hardware\\trust\\execution\\attestation\\verifier.py",
+        "size_bytes": 6907
+      },
+      {
+        "path": "runtime\\hardware\\trust\\execution\\governor\\resource.py",
+        "size_bytes": 2076
+      },
+      {
+        "path": "runtime\\hardware\\trust\\execution\\ledger\\execution_ledger.jsonl",
+        "size_bytes": 3426
+      },
+      {
+        "path": "runtime\\hardware\\trust\\execution\\ledger\\hashchain.py",
+        "size_bytes": 2871
+      },
+      {
+        "path": "runtime\\hardware\\trust\\ledger\\policy_audit.jsonl",
+        "size_bytes": 861
+      },
+      {
+        "path": "runtime\\hardware\\trust\\ledger\\policy_ledger.py",
+        "size_bytes": 1105
+      },
+      {
+        "path": "runtime\\hardware\\trust\\models\\contract_signer.py",
+        "size_bytes": 1206
+      },
+      {
+        "path": "runtime\\hardware\\trust\\models\\registry.py",
+        "size_bytes": 1247
+      },
+      {
+        "path": "runtime\\hardware\\trust\\models\\resolver.py",
+        "size_bytes": 1456
+      },
+      {
+        "path": "runtime\\hardware\\trust\\models\\contracts\\qwen2.5-7b.contract.json",
+        "size_bytes": 549
+      },
+      {
+        "path": "runtime\\hardware\\trust\\models_governance\\budget.py",
+        "size_bytes": 1671
+      },
+      {
+        "path": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+        "size_bytes": 1477
+      },
+      {
+        "path": "runtime\\hardware\\trust\\models_governance\\model_trust_registry.json",
+        "size_bytes": 501
+      },
+      {
+        "path": "runtime\\hardware\\trust\\policy\\evaluator.py",
+        "size_bytes": 2164
+      },
+      {
+        "path": "runtime\\hardware\\trust\\policy\\models.py",
+        "size_bytes": 455
+      },
+      {
+        "path": "runtime\\hardware\\trust\\policy\\policies.json",
+        "size_bytes": 487
+      },
+      {
+        "path": "runtime\\hardware\\trust\\policy\\registry.py",
+        "size_bytes": 874
+      },
+      {
+        "path": "runtime\\hardware\\trust\\revocation\\registry.py",
+        "size_bytes": 2763
+      },
+      {
+        "path": "runtime\\hardware\\trust\\revocation\\storage\\consumed_tokens.json",
+        "size_bytes": 66
+      },
+      {
+        "path": "runtime\\hardware\\trust\\revocation\\storage\\revoked_tokens.jsonl",
+        "size_bytes": 131
+      },
+      {
+        "path": "runtime\\hardware\\trust\\revocation\\storage_admission_test\\consumed_tokens.json",
+        "size_bytes": 66
+      },
+      {
+        "path": "runtime\\hardware\\trust\\revocation\\storage_gov_test\\consumed_tokens.json",
+        "size_bytes": 65
+      },
+      {
+        "path": "runtime\\hardware\\trust\\revocation\\storage_model_test\\consumed_tokens.json",
+        "size_bytes": 192
+      },
+      {
+        "path": "runtime\\identity\\boot_attestation.json",
+        "size_bytes": 411
+      },
+      {
+        "path": "runtime\\identity\\identity.json",
+        "size_bytes": 2049
+      },
+      {
+        "path": "runtime\\identity\\identity_authority.json",
+        "size_bytes": 325
+      },
+      {
+        "path": "runtime\\identity\\identity_chain.jsonl",
+        "size_bytes": 1595
+      },
+      {
+        "path": "runtime\\identity\\identity_events.jsonl",
+        "size_bytes": 250
+      },
+      {
+        "path": "runtime\\identity\\lore.md",
+        "size_bytes": 182
+      },
+      {
+        "path": "runtime\\identity\\persona.full.md",
+        "size_bytes": 6662
+      },
+      {
+        "path": "runtime\\identity\\persona.py",
+        "size_bytes": 839
+      },
+      {
+        "path": "runtime\\identity\\__init__.py",
+        "size_bytes": 34
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0001\\identity.json",
+        "size_bytes": 2049
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0001\\identity_authority.json",
+        "size_bytes": 325
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0001\\persona.json",
+        "size_bytes": 237
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0001\\snapshot_meta.json",
+        "size_bytes": 655
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0002\\identity.json",
+        "size_bytes": 2049
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0002\\identity_authority.json",
+        "size_bytes": 325
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0002\\persona.json",
+        "size_bytes": 237
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0002\\skills_manifest.json",
+        "size_bytes": 156
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0002\\snapshot_meta.json",
+        "size_bytes": 971
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0003\\identity.json",
+        "size_bytes": 2049
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0003\\identity_authority.json",
+        "size_bytes": 325
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0003\\memory_graph.json",
+        "size_bytes": 47
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0003\\persona.json",
+        "size_bytes": 237
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0003\\skills_manifest.json",
+        "size_bytes": 156
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0003\\snapshot_meta.json",
+        "size_bytes": 1065
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0004\\identity.json",
+        "size_bytes": 2049
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0004\\identity_authority.json",
+        "size_bytes": 325
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0004\\lore.md",
+        "size_bytes": 39
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0004\\memory_graph.json",
+        "size_bytes": 47
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0004\\persona.json",
+        "size_bytes": 237
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0004\\skills_manifest.json",
+        "size_bytes": 156
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0004\\snapshot_meta.json",
+        "size_bytes": 1149
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0005\\identity.json",
+        "size_bytes": 2049
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0005\\identity_authority.json",
+        "size_bytes": 325
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0005\\lore.md",
+        "size_bytes": 39
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0005\\memory_graph.json",
+        "size_bytes": 47
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0005\\persona.json",
+        "size_bytes": 237
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0005\\skills_manifest.json",
+        "size_bytes": 156
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0005\\snapshot_meta.json",
+        "size_bytes": 1149
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0006\\identity.json",
+        "size_bytes": 2049
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0006\\identity_authority.json",
+        "size_bytes": 325
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0006\\lore.md",
+        "size_bytes": 39
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0006\\memory_graph.json",
+        "size_bytes": 47
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0006\\persona.json",
+        "size_bytes": 237
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0006\\skills_manifest.json",
+        "size_bytes": 156
+      },
+      {
+        "path": "runtime\\identity\\snapshots\\snapshot_0006\\snapshot_meta.json",
+        "size_bytes": 1149
+      },
+      {
+        "path": "runtime\\incidents\\classifier.py",
+        "size_bytes": 3196
+      },
+      {
+        "path": "runtime\\incidents\\collector.py",
+        "size_bytes": 3869
+      },
+      {
+        "path": "runtime\\incidents\\decision.py",
+        "size_bytes": 2819
+      },
+      {
+        "path": "runtime\\incidents\\evidence.py",
+        "size_bytes": 5866
+      },
+      {
+        "path": "runtime\\incidents\\incidents.jsonl",
+        "size_bytes": 415
+      },
+      {
+        "path": "runtime\\incidents\\model.py",
+        "size_bytes": 2471
+      },
+      {
+        "path": "runtime\\incidents\\registry.py",
+        "size_bytes": 1716
+      },
+      {
+        "path": "runtime\\incidents\\__init__.py",
+        "size_bytes": 34
+      },
+      {
+        "path": "runtime\\kernel\\boot.py",
+        "size_bytes": 8629
+      },
+      {
+        "path": "runtime\\kernel\\context.py",
+        "size_bytes": 888
+      },
+      {
+        "path": "runtime\\kernel\\state.py",
+        "size_bytes": 2047
+      },
+      {
+        "path": "runtime\\kernel\\_v425_worker.py",
+        "size_bytes": 402
+      },
+      {
+        "path": "runtime\\kernel\\__init__.py",
+        "size_bytes": 34
+      },
+      {
+        "path": "runtime\\knowledge\\models.py",
+        "size_bytes": 720
+      },
+      {
+        "path": "runtime\\knowledge\\store.py",
+        "size_bytes": 3782
+      },
+      {
+        "path": "runtime\\knowledge\\__init__.py",
+        "size_bytes": 205
+      },
+      {
+        "path": "runtime\\launcher\\discord_watcher.py",
+        "size_bytes": 1117
+      },
+      {
+        "path": "runtime\\learning\\feedback.py",
+        "size_bytes": 629
+      },
+      {
+        "path": "runtime\\learning\\__init__.py",
+        "size_bytes": 34
+      },
+      {
+        "path": "runtime\\memory\\action_audit.json",
+        "size_bytes": 278
+      },
+      {
+        "path": "runtime\\memory\\atomic_writer.py",
+        "size_bytes": 2925
+      },
+      {
+        "path": "runtime\\memory\\batch_async_writer.py",
+        "size_bytes": 4705
+      },
+      {
+        "path": "runtime\\memory\\bridge.py",
+        "size_bytes": 822
+      },
+      {
+        "path": "runtime\\memory\\events.jsonl",
+        "size_bytes": 1405
+      },
+      {
+        "path": "runtime\\memory\\events.py",
+        "size_bytes": 834
+      },
+      {
+        "path": "runtime\\memory\\event_store.py",
+        "size_bytes": 11896
+      },
+      {
+        "path": "runtime\\memory\\models.py",
+        "size_bytes": 400
+      },
+      {
+        "path": "runtime\\memory\\replay.py",
+        "size_bytes": 1231
+      },
+      {
+        "path": "runtime\\memory\\security_events.jsonl",
+        "size_bytes": 1825
+      },
+      {
+        "path": "runtime\\memory\\session.py",
+        "size_bytes": 1855
+      },
+      {
+        "path": "runtime\\memory\\working_memory.json",
+        "size_bytes": 20843
+      },
+      {
+        "path": "runtime\\memory\\__init__.py",
+        "size_bytes": 199
+      },
+      {
+        "path": "runtime\\memory\\affect\\__init__.py",
+        "size_bytes": 2
+      },
+      {
+        "path": "runtime\\memory\\cortex\\episodic.py",
+        "size_bytes": 3102
+      },
+      {
+        "path": "runtime\\memory\\cortex\\__init__.py",
+        "size_bytes": 2
+      },
+      {
+        "path": "runtime\\memory\\cortex\\semantic\\__init__.py",
+        "size_bytes": 2
+      },
+      {
+        "path": "runtime\\memory\\dream\\engine.py",
+        "size_bytes": 3302
+      },
+      {
+        "path": "runtime\\memory\\dream\\__init__.py",
+        "size_bytes": 2
+      },
+      {
+        "path": "runtime\\memory\\episodic\\episode.py",
+        "size_bytes": 1181
+      },
+      {
+        "path": "runtime\\memory\\episodic\\episode_extractor.py",
+        "size_bytes": 4160
+      },
+      {
+        "path": "runtime\\memory\\episodic\\episode_recovery.py",
+        "size_bytes": 1370
+      },
+      {
+        "path": "runtime\\memory\\episodic\\episode_store.py",
+        "size_bytes": 4433
+      },
+      {
+        "path": "runtime\\memory\\episodic\\__init__.py",
+        "size_bytes": 30
+      },
+      {
+        "path": "runtime\\memory\\journal\\__init__.py",
+        "size_bytes": 0
+      },
+      {
+        "path": "runtime\\memory\\reflection\\proposal.py",
+        "size_bytes": 576
+      },
+      {
+        "path": "runtime\\memory\\reflection\\store.py",
+        "size_bytes": 2287
+      },
+      {
+        "path": "runtime\\memory\\reflection\\validator.py",
+        "size_bytes": 3889
+      },
+      {
+        "path": "runtime\\memory\\reflection\\__init__.py",
+        "size_bytes": 2
+      },
+      {
+        "path": "runtime\\memory\\semantic\\contracts.py",
+        "size_bytes": 3078
+      },
+      {
+        "path": "runtime\\memory\\semantic\\vector_store.py",
+        "size_bytes": 1362
+      },
+      {
+        "path": "runtime\\memory\\semantic\\__init__.py",
+        "size_bytes": 34
+      },
+      {
+        "path": "runtime\\memory\\signals\\salience.py",
+        "size_bytes": 1982
+      },
+      {
+        "path": "runtime\\memory\\signals\\__init__.py",
+        "size_bytes": 2
+      },
+      {
+        "path": "runtime\\memory\\sleep\\consolidator.py",
+        "size_bytes": 4355
+      },
+      {
+        "path": "runtime\\memory\\sleep\\scheduler.py",
+        "size_bytes": 2022
+      },
+      {
+        "path": "runtime\\memory\\sleep\\state.py",
+        "size_bytes": 898
+      },
+      {
+        "path": "runtime\\memory\\sleep\\__init__.py",
+        "size_bytes": 2
+      },
+      {
+        "path": "runtime\\memory\\snapshots\\__init__.py",
+        "size_bytes": 0
+      },
+      {
+        "path": "runtime\\memory\\sqlite\\store.py",
+        "size_bytes": 5435
+      },
+      {
+        "path": "runtime\\memory\\sqlite\\__init__.py",
+        "size_bytes": 2
+      },
+      {
+        "path": "runtime\\memory_store\\L3_EXPERIENCE\\EXP-20260812-GUARDIAN-MUTEX.json",
+        "size_bytes": 443
+      },
+      {
+        "path": "runtime\\memory_store\\L4_SEMANTIC\\SEM-WOW-335A-WAY-OF-ELENDIL.json",
+        "size_bytes": 411
+      },
+      {
+        "path": "runtime\\metrics\\model_performance.json",
+        "size_bytes": 1265
+      },
+      {
+        "path": "runtime\\metrics\\provider_health_status.json",
+        "size_bytes": 725
+      },
+      {
+        "path": "runtime\\metrics\\provider_performance.json",
+        "size_bytes": 340
+      },
+      {
+        "path": "runtime\\microkernel\\backpressure_controller.py",
+        "size_bytes": 3113
+      },
+      {
+        "path": "runtime\\microkernel\\test_v60_backpressure.py",
+        "size_bytes": 3532
+      },
+      {
+        "path": "runtime\\models\\model_capabilities.json",
+        "size_bytes": 1403
+      },
+      {
+        "path": "runtime\\models\\model_registry.json",
+        "size_bytes": 902
+      },
+      {
+        "path": "runtime\\models\\ollama_sync.py",
+        "size_bytes": 3158
+      },
+      {
+        "path": "runtime\\models\\provider_capabilities.json",
+        "size_bytes": 805
+      },
+      {
+        "path": "runtime\\observability\\__init__.py",
+        "size_bytes": 2
+      },
+      {
+        "path": "runtime\\optimization\\token_compressor.py",
+        "size_bytes": 3757
+      },
+      {
+        "path": "runtime\\optimization\\__init__.py",
+        "size_bytes": 34
+      },
+      {
+        "path": "runtime\\policy\\engine.py",
+        "size_bytes": 1867
+      },
+      {
+        "path": "runtime\\policy\\protected_identity_registry.json",
+        "size_bytes": 931
+      },
+      {
+        "path": "runtime\\policy\\__init__.py",
+        "size_bytes": 2
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\v7_contract_birth_trace.py",
+        "size_bytes": 4837
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\v7_contract_generation_trace.py",
+        "size_bytes": 3964
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\v7_directional_flow_tracer.py",
+        "size_bytes": 2062
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\v7_execution_trace.py",
+        "size_bytes": 4677
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\v7_runtime_dependency_tracer.py",
+        "size_bytes": 5729
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\absolute_clean_store.py",
+        "size_bytes": 2646
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\absolute_fix.py",
+        "size_bytes": 3947
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\action_v2.py",
+        "size_bytes": 2191
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\apply_final_polish.py",
+        "size_bytes": 4081
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\apply_final_zero_defect.py",
+        "size_bytes": 4457
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\apply_rowid_final.py",
+        "size_bytes": 889
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\apply_rowid_fix.py",
+        "size_bytes": 628
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\apply_safe_patch.py",
+        "size_bytes": 3166
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\apply_store_fix.py",
+        "size_bytes": 3430
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\apply_store_perfect.py",
+        "size_bytes": 2500
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\apply_surgical_v1952.py",
+        "size_bytes": 5901
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\apply_v1923_selfheal.py",
+        "size_bytes": 1311
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\apply_v1931.py",
+        "size_bytes": 4624
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\apply_v1945.py",
+        "size_bytes": 2951
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\apply_v1946.py",
+        "size_bytes": 1891
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\apply_v1947.py",
+        "size_bytes": 2419
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\apply_v1948.py",
+        "size_bytes": 2123
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\audit_routes.py",
+        "size_bytes": 582
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\audit_script.py",
+        "size_bytes": 1237
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\build_clean_executors.py",
+        "size_bytes": 3937
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\build_v1933.py",
+        "size_bytes": 3883
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\eradicate_utcnow.py",
+        "size_bytes": 2624
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\fix_all.py",
+        "size_bytes": 4371
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\fix_architecture.py",
+        "size_bytes": 4236
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\fix_clean.py",
+        "size_bytes": 3363
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\fix_definitif.py",
+        "size_bytes": 5030
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\fix_executor_signature.py",
+        "size_bytes": 568
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\fix_final_5.py",
+        "size_bytes": 2671
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\fix_fstrings.py",
+        "size_bytes": 921
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\fix_git.py",
+        "size_bytes": 1808
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\fix_imports.py",
+        "size_bytes": 979
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\fix_quality.py",
+        "size_bytes": 1898
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\fix_signer.py",
+        "size_bytes": 979
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\fix_store_indent.py",
+        "size_bytes": 2365
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\gen_v1935.py",
+        "size_bytes": 3653
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\gen_v1936.py",
+        "size_bytes": 3637
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\gen_v1937.py",
+        "size_bytes": 3850
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\gen_v1938.py",
+        "size_bytes": 4347
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\gen_v1939.py",
+        "size_bytes": 4188
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\make_bootstrap.py",
+        "size_bytes": 1334
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\make_wiring_test.py",
+        "size_bytes": 682
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\master_fix.py",
+        "size_bytes": 4798
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\patch_action.py",
+        "size_bytes": 1895
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\patch_imports.py",
+        "size_bytes": 832
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\patch_order.py",
+        "size_bytes": 267
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\patch_permissions.py",
+        "size_bytes": 397
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\patch_ps_context.py",
+        "size_bytes": 706
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\patch_router.py",
+        "size_bytes": 856
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\polish_warnings.py",
+        "size_bytes": 1226
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\repair_store_clean.py",
+        "size_bytes": 2098
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\rewrite_store_clean.py",
+        "size_bytes": 2461
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\rewrite_supervisor.py",
+        "size_bytes": 2285
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\v1905_zero_defect.py",
+        "size_bytes": 3372
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\v1906_premium_fix.py",
+        "size_bytes": 3422
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\v1907_premium_fix.py",
+        "size_bytes": 3097
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\v1908_clean_fix.py",
+        "size_bytes": 5866
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\v1909_omega_fix.py",
+        "size_bytes": 3249
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\v1911_apex_fix.py",
+        "size_bytes": 3998
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\v1912_ultima_fix.py",
+        "size_bytes": 3059
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\v1913_syntax_fix.py",
+        "size_bytes": 965
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\v1914_absolute_fix.py",
+        "size_bytes": 4022
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\v1915_final_matrix.py",
+        "size_bytes": 5555
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\v1916_surgical_repair.py",
+        "size_bytes": 3836
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\patch_history\\v1917_fix.py",
+        "size_bytes": 2576
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\runtime_temp_forensic\\EZZIO_AUDIT\\Audit_20260803_170043.json",
+        "size_bytes": 233
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\runtime_temp_forensic\\EZZIO_AUDIT\\Audit_20260803_171644.json",
+        "size_bytes": 11283
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\runtime_temp_forensic\\EZZIO_AUDIT\\Audit_20260803_172327.json",
+        "size_bytes": 257
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\runtime_temp_forensic\\EZZIO_AUDIT\\Audit_20260803_173434.json",
+        "size_bytes": 21477
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\runtime_temp_forensic\\EZZIO_AUDIT\\Audit_20260803_173851.json",
+        "size_bytes": 20995
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\runtime_temp_forensic\\EZZIO_AUDIT\\Audit_20260803_183407.json",
+        "size_bytes": 14592
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\runtime_temp_forensic\\EZZIO_AUDIT\\Audit_20260803_185652.json",
+        "size_bytes": 8464
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\runtime_temp_forensic\\EZZIO_AUDIT\\Audit_20260804_042405.json",
+        "size_bytes": 22733
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\runtime_temp_forensic\\EZZIO_AUDIT\\Audit_20260804_151514.json",
+        "size_bytes": 22150
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\runtime_temp_forensic\\EZZIO_AUDIT\\Audit_20260804_152021.json",
+        "size_bytes": 2021
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\runtime_temp_forensic\\EZZIO_CHIRURGICAL_VALIDATION\\EZZIO_CHIRURGICAL_VALIDATION.json",
+        "size_bytes": 7510
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\runtime_temp_forensic\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_172452.json",
+        "size_bytes": 2070
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\runtime_temp_forensic\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_174857.json",
+        "size_bytes": 2392
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\runtime_temp_forensic\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_175451.json",
+        "size_bytes": 3245
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\runtime_temp_forensic\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_175840.json",
+        "size_bytes": 2506
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\runtime_temp_forensic\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_183851.json",
+        "size_bytes": 2466
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\runtime_temp_forensic\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_184626.json",
+        "size_bytes": 2456
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_patches\\runtime_temp_forensic\\EZZIO_FORENSIC_CLEAN\\forensic_20260809_185850.json",
+        "size_bytes": 2452
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_traces\\relocation\\20260809_224648\\relocation_manifest.json",
+        "size_bytes": 562
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_traces\\relocation\\20260809_224648\\relocation_result.json",
+        "size_bytes": 919
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_traces\\relocation\\20260809_224911\\relocation_manifest.json",
+        "size_bytes": 562
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_traces\\relocation\\20260809_231043\\relocation_manifest.json",
+        "size_bytes": 6597
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_traces\\relocation\\20260809_231043\\relocation_result.json",
+        "size_bytes": 3593
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_traces\\relocation\\20260809_231557\\relocation_manifest.json",
+        "size_bytes": 24030
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_traces\\relocation\\20260809_231557\\relocation_result.json",
+        "size_bytes": 13089
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_traces\\relocation\\20260809_231837\\relocation_manifest.json",
+        "size_bytes": 24030
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_traces\\relocation\\20260809_231837\\relocation_result.json",
+        "size_bytes": 28492
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_traces\\relocation\\20260809_232734\\relocation_manifest.json",
+        "size_bytes": 299
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_traces\\relocation\\20260809_233102\\relocation_manifest.json",
+        "size_bytes": 282
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_traces\\relocation\\20260809_233102\\relocation_result.json",
+        "size_bytes": 1345
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_traces\\relocation\\20260809_233243\\relocation_manifest.json",
+        "size_bytes": 282
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_traces\\relocation\\20260809_233243\\relocation_result.json",
+        "size_bytes": 1743
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\audit\\archive_traces\\relocation_20260809_224021\\relocation_result.json",
+        "size_bytes": 109
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\experiments\\v611_topology\\discovery_hardened.py",
+        "size_bytes": 938
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\experiments\\v611_topology\\hardware_report.json",
+        "size_bytes": 673
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\experiments\\v611_topology\\topology_probe.py",
+        "size_bytes": 1133
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\experiments\\v611_topology\\topology_v2.py",
+        "size_bytes": 997
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\hardware\\adaptive_governor_v62.py",
+        "size_bytes": 5436
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\hardware\\autonomous_governor_v65.py",
+        "size_bytes": 12325
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\hardware\\hardened_governor_v64.py",
+        "size_bytes": 9971
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\hardware\\operational_governor_v610.py",
+        "size_bytes": 1102
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\hardware\\operational_governor_v67.py",
+        "size_bytes": 11499
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\hardware\\predictive_governor_v63.py",
+        "size_bytes": 8790
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\hardware\\resource_governor_v68.py",
+        "size_bytes": 3196
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\hardware\\state\\production_v661_state.json",
+        "size_bytes": 295
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\hardware\\state\\state\\production_v661_state.json",
+        "size_bytes": 259
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\runtime\\observability\\traces.py",
+        "size_bytes": 384
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\tools\\legacy_root_scripts\\deploy_fix.py",
+        "size_bytes": 5934
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\tools\\legacy_root_scripts\\ezzio_perfection.py",
+        "size_bytes": 1846
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\tools\\legacy_root_scripts\\file_tools.py",
+        "size_bytes": 8066
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\tools\\legacy_root_scripts\\Inspect-WorkspaceIndex.py",
+        "size_bytes": 1557
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\tools\\legacy_root_scripts\\inspect_exec.py",
+        "size_bytes": 484
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\tools\\legacy_root_scripts\\inspect_routes.py",
+        "size_bytes": 1310
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\tools\\legacy_root_scripts\\list_models.py",
+        "size_bytes": 729
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\tools\\legacy_root_scripts\\main.py",
+        "size_bytes": 1305
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\tools\\legacy_root_scripts\\safe_fix.py",
+        "size_bytes": 1377
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\tools\\legacy_root_scripts\\self_analysis.py",
+        "size_bytes": 3907
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\tools\\legacy_root_scripts\\sweeper.py",
+        "size_bytes": 1262
+      },
+      {
+        "path": "runtime\\quarantine\\V7.11.1.2\\tools\\legacy_root_scripts\\vision.py",
+        "size_bytes": 2327
+      },
+      {
+        "path": "runtime\\reasoning\\planner.py",
+        "size_bytes": 935
+      },
+      {
+        "path": "runtime\\reasoning\\router.py",
+        "size_bytes": 563
+      },
+      {
+        "path": "runtime\\reasoning\\__init__.py",
+        "size_bytes": 150
+      },
+      {
+        "path": "runtime\\recovery\\actions.py",
+        "size_bytes": 1422
+      },
+      {
+        "path": "runtime\\recovery\\contracts.py",
+        "size_bytes": 3157
+      },
+      {
+        "path": "runtime\\recovery\\controller.py",
+        "size_bytes": 2446
+      },
+      {
+        "path": "runtime\\recovery\\incident_bundle.py",
+        "size_bytes": 5373
+      },
+      {
+        "path": "runtime\\recovery\\ledger.py",
+        "size_bytes": 2905
+      },
+      {
+        "path": "runtime\\recovery\\ledger_boot_recovery.py",
+        "size_bytes": 6296
+      },
+      {
+        "path": "runtime\\recovery\\snapshot.py",
+        "size_bytes": 2498
+      },
+      {
+        "path": "runtime\\recovery\\store.py",
+        "size_bytes": 7744
+      },
+      {
+        "path": "runtime\\recovery\\__init__.py",
+        "size_bytes": 894
+      },
+      {
+        "path": "runtime\\recovery\\analyzers\\base.py",
+        "size_bytes": 243
+      },
+      {
+        "path": "runtime\\recovery\\analyzers\\queue_analyzer.py",
+        "size_bytes": 968
+      },
+      {
+        "path": "runtime\\recovery\\analyzers\\security_analyzer.py",
+        "size_bytes": 610
+      },
+      {
+        "path": "runtime\\recovery\\analyzers\\timeout_analyzer.py",
+        "size_bytes": 609
+      },
+      {
+        "path": "runtime\\recovery\\analyzers\\__init__.py",
+        "size_bytes": 307
+      },
+      {
+        "path": "runtime\\recovery\\decision\\engine.py",
+        "size_bytes": 8415
+      },
+      {
+        "path": "runtime\\recovery\\decision\\governor.py",
+        "size_bytes": 1325
+      },
+      {
+        "path": "runtime\\recovery\\decision\\policies.py",
+        "size_bytes": 2948
+      },
+      {
+        "path": "runtime\\recovery\\decision\\__init__.py",
+        "size_bytes": 243
+      },
+      {
+        "path": "runtime\\recovery\\executor\\base.py",
+        "size_bytes": 225
+      },
+      {
+        "path": "runtime\\recovery\\executor\\quarantine.py",
+        "size_bytes": 1118
+      },
+      {
+        "path": "runtime\\recovery\\executor\\retry.py",
+        "size_bytes": 785
+      },
+      {
+        "path": "runtime\\recovery\\executor\\scaling.py",
+        "size_bytes": 1218
+      },
+      {
+        "path": "runtime\\recovery\\executor\\__init__.py",
+        "size_bytes": 34
+      },
+      {
+        "path": "runtime\\recovery\\queue\\bus.py",
+        "size_bytes": 6110
+      },
+      {
+        "path": "runtime\\recovery\\queue\\__init__.py",
+        "size_bytes": 89
+      },
+      {
+        "path": "runtime\\recovery\\rollback\\manager.py",
+        "size_bytes": 5455
+      },
+      {
+        "path": "runtime\\recovery\\rollback\\__init__.py",
+        "size_bytes": 128
+      },
+      {
+        "path": "runtime\\router\\cognitive_router.py",
+        "size_bytes": 2313
+      },
+      {
+        "path": "runtime\\router\\llm_response.py",
+        "size_bytes": 698
+      },
+      {
+        "path": "runtime\\router\\llm_router.py",
+        "size_bytes": 3657
+      },
+      {
+        "path": "runtime\\router\\__init__.py",
+        "size_bytes": 2
+      },
+      {
+        "path": "runtime\\rss\\cache.py",
+        "size_bytes": 1888
+      },
+      {
+        "path": "runtime\\rss\\collector.py",
+        "size_bytes": 2514
+      },
+      {
+        "path": "runtime\\rss\\__init__.py",
+        "size_bytes": 171
+      },
+      {
+        "path": "runtime\\security\\dpapi_vault.json",
+        "size_bytes": 185
+      },
+      {
+        "path": "runtime\\sensors\\filesystem_sensor.py",
+        "size_bytes": 1749
+      },
+      {
+        "path": "runtime\\sensors\\git_sensor.py",
+        "size_bytes": 1399
+      },
+      {
+        "path": "runtime\\sensors\\health.py",
+        "size_bytes": 1081
+      },
+      {
+        "path": "runtime\\sensors\\sensor_manager.py",
+        "size_bytes": 3594
+      },
+      {
+        "path": "runtime\\sensors\\system_sensor.py",
+        "size_bytes": 2188
+      },
+      {
+        "path": "runtime\\sensors\\__init__.py",
+        "size_bytes": 2
+      },
+      {
+        "path": "runtime\\skills\\loader.py",
+        "size_bytes": 939
+      },
+      {
+        "path": "runtime\\skills\\registry.py",
+        "size_bytes": 1167
+      },
+      {
+        "path": "runtime\\skills\\skill_manager.py",
+        "size_bytes": 8640
+      },
+      {
+        "path": "runtime\\skills\\validator.py",
+        "size_bytes": 491
+      },
+      {
+        "path": "runtime\\skills\\__init__.py",
+        "size_bytes": 34
+      },
+      {
+        "path": "runtime\\skills\\active\\filesystem_search\\manifest.json",
+        "size_bytes": 226
+      },
+      {
+        "path": "runtime\\skills\\active\\filesystem_search\\skill.py",
+        "size_bytes": 748
+      },
+      {
+        "path": "runtime\\skills\\active\\git_manager\\manifest.json",
+        "size_bytes": 194
+      },
+      {
+        "path": "runtime\\skills\\active\\git_manager\\skill.py",
+        "size_bytes": 1020
+      },
+      {
+        "path": "runtime\\skills\\active\\python_analyzer\\manifest.json",
+        "size_bytes": 221
+      },
+      {
+        "path": "runtime\\skills\\active\\python_analyzer\\skill.py",
+        "size_bytes": 1190
+      },
+      {
+        "path": "runtime\\skills_store\\SKILL-PY-OPTIMIZER-V1.json",
+        "size_bytes": 350
+      },
+      {
+        "path": "runtime\\snapshots\\EZZIO_STATE_20260812_150705\\ledgers\\evolution_audit_2026-08-12.jsonl",
+        "size_bytes": 3727
+      },
+      {
+        "path": "runtime\\snapshots\\EZZIO_STATE_20260812_150705\\memory\\L3_EXPERIENCE\\EXP-20260812-GUARDIAN-MUTEX.json",
+        "size_bytes": 443
+      },
+      {
+        "path": "runtime\\snapshots\\EZZIO_STATE_20260812_150705\\memory\\L4_SEMANTIC\\SEM-WOW-335A-WAY-OF-ELENDIL.json",
+        "size_bytes": 411
+      },
+      {
+        "path": "runtime\\snapshots\\EZZIO_STATE_20260812_150705\\skills\\SKILL-PY-OPTIMIZER-V1.json",
+        "size_bytes": 350
+      },
+      {
+        "path": "runtime\\state\\circuit_breakers.json",
+        "size_bytes": 103
+      },
+      {
+        "path": "runtime\\state\\state.json",
+        "size_bytes": 250
+      },
+      {
+        "path": "runtime\\state\\state_manager.py",
+        "size_bytes": 1639
+      },
+      {
+        "path": "runtime\\state\\world_state.json",
+        "size_bytes": 1017
+      },
+      {
+        "path": "runtime\\state\\__init__.py",
+        "size_bytes": 2
+      },
+      {
+        "path": "runtime\\telemetry\\collector.py",
+        "size_bytes": 7468
+      },
+      {
+        "path": "runtime\\telemetry\\events.py",
+        "size_bytes": 714
+      },
+      {
+        "path": "runtime\\telemetry\\health.py",
+        "size_bytes": 2254
+      },
+      {
+        "path": "runtime\\telemetry\\metrics.py",
+        "size_bytes": 786
+      },
+      {
+        "path": "runtime\\telemetry\\storage.py",
+        "size_bytes": 10100
+      },
+      {
+        "path": "runtime\\telemetry\\__init__.py",
+        "size_bytes": 557
+      },
+      {
+        "path": "runtime\\tests\\test_v739_v741_parallel.py",
+        "size_bytes": 2878
+      },
+      {
+        "path": "runtime\\tests\\agent\\test_v740_stage2.py",
+        "size_bytes": 2309
+      },
+      {
+        "path": "runtime\\tests\\authority\\test_v732_authority.py",
+        "size_bytes": 3159
+      },
+      {
+        "path": "runtime\\tests\\evolution_experience\\test_v736_experience.py",
+        "size_bytes": 2132
+      },
+      {
+        "path": "runtime\\tests\\evolution_intelligence\\test_v734_intelligence.py",
+        "size_bytes": 1882
+      },
+      {
+        "path": "runtime\\tests\\evolution_simulation\\test_v735_simulation.py",
+        "size_bytes": 1796
+      },
+      {
+        "path": "runtime\\tests\\identity\\test_v729_3_guardian.py",
+        "size_bytes": 3120
+      },
+      {
+        "path": "runtime\\tests\\identity\\test_v730_identity_survival.py",
+        "size_bytes": 3636
+      },
+      {
+        "path": "runtime\\tests\\identity\\test_v731_identity_fortress.py",
+        "size_bytes": 3813
+      },
+      {
+        "path": "runtime\\tests\\integrations\\discord\\test_v744_discord.py",
+        "size_bytes": 2291
+      },
+      {
+        "path": "runtime\\tests\\integrations\\discord\\test_v744_drill.py",
+        "size_bytes": 3215
+      },
+      {
+        "path": "runtime\\tests\\integrations\\discord\\test_v744_hardening.py",
+        "size_bytes": 2775
+      },
+      {
+        "path": "runtime\\tests\\integrations\\discord\\test_v745_1_secret_matrix.py",
+        "size_bytes": 2522
+      },
+      {
+        "path": "runtime\\tests\\integrations\\discord\\test_v745_chaos.py",
+        "size_bytes": 4187
+      },
+      {
+        "path": "runtime\\tests\\integrations\\discord\\test_v746_resilience.py",
+        "size_bytes": 3152
+      },
+      {
+        "path": "runtime\\tests\\integrations\\discord\\test_v747_soak.py",
+        "size_bytes": 2000
+      },
+      {
+        "path": "runtime\\tests\\performance_intelligence\\test_v737_performance.py",
+        "size_bytes": 2864
+      },
+      {
+        "path": "runtime\\tests\\performance_intelligence\\test_v738_governor.py",
+        "size_bytes": 2437
+      },
+      {
+        "path": "runtime\\tests\\quality_gate\\test_v733_quality_gate.py",
+        "size_bytes": 2059
+      },
+      {
+        "path": "runtime\\tests\\router\\identity_mirror.py",
+        "size_bytes": 1413
+      },
+      {
+        "path": "runtime\\tests\\router\\test_chaos_resilience.py",
+        "size_bytes": 3371
+      },
+      {
+        "path": "runtime\\tests\\router\\test_decision_matrix.py",
+        "size_bytes": 1847
+      },
+      {
+        "path": "runtime\\tests\\router\\test_fault_tolerant.py",
+        "size_bytes": 3147
+      },
+      {
+        "path": "runtime\\tests\\router\\test_v726_chaos_full.py",
+        "size_bytes": 3984
+      },
+      {
+        "path": "runtime\\tests\\router\\test_v727_integrity_chaos.py",
+        "size_bytes": 4754
+      },
+      {
+        "path": "runtime\\tests\\router\\test_v728_archive.py",
+        "size_bytes": 3902
+      },
+      {
+        "path": "runtime\\tests\\router\\test_v728_archive_tamper.py",
+        "size_bytes": 3839
+      },
+      {
+        "path": "runtime\\tests\\router\\test_v728_disaster_recovery.py",
+        "size_bytes": 4183
+      },
+      {
+        "path": "runtime\\tests\\router\\test_v728_distributed_chaos.py",
+        "size_bytes": 4605
+      },
+      {
+        "path": "runtime\\tests\\router\\test_v728_identity_continuity.py",
+        "size_bytes": 1627
+      },
+      {
+        "path": "runtime\\tests\\router\\test_v728_recovery_continuity.py",
+        "size_bytes": 5413
+      },
+      {
+        "path": "runtime\\tests\\router\\test_v729_identity_context.py",
+        "size_bytes": 1441
+      },
+      {
+        "path": "runtime\\tests\\router\\test_v729_ledger_binding.py",
+        "size_bytes": 5242
+      },
+      {
+        "path": "runtime\\tests\\tool_gateway\\test_v739_gateway.py",
+        "size_bytes": 2038
+      },
+      {
+        "path": "runtime\\tests\\tool_gateway\\test_v740_google_bridge.py",
+        "size_bytes": 2711
+      },
+      {
+        "path": "runtime\\tests\\tool_gateway\\test_v741_model_router.py",
+        "size_bytes": 1973
+      },
+      {
+        "path": "runtime\\test_isolation\\v451\\simple_lock_v451.py",
+        "size_bytes": 3612
+      },
+      {
+        "path": "runtime\\test_isolation\\v451\\test_lock_logic.py",
+        "size_bytes": 2458
+      },
+      {
+        "path": "runtime\\test_isolation\\v452\\store_v452.py",
+        "size_bytes": 4557
+      },
+      {
+        "path": "runtime\\test_isolation\\v452\\test_crash_resilience.py",
+        "size_bytes": 2831
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\async_atomic_writer.py",
+        "size_bytes": 3263
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\atomic_writer.py",
+        "size_bytes": 2925
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\test_atomic_commit.py",
+        "size_bytes": 1198
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\test_batch_benchmark.py",
+        "size_bytes": 3181
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\test_crash_before_replace.py",
+        "size_bytes": 594
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\test_crash_pending.py",
+        "size_bytes": 593
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\test_event_store_atomic.py",
+        "size_bytes": 992
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\test_integration_v454.py",
+        "size_bytes": 3052
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\test_integration_v454_b.py",
+        "size_bytes": 2051
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\test_integration_v454_c.py",
+        "size_bytes": 1836
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\test_integration_v454_c_async.py",
+        "size_bytes": 1934
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\test_integration_v454_c_hardened.py",
+        "size_bytes": 3371
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\test_recovery_verify.py",
+        "size_bytes": 797
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\test_stress_chaos.py",
+        "size_bytes": 4626
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\worker_flood.py",
+        "size_bytes": 365
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\sandbox_batch_benchmark\\events_batch_bench.jsonl",
+        "size_bytes": 5677790
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\sandbox_data\\events_crash.jsonl",
+        "size_bytes": 33
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\sandbox_integration\\events_runtime.jsonl",
+        "size_bytes": 36786
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\sandbox_integration_b\\events_kill.jsonl",
+        "size_bytes": 736
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\sandbox_integration_c\\events_endurance.jsonl",
+        "size_bytes": 2800740
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\sandbox_integration_c_async\\events_endurance_async.jsonl",
+        "size_bytes": 1314438
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\sandbox_ryzen_drill\\events_ryzen_drill.jsonl",
+        "size_bytes": 1065074
+      },
+      {
+        "path": "runtime\\test_isolation\\v453\\sandbox_stress\\events_fuzz.jsonl",
+        "size_bytes": 5125
+      },
+      {
+        "path": "runtime\\test_isolation\\v456\\segmented_manager.py",
+        "size_bytes": 2791
+      },
+      {
+        "path": "runtime\\test_isolation\\v456\\segmented_recovery.py",
+        "size_bytes": 5927
+      },
+      {
+        "path": "runtime\\test_isolation\\v456\\test_manifest_checksum.py",
+        "size_bytes": 2719
+      },
+      {
+        "path": "runtime\\test_isolation\\v456\\test_recovery_chaos.py",
+        "size_bytes": 2819
+      },
+      {
+        "path": "runtime\\test_isolation\\v456\\test_segmentation.py",
+        "size_bytes": 1466
+      },
+      {
+        "path": "runtime\\test_isolation\\v456\\sandbox_chaos\\manifest.json",
+        "size_bytes": 264
+      },
+      {
+        "path": "runtime\\test_isolation\\v456\\sandbox_chaos\\segments\\segment_000001.jsonl",
+        "size_bytes": 19
+      },
+      {
+        "path": "runtime\\test_isolation\\v456\\sandbox_chaos\\segments\\segment_000002.jsonl",
+        "size_bytes": 18
+      },
+      {
+        "path": "runtime\\test_isolation\\v456\\sandbox_checksum\\manifest.json",
+        "size_bytes": 290
+      },
+      {
+        "path": "runtime\\test_isolation\\v456\\sandbox_checksum\\segments\\segment_000001.jsonl",
+        "size_bytes": 19
+      },
+      {
+        "path": "runtime\\test_isolation\\v456\\sandbox_checksum\\segments\\segment_000002.jsonl",
+        "size_bytes": 19
+      },
+      {
+        "path": "runtime\\test_isolation\\v456\\store\\manifest.json",
+        "size_bytes": 262
+      },
+      {
+        "path": "runtime\\test_isolation\\v456\\store\\segments\\segment_000001.jsonl",
+        "size_bytes": 1034
+      },
+      {
+        "path": "runtime\\test_isolation\\v457\\concurrent_segmented_engine.py",
+        "size_bytes": 9078
+      },
+      {
+        "path": "runtime\\test_isolation\\v457\\test_v457_benchmark.py",
+        "size_bytes": 3573
+      },
+      {
+        "path": "runtime\\test_isolation\\v457\\sandbox_bench\\manifest.json",
+        "size_bytes": 319
+      },
+      {
+        "path": "runtime\\test_isolation\\v457\\sandbox_bench\\segments\\segment_000001.jsonl",
+        "size_bytes": 10466810
+      },
+      {
+        "path": "runtime\\test_isolation\\v457\\sandbox_bench\\segments\\segment_000002.jsonl",
+        "size_bytes": 9904595
+      },
+      {
+        "path": "runtime\\test_isolation\\v458\\active_worker.py",
+        "size_bytes": 561
+      },
+      {
+        "path": "runtime\\test_isolation\\v458\\concurrent_segmented_engine.py",
+        "size_bytes": 7960
+      },
+      {
+        "path": "runtime\\test_isolation\\v458\\manifest.json",
+        "size_bytes": 993
+      },
+      {
+        "path": "runtime\\test_isolation\\v458\\test_v458_1_crash_hardening.py",
+        "size_bytes": 3019
+      },
+      {
+        "path": "runtime\\test_isolation\\v458\\test_v458_profiler_chaos.py",
+        "size_bytes": 3855
+      },
+      {
+        "path": "runtime\\test_isolation\\v458\\segments\\segment_000001.jsonl",
+        "size_bytes": 5214511
+      },
+      {
+        "path": "runtime\\test_isolation\\v458\\segments\\segment_000002.jsonl",
+        "size_bytes": 584684
+      },
+      {
+        "path": "runtime\\test_isolation\\v458\\segments\\segment_000003.jsonl",
+        "size_bytes": 41796
+      },
+      {
+        "path": "runtime\\test_isolation\\v458\\segments\\segment_000004.jsonl",
+        "size_bytes": 97315
+      },
+      {
+        "path": "runtime\\test_isolation\\v459\\manifest.json",
+        "size_bytes": 312
+      },
+      {
+        "path": "runtime\\test_isolation\\v459\\segments\\segment_000001.jsonl",
+        "size_bytes": 36
+      },
+      {
+        "path": "runtime\\test_isolation\\v459\\segments\\segment_000002.jsonl",
+        "size_bytes": 30
+      },
+      {
+        "path": "runtime\\test_isolation\\v4598\\concurrent_segmented_engine_faulty.py",
+        "size_bytes": 9934
+      },
+      {
+        "path": "runtime\\test_isolation\\v4598\\test_v459_8_chaos_matrix.py",
+        "size_bytes": 4200
+      },
+      {
+        "path": "runtime\\test_isolation\\v4598\\sandbox_chaos\\manifest.json",
+        "size_bytes": 87
+      },
+      {
+        "path": "runtime\\test_isolation\\v4599\\concurrent_segmented_engine_soak.py",
+        "size_bytes": 9253
+      },
+      {
+        "path": "runtime\\test_isolation\\v4599\\test_v459_9_soak_drill.py",
+        "size_bytes": 3706
+      },
+      {
+        "path": "runtime\\test_isolation\\v4599\\sandbox_soak\\manifest.json",
+        "size_bytes": 2602
+      },
+      {
+        "path": "runtime\\test_isolation\\v4599\\sandbox_soak\\segments\\segment_000001.jsonl",
+        "size_bytes": 10347227
+      },
+      {
+        "path": "runtime\\test_isolation\\v4599\\sandbox_soak\\segments\\segment_000002.jsonl",
+        "size_bytes": 10391076
+      },
+      {
+        "path": "runtime\\test_isolation\\v4599\\sandbox_soak\\segments\\segment_000003.jsonl",
+        "size_bytes": 10474907
+      },
+      {
+        "path": "runtime\\test_isolation\\v4599\\sandbox_soak\\segments\\segment_000004.jsonl",
+        "size_bytes": 10486581
+      },
+      {
+        "path": "runtime\\test_isolation\\v4599\\sandbox_soak\\segments\\segment_000005.jsonl",
+        "size_bytes": 10487510
+      },
+      {
+        "path": "runtime\\test_isolation\\v4599\\sandbox_soak\\segments\\segment_000006.jsonl",
+        "size_bytes": 10484826
+      },
+      {
+        "path": "runtime\\test_isolation\\v4599\\sandbox_soak\\segments\\segment_000007.jsonl",
+        "size_bytes": 10481901
+      },
+      {
+        "path": "runtime\\test_isolation\\v4599\\sandbox_soak\\segments\\segment_000008.jsonl",
+        "size_bytes": 10068210
+      },
+      {
+        "path": "runtime\\test_isolation\\v4599\\sandbox_soak\\segments\\segment_000009.jsonl",
+        "size_bytes": 10068184
+      },
+      {
+        "path": "runtime\\test_isolation\\v4599\\sandbox_soak\\segments\\segment_000010.jsonl",
+        "size_bytes": 10393394
+      },
+      {
+        "path": "runtime\\test_isolation\\v4599\\sandbox_soak\\segments\\segment_000011.jsonl",
+        "size_bytes": 10395874
+      },
+      {
+        "path": "runtime\\test_isolation\\v4599\\sandbox_soak\\segments\\segment_000012.jsonl",
+        "size_bytes": 9681097
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\concurrent_segmented_engine_v46.py",
+        "size_bytes": 12026
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\test_v46_scale_soak.py",
+        "size_bytes": 4509
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\manifest.json",
+        "size_bytes": 9431
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000001.jsonl",
+        "size_bytes": 9393778
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000002.jsonl",
+        "size_bytes": 9489143
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000003.jsonl",
+        "size_bytes": 9486706
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000004.jsonl",
+        "size_bytes": 9500444
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000005.jsonl",
+        "size_bytes": 9500406
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000006.jsonl",
+        "size_bytes": 9486961
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000007.jsonl",
+        "size_bytes": 9478958
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000008.jsonl",
+        "size_bytes": 9483267
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000009.jsonl",
+        "size_bytes": 9478593
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000010.jsonl",
+        "size_bytes": 9476749
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000011.jsonl",
+        "size_bytes": 9480525
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000012.jsonl",
+        "size_bytes": 9502591
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000013.jsonl",
+        "size_bytes": 9504199
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000014.jsonl",
+        "size_bytes": 9496010
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000015.jsonl",
+        "size_bytes": 9502124
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000016.jsonl",
+        "size_bytes": 9502181
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000017.jsonl",
+        "size_bytes": 9501707
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000018.jsonl",
+        "size_bytes": 9502701
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000019.jsonl",
+        "size_bytes": 9488443
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000020.jsonl",
+        "size_bytes": 9501626
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000021.jsonl",
+        "size_bytes": 9502698
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000022.jsonl",
+        "size_bytes": 9496471
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000023.jsonl",
+        "size_bytes": 9502932
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000024.jsonl",
+        "size_bytes": 9497410
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000025.jsonl",
+        "size_bytes": 9499657
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000026.jsonl",
+        "size_bytes": 9500235
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000027.jsonl",
+        "size_bytes": 9501208
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000028.jsonl",
+        "size_bytes": 9497906
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000029.jsonl",
+        "size_bytes": 9500401
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000030.jsonl",
+        "size_bytes": 9500615
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000031.jsonl",
+        "size_bytes": 9502486
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000032.jsonl",
+        "size_bytes": 9500963
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000033.jsonl",
+        "size_bytes": 9501033
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000034.jsonl",
+        "size_bytes": 9501680
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000035.jsonl",
+        "size_bytes": 9502820
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000036.jsonl",
+        "size_bytes": 9503781
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000037.jsonl",
+        "size_bytes": 9502210
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000038.jsonl",
+        "size_bytes": 9503312
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000039.jsonl",
+        "size_bytes": 9502015
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000040.jsonl",
+        "size_bytes": 9503459
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000041.jsonl",
+        "size_bytes": 9496163
+      },
+      {
+        "path": "runtime\\test_isolation\\v460\\sandbox_scale\\segments\\segment_000042.jsonl",
+        "size_bytes": 6416418
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\concurrent_segmented_engine_v47.py",
+        "size_bytes": 12435
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\test_v47_semantic_benchmark.py",
+        "size_bytes": 6197
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\manifest.json",
+        "size_bytes": 5579
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000001.jsonl",
+        "size_bytes": 50248561
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000002.jsonl",
+        "size_bytes": 50479815
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000003.jsonl",
+        "size_bytes": 50496740
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000004.jsonl",
+        "size_bytes": 50508854
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000005.jsonl",
+        "size_bytes": 50510284
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000006.jsonl",
+        "size_bytes": 50510813
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000007.jsonl",
+        "size_bytes": 50510338
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000008.jsonl",
+        "size_bytes": 50508536
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000009.jsonl",
+        "size_bytes": 50509130
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000010.jsonl",
+        "size_bytes": 50507896
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000011.jsonl",
+        "size_bytes": 50513077
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000012.jsonl",
+        "size_bytes": 50505935
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000013.jsonl",
+        "size_bytes": 50517096
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000014.jsonl",
+        "size_bytes": 50525582
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000015.jsonl",
+        "size_bytes": 50528506
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000016.jsonl",
+        "size_bytes": 50515663
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000017.jsonl",
+        "size_bytes": 50514542
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000018.jsonl",
+        "size_bytes": 50514270
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000019.jsonl",
+        "size_bytes": 50517875
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000020.jsonl",
+        "size_bytes": 50521667
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000021.jsonl",
+        "size_bytes": 50532812
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000022.jsonl",
+        "size_bytes": 50527312
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000023.jsonl",
+        "size_bytes": 50530455
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000024.jsonl",
+        "size_bytes": 50537765
+      },
+      {
+        "path": "runtime\\test_isolation\\v470\\sandbox_1m\\segments\\segment_000025.jsonl",
+        "size_bytes": 50755454
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\concurrent_segmented_engine_v48.py",
+        "size_bytes": 15629
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\test_v48_governor_benchmark.py",
+        "size_bytes": 4540
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\manifest.json",
+        "size_bytes": 4892
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000001.jsonl",
+        "size_bytes": 19346898
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000002.jsonl",
+        "size_bytes": 18218310
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000003.jsonl",
+        "size_bytes": 18217920
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000004.jsonl",
+        "size_bytes": 18204870
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000005.jsonl",
+        "size_bytes": 18208358
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000006.jsonl",
+        "size_bytes": 18214574
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000007.jsonl",
+        "size_bytes": 18217003
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000008.jsonl",
+        "size_bytes": 18212606
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000009.jsonl",
+        "size_bytes": 18221481
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000010.jsonl",
+        "size_bytes": 18207964
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000011.jsonl",
+        "size_bytes": 18201966
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000012.jsonl",
+        "size_bytes": 18203992
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000013.jsonl",
+        "size_bytes": 18209503
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000014.jsonl",
+        "size_bytes": 18211436
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000015.jsonl",
+        "size_bytes": 18212840
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000016.jsonl",
+        "size_bytes": 18218398
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000017.jsonl",
+        "size_bytes": 18215496
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000018.jsonl",
+        "size_bytes": 18216127
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000019.jsonl",
+        "size_bytes": 18221680
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000020.jsonl",
+        "size_bytes": 18217663
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000021.jsonl",
+        "size_bytes": 18218230
+      },
+      {
+        "path": "runtime\\test_isolation\\v480\\sandbox_governor\\segments\\segment_000022.jsonl",
+        "size_bytes": 14804281
+      },
+      {
+        "path": "runtime\\test_isolation\\v540\\sandbox_real_engine\\manifest.json",
+        "size_bytes": 88
+      },
+      {
+        "path": "runtime\\test_isolation\\v610\\sandbox_e2e_real\\manifest.json",
+        "size_bytes": 88
+      },
+      {
+        "path": "runtime\\tools\\action_ledger.jsonl",
+        "size_bytes": 1133
+      },
+      {
+        "path": "runtime\\tools\\base.py",
+        "size_bytes": 857
+      },
+      {
+        "path": "runtime\\tools\\bootstrap.py",
+        "size_bytes": 888
+      },
+      {
+        "path": "runtime\\tools\\manifest.json",
+        "size_bytes": 617
+      },
+      {
+        "path": "runtime\\tools\\manifest_loader.py",
+        "size_bytes": 371
+      },
+      {
+        "path": "runtime\\tools\\manifest_provider.py",
+        "size_bytes": 1537
+      },
+      {
+        "path": "runtime\\tools\\parser.py",
+        "size_bytes": 1384
+      },
+      {
+        "path": "runtime\\tools\\pipeline.py",
+        "size_bytes": 3542
+      },
+      {
+        "path": "runtime\\tools\\schema_validator.py",
+        "size_bytes": 1691
+      },
+      {
+        "path": "runtime\\tools\\tool_registry.py",
+        "size_bytes": 1471
+      },
+      {
+        "path": "runtime\\tools\\tool_schema.py",
+        "size_bytes": 1113
+      },
+      {
+        "path": "runtime\\tools\\__init__.py",
+        "size_bytes": 23
+      },
+      {
+        "path": "runtime\\tools\\executors\\filesystem.py",
+        "size_bytes": 1130
+      },
+      {
+        "path": "runtime\\tools\\executors\\git.py",
+        "size_bytes": 1196
+      },
+      {
+        "path": "runtime\\tools\\executors\\powershell.py",
+        "size_bytes": 1987
+      },
+      {
+        "path": "runtime\\tools\\executors\\reflector.py",
+        "size_bytes": 538
+      },
+      {
+        "path": "runtime\\tools\\executors\\__init__.py",
+        "size_bytes": 23
+      },
+      {
+        "path": "runtime_temp_forensic\\EZZIO_MEMORY_FORENSIC_20260809_222237\\01_database_autopsy.py",
+        "size_bytes": 1328
+      },
+      {
+        "path": "runtime_temp_forensic\\EZZIO_MEMORY_FORENSIC_20260809_222237\\02_direct_store_test.py",
+        "size_bytes": 827
+      },
+      {
+        "path": "runtime_temp_forensic\\EZZIO_MEMORY_FORENSIC_20260809_222237\\03_message_event_store.py",
+        "size_bytes": 1165
+      },
+      {
+        "path": "runtime_temp_forensic\\EZZIO_MEMORY_FORENSIC_20260809_222237\\04_working_memory.py",
+        "size_bytes": 533
+      },
+      {
+        "path": "runtime_temp_forensic\\EZZIO_MEMORY_FORENSIC_20260809_222237\\05_persistence_write.py",
+        "size_bytes": 348
+      },
+      {
+        "path": "runtime_temp_forensic\\EZZIO_MEMORY_FORENSIC_20260809_222237\\06_persistence_read.py",
+        "size_bytes": 267
+      },
+      {
+        "path": "runtime_temp_forensic\\EZZIO_MEMORY_FORENSIC_20260809_222237\\07_imports.py",
+        "size_bytes": 325
+      },
+      {
+        "path": "runtime_temp_forensic\\EZZIO_MEMORY_FORENSIC_20260809_222237\\syntax_runtime_memory_events_py.py",
+        "size_bytes": 322
+      },
+      {
+        "path": "runtime_temp_forensic\\EZZIO_MEMORY_FORENSIC_20260809_222237\\syntax_runtime_memory_session_py.py",
+        "size_bytes": 325
+      },
+      {
+        "path": "runtime_temp_forensic\\EZZIO_MEMORY_FORENSIC_20260809_222237\\syntax_runtime_memory_sqlite_store_py.py",
+        "size_bytes": 340
+      },
+      {
+        "path": "runtime_temp_forensic\\EZZIO_MEMORY_FORENSIC_20260809_222237\\syntax_runtime_memory___init___py.py",
+        "size_bytes": 325
+      },
+      {
+        "path": "runtime_temp_forensic\\EZZIO_MEMORY_FORENSIC_20260809_222237\\__init__.py",
+        "size_bytes": 34
+      },
+      {
+        "path": "state\\baselines\\v4_0_0_20260810_204914\\audit_certification_report.json",
+        "size_bytes": 486
+      },
+      {
+        "path": "state\\baselines\\v4_0_0_20260810_204914\\runtime_manifest_sha256.json",
+        "size_bytes": 422840
+      }
+    ],
+    "Laboratory": [
+      {
+        "path": "test_events.jsonl",
+        "size_bytes": 788
+      },
+      {
+        "path": ".pytest_cache\\README.md",
+        "size_bytes": 302
+      },
+      {
+        "path": "tests\\conftest.py",
+        "size_bytes": 173
+      },
+      {
+        "path": "tests\\__init__.py",
+        "size_bytes": 2
+      }
+    ],
+    "Historical/Archive": [
+      {
+        "path": "tools\\legacy_root_scripts\\restore_contracts.py",
+        "size_bytes": 1271
+      }
+    ],
+    "Uncategorized": [
+      {
+        "path": "config.json",
+        "size_bytes": 313
+      },
+      {
+        "path": "discord_agent_v2.py",
+        "size_bytes": 2971
+      },
+      {
+        "path": "E-zzio_Cartographie_Self_Awareness.md",
+        "size_bytes": 14417
+      },
+      {
+        "path": "ezzio_certify.py",
+        "size_bytes": 4512
+      },
+      {
+        "path": "ezzio_drift_detector.py",
+        "size_bytes": 4150
+      },
+      {
+        "path": "ezzio_kernel.py",
+        "size_bytes": 5060
+      },
+      {
+        "path": "ezzio_lock_baseline.py",
+        "size_bytes": 4241
+      },
+      {
+        "path": "ezzio_long_run_monitor.py",
+        "size_bytes": 5645
+      },
+      {
+        "path": "ezzio_long_run_v893.py",
+        "size_bytes": 6426
+      },
+      {
+        "path": "ezzio_memory_intelligence.py",
+        "size_bytes": 4049
+      },
+      {
+        "path": "ezzio_override_ledger.py",
+        "size_bytes": 3987
+      },
+      {
+        "path": "ezzio_structure_audit.py",
+        "size_bytes": 2290
+      },
+      {
+        "path": "ezzio_temporal_certificate.py",
+        "size_bytes": 3937
+      },
+      {
+        "path": "persona.full.md",
+        "size_bytes": 2166
+      },
+      {
+        "path": "run_ezzio.py",
+        "size_bytes": 2418
+      },
+      {
+        "path": "web_server.py",
+        "size_bytes": 10964
+      },
+      {
+        "path": "audit\\filesystem.json",
+        "size_bytes": 1222210
+      },
+      {
+        "path": "bridge\\brain\\20260610_111729_b5d6a1d737.json",
+        "size_bytes": 538
+      },
+      {
+        "path": "bridge\\brain\\20260610_111823_04709b37aa.json",
+        "size_bytes": 628
+      },
+      {
+        "path": "bridge\\brain\\20260610_112027_e238b6ac28.json",
+        "size_bytes": 406
+      },
+      {
+        "path": "bridge\\brain\\20260610_112143_c55f709a7b.json",
+        "size_bytes": 392
+      },
+      {
+        "path": "bridge\\brain\\20260610_112153_2ebc400d14.json",
+        "size_bytes": 589
+      },
+      {
+        "path": "bridge\\brain\\20260610_112207_b1aff27a93.json",
+        "size_bytes": 653
+      },
+      {
+        "path": "bridge\\brain\\20260610_112221_bfc1d7562a.json",
+        "size_bytes": 335
+      },
+      {
+        "path": "bridge\\brain\\20260610_112526_84c2de63c7.json",
+        "size_bytes": 367
+      },
+      {
+        "path": "bridge\\brain\\20260610_112539_0b249401ba.json",
+        "size_bytes": 343
+      },
+      {
+        "path": "bridge\\brain\\20260610_112613_eeb5fa1537.json",
+        "size_bytes": 391
+      },
+      {
+        "path": "bridge\\brain\\20260610_112625_e650db26b0.json",
+        "size_bytes": 567
+      },
+      {
+        "path": "bridge\\brain\\20260610_112635_fb02474825.json",
+        "size_bytes": 575
+      },
+      {
+        "path": "bridge\\brain\\20260610_112643_b1d590a678.json",
+        "size_bytes": 455
+      },
+      {
+        "path": "bridge\\brain\\20260610_112655_2c1f382d69.json",
+        "size_bytes": 338
+      },
+      {
+        "path": "bridge\\inbox\\20260610_012849_7efef2b884.json",
+        "size_bytes": 276
+      },
+      {
+        "path": "bridge\\inbox\\20260610_111710_31a0aba4f0.json",
+        "size_bytes": 278
+      },
+      {
+        "path": "bridge\\inbox\\20260610_111808_ffb5f3338d.json",
+        "size_bytes": 278
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112012_afc3ac7330.json",
+        "size_bytes": 315
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112027_da037a43e4.json",
+        "size_bytes": 224
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112104_1fcd7605f9.json",
+        "size_bytes": 224
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112104_7adabbdacc.json",
+        "size_bytes": 224
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112104_9b28000e2b.json",
+        "size_bytes": 222
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112112_ff1de9fa19.json",
+        "size_bytes": 225
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112120_bf95530d08.json",
+        "size_bytes": 223
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112128_3c92edfc67.json",
+        "size_bytes": 247
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112128_fe815b5ee1.json",
+        "size_bytes": 224
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112143_c2fd6be30a.json",
+        "size_bytes": 247
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112153_1b802f2346.json",
+        "size_bytes": 250
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112207_6e74e7c533.json",
+        "size_bytes": 244
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112513_25dfeedab3.json",
+        "size_bytes": 276
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112526_742bf59e29.json",
+        "size_bytes": 252
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112601_5057010a27.json",
+        "size_bytes": 247
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112613_2ac2c528dd.json",
+        "size_bytes": 243
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112625_e5c71d5c8e.json",
+        "size_bytes": 245
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112635_02e0e2f6e4.json",
+        "size_bytes": 253
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112643_a2bc8f04a6.json",
+        "size_bytes": 247
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112655_076deed2b9.json",
+        "size_bytes": 224
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112655_1217f4371b.json",
+        "size_bytes": 223
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112655_1e8724d213.json",
+        "size_bytes": 225
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112655_1eedc8421d.json",
+        "size_bytes": 218
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112655_25f0b374de.json",
+        "size_bytes": 228
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112655_6d133ac9a0.json",
+        "size_bytes": 224
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112655_919197fdfa.json",
+        "size_bytes": 222
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112655_a6052f7a19.json",
+        "size_bytes": 227
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112655_c58ab35f51.json",
+        "size_bytes": 224
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112655_e1e29b55f7.json",
+        "size_bytes": 223
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112655_fd867c5c22.json",
+        "size_bytes": 219
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112908_0ce6191a1f.json",
+        "size_bytes": 226
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112908_37583502bf.json",
+        "size_bytes": 225
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112908_47a353d1d3.json",
+        "size_bytes": 226
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112908_c250f569ae.json",
+        "size_bytes": 225
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112908_eb84076541.json",
+        "size_bytes": 227
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112955_084db5ef2e.json",
+        "size_bytes": 228
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112955_0997df25d1.json",
+        "size_bytes": 222
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112955_3bcfc5c351.json",
+        "size_bytes": 223
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112955_7d3a9fb7a8.json",
+        "size_bytes": 224
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112955_b1c2a287e0.json",
+        "size_bytes": 224
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112955_d4359ee042.json",
+        "size_bytes": 225
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112955_ee24985f80.json",
+        "size_bytes": 223
+      },
+      {
+        "path": "bridge\\inbox\\20260610_112955_f00edda99c.json",
+        "size_bytes": 223
+      },
+      {
+        "path": "bridge\\mobile\\20260610_012849_7aa3ec662f.json",
+        "size_bytes": 287
+      },
+      {
+        "path": "bridge\\mobile\\20260610_112143_98b187f378.json",
+        "size_bytes": 272
+      },
+      {
+        "path": "bridge\\mobile\\20260610_112153_d3c118c064.json",
+        "size_bytes": 470
+      },
+      {
+        "path": "bridge\\mobile\\20260610_112207_e437cd1ac1.json",
+        "size_bytes": 530
+      },
+      {
+        "path": "bridge\\mobile\\20260610_112221_9ca3261b22.json",
+        "size_bytes": 218
+      },
+      {
+        "path": "bridge\\mobile\\20260610_112526_f4272bd2b3.json",
+        "size_bytes": 218
+      },
+      {
+        "path": "bridge\\mobile\\20260610_112613_58cd8ef6c3.json",
+        "size_bytes": 271
+      },
+      {
+        "path": "bridge\\mobile\\20260610_112625_564283920f.json",
+        "size_bytes": 451
+      },
+      {
+        "path": "bridge\\mobile\\20260610_112635_b6b70c7695.json",
+        "size_bytes": 457
+      },
+      {
+        "path": "bridge\\mobile\\20260610_112643_53d49c38b0.json",
+        "size_bytes": 330
+      },
+      {
+        "path": "bridge\\mobile\\20260610_112655_5fe1514146.json",
+        "size_bytes": 1492
+      },
+      {
+        "path": "bridge\\mobile\\20260610_112655_6b4d1d75eb.json",
+        "size_bytes": 218
+      },
+      {
+        "path": "bridge\\mobile\\20260610_112655_70b95d47c0.json",
+        "size_bytes": 738
+      },
+      {
+        "path": "bridge\\mobile\\20260610_112655_70e60fab2b.json",
+        "size_bytes": 1492
+      },
+      {
+        "path": "bridge\\outbox\\20260610_012849_ca7350564a.json",
+        "size_bytes": 294
+      },
+      {
+        "path": "bridge\\outbox\\20260610_012849_cbf1ca91d5.json",
+        "size_bytes": 295
+      },
+      {
+        "path": "bridge\\outbox\\20260610_111729_3bb2bf29d6.json",
+        "size_bytes": 537
+      },
+      {
+        "path": "bridge\\outbox\\20260610_111823_5912ae2821.json",
+        "size_bytes": 627
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112027_36e8115e68.json",
+        "size_bytes": 473
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112027_46d31da4ac.json",
+        "size_bytes": 405
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112104_04efc668a0.json",
+        "size_bytes": 473
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112104_214b8e3f45.json",
+        "size_bytes": 1130
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112112_2a827290a6.json",
+        "size_bytes": 402
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112120_8e3bcf6ee3.json",
+        "size_bytes": 403
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112128_0d06704d81.json",
+        "size_bytes": 401
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112128_98a6c02eed.json",
+        "size_bytes": 3302
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112143_3198d2a203.json",
+        "size_bytes": 391
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112153_b961f63bca.json",
+        "size_bytes": 588
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112207_e96bfd2b77.json",
+        "size_bytes": 652
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112221_31c6383137.json",
+        "size_bytes": 334
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112526_3ed1c95f40.json",
+        "size_bytes": 366
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112539_80d6f6ef9a.json",
+        "size_bytes": 342
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112613_81e13b1958.json",
+        "size_bytes": 390
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112625_b74dcc7791.json",
+        "size_bytes": 566
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112635_cb43fbe161.json",
+        "size_bytes": 574
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112643_b371b073d1.json",
+        "size_bytes": 454
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112655_647c377aac.json",
+        "size_bytes": 486
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112655_854d7832b1.json",
+        "size_bytes": 337
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112655_8d55b38d11.json",
+        "size_bytes": 790
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112655_8dc43c1e45.json",
+        "size_bytes": 786
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112655_c1f8f7432b.json",
+        "size_bytes": 1546
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112655_c26e9b9dc8.json",
+        "size_bytes": 1541
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112655_cd6f05333d.json",
+        "size_bytes": 1550
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112655_d3eea67df4.json",
+        "size_bytes": 516
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112655_e36fc211c5.json",
+        "size_bytes": 516
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112655_e67ffd76fb.json",
+        "size_bytes": 4290
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112655_f171536749.json",
+        "size_bytes": 1545
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112703_e3452f1b65.json",
+        "size_bytes": 401
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112908_1fc696c22d.json",
+        "size_bytes": 827
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112908_21d8629637.json",
+        "size_bytes": 649
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112908_54ab89ce60.json",
+        "size_bytes": 1157
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112908_78b7d04e29.json",
+        "size_bytes": 763
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112908_d6c7a48d6f.json",
+        "size_bytes": 1842
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112955_26f08c500d.json",
+        "size_bytes": 1155
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112955_343e05e9d8.json",
+        "size_bytes": 825
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112955_54c967d713.json",
+        "size_bytes": 1550
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112955_639ed8c545.json",
+        "size_bytes": 1840
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112955_7a1906a8b8.json",
+        "size_bytes": 1545
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112955_8f0b6993e6.json",
+        "size_bytes": 761
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112955_c68fb132ba.json",
+        "size_bytes": 790
+      },
+      {
+        "path": "bridge\\outbox\\20260610_112955_f371219372.json",
+        "size_bytes": 647
+      },
+      {
+        "path": "certifications\\ULTIMATE_GUARDIAN_v8.7_RESILIENCE_20260730_145047.json",
+        "size_bytes": 535
+      },
+      {
+        "path": "config\\indexer_config.json",
+        "size_bytes": 852
+      },
+      {
+        "path": "config\\intentions.md",
+        "size_bytes": 1122
+      },
+      {
+        "path": "config\\lore.md",
+        "size_bytes": 39
+      },
+      {
+        "path": "config\\memory_graph.json",
+        "size_bytes": 47
+      },
+      {
+        "path": "config\\persona.json",
+        "size_bytes": 237
+      },
+      {
+        "path": "config\\recovery_policy.json",
+        "size_bytes": 326
+      },
+      {
+        "path": "config\\skills_manifest.json",
+        "size_bytes": 156
+      },
+      {
+        "path": "data\\index_engine_v5.json",
+        "size_bytes": 52056
+      },
+      {
+        "path": "data\\manifest.json",
+        "size_bytes": 444
+      },
+      {
+        "path": "ezzio-ui\\jsconfig.json",
+        "size_bytes": 487
+      },
+      {
+        "path": "ezzio-ui\\package-lock.json",
+        "size_bytes": 94676
+      },
+      {
+        "path": "ezzio-ui\\package.json",
+        "size_bytes": 836
+      },
+      {
+        "path": "ezzio-ui\\README.md",
+        "size_bytes": 972
+      },
+      {
+        "path": "ezzio-ui\\.svelte-kit\\tsconfig.json",
+        "size_bytes": 1038
+      },
+      {
+        "path": "ezzio-ui\\.svelte-kit\\output\\client\\.vite\\manifest.json",
+        "size_bytes": 2189
+      },
+      {
+        "path": "ezzio-ui\\.svelte-kit\\output\\client\\_app\\version.json",
+        "size_bytes": 27
+      },
+      {
+        "path": "ezzio-ui\\.svelte-kit\\output\\server\\.vite\\manifest.json",
+        "size_bytes": 2715
+      },
+      {
+        "path": "ezzio-ui\\.vscode\\extensions.json",
+        "size_bytes": 101
+      },
+      {
+        "path": "forge\\mobile\\mobile_manifest.json",
+        "size_bytes": 337
+      },
+      {
+        "path": "forge\\outputs\\image\\prompt_20260610_004156.json",
+        "size_bytes": 775
+      },
+      {
+        "path": "forge\\outputs\\image_hd\\EZZIO_HD_1920x1080_20260610_011554.json",
+        "size_bytes": 435
+      },
+      {
+        "path": "forge\\outputs\\image_hd\\EZZIO_HD_1920x1080_20260610_011625.json",
+        "size_bytes": 435
+      },
+      {
+        "path": "forge\\outputs\\video\\video_plan_20260610_004156.json",
+        "size_bytes": 737
+      },
+      {
+        "path": "forge\\vision\\outputs\\vision_analysis_20260610_004540.json",
+        "size_bytes": 2231
+      },
+      {
+        "path": "forge\\vision\\outputs\\vision_analysis_20260610_004642.json",
+        "size_bytes": 2198
+      },
+      {
+        "path": "forge\\vision\\outputs\\vision_analysis_20260610_004904.json",
+        "size_bytes": 2025
+      },
+      {
+        "path": "forge\\vision\\outputs\\vision_analysis_20260610_005145.json",
+        "size_bytes": 1425
+      },
+      {
+        "path": "forge\\vision\\outputs\\vision_analysis_20260610_235048.json",
+        "size_bytes": 1235
+      },
+      {
+        "path": "forge\\vision\\outputs\\vision_analysis_20260610_235458.json",
+        "size_bytes": 1592
+      },
+      {
+        "path": "forge\\workflows\\ezzio_sd15_cpu_basic.json",
+        "size_bytes": 1255
+      },
+      {
+        "path": "interfaces\\api\\server.py",
+        "size_bytes": 3997
+      },
+      {
+        "path": "interfaces\\discord\\bot.py",
+        "size_bytes": 5203
+      },
+      {
+        "path": "memory\\context.json",
+        "size_bytes": 7
+      },
+      {
+        "path": "memory\\g_drive_analysis.json",
+        "size_bytes": 391
+      },
+      {
+        "path": "memory\\user_186035306418405376.json",
+        "size_bytes": 1191
+      },
+      {
+        "path": "memory\\user_186035306418405376_local.json",
+        "size_bytes": 833
+      },
+      {
+        "path": "ollama\\adaptive_governor.py",
+        "size_bytes": 2741
+      },
+      {
+        "path": "ollama\\windows_telemetry.py",
+        "size_bytes": 2199
+      },
+      {
+        "path": "ollama\\__init__.py",
+        "size_bytes": 0
+      },
+      {
+        "path": "providers\\base_provider.py",
+        "size_bytes": 492
+      },
+      {
+        "path": "providers\\cloud_gateway.py",
+        "size_bytes": 62
+      },
+      {
+        "path": "providers\\gemini_provider.py",
+        "size_bytes": 4199
+      },
+      {
+        "path": "providers\\groq_provider.py",
+        "size_bytes": 3836
+      },
+      {
+        "path": "providers\\key_scheduler.py",
+        "size_bytes": 2208
+      },
+      {
+        "path": "providers\\ollama_provider.py",
+        "size_bytes": 2256
+      },
+      {
+        "path": "providers\\provider_health.py",
+        "size_bytes": 3276
+      },
+      {
+        "path": "providers\\provider_registry.py",
+        "size_bytes": 5500
+      },
+      {
+        "path": "providers\\provider_response.py",
+        "size_bytes": 568
+      },
+      {
+        "path": "providers\\provider_telemetry.py",
+        "size_bytes": 4461
+      },
+      {
+        "path": "providers\\secrets_loader.py",
+        "size_bytes": 1741
+      },
+      {
+        "path": "providers\\__init__.py",
+        "size_bytes": 57
+      },
+      {
+        "path": "recovery\\certified_state\\capability.py",
+        "size_bytes": 1796
+      },
+      {
+        "path": "recovery\\certified_state\\microkernel.py",
+        "size_bytes": 10085
+      },
+      {
+        "path": "registry\\cloud_audit.jsonl",
+        "size_bytes": 364
+      },
+      {
+        "path": "registry\\cloud_rate_state.json",
+        "size_bytes": 70
+      },
+      {
+        "path": "registry\\history.json",
+        "size_bytes": 106013
+      },
+      {
+        "path": "registry\\model_latency.json",
+        "size_bytes": 623
+      },
+      {
+        "path": "registry\\roles.json",
+        "size_bytes": 660
+      },
+      {
+        "path": "registry\\build\\build_manifest.json",
+        "size_bytes": 1111
+      },
+      {
+        "path": "registry\\build\\persona.coding.md",
+        "size_bytes": 7231
+      },
+      {
+        "path": "registry\\build\\persona.discord.md",
+        "size_bytes": 7041
+      },
+      {
+        "path": "registry\\build\\persona.full.md",
+        "size_bytes": 6662
+      },
+      {
+        "path": "registry\\build\\persona.production.md",
+        "size_bytes": 6256
+      },
+      {
+        "path": "registry\\build\\persona.terminal.md",
+        "size_bytes": 7031
+      },
+      {
+        "path": "registry\\capabilities\\quality.md",
+        "size_bytes": 255
+      },
+      {
+        "path": "registry\\capabilities\\skills.md",
+        "size_bytes": 124
+      },
+      {
+        "path": "registry\\cloud_cache\\c7d575537c1b9a593bd01e6f58cdf6b62b780ec0ff02e2fad1110c652ce03fea.json",
+        "size_bytes": 2483
+      },
+      {
+        "path": "registry\\compiler\\cache.json",
+        "size_bytes": 267
+      },
+      {
+        "path": "registry\\compiler\\manifest.json",
+        "size_bytes": 3098
+      },
+      {
+        "path": "registry\\personality\\identity.md",
+        "size_bytes": 165
+      },
+      {
+        "path": "registry\\personality\\lore.md",
+        "size_bytes": 182
+      },
+      {
+        "path": "registry\\personality\\speech.md",
+        "size_bytes": 547
+      },
+      {
+        "path": "registry\\personality\\traits.md",
+        "size_bytes": 393
+      },
+      {
+        "path": "registry\\platforms\\cli.md",
+        "size_bytes": 149
+      },
+      {
+        "path": "registry\\platforms\\discord.md",
+        "size_bytes": 151
+      },
+      {
+        "path": "registry\\telemetry\\events.jsonl",
+        "size_bytes": 46927
+      },
+      {
+        "path": "registry\\workflows\\coding.md",
+        "size_bytes": 343
+      },
+      {
+        "path": "routers\\actions.py",
+        "size_bytes": 506
+      },
+      {
+        "path": "routers\\admin_maintenance.py",
+        "size_bytes": 589
+      },
+      {
+        "path": "routers\\autonomy.py",
+        "size_bytes": 444
+      },
+      {
+        "path": "routers\\brain.py",
+        "size_bytes": 991
+      },
+      {
+        "path": "routers\\brain_gateway.py",
+        "size_bytes": 1728
+      },
+      {
+        "path": "routers\\chat.py",
+        "size_bytes": 1166
+      },
+      {
+        "path": "routers\\cloud.py",
+        "size_bytes": 1039
+      },
+      {
+        "path": "routers\\cloud_brain.py",
+        "size_bytes": 1205
+      },
+      {
+        "path": "routers\\compress.py",
+        "size_bytes": 511
+      },
+      {
+        "path": "routers\\ezzio_identity.py",
+        "size_bytes": 565
+      },
+      {
+        "path": "routers\\ezzio_unified.py",
+        "size_bytes": 1098
+      },
+      {
+        "path": "routers\\forge.py",
+        "size_bytes": 4021
+      },
+      {
+        "path": "routers\\human_chat.py",
+        "size_bytes": 1376
+      },
+      {
+        "path": "routers\\human_loop.py",
+        "size_bytes": 1686
+      },
+      {
+        "path": "routers\\knowledge.py",
+        "size_bytes": 2493
+      },
+      {
+        "path": "routers\\master.py",
+        "size_bytes": 465
+      },
+      {
+        "path": "routers\\memory.py",
+        "size_bytes": 514
+      },
+      {
+        "path": "routers\\models.py",
+        "size_bytes": 1674
+      },
+      {
+        "path": "routers\\omnipresence.py",
+        "size_bytes": 3589
+      },
+      {
+        "path": "routers\\omni_bridge.py",
+        "size_bytes": 1529
+      },
+      {
+        "path": "routers\\pc_commander.py",
+        "size_bytes": 856
+      },
+      {
+        "path": "routers\\performance.py",
+        "size_bytes": 1079
+      },
+      {
+        "path": "routers\\safe_actions.py",
+        "size_bytes": 1805
+      },
+      {
+        "path": "routers\\skills.py",
+        "size_bytes": 1816
+      },
+      {
+        "path": "routers\\supervisor.py",
+        "size_bytes": 794
+      },
+      {
+        "path": "routers\\system.py",
+        "size_bytes": 1029
+      },
+      {
+        "path": "routers\\ui_dashboard.py",
+        "size_bytes": 7636
+      },
+      {
+        "path": "routers\\vision.py",
+        "size_bytes": 1176
+      },
+      {
+        "path": "routers\\vision_smart.py",
+        "size_bytes": 1174
+      },
+      {
+        "path": "state\\watchdog_last.json",
+        "size_bytes": 15377
+      },
+      {
+        "path": "state\\cloud_brain\\audit.jsonl",
+        "size_bytes": 1188
+      },
+      {
+        "path": "state\\cloud_brain\\usage.jsonl",
+        "size_bytes": 744
+      },
+      {
+        "path": "state\\human_chat\\sessions\\functional-cockpit.jsonl",
+        "size_bytes": 2214
+      },
+      {
+        "path": "state\\human_chat\\sessions\\living-cockpit.jsonl",
+        "size_bytes": 2227
+      },
+      {
+        "path": "state\\human_chat\\sessions\\pc.jsonl",
+        "size_bytes": 25810
+      },
+      {
+        "path": "state\\human_loop\\current_intent.json",
+        "size_bytes": 477
+      },
+      {
+        "path": "state\\human_loop\\journal.jsonl",
+        "size_bytes": 157842
+      },
+      {
+        "path": "state\\human_loop\\last_perception.json",
+        "size_bytes": 2250
+      },
+      {
+        "path": "state\\human_loop\\memory.json",
+        "size_bytes": 947
+      },
+      {
+        "path": "state\\pc_commander\\journal.jsonl",
+        "size_bytes": 174517
+      },
+      {
+        "path": "state\\pc_commander\\sessions\\living-cockpit.json",
+        "size_bytes": 160
+      },
+      {
+        "path": "state\\pc_commander\\sessions\\pc.json",
+        "size_bytes": 148
+      },
+      {
+        "path": "state\\pc_commander\\sessions\\svelte-ui.json",
+        "size_bytes": 155
+      },
+      {
+        "path": "state\\pc_commander\\sessions\\ui.json",
+        "size_bytes": 148
+      },
+      {
+        "path": "state\\performance\\bench_20260610_115336.json",
+        "size_bytes": 1779
+      },
+      {
+        "path": "state\\performance\\bench_guarded_20260610_120036.json",
+        "size_bytes": 3709
+      },
+      {
+        "path": "state\\performance\\bench_guarded_20260610_120135.json",
+        "size_bytes": 3716
+      },
+      {
+        "path": "state\\performance\\bench_guarded_20260610_120537.json",
+        "size_bytes": 3705
+      },
+      {
+        "path": "state\\performance\\bench_guarded_20260610_120626.json",
+        "size_bytes": 3704
+      },
+      {
+        "path": "state\\performance\\model_policy.json",
+        "size_bytes": 1177
+      },
+      {
+        "path": "state\\performance\\warmup_fast_20260610_115233.json",
+        "size_bytes": 537
+      },
+      {
+        "path": "state\\performance\\warmup_fast_20260610_115244.json",
+        "size_bytes": 534
+      },
+      {
+        "path": "state\\performance\\warmup_fast_20260610_115939.json",
+        "size_bytes": 537
+      },
+      {
+        "path": "state\\safe_actions\\cancellations.jsonl",
+        "size_bytes": 1530
+      },
+      {
+        "path": "state\\safe_actions\\queue.jsonl",
+        "size_bytes": 21268
+      },
+      {
+        "path": "state\\safe_actions\\runs.jsonl",
+        "size_bytes": 153884
+      },
+      {
+        "path": "state\\snapshots\\ezzio_snapshot_20260610_113159.json",
+        "size_bytes": 13943
+      },
+      {
+        "path": "state\\snapshots\\ezzio_snapshot_20260610_113242.json",
+        "size_bytes": 13942
+      },
+      {
+        "path": "state\\snapshots\\ezzio_snapshot_20260610_123200.json",
+        "size_bytes": 14041
+      },
+      {
+        "path": "tools\\exec_tools.py",
+        "size_bytes": 2451
+      },
+      {
+        "path": "tools\\fs_tools.py",
+        "size_bytes": 6981
+      },
+      {
+        "path": "tools\\guard.py",
+        "size_bytes": 1701
+      },
+      {
+        "path": "tools\\index_engine_v5_5.py",
+        "size_bytes": 21400
+      },
+      {
+        "path": "tools\\learning_db.json",
+        "size_bytes": 219
+      },
+      {
+        "path": "tools\\patch_engine.py",
+        "size_bytes": 3371
+      },
+      {
+        "path": "tools\\patch_pipeline.py",
+        "size_bytes": 2163
+      },
+      {
+        "path": "tools\\workspace_index_v2.py",
+        "size_bytes": 10269
+      },
+      {
+        "path": "tools\\workspace_index_v3.py",
+        "size_bytes": 9946
+      }
+    ]
+  },
+  "stats": {
+    "total_files": 1655,
+    "total_size_mb": 2286.5341
+  }
+}

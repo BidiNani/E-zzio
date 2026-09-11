@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-ZzIO Autonomous Core | Live Control & Neural Chat</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    code, pre { font-family: 'Fira Code', monospace; }
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glow-cyan {
+      box-shadow: 0 0 25px rgba(6, 182, 212, 0.25);
+    }
+    .glow-magenta {
+      box-shadow: 0 0 25px rgba(217, 70, 239, 0.25);
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-slate-950">
+
+  <!-- Header -->
+  <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-fuchsia-500 flex items-center justify-center font-bold text-white shadow-lg glow-cyan">
+          <i class="fa-solid fa-brain text-lg"></i>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="font-bold text-lg tracking-tight bg-gradient-to-r from-cyan-400 to-fuchsia-400 bg-clip-text text-transparent">E-ZzIO Core</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800 font-mono">v2.0.0</span>
+          </div>
+          <p class="text-xs text-slate-400">Autonomous Orchestrator & Self-Healing Engine</p>
+        </div>
+      </div>
+
+      <!-- Quick Status Badges -->
+      <div class="hidden md:flex items-center space-x-3 text-xs font-mono">
+        <div id="badge-gemini" class="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+          <span class="text-cyan-300 font-semibold">Gemini Flash Core</span>
+        </div>
+        <div id="badge-forge" class="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700">
+          <i class="fa-solid fa-fire-flame-curved text-amber-400"></i>
+          <span class="text-slate-300">Forge Core</span>
+        </div>
+        <div id="badge-ast" class="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700">
+          <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+          <span class="text-slate-300">AST Guardian</span>
+        </div>
+        <div id="badge-wal" class="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700">
+          <i class="fa-solid fa-database text-cyan-400"></i>
+          <span class="text-slate-300">SQLite WAL</span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center space-x-2">
+        <button onclick="triggerHeal()" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-emerald-950 text-emerald-300 border border-emerald-800 hover:bg-emerald-900 transition flex items-center space-x-1.5">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>Auto-Heal</span>
+        </button>
+        <button onclick="triggerCatalog()" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-cyan-950 text-cyan-300 border border-cyan-800 hover:bg-cyan-900 transition flex items-center space-x-1.5">
+          <i class="fa-solid fa-diagram-project"></i>
+          <span>Catalogue</span>
+        </button>
+        <a href="/docs" target="_blank" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 transition flex items-center space-x-1.5">
+          <i class="fa-solid fa-book-open"></i>
+          <span>Forge API</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Grid -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+    <!-- Sidebar / Context info -->
+    <aside class="space-y-4 lg:col-span-1">
+      <div class="glass-panel rounded-2xl p-4 space-y-4 shadow-xl">
+        <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider flex items-center space-x-2">
+          <i class="fa-solid fa-sliders text-cyan-400"></i>
+          <span>Contrôles Session</span>
+        </h3>
+
+        <div>
+          <label class="block text-xs font-medium text-slate-400 mb-1">Thread ID (Mémoire)</label>
+          <input type="text" id="thread-id-input" value="web_ui_session" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-cyan-300 focus:outline-none focus:border-cyan-500 transition">
+        </div>
+
+        <div class="pt-2 border-t border-slate-800">
+          <div class="text-xs text-slate-400 mb-2">Moteurs Neuronaux</div>
+          <div class="space-y-1.5 font-mono text-xs">
+            <div class="p-2 rounded-lg bg-cyan-950/40 border border-cyan-800/60 flex justify-between">
+              <span class="text-slate-400">Primaire :</span>
+              <span class="text-cyan-400 font-semibold">Gemini 3.7 Flash</span>
+            </div>
+            <div class="p-2 rounded-lg bg-slate-900/60 border border-slate-800 flex justify-between">
+              <span class="text-slate-400">Forge Core :</span>
+              <span class="text-amber-400">Comfy + Video HD</span>
+            </div>
+            <div class="p-2 rounded-lg bg-slate-900/60 border border-slate-800 flex justify-between">
+              <span class="text-slate-400">RAG Vector :</span>
+              <span class="text-emerald-400">ChromaDB + bge-m3</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-slate-800 space-y-2">
+          <div class="text-xs text-slate-400">Noyau Forge & Outils</div>
+          <div class="grid grid-cols-2 gap-2 text-[11px] font-medium">
+            <button onclick="promptForge('image')" class="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700 flex items-center justify-center space-x-1">
+              <i class="fa-solid fa-image text-cyan-400"></i>
+              <span>Image Plan</span>
+            </button>
+            <button onclick="promptForge('video')" class="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700 flex items-center justify-center space-x-1">
+              <i class="fa-solid fa-video text-fuchsia-400"></i>
+              <span>Video Plan</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-slate-800">
+          <button onclick="clearChat()" class="w-full py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 transition flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-trash-can text-rose-400"></i>
+            <span>Effacer la vue</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Live metrics -->
+      <div id="diagnostics-panel" class="glass-panel rounded-2xl p-4 text-xs font-mono text-slate-400 space-y-2">
+        <div class="text-slate-300 font-semibold uppercase tracking-wider flex items-center space-x-2 mb-2 font-sans">
+          <i class="fa-solid fa-microchip text-fuchsia-400"></i>
+          <span>Statut Système</span>
+        </div>
+        <div id="diag-content">Chargement des diagnostics...</div>
+      </div>
+    </aside>
+
+    <!-- Chat Area -->
+    <section class="lg:col-span-3 flex flex-col glass-panel rounded-2xl shadow-2xl overflow-hidden min-h-[620px]">
+      
+      <!-- Chat Messages Container -->
+      <div id="chat-box" class="flex-1 p-6 overflow-y-auto space-y-6">
+        
+        <!-- Welcome Message -->
+        <div class="flex items-start space-x-3.5">
+          <div class="w-8 h-8 rounded-lg bg-cyan-600/30 border border-cyan-500/30 flex items-center justify-center text-cyan-300 font-bold text-sm shrink-0">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl rounded-tl-none p-4 text-sm leading-relaxed max-w-2xl shadow-md">
+            <p class="font-medium text-slate-200 mb-1">Bienvenue dans l'interface neuronale d'E-ZzIO.</p>
+            <p class="text-slate-400 text-xs leading-normal">
+              Posez n'importe quelle question sur le codebase, demandez une vérification architecturale ou confiez-lui une tâche de code. Les flux sont routés automatiquement entre RAG, réponse directe et auto-réparation avec streaming en direct.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Streaming Indicator Bar -->
+      <div id="stream-indicator" class="hidden px-6 py-2 bg-slate-900/90 border-t border-slate-800/80 text-xs font-mono flex items-center justify-between text-slate-400">
+        <div class="flex items-center space-x-2">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+          <span id="stream-route-label">Génération de la réponse en streaming...</span>
+        </div>
+        <div id="stream-model-badge" class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800 text-[10px]">
+          E-ZzIO
+        </div>
+      </div>
+
+      <!-- Input Bar -->
+      <div class="p-4 bg-slate-900/90 border-t border-slate-800">
+        <form id="chat-form" onsubmit="sendMessage(event)" class="relative flex items-center">
+          <input
+            type="text"
+            id="user-input"
+            placeholder="Posez votre question ou demandez une correction à E-ZzIO..."
+            autocomplete="off"
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-4 pr-24 py-3.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition shadow-inner"
+          >
+          <button
+            type="submit"
+            id="send-btn"
+            class="absolute right-2 px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white text-xs font-semibold shadow-md transition flex items-center space-x-1.5"
+          >
+            <span>Envoyer</span>
+            <i class="fa-solid fa-paper-plane text-xs"></i>
+          </button>
+        </form>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    const chatBox = document.getElementById('chat-box');
+    const userInput = document.getElementById('user-input');
+    const threadInput = document.getElementById('thread-id-input');
+    const streamIndicator = document.getElementById('stream-indicator');
+    const streamRouteLabel = document.getElementById('stream-route-label');
+    const streamModelBadge = document.getElementById('stream-model-badge');
+    const sendBtn = document.getElementById('send-btn');
+
+    async function loadHealth() {
+      try {
+        const res = await fetch('/api/health');
+        const data = await res.json();
+        const diag = document.getElementById('diag-content');
+        diag.innerHTML = `
+          <div>LLM Status : <span class="${data.ollama_ok ? 'text-emerald-400' : 'text-rose-400'}">${data.ollama_ok ? 'OK (Connecté)' : 'Erreur'}</span></div>
+          <div>ChromaDB : <span class="${data.vectorstore_ok ? 'text-cyan-400' : 'text-amber-400'}">${data.vectorstore_ok ? 'Prêt' : 'Absent'}</span></div>
+          <div>Modèles : <span class="text-slate-300">${data.models_available ? data.models_available.length : 0} prêts</span></div>
+        `;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    loadHealth();
+
+    function clearChat() {
+      chatBox.innerHTML = '';
+    }
+
+    function appendUserMessage(text) {
+      const div = document.createElement('div');
+      div.className = 'flex items-start justify-end space-x-3.5';
+      div.innerHTML = `
+        <div class="bg-indigo-600/90 border border-indigo-500/50 rounded-2xl rounded-tr-none p-4 text-sm text-white max-w-xl shadow-md">
+          ${text}
+        </div>
+        <div class="w-8 h-8 rounded-lg bg-indigo-500/30 border border-indigo-400/30 flex items-center justify-center text-indigo-300 font-bold text-sm shrink-0">
+          <i class="fa-solid fa-user"></i>
+        </div>
+      `;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function createAssistantMessageNode() {
+      const div = document.createElement('div');
+      div.className = 'flex items-start space-x-3.5';
+      div.innerHTML = `
+        <div class="w-8 h-8 rounded-lg bg-cyan-600/30 border border-cyan-500/30 flex items-center justify-center text-cyan-300 font-bold text-sm shrink-0">
+          <i class="fa-solid fa-brain"></i>
+        </div>
+        <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl rounded-tl-none p-4 text-sm text-slate-200 leading-relaxed max-w-2xl shadow-md space-y-2 w-full">
+          <div class="response-header flex items-center space-x-2 text-xs font-mono text-cyan-400 pb-1 border-b border-slate-800/60 hidden">
+            <span class="route-badge px-2 py-0.5 rounded bg-cyan-950 border border-cyan-800 font-semibold"></span>
+            <span class="model-badge text-slate-400"></span>
+          </div>
+          <div class="response-loading flex items-center space-x-2 text-xs font-mono text-cyan-400 py-1">
+            <i class="fa-solid fa-circle-notch fa-spin text-cyan-400"></i>
+            <span class="loading-status">Réflexion et classification de la requête...</span>
+          </div>
+          <div class="response-text whitespace-pre-wrap font-sans"></div>
+          <div class="sources-drawer text-xs font-mono text-slate-400 pt-2 border-t border-slate-800/60 hidden"></div>
+        </div>
+      `;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+      return {
+        root: div,
+        header: div.querySelector('.response-header'),
+        routeBadge: div.querySelector('.route-badge'),
+        modelBadge: div.querySelector('.model-badge'),
+        loading: div.querySelector('.response-loading'),
+        loadingStatus: div.querySelector('.loading-status'),
+        text: div.querySelector('.response-text'),
+        sources: div.querySelector('.sources-drawer'),
+      };
+    }
+
+    async function sendMessage(e) {
+      e.preventDefault();
+      const query = userInput.value.trim();
+      const threadId = threadInput.value.trim() || "web_ui_session";
+      if (!query) return;
+
+      userInput.value = '';
+      sendBtn.disabled = true;
+      appendUserMessage(query);
+
+      const assistantNodes = createAssistantMessageNode();
+      streamIndicator.classList.remove('hidden');
+
+      try {
+        const response = await fetch('/api/chat/stream', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: query, thread_id: threadId, stream: true })
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+        let buffer = '';
+        let receivedTokens = false;
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              const dataStr = line.replace('data: ', '').trim();
+              if (!dataStr) continue;
+              try {
+                const payload = JSON.parse(dataStr);
+                if (payload.event === 'status') {
+                  assistantNodes.loadingStatus.textContent = payload.message;
+                  streamRouteLabel.textContent = payload.message;
+                } else if (payload.event === 'route') {
+                  assistantNodes.header.classList.remove('hidden');
+                  assistantNodes.routeBadge.textContent = 'ROUTE: ' + (payload.route || 'DIRECT').toUpperCase();
+                  assistantNodes.modelBadge.textContent = payload.model || '';
+                  streamRouteLabel.textContent = 'Acheminé vers : ' + (payload.route || 'DIRECT').toUpperCase();
+                  streamModelBadge.textContent = payload.model || 'E-ZzIO';
+                } else if (payload.event === 'token') {
+                  if (!receivedTokens) {
+                    assistantNodes.loading.classList.add('hidden');
+                    receivedTokens = true;
+                  }
+                  assistantNodes.text.textContent += payload.chunk;
+                  chatBox.scrollTop = chatBox.scrollHeight;
+                } else if (payload.event === 'done') {
+                  assistantNodes.loading.classList.add('hidden');
+                  if (payload.sources && payload.sources.length > 0) {
+                    assistantNodes.sources.classList.remove('hidden');
+                    const srcList = payload.sources.map(s => s.metadata ? (s.metadata.path || s.metadata.source) : 'doc').join(', ');
+                    assistantNodes.sources.innerHTML = `<i class="fa-solid fa-bookmark text-cyan-400 mr-1"></i> Sources : ${srcList}`;
+                  }
+                } else if (payload.event === 'error') {
+                  assistantNodes.loading.classList.add('hidden');
+                  assistantNodes.text.textContent += `\n[Erreur : ${payload.message}]`;
+                }
+              } catch (err) {
+                console.error("Parse SSE error", err);
+              }
+            }
+          }
+        }
+      } catch (err) {
+        console.warn("Échec streaming SSE, tentative repli REST...", err);
+        assistantNodes.loadingStatus.textContent = "Génération de la réponse directe...";
+        try {
+          const directRes = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: query, thread_id: threadId })
+          });
+          const data = await directRes.json();
+          assistantNodes.loading.classList.add('hidden');
+          assistantNodes.header.classList.remove('hidden');
+          assistantNodes.routeBadge.textContent = 'ROUTE: ' + (data.route || 'DIRECT').toUpperCase();
+          assistantNodes.modelBadge.textContent = data.model_used || '';
+          assistantNodes.text.textContent = data.answer || '';
+          if (data.sources && data.sources.length > 0) {
+            assistantNodes.sources.classList.remove('hidden');
+            const srcList = data.sources.map(s => s.metadata ? (s.metadata.path || s.metadata.source) : 'doc').join(', ');
+            assistantNodes.sources.innerHTML = `<i class="fa-solid fa-bookmark text-cyan-400 mr-1"></i> Sources : ${srcList}`;
+          }
+        } catch (fallbackErr) {
+          assistantNodes.loading.classList.add('hidden');
+          assistantNodes.text.textContent = `Erreur de connexion : ${fallbackErr.message}`;
+        }
+      } finally {
+        assistantNodes.loading.classList.add('hidden');
+        streamIndicator.classList.add('hidden');
+        sendBtn.disabled = false;
+        loadHealth();
+      }
+    }
+
+    async function triggerHeal() {
+      const res = await fetch('/api/heal', { method: 'POST' });
+      const data = await res.json();
+      alert(`Auto-Guérison : ${data.syntax_valid_count} / ${data.python_modules} modules 100% valides AST !`);
+    }
+
+    async function triggerCatalog() {
+      const res = await fetch('/api/catalog');
+      const data = await res.json();
+      alert(`Catalogue E-ZzIO : ${data.files_count} fichiers cartographiés.`);
+    }
+
+    function promptForge(type) {
+      if (type === 'image') {
+        userInput.value = "Forge Image : Crée un plan d'image cinématique pour une ville cyberpunk néon sous la pluie.";
+      } else if (type === 'video') {
+        userInput.value = "Forge Video : Établis un plan de storyboard vidéo 4k à 24fps pour une transition neuronale fluide.";
+      }
+      userInput.focus();
+    }
+  </script>
+</body>
+</html>

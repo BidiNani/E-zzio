@@ -1,0 +1,12 @@
+{
+  "quarantine_date": "2026-08-29T19:38:00Z",
+  "status": "ORPHANED_EXPLORATORY_PHASE_ARCHIVE",
+  "reason": "Ébauche expérimentale LangGraph de phase 1/2 jamais intégrée au serveur de production web_server.py:8001 ni au dossier core/.",
+  "active_entrypoint": "web_server.py (port 8001)",
+  "active_orchestrator": "core/agent/coding_agent_loop.py (CodingAgentHarness)",
+  "files_quarantined": [
+    "src/ezzio/api.py",
+    "src/ezzio/graph/workflow.py",
+    "src/ezzio/graph/state.py"
+  ]
+}

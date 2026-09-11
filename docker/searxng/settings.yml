@@ -1,0 +1,29 @@
+use_default_settings: false
+
+server:
+  default_locale: "en"
+  limiter: false
+  http_protocol_version: "1.1"
+  secret_key: "UltrasecretKeyChangeMe1234567890"
+
+search:
+  formats:
+    - json
+    - html
+
+engines:
+  # Moteurs de base (sans wikidata, etc.)
+  - name: google
+    engine: google
+    shortcut: go
+    disabled: false
+
+  - name: bing
+    engine: bing
+    shortcut: bi
+    disabled: false
+
+  - name: duckduckgo
+    engine: duckduckgo
+    shortcut: ddg
+    disabled: false

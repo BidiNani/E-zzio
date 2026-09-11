@@ -1,0 +1,24 @@
+{
+  "fallback": "ollama",
+  "primary": "gemini",
+  "providers": {
+    "groq": {
+      "model": "llama3-70b-8192",
+      "enabled": true,
+      "priority": 2,
+      "rate_limit": 30
+    },
+    "ollama": {
+      "model": "llama3",
+      "enabled": true,
+      "priority": 3,
+      "rate_limit": -1
+    },
+    "gemini": {
+      "model": "gemini-3.7-flash",
+      "enabled": true,
+      "priority": 1,
+      "rate_limit": 60
+    }
+  }
+}

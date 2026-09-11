@@ -171,3 +171,23 @@ scan-candidates-report_*.txt
 .brave-profile/
 runtime/models/whisper/
 outputs/
+state/
+runtime/
+artifacts/
+legacy_archive/
+recovery/
+audit/
+forensic_validation/
+dist/
+v17/
+v18/
+v19/
+ollama_local_archive/
+.cursor/
+.trae/
+.vscode/
+.agents/
+capcap/
+E-ZZIO *.txt
+E-ZZIO *.md
+EZZIO_*.md

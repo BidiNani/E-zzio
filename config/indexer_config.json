@@ -1,0 +1,28 @@
+{
+  "paths": {
+    "root_scan": ["G:\\"],
+    "db_path": "G:\\AI\\E-zzio\\data\\workspace_index.db",
+    "backup_dir": "G:\\AI\\E-zzio\\data\\backups",
+    "log_path": "G:\\AI\\E-zzio\\data\\index_engine_v5.json"
+  },
+  "performance": {
+    "num_hash_workers": 0,
+    "batch_size": 2000,
+    "queue_max_size": 10000,
+    "use_blake3_if_available": true
+  },
+  "sqlite_pragmas": {
+    "busy_timeout_ms": 30000,
+    "journal_size_limit_bytes": 67108864,
+    "mmap_size_bytes": 268435456,
+    "page_size": 4096
+  },
+  "retention": {
+    "keep_max_backups": 5,
+    "full_integrity_check_interval_days": 7
+  },
+  "exclusions": {
+    "dirs": [".git", "venv", "__pycache__", ".godot", "node_modules", ".vs", "$RECYCLE.BIN", "System Volume Information"],
+    "extensions": [".py", ".ps1", ".gd", ".md", ".txt", ".json", ".cfg", ".yaml", ".yml", ".ini"]
+  }
+}

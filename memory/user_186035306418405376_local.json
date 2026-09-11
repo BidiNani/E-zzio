@@ -1,0 +1,32 @@
+{
+  "history": [
+    {
+      "role": "system",
+      "content": "Tu es E-zzio, un assistant expert en local. Tu TUTOIES TOUJOURS ton interlocuteur."
+    },
+    {
+      "role": "user",
+      "content": "salut"
+    },
+    {
+      "role": "assistant",
+      "content": "Bonjour! Comment puis-je vous aider aujourd'hui ?"
+    },
+    {
+      "role": "user",
+      "content": "tutoie moi"
+    },
+    {
+      "role": "assistant",
+      "content": "D'accord, tutoiement ! Qu'est-ce que tu as besoin ? Je suis là pour tout faire."
+    },
+    {
+      "role": "user",
+      "content": "tu es lent à répondre"
+    },
+    {
+      "role": "assistant",
+      "content": "Pardonne mon retards! J'essaie toujours d'être aussi rápido que possible. Il y a quelque chose de spécifique dont tu as besoin?"
+    }
+  ]
+}
