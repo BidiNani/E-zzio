@@ -131,14 +131,14 @@ class EzzioMaster:
             resp: ProviderResponse = await self.provider.generate(
                 prompt=user_prompt or "",
                 system_prompt=chat_system if chat_system else None,
-                model="gemini-3.6-flash",
+                model="gemini-3.7-flash",
                 temperature=0.2,
                 max_tokens=512,
             )
             elapsed_ms = int((time.perf_counter() - start_time) * 1000)
 
             reply = resp.content or ""
-            model_name = resp.model or "gemini-3.6-flash"
+            model_name = resp.model or "gemini-3.7-flash"
             provider_name = resp.provider or "gemini"
 
             if not reply.strip():
