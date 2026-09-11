@@ -1,0 +1,4892 @@
+[
+  {
+    "file": "ezzio_kernel.py",
+    "line": 157,
+    "type": "ASSIGN",
+    "code": "selected_model = model or DEFAULT_MODEL"
+  },
+  {
+    "file": "ezzio_kernel.py",
+    "line": 158,
+    "type": "ASSIGN",
+    "code": "provider_name = 'ollama'"
+  },
+  {
+    "file": "ezzio_kernel.py",
+    "line": 208,
+    "type": "ASSIGN",
+    "code": "running_models = ps_resp.json().get('models', [])"
+  },
+  {
+    "file": "ezzio_kernel.py",
+    "line": 216,
+    "type": "ASSIGN",
+    "code": "models_to_unload = [m for m in active_generative if m != selected_model]"
+  },
+  {
+    "file": "ezzio_kernel.py",
+    "line": 256,
+    "type": "ASSIGN",
+    "code": "actual_model = selected_model"
+  },
+  {
+    "file": "ezzio_kernel.py",
+    "line": 259,
+    "type": "ASSIGN",
+    "code": "provider = OllamaProvider(model=selected_model)"
+  },
+  {
+    "file": "ezzio_kernel.py",
+    "line": 262,
+    "type": "ASSIGN",
+    "code": "provider_name = result.get('provider', 'ollama')"
+  },
+  {
+    "file": "ezzio_kernel.py",
+    "line": 263,
+    "type": "ASSIGN",
+    "code": "actual_model = result.get('model', selected_model)"
+  },
+  {
+    "file": "EZZIO_Model_Qualification_Gate_v4.2.py",
+    "line": 15,
+    "type": "ASSIGN",
+    "code": "model_class = 'LARGE_MODEL' if size_gb >= 10.0 else 'COMPACT_MODEL'"
+  },
+  {
+    "file": "EZZIO_Model_Qualification_Gate_v4.2.py",
+    "line": 162,
+    "type": "ASSIGN",
+    "code": "all_models = resp.json().get('models', [])"
+  },
+  {
+    "file": "EZZIO_Model_Qualification_Gate_v4.2.py",
+    "line": 165,
+    "type": "ASSIGN",
+    "code": "gen_models = [m for m in all_models if not any((p in m['name'].lower() for p in EMBED_PATTERNS))]"
+  },
+  {
+    "file": "run_ezzio.py",
+    "line": 5,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "run_ezzio.py",
+    "line": 38,
+    "type": "ASSIGN",
+    "code": "router = CognitiveRouter()"
+  },
+  {
+    "file": "run_ezzio.py",
+    "line": 39,
+    "type": "CALL",
+    "code": "router.route_query('Confirme la disponibilit\u00e9 du routeur en un mot.', target='local')"
+  },
+  {
+    "file": "web_server.py",
+    "line": 70,
+    "type": "CALL",
+    "code": "app.include_router(llm_router)"
+  },
+  {
+    "file": "web_server.py",
+    "line": 71,
+    "type": "CALL",
+    "code": "app.include_router(mobile_router)"
+  },
+  {
+    "file": "web_server.py",
+    "line": 72,
+    "type": "CALL",
+    "code": "app.include_router(master_router)"
+  },
+  {
+    "file": "web_server.py",
+    "line": 73,
+    "type": "CALL",
+    "code": "app.include_router(memory_router)"
+  },
+  {
+    "file": "core\\actions.py",
+    "line": 4,
+    "type": "CALL",
+    "code": "Path('G:/AI/E-zzio/workspace').resolve()"
+  },
+  {
+    "file": "core\\actions.py",
+    "line": 10,
+    "type": "CALL",
+    "code": "(SAFE_ROOT / str(user_path)).resolve()"
+  },
+  {
+    "file": "core\\cloud_guard.py",
+    "line": 198,
+    "type": "ASSIGN",
+    "code": "state[provider] = item"
+  },
+  {
+    "file": "core\\cloud_guard.py",
+    "line": 217,
+    "type": "ASSIGN",
+    "code": "provider = provider_from_url(url)"
+  },
+  {
+    "file": "core\\codebase_indexer.py",
+    "line": 11,
+    "type": "CALL",
+    "code": "pathlib.Path(root_dir).resolve()"
+  },
+  {
+    "file": "core\\creative_forge.py",
+    "line": 39,
+    "type": "CALL",
+    "code": "(OUTPUT_ROOT / str(relative_path)).resolve()"
+  },
+  {
+    "file": "core\\creative_forge.py",
+    "line": 40,
+    "type": "CALL",
+    "code": "OUTPUT_ROOT.resolve()"
+  },
+  {
+    "file": "core\\creative_forge.py",
+    "line": 180,
+    "type": "CALL",
+    "code": "Path(folder).resolve()"
+  },
+  {
+    "file": "core\\decision_router.py",
+    "line": 24,
+    "type": "ASSIGN",
+    "code": "self.providers = providers"
+  },
+  {
+    "file": "core\\decision_router.py",
+    "line": 36,
+    "type": "CALL",
+    "code": "self._select_providers(mode)"
+  },
+  {
+    "file": "core\\decision_router.py",
+    "line": 40,
+    "type": "ASSIGN",
+    "code": "provider_name = getattr(provider, 'name', 'unknown')"
+  },
+  {
+    "file": "core\\dependency_graph_v49.py",
+    "line": 40,
+    "type": "CALL",
+    "code": "Path(project_root).resolve()"
+  },
+  {
+    "file": "core\\domain_scope.py",
+    "line": 79,
+    "type": "CALL",
+    "code": "self.resolve_domain(domain)"
+  },
+  {
+    "file": "core\\ezzio_identity.py",
+    "line": 7,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\ezzio_message_brain.py",
+    "line": 216,
+    "type": "ASSIGN",
+    "code": "model = FAST_MODEL if intent == 'system' else CHAT_MODEL"
+  },
+  {
+    "file": "core\\gemini_pro_provider.py",
+    "line": 6,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\gemini_pro_provider.py",
+    "line": 42,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\gemini_pro_provider.py",
+    "line": 86,
+    "type": "ASSIGN",
+    "code": "gemini_provider = GeminiProProvider()"
+  },
+  {
+    "file": "core\\hd_forge.py",
+    "line": 34,
+    "type": "CALL",
+    "code": "Path(path_text).resolve()"
+  },
+  {
+    "file": "core\\hd_forge.py",
+    "line": 37,
+    "type": "CALL",
+    "code": "COMFY_OUTPUT.resolve()"
+  },
+  {
+    "file": "core\\hd_forge.py",
+    "line": 38,
+    "type": "CALL",
+    "code": "HD_OUTPUT.resolve()"
+  },
+  {
+    "file": "core\\hd_forge.py",
+    "line": 39,
+    "type": "CALL",
+    "code": "(PROJECT_ROOT / 'forge').resolve()"
+  },
+  {
+    "file": "core\\hd_forge.py",
+    "line": 40,
+    "type": "CALL",
+    "code": "(PROJECT_ROOT / 'workspace').resolve()"
+  },
+  {
+    "file": "core\\human_chat.py",
+    "line": 192,
+    "type": "CALL",
+    "code": "router_status()"
+  },
+  {
+    "file": "core\\human_chat.py",
+    "line": 259,
+    "type": "CALL",
+    "code": "router_status()"
+  },
+  {
+    "file": "core\\human_chat.py",
+    "line": 451,
+    "type": "ASSIGN",
+    "code": "routed = chat_with_route(text=enriched, task=task, speed=speed, predict=predict)"
+  },
+  {
+    "file": "core\\human_chat.py",
+    "line": 451,
+    "type": "CALL",
+    "code": "chat_with_route(text=enriched, task=task, speed=speed, predict=predict)"
+  },
+  {
+    "file": "core\\human_chat.py",
+    "line": 458,
+    "type": "CALL",
+    "code": "routed.get('reply')"
+  },
+  {
+    "file": "core\\human_chat.py",
+    "line": 465,
+    "type": "CALL",
+    "code": "routed.get('route')"
+  },
+  {
+    "file": "core\\human_chat.py",
+    "line": 466,
+    "type": "CALL",
+    "code": "routed.get('elapsed_ms')"
+  },
+  {
+    "file": "core\\human_chat.py",
+    "line": 467,
+    "type": "CALL",
+    "code": "routed.get('deterministic', False)"
+  },
+  {
+    "file": "core\\human_chat.py",
+    "line": 472,
+    "type": "ASSIGN",
+    "code": "routed['version'] = 'v2.20.1b-human-chat-truth-guard'"
+  },
+  {
+    "file": "core\\human_chat.py",
+    "line": 473,
+    "type": "ASSIGN",
+    "code": "routed['session'] = session"
+  },
+  {
+    "file": "core\\human_chat.py",
+    "line": 474,
+    "type": "ASSIGN",
+    "code": "routed['reply'] = reply"
+  },
+  {
+    "file": "core\\human_chat.py",
+    "line": 475,
+    "type": "ASSIGN",
+    "code": "routed['truth_guard'] = True"
+  },
+  {
+    "file": "core\\human_chat.py",
+    "line": 476,
+    "type": "ASSIGN",
+    "code": "routed['human_chat_elapsed_ms'] = int((time.time() - started) * 1000)"
+  },
+  {
+    "file": "core\\human_chat.py",
+    "line": 477,
+    "type": "ASSIGN",
+    "code": "routed['gateway'] = '/api/chat/human'"
+  },
+  {
+    "file": "core\\human_loop.py",
+    "line": 181,
+    "type": "CALL",
+    "code": "router_status()"
+  },
+  {
+    "file": "core\\human_loop.py",
+    "line": 372,
+    "type": "CALL",
+    "code": "router_status()"
+  },
+  {
+    "file": "core\\intelligence_router.py",
+    "line": 20,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\intelligence_router.py",
+    "line": 27,
+    "type": "ASSIGN",
+    "code": "self.local_models = self._load_local_registry()"
+  },
+  {
+    "file": "core\\intelligence_router.py",
+    "line": 27,
+    "type": "CALL",
+    "code": "self._load_local_registry()"
+  },
+  {
+    "file": "core\\intelligence_router.py",
+    "line": 182,
+    "type": "ASSIGN",
+    "code": "original_provider = decision.provider"
+  },
+  {
+    "file": "core\\intelligence_router.py",
+    "line": 183,
+    "type": "ASSIGN",
+    "code": "original_model = decision.model"
+  },
+  {
+    "file": "core\\intelligence_router.py",
+    "line": 202,
+    "type": "ASSIGN",
+    "code": "provider_instance = get_provider_instance(decision.provider)"
+  },
+  {
+    "file": "core\\intelligence_router.py",
+    "line": 240,
+    "type": "ASSIGN",
+    "code": "decision.provider = alt_prov"
+  },
+  {
+    "file": "core\\intelligence_router.py",
+    "line": 241,
+    "type": "ASSIGN",
+    "code": "decision.model = alt['model']"
+  },
+  {
+    "file": "core\\intelligence_router.py",
+    "line": 274,
+    "type": "ASSIGN",
+    "code": "intelligence_router = IntelligenceRouter()"
+  },
+  {
+    "file": "core\\model_registry.py",
+    "line": 10,
+    "type": "CALL",
+    "code": "Path('G:/AI/E-zzio').resolve()"
+  },
+  {
+    "file": "core\\omni_brain.py",
+    "line": 306,
+    "type": "CALL",
+    "code": "local_router_status_payload()"
+  },
+  {
+    "file": "core\\omni_brain.py",
+    "line": 496,
+    "type": "ASSIGN",
+    "code": "model = FAST_MODEL if mode != 'companion' else COMPANION_MODEL"
+  },
+  {
+    "file": "core\\pc_model_router.py",
+    "line": 414,
+    "type": "ASSIGN",
+    "code": "route_preview = {}"
+  },
+  {
+    "file": "core\\pc_model_router.py",
+    "line": 416,
+    "type": "ASSIGN",
+    "code": "route_preview[task] = select_model(task=task, text='', speed='auto')"
+  },
+  {
+    "file": "core\\pc_model_router.py",
+    "line": 416,
+    "type": "CALL",
+    "code": "select_model(task=task, text='', speed='auto')"
+  },
+  {
+    "file": "core\\pc_model_router.py",
+    "line": 437,
+    "type": "ASSIGN",
+    "code": "route = select_model(task=task, text=text, speed=speed)"
+  },
+  {
+    "file": "core\\pc_model_router.py",
+    "line": 437,
+    "type": "CALL",
+    "code": "select_model(task=task, text=text, speed=speed)"
+  },
+  {
+    "file": "core\\pc_model_router.py",
+    "line": 438,
+    "type": "CALL",
+    "code": "route.get('ok')"
+  },
+  {
+    "file": "core\\pc_model_router.py",
+    "line": 441,
+    "type": "ASSIGN",
+    "code": "model = route['model']"
+  },
+  {
+    "file": "core\\pc_optimizer.py",
+    "line": 259,
+    "type": "ASSIGN",
+    "code": "models = [item.get('name') for item in data.get('models', []) if item.get('name')]"
+  },
+  {
+    "file": "core\\pc_optimizer.py",
+    "line": 322,
+    "type": "ASSIGN",
+    "code": "models = FAST_WARMUP_MODELS + NORMAL_WARMUP_MODELS"
+  },
+  {
+    "file": "core\\pc_optimizer.py",
+    "line": 324,
+    "type": "ASSIGN",
+    "code": "models = FAST_WARMUP_MODELS + NORMAL_WARMUP_MODELS + DEEP_MODELS[:2]"
+  },
+  {
+    "file": "core\\pc_optimizer.py",
+    "line": 326,
+    "type": "ASSIGN",
+    "code": "models = FAST_WARMUP_MODELS"
+  },
+  {
+    "file": "core\\research_router.py",
+    "line": 11,
+    "type": "ASSIGN",
+    "code": "self.providers = providers"
+  },
+  {
+    "file": "core\\safe_actions.py",
+    "line": 356,
+    "type": "CALL",
+    "code": "router_status()"
+  },
+  {
+    "file": "core\\scope_resolver.py",
+    "line": 34,
+    "type": "CALL",
+    "code": "Path(root_dir).resolve()"
+  },
+  {
+    "file": "core\\scope_resolver.py",
+    "line": 34,
+    "type": "CALL",
+    "code": "Path.cwd().resolve()"
+  },
+  {
+    "file": "core\\scope_resolver.py",
+    "line": 145,
+    "type": "CALL",
+    "code": "resolved.add(current)"
+  },
+  {
+    "file": "core\\secrets.py",
+    "line": 8,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\supervisor.py",
+    "line": 156,
+    "type": "CALL",
+    "code": "registry_status()"
+  },
+  {
+    "file": "core\\supervisor.py",
+    "line": 231,
+    "type": "ASSIGN",
+    "code": "routers = data['checks'].get('routers', {}).get('data', {})"
+  },
+  {
+    "file": "core\\supervisor.py",
+    "line": 231,
+    "type": "CALL",
+    "code": "data['checks'].get('routers', {}).get('data', {})"
+  },
+  {
+    "file": "core\\supervisor.py",
+    "line": 232,
+    "type": "CALL",
+    "code": "routers.get('failed_count', 0)"
+  },
+  {
+    "file": "core\\supervisor.py",
+    "line": 273,
+    "type": "CALL",
+    "code": "f'\\n<!doctype html>\\n<html lang=\"fr\">\\n<head>\\n<meta charset=\"utf-8\">\\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\\n<title>E-ZZIO Mobile Home</title>\\n<style>\\nbody {{\\n  font-family: system-ui, Arial, sans-serif;\\n  background: #111;\\n  color: #f2f2f2;\\n  padding: 20px;\\n  line-height: 1.45;\\n}}\\n.card {{\\n  background: #1d1d1d;\\n  border: 1px solid #333;\\n  border-radius: 16px;\\n  padding: 16px;\\n  margin: 12px 0;\\n}}\\na {{ color: #9ad7ff; }}\\n.badge {{\\n  display: inline-block;\\n  padding: 4px 8px;\\n  border-radius: 999px;\\n  background: #263;\\n  margin: 3px;\\n}}\\ncode {{\\n  background: #222;\\n  padding: 2px 5px;\\n  border-radius: 6px;\\n}}\\n</style>\\n</head>\\n<body>\\n<h1>\ud83e\udd16 E-ZZIO</h1>\\n<div class=\"card\">\\n  <span class=\"badge\">CPU/RAM only</span>\\n  <span class=\"badge\">No ads</span>\\n  <span class=\"badge\">No tracking</span>\\n  <span class=\"badge\">Local-first</span>\\n</div>\\n\\n<div class=\"card\">\\n  <h2>\u00c9tat r\u00e9el</h2>\\n  <p>PC actif. Bridge smartphone LAN pr\u00eat. Discord/Messenger pr\u00eats c\u00f4t\u00e9 API mais non configur\u00e9s tant que les tokens ne sont pas renseign\u00e9s.</p>\\n</div>\\n\\n<div class=\"card\">\\n  <h2>Commandes utiles</h2>\\n  <p><code>/help</code> <code>/truth</code> <code>/everywhere</code> <code>/mobile</code> <code>/forge</code> <code>/vision</code> <code>/noads</code></p>\\n</div>\\n\\n<div class=\"card\">\\n  <h2>Liens LAN</h2>\\n  <ul>{local_urls}</ul>\\n</div>\\n\\n<div class=\"card\">\\n  <h2>Endpoints</h2>\\n  <ul>\\n    <li><a href=\"/supervisor/status\">Supervisor status</a></li>\\n    <li><a href=\"/supervisor/watchdog\">Watchdog</a></li>\\n    <li><a href=\"/router-status\">Routers</a></li>\\n    <li><a href=\"/omni-bridge/truth\">Truth</a></li>\\n    <li><a href=\"/no-ads-policy\">No ads policy</a></li>\\n  </ul>\\n</div>\\n</body>\\n</html>\\n'.strip()"
+  },
+  {
+    "file": "core\\system_cleanup.py",
+    "line": 24,
+    "type": "CALL",
+    "code": "Path(root_dir).resolve()"
+  },
+  {
+    "file": "core\\token_compressor.py",
+    "line": 106,
+    "type": "CALL",
+    "code": "selected.append(sent)"
+  },
+  {
+    "file": "core\\vision_bridge.py",
+    "line": 35,
+    "type": "CALL",
+    "code": "Path(path_text).resolve()"
+  },
+  {
+    "file": "core\\vision_bridge.py",
+    "line": 38,
+    "type": "CALL",
+    "code": "VISION_INBOX.resolve()"
+  },
+  {
+    "file": "core\\vision_bridge.py",
+    "line": 39,
+    "type": "CALL",
+    "code": "VISION_OUT.resolve()"
+  },
+  {
+    "file": "core\\vision_bridge.py",
+    "line": 40,
+    "type": "CALL",
+    "code": "(PROJECT_ROOT / 'forge').resolve()"
+  },
+  {
+    "file": "core\\vision_bridge.py",
+    "line": 41,
+    "type": "CALL",
+    "code": "(PROJECT_ROOT / 'workspace').resolve()"
+  },
+  {
+    "file": "core\\vision_bridge.py",
+    "line": 77,
+    "type": "CALL",
+    "code": "\"\\nTu es les Yeux d'E-ZZIO.\\n\\nR\u00e8gles obligatoires :\\n- R\u00e9ponds uniquement \u00e0 partir de l'image.\\n- Ne r\u00e9p\u00e8te jamais ces consignes.\\n- Ne cite jamais ce prompt.\\n- Ne continue jamais la liste de consignes.\\n- Ne propose pas Linux, chmod, Docker, pip install routers/forge, python3, sauf si l'image les montre explicitement.\\n- Contexte r\u00e9el : Windows, PowerShell, G:/AI/E-zzio.\\n- CPU/RAM only : ne propose jamais CUDA/GPU.\\n- R\u00e9ponse courte, tactique, fran\u00e7aise.\\n\\nFormat obligatoire :\\n1. Lecture exacte :\\n2. Diagnostic :\\n3. Correction PowerShell :\\n4. Test de validation :\\n5. Prochaine action :\\n\".strip()"
+  },
+  {
+    "file": "core\\vision_bridge.py",
+    "line": 210,
+    "type": "CALL",
+    "code": "route_vision_result(cleaned)"
+  },
+  {
+    "file": "ollama_local_archive\\adaptive_governor.py",
+    "line": 25,
+    "type": "ASSIGN",
+    "code": "models = await self.get_loaded_models()"
+  },
+  {
+    "file": "ollama_local_archive\\adaptive_governor.py",
+    "line": 56,
+    "type": "ASSIGN",
+    "code": "models = await self.get_loaded_models()"
+  },
+  {
+    "file": "providers\\gemini_provider.py",
+    "line": 37,
+    "type": "ASSIGN",
+    "code": "target_model = model if model in GEMINI_MODELS else GEMINI_MODELS[0]"
+  },
+  {
+    "file": "providers\\provider_health.py",
+    "line": 11,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "providers\\provider_health.py",
+    "line": 24,
+    "type": "ASSIGN",
+    "code": "self.providers = {'gemini': GeminiProvider(), 'groq': GroqProvider()}"
+  },
+  {
+    "file": "providers\\provider_health.py",
+    "line": 35,
+    "type": "ASSIGN",
+    "code": "provider = self.providers.get(name)"
+  },
+  {
+    "file": "providers\\provider_health.py",
+    "line": 72,
+    "type": "ASSIGN",
+    "code": "report['providers'][name] = self.check_provider_health(name)"
+  },
+  {
+    "file": "providers\\provider_registry.py",
+    "line": 13,
+    "type": "CALL",
+    "code": "Path('G:/AI/E-zzio').resolve()"
+  },
+  {
+    "file": "providers\\provider_registry.py",
+    "line": 110,
+    "type": "ASSIGN",
+    "code": "scored_providers = []"
+  },
+  {
+    "file": "providers\\provider_telemetry.py",
+    "line": 8,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "providers\\provider_telemetry.py",
+    "line": 80,
+    "type": "ASSIGN",
+    "code": "providers = [row['provider'] for row in cursor.fetchall()]"
+  },
+  {
+    "file": "providers\\provider_telemetry.py",
+    "line": 107,
+    "type": "ASSIGN",
+    "code": "cache_data['providers'][p] = {'calls': calls, 'success': success, 'errors': errors, 'raw_success_rate': round(raw_success_rate, 3), 'confidence': confidence, 'effective_reliability': round(effective_reliability, 3), 'avg_latency_ms': round(row['avg_latency'] or 0.0, 2)}"
+  },
+  {
+    "file": "providers\\provider_telemetry.py",
+    "line": 123,
+    "type": "ASSIGN",
+    "code": "provider_telemetry = DurableTelemetry()"
+  },
+  {
+    "file": "providers\\secrets_loader.py",
+    "line": 14,
+    "type": "CALL",
+    "code": "Path('G:/AI/E-zzio').resolve()"
+  },
+  {
+    "file": "routers\\actions.py",
+    "line": 5,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/actions', tags=['actions'])"
+  },
+  {
+    "file": "routers\\actions.py",
+    "line": 8,
+    "type": "CALL",
+    "code": "router.post('/create_file')"
+  },
+  {
+    "file": "routers\\actions.py",
+    "line": 13,
+    "type": "CALL",
+    "code": "router.get('/list_files')"
+  },
+  {
+    "file": "routers\\actions.py",
+    "line": 18,
+    "type": "CALL",
+    "code": "router.get('/status')"
+  },
+  {
+    "file": "routers\\admin_maintenance.py",
+    "line": 10,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/maintenance', tags=['maintenance'])"
+  },
+  {
+    "file": "routers\\admin_maintenance.py",
+    "line": 17,
+    "type": "CALL",
+    "code": "router.get('/status')"
+  },
+  {
+    "file": "routers\\admin_maintenance.py",
+    "line": 22,
+    "type": "CALL",
+    "code": "router.get('/audit')"
+  },
+  {
+    "file": "routers\\admin_maintenance.py",
+    "line": 27,
+    "type": "CALL",
+    "code": "router.post('/dust')"
+  },
+  {
+    "file": "routers\\autonomy.py",
+    "line": 6,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/autonomy', tags=['autonomy'])"
+  },
+  {
+    "file": "routers\\autonomy.py",
+    "line": 9,
+    "type": "CALL",
+    "code": "router.get('/status')"
+  },
+  {
+    "file": "routers\\autonomy.py",
+    "line": 14,
+    "type": "CALL",
+    "code": "router.post('/doctor')"
+  },
+  {
+    "file": "routers\\autonomy.py",
+    "line": 19,
+    "type": "CALL",
+    "code": "router.post('/plan')"
+  },
+  {
+    "file": "routers\\brain.py",
+    "line": 11,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/brain', tags=['brain'])"
+  },
+  {
+    "file": "routers\\brain.py",
+    "line": 29,
+    "type": "CALL",
+    "code": "router_status()"
+  },
+  {
+    "file": "routers\\brain.py",
+    "line": 27,
+    "type": "CALL",
+    "code": "router.get('/status')"
+  },
+  {
+    "file": "routers\\brain.py",
+    "line": 34,
+    "type": "CALL",
+    "code": "select_model(task=req.task, text=req.text, speed=req.speed)"
+  },
+  {
+    "file": "routers\\brain.py",
+    "line": 32,
+    "type": "CALL",
+    "code": "router.post('/route')"
+  },
+  {
+    "file": "routers\\brain.py",
+    "line": 39,
+    "type": "CALL",
+    "code": "chat_with_route(text=req.text, task=req.task, speed=req.speed, predict=req.predict)"
+  },
+  {
+    "file": "routers\\brain.py",
+    "line": 37,
+    "type": "CALL",
+    "code": "router.post('/chat')"
+  },
+  {
+    "file": "routers\\brain.py",
+    "line": 47,
+    "type": "CALL",
+    "code": "router.post('/policy/default')"
+  },
+  {
+    "file": "routers\\brain_gateway.py",
+    "line": 10,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(tags=['brain-gateway'])"
+  },
+  {
+    "file": "routers\\brain_gateway.py",
+    "line": 28,
+    "type": "CALL",
+    "code": "router_status()"
+  },
+  {
+    "file": "routers\\brain_gateway.py",
+    "line": 26,
+    "type": "CALL",
+    "code": "router.get('/api/brain/status')"
+  },
+  {
+    "file": "routers\\brain_gateway.py",
+    "line": 43,
+    "type": "CALL",
+    "code": "select_model(task=req.task, text=req.text, speed=req.speed)"
+  },
+  {
+    "file": "routers\\brain_gateway.py",
+    "line": 41,
+    "type": "CALL",
+    "code": "router.post('/api/brain/route')"
+  },
+  {
+    "file": "routers\\brain_gateway.py",
+    "line": 48,
+    "type": "CALL",
+    "code": "chat_with_route(text=req.text, task=req.task, speed=req.speed, predict=req.predict)"
+  },
+  {
+    "file": "routers\\brain_gateway.py",
+    "line": 46,
+    "type": "CALL",
+    "code": "router.post('/api/brain/chat')"
+  },
+  {
+    "file": "routers\\brain_gateway.py",
+    "line": 60,
+    "type": "CALL",
+    "code": "chat_with_route(text=req.text, task=req.task, speed=req.speed, predict=req.predict)"
+  },
+  {
+    "file": "routers\\brain_gateway.py",
+    "line": 58,
+    "type": "CALL",
+    "code": "router.post('/api/chat/pc')"
+  },
+  {
+    "file": "routers\\brain_gateway.py",
+    "line": 72,
+    "type": "CALL",
+    "code": "chat_with_route(text=req.text, task=req.task, speed=req.speed, predict=req.predict)"
+  },
+  {
+    "file": "routers\\brain_gateway.py",
+    "line": 70,
+    "type": "CALL",
+    "code": "router.post('/api/chat/router')"
+  },
+  {
+    "file": "routers\\chat.py",
+    "line": 13,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/api/v1/chat', tags=['Chat'])"
+  },
+  {
+    "file": "routers\\chat.py",
+    "line": 40,
+    "type": "CALL",
+    "code": "router.post('', response_model=ChatResponse)"
+  },
+  {
+    "file": "routers\\cloud.py",
+    "line": 10,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/cloud', tags=['cloud'])"
+  },
+  {
+    "file": "routers\\cloud.py",
+    "line": 13,
+    "type": "CALL",
+    "code": "router.get('/status')"
+  },
+  {
+    "file": "routers\\cloud.py",
+    "line": 20,
+    "type": "ASSIGN",
+    "code": "provider = req.provider.lower().strip()"
+  },
+  {
+    "file": "routers\\cloud.py",
+    "line": 18,
+    "type": "CALL",
+    "code": "router.post('/get')"
+  },
+  {
+    "file": "routers\\cloud_brain.py",
+    "line": 6,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(tags=['cloud-brain'])"
+  },
+  {
+    "file": "routers\\cloud_brain.py",
+    "line": 27,
+    "type": "CALL",
+    "code": "router.get('/cloud-brain/status')"
+  },
+  {
+    "file": "routers\\cloud_brain.py",
+    "line": 32,
+    "type": "CALL",
+    "code": "router.get('/cloud-brain/providers')"
+  },
+  {
+    "file": "routers\\cloud_brain.py",
+    "line": 39,
+    "type": "CALL",
+    "code": "route(text=req.text, provider=req.provider)"
+  },
+  {
+    "file": "routers\\cloud_brain.py",
+    "line": 37,
+    "type": "CALL",
+    "code": "router.post('/cloud-brain/route')"
+  },
+  {
+    "file": "routers\\cloud_brain.py",
+    "line": 42,
+    "type": "CALL",
+    "code": "router.post('/api/chat/cloud')"
+  },
+  {
+    "file": "routers\\cloud_brain.py",
+    "line": 47,
+    "type": "CALL",
+    "code": "router.post('/api/chat/hybrid')"
+  },
+  {
+    "file": "routers\\compress.py",
+    "line": 5,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/compress', tags=['compress'])"
+  },
+  {
+    "file": "routers\\compress.py",
+    "line": 8,
+    "type": "CALL",
+    "code": "router.post('/text')"
+  },
+  {
+    "file": "routers\\compress.py",
+    "line": 13,
+    "type": "CALL",
+    "code": "router.post('/estimate')"
+  },
+  {
+    "file": "routers\\ezzio_identity.py",
+    "line": 10,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/ezzio', tags=['ezzio'])"
+  },
+  {
+    "file": "routers\\ezzio_identity.py",
+    "line": 13,
+    "type": "CALL",
+    "code": "router.get('/identity')"
+  },
+  {
+    "file": "routers\\ezzio_identity.py",
+    "line": 18,
+    "type": "CALL",
+    "code": "router.get('/manifest')"
+  },
+  {
+    "file": "routers\\ezzio_identity.py",
+    "line": 23,
+    "type": "CALL",
+    "code": "router.get('/policy')"
+  },
+  {
+    "file": "routers\\ezzio_identity.py",
+    "line": 30,
+    "type": "CALL",
+    "code": "routes_payload(request.app)"
+  },
+  {
+    "file": "routers\\ezzio_identity.py",
+    "line": 28,
+    "type": "CALL",
+    "code": "router.get('/routes')"
+  },
+  {
+    "file": "routers\\ezzio_unified.py",
+    "line": 7,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(tags=['ezzio-unified'])"
+  },
+  {
+    "file": "routers\\ezzio_unified.py",
+    "line": 14,
+    "type": "CALL",
+    "code": "router.get('/api/ezzio/status')"
+  },
+  {
+    "file": "routers\\ezzio_unified.py",
+    "line": 25,
+    "type": "CALL",
+    "code": "router.post('/api/ezzio/message-json')"
+  },
+  {
+    "file": "routers\\ezzio_unified.py",
+    "line": 30,
+    "type": "CALL",
+    "code": "router.post('/api/ezzio/message')"
+  },
+  {
+    "file": "routers\\forge.py",
+    "line": 35,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/forge', tags=['forge'])"
+  },
+  {
+    "file": "routers\\forge.py",
+    "line": 47,
+    "type": "CALL",
+    "code": "router.get('/status')"
+  },
+  {
+    "file": "routers\\forge.py",
+    "line": 52,
+    "type": "CALL",
+    "code": "router.get('/comfy/health')"
+  },
+  {
+    "file": "routers\\forge.py",
+    "line": 57,
+    "type": "CALL",
+    "code": "router.post('/comfy/wake')"
+  },
+  {
+    "file": "routers\\forge.py",
+    "line": 62,
+    "type": "CALL",
+    "code": "router.get('/comfy/models')"
+  },
+  {
+    "file": "routers\\forge.py",
+    "line": 67,
+    "type": "CALL",
+    "code": "router.get('/comfy/outputs')"
+  },
+  {
+    "file": "routers\\forge.py",
+    "line": 75,
+    "type": "CALL",
+    "code": "router.post('/comfy/workflow/basic')"
+  },
+  {
+    "file": "routers\\forge.py",
+    "line": 90,
+    "type": "CALL",
+    "code": "router.post('/comfy/generate-basic')"
+  },
+  {
+    "file": "routers\\forge.py",
+    "line": 105,
+    "type": "CALL",
+    "code": "router.post('/image/prompt')"
+  },
+  {
+    "file": "routers\\forge.py",
+    "line": 110,
+    "type": "CALL",
+    "code": "router.post('/video/plan')"
+  },
+  {
+    "file": "routers\\forge.py",
+    "line": 115,
+    "type": "CALL",
+    "code": "router.post('/video/from-folder')"
+  },
+  {
+    "file": "routers\\forge.py",
+    "line": 123,
+    "type": "CALL",
+    "code": "router.get('/apk/status')"
+  },
+  {
+    "file": "routers\\forge.py",
+    "line": 128,
+    "type": "CALL",
+    "code": "router.post('/apk/manifest')"
+  },
+  {
+    "file": "routers\\forge.py",
+    "line": 133,
+    "type": "CALL",
+    "code": "router.get('/image/hd-presets')"
+  },
+  {
+    "file": "routers\\forge.py",
+    "line": 138,
+    "type": "CALL",
+    "code": "router.get('/image/list')"
+  },
+  {
+    "file": "routers\\forge.py",
+    "line": 146,
+    "type": "CALL",
+    "code": "router.get('/image/latest')"
+  },
+  {
+    "file": "routers\\forge.py",
+    "line": 163,
+    "type": "CALL",
+    "code": "router.post('/image/upscale-hd')"
+  },
+  {
+    "file": "routers\\forge.py",
+    "line": 174,
+    "type": "CALL",
+    "code": "router.post('/image/upscale-latest-1080p')"
+  },
+  {
+    "file": "routers\\human_chat.py",
+    "line": 12,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(tags=['human-chat'])"
+  },
+  {
+    "file": "routers\\human_chat.py",
+    "line": 23,
+    "type": "CALL",
+    "code": "router.get('/human-chat/status')"
+  },
+  {
+    "file": "routers\\human_chat.py",
+    "line": 28,
+    "type": "CALL",
+    "code": "router.get('/human-chat/sessions')"
+  },
+  {
+    "file": "routers\\human_chat.py",
+    "line": 33,
+    "type": "CALL",
+    "code": "router.get('/human-chat/session/{session}')"
+  },
+  {
+    "file": "routers\\human_chat.py",
+    "line": 42,
+    "type": "CALL",
+    "code": "router.get('/human-chat/brief')"
+  },
+  {
+    "file": "routers\\human_chat.py",
+    "line": 47,
+    "type": "CALL",
+    "code": "router.post('/api/chat/human')"
+  },
+  {
+    "file": "routers\\human_chat.py",
+    "line": 58,
+    "type": "CALL",
+    "code": "router.post('/human-chat/message')"
+  },
+  {
+    "file": "routers\\human_loop.py",
+    "line": 14,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/human', tags=['human-loop'])"
+  },
+  {
+    "file": "routers\\human_loop.py",
+    "line": 35,
+    "type": "CALL",
+    "code": "router.get('/status')"
+  },
+  {
+    "file": "routers\\human_loop.py",
+    "line": 40,
+    "type": "CALL",
+    "code": "router.post('/perceive')"
+  },
+  {
+    "file": "routers\\human_loop.py",
+    "line": 45,
+    "type": "CALL",
+    "code": "router.post('/reflect')"
+  },
+  {
+    "file": "routers\\human_loop.py",
+    "line": 50,
+    "type": "CALL",
+    "code": "router.post('/tick')"
+  },
+  {
+    "file": "routers\\human_loop.py",
+    "line": 55,
+    "type": "CALL",
+    "code": "router.get('/journal')"
+  },
+  {
+    "file": "routers\\human_loop.py",
+    "line": 60,
+    "type": "CALL",
+    "code": "router.get('/memory')"
+  },
+  {
+    "file": "routers\\human_loop.py",
+    "line": 68,
+    "type": "CALL",
+    "code": "router.post('/memory/preference')"
+  },
+  {
+    "file": "routers\\knowledge.py",
+    "line": 16,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/knowledge', tags=['knowledge'])"
+  },
+  {
+    "file": "routers\\knowledge.py",
+    "line": 19,
+    "type": "CALL",
+    "code": "router.get('/status')"
+  },
+  {
+    "file": "routers\\knowledge.py",
+    "line": 26,
+    "type": "ASSIGN",
+    "code": "provider = req.provider.lower().strip()"
+  },
+  {
+    "file": "routers\\knowledge.py",
+    "line": 24,
+    "type": "CALL",
+    "code": "router.post('/search')"
+  },
+  {
+    "file": "routers\\master.py",
+    "line": 5,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/master', tags=['E-ZZIO Master'])"
+  },
+  {
+    "file": "routers\\master.py",
+    "line": 14,
+    "type": "CALL",
+    "code": "router.post('/chat')"
+  },
+  {
+    "file": "routers\\memory.py",
+    "line": 5,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/memory', tags=['memory'])"
+  },
+  {
+    "file": "routers\\memory.py",
+    "line": 8,
+    "type": "CALL",
+    "code": "router.get('/recent')"
+  },
+  {
+    "file": "routers\\memory.py",
+    "line": 14,
+    "type": "CALL",
+    "code": "router.post('/search')"
+  },
+  {
+    "file": "routers\\memory.py",
+    "line": 20,
+    "type": "CALL",
+    "code": "router.post('/compact')"
+  },
+  {
+    "file": "routers\\models.py",
+    "line": 8,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/models', tags=['models'])"
+  },
+  {
+    "file": "routers\\models.py",
+    "line": 49,
+    "type": "CALL",
+    "code": "router.get('/latency')"
+  },
+  {
+    "file": "routers\\models.py",
+    "line": 61,
+    "type": "ASSIGN",
+    "code": "results[model] = item"
+  },
+  {
+    "file": "routers\\models.py",
+    "line": 62,
+    "type": "ASSIGN",
+    "code": "existing[model] = item"
+  },
+  {
+    "file": "routers\\models.py",
+    "line": 54,
+    "type": "CALL",
+    "code": "router.post('/bench/fast')"
+  },
+  {
+    "file": "routers\\omnipresence.py",
+    "line": 17,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/omni', tags=['omnipresence'])"
+  },
+  {
+    "file": "routers\\omnipresence.py",
+    "line": 57,
+    "type": "CALL",
+    "code": "router.get('/status')"
+  },
+  {
+    "file": "routers\\omnipresence.py",
+    "line": 62,
+    "type": "CALL",
+    "code": "router.post('/inbox')"
+  },
+  {
+    "file": "routers\\omnipresence.py",
+    "line": 67,
+    "type": "CALL",
+    "code": "router.post('/outbox')"
+  },
+  {
+    "file": "routers\\omnipresence.py",
+    "line": 72,
+    "type": "CALL",
+    "code": "router.post('/discord/webhook')"
+  },
+  {
+    "file": "routers\\omnipresence.py",
+    "line": 77,
+    "type": "CALL",
+    "code": "router.post('/discord/bot/send')"
+  },
+  {
+    "file": "routers\\omnipresence.py",
+    "line": 82,
+    "type": "CALL",
+    "code": "router.post('/messenger/send')"
+  },
+  {
+    "file": "routers\\omnipresence.py",
+    "line": 87,
+    "type": "CALL",
+    "code": "router.post('/mobile/push')"
+  },
+  {
+    "file": "routers\\omnipresence.py",
+    "line": 92,
+    "type": "CALL",
+    "code": "router.get('/mobile/pull')"
+  },
+  {
+    "file": "routers\\omnipresence.py",
+    "line": 97,
+    "type": "CALL",
+    "code": "router.get('/messenger/webhook')"
+  },
+  {
+    "file": "routers\\omnipresence.py",
+    "line": 112,
+    "type": "CALL",
+    "code": "router.post('/messenger/webhook')"
+  },
+  {
+    "file": "routers\\omnipresence.py",
+    "line": 123,
+    "type": "CALL",
+    "code": "router.post('/mobile/inbox')"
+  },
+  {
+    "file": "routers\\omni_bridge.py",
+    "line": 13,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/omni-bridge', tags=['omni-bridge'])"
+  },
+  {
+    "file": "routers\\omni_bridge.py",
+    "line": 23,
+    "type": "CALL",
+    "code": "router.get('/status')"
+  },
+  {
+    "file": "routers\\omni_bridge.py",
+    "line": 28,
+    "type": "CALL",
+    "code": "router.get('/truth')"
+  },
+  {
+    "file": "routers\\omni_bridge.py",
+    "line": 33,
+    "type": "CALL",
+    "code": "router.get('/commands')"
+  },
+  {
+    "file": "routers\\omni_bridge.py",
+    "line": 38,
+    "type": "CALL",
+    "code": "router.get('/mobile/config')"
+  },
+  {
+    "file": "routers\\omni_bridge.py",
+    "line": 43,
+    "type": "CALL",
+    "code": "router.post('/reply')"
+  },
+  {
+    "file": "routers\\omni_bridge.py",
+    "line": 53,
+    "type": "CALL",
+    "code": "router.post('/mobile/reply')"
+  },
+  {
+    "file": "routers\\pc_commander.py",
+    "line": 6,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(tags=['pc-commander'])"
+  },
+  {
+    "file": "routers\\pc_commander.py",
+    "line": 18,
+    "type": "CALL",
+    "code": "router.get('/commander/status')"
+  },
+  {
+    "file": "routers\\pc_commander.py",
+    "line": 23,
+    "type": "CALL",
+    "code": "router.post('/commander/interpret')"
+  },
+  {
+    "file": "routers\\pc_commander.py",
+    "line": 31,
+    "type": "CALL",
+    "code": "router.post('/commander/command')"
+  },
+  {
+    "file": "routers\\pc_commander.py",
+    "line": 36,
+    "type": "CALL",
+    "code": "router.post('/api/chat/commander')"
+  },
+  {
+    "file": "routers\\performance.py",
+    "line": 13,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/performance', tags=['performance'])"
+  },
+  {
+    "file": "routers\\performance.py",
+    "line": 26,
+    "type": "CALL",
+    "code": "router.get('/status')"
+  },
+  {
+    "file": "routers\\performance.py",
+    "line": 31,
+    "type": "CALL",
+    "code": "router.get('/pc')"
+  },
+  {
+    "file": "routers\\performance.py",
+    "line": 36,
+    "type": "CALL",
+    "code": "router.get('/ollama')"
+  },
+  {
+    "file": "routers\\performance.py",
+    "line": 41,
+    "type": "CALL",
+    "code": "router.post('/warmup')"
+  },
+  {
+    "file": "routers\\performance.py",
+    "line": 46,
+    "type": "CALL",
+    "code": "router.post('/bench')"
+  },
+  {
+    "file": "routers\\performance.py",
+    "line": 51,
+    "type": "CALL",
+    "code": "router.post('/bench/quick')"
+  },
+  {
+    "file": "routers\\research.py",
+    "line": 17,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/api/v1/research', tags=['Research'])"
+  },
+  {
+    "file": "routers\\research.py",
+    "line": 20,
+    "type": "ASSIGN",
+    "code": "_decision_router = DecisionRouter([SearxngProvider(), JinaProvider(), TavilyProvider(), GeminiProvider(), OllamaProvider()])"
+  },
+  {
+    "file": "routers\\research.py",
+    "line": 56,
+    "type": "CALL",
+    "code": "_decision_router.search(query=payload.query, mode=search_mode, max_tokens=payload.max_tokens or 400)"
+  },
+  {
+    "file": "routers\\research.py",
+    "line": 58,
+    "type": "ASSIGN",
+    "code": "provider_name = result.get('provider', 'unknown')"
+  },
+  {
+    "file": "routers\\research.py",
+    "line": 42,
+    "type": "CALL",
+    "code": "router.post('/search', response_model=ResearchResponse)"
+  },
+  {
+    "file": "routers\\safe_actions.py",
+    "line": 16,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/safe-actions', tags=['safe-actions'])"
+  },
+  {
+    "file": "routers\\safe_actions.py",
+    "line": 44,
+    "type": "CALL",
+    "code": "router.get('/status')"
+  },
+  {
+    "file": "routers\\safe_actions.py",
+    "line": 51,
+    "type": "CALL",
+    "code": "registry()"
+  },
+  {
+    "file": "routers\\safe_actions.py",
+    "line": 49,
+    "type": "CALL",
+    "code": "router.get('/registry')"
+  },
+  {
+    "file": "routers\\safe_actions.py",
+    "line": 54,
+    "type": "CALL",
+    "code": "router.get('/queue')"
+  },
+  {
+    "file": "routers\\safe_actions.py",
+    "line": 59,
+    "type": "CALL",
+    "code": "router.post('/propose')"
+  },
+  {
+    "file": "routers\\safe_actions.py",
+    "line": 64,
+    "type": "CALL",
+    "code": "router.post('/run')"
+  },
+  {
+    "file": "routers\\safe_actions.py",
+    "line": 69,
+    "type": "CALL",
+    "code": "router.post('/quick')"
+  },
+  {
+    "file": "routers\\safe_actions.py",
+    "line": 74,
+    "type": "CALL",
+    "code": "router.post('/cancel')"
+  },
+  {
+    "file": "routers\\safe_actions.py",
+    "line": 79,
+    "type": "CALL",
+    "code": "router.post('/cancel-pending')"
+  },
+  {
+    "file": "routers\\self.py",
+    "line": 10,
+    "type": "ASSIGN",
+    "code": "router = APIRouter()"
+  },
+  {
+    "file": "routers\\self.py",
+    "line": 31,
+    "type": "ASSIGN",
+    "code": "model_active = os.getenv('EZZIO_ACTIVE_MODEL', 'gemini-2.5-flash')"
+  },
+  {
+    "file": "routers\\self.py",
+    "line": 22,
+    "type": "CALL",
+    "code": "router.get('/api/v1/self/status', response_model=SelfStatus, tags=['Self'])"
+  },
+  {
+    "file": "routers\\skills.py",
+    "line": 6,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "routers\\skills.py",
+    "line": 9,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/api/skills', tags=['Auto-Evolution Skills'])"
+  },
+  {
+    "file": "routers\\skills.py",
+    "line": 13,
+    "type": "CALL",
+    "code": "router.post('/deploy')"
+  },
+  {
+    "file": "routers\\skills.py",
+    "line": 41,
+    "type": "CALL",
+    "code": "router.get('/active')"
+  },
+  {
+    "file": "routers\\stats.py",
+    "line": 17,
+    "type": "ASSIGN",
+    "code": "router = APIRouter()"
+  },
+  {
+    "file": "routers\\stats.py",
+    "line": 63,
+    "type": "ASSIGN",
+    "code": "by_provider = stats_data['requests_by_provider']"
+  },
+  {
+    "file": "routers\\stats.py",
+    "line": 76,
+    "type": "CALL",
+    "code": "router.get('/api/v1/stats', response_model=StatsResponse, tags=['Stats'])"
+  },
+  {
+    "file": "routers\\stats.py",
+    "line": 89,
+    "type": "ASSIGN",
+    "code": "stats_data['requests_by_provider'][data.provider] = stats_data['requests_by_provider'].get(data.provider, 0) + 1"
+  },
+  {
+    "file": "routers\\stats.py",
+    "line": 83,
+    "type": "CALL",
+    "code": "router.post('/api/v1/stats/notify', tags=['Stats'])"
+  },
+  {
+    "file": "routers\\supervisor.py",
+    "line": 12,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/supervisor', tags=['supervisor'])"
+  },
+  {
+    "file": "routers\\supervisor.py",
+    "line": 15,
+    "type": "CALL",
+    "code": "router.get('/status')"
+  },
+  {
+    "file": "routers\\supervisor.py",
+    "line": 20,
+    "type": "CALL",
+    "code": "router.post('/snapshot')"
+  },
+  {
+    "file": "routers\\supervisor.py",
+    "line": 25,
+    "type": "CALL",
+    "code": "router.get('/snapshots')"
+  },
+  {
+    "file": "routers\\supervisor.py",
+    "line": 30,
+    "type": "CALL",
+    "code": "router.get('/watchdog')"
+  },
+  {
+    "file": "routers\\supervisor.py",
+    "line": 35,
+    "type": "CALL",
+    "code": "router.get('/mobile-home', response_class=HTMLResponse)"
+  },
+  {
+    "file": "routers\\system.py",
+    "line": 13,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/api/v1/system', tags=['System'])"
+  },
+  {
+    "file": "routers\\system.py",
+    "line": 40,
+    "type": "CALL",
+    "code": "router.post('/cleanup', response_model=CleanupReport)"
+  },
+  {
+    "file": "routers\\system.py",
+    "line": 76,
+    "type": "CALL",
+    "code": "router.get('/dependencies', response_model=DependencyGraphResponse, tags=['Dependencies'])"
+  },
+  {
+    "file": "routers\\system.py",
+    "line": 99,
+    "type": "CALL",
+    "code": "router.post('/dependencies/query', response_model=DependencyQueryResponse, tags=['Dependencies'])"
+  },
+  {
+    "file": "routers\\system.py",
+    "line": 131,
+    "type": "CALL",
+    "code": "router.get('/dependencies/orphans', response_model=List[str], tags=['Dependencies'])"
+  },
+  {
+    "file": "routers\\system.py",
+    "line": 145,
+    "type": "CALL",
+    "code": "router.get('/dependencies/circular', response_model=List[List[str]], tags=['Dependencies'])"
+  },
+  {
+    "file": "routers\\system.py",
+    "line": 173,
+    "type": "CALL",
+    "code": "router.post('/dependencies/export', response_model=ExportGraphResponse)"
+  },
+  {
+    "file": "routers\\system.py",
+    "line": 204,
+    "type": "CALL",
+    "code": "router.post('/cleanup/orphans', response_model=OrphanCleanupReport)"
+  },
+  {
+    "file": "routers\\tasks.py",
+    "line": 10,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/api/v1/tasks', tags=['Tasks'])"
+  },
+  {
+    "file": "routers\\tasks.py",
+    "line": 38,
+    "type": "CALL",
+    "code": "router.post('/', response_model=TaskResponse)"
+  },
+  {
+    "file": "routers\\tasks.py",
+    "line": 64,
+    "type": "CALL",
+    "code": "router.get('/{task_id}', response_model=TaskResponse)"
+  },
+  {
+    "file": "routers\\tasks.py",
+    "line": 71,
+    "type": "CALL",
+    "code": "router.post('/{task_id}/run', response_model=TaskResponse)"
+  },
+  {
+    "file": "routers\\tasks.py",
+    "line": 134,
+    "type": "CALL",
+    "code": "router.post('/{task_id}/cancel', response_model=TaskResponse)"
+  },
+  {
+    "file": "routers\\ui_dashboard.py",
+    "line": 4,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(tags=['ui-dashboard'])"
+  },
+  {
+    "file": "routers\\ui_dashboard.py",
+    "line": 248,
+    "type": "CALL",
+    "code": "router.get('/ui', response_class=HTMLResponse)"
+  },
+  {
+    "file": "routers\\vision.py",
+    "line": 6,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/vision', tags=['vision'])"
+  },
+  {
+    "file": "routers\\vision.py",
+    "line": 9,
+    "type": "CALL",
+    "code": "router.get('/status')"
+  },
+  {
+    "file": "routers\\vision.py",
+    "line": 14,
+    "type": "CALL",
+    "code": "router.post('/analyze-path')"
+  },
+  {
+    "file": "routers\\vision.py",
+    "line": 26,
+    "type": "CALL",
+    "code": "router.post('/analyze')"
+  },
+  {
+    "file": "routers\\vision_smart.py",
+    "line": 6,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(tags=['vision-smart'])"
+  },
+  {
+    "file": "routers\\vision_smart.py",
+    "line": 14,
+    "type": "CALL",
+    "code": "router.get('/vision-smart/status')"
+  },
+  {
+    "file": "routers\\vision_smart.py",
+    "line": 24,
+    "type": "CALL",
+    "code": "router.post('/vision/analyze-smart-path')"
+  },
+  {
+    "file": "routers\\vision_smart.py",
+    "line": 29,
+    "type": "CALL",
+    "code": "router.post('/vision/analyze-smart')"
+  },
+  {
+    "file": "routers\\webhook.py",
+    "line": 16,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/api/v1/webhook', tags=['Webhook'])"
+  },
+  {
+    "file": "routers\\webhook.py",
+    "line": 76,
+    "type": "CALL",
+    "code": "router.post('/n8n', response_model=WebhookResponse)"
+  },
+  {
+    "file": "runtime\\debug_ollama.py",
+    "line": 14,
+    "type": "ASSIGN",
+    "code": "provider = OllamaProvider(model='qwen3.5:9b')"
+  },
+  {
+    "file": "runtime\\diagnose_ollama.py",
+    "line": 13,
+    "type": "ASSIGN",
+    "code": "provider = OllamaProvider(model='qwen3.5:9b')"
+  },
+  {
+    "file": "runtime\\kernel_legacy_v2.py",
+    "line": 4,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\kernel_legacy_v2.py",
+    "line": 17,
+    "type": "ASSIGN",
+    "code": "self.router = LLMRouter()"
+  },
+  {
+    "file": "runtime\\kernel_legacy_v2.py",
+    "line": 23,
+    "type": "CALL",
+    "code": "Path('registry/build/persona.production.md').exists()"
+  },
+  {
+    "file": "runtime\\kernel_legacy_v2.py",
+    "line": 23,
+    "type": "CALL",
+    "code": "Path('registry/persona.txt').exists()"
+  },
+  {
+    "file": "runtime\\kernel_legacy_v2.py",
+    "line": 26,
+    "type": "CALL",
+    "code": "self.router.check_health()"
+  },
+  {
+    "file": "scripts\\audit_secrets.py",
+    "line": 5,
+    "type": "CALL",
+    "code": "Path('G:/AI/E-zzio').resolve()"
+  },
+  {
+    "file": "scripts\\backup_ezzio.py",
+    "line": 10,
+    "type": "CALL",
+    "code": "Path('G:/AI/E-zzio').resolve()"
+  },
+  {
+    "file": "scripts\\benchmark_production.py",
+    "line": 9,
+    "type": "CALL",
+    "code": "Path('G:/AI/E-zzio').resolve()"
+  },
+  {
+    "file": "scripts\\cleanup_engine.py",
+    "line": 14,
+    "type": "CALL",
+    "code": "root.resolve()"
+  },
+  {
+    "file": "scripts\\cleanup_v2_1_engine.py",
+    "line": 21,
+    "type": "CALL",
+    "code": "root.resolve()"
+  },
+  {
+    "file": "scripts\\cleanup_v2_engine.py",
+    "line": 19,
+    "type": "CALL",
+    "code": "root.resolve()"
+  },
+  {
+    "file": "scripts\\connect_context_router.py",
+    "line": 6,
+    "type": "ASSIGN",
+    "code": "router_code = 'import json\\nfrom pathlib import Path\\nfrom typing import Dict, Any, Optional\\n\\nfrom .schemas import ModelRequest, ModelResponse\\nfrom .selector import ModelSelector\\nfrom .health import ModelHealthChecker\\nfrom .telemetry import RouterTelemetry\\nfrom .context import EzzioContextInjector\\nfrom .providers.ollama import OllamaProvider\\nfrom .providers.gemini import GeminiProvider\\nfrom .providers.llama_cpp import LlamaCppProvider\\n\\nclass EzzioModelRouter:\\n    def __init__(self, config_path: Optional[str] = None):\\n        self.root_dir = Path(r\"G:\\\\AI\\\\E-zzio\")\\n        cfg_file = Path(config_path) if config_path else Path(__file__).parent / \"config.json\"\\n        self.config = json.loads(cfg_file.read_text(encoding=\"utf-8\"))\\n\\n        self.catalog = self.config.get(\"catalog\", {})\\n        self.selector = ModelSelector(self.catalog)\\n        self.health = ModelHealthChecker(self.config)\\n        self.telemetry = RouterTelemetry()\\n        self.context_injector = EzzioContextInjector(self.root_dir)\\n\\n        self.ollama = OllamaProvider(self.config.get(\"ollama_host\", \"http://127.0.0.1:11434\"))\\n        self.gemini = GeminiProvider()\\n        self.llama_cpp = LlamaCppProvider(self.root_dir)\\n\\n    def generate(self, req: ModelRequest, agent_id: str = \"system\") -> ModelResponse:\\n        # Injection automatique de l\\'identit\u00e9 et de l\\'\u00e9tat syst\u00e8me E-ZZIO\\n        req.system_prompt = self.context_injector.build_system_prompt(req.system_prompt)\\n\\n        cascade = self.selector.select_cascade(req)\\n        last_error = None\\n        fallback_flag = False\\n\\n        for idx, model_name in enumerate(cascade):\\n            if idx > 0:\\n                fallback_flag = True\\n\\n            meta = self.catalog.get(model_name, {})\\n            provider_type = meta.get(\"provider\")\\n            required_ram = meta.get(\"required_ram_gb\", 0.0)\\n\\n            # Verification de la disponibilit\u00e9 RAM\\n            if not self.health.check_ram_availability(required_ram):\\n                continue\\n\\n            try:\\n                if provider_type == \"ollama\":\\n                    if not self.health.check_ollama():\\n                        continue\\n                    resp = self.ollama.execute(model_name, req, keep_alive=self.config.get(\"default_keep_alive\", \"5m\"))\\n                elif provider_type == \"gemini\":\\n                    if not self.health.check_gemini():\\n                        continue\\n                    resp = self.gemini.execute(model_name, req)\\n                elif provider_type == \"llama_cpp\":\\n                    resp = self.llama_cpp.execute(meta, req)\\n                else:\\n                    continue\\n\\n                resp.fallback_applied = fallback_flag\\n                self.telemetry.log_usage(agent_id, req.task, resp)\\n                return resp\\n\\n            except Exception as e:\\n                last_error = e\\n                continue\\n\\n        raise RuntimeError(f\"\u00c9chec de la cascade du Model Router. Dernier \u00e9chec : {last_error}\")\\n'"
+  },
+  {
+    "file": "scripts\\connect_context_router.py",
+    "line": 80,
+    "type": "CALL",
+    "code": "(ROUTER_DIR / 'router.py').write_text(router_code, encoding='utf-8')"
+  },
+  {
+    "file": "scripts\\deploy_llm_api_router.py",
+    "line": 7,
+    "type": "ASSIGN",
+    "code": "llm_router_code = 'from fastapi import APIRouter, HTTPException\\nfrom pydantic import BaseModel\\nfrom typing import Optional, Dict, Any\\n\\nfrom runtime.model_router import EzzioModelRouter, ModelRequest\\n\\nrouter = APIRouter(prefix=\"/api/llm\", tags=[\"llm\"])\\nmodel_orchestrator = EzzioModelRouter()\\n\\nclass GenerateDTO(BaseModel):\\n    prompt: str\\n    task: str = \"general\"\\n    complexity: str = \"low\"\\n    latency: str = \"normal\"\\n    budget: str = \"local_first\"\\n    system_prompt: Optional[str] = None\\n    agent_id: str = \"web_api\"\\n\\n@router.post(\"/generate\")\\ndef generate_text(payload: GenerateDTO):\\n    try:\\n        req = ModelRequest(\\n            prompt=payload.prompt,\\n            task=payload.task,\\n            complexity=payload.complexity,\\n            latency=payload.latency,\\n            budget=payload.budget,\\n            system_prompt=payload.system_prompt\\n        )\\n        response = model_orchestrator.generate(req, agent_id=payload.agent_id)\\n        return {\\n            \"ok\": True,\\n            \"content\": response.content,\\n            \"model_used\": response.model_used,\\n            \"provider_used\": response.provider_used,\\n            \"latency_ms\": response.latency_ms,\\n            \"fallback_applied\": response.fallback_applied\\n        }\\n    except Exception as e:\\n        raise HTTPException(status_code=500, detail=str(e))\\n'"
+  },
+  {
+    "file": "scripts\\deploy_mobile_websocket.py",
+    "line": 7,
+    "type": "ASSIGN",
+    "code": "mobile_router_code = 'import json\\nfrom fastapi import APIRouter, WebSocket, WebSocketDisconnect\\nfrom runtime.model_router import EzzioModelRouter, ModelRequest\\n\\nrouter = APIRouter(prefix=\"/api/mobile\", tags=[\"mobile\"])\\norchestrator = EzzioModelRouter()\\n\\n@router.websocket(\"/ws\")\\nasync def mobile_websocket_endpoint(websocket: WebSocket):\\n    await websocket.accept()\\n    try:\\n        while True:\\n            data = await websocket.receive_text()\\n            payload = json.loads(data)\\n\\n            req = ModelRequest(\\n                prompt=payload.get(\"prompt\", \"\"),\\n                task=payload.get(\"task\", \"general\"),\\n                complexity=payload.get(\"complexity\", \"low\"),\\n                latency=payload.get(\"latency\", \"normal\"),\\n                budget=payload.get(\"budget\", \"local_first\"),\\n                system_prompt=payload.get(\"system_prompt\")\\n            )\\n\\n            response = orchestrator.generate(req, agent_id=\"samsung_a33_client\")\\n\\n            await websocket.send_json({\\n                \"ok\": True,\\n                \"content\": response.content,\\n                \"model_used\": response.model_used,\\n                \"provider_used\": response.provider_used,\\n                \"latency_ms\": response.latency_ms,\\n                \"fallback_applied\": response.fallback_applied\\n            })\\n    except WebSocketDisconnect:\\n        pass\\n    except Exception as e:\\n        await websocket.send_json({\"ok\": False, \"error\": str(e)})\\n'"
+  },
+  {
+    "file": "scripts\\deploy_model_router_v1.1.py",
+    "line": 130,
+    "type": "ASSIGN",
+    "code": "router_code = 'import json\\nfrom pathlib import Path\\nfrom typing import Dict, Any, Optional\\n\\nfrom .schemas import ModelRequest, ModelResponse\\nfrom .selector import ModelSelector\\nfrom .health import ModelHealthChecker\\nfrom .telemetry import RouterTelemetry\\nfrom .providers.ollama import OllamaProvider\\nfrom .providers.gemini import GeminiProvider\\nfrom .providers.llama_cpp import LlamaCppProvider\\n\\nclass EzzioModelRouter:\\n    def __init__(self, config_path: Optional[str] = None):\\n        self.root_dir = Path(r\"G:\\\\AI\\\\E-zzio\")\\n        cfg_file = Path(config_path) if config_path else Path(__file__).parent / \"config.json\"\\n        self.config = json.loads(cfg_file.read_text(encoding=\"utf-8\"))\\n\\n        self.catalog = self.config.get(\"catalog\", {})\\n        self.selector = ModelSelector(self.catalog)\\n        self.health = ModelHealthChecker(self.config)\\n        self.telemetry = RouterTelemetry()\\n\\n        self.ollama = OllamaProvider(self.config.get(\"ollama_host\", \"http://127.0.0.1:11434\"))\\n        self.gemini = GeminiProvider()\\n        self.llama_cpp = LlamaCppProvider(self.root_dir)\\n\\n    def generate(self, req: ModelRequest, agent_id: str = \"system\") -> ModelResponse:\\n        cascade = self.selector.select_cascade(req)\\n        last_error = None\\n        fallback_flag = False\\n\\n        for idx, model_name in enumerate(cascade):\\n            if idx > 0:\\n                fallback_flag = True\\n\\n            meta = self.catalog.get(model_name, {})\\n            provider_type = meta.get(\"provider\")\\n            required_ram = meta.get(\"required_ram_gb\", 0.0)\\n\\n            # V\u00e9rification de s\u00e9curit\u00e9 RAM via Governor Guard\\n            if not self.health.check_ram_availability(required_ram):\\n                continue\\n\\n            try:\\n                if provider_type == \"ollama\":\\n                    if not self.health.check_ollama():\\n                        continue\\n                    resp = self.ollama.execute(model_name, req, keep_alive=self.config.get(\"default_keep_alive\", \"5m\"))\\n                elif provider_type == \"gemini\":\\n                    if not self.health.check_gemini():\\n                        continue\\n                    resp = self.gemini.execute(model_name, req)\\n                elif provider_type == \"llama_cpp\":\\n                    resp = self.llama_cpp.execute(meta, req)\\n                else:\\n                    continue\\n\\n                resp.fallback_applied = fallback_flag\\n                self.telemetry.log_usage(agent_id, req.task, resp)\\n                return resp\\n\\n            except Exception as e:\\n                last_error = e\\n                continue\\n\\n        raise RuntimeError(f\"\u00c9chec de la cascade du Model Router. Dernier \u00e9chec : {last_error}\")\\n'"
+  },
+  {
+    "file": "scripts\\deploy_model_router_v1.1.py",
+    "line": 198,
+    "type": "CALL",
+    "code": "(ROUTER_DIR / 'router.py').write_text(router_code, encoding='utf-8')"
+  },
+  {
+    "file": "scripts\\enable_fast_mode.py",
+    "line": 18,
+    "type": "ASSIGN",
+    "code": "cfg['routes'] = {}"
+  },
+  {
+    "file": "scripts\\enable_fast_mode.py",
+    "line": 19,
+    "type": "ASSIGN",
+    "code": "cfg['routes']['general'] = 'gemma2:2b'"
+  },
+  {
+    "file": "scripts\\enable_fast_mode.py",
+    "line": 20,
+    "type": "ASSIGN",
+    "code": "cfg['routes']['chat'] = 'gemma2:2b'"
+  },
+  {
+    "file": "scripts\\enable_fast_mode.py",
+    "line": 21,
+    "type": "ASSIGN",
+    "code": "cfg['default_model'] = 'gemma2:2b'"
+  },
+  {
+    "file": "scripts\\ezzio_smoke_test.py",
+    "line": 7,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "scripts\\ezzio_smoke_test.py",
+    "line": 25,
+    "type": "CALL",
+    "code": "init_chat_router()"
+  },
+  {
+    "file": "scripts\\full_production_verification_flow.py",
+    "line": 12,
+    "type": "CALL",
+    "code": "Path('G:/AI/E-zzio').resolve()"
+  },
+  {
+    "file": "scripts\\full_production_verification_flow.py",
+    "line": 140,
+    "type": "CALL",
+    "code": "resolve_discord_token()"
+  },
+  {
+    "file": "scripts\\live_user_acceptance.py",
+    "line": 9,
+    "type": "CALL",
+    "code": "Path('G:/AI/E-zzio').resolve()"
+  },
+  {
+    "file": "scripts\\patch_ollama_provider.py",
+    "line": 4,
+    "type": "ASSIGN",
+    "code": "provider_file = Path('G:\\\\AI\\\\E-zzio\\\\runtime\\\\model_router\\\\providers\\\\ollama.py')"
+  },
+  {
+    "file": "scripts\\quality_gate.py",
+    "line": 5,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "scripts\\run_certification.py",
+    "line": 5,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "scripts\\run_master_final_certification.py",
+    "line": 9,
+    "type": "CALL",
+    "code": "Path('G:/AI/E-zzio').resolve()"
+  },
+  {
+    "file": "scripts\\run_productization_master_certification.py",
+    "line": 12,
+    "type": "CALL",
+    "code": "Path('G:/AI/E-zzio').resolve()"
+  },
+  {
+    "file": "scripts\\run_productization_master_certification.py",
+    "line": 51,
+    "type": "CALL",
+    "code": "resolve_discord_token()"
+  },
+  {
+    "file": "scripts\\run_v15_execution.py",
+    "line": 10,
+    "type": "CALL",
+    "code": "Path('G:/AI/E-zzio').resolve()"
+  },
+  {
+    "file": "scripts\\start_ezzio.py",
+    "line": 8,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "scripts\\status_production.py",
+    "line": 9,
+    "type": "CALL",
+    "code": "Path('G:/AI/E-zzio').resolve()"
+  },
+  {
+    "file": "scripts\\stop_ezzio.py",
+    "line": 6,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "scripts\\update_router_fast_profile.py",
+    "line": 33,
+    "type": "ASSIGN",
+    "code": "config['routes']['general'] = 'gemma4e4b'"
+  },
+  {
+    "file": "scripts\\update_router_fast_profile.py",
+    "line": 34,
+    "type": "ASSIGN",
+    "code": "config['routes']['chat'] = 'gemma4e4b'"
+  },
+  {
+    "file": "scripts\\update_router_fast_profile.py",
+    "line": 35,
+    "type": "ASSIGN",
+    "code": "config['routes']['reasoning'] = 'qwen3:8b'"
+  },
+  {
+    "file": "scripts\\update_router_fast_profile.py",
+    "line": 36,
+    "type": "ASSIGN",
+    "code": "config['routes']['code'] = 'qwen3:8b'"
+  },
+  {
+    "file": "scripts\\watchdog_ezzio.py",
+    "line": 7,
+    "type": "CALL",
+    "code": "Path('G:/AI/E-zzio').resolve()"
+  },
+  {
+    "file": "tools\\audit_gate_v6.45.34.py",
+    "line": 8,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "tools\\audit_gate_v6.45.35.py",
+    "line": 8,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "tools\\audit_gate_v6.45.36.py",
+    "line": 8,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "tools\\audit_gate_v6.45.37.py",
+    "line": 8,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "tools\\audit_gate_v6.45.38.py",
+    "line": 8,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "tools\\audit_gate_v6.45.38.py",
+    "line": 34,
+    "type": "ASSIGN",
+    "code": "found_providers = []"
+  },
+  {
+    "file": "tools\\audit_gate_v6.45.39.py",
+    "line": 7,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "tools\\audit_gate_v6.45.39.py",
+    "line": 52,
+    "type": "CALL",
+    "code": "report['fabric_candidates'].append({'path': rel, 'has_fabric': 'AutonomousModelFabric' in content, 'has_registry': 'ModelRegistry' in content, 'has_router': 'IntentRouter' in content})"
+  },
+  {
+    "file": "tools\\audit_gate_v6.45.40.py",
+    "line": 8,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "tools\\audit_gate_v6_45_28.py",
+    "line": 7,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "tools\\audit_gate_v6_45_28.py",
+    "line": 86,
+    "type": "CALL",
+    "code": "self._resolve_name(node.func)"
+  },
+  {
+    "file": "tools\\audit_gate_v6_45_29.py",
+    "line": 6,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "tools\\audit_gate_v6_45_30.py",
+    "line": 7,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "tools\\audit_gate_v6_45_30.py",
+    "line": 70,
+    "type": "CALL",
+    "code": "self._resolve_name(val_node.func)"
+  },
+  {
+    "file": "tools\\audit_gate_v6_45_30.py",
+    "line": 101,
+    "type": "CALL",
+    "code": "self._resolve_name(node.func)"
+  },
+  {
+    "file": "tools\\audit_gate_v6_45_31.py",
+    "line": 8,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "tools\\audit_gate_v6_45_32.py",
+    "line": 8,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "tools\\audit_gate_v6_45_33.py",
+    "line": 8,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "tools\\audit_gate_v6_45_39.py",
+    "line": 7,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "tools\\audit_gate_v6_45_39.py",
+    "line": 54,
+    "type": "CALL",
+    "code": "report['fabric_candidates'].append({'path': rel, 'has_fabric': 'AutonomousModelFabric' in content, 'has_registry': 'ModelRegistry' in content, 'has_router': 'IntentRouter' in content})"
+  },
+  {
+    "file": "core\\agent\\agent_provider.py",
+    "line": 29,
+    "type": "ASSIGN",
+    "code": "self.router = self._build_canonical_router()"
+  },
+  {
+    "file": "core\\agent\\agent_provider.py",
+    "line": 29,
+    "type": "CALL",
+    "code": "self._build_canonical_router()"
+  },
+  {
+    "file": "core\\agent\\agent_provider.py",
+    "line": 36,
+    "type": "ASSIGN",
+    "code": "model_list = [{'model_name': 'cloud_gemini', 'litellm_params': {'model': 'gemini/gemini-3.5-flash-lite', 'api_key': gemini_key}}, {'model_name': 'local_primary', 'litellm_params': {'model': 'ollama/ezzio-granite', 'api_base': 'http://127.0.0.1:11434'}}, {'model_name': 'local_fallback', 'litellm_params': {'model': 'ollama/ornith-ezzio', 'api_base': 'http://127.0.0.1:11434'}}]"
+  },
+  {
+    "file": "core\\agent\\agent_provider.py",
+    "line": 67,
+    "type": "ASSIGN",
+    "code": "running_models = data.get('models', [])"
+  },
+  {
+    "file": "core\\agent\\agent_provider.py",
+    "line": 112,
+    "type": "ASSIGN",
+    "code": "target_model = 'cloud_gemini' if force_cloud else self.backend"
+  },
+  {
+    "file": "core\\agent\\agent_provider.py",
+    "line": 131,
+    "type": "CALL",
+    "code": "self.router.completion(**call_kwargs)"
+  },
+  {
+    "file": "core\\agent\\agent_provider.py",
+    "line": 134,
+    "type": "CALL",
+    "code": "self._is_terminal_route_error(primary_exc)"
+  },
+  {
+    "file": "core\\agent\\agent_provider.py",
+    "line": 156,
+    "type": "CALL",
+    "code": "self.router.completion(**fb_kwargs)"
+  },
+  {
+    "file": "core\\agent\\agent_provider.py",
+    "line": 159,
+    "type": "CALL",
+    "code": "self._is_terminal_route_error(fb_exc)"
+  },
+  {
+    "file": "core\\agent\\coding_agent_loop.py",
+    "line": 22,
+    "type": "ASSIGN",
+    "code": "self.provider = AgentProviderAdapter(backend=backend)"
+  },
+  {
+    "file": "core\\agent\\coding_agent_loop.py",
+    "line": 57,
+    "type": "CALL",
+    "code": "self.registry.list_tools()"
+  },
+  {
+    "file": "core\\agent\\coding_agent_loop.py",
+    "line": 123,
+    "type": "CALL",
+    "code": "self.registry.execute(action['tool'], action['args'])"
+  },
+  {
+    "file": "core\\agent\\coding_assistant.py",
+    "line": 9,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\agent\\writing_engine.py",
+    "line": 9,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\authority\\authority_policy.py",
+    "line": 9,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\authority\\evolution_ledger.py",
+    "line": 11,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\authority\\evolution_request.py",
+    "line": 12,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\authority\\promotion_controller.py",
+    "line": 12,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\cognition\\cognitive_gateway.py",
+    "line": 28,
+    "type": "ASSIGN",
+    "code": "self.identity_provider = CanonicalIdentity()"
+  },
+  {
+    "file": "core\\cognition\\cognitive_gateway.py",
+    "line": 31,
+    "type": "ASSIGN",
+    "code": "self.identity_provider = None"
+  },
+  {
+    "file": "core\\cognition\\cognitive_router.py",
+    "line": 85,
+    "type": "ASSIGN",
+    "code": "selected_model = profile['fallback']"
+  },
+  {
+    "file": "core\\cognition\\cognitive_router.py",
+    "line": 89,
+    "type": "ASSIGN",
+    "code": "selected_model = profile['model']"
+  },
+  {
+    "file": "core\\cognition\\cognitive_router.py",
+    "line": 92,
+    "type": "ASSIGN",
+    "code": "selected_model = profile['model']"
+  },
+  {
+    "file": "core\\cognition\\cognitive_router.py",
+    "line": 220,
+    "type": "ASSIGN",
+    "code": "router = CognitiveTaskClassifier()"
+  },
+  {
+    "file": "core\\cognition\\cognitive_router.py",
+    "line": 224,
+    "type": "CALL",
+    "code": "router.route_task('code', 'Refactoring du module de persistance E-zzio', 450)"
+  },
+  {
+    "file": "core\\cognition\\cognitive_router.py",
+    "line": 229,
+    "type": "CALL",
+    "code": "router.route_task('reasoning', \"Analyse comparative de l'architecture M\u00e9morielle L0-L5\", 800)"
+  },
+  {
+    "file": "core\\cognition\\cognitive_router.py",
+    "line": 238,
+    "type": "CALL",
+    "code": "test_cognitive_router()"
+  },
+  {
+    "file": "core\\cognition\\decision_ledger.py",
+    "line": 168,
+    "type": "CALL",
+    "code": "self._resolve_secret_key(hmac_key, root_dir=self.root_dir)"
+  },
+  {
+    "file": "core\\cognition\\decision_ledger.py",
+    "line": 495,
+    "type": "CALL",
+    "code": "self._resolve_secret_key(new_key)"
+  },
+  {
+    "file": "core\\cognition\\model_router.py",
+    "line": 22,
+    "type": "ASSIGN",
+    "code": "provider = 'ollama'"
+  },
+  {
+    "file": "core\\cognition\\model_router.py",
+    "line": 25,
+    "type": "ASSIGN",
+    "code": "provider = 'ollama'"
+  },
+  {
+    "file": "core\\cognition\\model_router.py",
+    "line": 28,
+    "type": "ASSIGN",
+    "code": "provider = 'api'"
+  },
+  {
+    "file": "core\\cognition\\model_token_governor.py",
+    "line": 46,
+    "type": "ASSIGN",
+    "code": "selected_model = profile['default_model']"
+  },
+  {
+    "file": "core\\cognition\\model_token_governor.py",
+    "line": 84,
+    "type": "CALL",
+    "code": "gov.evaluate_and_route('code_completion', 300)"
+  },
+  {
+    "file": "core\\cognition\\model_token_governor.py",
+    "line": 91,
+    "type": "CALL",
+    "code": "gov.evaluate_and_route('massive_analysis', 10000)"
+  },
+  {
+    "file": "core\\cognitive_engine\\cognitive_gatekeeper.py",
+    "line": 49,
+    "type": "CALL",
+    "code": "(ROOT_DIR / file_path).resolve()"
+  },
+  {
+    "file": "core\\cognitive_engine\\cognitive_gatekeeper.py",
+    "line": 51,
+    "type": "CALL",
+    "code": "file_path.resolve()"
+  },
+  {
+    "file": "core\\cognitive_engine\\cognitive_gatekeeper.py",
+    "line": 54,
+    "type": "CALL",
+    "code": "abs_path.relative_to(ROOT_DIR.resolve()).as_posix()"
+  },
+  {
+    "file": "core\\cognitive_engine\\cognitive_gatekeeper.py",
+    "line": 54,
+    "type": "CALL",
+    "code": "ROOT_DIR.resolve()"
+  },
+  {
+    "file": "core\\cognitive_engine\\patch_ecol_pipeline.py",
+    "line": 79,
+    "type": "ASSIGN",
+    "code": "router_path = CORE_COG_DIR / 'model_router.py'"
+  },
+  {
+    "file": "core\\constitution\\ccr_security_governor.py",
+    "line": 116,
+    "type": "CALL",
+    "code": "self.fabric._sanitize_memory_content(raw_text)"
+  },
+  {
+    "file": "core\\evolution_experience\\experience_ledger.py",
+    "line": 10,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\identity\\boot_attestation.py",
+    "line": 14,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\identity\\canonical_identity.py",
+    "line": 14,
+    "type": "CALL",
+    "code": "root_dir.resolve()"
+  },
+  {
+    "file": "core\\identity\\canonical_identity.py",
+    "line": 14,
+    "type": "CALL",
+    "code": "Path('G:/AI/E-zzio').resolve()"
+  },
+  {
+    "file": "core\\identity\\global_fingerprint.py",
+    "line": 10,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\identity\\identity_chain.py",
+    "line": 11,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\identity\\identity_chain_validator.py",
+    "line": 10,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\identity\\identity_context.py",
+    "line": 14,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\identity\\identity_events.py",
+    "line": 10,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\identity\\identity_guardian.py",
+    "line": 11,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\identity\\identity_persistence.py",
+    "line": 12,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\identity\\identity_recovery.py",
+    "line": 14,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\identity\\identity_snapshot.py",
+    "line": 15,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\identity\\identity_validator.py",
+    "line": 12,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\identity\\intentions_reader.py",
+    "line": 8,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\intents\\fabric_connector.py",
+    "line": 54,
+    "type": "CALL",
+    "code": "build_fabric(project_root=project_root)"
+  },
+  {
+    "file": "core\\intents\\fabric_connector.py",
+    "line": 87,
+    "type": "CALL",
+    "code": "self.resolve_tier(intent)"
+  },
+  {
+    "file": "core\\intents\\fabric_connector.py",
+    "line": 91,
+    "type": "CALL",
+    "code": "self.fabric.router.execute(messages=messages, tier=target_tier, temperature=temperature, max_tokens=max_tokens)"
+  },
+  {
+    "file": "core\\intents\\fabric_connector.py",
+    "line": 116,
+    "type": "CALL",
+    "code": "self.fabric.telemetry.emit('intent_routing_failed', {'intent': str(intent), 'tier': target_tier, 'error': str(exc), 'duration_ms': elapsed_ms})"
+  },
+  {
+    "file": "core\\knowledge\\drift_detector.py",
+    "line": 83,
+    "type": "CALL",
+    "code": "Path(root_dir).resolve()"
+  },
+  {
+    "file": "core\\knowledge\\drift_detector.py",
+    "line": 85,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\knowledge\\drift_detector.py",
+    "line": 88,
+    "type": "CALL",
+    "code": "Path(knowledge_dir).resolve()"
+  },
+  {
+    "file": "core\\knowledge\\drift_detector.py",
+    "line": 90,
+    "type": "CALL",
+    "code": "(self._root_dir / '_forensic' / 'knowledge').resolve()"
+  },
+  {
+    "file": "core\\knowledge\\drift_detector.py",
+    "line": 93,
+    "type": "CALL",
+    "code": "Path(drift_dir).resolve()"
+  },
+  {
+    "file": "core\\knowledge\\drift_detector.py",
+    "line": 95,
+    "type": "CALL",
+    "code": "(self._root_dir / '_forensic' / 'drift').resolve()"
+  },
+  {
+    "file": "core\\knowledge\\self_awareness.py",
+    "line": 57,
+    "type": "CALL",
+    "code": "Path(knowledge_dir).resolve()"
+  },
+  {
+    "file": "core\\knowledge\\self_awareness.py",
+    "line": 59,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\knowledge\\self_awareness.py",
+    "line": 60,
+    "type": "CALL",
+    "code": "(base_dir / '_forensic' / 'knowledge').resolve()"
+  },
+  {
+    "file": "core\\knowledge\\self_awareness.py",
+    "line": 402,
+    "type": "ASSIGN",
+    "code": "http_routes = apis.get('http_routes', [])"
+  },
+  {
+    "file": "core\\knowledge\\self_awareness.py",
+    "line": 403,
+    "type": "ASSIGN",
+    "code": "ws_routes = apis.get('websocket_routes', [])"
+  },
+  {
+    "file": "core\\knowledge\\self_awareness.py",
+    "line": 407,
+    "type": "ASSIGN",
+    "code": "http_routes = [r for r in http_routes if q_lower in r.get('path', '').lower() or q_lower in r.get('method', '').lower() or q_lower in r.get('file', '').lower()]"
+  },
+  {
+    "file": "core\\knowledge\\self_awareness.py",
+    "line": 408,
+    "type": "ASSIGN",
+    "code": "ws_routes = [r for r in ws_routes if q_lower in r.get('path', '').lower() or q_lower in r.get('file', '').lower()]"
+  },
+  {
+    "file": "core\\models\\admin.py",
+    "line": 10,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\models\\admin.py",
+    "line": 37,
+    "type": "CALL",
+    "code": "build_fabric(project_root=PROJECT_ROOT)"
+  },
+  {
+    "file": "core\\models\\admin.py",
+    "line": 40,
+    "type": "ASSIGN",
+    "code": "models = fabric.registry.all() if hasattr(fabric.registry, 'all') else list(fabric.registry.models.values())"
+  },
+  {
+    "file": "core\\models\\admin.py",
+    "line": 40,
+    "type": "CALL",
+    "code": "fabric.registry.all()"
+  },
+  {
+    "file": "core\\models\\admin.py",
+    "line": 40,
+    "type": "CALL",
+    "code": "fabric.registry.models.values()"
+  },
+  {
+    "file": "core\\models\\admin.py",
+    "line": 42,
+    "type": "ASSIGN",
+    "code": "models = [m for m in models if getattr(m, 'lifecycle', '') == 'QUARANTINED']"
+  },
+  {
+    "file": "core\\models\\admin.py",
+    "line": 44,
+    "type": "ASSIGN",
+    "code": "models = [m for m in models if getattr(m, 'lifecycle', '') == 'ACTIVE']"
+  },
+  {
+    "file": "core\\models\\admin.py",
+    "line": 53,
+    "type": "CALL",
+    "code": "fabric.registry.find(args.provider, args.model_id)"
+  },
+  {
+    "file": "core\\models\\admin.py",
+    "line": 69,
+    "type": "CALL",
+    "code": "fabric.registry.find(args.provider, args.model_id)"
+  },
+  {
+    "file": "core\\models\\admin.py",
+    "line": 82,
+    "type": "CALL",
+    "code": "fabric.rehabilitate_model(provider=args.provider, model_id=args.model_id, reason=args.reason.strip(), operator=args.operator.strip())"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 42,
+    "type": "ASSIGN",
+    "code": "self.router = EzzioRouter(registry=self.registry, key_pool=self.key_pool, telemetry=self.telemetry)"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 50,
+    "type": "ASSIGN",
+    "code": "self.providers = {'gemini': GeminiDiscovery(), 'groq': GroqDiscovery(), 'openrouter': OpenRouterDiscovery(), 'litellm': LiteLLMDiscovery()}"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 72,
+    "type": "ASSIGN",
+    "code": "raw_models = await adapter.discover(key)"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 89,
+    "type": "ASSIGN",
+    "code": "discovered[provider] = accepted"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 129,
+    "type": "ASSIGN",
+    "code": "discovered[provider] = []"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 154,
+    "type": "ASSIGN",
+    "code": "provider_rank = {'groq': 0, 'gemini': 1, 'openrouter': 2, 'litellm': 99}"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 165,
+    "type": "ASSIGN",
+    "code": "provider = str(result.get('provider', '')).lower()"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 166,
+    "type": "ASSIGN",
+    "code": "model_id = str(result.get('model_id', ''))"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 170,
+    "type": "CALL",
+    "code": "self.registry.get(provider, model_id)"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 219,
+    "type": "ASSIGN",
+    "code": "c_provider = str(candidate['provider']).lower()"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 220,
+    "type": "ASSIGN",
+    "code": "c_model_id = str(candidate['model_id'])"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 221,
+    "type": "CALL",
+    "code": "self.registry.get(c_provider, c_model_id)"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 242,
+    "type": "ASSIGN",
+    "code": "provider = str(winner['provider']).lower()"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 243,
+    "type": "ASSIGN",
+    "code": "model_id = str(winner['model_id'])"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 244,
+    "type": "CALL",
+    "code": "self.registry.get(provider, model_id)"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 249,
+    "type": "CALL",
+    "code": "self.registry.all()"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 287,
+    "type": "CALL",
+    "code": "self.registry.save()"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 297,
+    "type": "CALL",
+    "code": "self.registry.save()"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 306,
+    "type": "CALL",
+    "code": "self.registry.all()"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 313,
+    "type": "ASSIGN",
+    "code": "provider = model.provider.lower()"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 314,
+    "type": "CALL",
+    "code": "getattr(self.router, 'endpoint', lambda p: getattr(self.router, 'endpoints', {}).get(p))(provider)"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 314,
+    "type": "CALL",
+    "code": "getattr(self.router, 'endpoints', {}).get(p)"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 350,
+    "type": "ASSIGN",
+    "code": "model.tier = result['tier']"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 351,
+    "type": "ASSIGN",
+    "code": "model.latency_ms = result['latency_ms']"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 352,
+    "type": "ASSIGN",
+    "code": "model.qualification_score = result['score']"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 353,
+    "type": "ASSIGN",
+    "code": "model.last_verified = time.time()"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 363,
+    "type": "CALL",
+    "code": "self.registry.save()"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 374,
+    "type": "CALL",
+    "code": "self._sync_router_with_registry()"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 387,
+    "type": "CALL",
+    "code": "self.registry.active()"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 465,
+    "type": "CALL",
+    "code": "self.registry.get(provider, model_id)"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 498,
+    "type": "CALL",
+    "code": "self.router.invalidate_cache(provider, model_id)"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 516,
+    "type": "CALL",
+    "code": "self._sync_router_with_registry()"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 517,
+    "type": "CALL",
+    "code": "self.registry.save()"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 569,
+    "type": "ASSIGN",
+    "code": "active_models = []"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 573,
+    "type": "CALL",
+    "code": "self.registry._models.values()"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 575,
+    "type": "CALL",
+    "code": "self.registry.all()"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 580,
+    "type": "ASSIGN",
+    "code": "provider = str(getattr(entry, 'provider', 'openai')).lower()"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 581,
+    "type": "ASSIGN",
+    "code": "model_id = str(getattr(entry, 'model_id', 'gpt-4'))"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 599,
+    "type": "ASSIGN",
+    "code": "active_models = []"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 604,
+    "type": "CALL",
+    "code": "self.router.set_model_list(active_models)"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 606,
+    "type": "ASSIGN",
+    "code": "self.router.model_list = active_models"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 608,
+    "type": "ASSIGN",
+    "code": "self.router.model_list = active_models"
+  },
+  {
+    "file": "core\\models\\fabric.py",
+    "line": 616,
+    "type": "CALL",
+    "code": "fabric._sync_router_with_registry()"
+  },
+  {
+    "file": "core\\models\\key_pool.py",
+    "line": 117,
+    "type": "ASSIGN",
+    "code": "self._slots[provider] = slots"
+  },
+  {
+    "file": "core\\models\\key_pool.py",
+    "line": 123,
+    "type": "ASSIGN",
+    "code": "provider = provider.lower()"
+  },
+  {
+    "file": "core\\models\\lifecycle.py",
+    "line": 46,
+    "type": "ASSIGN",
+    "code": "model_id = str(item['model_id'])"
+  },
+  {
+    "file": "core\\models\\lifecycle.py",
+    "line": 49,
+    "type": "CALL",
+    "code": "self.registry.get(provider, model_id)"
+  },
+  {
+    "file": "core\\models\\lifecycle.py",
+    "line": 79,
+    "type": "CALL",
+    "code": "self.registry.upsert(record)"
+  },
+  {
+    "file": "core\\models\\lifecycle.py",
+    "line": 82,
+    "type": "CALL",
+    "code": "self.registry.save()"
+  },
+  {
+    "file": "core\\models\\registry.py",
+    "line": 99,
+    "type": "ASSIGN",
+    "code": "models = data.get('models', {})"
+  },
+  {
+    "file": "core\\models\\registry.py",
+    "line": 102,
+    "type": "ASSIGN",
+    "code": "self._models[key] = ModelRecord(**raw)"
+  },
+  {
+    "file": "core\\models\\registry.py",
+    "line": 105,
+    "type": "ASSIGN",
+    "code": "self._models = {}"
+  },
+  {
+    "file": "core\\models\\registry.py",
+    "line": 147,
+    "type": "ASSIGN",
+    "code": "self._models[self.key(record.provider, record.model_id)] = record"
+  },
+  {
+    "file": "core\\models\\router.py",
+    "line": 41,
+    "type": "ASSIGN",
+    "code": "model_config = ConfigDict(protected_namespaces=())"
+  },
+  {
+    "file": "core\\models\\router.py",
+    "line": 54,
+    "type": "ASSIGN",
+    "code": "model_config = ConfigDict(protected_namespaces=())"
+  },
+  {
+    "file": "core\\models\\router.py",
+    "line": 86,
+    "type": "ASSIGN",
+    "code": "model_config = ConfigDict(protected_namespaces=())"
+  },
+  {
+    "file": "core\\models\\router.py",
+    "line": 128,
+    "type": "ASSIGN",
+    "code": "model_config = ConfigDict(protected_namespaces=())"
+  },
+  {
+    "file": "core\\models\\router.py",
+    "line": 212,
+    "type": "ASSIGN",
+    "code": "model_config = ConfigDict(extra='allow')"
+  },
+  {
+    "file": "core\\models\\router.py",
+    "line": 321,
+    "type": "ASSIGN",
+    "code": "model_config = ConfigDict(extra='allow', arbitrary_types_allowed=True)"
+  },
+  {
+    "file": "core\\models\\router.py",
+    "line": 394,
+    "type": "ASSIGN",
+    "code": "model_config = ConfigDict(extra='allow', arbitrary_types_allowed=True)"
+  },
+  {
+    "file": "core\\models\\router.py",
+    "line": 425,
+    "type": "ASSIGN",
+    "code": "model_config = ConfigDict(protected_namespaces=())"
+  },
+  {
+    "file": "core\\models\\router.py",
+    "line": 511,
+    "type": "ASSIGN",
+    "code": "model_config = ConfigDict(extra='allow', protected_namespaces=())"
+  },
+  {
+    "file": "core\\models\\router.py",
+    "line": 521,
+    "type": "ASSIGN",
+    "code": "model_info = ModelInfo()"
+  },
+  {
+    "file": "core\\models\\router.py",
+    "line": 523,
+    "type": "ASSIGN",
+    "code": "model_info = ModelInfo(**model_info)"
+  },
+  {
+    "file": "core\\models\\router.py",
+    "line": 569,
+    "type": "ASSIGN",
+    "code": "no_deployments_with_provider_budget_routing = 'No deployments available - crossed budget'"
+  },
+  {
+    "file": "core\\models\\router.py",
+    "line": 775,
+    "type": "ASSIGN",
+    "code": "self.model = model"
+  },
+  {
+    "file": "core\\models\\router.py",
+    "line": 788,
+    "type": "ASSIGN",
+    "code": "self.model = model"
+  },
+  {
+    "file": "core\\models\\router.py",
+    "line": 992,
+    "type": "ASSIGN",
+    "code": "model_config = ConfigDict(use_enum_values=False)"
+  },
+  {
+    "file": "core\\providers\\gemini_provider.py",
+    "line": 15,
+    "type": "ASSIGN",
+    "code": "self.model = model or os.getenv('GEMINI_MODEL', 'gemini-3.7-flash')"
+  },
+  {
+    "file": "core\\providers\\gemini_provider.py",
+    "line": 17,
+    "type": "ASSIGN",
+    "code": "self.fallback_models = ['gemini-3.6-flash', 'gemini-2.5-flash']"
+  },
+  {
+    "file": "core\\providers\\gemini_provider.py",
+    "line": 36,
+    "type": "ASSIGN",
+    "code": "models_to_try = [self.model.replace('models/', '')]"
+  },
+  {
+    "file": "core\\providers\\google_gateway.py",
+    "line": 19,
+    "type": "ASSIGN",
+    "code": "self.providers[service_name.lower()] = provider"
+  },
+  {
+    "file": "core\\providers\\google_gateway.py",
+    "line": 23,
+    "type": "ASSIGN",
+    "code": "provider = self.providers.get(service_key)"
+  },
+  {
+    "file": "core\\providers\\ollama_provider.py",
+    "line": 15,
+    "type": "ASSIGN",
+    "code": "self.model = model or os.getenv('OLLAMA_MODEL', 'qwen3:8b')"
+  },
+  {
+    "file": "core\\routing\\circuit_breaker.py",
+    "line": 10,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\routing\\circuit_breaker.py",
+    "line": 43,
+    "type": "ASSIGN",
+    "code": "self.state_data[provider] = prov_state"
+  },
+  {
+    "file": "core\\routing\\circuit_breaker.py",
+    "line": 50,
+    "type": "ASSIGN",
+    "code": "self.state_data[provider] = {'tripped': False, 'failures': 0, 'trip_time': 0.0}"
+  },
+  {
+    "file": "core\\routing\\circuit_breaker.py",
+    "line": 62,
+    "type": "ASSIGN",
+    "code": "self.state_data[provider] = prov_state"
+  },
+  {
+    "file": "core\\runtime\\boot.py",
+    "line": 12,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\runtime\\cognitive_forensic_scan.py",
+    "line": 138,
+    "type": "CALL",
+    "code": "inventory['hash_registry'][file_hash].append(str(file_path.relative_to(ROOT_DIR)))"
+  },
+  {
+    "file": "core\\runtime\\cognitive_forensic_scan.py",
+    "line": 151,
+    "type": "CALL",
+    "code": "inventory['hash_registry'].items()"
+  },
+  {
+    "file": "core\\runtime\\resilience_orchestrator.py",
+    "line": 12,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\security\\archive_engine.py",
+    "line": 15,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\security\\archive_validator.py",
+    "line": 11,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\security\\disaster_recovery.py",
+    "line": 11,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\security\\ledger_engine.py",
+    "line": 18,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\security\\ledger_validator.py",
+    "line": 13,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\skills\\research_skill.py",
+    "line": 8,
+    "type": "ASSIGN",
+    "code": "self.router = router"
+  },
+  {
+    "file": "core\\skills\\research_skill.py",
+    "line": 15,
+    "type": "CALL",
+    "code": "self.router.search(query, mode=mode)"
+  },
+  {
+    "file": "core\\tool_gateway\\gateway_controller.py",
+    "line": 12,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\tool_gateway\\google_bridge.py",
+    "line": 15,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\tool_gateway\\model_router.py",
+    "line": 10,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\tool_gateway\\model_router.py",
+    "line": 19,
+    "type": "ASSIGN",
+    "code": "self.models = {'gemini_pro': {'tool': 'gemini_inference', 'cost': 'api_quota'}, 'ollama_local': {'tool': 'ollama_inference', 'cost': 'local_compute'}}"
+  },
+  {
+    "file": "core\\tool_gateway\\model_router.py",
+    "line": 33,
+    "type": "ASSIGN",
+    "code": "selected_model = self._evaluate_routing(task_type, complexity)"
+  },
+  {
+    "file": "core\\tool_gateway\\model_router.py",
+    "line": 53,
+    "type": "ASSIGN",
+    "code": "model_router = MultiModelRouter()"
+  },
+  {
+    "file": "core\\agent\\sensors\\system_sensor.py",
+    "line": 37,
+    "type": "ASSIGN",
+    "code": "installed_models = [m.get('name') for m in tags_data.get('models', [])] if tags_data else []"
+  },
+  {
+    "file": "core\\agent\\sensors\\system_sensor.py",
+    "line": 41,
+    "type": "ASSIGN",
+    "code": "running_models = []"
+  },
+  {
+    "file": "core\\cognition\\antigravity\\policy.py",
+    "line": 34,
+    "type": "CALL",
+    "code": "request.workspace_path.resolve()"
+  },
+  {
+    "file": "core\\cognition\\antigravity\\policy.py",
+    "line": 35,
+    "type": "CALL",
+    "code": "self.root_dir.resolve()"
+  },
+  {
+    "file": "core\\cognition\\antigravity\\policy.py",
+    "line": 36,
+    "type": "CALL",
+    "code": "str(ws_resolved).startswith(str(root_resolved))"
+  },
+  {
+    "file": "core\\cognition\\antigravity\\policy.py",
+    "line": 36,
+    "type": "CALL",
+    "code": "str(ws_resolved).startswith('C:\\\\Users\\\\')"
+  },
+  {
+    "file": "core\\cognition\\compression\\integrity_gate.py",
+    "line": 62,
+    "type": "CALL",
+    "code": "self.fabric.compress_segment(segment)"
+  },
+  {
+    "file": "core\\cognition\\compression\\integrity_gate.py",
+    "line": 91,
+    "type": "CALL",
+    "code": "self.fabric.retrieve_from_ccr_cache(comp_res.cache_id)"
+  },
+  {
+    "file": "core\\cognition\\compression\\integrity_gate.py",
+    "line": 109,
+    "type": "CALL",
+    "code": "self.fabric.retrieve_from_ccr_cache(comp_res.cache_id)"
+  },
+  {
+    "file": "core\\cognition\\compression\\integrity_gate.py",
+    "line": 125,
+    "type": "CALL",
+    "code": "self.fabric.retrieve_from_ccr_cache(comp_res.cache_id)"
+  },
+  {
+    "file": "core\\cognition\\model_federation\\groq_provider.py",
+    "line": 37,
+    "type": "ASSIGN",
+    "code": "model = request.context_metadata.get('model', self.DEFAULT_MODEL)"
+  },
+  {
+    "file": "core\\cognition\\observation\\reality_verifier.py",
+    "line": 39,
+    "type": "CALL",
+    "code": "resolved.exists()"
+  },
+  {
+    "file": "core\\cognition\\observation\\reality_verifier.py",
+    "line": 47,
+    "type": "CALL",
+    "code": "resolved.stat()"
+  },
+  {
+    "file": "core\\cognition\\observation\\reality_verifier.py",
+    "line": 57,
+    "type": "CALL",
+    "code": "hashlib.sha256(resolved.read_bytes()).hexdigest()"
+  },
+  {
+    "file": "core\\cognition\\observation\\reality_verifier.py",
+    "line": 57,
+    "type": "CALL",
+    "code": "resolved.read_bytes()"
+  },
+  {
+    "file": "core\\cognition\\observation\\reality_verifier.py",
+    "line": 71,
+    "type": "CALL",
+    "code": "resolved.exists()"
+  },
+  {
+    "file": "core\\cognition\\observation\\reality_verifier.py",
+    "line": 79,
+    "type": "CALL",
+    "code": "hashlib.sha256(resolved.read_bytes()).hexdigest()"
+  },
+  {
+    "file": "core\\cognition\\observation\\reality_verifier.py",
+    "line": 79,
+    "type": "CALL",
+    "code": "resolved.read_bytes()"
+  },
+  {
+    "file": "core\\cognition\\observation\\reality_verifier.py",
+    "line": 97,
+    "type": "CALL",
+    "code": "resolved.stat()"
+  },
+  {
+    "file": "core\\cognition\\observation\\reality_verifier.py",
+    "line": 104,
+    "type": "CALL",
+    "code": "resolved.exists()"
+  },
+  {
+    "file": "core\\cognition\\observation\\reality_verifier.py",
+    "line": 113,
+    "type": "CALL",
+    "code": "resolved.read_text(encoding='utf-8')"
+  },
+  {
+    "file": "core\\cognition\\orchestration\\arbiter.py",
+    "line": 125,
+    "type": "ASSIGN",
+    "code": "winning_provider = 'NONE'"
+  },
+  {
+    "file": "core\\cognition\\orchestration\\arbiter.py",
+    "line": 126,
+    "type": "ASSIGN",
+    "code": "winning_model = 'NONE'"
+  },
+  {
+    "file": "core\\cognition\\orchestration\\arbiter.py",
+    "line": 132,
+    "type": "ASSIGN",
+    "code": "winning_provider = winner.provider"
+  },
+  {
+    "file": "core\\cognition\\orchestration\\arbiter.py",
+    "line": 133,
+    "type": "ASSIGN",
+    "code": "winning_model = winner.model_name"
+  },
+  {
+    "file": "core\\cognition\\providers\\key_pool.py",
+    "line": 51,
+    "type": "ASSIGN",
+    "code": "self.provider_name = provider_name"
+  },
+  {
+    "file": "core\\integrations\\discord\\command_router.py",
+    "line": 9,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\integrations\\discord\\command_router.py",
+    "line": 60,
+    "type": "ASSIGN",
+    "code": "command_router = DiscordCommandRouter()"
+  },
+  {
+    "file": "core\\integrations\\discord\\discord_client.py",
+    "line": 46,
+    "type": "CALL",
+    "code": "resolve_discord_token()"
+  },
+  {
+    "file": "core\\integrations\\discord\\permission_guard.py",
+    "line": 10,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "core\\models\\discovery\\gemini.py",
+    "line": 14,
+    "type": "ASSIGN",
+    "code": "provider = 'gemini'"
+  },
+  {
+    "file": "core\\models\\discovery\\gemini.py",
+    "line": 57,
+    "type": "ASSIGN",
+    "code": "model_id = name.split('models/', 1)[-1]"
+  },
+  {
+    "file": "core\\models\\discovery\\groq.py",
+    "line": 8,
+    "type": "ASSIGN",
+    "code": "provider = 'groq'"
+  },
+  {
+    "file": "core\\models\\discovery\\groq.py",
+    "line": 39,
+    "type": "ASSIGN",
+    "code": "model_id = str(raw.get('id', ''))"
+  },
+  {
+    "file": "core\\models\\discovery\\litellm.py",
+    "line": 14,
+    "type": "ASSIGN",
+    "code": "provider = 'litellm'"
+  },
+  {
+    "file": "core\\models\\discovery\\litellm.py",
+    "line": 43,
+    "type": "ASSIGN",
+    "code": "model_id = raw.get('id')"
+  },
+  {
+    "file": "core\\models\\discovery\\openrouter.py",
+    "line": 8,
+    "type": "ASSIGN",
+    "code": "provider = 'openrouter'"
+  },
+  {
+    "file": "core\\models\\discovery\\openrouter.py",
+    "line": 28,
+    "type": "ASSIGN",
+    "code": "model_id = raw.get('id')"
+  },
+  {
+    "file": "core\\models\\qualification\\free_only.py",
+    "line": 59,
+    "type": "ASSIGN",
+    "code": "model_id = str(model.get('model_id') or model.get('id') or model.get('name') or '').strip().lower()"
+  },
+  {
+    "file": "core\\models\\qualification\\gate.py",
+    "line": 51,
+    "type": "ASSIGN",
+    "code": "model = annotate_free_status(model)"
+  },
+  {
+    "file": "core\\models\\qualification\\gate.py",
+    "line": 92,
+    "type": "ASSIGN",
+    "code": "model_id_lower = str(model.get('model_id', '')).lower()"
+  },
+  {
+    "file": "recovery\\certified_state\\microkernel.py",
+    "line": 31,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "recovery\\certified_state\\microkernel.py",
+    "line": 80,
+    "type": "CALL",
+    "code": "ToolResolver.resolve(request.name)"
+  },
+  {
+    "file": "recovery\\certified_state\\microkernel.py",
+    "line": 86,
+    "type": "CALL",
+    "code": "self.registry.get_class(resolved_tool_name)"
+  },
+  {
+    "file": "recovery\\certified_state\\microkernel.py",
+    "line": 98,
+    "type": "CALL",
+    "code": "ExecutionRouter.route(context, executor_cls, self.project_root, **request.arguments)"
+  },
+  {
+    "file": "recovery\\certified_state\\microkernel.py",
+    "line": 167,
+    "type": "ASSIGN",
+    "code": "self.manifest_provider = ManifestProvider()"
+  },
+  {
+    "file": "runtime\\action\\registry.py",
+    "line": 61,
+    "type": "CALL",
+    "code": "handler_resolver(contract.handler_ref)"
+  },
+  {
+    "file": "runtime\\action\\registry.py",
+    "line": 63,
+    "type": "CALL",
+    "code": "self._default_resolver(contract.handler_ref)"
+  },
+  {
+    "file": "runtime\\agent\\capability_guard.py",
+    "line": 16,
+    "type": "CALL",
+    "code": "self.registry.get(capability)"
+  },
+  {
+    "file": "runtime\\agent\\controller.py",
+    "line": 12,
+    "type": "ASSIGN",
+    "code": "self.router = router"
+  },
+  {
+    "file": "runtime\\agent\\controller.py",
+    "line": 51,
+    "type": "CALL",
+    "code": "self.router.generate(prompt)"
+  },
+  {
+    "file": "runtime\\autonomy\\policy_engine.py",
+    "line": 23,
+    "type": "CALL",
+    "code": "self.registry.get(intent_type)"
+  },
+  {
+    "file": "runtime\\bidi\\ezzio_interface.py",
+    "line": 163,
+    "type": "ASSIGN",
+    "code": "task_type, preferred_model = classifier.classify(content)"
+  },
+  {
+    "file": "runtime\\bidi\\ezzio_interface.py",
+    "line": 165,
+    "type": "ASSIGN",
+    "code": "task_type, preferred_model = ('quick', 'granite4.1:8b')"
+  },
+  {
+    "file": "runtime\\bidi\\ezzio_interface.py",
+    "line": 167,
+    "type": "ASSIGN",
+    "code": "route_level = self.ROUTE_LEVEL_MAP.get(task_type, 'FAST')"
+  },
+  {
+    "file": "runtime\\capabilities\\installer.py",
+    "line": 35,
+    "type": "CALL",
+    "code": "self.registry.is_capability_active(skill_id)"
+  },
+  {
+    "file": "runtime\\capabilities\\installer.py",
+    "line": 48,
+    "type": "CALL",
+    "code": "self.registry.register_capability(manifest)"
+  },
+  {
+    "file": "runtime\\capabilities\\registry.py",
+    "line": 17,
+    "type": "CALL",
+    "code": "self._ensure_registry()"
+  },
+  {
+    "file": "runtime\\capabilities\\registry.py",
+    "line": 20,
+    "type": "CALL",
+    "code": "self.registry_file.parent.mkdir(parents=True, exist_ok=True)"
+  },
+  {
+    "file": "runtime\\capabilities\\registry.py",
+    "line": 21,
+    "type": "CALL",
+    "code": "self.registry_file.exists()"
+  },
+  {
+    "file": "runtime\\capabilities\\registry.py",
+    "line": 44,
+    "type": "CALL",
+    "code": "self.registry_file.write_text(json.dumps(initial_data, indent=2, ensure_ascii=False), encoding='utf-8')"
+  },
+  {
+    "file": "runtime\\capabilities\\registry.py",
+    "line": 48,
+    "type": "CALL",
+    "code": "self.registry_file.read_text(encoding='utf-8')"
+  },
+  {
+    "file": "runtime\\capabilities\\registry.py",
+    "line": 53,
+    "type": "CALL",
+    "code": "self.load_registry()"
+  },
+  {
+    "file": "runtime\\capabilities\\registry.py",
+    "line": 65,
+    "type": "CALL",
+    "code": "self.load_registry()"
+  },
+  {
+    "file": "runtime\\capabilities\\registry.py",
+    "line": 72,
+    "type": "CALL",
+    "code": "self.registry_file.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding='utf-8')"
+  },
+  {
+    "file": "runtime\\capabilities\\registry.py",
+    "line": 78,
+    "type": "CALL",
+    "code": "registry.load_registry()"
+  },
+  {
+    "file": "runtime\\capabilities\\service.py",
+    "line": 24,
+    "type": "CALL",
+    "code": "self.revocation_registry.is_revoked(token_id)"
+  },
+  {
+    "file": "runtime\\capabilities\\service.py",
+    "line": 91,
+    "type": "CALL",
+    "code": "self.revocation_registry.revoke(token_id)"
+  },
+  {
+    "file": "runtime\\cli\\commands.py",
+    "line": 23,
+    "type": "CALL",
+    "code": "self.registry.list_skills()"
+  },
+  {
+    "file": "runtime\\cli\\commands.py",
+    "line": 27,
+    "type": "CALL",
+    "code": "self.registry.list_skills()"
+  },
+  {
+    "file": "runtime\\cli\\commands.py",
+    "line": 33,
+    "type": "CALL",
+    "code": "self.registry.execute('python_analyzer', {'path': arg})"
+  },
+  {
+    "file": "runtime\\cli\\commands.py",
+    "line": 39,
+    "type": "CALL",
+    "code": "self.registry.execute('filesystem_search', {'query': arg, 'path': '.'})"
+  },
+  {
+    "file": "runtime\\cli\\shell.py",
+    "line": 5,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\context\\builder.py",
+    "line": 6,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\contracts\\authority.py",
+    "line": 19,
+    "type": "CALL",
+    "code": "Path('G:/AI/E-zzio').resolve()"
+  },
+  {
+    "file": "runtime\\contracts\\authority.py",
+    "line": 32,
+    "type": "CALL",
+    "code": "self.registry_path.exists()"
+  },
+  {
+    "file": "runtime\\contracts\\authority.py",
+    "line": 37,
+    "type": "ASSIGN",
+    "code": "model_meta = sealed_artifacts.get('model_registry')"
+  },
+  {
+    "file": "runtime\\contracts\\authority.py",
+    "line": 45,
+    "type": "CALL",
+    "code": "self.registry_path.read_bytes()"
+  },
+  {
+    "file": "runtime\\contracts\\authority.py",
+    "line": 85,
+    "type": "ASSIGN",
+    "code": "ollama_models = self.get_external_providers().get('ollama_models', [])"
+  },
+  {
+    "file": "runtime\\contracts\\enforcer.py",
+    "line": 21,
+    "type": "CALL",
+    "code": "Path('G:/AI/E-zzio').resolve()"
+  },
+  {
+    "file": "runtime\\contracts\\enforcer.py",
+    "line": 31,
+    "type": "CALL",
+    "code": "self.authority.get_registry_version()"
+  },
+  {
+    "file": "runtime\\contracts\\enforcer.py",
+    "line": 32,
+    "type": "CALL",
+    "code": "self.authority.get_registry_epoch()"
+  },
+  {
+    "file": "runtime\\core\\ezzio_core.py",
+    "line": 22,
+    "type": "ASSIGN",
+    "code": "self.decision_router = decision_router"
+  },
+  {
+    "file": "runtime\\core\\ezzio_core.py",
+    "line": 28,
+    "type": "ASSIGN",
+    "code": "self.intent_router = IntentRouter()"
+  },
+  {
+    "file": "runtime\\core\\ezzio_core.py",
+    "line": 29,
+    "type": "CALL",
+    "code": "Path.cwd().resolve()"
+  },
+  {
+    "file": "runtime\\core\\ezzio_core.py",
+    "line": 51,
+    "type": "CALL",
+    "code": "self.intent_router.classify(message)"
+  },
+  {
+    "file": "runtime\\core\\ezzio_core.py",
+    "line": 107,
+    "type": "CALL",
+    "code": "self.scope_resolver.resolve_scope(target_domain, max_depth=1)"
+  },
+  {
+    "file": "runtime\\core\\ezzio_core.py",
+    "line": 131,
+    "type": "ASSIGN",
+    "code": "provider_used = 'ollama'"
+  },
+  {
+    "file": "runtime\\core\\ezzio_core.py",
+    "line": 136,
+    "type": "ASSIGN",
+    "code": "routed_res = await self.decision_router.search(query=full_prompt, mode=search_mode)"
+  },
+  {
+    "file": "runtime\\core\\ezzio_core.py",
+    "line": 136,
+    "type": "CALL",
+    "code": "self.decision_router.search(query=full_prompt, mode=search_mode)"
+  },
+  {
+    "file": "runtime\\core\\ezzio_core.py",
+    "line": 138,
+    "type": "ASSIGN",
+    "code": "provider_used = routed_res.get('provider', 'ollama')"
+  },
+  {
+    "file": "runtime\\core\\ezzio_core.py",
+    "line": 138,
+    "type": "CALL",
+    "code": "routed_res.get('provider', 'ollama')"
+  },
+  {
+    "file": "runtime\\core\\ezzio_core.py",
+    "line": 139,
+    "type": "CALL",
+    "code": "routed_res.get('data', {})"
+  },
+  {
+    "file": "runtime\\core\\ezzio_core.py",
+    "line": 146,
+    "type": "ASSIGN",
+    "code": "provider_used = res.get('provider', 'ollama')"
+  },
+  {
+    "file": "runtime\\core\\ezzio_core.py",
+    "line": 151,
+    "type": "ASSIGN",
+    "code": "provider_used = 'ollama'"
+  },
+  {
+    "file": "runtime\\core\\ezzio_core.py",
+    "line": 158,
+    "type": "ASSIGN",
+    "code": "provider_used = 'ollama'"
+  },
+  {
+    "file": "runtime\\execution\\registry.py",
+    "line": 22,
+    "type": "CALL",
+    "code": "self._registry.get(k)"
+  },
+  {
+    "file": "runtime\\execution\\registry.py",
+    "line": 30,
+    "type": "CALL",
+    "code": "self._registry.get(tool_name, PowerShellExecutor)"
+  },
+  {
+    "file": "runtime\\execution\\resource.py",
+    "line": 10,
+    "type": "CALL",
+    "code": "Path(project_root).resolve()"
+  },
+  {
+    "file": "runtime\\execution\\resource.py",
+    "line": 20,
+    "type": "CALL",
+    "code": "(self.project_root / raw_path).resolve()"
+  },
+  {
+    "file": "runtime\\execution\\resource.py",
+    "line": 28,
+    "type": "CALL",
+    "code": "(self.project_root / r).resolve()"
+  },
+  {
+    "file": "runtime\\execution\\supervisor.py",
+    "line": 14,
+    "type": "CALL",
+    "code": "self.registry.get_class(context.tool_name)"
+  },
+  {
+    "file": "runtime\\governor\\gemini_bridge.py",
+    "line": 16,
+    "type": "ASSIGN",
+    "code": "self.model = None"
+  },
+  {
+    "file": "runtime\\governor\\gemini_bridge.py",
+    "line": 19,
+    "type": "ASSIGN",
+    "code": "self._current_model_name = 'gemini-1.5-flash'"
+  },
+  {
+    "file": "runtime\\governor\\gemini_bridge.py",
+    "line": 27,
+    "type": "ASSIGN",
+    "code": "vault_model = secret_provider.get('EZZIO_GEMINI_MODEL') or 'gemini-1.5-flash'"
+  },
+  {
+    "file": "runtime\\governor\\gemini_bridge.py",
+    "line": 36,
+    "type": "ASSIGN",
+    "code": "self.model = None"
+  },
+  {
+    "file": "runtime\\governor\\gemini_bridge.py",
+    "line": 37,
+    "type": "ASSIGN",
+    "code": "self._current_model_name = vault_model"
+  },
+  {
+    "file": "runtime\\governor\\gemini_bridge.py",
+    "line": 76,
+    "type": "ASSIGN",
+    "code": "self.model = genai.GenerativeModel(model_name=self._current_model_name, tools=self.tools, system_instruction=instruction)"
+  },
+  {
+    "file": "runtime\\hardware\\adaptive_learning_governor.py",
+    "line": 26,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\hardware\\cognitive_memory_governor.py",
+    "line": 31,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\hardware\\governor_service.py",
+    "line": 17,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\hardware\\memory_actuator_v53.py",
+    "line": 19,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\hardware\\memory_actuator_v54.py",
+    "line": 21,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\hardware\\production_kernel_v66.py",
+    "line": 151,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\hardware\\production_kernel_v661.py",
+    "line": 153,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\hardware\\test_governor_ipc.py",
+    "line": 6,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\hardware\\test_governor_ipc.py",
+    "line": 16,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\hardware\\test_pure_cpu.py",
+    "line": 5,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\hardware\\test_pure_cpu.py",
+    "line": 15,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\hardware\\test_v492_adaptive_matrix.py",
+    "line": 5,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\hardware\\test_v492_adaptive_matrix.py",
+    "line": 16,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\hardware\\test_v49_adaptive.py",
+    "line": 5,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\hardware\\test_v49_adaptive.py",
+    "line": 16,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\hardware\\test_v51_gpu_ipc.py",
+    "line": 6,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\hardware\\test_v51_gpu_ipc.py",
+    "line": 16,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\hardware\\test_v52_actuator.py",
+    "line": 5,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\incidents\\evidence.py",
+    "line": 19,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\kernel\\boot.py",
+    "line": 9,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\lab\\test_v921_registry.py",
+    "line": 34,
+    "type": "CALL",
+    "code": "registry.register_capability(test_manifest)"
+  },
+  {
+    "file": "runtime\\lab\\test_v921_registry.py",
+    "line": 37,
+    "type": "CALL",
+    "code": "registry.load_registry()"
+  },
+  {
+    "file": "runtime\\lab\\test_v923_immune_base.py",
+    "line": 24,
+    "type": "CALL",
+    "code": "registry.get_state()"
+  },
+  {
+    "file": "runtime\\lab\\test_v92_certification.py",
+    "line": 34,
+    "type": "CALL",
+    "code": "registry.load_registry()"
+  },
+  {
+    "file": "runtime\\microkernel\\test_v60_backpressure.py",
+    "line": 4,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\models\\ollama_sync.py",
+    "line": 6,
+    "type": "CALL",
+    "code": "Path('G:/AI/E-zzio').resolve()"
+  },
+  {
+    "file": "runtime\\models\\ollama_sync.py",
+    "line": 29,
+    "type": "ASSIGN",
+    "code": "installed_models = fetch_ollama_models()"
+  },
+  {
+    "file": "runtime\\models\\ollama_sync.py",
+    "line": 45,
+    "type": "ASSIGN",
+    "code": "phantom_models = all_declared - installed_set"
+  },
+  {
+    "file": "runtime\\model_router\\context.py",
+    "line": 7,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\model_router\\router.py",
+    "line": 14,
+    "type": "ASSIGN",
+    "code": "self.default_model = self.config.get('default_model', 'gemma4e4b:latest')"
+  },
+  {
+    "file": "runtime\\model_router\\router.py",
+    "line": 16,
+    "type": "ASSIGN",
+    "code": "self.routes = self.config.get('routes', {})"
+  },
+  {
+    "file": "runtime\\model_router\\router.py",
+    "line": 20,
+    "type": "ASSIGN",
+    "code": "model_name = self.routes[task]"
+  },
+  {
+    "file": "runtime\\model_router\\router.py",
+    "line": 45,
+    "type": "ASSIGN",
+    "code": "model_name = self.select_model(task)"
+  },
+  {
+    "file": "runtime\\model_router\\router.py",
+    "line": 45,
+    "type": "CALL",
+    "code": "self.select_model(task)"
+  },
+  {
+    "file": "runtime\\model_router\\router.py",
+    "line": 46,
+    "type": "ASSIGN",
+    "code": "model_config = self.catalog.get(model_name, {})"
+  },
+  {
+    "file": "runtime\\model_router\\router.py",
+    "line": 47,
+    "type": "ASSIGN",
+    "code": "provider = model_config.get('provider', 'ollama')"
+  },
+  {
+    "file": "runtime\\model_router\\router.py",
+    "line": 53,
+    "type": "ASSIGN",
+    "code": "provider_instance = OllamaProvider()"
+  },
+  {
+    "file": "runtime\\optimization\\token_compressor.py",
+    "line": 105,
+    "type": "CALL",
+    "code": "selected.append(sent)"
+  },
+  {
+    "file": "runtime\\recovery\\ledger_boot_recovery.py",
+    "line": 15,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\router\\cognitive_router.py",
+    "line": 11,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\router\\llm_router.py",
+    "line": 16,
+    "type": "ASSIGN",
+    "code": "self.default_model = default_model"
+  },
+  {
+    "file": "runtime\\router\\llm_router.py",
+    "line": 21,
+    "type": "ASSIGN",
+    "code": "target_model = model or self.default_model"
+  },
+  {
+    "file": "runtime\\routers\\llm.py",
+    "line": 7,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/api/llm', tags=['llm'])"
+  },
+  {
+    "file": "runtime\\routers\\llm.py",
+    "line": 8,
+    "type": "ASSIGN",
+    "code": "model_orchestrator = EzzioModelRouter()"
+  },
+  {
+    "file": "runtime\\routers\\llm.py",
+    "line": 21,
+    "type": "CALL",
+    "code": "router.post('/generate')"
+  },
+  {
+    "file": "runtime\\routers\\mobile.py",
+    "line": 5,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/api/mobile', tags=['mobile'])"
+  },
+  {
+    "file": "runtime\\routers\\mobile.py",
+    "line": 9,
+    "type": "CALL",
+    "code": "router.websocket('/ws')"
+  },
+  {
+    "file": "runtime\\security\\secrets.py",
+    "line": 20,
+    "type": "ASSIGN",
+    "code": "secret_provider = SecretProvider()"
+  },
+  {
+    "file": "runtime\\sensors\\filesystem_sensor.py",
+    "line": 25,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\sensors\\filesystem_sensor.py",
+    "line": 26,
+    "type": "CALL",
+    "code": "Path(root_dir).resolve()"
+  },
+  {
+    "file": "runtime\\sensors\\git_sensor.py",
+    "line": 9,
+    "type": "CALL",
+    "code": "Path(root_dir).resolve()"
+  },
+  {
+    "file": "runtime\\sensors\\sensor_manager.py",
+    "line": 15,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\sensors\\sensor_manager.py",
+    "line": 17,
+    "type": "CALL",
+    "code": "Path(project_root).resolve()"
+  },
+  {
+    "file": "runtime\\skills\\skill_manager.py",
+    "line": 95,
+    "type": "CALL",
+    "code": "self.active_dir.resolve()"
+  },
+  {
+    "file": "runtime\\skills\\skill_manager.py",
+    "line": 96,
+    "type": "CALL",
+    "code": "self.active_dir.resolve()"
+  },
+  {
+    "file": "runtime\\skills\\skill_manager.py",
+    "line": 134,
+    "type": "CALL",
+    "code": "self.active_dir.resolve()"
+  },
+  {
+    "file": "runtime\\skills\\skill_manager.py",
+    "line": 134,
+    "type": "CALL",
+    "code": "staging_file.resolve()"
+  },
+  {
+    "file": "runtime\\tools\\bootstrap.py",
+    "line": 8,
+    "type": "CALL",
+    "code": "registry.register('system.powershell', PowerShellExecutor)"
+  },
+  {
+    "file": "runtime\\tools\\bootstrap.py",
+    "line": 9,
+    "type": "CALL",
+    "code": "registry.register('powershell.safe.execute', PowerShellExecutor)"
+  },
+  {
+    "file": "runtime\\tools\\bootstrap.py",
+    "line": 10,
+    "type": "CALL",
+    "code": "registry.register('filesystem.read', FileSystemExecutor)"
+  },
+  {
+    "file": "runtime\\tools\\bootstrap.py",
+    "line": 11,
+    "type": "CALL",
+    "code": "registry.register('git.status', GitExecutor)"
+  },
+  {
+    "file": "runtime\\tools\\manifest_loader.py",
+    "line": 7,
+    "type": "ASSIGN",
+    "code": "_provider = None"
+  },
+  {
+    "file": "runtime\\tools\\manifest_loader.py",
+    "line": 12,
+    "type": "ASSIGN",
+    "code": "cls._provider = ManifestProvider()"
+  },
+  {
+    "file": "runtime\\tools\\manifest_provider.py",
+    "line": 15,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\tools\\pipeline.py",
+    "line": 53,
+    "type": "CALL",
+    "code": "self.registry.dispatch(request)"
+  },
+  {
+    "file": "runtime\\tools\\tool_registry.py",
+    "line": 49,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\tools\\tool_registry.py",
+    "line": 50,
+    "type": "CALL",
+    "code": "Path(project_root).resolve()"
+  },
+  {
+    "file": "runtime\\adapters\\config\\dotenv_provider.py",
+    "line": 20,
+    "type": "CALL",
+    "code": "Path(__file__).resolve()"
+  },
+  {
+    "file": "runtime\\capabilities\\registry\\registry_core.py",
+    "line": 16,
+    "type": "CALL",
+    "code": "self._init_empty_registry()"
+  },
+  {
+    "file": "runtime\\capabilities\\registry\\registry_core.py",
+    "line": 19,
+    "type": "CALL",
+    "code": "self.registry_file.parent.mkdir(parents=True, exist_ok=True)"
+  },
+  {
+    "file": "runtime\\capabilities\\registry\\registry_core.py",
+    "line": 20,
+    "type": "CALL",
+    "code": "self.registry_file.exists()"
+  },
+  {
+    "file": "runtime\\capabilities\\registry\\registry_core.py",
+    "line": 22,
+    "type": "CALL",
+    "code": "self.registry_file.write_text(json.dumps(initial_data, indent=2, ensure_ascii=False), encoding='utf-8')"
+  },
+  {
+    "file": "runtime\\capabilities\\registry\\registry_core.py",
+    "line": 26,
+    "type": "CALL",
+    "code": "self.registry_file.read_text(encoding='utf-8')"
+  },
+  {
+    "file": "runtime\\hardware\\router\\router.py",
+    "line": 57,
+    "type": "CALL",
+    "code": "self._resolve_allocation(clusters, target_ccd, max_threads)"
+  },
+  {
+    "file": "runtime\\hardware\\cartography\\registry\\registry.py",
+    "line": 10,
+    "type": "CALL",
+    "code": "self.registry_dir.mkdir(parents=True, exist_ok=True)"
+  },
+  {
+    "file": "runtime\\hardware\\cartography\\registry\\registry.py",
+    "line": 16,
+    "type": "CALL",
+    "code": "self.registry_file.exists()"
+  },
+  {
+    "file": "runtime\\hardware\\cartography\\registry\\registry.py",
+    "line": 19,
+    "type": "CALL",
+    "code": "self.registry_file.read_text(encoding='utf-8')"
+  },
+  {
+    "file": "runtime\\hardware\\cartography\\registry\\registry.py",
+    "line": 25,
+    "type": "CALL",
+    "code": "self.registry_file.write_text(content, encoding='utf-8')"
+  },
+  {
+    "file": "runtime\\hardware\\cartography\\registry\\registry.py",
+    "line": 32,
+    "type": "CALL",
+    "code": "self.load_registry()"
+  },
+  {
+    "file": "runtime\\hardware\\cartography\\registry\\registry.py",
+    "line": 33,
+    "type": "CALL",
+    "code": "registry.get('baseline')"
+  },
+  {
+    "file": "runtime\\hardware\\cartography\\registry\\registry.py",
+    "line": 44,
+    "type": "CALL",
+    "code": "registry['history'].append({'timestamp': time.time(), 'event': 'REGISTRY_INITIALIZED', 'severity': 'INFO', 'category': 'BOOT', 'details': 'Initial hardware truth established.'})"
+  },
+  {
+    "file": "runtime\\hardware\\cartography\\registry\\registry.py",
+    "line": 53,
+    "type": "CALL",
+    "code": "self.save_registry(registry)"
+  },
+  {
+    "file": "runtime\\hardware\\cartography\\registry\\registry.py",
+    "line": 77,
+    "type": "CALL",
+    "code": "registry['history'].append(event_record)"
+  },
+  {
+    "file": "runtime\\hardware\\cartography\\registry\\registry.py",
+    "line": 78,
+    "type": "CALL",
+    "code": "self.save_registry(registry)"
+  },
+  {
+    "file": "runtime\\hardware\\trust\\envelope\\envelope.py",
+    "line": 96,
+    "type": "CALL",
+    "code": "self.revocation_registry.is_usable(envelope.token_id)"
+  },
+  {
+    "file": "runtime\\hardware\\trust\\envelope\\envelope.py",
+    "line": 110,
+    "type": "CALL",
+    "code": "self.revocation_registry.mark_consumed(envelope.token_id, envelope.expires_at)"
+  },
+  {
+    "file": "runtime\\hardware\\trust\\models\\registry.py",
+    "line": 18,
+    "type": "ASSIGN",
+    "code": "self._registry[contract['model_id']] = contract"
+  },
+  {
+    "file": "runtime\\hardware\\trust\\models\\registry.py",
+    "line": 31,
+    "type": "CALL",
+    "code": "self._registry.get(model_id, {'status': 'QUARANTINE'})"
+  },
+  {
+    "file": "runtime\\hardware\\trust\\models\\resolver.py",
+    "line": 16,
+    "type": "CALL",
+    "code": "self.registry.resolve_contract(model_id)"
+  },
+  {
+    "file": "runtime\\hardware\\trust\\models\\resolver.py",
+    "line": 30,
+    "type": "CALL",
+    "code": "self.registry.resolve_contract(model_id)"
+  },
+  {
+    "file": "runtime\\hardware\\trust\\models_governance\\budget.py",
+    "line": 24,
+    "type": "ASSIGN",
+    "code": "model_info = self.trust_registry.get_model_status(model_identity.model_id)"
+  },
+  {
+    "file": "runtime\\hardware\\trust\\models_governance\\budget.py",
+    "line": 24,
+    "type": "CALL",
+    "code": "self.trust_registry.get_model_status(model_identity.model_id)"
+  },
+  {
+    "file": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "line": 8,
+    "type": "CALL",
+    "code": "self._load_registry()"
+  },
+  {
+    "file": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "line": 11,
+    "type": "CALL",
+    "code": "self.registry_file.exists()"
+  },
+  {
+    "file": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "line": 19,
+    "type": "CALL",
+    "code": "self.registry_file.parent.mkdir(parents=True, exist_ok=True)"
+  },
+  {
+    "file": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "line": 20,
+    "type": "CALL",
+    "code": "self.registry_file.write_text(json.dumps(default_data, indent=4), encoding='utf-8')"
+  },
+  {
+    "file": "runtime\\hardware\\trust\\models_governance\\model_registry.py",
+    "line": 24,
+    "type": "CALL",
+    "code": "self.registry_file.read_text(encoding='utf-8')"
+  },
+  {
+    "file": "runtime\\hardware\\trust\\policy\\evaluator.py",
+    "line": 17,
+    "type": "CALL",
+    "code": "self.registry.get_profile(profile_name)"
+  },
+  {
+    "file": "runtime\\hardware\\trust\\policy\\evaluator.py",
+    "line": 44,
+    "type": "CALL",
+    "code": "self.registry.get_version()"
+  },
+  {
+    "file": "runtime\\hardware\\trust\\execution\\admission\\controller.py",
+    "line": 26,
+    "type": "ASSIGN",
+    "code": "model = request.model_identity"
+  },
+  {
+    "file": "runtime\\hardware\\trust\\execution\\admission\\controller.py",
+    "line": 68,
+    "type": "CALL",
+    "code": "self.policy_registry.get_profile(token.profile)"
+  },
+  {
+    "file": "runtime\\skills\\active\\filesystem_search\\skill.py",
+    "line": 16,
+    "type": "CALL",
+    "code": "path.resolve()"
+  },
+  {
+    "file": "runtime\\skills\\active\\python_analyzer\\skill.py",
+    "line": 21,
+    "type": "CALL",
+    "code": "file_path.resolve()"
+  },
+  {
+    "file": "runtime\\tools\\executors\\filesystem.py",
+    "line": 7,
+    "type": "CALL",
+    "code": "Path(project_root or 'G:/AI/E-zzio').resolve()"
+  },
+  {
+    "file": "tools\\diagnostics\\benchmark_chat.py",
+    "line": 47,
+    "type": "ASSIGN",
+    "code": "provider = data.get('provider')"
+  },
+  {
+    "file": "tools\\diagnostics\\bench_cpu_load.py",
+    "line": 18,
+    "type": "ASSIGN",
+    "code": "provider = OllamaProvider()"
+  },
+  {
+    "file": "tools\\diagnostics\\debug_ollama.py",
+    "line": 11,
+    "type": "ASSIGN",
+    "code": "provider = OllamaProvider(model='qwen3.5:9b')"
+  },
+  {
+    "file": "tools\\diagnostics\\test_all_stack.py",
+    "line": 45,
+    "type": "ASSIGN",
+    "code": "router = IntentRouter()"
+  },
+  {
+    "file": "tools\\diagnostics\\test_all_stack.py",
+    "line": 46,
+    "type": "CALL",
+    "code": "router.classify('Cherche les derni\u00e8res actus IA')"
+  },
+  {
+    "file": "tools\\diagnostics\\test_all_stack.py",
+    "line": 47,
+    "type": "CALL",
+    "code": "router.classify('Analyse cette architecture et propose un refactor')"
+  },
+  {
+    "file": "tools\\diagnostics\\test_all_stack.py",
+    "line": 48,
+    "type": "CALL",
+    "code": "router.classify('Bonjour E-ZZIO, comment \u00e7a va ?')"
+  },
+  {
+    "file": "tools\\diagnostics\\test_all_stack.py",
+    "line": 49,
+    "type": "CALL",
+    "code": "router.classify(\"Rappel de ce qu'on a fait pr\u00e9c\u00e9demment\")"
+  },
+  {
+    "file": "tools\\diagnostics\\tmp_test_agentic_loop.py",
+    "line": 11,
+    "type": "ASSIGN",
+    "code": "router = AsyncMock()"
+  },
+  {
+    "file": "tools\\diagnostics\\tmp_test_agentic_loop.py",
+    "line": 16,
+    "type": "ASSIGN",
+    "code": "router.search.return_value = {'data': {'text': '<tool>{\"tool\": \"get_system_metrics\", \"args\": {}}</tool>'}}"
+  },
+  {
+    "file": "tools\\diagnostics\\tmp_test_agentic_loop.py",
+    "line": 20,
+    "type": "ASSIGN",
+    "code": "router.search.side_effect = [{'data': {'text': '<tool>{\"tool\": \"get_system_metrics\", \"args\": {}}</tool>'}}, {'data': {'text': \"L'utilisation CPU est de 25%.\"}}]"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 27,
+    "type": "ASSIGN",
+    "code": "router = APIRouter(prefix='/api/v17', tags=['V17 Product Experience'])"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 32,
+    "type": "CALL",
+    "code": "router.get('/product/ui', response_class=HTMLResponse)"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 38,
+    "type": "CALL",
+    "code": "router.get('/product/overview', response_model=ProductOverviewDTO)"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 42,
+    "type": "CALL",
+    "code": "router.get('/product/system', response_model=SystemOverviewDTO)"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 46,
+    "type": "CALL",
+    "code": "router.get('/product/models', response_model=ModelStatusDTO)"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 50,
+    "type": "CALL",
+    "code": "router.get('/product/tasks', response_model=List[TaskItemDTO])"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 54,
+    "type": "CALL",
+    "code": "router.get('/product/memory', response_model=MemorySummaryDTO)"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 58,
+    "type": "CALL",
+    "code": "router.get('/product/channels', response_model=ChannelsStatusDTO)"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 62,
+    "type": "CALL",
+    "code": "router.get('/product/operations', response_model=OperationsDTO)"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 66,
+    "type": "CALL",
+    "code": "router.get('/product/state', response_model=ProductStateSnapshot)"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 70,
+    "type": "CALL",
+    "code": "router.get('/product/events', response_model=List[ProductEvent])"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 74,
+    "type": "CALL",
+    "code": "router.get('/product/events/recent', response_model=List[ProductEvent])"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 79,
+    "type": "CALL",
+    "code": "router.post('/product/actions', response_model=ActionRequest)"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 88,
+    "type": "CALL",
+    "code": "router.post('/product/actions/{request_id}/approve', response_model=ActionRequest)"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 95,
+    "type": "CALL",
+    "code": "router.post('/product/actions/{request_id}/deny', response_model=ActionRequest)"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 102,
+    "type": "CALL",
+    "code": "router.get('/product/actions', response_model=List[ActionRequest])"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 107,
+    "type": "CALL",
+    "code": "router.post('/orchestration/intent', response_model=StructuredIntent)"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 111,
+    "type": "CALL",
+    "code": "router.post('/orchestration/plan', response_model=OrchestrationPlan)"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 117,
+    "type": "CALL",
+    "code": "model_intelligence_router.get_available_models()"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 115,
+    "type": "CALL",
+    "code": "router.get('/models/available', response_model=List[ModelProfile])"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 121,
+    "type": "CALL",
+    "code": "model_intelligence_router.route_for_task(payload.get('task_type', 'CHAT'), payload.get('context_len', 1000), payload.get('prefer_local', True))"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 119,
+    "type": "CALL",
+    "code": "router.post('/models/routing', response_model=RouteDecision)"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 129,
+    "type": "CALL",
+    "code": "model_intelligence_router.get_health_metrics()"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 127,
+    "type": "CALL",
+    "code": "router.get('/models/health', response_model=Dict[str, str])"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 132,
+    "type": "CALL",
+    "code": "router.post('/concurrency/tasks', response_model=ConcurrentTaskRecord)"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 136,
+    "type": "CALL",
+    "code": "router.get('/concurrency/tasks', response_model=List[ConcurrentTaskRecord])"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 140,
+    "type": "CALL",
+    "code": "router.get('/concurrency/tasks/{task_id}', response_model=ConcurrentTaskRecord)"
+  },
+  {
+    "file": "v17\\api\\router.py",
+    "line": 147,
+    "type": "CALL",
+    "code": "router.post('/concurrency/tasks/{task_id}/cancel')"
+  },
+  {
+    "file": "v17\\channels\\discord_adapter.py",
+    "line": 56,
+    "type": "ASSIGN",
+    "code": "route = model_intelligence_router.route_for_task(intent.task_type)"
+  },
+  {
+    "file": "v17\\channels\\discord_adapter.py",
+    "line": 56,
+    "type": "CALL",
+    "code": "model_intelligence_router.route_for_task(intent.task_type)"
+  },
+  {
+    "file": "v17\\concurrency\\manager.py",
+    "line": 75,
+    "type": "ASSIGN",
+    "code": "route = model_intelligence_router.route_for_task(intent.task_type)"
+  },
+  {
+    "file": "v17\\concurrency\\manager.py",
+    "line": 75,
+    "type": "CALL",
+    "code": "model_intelligence_router.route_for_task(intent.task_type)"
+  },
+  {
+    "file": "v17\\concurrency\\manager.py",
+    "line": 76,
+    "type": "ASSIGN",
+    "code": "task.selected_model = route.selected_model"
+  },
+  {
+    "file": "v17\\concurrency\\manager.py",
+    "line": 77,
+    "type": "ASSIGN",
+    "code": "task.provider = route.provider"
+  },
+  {
+    "file": "v17\\concurrency\\manager.py",
+    "line": 78,
+    "type": "ASSIGN",
+    "code": "task.fallback_model = route.fallback_model"
+  },
+  {
+    "file": "v17\\concurrency\\manager.py",
+    "line": 79,
+    "type": "ASSIGN",
+    "code": "task.model_score = route.score"
+  },
+  {
+    "file": "v17\\control\\service.py",
+    "line": 19,
+    "type": "ASSIGN",
+    "code": "self.read_model = V17ReadModelService()"
+  },
+  {
+    "file": "v17\\models\\intelligence_router.py",
+    "line": 113,
+    "type": "ASSIGN",
+    "code": "model_intelligence_router = ModelIntelligenceRouter()"
+  },
+  {
+    "file": "v17\\orchestration\\planner.py",
+    "line": 26,
+    "type": "ASSIGN",
+    "code": "route = model_intelligence_router.route_for_task(intent.task_type)"
+  },
+  {
+    "file": "v17\\orchestration\\planner.py",
+    "line": 26,
+    "type": "CALL",
+    "code": "model_intelligence_router.route_for_task(intent.task_type)"
+  },
+  {
+    "file": "v17\\read_model\\service.py",
+    "line": 10,
+    "type": "CALL",
+    "code": "Path('G:/AI/E-zzio').resolve()"
+  },
+  {
+    "file": "v17\\state\\service.py",
+    "line": 10,
+    "type": "ASSIGN",
+    "code": "self.read_model = V17ReadModelService()"
+  },
+  {
+    "file": "v17\\state\\service.py",
+    "line": 14,
+    "type": "ASSIGN",
+    "code": "model_dto = self.read_model.get_model_status()"
+  }
+]

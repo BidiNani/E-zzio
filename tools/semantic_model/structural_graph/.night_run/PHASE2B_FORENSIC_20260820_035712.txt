@@ -1,0 +1,40 @@
+============================================================
+E-ZZIO — PHASE 2B FORENSIC NIGHT CHECK
+MODE : READ-ONLY / NO EXECUTION / NO MUTATION
+UTC  : 2026-08-20T01:57:12.9027784Z
+============================================================
+
+PATH : G:\AI\E-zzio\Phase2B_v5.2.ps1
+SIZE : 40585
+SHA  : 9473855338424c435659e511f6f4f4712f106b4227965852e92dba12a156b9bb
+
+SYNTAX : PASS
+PARAM PASS : \[switch\]\$ResumeLatest
+PARAM PASS : \[switch\]\$DryRun
+PARAM PASS : \[int\]\$BatchSize
+PARAM PASS : \[int64\]\$ExpectedFileCount
+SECURITY OBSERVED : Set-StrictMode = 2
+SECURITY OBSERVED : \$ErrorActionPreference = 1
+SECURITY OBSERVED : Mutex = 15
+SECURITY OBSERVED : Get-FileHash = 4
+SECURITY OBSERVED : SHA256 = 11
+SECURITY OBSERVED : ConvertFrom-Json = 6
+SECURITY OBSERVED : ConvertTo-Json = 2
+SECURITY OBSERVED : DryRun = 3
+SECURITY OBSERVED : ResumeLatest = 2
+SECURITY OBSERVED : checkpoint = 25
+SECURITY OBSERVED : ChainHash = 11
+SECURITY OBSERVED : FileStream = 3
+SECURITY OBSERVED : CryptoStream = 5
+MUTATION OBSERVED : Remove-Item = 3
+MUTATION OBSERVED : Move-Item = 3
+MUTATION OBSERVED : \.Replace\( = 7
+MUTATION OBSERVED : WriteAllText = 3
+LINE_COUNT : 677
+TOKEN_COUNT : 5285
+
+============================================================
+RESULT : STATIC FORENSIC CHECK COMPLETE
+EXECUTION : NONE
+MUTATION : NONE
+============================================================

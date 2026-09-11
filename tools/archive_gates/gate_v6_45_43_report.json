@@ -1,0 +1,38 @@
+[
+  {
+    "file": "core\\cognition\\cognitive_router.py",
+    "line": 74,
+    "type": "ATTR_ACCESS",
+    "code": "self.TASK_MAP"
+  },
+  {
+    "file": "core\\cognition\\cognitive_router.py",
+    "line": 80,
+    "type": "ATTR_ACCESS",
+    "code": "self.TASK_MAP"
+  },
+  {
+    "file": "core\\cognition\\cognitive_router.py",
+    "line": 220,
+    "type": "CALL",
+    "code": "CognitiveTaskClassifier()"
+  },
+  {
+    "file": "runtime\\bidi\\ezzio_interface.py",
+    "line": 120,
+    "type": "IMPORT",
+    "code": "from core.cognition.cognitive_router import CognitiveTaskClassifier"
+  },
+  {
+    "file": "runtime\\bidi\\ezzio_interface.py",
+    "line": 121,
+    "type": "CALL",
+    "code": "CognitiveTaskClassifier()"
+  },
+  {
+    "file": "runtime\\bidi\\ezzio_interface.py",
+    "line": 163,
+    "type": "CALL",
+    "code": "classifier.classify(content)"
+  }
+]

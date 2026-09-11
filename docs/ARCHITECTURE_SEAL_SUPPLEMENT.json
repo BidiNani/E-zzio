@@ -1,0 +1,102 @@
+{
+ "seal": "SUPPLEMENT-PROVENANCE",
+ "date": "2026-09-10T17:41:46.433742+00:00",
+ "rule": "aucun hash gelé modifié; divergences non attribuables = REFUSE",
+ "files": {
+  "core/providers/gemini_provider.py": {
+   "sha256": "a5d2d48a1bc69c2e0bf8afed786a16c75d934392f0faf4bc4589792363923bcf",
+   "provenance": "validated-hunks:3.6-flash+SDK+rotation+caps; +pre-existing:vault-first-credentials"
+  },
+  "core/memory/unified_gateway.py": {
+   "sha256": "051980ab331f34abd8bf2a04bb8df4df9a166bf357dd5c703c0a6531d7eb9bc0",
+   "provenance": "validated-hunks:record-PRAGMAs; +pre-existing:3-tier-schema+FTS"
+  },
+  "core/agent/coder_federation.py": {
+   "sha256": "00c5548328a97b20fd2ad6050e20f58f571b9268518fb46d4df7db91231ce1b6",
+   "provenance": "validated:strict-governance+CHAT+HERMES+FAST-gemini+NVIDIA-purge"
+  },
+  "core/ezzio_master.py": {
+   "sha256": "b6da06c1ce8ccee2788c1d8d32e1d0c669c3eb427ea53f12acb9549239ec9046",
+   "provenance": "validated:GovernanceError+LAST-RESORT-eradication+CHAT-type+identity-injection"
+  },
+  "core/routing/model_registry.py": {
+   "sha256": "807bbe05cae596ee5cb3e2b7e3e903199d631431fe7c0f9a620235ec93180039",
+   "provenance": "validated:hermes-record+enabled-flag+NVIDIA-disabled"
+  },
+  "core/providers/groq_provider.py": {
+   "sha256": "822ff883e7a6953e1abeac30f456b8f9104d2df8f3158ac7a52a6568a28255e4",
+   "provenance": "validated:secrets_loader-source"
+  },
+  "core/providers/ollama_provider.py": {
+   "sha256": "2aa76c4e176f39b875ff963f64630ff875310beeb3e837143776eb6b7d096746",
+   "provenance": "validated:shared-httpx-keepalive+threads-6+num_ctx"
+  },
+  "web_server.py": {
+   "sha256": "5d21c9785f435e34fee370f2adefacf60beafb56b35de74e74902512e715b054",
+   "provenance": "REFUSE:pre-existing-unknown"
+  },
+  "core/cognition/cognitive_gateway.py": {
+   "sha256": "7a08933e30878d2e09ef947b93f0686e60a77bbe44a8a676a1384ccff0c5ed02",
+   "provenance": "REFUSE:pre-existing-unknown"
+  },
+  "core/cognition/model_router.py": {
+   "sha256": "970de3869506532ac1a4e1af2d9661155ae40ef5d36dec3dc04278e6ead5442f",
+   "provenance": "REFUSE:freeze-locked+stale-manifest"
+  },
+  "core/models/gemini_pool.py": {
+   "sha256": "73392a4be035e7515324ccc52cdbb0926e28310aedac281834757b4835961d22",
+   "provenance": "REFUSE:stale-manifest"
+  },
+  "core/security/audit_ledger.py": {
+   "sha256": "7e6e0d0e86469f00d01df2f24e4f8ce6cd77fa8d9db57aec162b000e990eeb72",
+   "provenance": "REFUSE:untracked+pre-existing-unknown"
+  },
+  "core/agent/coding_agent_loop.py": {
+   "sha256": "24d803cf1783b8e3e599ddab6efc7704254f853962800d066774d74622c8ab2f",
+   "provenance": "REFUSE:pre-existing-unknown"
+  },
+  "core/system/cpu_tuning.py": {
+   "sha256": "30f54b14cee4cb9ab6f9c872c4f42cd7c83f36c0bb64c4c523106283351ecd73",
+   "provenance": "validated:new:CCD1-pinning"
+  },
+  "routers/telemetry.py": {
+   "sha256": "3b7626ba3c68c60c8b5ed24b2d5099cd3423eb1e2d234047cd56480020cf0a87",
+   "provenance": "validated:new:SSE+agent-view"
+  },
+  "routers/openai_compat.py": {
+   "sha256": "104a500e955d4908cd369759ded02b1e22ff812e1eb063584ef921596c7dfa18",
+   "provenance": "validated:new:SSE-streaming"
+  },
+  "core/telemetry/agent_tracer.py": {
+   "sha256": "759551b2338ec19a3160617792ce57d5631cb24004146fe835d3f909461a0e53",
+   "provenance": "validated:bounded-buffers+hooks"
+  },
+  "tools/live_duplex_chat.py": {
+   "sha256": "3470b827c47236eae3c279198a3892f1bc3a0a251f073dc46a4e3a2b12110b12",
+   "provenance": "validated:new:REPL-vocal"
+  },
+  "tools/interactive_session.py": {
+   "sha256": "af1550aecf975843e6b32869fbc01ab15ee3427d99c9c8a71790375d806f1966",
+   "provenance": "validated:REPL+priorite+streaming-phrases"
+  },
+  "core/system_anatomy.json": {
+   "sha256": "10026938024f58ee36128afb1d050eb9390a9d44ef8bcd3ab17d28143e9c1a7c",
+   "provenance": "validated:new:cartographie-844-fichiers"
+  },
+  "data/audit_graph.json": {
+   "sha256": "e22757b2537812ea6246d48b17cdd77599b4aa7dac50ef2feef3c3f6a29602b8",
+   "provenance": "validated:regen-AST-845-fichiers"
+  }
+ },
+ "purged": [
+  "runtime/debug_ollama.py",
+  "runtime/diagnose_ollama.py",
+  "runtime/launcher/discord_watcher.py",
+  "core/domain_scope.py",
+  "core/file_scanner.py",
+  "core/memory_vault.py",
+  "core/vision_prompt_guard.py",
+  "runtime/sqlite_v557_certification.py",
+  "runtime/router/cognitive_router.py"
+ ]
+}

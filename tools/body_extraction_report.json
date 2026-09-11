@@ -1,0 +1,13 @@
+{
+  "fabric_bodies": {
+    "discover": 3124,
+    "activate_qualified": 5930,
+    "qualify_candidates": 2355,
+    "_sync_router_with_registry": 2193
+  },
+  "qualification_bodies": {
+    "run_model": 6268
+  },
+  "writes_performed": 0,
+  "runtime_mutations": 0
+}

@@ -1,0 +1,10 @@
+{
+  "fabric": [
+    {
+      "func_name": "ingest",
+      "lineno": 98,
+      "snippet": "                        raise RuntimeError(\"ModelLifecycleManager.ingest_discovery introuvable ou non callable.\")\n                    \n                    result = ingest(provider, accepted)"
+    }
+  ],
+  "lifecycle": []
+}

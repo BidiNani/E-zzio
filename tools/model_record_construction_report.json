@@ -1,0 +1,22 @@
+{
+  "registry": {
+    "decorators": [
+      [
+        "ModelRecord",
+        "dataclass"
+      ]
+    ],
+    "records_instantiated": [
+      "ModelRecord"
+    ],
+    "winners_logic": []
+  },
+  "fabric": {
+    "decorators": [],
+    "records_instantiated": [],
+    "winners_logic": [
+      "activate_qualified",
+      "qualify_candidates"
+    ]
+  }
+}

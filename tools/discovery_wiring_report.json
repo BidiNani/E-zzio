@@ -1,0 +1,70 @@
+{
+  "gemini_discovery": {
+    "exists": true,
+    "classes": [
+      "GeminiDiscovery"
+    ],
+    "functions": [
+      "_version_rank",
+      "discover"
+    ],
+    "calls": [
+      "float",
+      "split",
+      "_version_rank",
+      "json",
+      "search",
+      "raise_for_status",
+      "any",
+      "group",
+      "get",
+      "sort",
+      "str",
+      "append",
+      "lower",
+      "AsyncClient"
+    ],
+    "mentions_ingest": false,
+    "mentions_registry": false
+  },
+  "gemini_callers": [
+    "core\\models\\fabric.py",
+    "core\\models\\discovery\\gemini.py"
+  ],
+  "ollama_sync": {
+    "exists": true,
+    "classes": [],
+    "functions": [
+      "fetch_ollama_models",
+      "run_reconciliation"
+    ],
+    "calls": [
+      "resolve",
+      "Path",
+      "get",
+      "isoformat",
+      "values",
+      "print",
+      "urlopen",
+      "now",
+      "fetch_ollama_models",
+      "loads",
+      "mkdir",
+      "set",
+      "run_reconciliation",
+      "Request",
+      "write_text",
+      "list",
+      "str",
+      "read",
+      "dumps",
+      "decode",
+      "intersection"
+    ],
+    "mentions_ingest": false,
+    "mentions_registry": true
+  },
+  "ollama_callers": [],
+  "writes_performed": 0,
+  "runtime_mutations": 0
+}

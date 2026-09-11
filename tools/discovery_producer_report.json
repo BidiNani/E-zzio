@@ -1,0 +1,156 @@
+{
+  "producers": [
+    {
+      "file": "AG_Forensic_Verifier_V3.py",
+      "has_ollama_discovery": true,
+      "has_gemini_discovery": false,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "ezzio_kernel.py",
+      "has_ollama_discovery": true,
+      "has_gemini_discovery": false,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "core\\safe_actions.py",
+      "has_ollama_discovery": true,
+      "has_gemini_discovery": false,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "providers\\secrets_loader.py",
+      "has_ollama_discovery": false,
+      "has_gemini_discovery": true,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "scripts\\AG_Forensic_Verifier_V3.py",
+      "has_ollama_discovery": true,
+      "has_gemini_discovery": false,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "scripts\\cleanup_engine.py",
+      "has_ollama_discovery": true,
+      "has_gemini_discovery": false,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "scripts\\cleanup_v2_engine.py",
+      "has_ollama_discovery": true,
+      "has_gemini_discovery": false,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "scripts\\full_production_verification_flow.py",
+      "has_ollama_discovery": false,
+      "has_gemini_discovery": true,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "scripts\\live_user_acceptance.py",
+      "has_ollama_discovery": false,
+      "has_gemini_discovery": true,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "scripts\\run_master_final_certification.py",
+      "has_ollama_discovery": true,
+      "has_gemini_discovery": true,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "scripts\\run_productization_master_certification.py",
+      "has_ollama_discovery": false,
+      "has_gemini_discovery": true,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "core\\agent\\tools_registry.py",
+      "has_ollama_discovery": true,
+      "has_gemini_discovery": false,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "core\\cognition\\cognitive_router.py",
+      "has_ollama_discovery": true,
+      "has_gemini_discovery": true,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "core\\cognition\\model_token_governor.py",
+      "has_ollama_discovery": true,
+      "has_gemini_discovery": false,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "core\\cognitive_engine\\ecol_integration_audit.py",
+      "has_ollama_discovery": true,
+      "has_gemini_discovery": false,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "core\\constitution\\hardware_resource_governor.py",
+      "has_ollama_discovery": true,
+      "has_gemini_discovery": false,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "core\\models\\fabric.py",
+      "has_ollama_discovery": false,
+      "has_gemini_discovery": true,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "core\\models\\__init__.py",
+      "has_ollama_discovery": true,
+      "has_gemini_discovery": true,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "core\\cognition\\observation\\reality_verifier.py",
+      "has_ollama_discovery": true,
+      "has_gemini_discovery": true,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "core\\models\\discovery\\gemini.py",
+      "has_ollama_discovery": false,
+      "has_gemini_discovery": true,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "runtime\\contracts\\authority.py",
+      "has_ollama_discovery": true,
+      "has_gemini_discovery": false,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "runtime\\models\\ollama_sync.py",
+      "has_ollama_discovery": true,
+      "has_gemini_discovery": false,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "runtime\\sensors\\sensor_manager.py",
+      "has_ollama_discovery": true,
+      "has_gemini_discovery": false,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "runtime\\sensors\\system_sensor.py",
+      "has_ollama_discovery": true,
+      "has_gemini_discovery": false,
+      "has_discover_keyword": true
+    },
+    {
+      "file": "v17\\read_model\\service.py",
+      "has_ollama_discovery": true,
+      "has_gemini_discovery": false,
+      "has_discover_keyword": true
+    }
+  ],
+  "writes_performed": 0,
+  "runtime_mutations": 0
+}

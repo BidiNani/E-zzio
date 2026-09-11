@@ -1,0 +1,62 @@
+{
+  "providers\\ollama_provider.py": {
+    "classes": [
+      "OllamaProvider"
+    ],
+    "functions": [
+      "__init__",
+      "capabilities",
+      "health"
+    ],
+    "mentions_ingest_or_lifecycle": false,
+    "content_sample": "\"\"\"\nE-ZZIO V7.24.2 \u2014 Ollama Provider Adapter\nPont entre l'Intelligence Router et le Governor local. Respecte le contrat BaseProvider.\n\"\"\"\n\nimport time\nfrom typing import Optional, Dict, Any\nfrom providers.base_provider import BaseProvider\nfrom providers.provider_response import ProviderResponse\n\n\nclass OllamaProvider(BaseProvider):\n    def __init__(self):\n        self.host = \"http://127.0.0.1:11434\"\n\n    def capabilities(self) -> list:\n        return [\"reasoning\", \"coding\", \"fast_chat\", \"vision\""
+  },
+  "runtime\\debug_ollama.py": {
+    "classes": [],
+    "functions": [],
+    "mentions_ingest_or_lifecycle": false,
+    "content_sample": "import asyncio\nimport sys\nimport os\nimport traceback\n\n# Ajout de la racine du projet au chemin d'importation Python\nsys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), \"..\")))\n\nfrom core.providers.ollama_provider import OllamaProvider\n\n\nasync def main():\n    print(\"[*] Instanciation d'OllamaProvider avec qwen3.5:9b...\")\n    provider = OllamaProvider(model=\"qwen3.5:9b\")\n\n    try:\n        print(\"[*] Envoi de la requ\u00eate de test (timeout 120s pour le cold start)...\")\n        res "
+  },
+  "runtime\\diagnose_ollama.py": {
+    "classes": [],
+    "functions": [],
+    "mentions_ingest_or_lifecycle": false,
+    "content_sample": "import asyncio\nimport os\nfrom core.providers.ollama_provider import OllamaProvider\nfrom core.secrets import load_secrets\n\n\nasync def test_qwen_load():\n    load_secrets()\n    # Forcer la variable d'environnement pour le test imm\u00e9diat\n    os.environ[\"OLLAMA_MODEL\"] = \"qwen3.5:9b\"\n\n    print(\"[*] Initialisation de l'instance Ollama avec qwen3.5:9b...\")\n    provider = OllamaProvider(model=\"qwen3.5:9b\")\n\n    print(\"[*] Envoi de la requ\u00eate de test (chargement \u00e0 froid possible, timeout 120s)...\")\n    t"
+  },
+  "scripts\\patch_ollama_provider.py": {
+    "classes": [],
+    "functions": [],
+    "mentions_ingest_or_lifecycle": false,
+    "content_sample": "from pathlib import Path\nimport re\n\nprovider_file = Path(r\"G:\\AI\\E-zzio\\runtime\\model_router\\providers\\ollama.py\")\n\nif not provider_file.exists():\n    print(\"[FAIL] ollama.py introuvable.\")\n    exit(1)\n\ncontent = provider_file.read_text(encoding=\"utf-8\")\n\n# V\u00e9rification et remplacement de la signature de generate pour accepter **kwargs / options\n# On recherche une d\u00e9finition de type \"def generate(self, ...):\"\nif \"def generate(\" in content:\n    # Remplacement s\u00e9curis\u00e9 pour accepter **kwargs ou op"
+  },
+  "core\\providers\\ollama_provider.py": {
+    "classes": [
+      "OllamaProvider"
+    ],
+    "functions": [
+      "__init__"
+    ],
+    "mentions_ingest_or_lifecycle": false,
+    "content_sample": "import os\nimport json\nimport httpx\nfrom typing import Any, Dict, Optional\nfrom core.providers.iresearch_provider import IResearchProvider\nfrom core.secrets import load_secrets\n\n\nclass OllamaProvider(IResearchProvider):\n    name: str = \"ollama\"\n\n    def __init__(self, base_url: Optional[str] = None, model: Optional[str] = None):\n        load_secrets()\n        self.base_url = base_url or os.getenv(\"OLLAMA_BASE_URL\", \"http://127.0.0.1:11434\")\n        self.model = model or os.getenv(\"OLLAMA_MODEL\", "
+  },
+  "runtime\\models\\ollama_sync.py": {
+    "classes": [],
+    "functions": [
+      "fetch_ollama_models",
+      "run_reconciliation"
+    ],
+    "mentions_ingest_or_lifecycle": false,
+    "content_sample": "import json\nimport urllib.request\nfrom pathlib import Path\nfrom datetime import datetime, timezone\n\nROOT_DIR = Path(\"G:/AI/E-zzio\").resolve()\nREGISTRY_OUT = ROOT_DIR / \"runtime\" / \"audit\" / \"intelligence_scan\" / \"V7_REGISTRY\"\nREGISTRY_OUT.mkdir(parents=True, exist_ok=True)\n\n\ndef fetch_ollama_models():\n    \"\"\"Interroge l'API locale Ollama pour obtenir la liste exacte des mod\u00e8les install\u00e9s.\"\"\"\n    url = \"http://localhost:11434/api/tags\"\n    try:\n        req = urllib.request.Request(url, headers={\""
+  },
+  "runtime\\model_router\\providers\\ollama.py": {
+    "classes": [
+      "OllamaProvider"
+    ],
+    "functions": [
+      "__init__",
+      "generate"
+    ],
+    "mentions_ingest_or_lifecycle": false,
+    "content_sample": "import requests\nimport time\nfrom typing import Dict, Any\n\n\nclass OllamaProvider:\n    def __init__(self, base_url: str = \"http://localhost:11434\"):\n        self.base_url = base_url\n\n    def generate(self, prompt: str, model: str, **kwargs) -> Dict[str, Any]:\n        \"\"\"\n        G\u00e9n\u00e8re une r\u00e9ponse avec Ollama\n        \"\"\"\n        start_time = time.time()\n\n        # Nettoyer les kwargs\n        options = {}\n        if \"num_ctx\" in kwargs:\n            options[\"num_ctx\"] = kwargs[\"num_ctx\"]\n        if "
+  }
+}

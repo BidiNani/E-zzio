@@ -1,0 +1,55 @@
+{
+  "discovery_folder_files": {
+    "core\\models\\discovery\\base.py": {
+      "classes": [
+        "ProviderDiscovery"
+      ],
+      "functions": [
+        "discover"
+      ]
+    },
+    "core\\models\\discovery\\gemini.py": {
+      "classes": [
+        "GeminiDiscovery"
+      ],
+      "functions": [
+        "_version_rank",
+        "discover"
+      ]
+    },
+    "core\\models\\discovery\\groq.py": {
+      "classes": [
+        "GroqDiscovery"
+      ],
+      "functions": [
+        "__init__",
+        "discover"
+      ]
+    },
+    "core\\models\\discovery\\litellm.py": {
+      "classes": [
+        "LiteLLMDiscovery"
+      ],
+      "functions": [
+        "discover"
+      ]
+    },
+    "core\\models\\discovery\\openrouter.py": {
+      "classes": [
+        "OpenRouterDiscovery"
+      ],
+      "functions": [
+        "__init__",
+        "discover"
+      ]
+    },
+    "core\\models\\discovery\\__init__.py": {
+      "classes": [],
+      "functions": []
+    }
+  },
+  "other_discovery_files": [
+    "core\\cognitive_engine\\rpg_discovery.py",
+    "runtime\\hardware\\topology\\discovery.py"
+  ]
+}

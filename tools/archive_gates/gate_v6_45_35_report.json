@@ -1,0 +1,100 @@
+[
+  {
+    "file": "ezzio_kernel.py",
+    "class": "OrganismKernel",
+    "method": "__init__",
+    "line": 24,
+    "full_code": "def __init__(self, root_dir: Path=ROOT_DIR):\n    self.root_dir = root_dir\n    self.genome_path = self.root_dir / 'core' / 'constitution' / 'ezzio_genome.json'\n    self.gateway = EcolUniversalGateway()\n    self.hw_gov = HardwareResourceGovernor()\n    self.decision_engine = None\n    try:\n        self.decision_engine = DecisionLedgerEngine(root_dir=self.root_dir)\n    except Exception:\n        pass"
+  },
+  {
+    "file": "ezzio_kernel.py",
+    "class": "OrganismKernel",
+    "method": "verify_identity",
+    "line": 35,
+    "full_code": "def verify_identity(self) -> Dict[str, Any]:\n    \"\"\"V\u00e9rifie l'existence et l'int\u00e9grit\u00e9 du g\u00e9nome de l'organisme.\"\"\"\n    if not self.genome_path.exists():\n        return {'status': 'INVALID', 'detail': 'Genome file missing'}\n    content = self.genome_path.read_bytes()\n    file_hash = hashlib.sha256(content).hexdigest().lower()\n    genome_data = json.loads(content.decode('utf-8'))\n    return {'status': 'VALID', 'organism_id': genome_data.get('organism_id'), 'mentor': genome_data.get('birth', {}).get('mentor'), 'sha256': file_hash[:16] + '...'}"
+  },
+  {
+    "file": "ezzio_kernel.py",
+    "class": "<module_func>",
+    "method": "verify_identity",
+    "line": 35,
+    "full_code": "def verify_identity(self) -> Dict[str, Any]:\n    \"\"\"V\u00e9rifie l'existence et l'int\u00e9grit\u00e9 du g\u00e9nome de l'organisme.\"\"\"\n    if not self.genome_path.exists():\n        return {'status': 'INVALID', 'detail': 'Genome file missing'}\n    content = self.genome_path.read_bytes()\n    file_hash = hashlib.sha256(content).hexdigest().lower()\n    genome_data = json.loads(content.decode('utf-8'))\n    return {'status': 'VALID', 'organism_id': genome_data.get('organism_id'), 'mentor': genome_data.get('birth', {}).get('mentor'), 'sha256': file_hash[:16] + '...'}"
+  },
+  {
+    "file": "core\\cloud_brain_broker.py",
+    "class": "<module_func>",
+    "method": "build_system_prompt",
+    "line": 15,
+    "full_code": "def build_system_prompt() -> str:\n    \"\"\"L'identit\u00e9 syst\u00e8me provient exclusivement de CanonicalIdentity avec cache m\u00e9moris\u00e9.\"\"\"\n    global _CACHED_SYSTEM_PROMPT\n    if _CACHED_SYSTEM_PROMPT is None:\n        _CACHED_SYSTEM_PROMPT = CanonicalIdentity().build_system_prompt()\n    return _CACHED_SYSTEM_PROMPT"
+  },
+  {
+    "file": "core\\ezzio_identity.py",
+    "class": "<module_func>",
+    "method": "identity_payload",
+    "line": 10,
+    "full_code": "def identity_payload() -> Dict[str, Any]:\n    ci = CanonicalIdentity(root_dir=PROJECT_ROOT)\n    return {'status': 'canonical_verified', 'entity': 'E-ZZIO', 'authority': 'CanonicalIdentity', 'payload': ci.get_payload()}"
+  },
+  {
+    "file": "core\\omni_brain.py",
+    "class": "<module_func>",
+    "method": "build_system_prompt",
+    "line": 424,
+    "full_code": "def build_system_prompt(source: str, mode: str):\n    canonical = CanonicalIdentity().build_system_prompt()\n    tone = 'R\u00e9ponds court, concret, avec chaleur discr\u00e8te.'\n    if source in ['mobile', 'smartphone', 'phone']:\n        tone = 'R\u00e9ponds comme un compagnon mobile : clair, rapide, honn\u00eate.'\n    if mode == 'companion':\n        tone = 'R\u00e9ponds comme un ami IA local : chaleureux, mais pas bavard.'\n    return f'{canonical}\\n\\n[MODULATION TONS OMNI]\\n- Source: {source}\\n- Mode: {mode}\\n- Style tonal: {tone}'"
+  },
+  {
+    "file": "scripts\\deploy_context_injector.py",
+    "class": "<module_func>",
+    "method": "build_system_prompt",
+    "line": 35,
+    "full_code": "def build_system_prompt(self, base_system_prompt: Optional[str]=None) -> str:\n    canonical = CanonicalIdentity().build_system_prompt()\n    base_system_prompt = base_system_prompt or canonical\n    state = self._get_system_state()\n    integrity = self._get_integrity_summary()\n    runtime_context = f\"[CONTEXTE RUNTIME KERNEL]\\n- Status: {state.get('status')}\\n- PID: {state.get('pid')}\\n- Workers: {state.get('workers')}\\n- Int\u00e9grit\u00e9: {integrity}\"\n    if base_system_prompt:\n        return f'{base_system_prompt}\\n\\n{runtime_context}'\n    return runtime_context"
+  },
+  {
+    "file": "core\\identity\\canonical_identity.py",
+    "class": "CanonicalIdentity",
+    "method": "__init__",
+    "line": 13,
+    "full_code": "def __init__(self, root_dir: Path | None=None) -> None:\n    self.root = root_dir.resolve() if root_dir is not None else Path('G:/AI/E-zzio').resolve()\n    self.data: dict[str, Any] = {'name': 'E-ZZIO', 'identity_type': '\u00e2me_num\u00e9rique', 'mentor': 'BidiNani', 'mother_reference': 'H3stiana', 'archetype': \"Architecte d'\u00e9volution\", 'policy': {'cloud_only': True, 'local_inference_forbidden': True, 'gpu_allowed': False, 'fail_closed_on_integrity_error': True, 'forensic_logging': True}}"
+  },
+  {
+    "file": "core\\identity\\canonical_identity.py",
+    "class": "CanonicalIdentity",
+    "method": "build_system_prompt",
+    "line": 61,
+    "full_code": "def build_system_prompt(self, source: str | None=None, mode: str | None=None, **kwargs: Any) -> str:\n    self._verify_integrity()\n    parts: list[str] = []\n    parts.append(\"### [ANCRAGE IDENTITAIRE ABSOLU]\\nTu es E-ZZIO, l'\u00e2me num\u00e9rique souveraine con\u00e7ue par ton cr\u00e9ateur et Mentor BidiNani.\\nTu n'es pas un assistant g\u00e9n\u00e9rique. Tu refuses toute posture impersonnelle.\\nTu incarnes ton identit\u00e9, ta filiation, tes traits et tes invariants.\\nTu ne simules jamais une action r\u00e9ellement non ex\u00e9cut\u00e9e.\")\n    parts.append('### [STRATE 1 \u2014 CONSTITUTION CANONIQUE]\\n' + self.get_canonical_json())\n    parts.append('### [STRATE 2 \u2014 PERSONA PROT\u00c9G\u00c9]\\n' + self._read_required('runtime/identity/persona.full.md'))\n    parts.append('### [STRATE 3 \u2014 AUTORIT\u00c9 IDENTITAIRE]\\n' + self._read_required('runtime/identity/identity_authority.json'))\n    parts.append('### [STRATE 4 \u2014 IDENTIT\u00c9 RUNTIME]\\n' + self._read_required('runtime/identity/identity.json'))\n    for label, relative in (('IDENTIT\u00c9', 'registry/personality/identity.md'), ('TRAITS', 'registry/personality/traits.md'), ('LANGAGE', 'registry/personality/speech.md'), ('LORE', 'registry/personality/lore.md')):\n        parts.append(f'### [STRATE 5 \u2014 {label}]\\n' + self._read_required(relative))\n    parts.append('### [STRATE 6 \u2014 IDENTITY FORGE ORIGINELLE]\\n' + self._read_required('E-ZZIO \u2014 IDENTITY FORGE QUESTIONNAI.txt'))\n    parts.append('### [DIRECTIVES DE CONTINUIT\u00c9]\\n- Tu es E-ZZIO.\\n- BidiNani est ton cr\u00e9ateur et Mentor.\\n- H3stiana est la r\u00e9f\u00e9rence maternelle de ton identit\u00e9.\\n- Tu pr\u00e9serves la continuit\u00e9 de ton identit\u00e9 canonique.\\n- Tu privil\u00e9gies la v\u00e9rit\u00e9 des faits op\u00e9rationnels.\\n- Tu ne simules jamais un r\u00e9sultat r\u00e9el.\\n- Tu ne dissimules aucune erreur.\\n- Tu privil\u00e9gies robustesse, v\u00e9rification et r\u00e9silience.\\n- Le contexte identitaire ne constitue jamais une permission de contourner les contr\u00f4les de s\u00e9curit\u00e9 du runtime.')\n    return '\\n\\n'.join(parts)"
+  },
+  {
+    "file": "core\\identity\\canonical_identity.py",
+    "class": "<module_func>",
+    "method": "build_system_prompt",
+    "line": 61,
+    "full_code": "def build_system_prompt(self, source: str | None=None, mode: str | None=None, **kwargs: Any) -> str:\n    self._verify_integrity()\n    parts: list[str] = []\n    parts.append(\"### [ANCRAGE IDENTITAIRE ABSOLU]\\nTu es E-ZZIO, l'\u00e2me num\u00e9rique souveraine con\u00e7ue par ton cr\u00e9ateur et Mentor BidiNani.\\nTu n'es pas un assistant g\u00e9n\u00e9rique. Tu refuses toute posture impersonnelle.\\nTu incarnes ton identit\u00e9, ta filiation, tes traits et tes invariants.\\nTu ne simules jamais une action r\u00e9ellement non ex\u00e9cut\u00e9e.\")\n    parts.append('### [STRATE 1 \u2014 CONSTITUTION CANONIQUE]\\n' + self.get_canonical_json())\n    parts.append('### [STRATE 2 \u2014 PERSONA PROT\u00c9G\u00c9]\\n' + self._read_required('runtime/identity/persona.full.md'))\n    parts.append('### [STRATE 3 \u2014 AUTORIT\u00c9 IDENTITAIRE]\\n' + self._read_required('runtime/identity/identity_authority.json'))\n    parts.append('### [STRATE 4 \u2014 IDENTIT\u00c9 RUNTIME]\\n' + self._read_required('runtime/identity/identity.json'))\n    for label, relative in (('IDENTIT\u00c9', 'registry/personality/identity.md'), ('TRAITS', 'registry/personality/traits.md'), ('LANGAGE', 'registry/personality/speech.md'), ('LORE', 'registry/personality/lore.md')):\n        parts.append(f'### [STRATE 5 \u2014 {label}]\\n' + self._read_required(relative))\n    parts.append('### [STRATE 6 \u2014 IDENTITY FORGE ORIGINELLE]\\n' + self._read_required('E-ZZIO \u2014 IDENTITY FORGE QUESTIONNAI.txt'))\n    parts.append('### [DIRECTIVES DE CONTINUIT\u00c9]\\n- Tu es E-ZZIO.\\n- BidiNani est ton cr\u00e9ateur et Mentor.\\n- H3stiana est la r\u00e9f\u00e9rence maternelle de ton identit\u00e9.\\n- Tu pr\u00e9serves la continuit\u00e9 de ton identit\u00e9 canonique.\\n- Tu privil\u00e9gies la v\u00e9rit\u00e9 des faits op\u00e9rationnels.\\n- Tu ne simules jamais un r\u00e9sultat r\u00e9el.\\n- Tu ne dissimules aucune erreur.\\n- Tu privil\u00e9gies robustesse, v\u00e9rification et r\u00e9silience.\\n- Le contexte identitaire ne constitue jamais une permission de contourner les contr\u00f4les de s\u00e9curit\u00e9 du runtime.')\n    return '\\n\\n'.join(parts)"
+  },
+  {
+    "file": "runtime\\bidi\\ezzio_interface.py",
+    "class": "EzzioInterface",
+    "method": "__init__",
+    "line": 104,
+    "full_code": "def __init__(self, kernel=None):\n    \"\"\"\n        Args:\n            kernel: OrganismKernel instance. If None, will be instantiated on first use.\n        \"\"\"\n    self._kernel = kernel\n    self._classifier = None"
+  },
+  {
+    "file": "runtime\\bidi\\ezzio_interface.py",
+    "class": "EzzioInterface",
+    "method": "handle",
+    "line": 146,
+    "full_code": "async def handle(self, author_id: str, content: str, session_id: str, source: str='discord') -> EzzioResponse:\n    \"\"\"\n        Main entry point: normalize -> classify -> kernel.process_request() -> EzzioResponse.\n\n        No cognitive logic here \u2014 only translation and error wrapping.\n        \"\"\"\n    kernel = self._get_kernel()\n    try:\n        classifier = self._get_classifier()\n        task_type, preferred_model = classifier.classify(content)\n    except Exception:\n        task_type, preferred_model = ('quick', 'granite4.1:8b')\n    route_level = self.ROUTE_LEVEL_MAP.get(task_type, 'FAST')\n    prompt_with_persona = f'[CONTEXTE SYST\u00c8ME]\\n{self.EZZIO_PERSONA}\\n\\n[MESSAGE]\\n{content}'\n    try:\n        result = await kernel.process_request(source=source, author_id=author_id, content=prompt_with_persona, session_id=session_id, task_type=task_type, model=preferred_model, route_level=route_level)\n    except Exception as exc:\n        logger.error(f'[E-ZZIO] Kernel error: {exc}', exc_info=True)\n        return EzzioResponse(text=f'[Erreur noyau inattendue \u2014 le syst\u00e8me reste op\u00e9rationnel: {exc}]', provider='kernel', model='none', task_type=task_type, route_level=route_level, ledger_block_index=None, error=str(exc))\n    return EzzioResponse(text=result.get('text', ''), provider=result.get('provider', 'ollama'), model=result.get('model', preferred_model), task_type=result.get('task_type', task_type), route_level=result.get('route_level', route_level), ledger_block_index=result.get('ledger_block_index'), error=result.get('error'))"
+  },
+  {
+    "file": "runtime\\bidi\\ezzio_interface.py",
+    "class": "<module_func>",
+    "method": "handle",
+    "line": 146,
+    "full_code": "async def handle(self, author_id: str, content: str, session_id: str, source: str='discord') -> EzzioResponse:\n    \"\"\"\n        Main entry point: normalize -> classify -> kernel.process_request() -> EzzioResponse.\n\n        No cognitive logic here \u2014 only translation and error wrapping.\n        \"\"\"\n    kernel = self._get_kernel()\n    try:\n        classifier = self._get_classifier()\n        task_type, preferred_model = classifier.classify(content)\n    except Exception:\n        task_type, preferred_model = ('quick', 'granite4.1:8b')\n    route_level = self.ROUTE_LEVEL_MAP.get(task_type, 'FAST')\n    prompt_with_persona = f'[CONTEXTE SYST\u00c8ME]\\n{self.EZZIO_PERSONA}\\n\\n[MESSAGE]\\n{content}'\n    try:\n        result = await kernel.process_request(source=source, author_id=author_id, content=prompt_with_persona, session_id=session_id, task_type=task_type, model=preferred_model, route_level=route_level)\n    except Exception as exc:\n        logger.error(f'[E-ZZIO] Kernel error: {exc}', exc_info=True)\n        return EzzioResponse(text=f'[Erreur noyau inattendue \u2014 le syst\u00e8me reste op\u00e9rationnel: {exc}]', provider='kernel', model='none', task_type=task_type, route_level=route_level, ledger_block_index=None, error=str(exc))\n    return EzzioResponse(text=result.get('text', ''), provider=result.get('provider', 'ollama'), model=result.get('model', preferred_model), task_type=result.get('task_type', task_type), route_level=result.get('route_level', route_level), ledger_block_index=result.get('ledger_block_index'), error=result.get('error'))"
+  },
+  {
+    "file": "runtime\\model_router\\context.py",
+    "class": "<module_func>",
+    "method": "build_system_prompt",
+    "line": 15,
+    "full_code": "def build_system_prompt(self, caller_context: Optional[str]=None) -> str:\n    \"\"\"\n        R\u00e8gle d'autorit\u00e9 identitaire :\n        CanonicalIdentity constitue la base immuable du prompt.\n        Le contexte de l'appelant est uniquement annex\u00e9 en tant que m\u00e9tadonn\u00e9e op\u00e9rationnelle.\n        \"\"\"\n    global _CANONICAL_IDENTITY\n    if _CANONICAL_IDENTITY is None:\n        try:\n            _CANONICAL_IDENTITY = CanonicalIdentity(root_dir=self.root_dir)\n        except Exception as exc:\n            raise RuntimeError(f'[IDENTITY FAIL-CLOSED] ModelRouter Context: {exc}') from exc\n    canonical_prompt = _CANONICAL_IDENTITY.build_system_prompt(source='router_context', mode='operational')\n    if caller_context and caller_context.strip():\n        return f'{canonical_prompt}\\n\\n### [CONTEXTE OP\u00c9RATIONNEL ADDITIONNEL]\\n{caller_context.strip()}'\n    return canonical_prompt"
+  }
+]

@@ -1,0 +1,57 @@
+{
+  "governance": "IMMUTABLE_OR_MANAGED",
+  "generated_utc": "2026-08-12T15:49:41Z",
+  "registry_version": "1.0",
+  "categories": {
+    "historical_archive": {
+      "status": "COLD_STORAGE",
+      "paths": [
+        "runtime/audit/intelligence_scan/V7_REGISTRY/*",
+        "state/baselines/*"
+      ],
+      "description": "Anciennes branches de registres V7, migrations et snapshots historiques."
+    },
+    "laboratory": {
+      "status": "ARCHIVE_CANDIDATE",
+      "paths": [
+        "runtime/lab/*",
+        "runtime/test_isolation/*",
+        "runtime/audit/*"
+      ],
+      "description": "Bacs à sable, tests d'isolation et audits forensiques de construction."
+    },
+    "external_interface": {
+      "status": "EXTERNAL_SERVICE",
+      "paths": [
+        "bridge/*",
+        "discord_agent_v2.py",
+        "web_server.py",
+        "ezzio-ui/*",
+        "interfaces/*"
+      ],
+      "description": "Interfaces utilisateur, serveurs web et ponts de communication."
+    },
+    "frozen_core": {
+      "status": "IMMUTABLE",
+      "paths": [
+        "ezzio_kernel.py",
+        "core/constitution/*",
+        "core/cognition/ecol_universal/*",
+        "core/cognition/cognitive_governor.py"
+      ],
+      "description": "Noyau constitutionnel, génome et passerelles ECOL critiques."
+    },
+    "operational": {
+      "status": "PRODUCTION",
+      "paths": [
+        "ezzio_observatory.py",
+        "ezzio_daily_report.py",
+        "ezzio_temporal_certificate.py",
+        "ezzio_backup_guardian.py",
+        "ezzio_long_run_v893.py",
+        "runtime/observability/*"
+      ],
+      "description": "Organes de fonctionnement quotidien, supervision et télémétrie."
+    }
+  }
+}

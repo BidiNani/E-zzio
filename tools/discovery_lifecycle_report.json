@@ -1,0 +1,38 @@
+{
+  "ingest_callers": [
+    "core\\models\\fabric.py",
+    "core\\models\\lifecycle.py"
+  ],
+  "discovery_sources": [
+    "scripts\\live_user_acceptance.py",
+    "scripts\\run_productization_master_certification.py",
+    "core\\agent\\skill_manager.py",
+    "core\\agent\\tools_registry.py",
+    "core\\cognitive_engine\\rpg_discovery.py",
+    "core\\models\\errors.py",
+    "core\\models\\fabric.py",
+    "core\\models\\lifecycle.py",
+    "core\\models\\registry.py",
+    "core\\models\\__init__.py",
+    "core\\models\\discovery\\base.py",
+    "core\\models\\discovery\\gemini.py",
+    "core\\models\\discovery\\groq.py",
+    "core\\models\\discovery\\litellm.py",
+    "core\\models\\discovery\\openrouter.py",
+    "core\\models\\discovery\\__init__.py",
+    "runtime\\contracts\\authority.py",
+    "runtime\\lab\\test_v92_certification.py",
+    "runtime\\lab\\test_v94_autonomous.py",
+    "runtime\\models\\ollama_sync.py",
+    "runtime\\skills\\loader.py",
+    "runtime\\skills\\registry.py",
+    "runtime\\capabilities\\discovery\\acquisition_manager.py",
+    "runtime\\capabilities\\lifecycle\\lifecycle_manager.py",
+    "runtime\\hardware\\topology\\discovery.py"
+  ],
+  "lifecycle_methods": [
+    "__init__",
+    "fingerprint",
+    "ingest_discovery"
+  ]
+}

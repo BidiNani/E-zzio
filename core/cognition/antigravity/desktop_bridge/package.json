@@ -1,0 +1,10 @@
+{
+  "name": "ezzio-antigravity-desktop-bridge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "E-ZZIO local bridge to Antigravity Desktop Language Server",
+  "main": "ezzio_antigravity_bridge.js",
+  "dependencies": {
+    "antigravity-client": "github:jkfujinami/antigravity-client#c03f715724cdb17dfe2cfacc1f27c3041c7d1452"
+  }
+}

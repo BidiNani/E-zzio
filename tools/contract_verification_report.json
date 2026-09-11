@@ -1,0 +1,37 @@
+{
+  "registry": {
+    "canonical_path": "data/models/registry.json",
+    "writer_discovered": true,
+    "write_methods": [
+      "save",
+      "upsert"
+    ],
+    "entries_count": 37
+  },
+  "qualification": {
+    "automatic_qualification": true,
+    "qualification_scripts": [
+      "EZZIO_Model_Qualification_Gate_v4.2.py",
+      "legacy_archive\\EZZIO_Model_Qualification_Gate_v4.2.py"
+    ],
+    "produces_model_record": true,
+    "produces_tier": true
+  },
+  "pipeline": {
+    "discovery_to_qualification": "PRESENT",
+    "qualification_to_registry": "PRESENT",
+    "registry_to_fabric": "PRESENT",
+    "fabric_to_adapter": "PRESENT"
+  },
+  "provenance": {
+    "gemini": "KeyPool / KeyVault / SecretsLoader",
+    "granite": "ezzio-granite (Ollama local 4.2)",
+    "ornith": "ornith-ezzio (Ollama local 1.5)"
+  },
+  "safety": {
+    "writes_performed": 0,
+    "runtime_mutations": 0,
+    "ollama_state_mutations": 0,
+    "production_code_changes": 0
+  }
+}

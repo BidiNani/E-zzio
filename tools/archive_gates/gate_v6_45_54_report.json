@@ -1,0 +1,18 @@
+{
+  "consumers": [
+    "core\\agent\\coding_agent_loop.py",
+    "core\\cognition\\cognitive_gateway.py"
+  ],
+  "physical_mapping": {
+    "ezzio-granite": [
+      "EZZIO_CONTEXT.md",
+      "core\\agent\\agent_provider.py",
+      "runtime\\cache\\pycache\\AI\\E-zzio\\core\\agent\\agent_provider.cpython-312.pyc"
+    ],
+    "ornith-ezzio": [
+      "EZZIO_CONTEXT.md",
+      "core\\agent\\agent_provider.py",
+      "runtime\\cache\\pycache\\AI\\E-zzio\\core\\agent\\agent_provider.cpython-312.pyc"
+    ]
+  }
+}

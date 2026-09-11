@@ -1,0 +1,23 @@
+{
+  "exists": true,
+  "enums": {
+    "ModelTier": [
+      "FAST",
+      "MID",
+      "HEAVY",
+      "SPECIALIZED",
+      "UNQUALIFIED"
+    ],
+    "ModelLifecycle": [
+      "DISCOVERED",
+      "CANDIDATE",
+      "QUALIFYING",
+      "QUALIFIED",
+      "ACTIVE",
+      "SUPERSEDED",
+      "QUARANTINED",
+      "RETIRED"
+    ]
+  },
+  "model_record_init_args": null
+}

@@ -1,0 +1,6 @@
+{
+  "exists": true,
+  "base_discovery_source": {
+    "discover": "    async def discover(\n        self,\n        api_key: str,\n    ) -> list[dict[str, Any]]:\n        \"\"\"Discover currently available models.\"\"\"\n        raise NotImplementedError"
+  }
+}

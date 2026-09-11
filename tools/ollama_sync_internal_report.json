@@ -1,0 +1,39 @@
+{
+  "ollama_sync_analysis": {
+    "exists": true,
+    "functions": [
+      "fetch_ollama_models",
+      "run_reconciliation"
+    ],
+    "calls": [
+      "run_reconciliation",
+      "decode",
+      "print",
+      "write_text",
+      "Request",
+      "loads",
+      "now",
+      "read",
+      "urlopen",
+      "resolve",
+      "dumps",
+      "list",
+      "set",
+      "str",
+      "get",
+      "values",
+      "fetch_ollama_models",
+      "intersection",
+      "isoformat",
+      "mkdir",
+      "Path"
+    ],
+    "mentions_registry": true,
+    "mentions_lifecycle": false,
+    "mentions_tags": true,
+    "mentions_tier": false,
+    "mentions_active": false
+  },
+  "writes_performed": 0,
+  "runtime_mutations": 0
+}

@@ -1,0 +1,65 @@
+{
+  "core/models/registry.py": {
+    "classes": [
+      "ModelTier",
+      "ModelLifecycle",
+      "ModelRecord",
+      "ModelRegistry"
+    ],
+    "fields_detected": [
+      "model_id",
+      "provider",
+      "updated_at",
+      "last_quarantine_operator",
+      "last_quarantine_reason",
+      "last_quarantine_at",
+      "rehabilitation_reason",
+      "rehabilitated_by",
+      "rehabilitated_at",
+      "rehabilitation_count",
+      "historical_failures",
+      "tier",
+      "lifecycle",
+      "context_window",
+      "max_output_tokens",
+      "supports_chat",
+      "supports_json",
+      "supports_tools",
+      "supports_reasoning",
+      "latency_ms",
+      "qualification_score",
+      "discovered_at",
+      "last_verified",
+      "source_hash",
+      "failure_count",
+      "success_count",
+      "metadata"
+    ]
+  },
+  "core/models/lifecycle.py": {
+    "classes": [
+      "ModelLifecycleManager"
+    ],
+    "fields_detected": [
+      "records"
+    ]
+  },
+  "core/models/fabric.py": {
+    "classes": [
+      "AutonomousModelFabric"
+    ],
+    "fields_detected": [
+      "discovered",
+      "transitions",
+      "qualified_by_tier",
+      "winners"
+    ]
+  },
+  "core/cognition/cognitive_router.py": {
+    "classes": [
+      "CognitiveRouterError",
+      "CognitiveTaskClassifier"
+    ],
+    "fields_detected": []
+  }
+}

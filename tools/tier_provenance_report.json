@@ -1,0 +1,737 @@
+{
+  "dashboard_jarvis.py": {
+    "matched_terms": [],
+    "functions": [
+      "load_core",
+      "run_think"
+    ]
+  },
+  "ezzio_kernel.py": {
+    "matched_terms": [
+      "FAST"
+    ],
+    "functions": [
+      "render_status_cli",
+      "main",
+      "__init__",
+      "verify_identity",
+      "get_organism_status",
+      "process_request"
+    ]
+  },
+  "EZZIO_Model_Qualification_Gate_v4.2.py": {
+    "matched_terms": [
+      "UNQUALIFIED"
+    ],
+    "functions": [
+      "extract_code_block",
+      "safe_str",
+      "run_model",
+      "main"
+    ]
+  },
+  "core\\decision_router.py": {
+    "matched_terms": [
+      "FAST"
+    ],
+    "functions": [
+      "__init__",
+      "_select_providers",
+      "search"
+    ]
+  },
+  "core\\ezzio_message_brain.py": {
+    "matched_terms": [
+      "FAST"
+    ],
+    "functions": [
+      "intent_of",
+      "ollama",
+      "web_research",
+      "chat_answer",
+      "vision_answer",
+      "save_upload",
+      "handle_message"
+    ]
+  },
+  "core\\llm_engine.py": {
+    "matched_terms": [
+      "FAST"
+    ],
+    "functions": [
+      "get_persona",
+      "build_options",
+      "format_memory",
+      "build_messages",
+      "_sync_ollama_chat",
+      "clean_reply",
+      "query_model_async"
+    ]
+  },
+  "core\\model_registry.py": {
+    "matched_terms": [
+      "FAST"
+    ],
+    "functions": [
+      "_load_capabilities",
+      "all_known_models",
+      "best_fast_model",
+      "load_latency",
+      "save_latency"
+    ]
+  },
+  "core\\omni_brain.py": {
+    "matched_terms": [
+      "FAST"
+    ],
+    "functions": [
+      "load_config",
+      "_bool",
+      "_redact",
+      "get_lan_ips",
+      "integration_truth",
+      "mobile_config",
+      "verify_mobile_token",
+      "write_json_event",
+      "local_status_payload",
+      "local_router_status_payload",
+      "no_ads_policy_payload",
+      "local_forge_status_payload",
+      "local_vision_status_payload",
+      "_get_json",
+      "available_commands",
+      "_compact_json",
+      "handle_command",
+      "sanitize_reply",
+      "build_system_prompt",
+      "local_brain_reply",
+      "bridge_status"
+    ]
+  },
+  "core\\pc_model_router.py": {
+    "matched_terms": [
+      "FAST"
+    ],
+    "functions": [
+      "_now",
+      "clean_reply",
+      "sanitize_truth",
+      "words",
+      "has_phrase",
+      "ollama_models",
+      "is_available",
+      "classify_error",
+      "load_policy",
+      "save_policy",
+      "latest_guarded_bench",
+      "infer_task",
+      "select_model",
+      "router_status",
+      "chat_with_route",
+      "write_default_policy"
+    ]
+  },
+  "core\\pc_optimizer.py": {
+    "matched_terms": [
+      "FAST"
+    ],
+    "functions": [
+      "_now",
+      "_gb",
+      "clean_reply",
+      "collect_bad_hits",
+      "identity_score",
+      "pc_profile",
+      "ollama_tags",
+      "model_available",
+      "warmup_model",
+      "warmup_profile",
+      "bench_model",
+      "quick_bench",
+      "performance_status"
+    ]
+  },
+  "core\\research_router.py": {
+    "matched_terms": [
+      "FAST"
+    ],
+    "functions": [
+      "__init__",
+      "search"
+    ]
+  },
+  "core\\response_guard.py": {
+    "matched_terms": [
+      "FAST"
+    ],
+    "functions": [
+      "_clean",
+      "deterministic_reply",
+      "sanitize_ezzio_reply"
+    ]
+  },
+  "providers\\provider_registry.py": {
+    "matched_terms": [],
+    "functions": [
+      "_is_cloud_authorized",
+      "_load_capabilities",
+      "_load_performance",
+      "calculate_provider_score",
+      "get_provider_contract",
+      "get_best_provider",
+      "get_provider_instance"
+    ]
+  },
+  "providers\\provider_response.py": {
+    "matched_terms": [],
+    "functions": []
+  },
+  "routers\\models.py": {
+    "matched_terms": [
+      "FAST"
+    ],
+    "functions": [
+      "_bench_sync",
+      "bench_one",
+      "latency",
+      "bench_fast"
+    ]
+  },
+  "routers\\research.py": {
+    "matched_terms": [
+      "FAST"
+    ],
+    "functions": [
+      "init_research_router",
+      "search_endpoint"
+    ]
+  },
+  "scripts\\cleanup_v2_1_engine.py": {
+    "matched_terms": [
+      "SPECIALIZED"
+    ],
+    "functions": [
+      "__init__",
+      "log",
+      "sha256_file",
+      "run_physical_reconciliation",
+      "classify_and_purge_empty_directories",
+      "analyze_semantic_duplicates_ast",
+      "save_reports",
+      "run"
+    ]
+  },
+  "core\\cognition\\cognitive_router.py": {
+    "matched_terms": [
+      "MID",
+      "FAST",
+      "HEAVY"
+    ],
+    "functions": [
+      "test_cognitive_router",
+      "__init__",
+      "route_task",
+      "classify",
+      "execute_routing"
+    ]
+  },
+  "core\\cognition\\ecol_runtime_contract.py": {
+    "matched_terms": [],
+    "functions": [
+      "test_runtime_contract",
+      "__init__",
+      "_validate_payload",
+      "evaluate_request"
+    ]
+  },
+  "core\\cognition\\permanent_benchmark.py": {
+    "matched_terms": [],
+    "functions": [
+      "test_benchmark",
+      "__init__",
+      "run_benchmark_tick",
+      "commit_benchmark"
+    ]
+  },
+  "core\\cognition\\self_healing_engine.py": {
+    "matched_terms": [],
+    "functions": [
+      "test_self_healing",
+      "__init__",
+      "handle_incident",
+      "commit_recovery"
+    ]
+  },
+  "core\\cognitive_engine\\cognitive_provenance_tracer.py": {
+    "matched_terms": [],
+    "functions": [
+      "classify_record",
+      "run_tracer"
+    ]
+  },
+  "core\\constitution\\hardware_resource_governor.py": {
+    "matched_terms": [],
+    "functions": [
+      "__init__",
+      "detect_gaming_activity",
+      "get_system_telemetry",
+      "evaluate_pressure_level",
+      "evaluate_task_request",
+      "release_task_resources",
+      "_build_and_record_decision"
+    ]
+  },
+  "core\\intents\\fabric_connector.py": {
+    "matched_terms": [
+      "MID",
+      "FAST"
+    ],
+    "functions": [
+      "__init__",
+      "resolve_tier",
+      "_extract_reasoning",
+      "execute_intent"
+    ]
+  },
+  "core\\memory\\multi_tier_memory.py": {
+    "matched_terms": [],
+    "functions": [
+      "test_multi_tier_memory",
+      "__init__",
+      "store_memory",
+      "commit_to_disk"
+    ]
+  },
+  "core\\models\\admin.py": {
+    "matched_terms": [
+      "UNQUALIFIED"
+    ],
+    "functions": [
+      "main"
+    ]
+  },
+  "core\\models\\fabric.py": {
+    "matched_terms": [
+      "MID",
+      "FAST",
+      "HEAVY",
+      "UNQUALIFIED"
+    ],
+    "functions": [
+      "build_fabric",
+      "__init__",
+      "key_for_provider",
+      "discover",
+      "discover_all",
+      "activate_qualified",
+      "qualify_candidates",
+      "refresh",
+      "run_forever",
+      "quarantine_runtime_violation",
+      "rehabilitate_model",
+      "transition",
+      "quarantine_runtime_violation",
+      "rehabilitate_model",
+      "_sync_router_with_registry"
+    ]
+  },
+  "core\\models\\registry.py": {
+    "matched_terms": [
+      "SPECIALIZED",
+      "MID",
+      "FAST",
+      "HEAVY",
+      "UNQUALIFIED"
+    ],
+    "functions": [
+      "__init__",
+      "key",
+      "load",
+      "save",
+      "upsert",
+      "get",
+      "all",
+      "active"
+    ]
+  },
+  "core\\models\\router.py": {
+    "matched_terms": [],
+    "functions": [
+      "_as_utc",
+      "__init__",
+      "_validate_ptu_bounds",
+      "__contains__",
+      "get",
+      "__getitem__",
+      "__setitem__",
+      "preprocess_input_data",
+      "__contains__",
+      "get",
+      "__getitem__",
+      "__setitem__",
+      "__contains__",
+      "get",
+      "__getitem__",
+      "__setitem__",
+      "__init__",
+      "to_json",
+      "__contains__",
+      "get",
+      "__getitem__",
+      "__setitem__",
+      "__init__",
+      "async_get_available_deployment",
+      "get_available_deployment",
+      "__init__",
+      "__init__",
+      "from_kwargs",
+      "async_pre_routing_hook",
+      "run",
+      "_weights_sum_to_one",
+      "__init__",
+      "invalidate_cache",
+      "extract_bool_param"
+    ]
+  },
+  "core\\models\\scoring.py": {
+    "matched_terms": [
+      "MID",
+      "FAST",
+      "HEAVY"
+    ],
+    "functions": [
+      "classify_tier",
+      "calculate_score"
+    ]
+  },
+  "core\\skills\\research_skill.py": {
+    "matched_terms": [
+      "FAST"
+    ],
+    "functions": [
+      "__init__",
+      "search"
+    ]
+  },
+  "core\\cognition\\compression\\budget_engine.py": {
+    "matched_terms": [],
+    "functions": [
+      "__init__",
+      "classify_segment"
+    ]
+  },
+  "core\\cognition\\compression\\compressor_fabric.py": {
+    "matched_terms": [],
+    "functions": [
+      "__init__",
+      "store_in_ccr_cache",
+      "retrieve_from_ccr_cache",
+      "compress_segment",
+      "_headroom_compress_json",
+      "_headroom_compress_code_and_logs",
+      "_llmlingua_compress_prose",
+      "clean_struct"
+    ]
+  },
+  "core\\cognition\\compression\\economizer.py": {
+    "matched_terms": [],
+    "functions": [
+      "__init__",
+      "deduplicate_exact_lines",
+      "economize_context_payload"
+    ]
+  },
+  "core\\cognition\\compression\\integrity_gate.py": {
+    "matched_terms": [],
+    "functions": [
+      "__init__",
+      "evaluate_and_filter",
+      "_build_verdict"
+    ]
+  },
+  "core\\cognition\\memory\\context_fabric.py": {
+    "matched_terms": [],
+    "functions": [
+      "__init__",
+      "_load_constitutional_rules",
+      "_retrieve_tier_memories",
+      "_sanitize_memory_content",
+      "assemble_context"
+    ]
+  },
+  "core\\cognition\\memory\\memory_manager.py": {
+    "matched_terms": [],
+    "functions": [
+      "__init__",
+      "ingest_memory",
+      "retrieve_memory",
+      "verify_memory_record"
+    ]
+  },
+  "core\\cognition\\orchestration\\closed_loop.py": {
+    "matched_terms": [],
+    "functions": [
+      "__init__",
+      "execute_closed_loop_file_action"
+    ]
+  },
+  "core\\models\\qualification\\gate.py": {
+    "matched_terms": [
+      "MID",
+      "FAST",
+      "HEAVY",
+      "UNQUALIFIED"
+    ],
+    "functions": [
+      "qualify_openai_compatible"
+    ]
+  },
+  "runtime\\bidi\\ezzio_interface.py": {
+    "matched_terms": [
+      "MID",
+      "FAST",
+      "HEAVY"
+    ],
+    "functions": [
+      "__post_init__",
+      "is_error",
+      "display_text",
+      "__init__",
+      "_get_kernel",
+      "_get_classifier",
+      "normalize",
+      "handle"
+    ]
+  },
+  "runtime\\cognition\\analyzer.py": {
+    "matched_terms": [
+      "HEAVY"
+    ],
+    "functions": [
+      "analyze",
+      "extract_keywords"
+    ]
+  },
+  "runtime\\core\\ezzio_core.py": {
+    "matched_terms": [
+      "FAST"
+    ],
+    "functions": [
+      "__init__",
+      "init",
+      "think"
+    ]
+  },
+  "runtime\\hardware\\adaptive_learning_governor.py": {
+    "matched_terms": [],
+    "functions": [
+      "__init__",
+      "_actuator_loop",
+      "set_workload_context",
+      "calculate_time_to_critical",
+      "apply_regulation_tick",
+      "start",
+      "stop"
+    ]
+  },
+  "runtime\\hardware\\cognitive_memory_governor.py": {
+    "matched_terms": [],
+    "functions": [
+      "__init__",
+      "_load_cognitive_state",
+      "_save_cognitive_state_atomic",
+      "_actuator_loop",
+      "set_workload_context",
+      "calculate_effective_threshold",
+      "calculate_time_to_critical",
+      "apply_regulation_tick",
+      "start",
+      "stop"
+    ]
+  },
+  "runtime\\hardware\\memory_actuator.py": {
+    "matched_terms": [],
+    "functions": [
+      "__init__",
+      "start",
+      "_actuator_loop",
+      "apply_regulation_tick",
+      "stop"
+    ]
+  },
+  "runtime\\hardware\\memory_actuator_v53.py": {
+    "matched_terms": [],
+    "functions": [
+      "__init__",
+      "start",
+      "_actuator_loop",
+      "_log_audit_event",
+      "apply_regulation_tick",
+      "stop"
+    ]
+  },
+  "runtime\\hardware\\memory_actuator_v54.py": {
+    "matched_terms": [],
+    "functions": [
+      "__init__",
+      "_load_persisted_state",
+      "_save_persisted_state_atomic",
+      "start",
+      "_actuator_loop",
+      "_log_audit_event",
+      "apply_regulation_tick",
+      "stop"
+    ]
+  },
+  "runtime\\hardware\\production_kernel_v66.py": {
+    "matched_terms": [],
+    "functions": [
+      "__init__",
+      "calibrate_profile",
+      "__init__",
+      "calculate_confidence",
+      "evaluate",
+      "__init__",
+      "apply",
+      "__init__",
+      "_generate_hmac",
+      "_start_threads",
+      "load_persisted_state_safely",
+      "save_persisted_state_atomic",
+      "trigger_safe_mode",
+      "trigger_permanent_safe_mode",
+      "_watchdog_loop",
+      "_execute_gradual_recovery",
+      "_governor_loop",
+      "evaluate_tick",
+      "simulate_fatal_crash",
+      "simulate_thread_stall",
+      "restore_thread_stall",
+      "stop"
+    ]
+  },
+  "runtime\\hardware\\production_kernel_v661.py": {
+    "matched_terms": [],
+    "functions": [
+      "__init__",
+      "calibrate_profile",
+      "__init__",
+      "calculate_confidence",
+      "evaluate",
+      "__init__",
+      "apply",
+      "__init__",
+      "_get_or_create_hmac_key",
+      "_generate_hmac",
+      "_start_threads",
+      "load_persisted_state_safely",
+      "save_persisted_state_atomic",
+      "trigger_safe_mode",
+      "trigger_permanent_safe_mode",
+      "_watchdog_loop",
+      "_execute_gradual_recovery",
+      "_governor_loop",
+      "evaluate_tick",
+      "simulate_fatal_crash",
+      "simulate_thread_stall",
+      "restore_thread_stall",
+      "stop"
+    ]
+  },
+  "runtime\\hardware\\test_v52_actuator.py": {
+    "matched_terms": [],
+    "functions": [
+      "test_v52_active_memory_actuator",
+      "__init__"
+    ]
+  },
+  "runtime\\lab\\test_v923_immune_base.py": {
+    "matched_terms": [
+      "HEAVY"
+    ],
+    "functions": [
+      "run_test"
+    ]
+  },
+  "runtime\\memory\\events.py": {
+    "matched_terms": [],
+    "functions": [
+      "to_dict",
+      "to_json"
+    ]
+  },
+  "runtime\\microkernel\\backpressure_controller.py": {
+    "matched_terms": [],
+    "functions": [
+      "__init__",
+      "start",
+      "_controller_loop",
+      "update_backpressure_state",
+      "get_llm_context_budget",
+      "is_agent_execution_allowed",
+      "acquire_ingestion_slot",
+      "stop"
+    ]
+  },
+  "runtime\\microkernel\\test_v60_backpressure.py": {
+    "matched_terms": [],
+    "functions": [
+      "test_v60_semantic_backpressure_certification",
+      "__init__",
+      "__init__",
+      "evaluate_state"
+    ]
+  },
+  "runtime\\reasoning\\router.py": {
+    "matched_terms": [
+      "HEAVY"
+    ],
+    "functions": [
+      "route"
+    ]
+  },
+  "runtime\\external\\platform\\windows.py": {
+    "matched_terms": [],
+    "functions": [
+      "__init__",
+      "assign",
+      "close"
+    ]
+  },
+  "runtime\\hardware\\ryzen_optimizer\\governor.py": {
+    "matched_terms": [
+      "HEAVY"
+    ],
+    "functions": [
+      "__init__",
+      "update",
+      "__init__",
+      "bind_worker_thread",
+      "evaluate_and_scale"
+    ]
+  },
+  "v17\\control\\classifier.py": {
+    "matched_terms": [
+      "FAST"
+    ],
+    "functions": [
+      "classify_action_risk"
+    ]
+  },
+  "v17\\orchestration\\classifier.py": {
+    "matched_terms": [
+      "FAST"
+    ],
+    "functions": [
+      "classify_user_prompt"
+    ]
+  },
+  "v18\\agents\\coordinator.py": {
+    "matched_terms": [
+      "SPECIALIZED"
+    ],
+    "functions": [
+      "execute_subtask"
+    ]
+  }
+}

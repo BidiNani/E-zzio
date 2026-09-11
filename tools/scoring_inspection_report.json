@@ -1,0 +1,10 @@
+{
+  "exists": true,
+  "scoring_functions": {
+    "classify_tier": "def classify_tier(\n    *,\n    latency_ms: float,\n    context_window: int | None,\n    supports_json: bool,\n    supports_tools: bool,\n    supports_reasoning: bool,\n) -> str:\n\n    if supports_reasoning and (context_window or 0) >= 64_000:\n        return \"HEAVY\"\n\n    if latency_ms <= 900.0 and supports_json:\n        return \"FAST\"\n\n    if latency_ms <= 2500.0 or supports_tools:\n        return \"MID\"\n\n    return \"HEAVY\"",
+    "calculate_score": "def calculate_score(\n    *,\n    latency_ms: float,\n    supports_json: bool,\n    supports_tools: bool,\n    supports_reasoning: bool,\n    context_window: int | None,\n) -> float:\n\n    score = 100.0\n    score -= min(latency_ms / 100.0, 40.0)\n\n    if supports_json:\n        score += 10.0\n\n    if supports_tools:\n        score += 10.0\n\n    if supports_reasoning:\n        score += 15.0\n\n    if (context_window or 0) >= 32_000:\n        score += 5.0\n\n    return round(\n        max(0.0, min(100.0, score)),\n        2,\n    )"
+  },
+  "callsites": [
+    "core\\models\\scoring.py"
+  ]
+}

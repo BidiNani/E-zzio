@@ -1,0 +1,826 @@
+[
+  {
+    "file": "core\\integrations\\discord\\discord_client.py",
+    "function": "on_ready",
+    "depth": 0,
+    "line": 160,
+    "calls": [
+      {
+        "call": "print",
+        "args": [
+          "f'[E-ZZIO SENSE] Agent Discord V7.51 en ligne : {bot.user}'"
+        ],
+        "line": 170
+      },
+      {
+        "call": "print",
+        "args": [
+          "f\"[*] Canal d'orchestration persistant : {LOCAL_API_URL}\""
+        ],
+        "line": 171
+      },
+      {
+        "call": "aiohttp.ClientSession",
+        "args": [],
+        "line": 163
+      },
+      {
+        "call": "update_dynamic_presence.is_running",
+        "args": [],
+        "line": 165
+      },
+      {
+        "call": "update_dynamic_presence.start",
+        "args": [],
+        "line": 166
+      },
+      {
+        "call": "proactive_event_loop.is_running",
+        "args": [],
+        "line": 168
+      },
+      {
+        "call": "proactive_event_loop.start",
+        "args": [],
+        "line": 169
+      }
+    ]
+  },
+  {
+    "file": "core\\integrations\\discord\\discord_client.py",
+    "function": "on_message",
+    "depth": 0,
+    "line": 182,
+    "calls": [
+      {
+        "call": "str",
+        "args": [
+          "message.author.id"
+        ],
+        "line": 187
+      },
+      {
+        "call": "str",
+        "args": [
+          "message.author.name"
+        ],
+        "line": 188
+      },
+      {
+        "call": "isinstance",
+        "args": [
+          "message.channel",
+          "discord.DMChannel"
+        ],
+        "line": 189
+      },
+      {
+        "call": "permission_guard.evaluate_guild_access",
+        "args": [
+          "guild_id",
+          "discord_user_id",
+          "username",
+          "is_private"
+        ],
+        "line": 192
+      },
+      {
+        "call": "discord_watchdog.record_activity",
+        "args": [],
+        "line": 208
+      },
+      {
+        "call": "str",
+        "args": [
+          "message.guild.id"
+        ],
+        "line": 190
+      },
+      {
+        "call": "message.content.strip",
+        "args": [],
+        "line": 199
+      },
+      {
+        "call": "message.content[3:].strip",
+        "args": [],
+        "line": 203
+      },
+      {
+        "call": "message.channel.typing",
+        "args": [],
+        "line": 210
+      },
+      {
+        "call": "message.content.startswith",
+        "args": [
+          "'!e '"
+        ],
+        "line": 201
+      },
+      {
+        "call": "range",
+        "args": [
+          "0",
+          "len(reply_text)",
+          "chunk_size"
+        ],
+        "line": 246
+      },
+      {
+        "call": "message.channel.send",
+        "args": [
+          "'\u274c Acc\u00e8s priv\u00e9 non autoris\u00e9.'"
+        ],
+        "line": 195
+      },
+      {
+        "call": "aiohttp.ClientSession",
+        "args": [],
+        "line": 226
+      },
+      {
+        "call": "http_session.post",
+        "args": [
+          "LOCAL_API_URL"
+        ],
+        "line": 228
+      },
+      {
+        "call": "len",
+        "args": [
+          "reply_text"
+        ],
+        "line": 246
+      },
+      {
+        "call": "secret_redactor.sanitize",
+        "args": [
+          "str(e)"
+        ],
+        "line": 253
+      },
+      {
+        "call": "any",
+        "args": [
+          "(attachment.filename.lower().endswith(ext) for ext in ['.png', '.jpg', '.jpeg', '.webp'])"
+        ],
+        "line": 221
+      },
+      {
+        "call": "isinstance",
+        "args": [
+          "data",
+          "dict"
+        ],
+        "line": 231
+      },
+      {
+        "call": "str",
+        "args": [
+          "e"
+        ],
+        "line": 253
+      },
+      {
+        "call": "resp.json",
+        "args": [],
+        "line": 230
+      },
+      {
+        "call": "data.get",
+        "args": [
+          "'response'",
+          "''"
+        ],
+        "line": 232
+      },
+      {
+        "call": "isinstance",
+        "args": [
+          "raw_res",
+          "dict"
+        ],
+        "line": 233
+      },
+      {
+        "call": "message.channel.send",
+        "args": [
+          "reply_text[i:i + chunk_size]"
+        ],
+        "line": 248
+      },
+      {
+        "call": "message.reply",
+        "args": [
+          "reply_text[i:i + chunk_size]"
+        ],
+        "line": 250
+      },
+      {
+        "call": "message.channel.send",
+        "args": [
+          "error_reply"
+        ],
+        "line": 256
+      },
+      {
+        "call": "message.reply",
+        "args": [
+          "error_reply"
+        ],
+        "line": 258
+      },
+      {
+        "call": "attachment.filename.lower().endswith",
+        "args": [
+          "ext"
+        ],
+        "line": 221
+      },
+      {
+        "call": "isinstance",
+        "args": [
+          "raw_res",
+          "str"
+        ],
+        "line": 235
+      },
+      {
+        "call": "str",
+        "args": [
+          "data"
+        ],
+        "line": 240
+      },
+      {
+        "call": "raw_res.get",
+        "args": [
+          "'response'"
+        ],
+        "line": 234
+      },
+      {
+        "call": "raw_res.get",
+        "args": [
+          "'answer'"
+        ],
+        "line": 234
+      },
+      {
+        "call": "raw_res.get",
+        "args": [
+          "'content'"
+        ],
+        "line": 234
+      },
+      {
+        "call": "str",
+        "args": [
+          "raw_res"
+        ],
+        "line": 234
+      },
+      {
+        "call": "attachment.filename.lower",
+        "args": [],
+        "line": 221
+      },
+      {
+        "call": "raw_res.strip",
+        "args": [],
+        "line": 236
+      },
+      {
+        "call": "str",
+        "args": [
+          "raw_res"
+        ],
+        "line": 238
+      }
+    ]
+  },
+  {
+    "file": "runtime\\bidi\\presence.py",
+    "function": "setup_hook",
+    "depth": 0,
+    "line": 108,
+    "calls": [
+      {
+        "call": "logger.info",
+        "args": [
+          "f'[E-ZZIO] Slash commands synced: {[c.name for c in synced]}'"
+        ],
+        "line": 111
+      },
+      {
+        "call": "self.tree.sync",
+        "args": [],
+        "line": 110
+      },
+      {
+        "call": "logger.error",
+        "args": [
+          "f'[E-ZZIO] Slash sync error: {e}'"
+        ],
+        "line": 113
+      }
+    ]
+  },
+  {
+    "file": "runtime\\bidi\\presence.py",
+    "function": "on_ready",
+    "depth": 0,
+    "line": 115,
+    "calls": [
+      {
+        "call": "logger.info",
+        "args": [
+          "f\"[E-ZZIO] Online as {self.user} (ID: {(self.user.id if self.user else 'UNKNOWN')})\""
+        ],
+        "line": 116
+      },
+      {
+        "call": "self.change_presence",
+        "args": [],
+        "line": 117
+      },
+      {
+        "call": "discord.Activity",
+        "args": [],
+        "line": 118
+      }
+    ]
+  },
+  {
+    "file": "runtime\\bidi\\presence.py",
+    "function": "_should_respond",
+    "depth": 1,
+    "line": 121,
+    "calls": [
+      {
+        "call": "isinstance",
+        "args": [
+          "message.channel",
+          "discord.DMChannel"
+        ],
+        "line": 124
+      },
+      {
+        "call": "any",
+        "args": [
+          "(k in message.content.lower() for k in ('e-zzio', 'ezzio'))"
+        ],
+        "line": 126
+      },
+      {
+        "call": "message.content.startswith",
+        "args": [
+          "('!ezzio ', '!e-zzio ', '!chat ')"
+        ],
+        "line": 127
+      },
+      {
+        "call": "message.content.lower",
+        "args": [],
+        "line": 126
+      }
+    ]
+  },
+  {
+    "file": "runtime\\bidi\\presence.py",
+    "function": "split_text",
+    "depth": 2,
+    "line": 72,
+    "calls": [
+      {
+        "call": "len",
+        "args": [
+          "text"
+        ],
+        "line": 73
+      },
+      {
+        "call": "chunk.rfind",
+        "args": [
+          "'\\n'"
+        ],
+        "line": 78
+      },
+      {
+        "call": "chunks.append",
+        "args": [
+          "chunk"
+        ],
+        "line": 81
+      },
+      {
+        "call": "len",
+        "args": [
+          "chunk"
+        ],
+        "line": 82
+      }
+    ]
+  },
+  {
+    "file": "runtime\\bidi\\presence.py",
+    "function": "render_embed",
+    "depth": 2,
+    "line": 58,
+    "calls": [
+      {
+        "call": "discord.Embed",
+        "args": [],
+        "line": 68
+      },
+      {
+        "call": "embed.set_footer",
+        "args": [],
+        "line": 69
+      },
+      {
+        "call": "discord.Color.red",
+        "args": [],
+        "line": 60
+      },
+      {
+        "call": "discord.Color.blue",
+        "args": [],
+        "line": 62
+      },
+      {
+        "call": "discord.Color.purple",
+        "args": [],
+        "line": 64
+      },
+      {
+        "call": "discord.Color.teal",
+        "args": [],
+        "line": 66
+      }
+    ]
+  },
+  {
+    "file": "runtime\\bidi\\presence.py",
+    "function": "_process_and_reply",
+    "depth": 1,
+    "line": 130,
+    "calls": [
+      {
+        "call": "str",
+        "args": [
+          "message.author.id"
+        ],
+        "line": 131
+      },
+      {
+        "call": "self.interface.normalize",
+        "args": [],
+        "line": 134
+      },
+      {
+        "call": "message.channel.typing",
+        "args": [],
+        "line": 139
+      },
+      {
+        "call": "len",
+        "args": [
+          "response.display_text"
+        ],
+        "line": 146
+      },
+      {
+        "call": "self.renderer.split_text",
+        "args": [
+          "response.display_text"
+        ],
+        "line": 149
+      },
+      {
+        "call": "enumerate",
+        "args": [
+          "chunks"
+        ],
+        "line": 150
+      },
+      {
+        "call": "discord.Embed",
+        "args": [],
+        "line": 155
+      },
+      {
+        "call": "footer_embed.set_footer",
+        "args": [],
+        "line": 156
+      },
+      {
+        "call": "self.interface.handle",
+        "args": [],
+        "line": 140
+      },
+      {
+        "call": "message.reply",
+        "args": [],
+        "line": 147
+      },
+      {
+        "call": "message.channel.send",
+        "args": [],
+        "line": 157
+      },
+      {
+        "call": "discord.Color.teal",
+        "args": [],
+        "line": 155
+      },
+      {
+        "call": "self.renderer.render_embed",
+        "args": [
+          "response"
+        ],
+        "line": 147
+      },
+      {
+        "call": "message.reply",
+        "args": [
+          "chunk"
+        ],
+        "line": 152
+      },
+      {
+        "call": "message.channel.send",
+        "args": [
+          "chunk"
+        ],
+        "line": 154
+      }
+    ]
+  },
+  {
+    "file": "runtime\\bidi\\presence.py",
+    "function": "on_message",
+    "depth": 0,
+    "line": 160,
+    "calls": [
+      {
+        "call": "commands.Cog.listener",
+        "args": [],
+        "line": 159
+      },
+      {
+        "call": "self._should_respond",
+        "args": [
+          "message"
+        ],
+        "line": 161
+      },
+      {
+        "call": "self._process_and_reply",
+        "args": [
+          "message",
+          "message.content"
+        ],
+        "line": 164
+      },
+      {
+        "call": "self.process_commands",
+        "args": [
+          "message"
+        ],
+        "line": 165
+      },
+      {
+        "call": "self.process_commands",
+        "args": [
+          "message"
+        ],
+        "line": 162
+      }
+    ]
+  },
+  {
+    "file": "runtime\\bidi\\presence.py",
+    "function": "slash_ezzio",
+    "depth": 0,
+    "line": 173,
+    "calls": [
+      {
+        "call": "bot.tree.command",
+        "args": [],
+        "line": 171
+      },
+      {
+        "call": "app_commands.describe",
+        "args": [],
+        "line": 172
+      },
+      {
+        "call": "str",
+        "args": [
+          "interaction.user.id"
+        ],
+        "line": 175
+      },
+      {
+        "call": "bot.interface.normalize",
+        "args": [],
+        "line": 177
+      },
+      {
+        "call": "interaction.response.defer",
+        "args": [],
+        "line": 174
+      },
+      {
+        "call": "bot.interface.handle",
+        "args": [],
+        "line": 178
+      },
+      {
+        "call": "interaction.followup.send",
+        "args": [],
+        "line": 183
+      },
+      {
+        "call": "bot.renderer.render_embed",
+        "args": [
+          "response"
+        ],
+        "line": 183
+      }
+    ]
+  },
+  {
+    "file": "runtime\\bidi\\presence.py",
+    "function": "slash_status",
+    "depth": 0,
+    "line": 186,
+    "calls": [
+      {
+        "call": "bot.tree.command",
+        "args": [],
+        "line": 185
+      },
+      {
+        "call": "interaction.response.defer",
+        "args": [],
+        "line": 187
+      },
+      {
+        "call": "bot.interface._get_kernel",
+        "args": [],
+        "line": 189
+      },
+      {
+        "call": "kernel.get_organism_status",
+        "args": [],
+        "line": 190
+      },
+      {
+        "call": "status.get",
+        "args": [
+          "'hardware'",
+          "{}"
+        ],
+        "line": 191
+      },
+      {
+        "call": "status.get",
+        "args": [
+          "'decision_ledger'",
+          "{}"
+        ],
+        "line": 192
+      },
+      {
+        "call": "discord.Embed",
+        "args": [],
+        "line": 193
+      },
+      {
+        "call": "embed.add_field",
+        "args": [],
+        "line": 194
+      },
+      {
+        "call": "embed.add_field",
+        "args": [],
+        "line": 195
+      },
+      {
+        "call": "embed.add_field",
+        "args": [],
+        "line": 196
+      },
+      {
+        "call": "embed.add_field",
+        "args": [],
+        "line": 197
+      },
+      {
+        "call": "embed.add_field",
+        "args": [],
+        "line": 198
+      },
+      {
+        "call": "embed.add_field",
+        "args": [],
+        "line": 199
+      },
+      {
+        "call": "embed.set_footer",
+        "args": [],
+        "line": 200
+      },
+      {
+        "call": "interaction.followup.send",
+        "args": [],
+        "line": 201
+      },
+      {
+        "call": "discord.Color.green",
+        "args": [],
+        "line": 193
+      },
+      {
+        "call": "status.get",
+        "args": [
+          "'global_state'",
+          "'?'"
+        ],
+        "line": 194
+      },
+      {
+        "call": "ledger.get",
+        "args": [
+          "'status'",
+          "'?'"
+        ],
+        "line": 195
+      },
+      {
+        "call": "str",
+        "args": [
+          "ledger.get('decisions_recorded', '?')"
+        ],
+        "line": 196
+      },
+      {
+        "call": "str",
+        "args": [
+          "hw.get('gaming_detected', '?')"
+        ],
+        "line": 199
+      },
+      {
+        "call": "interaction.followup.send",
+        "args": [],
+        "line": 203
+      },
+      {
+        "call": "ledger.get",
+        "args": [
+          "'decisions_recorded'",
+          "'?'"
+        ],
+        "line": 196
+      },
+      {
+        "call": "hw.get",
+        "args": [
+          "'gaming_detected'",
+          "'?'"
+        ],
+        "line": 199
+      },
+      {
+        "call": "hw.get",
+        "args": [
+          "'cpu_system_usage_percent'",
+          "'?'"
+        ],
+        "line": 197
+      },
+      {
+        "call": "hw.get",
+        "args": [
+          "'ram_usage_percent'",
+          "'?'"
+        ],
+        "line": 198
+      },
+      {
+        "call": "discord.Embed",
+        "args": [],
+        "line": 204
+      },
+      {
+        "call": "discord.Color.red",
+        "args": [],
+        "line": 204
+      }
+    ]
+  }
+]

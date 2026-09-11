@@ -1,0 +1,118 @@
+{
+  "fabric": {
+    "methods": {
+      "build_fabric": {
+        "args": [
+          "project_root"
+        ],
+        "returns": "AutonomousModelFabric"
+      },
+      "__init__": {
+        "args": [
+          "self",
+          "project_root"
+        ],
+        "returns": "None"
+      },
+      "key_for_provider": {
+        "args": [
+          "self",
+          "provider"
+        ],
+        "returns": "str | None"
+      },
+      "discover": {
+        "args": [
+          "self"
+        ],
+        "returns": "dict[str, list[dict[str, Any]]]"
+      },
+      "discover_all": {
+        "args": [
+          "self"
+        ],
+        "returns": "dict[str, list[dict[str, Any]]]"
+      },
+      "activate_qualified": {
+        "args": [
+          "self",
+          "qualification_results",
+          "exclusive_per_tier"
+        ],
+        "returns": "list[dict[str, Any]]"
+      },
+      "qualify_candidates": {
+        "args": [
+          "self"
+        ],
+        "returns": "list[dict[str, Any]]"
+      },
+      "refresh": {
+        "args": [
+          "self"
+        ],
+        "returns": "dict[str, Any]"
+      },
+      "run_forever": {
+        "args": [
+          "self",
+          "interval_seconds"
+        ],
+        "returns": "None"
+      },
+      "quarantine_runtime_violation": {
+        "args": [
+          "self"
+        ],
+        "returns": "bool"
+      },
+      "rehabilitate_model": {
+        "args": [
+          "self"
+        ],
+        "returns": "bool"
+      },
+      "transition": {
+        "args": [
+          "self"
+        ],
+        "returns": "bool"
+      },
+      "_sync_router_with_registry": {
+        "args": [
+          "self"
+        ],
+        "returns": "None"
+      }
+    }
+  },
+  "qualification": {
+    "methods": {
+      "extract_code_block": {
+        "args": [
+          "text"
+        ],
+        "returns": "str"
+      },
+      "safe_str": {
+        "args": [
+          "v"
+        ],
+        "returns": "str"
+      },
+      "run_model": {
+        "args": [
+          "client",
+          "blind_name",
+          "real_name",
+          "size_gb"
+        ],
+        "returns": "dict"
+      },
+      "main": {
+        "args": [],
+        "returns": "None"
+      }
+    }
+  }
+}

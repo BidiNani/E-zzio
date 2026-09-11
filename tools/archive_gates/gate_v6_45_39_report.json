@@ -1,0 +1,285 @@
+{
+  "normative_contracts": [
+    {
+      "path": "core\\constitution\\ccr_security_governor.py",
+      "type": "constitution"
+    },
+    {
+      "path": "core\\constitution\\cold_storage_migrator.py",
+      "type": "constitution"
+    },
+    {
+      "path": "core\\constitution\\continuous_organism_certifier.py",
+      "type": "constitution"
+    },
+    {
+      "path": "core\\constitution\\extended_organism_certifier.py",
+      "type": "constitution"
+    },
+    {
+      "path": "core\\constitution\\ezzio_backup_guardian.py",
+      "type": "constitution"
+    },
+    {
+      "path": "core\\constitution\\ezzio_disaster_recovery_test.py",
+      "type": "constitution"
+    },
+    {
+      "path": "core\\constitution\\ezzio_file_registry.json",
+      "type": "constitution"
+    },
+    {
+      "path": "core\\constitution\\ezzio_genome.json",
+      "type": "constitution"
+    },
+    {
+      "path": "core\\constitution\\ezzio_global_framework.py",
+      "type": "constitution"
+    },
+    {
+      "path": "core\\constitution\\hardware_orchestrator.py",
+      "type": "constitution"
+    },
+    {
+      "path": "core\\constitution\\hardware_resource_governor.py",
+      "type": "constitution"
+    },
+    {
+      "path": "core\\constitution\\live_organism_certifier.py",
+      "type": "constitution"
+    },
+    {
+      "path": "core\\constitution\\organism_identity.py",
+      "type": "constitution"
+    },
+    {
+      "path": "core\\constitution\\snapshot_engine.py",
+      "type": "constitution"
+    },
+    {
+      "path": "core\\constitution\\snapshot_restore_engine.py",
+      "type": "constitution"
+    },
+    {
+      "path": "core\\constitution\\validate_mapping.py",
+      "type": "constitution"
+    },
+    {
+      "path": "core\\identity\\boot_attestation.py",
+      "type": "identity_spec"
+    },
+    {
+      "path": "core\\identity\\canonical_identity.py",
+      "type": "identity_spec"
+    },
+    {
+      "path": "core\\identity\\global_fingerprint.py",
+      "type": "identity_spec"
+    },
+    {
+      "path": "core\\identity\\identity_boot_check.py",
+      "type": "identity_spec"
+    },
+    {
+      "path": "core\\identity\\identity_chain.py",
+      "type": "identity_spec"
+    },
+    {
+      "path": "core\\identity\\identity_chain_validator.py",
+      "type": "identity_spec"
+    },
+    {
+      "path": "core\\identity\\identity_context.py",
+      "type": "identity_spec"
+    },
+    {
+      "path": "core\\identity\\identity_events.py",
+      "type": "identity_spec"
+    },
+    {
+      "path": "core\\identity\\identity_guardian.py",
+      "type": "identity_spec"
+    },
+    {
+      "path": "core\\identity\\identity_persistence.py",
+      "type": "identity_spec"
+    },
+    {
+      "path": "core\\identity\\identity_recovery.py",
+      "type": "identity_spec"
+    },
+    {
+      "path": "core\\identity\\identity_sealer.py",
+      "type": "identity_spec"
+    },
+    {
+      "path": "core\\identity\\identity_snapshot.py",
+      "type": "identity_spec"
+    },
+    {
+      "path": "core\\identity\\identity_validator.py",
+      "type": "identity_spec"
+    },
+    {
+      "path": "core\\identity\\intentions_reader.py",
+      "type": "identity_spec"
+    },
+    {
+      "path": "core\\identity\\route_audit.py",
+      "type": "identity_spec"
+    },
+    {
+      "path": "config\\.env",
+      "type": "config"
+    },
+    {
+      "path": "config\\.env.example",
+      "type": "config"
+    },
+    {
+      "path": "config\\constitution.json",
+      "type": "config"
+    },
+    {
+      "path": "config\\indexer_config.json",
+      "type": "config"
+    },
+    {
+      "path": "config\\intentions.md",
+      "type": "config"
+    },
+    {
+      "path": "config\\litellm_config.yaml",
+      "type": "config"
+    },
+    {
+      "path": "config\\llm_providers.json",
+      "type": "config"
+    },
+    {
+      "path": "config\\lore.md",
+      "type": "config"
+    },
+    {
+      "path": "config\\memory_graph.json",
+      "type": "config"
+    },
+    {
+      "path": "config\\persona.json",
+      "type": "config"
+    },
+    {
+      "path": "config\\recovery_policy.json",
+      "type": "config"
+    },
+    {
+      "path": "config\\skills_manifest.json",
+      "type": "config"
+    }
+  ],
+  "fabric_candidates": [
+    {
+      "path": "tools\\audit_gate_v6.45.39.py",
+      "has_fabric": true,
+      "has_registry": true,
+      "has_router": true
+    },
+    {
+      "path": "tools\\audit_gate_v6_45_28.py",
+      "has_fabric": true,
+      "has_registry": false,
+      "has_router": false
+    },
+    {
+      "path": "tools\\audit_gate_v6_45_29.py",
+      "has_fabric": true,
+      "has_registry": false,
+      "has_router": false
+    },
+    {
+      "path": "tools\\audit_gate_v6_45_30.py",
+      "has_fabric": true,
+      "has_registry": false,
+      "has_router": false
+    },
+    {
+      "path": "tools\\audit_gate_v6_45_31.py",
+      "has_fabric": true,
+      "has_registry": false,
+      "has_router": false
+    },
+    {
+      "path": "tools\\audit_gate_v6_45_39.py",
+      "has_fabric": true,
+      "has_registry": true,
+      "has_router": true
+    },
+    {
+      "path": "core\\intents\\fabric_connector.py",
+      "has_fabric": true,
+      "has_registry": false,
+      "has_router": false
+    },
+    {
+      "path": "core\\models\\fabric.py",
+      "has_fabric": true,
+      "has_registry": true,
+      "has_router": false
+    },
+    {
+      "path": "core\\models\\lifecycle.py",
+      "has_fabric": false,
+      "has_registry": true,
+      "has_router": false
+    },
+    {
+      "path": "core\\models\\registry.py",
+      "has_fabric": false,
+      "has_registry": true,
+      "has_router": false
+    },
+    {
+      "path": "core\\router\\intent_router.py",
+      "has_fabric": false,
+      "has_registry": false,
+      "has_router": true
+    },
+    {
+      "path": "runtime\\contracts\\authority.py",
+      "has_fabric": false,
+      "has_registry": true,
+      "has_router": false
+    },
+    {
+      "path": "runtime\\contracts\\enforcer.py",
+      "has_fabric": false,
+      "has_registry": true,
+      "has_router": false
+    },
+    {
+      "path": "runtime\\core\\ezzio_core.py",
+      "has_fabric": false,
+      "has_registry": false,
+      "has_router": true
+    },
+    {
+      "path": "runtime\\hardware\\trust\\models\\registry.py",
+      "has_fabric": false,
+      "has_registry": true,
+      "has_router": false
+    },
+    {
+      "path": "runtime\\hardware\\trust\\models\\resolver.py",
+      "has_fabric": false,
+      "has_registry": true,
+      "has_router": false
+    },
+    {
+      "path": "tools\\diagnostics\\test_all_stack.py",
+      "has_fabric": false,
+      "has_registry": false,
+      "has_router": true
+    }
+  ],
+  "runtime_execution_paths": []
+}

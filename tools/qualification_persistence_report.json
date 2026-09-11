@@ -1,0 +1,15 @@
+{
+  "qualification_script": {
+    "found": true,
+    "path": "EZZIO_Model_Qualification_Gate_v4.2.py",
+    "targets": {
+      "gemini": false,
+      "granite": false,
+      "ornith": false
+    },
+    "writes_to_registry": false
+  },
+  "current_registry_models": [],
+  "writes_performed": 0,
+  "runtime_mutations": 0
+}

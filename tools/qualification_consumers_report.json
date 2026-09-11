@@ -1,0 +1,33 @@
+{
+  "consumers": [
+    {
+      "file": "EZZIO_Model_Qualification_Gate_v4.2.py",
+      "hits": [
+        "run_model"
+      ]
+    },
+    {
+      "file": "core\\models\\fabric.py",
+      "hits": [
+        "ingest_discovery"
+      ]
+    },
+    {
+      "file": "core\\models\\lifecycle.py",
+      "hits": [
+        "ingest_discovery",
+        "modelrecord",
+        "upsert"
+      ]
+    },
+    {
+      "file": "core\\models\\registry.py",
+      "hits": [
+        "modelrecord",
+        "upsert"
+      ]
+    }
+  ],
+  "writes_performed": 0,
+  "runtime_mutations": 0
+}

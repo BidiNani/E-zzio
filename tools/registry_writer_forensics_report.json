@@ -1,0 +1,117 @@
+{
+  "writers": [
+    {
+      "file": "core\\cloud_connectors.py",
+      "has_model_record": false,
+      "has_upsert": false,
+      "has_save": true,
+      "mentions_gemini": false,
+      "mentions_granite": false,
+      "mentions_ornith": false
+    },
+    {
+      "file": "core\\hd_forge.py",
+      "has_model_record": false,
+      "has_upsert": false,
+      "has_save": true,
+      "mentions_gemini": false,
+      "mentions_granite": false,
+      "mentions_ornith": false
+    },
+    {
+      "file": "core\\cognition\\cognitive_gateway.py",
+      "has_model_record": false,
+      "has_upsert": false,
+      "has_save": true,
+      "mentions_gemini": false,
+      "mentions_granite": false,
+      "mentions_ornith": false
+    },
+    {
+      "file": "core\\memory\\legacy_manager.py",
+      "has_model_record": false,
+      "has_upsert": false,
+      "has_save": true,
+      "mentions_gemini": false,
+      "mentions_granite": false,
+      "mentions_ornith": false
+    },
+    {
+      "file": "core\\models\\fabric.py",
+      "has_model_record": false,
+      "has_upsert": false,
+      "has_save": true,
+      "mentions_gemini": true,
+      "mentions_granite": false,
+      "mentions_ornith": false
+    },
+    {
+      "file": "core\\models\\lifecycle.py",
+      "has_model_record": true,
+      "has_upsert": true,
+      "has_save": true,
+      "mentions_gemini": false,
+      "mentions_granite": false,
+      "mentions_ornith": false
+    },
+    {
+      "file": "core\\models\\registry.py",
+      "has_model_record": true,
+      "has_upsert": true,
+      "has_save": true,
+      "mentions_gemini": false,
+      "mentions_granite": false,
+      "mentions_ornith": false
+    },
+    {
+      "file": "core\\tasks\\store.py",
+      "has_model_record": false,
+      "has_upsert": false,
+      "has_save": true,
+      "mentions_gemini": false,
+      "mentions_granite": false,
+      "mentions_ornith": false
+    },
+    {
+      "file": "runtime\\agent\\loop.py",
+      "has_model_record": false,
+      "has_upsert": false,
+      "has_save": true,
+      "mentions_gemini": false,
+      "mentions_granite": false,
+      "mentions_ornith": false
+    },
+    {
+      "file": "runtime\\memory\\session.py",
+      "has_model_record": false,
+      "has_upsert": false,
+      "has_save": true,
+      "mentions_gemini": false,
+      "mentions_granite": false,
+      "mentions_ornith": false
+    },
+    {
+      "file": "runtime\\state\\state_manager.py",
+      "has_model_record": false,
+      "has_upsert": false,
+      "has_save": true,
+      "mentions_gemini": false,
+      "mentions_granite": false,
+      "mentions_ornith": false
+    },
+    {
+      "file": "runtime\\hardware\\cartography\\registry\\registry.py",
+      "has_model_record": false,
+      "has_upsert": false,
+      "has_save": true,
+      "mentions_gemini": false,
+      "mentions_granite": false,
+      "mentions_ornith": false
+    }
+  ],
+  "canonical_writer": "core\\models\\registry.py",
+  "safety": {
+    "writes_performed": 0,
+    "runtime_mutations": 0
+  }
+}

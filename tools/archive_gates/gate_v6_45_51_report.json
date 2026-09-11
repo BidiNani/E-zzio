@@ -1,0 +1,37 @@
+{
+  "mro": [
+    "EzzioRouter",
+    "Router",
+    "object"
+  ],
+  "parent_key_methods": {
+    "Router": [
+      "acompletion",
+      "set_model_list"
+    ],
+    "object": []
+  },
+  "router_model_list": [
+    {
+      "model_name": "FAST",
+      "litellm_params": {
+        "custom_llm_provider": "groq",
+        "allow_client_keepalive_override": false,
+        "use_in_pass_through": false,
+        "use_litellm_proxy": false,
+        "use_xai_oauth": false,
+        "merge_reasoning_content_in_choices": false,
+        "model": "groq/secure-canonical-model"
+      },
+      "model_info": {
+        "id": "groq_secure-canonical-model",
+        "db_model": false,
+        "base_model": "secure-canonical-model",
+        "lifecycle": "ACTIVE"
+      }
+    }
+  ],
+  "world_a": "Discord -> EzzioInterface -> CognitiveTaskClassifier -> OrganismKernel -> OllamaProvider -> Ollama",
+  "world_b": "IntentFabricConnector -> AutonomousModelFabric -> ModelRegistry -> EzzioRouter -> LiteLLM",
+  "common_terminal": false
+}

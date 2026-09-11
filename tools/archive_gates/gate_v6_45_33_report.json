@@ -1,0 +1,274 @@
+{
+  "methods": [
+    {
+      "file": "ezzio_kernel.py",
+      "class": "OrganismKernel",
+      "method": "get_organism_status",
+      "line": 51,
+      "code": "def get_organism_status(self) -> Dict[str, Any]:\n    \"\"\"Ex\u00e9cute un diagnostic complet de tous les sous-syst\u00e8mes de l'org"
+    },
+    {
+      "file": "runtime\\bidi\\ezzio_interface.py",
+      "class": "EzzioInterface",
+      "method": "_get_kernel",
+      "line": 112,
+      "code": "def _get_kernel(self):\n    if self._kernel is None:\n        from ezzio_kernel import OrganismKernel\n        self._kernel"
+    },
+    {
+      "file": "runtime\\bidi\\ezzio_interface.py",
+      "class": "EzzioInterface",
+      "method": "handle",
+      "line": 146,
+      "code": "async def handle(self, author_id: str, content: str, session_id: str, source: str='discord') -> EzzioResponse:\n    \"\"\"\n "
+    },
+    {
+      "file": "runtime\\cli\\commands.py",
+      "class": "CommandHandler",
+      "method": "handle",
+      "line": 11,
+      "code": "def handle(self, raw_input: str) -> str:\n    parts = raw_input.strip().split(maxsplit=1)\n    if not parts:\n        retur"
+    }
+  ],
+  "calls": [
+    {
+      "file": "core\\human_chat.py",
+      "function": "append_session",
+      "call": "handle.write",
+      "line": 72
+    },
+    {
+      "file": "core\\human_loop.py",
+      "function": "append_journal",
+      "call": "handle.write",
+      "line": 101
+    },
+    {
+      "file": "core\\omni_brain.py",
+      "function": "local_brain_reply",
+      "call": "handle_command",
+      "line": 452
+    },
+    {
+      "file": "core\\pc_commander.py",
+      "function": "append_journal",
+      "call": "handle.write",
+      "line": 75
+    },
+    {
+      "file": "core\\safe_actions.py",
+      "function": "append_jsonl",
+      "call": "handle.write",
+      "line": 115
+    },
+    {
+      "file": "routers\\ezzio_unified.py",
+      "function": "message_json",
+      "call": "handle_message",
+      "line": 27
+    },
+    {
+      "file": "routers\\ezzio_unified.py",
+      "function": "message",
+      "call": "handle_message",
+      "line": 37
+    },
+    {
+      "file": "tools\\audit_gate_v6_45_31.py",
+      "function": "_inspect_function",
+      "call": "self.detected_handlers.append",
+      "line": 140
+    },
+    {
+      "file": "tools\\audit_gate_v6_45_31.py",
+      "function": "_inspect_function",
+      "call": "handler_info['target_interactions'].append",
+      "line": 121
+    },
+    {
+      "file": "tools\\audit_gate_v6_45_31.py",
+      "function": "_inspect_function",
+      "call": "handler_info['downstream_calls'].append",
+      "line": 132
+    },
+    {
+      "file": "tools\\audit_gate_v6_45_31.py",
+      "function": "main",
+      "call": "all_handlers.extend",
+      "line": 166
+    },
+    {
+      "file": "tools\\audit_gate_v6_45_33.py",
+      "function": "visit_ClassDef",
+      "call": "self.handle_methods.append",
+      "line": 22
+    },
+    {
+      "file": "tools\\index_engine_v5_5.py",
+      "function": "setup_logger",
+      "call": "handler.setFormatter",
+      "line": 96
+    },
+    {
+      "file": "core\\cognition\\decision_ledger.py",
+      "function": "__enter__",
+      "call": "self._file_handle.fileno",
+      "line": 116
+    },
+    {
+      "file": "core\\cognition\\decision_ledger.py",
+      "function": "__enter__",
+      "call": "self._file_handle.fileno",
+      "line": 109
+    },
+    {
+      "file": "core\\cognition\\decision_ledger.py",
+      "function": "__exit__",
+      "call": "self._file_handle.close",
+      "line": 136
+    },
+    {
+      "file": "core\\cognition\\decision_ledger.py",
+      "function": "__exit__",
+      "call": "self._file_handle.fileno",
+      "line": 127
+    },
+    {
+      "file": "core\\cognition\\decision_ledger.py",
+      "function": "__exit__",
+      "call": "self._file_handle.fileno",
+      "line": 133
+    },
+    {
+      "file": "core\\cognition\\self_healing_engine.py",
+      "function": "test_self_healing",
+      "call": "healer.handle_incident",
+      "line": 82
+    },
+    {
+      "file": "core\\models\\registry.py",
+      "function": "save",
+      "call": "handle.flush",
+      "line": 136
+    },
+    {
+      "file": "core\\models\\registry.py",
+      "function": "save",
+      "call": "handle.fileno",
+      "line": 137
+    },
+    {
+      "file": "core\\models\\telemetry.py",
+      "function": "emit",
+      "call": "handle.write",
+      "line": 70
+    },
+    {
+      "file": "core\\runtime\\log_rotator.py",
+      "function": "setup_production_logging",
+      "call": "handler.setFormatter",
+      "line": 41
+    },
+    {
+      "file": "core\\runtime\\log_rotator.py",
+      "function": "setup_production_logging",
+      "call": "uv_logger.handlers.clear",
+      "line": 50
+    },
+    {
+      "file": "runtime\\action\\registry.py",
+      "function": "bootstrap",
+      "call": "handler_resolver",
+      "line": 61
+    },
+    {
+      "file": "runtime\\action\\registry.py",
+      "function": "_default_resolver",
+      "call": "handler_ref.split",
+      "line": 74
+    },
+    {
+      "file": "runtime\\action\\registry.py",
+      "function": "_default_resolver",
+      "call": "handler_ref.split",
+      "line": 76
+    },
+    {
+      "file": "runtime\\action\\registry.py",
+      "function": "_invoke_handler",
+      "call": "handler",
+      "line": 91
+    },
+    {
+      "file": "runtime\\action\\registry.py",
+      "function": "_invoke_handler",
+      "call": "handler",
+      "line": 93
+    },
+    {
+      "file": "runtime\\action\\registry.py",
+      "function": "execute",
+      "call": "self._handlers.get",
+      "line": 179
+    },
+    {
+      "file": "runtime\\bidi\\ezzio_interface.py",
+      "function": "handle",
+      "call": "self._get_kernel",
+      "line": 158
+    },
+    {
+      "file": "runtime\\bidi\\presence.py",
+      "function": "_process_and_reply",
+      "call": "self.interface.handle",
+      "line": 140
+    },
+    {
+      "file": "runtime\\bidi\\presence.py",
+      "function": "register_slash_commands",
+      "call": "bot.interface.handle",
+      "line": 178
+    },
+    {
+      "file": "runtime\\bidi\\presence.py",
+      "function": "register_slash_commands",
+      "call": "bot.interface._get_kernel",
+      "line": 189
+    },
+    {
+      "file": "runtime\\bidi\\presence.py",
+      "function": "slash_ezzio",
+      "call": "bot.interface.handle",
+      "line": 178
+    },
+    {
+      "file": "runtime\\bidi\\presence.py",
+      "function": "slash_status",
+      "call": "bot.interface._get_kernel",
+      "line": 189
+    },
+    {
+      "file": "runtime\\cli\\shell.py",
+      "function": "run_shell",
+      "call": "handler.handle",
+      "line": 29
+    },
+    {
+      "file": "runtime\\recovery\\executor\\quarantine.py",
+      "function": "execute",
+      "call": "self.quarantined_handlers.add",
+      "line": 11
+    },
+    {
+      "file": "runtime\\recovery\\executor\\quarantine.py",
+      "function": "restore",
+      "call": "self.quarantined_handlers.remove",
+      "line": 24
+    },
+    {
+      "file": "tools\\diagnostics\\ezzio_certify.py",
+      "function": "run_certification_suite",
+      "call": "self.healer.handle_incident",
+      "line": 52
+    }
+  ]
+}

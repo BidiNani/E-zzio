@@ -1,0 +1,8 @@
+web_server.py
+core/cognition/cognitive_gateway.py
+core/cognition/model_router.py
+core/models/gemini_pool.py
+core/providers/gemini_provider.py
+core/memory/unified_gateway.py
+core/security/audit_ledger.py
+core/agent/coding_agent_loop.py

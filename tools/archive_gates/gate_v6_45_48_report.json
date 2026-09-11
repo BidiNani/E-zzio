@@ -1,0 +1,26 @@
+{
+  "registry_path": "G:\\AI\\E-zzio\\data\\models\\registry.json",
+  "total_records": 1,
+  "active_records": 1,
+  "router_type": "EzzioRouter",
+  "router_models": [
+    {
+      "model_name": "FAST",
+      "litellm_params": {
+        "custom_llm_provider": "groq",
+        "allow_client_keepalive_override": false,
+        "use_in_pass_through": false,
+        "use_litellm_proxy": false,
+        "use_xai_oauth": false,
+        "merge_reasoning_content_in_choices": false,
+        "model": "groq/secure-canonical-model"
+      },
+      "model_info": {
+        "id": "groq_secure-canonical-model",
+        "db_model": false,
+        "base_model": "secure-canonical-model",
+        "lifecycle": "ACTIVE"
+      }
+    }
+  ]
+}

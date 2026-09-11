@@ -1,0 +1,397 @@
+{
+  "core/models/registry.py": {
+    "classes": [
+      {
+        "name": "ModelTier",
+        "line": 16,
+        "docstring": "",
+        "methods": []
+      },
+      {
+        "name": "ModelLifecycle",
+        "line": 24,
+        "docstring": "",
+        "methods": []
+      },
+      {
+        "name": "ModelRecord",
+        "line": 36,
+        "docstring": "",
+        "methods": []
+      },
+      {
+        "name": "ModelRegistry",
+        "line": 74,
+        "docstring": "Persistent registry with atomic JSON writes.",
+        "methods": [
+          {
+            "name": "__init__",
+            "line": 77,
+            "is_async": false,
+            "args": [
+              "self",
+              "path: str | Path"
+            ],
+            "returns": "None",
+            "docstring": ""
+          },
+          {
+            "name": "key",
+            "line": 87,
+            "is_async": false,
+            "args": [
+              "provider: str",
+              "model_id: str"
+            ],
+            "returns": "str",
+            "docstring": ""
+          },
+          {
+            "name": "load",
+            "line": 90,
+            "is_async": false,
+            "args": [
+              "self"
+            ],
+            "returns": "None",
+            "docstring": ""
+          },
+          {
+            "name": "save",
+            "line": 107,
+            "is_async": false,
+            "args": [
+              "self"
+            ],
+            "returns": "None",
+            "docstring": ""
+          },
+          {
+            "name": "upsert",
+            "line": 145,
+            "is_async": false,
+            "args": [
+              "self",
+              "record: ModelRecord"
+            ],
+            "returns": "None",
+            "docstring": ""
+          },
+          {
+            "name": "get",
+            "line": 151,
+            "is_async": false,
+            "args": [
+              "self",
+              "provider: str",
+              "model_id: str"
+            ],
+            "returns": "ModelRecord | None",
+            "docstring": ""
+          },
+          {
+            "name": "all",
+            "line": 162,
+            "is_async": false,
+            "args": [
+              "self"
+            ],
+            "returns": "list[ModelRecord]",
+            "docstring": ""
+          },
+          {
+            "name": "active",
+            "line": 166,
+            "is_async": false,
+            "args": [
+              "self"
+            ],
+            "returns": "list[ModelRecord]",
+            "docstring": ""
+          }
+        ]
+      }
+    ],
+    "functions": []
+  },
+  "core/models/fabric.py": {
+    "classes": [
+      {
+        "name": "AutonomousModelFabric",
+        "line": 25,
+        "docstring": "",
+        "methods": [
+          {
+            "name": "__init__",
+            "line": 27,
+            "is_async": false,
+            "args": [
+              "self",
+              "project_root: str | Path"
+            ],
+            "returns": "None",
+            "docstring": ""
+          },
+          {
+            "name": "key_for_provider",
+            "line": 58,
+            "is_async": false,
+            "args": [
+              "self",
+              "provider: str"
+            ],
+            "returns": "str | None",
+            "docstring": ""
+          },
+          {
+            "name": "discover",
+            "line": 62,
+            "is_async": true,
+            "args": [
+              "self"
+            ],
+            "returns": "dict[str, list[dict[str, Any]]]",
+            "docstring": ""
+          },
+          {
+            "name": "discover_all",
+            "line": 146,
+            "is_async": true,
+            "args": [
+              "self"
+            ],
+            "returns": "dict[str, list[dict[str, Any]]]",
+            "docstring": ""
+          },
+          {
+            "name": "activate_qualified",
+            "line": 149,
+            "is_async": false,
+            "args": [
+              "self",
+              "qualification_results: list[dict[str, Any]]",
+              "exclusive_per_tier: bool"
+            ],
+            "returns": "list[dict[str, Any]]",
+            "docstring": ""
+          },
+          {
+            "name": "qualify_candidates",
+            "line": 300,
+            "is_async": true,
+            "args": [
+              "self"
+            ],
+            "returns": "list[dict[str, Any]]",
+            "docstring": ""
+          },
+          {
+            "name": "refresh",
+            "line": 366,
+            "is_async": true,
+            "args": [
+              "self"
+            ],
+            "returns": "dict[str, Any]",
+            "docstring": ""
+          },
+          {
+            "name": "run_forever",
+            "line": 393,
+            "is_async": true,
+            "args": [
+              "self",
+              "interval_seconds: int"
+            ],
+            "returns": "None",
+            "docstring": ""
+          },
+          {
+            "name": "quarantine_runtime_violation",
+            "line": 412,
+            "is_async": false,
+            "args": [
+              "self"
+            ],
+            "returns": "bool",
+            "docstring": ""
+          },
+          {
+            "name": "rehabilitate_model",
+            "line": 430,
+            "is_async": false,
+            "args": [
+              "self"
+            ],
+            "returns": "bool",
+            "docstring": ""
+          },
+          {
+            "name": "transition",
+            "line": 453,
+            "is_async": false,
+            "args": [
+              "self"
+            ],
+            "returns": "bool",
+            "docstring": ""
+          },
+          {
+            "name": "quarantine_runtime_violation",
+            "line": 520,
+            "is_async": false,
+            "args": [
+              "self"
+            ],
+            "returns": "bool",
+            "docstring": ""
+          },
+          {
+            "name": "rehabilitate_model",
+            "line": 538,
+            "is_async": false,
+            "args": [
+              "self"
+            ],
+            "returns": "bool",
+            "docstring": ""
+          },
+          {
+            "name": "_sync_router_with_registry",
+            "line": 563,
+            "is_async": false,
+            "args": [
+              "self"
+            ],
+            "returns": "None",
+            "docstring": "FAIL-CLOSED Synchronization (Canonique):\nExtrait strictement les mod\u00e8les du ModelRegistry dont l'\u00e9tat de cycle de vie est ACTIVE.\nExclut imm\u00e9diatement tout mod\u00e8le DISCOVERED, CANDIDATE, QUALIFIED, QUARANTINED, SUPERSEDED ou RETIRED."
+          }
+        ]
+      }
+    ],
+    "functions": [
+      {
+        "name": "build_fabric",
+        "line": 610,
+        "is_async": false,
+        "args": [
+          "project_root: str | Path"
+        ],
+        "returns": "AutonomousModelFabric",
+        "docstring": "Factory canonique pour instancier et synchroniser AutonomousModelFabric."
+      }
+    ]
+  },
+  "core/models/lifecycle.py": {
+    "classes": [
+      {
+        "name": "ModelLifecycleManager",
+        "line": 17,
+        "docstring": "Converts provider discoveries into registry state.",
+        "methods": [
+          {
+            "name": "__init__",
+            "line": 20,
+            "is_async": false,
+            "args": [
+              "self",
+              "registry: ModelRegistry"
+            ],
+            "returns": "None",
+            "docstring": ""
+          },
+          {
+            "name": "fingerprint",
+            "line": 24,
+            "is_async": false,
+            "args": [
+              "metadata: dict[str, Any]"
+            ],
+            "returns": "str",
+            "docstring": ""
+          },
+          {
+            "name": "ingest_discovery",
+            "line": 36,
+            "is_async": false,
+            "args": [
+              "self",
+              "provider: str",
+              "discovered: list[dict[str, Any]]"
+            ],
+            "returns": "list[ModelRecord]",
+            "docstring": ""
+          }
+        ]
+      }
+    ],
+    "functions": []
+  },
+  "core/intents/fabric_connector.py": {
+    "classes": [
+      {
+        "name": "IntentCategory",
+        "line": 19,
+        "docstring": "Cat\u00e9gories fonctionnelles d'intentions reconnues par E-zzio.",
+        "methods": []
+      },
+      {
+        "name": "IntentExecutionResult",
+        "line": 36,
+        "docstring": "R\u00e9sultat enrichi de l'ex\u00e9cution d'une intention via le Fabric.",
+        "methods": []
+      },
+      {
+        "name": "IntentFabricConnector",
+        "line": 50,
+        "docstring": "Connecteur principal orchestrant l'ex\u00e9cution des intentions cognitives.",
+        "methods": [
+          {
+            "name": "__init__",
+            "line": 53,
+            "is_async": false,
+            "args": [
+              "self",
+              "fabric: AutonomousModelFabric | None",
+              "project_root: str"
+            ],
+            "returns": "None",
+            "docstring": ""
+          },
+          {
+            "name": "resolve_tier",
+            "line": 56,
+            "is_async": false,
+            "args": [
+              "self",
+              "intent: IntentCategory | str"
+            ],
+            "returns": "str",
+            "docstring": "D\u00e9termine le palier requis pour une intention donn\u00e9e."
+          },
+          {
+            "name": "_extract_reasoning",
+            "line": 66,
+            "is_async": false,
+            "args": [
+              "raw_content: str"
+            ],
+            "returns": "tuple[str, str | None]",
+            "docstring": "Extrait et s\u00e9pare les balises <think>...</think> de la r\u00e9ponse finale."
+          },
+          {
+            "name": "execute_intent",
+            "line": 78,
+            "is_async": true,
+            "args": [
+              "self"
+            ],
+            "returns": "IntentExecutionResult",
+            "docstring": "Achemine une intention vers le mod\u00e8le qualifi\u00e9 actif appropri\u00e9."
+          }
+        ]
+      }
+    ],
+    "functions": []
+  }
+}

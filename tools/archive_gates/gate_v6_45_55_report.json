@@ -1,0 +1,17 @@
+{
+  "granite_references": [
+    "EZZIO_CONTEXT.md",
+    "core\\agent\\agent_provider.py",
+    "runtime\\cache\\pycache\\AI\\E-zzio\\core\\agent\\agent_provider.cpython-312.pyc"
+  ],
+  "ornith_references": [
+    "EZZIO_CONTEXT.md",
+    "core\\agent\\agent_provider.py",
+    "runtime\\cache\\pycache\\AI\\E-zzio\\core\\agent\\agent_provider.cpython-312.pyc"
+  ],
+  "modelfile_references": [
+    "EZZIO_CONTEXT.md",
+    "scripts\\download_dreamshaper8_cpu.ps1",
+    "runtime\\cache\\pycache\\Python312\\Lib\\site-packages\\ollama\\_types.cpython-312.pyc"
+  ]
+}

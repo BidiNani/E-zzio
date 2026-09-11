@@ -1,0 +1,17 @@
+{
+  "qualification_analysis": {
+    "exists": true,
+    "path": "EZZIO_Model_Qualification_Gate_v4.2.py",
+    "classes": [],
+    "functions": [
+      "extract_code_block",
+      "safe_str",
+      "run_model",
+      "main"
+    ],
+    "mentions_model_record": false,
+    "mentions_tiers": false
+  },
+  "writes_performed": 0,
+  "runtime_mutations": 0
+}

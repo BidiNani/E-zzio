@@ -1,0 +1,173 @@
+# ================================
+# E-ZZIO GENERATED DATA
+# ================================
+
+*.db
+*.db-shm
+*.db-wal
+
+runtime/memory/sqlite/*.db
+
+runtime/memory/logs/
+runtime/memory/journal/
+runtime/memory/backups/
+runtime/memory/snapshots/
+
+runtime/audit/*.jsonl
+
+
+# ================================
+# BACKUPS
+# ================================
+
+*.bak
+*.backup
+
+
+# ================================
+# PYTHON
+# ================================
+
+__pycache__/
+*.pyc
+*.pyo
+
+.pytest_cache/
+
+
+# ================================
+# TEMP
+# ================================
+
+*.tmp
+*.temp
+
+
+# ================================
+# LOCAL AI DATA
+# ================================
+
+data/
+_harvested_assets/
+
+
+# ================================
+# ARCHIVE
+# ================================
+
+archive/
+
+# ================================
+# SECRETS
+# ================================
+
+.env
+.env.*
+secrets/
+*.key
+*.pem
+
+
+# ================================
+# RUNTIME GENERATED
+# ================================
+
+runtime/memory/database/
+runtime/memory/sqlite/*.db
+runtime/memory/sqlite/*.db-*
+runtime/memory/logs/
+runtime/memory/journal/
+runtime/memory/backups/
+runtime/memory/snapshots/
+
+logs/
+reports/
+
+
+# ================================
+# CACHE
+# ================================
+
+registry/cloud_cache/
+registry/telemetry/
+_snapshots/
+
+
+# SECURITY KEYS
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+*.jks
+release.keystore
+
+_archive/
+_archive_memoire_morte/
+_a_verifier/
+_backups_auto/
+archive/
+backups/
+quarantine/
+runtime/guardian/
+
+# Ignorer les trous noirs et les sauvegardes lourdes
+_archive/
+_archive_memoire_morte/
+_a_verifier/
+_backups_auto/
+archive/
+backups/
+quarantine/
+runtime/guardian/
+
+# E-ZZIO local/runtime exclusions added 20260815_190845
+# --- E-ZZIO runtime artefacts: never commit ---
+.venv/
+*.py[cod]
+# SQLite runtime databases and sidecar files
+*.sqlite
+*-wal
+*-shm
+# Logs, traces, generated audit outputs
+*.log
+*.jsonl
+runtime/temp/
+runtime/cache/
+runtime/snapshots/
+runtime/audit/telemetry/
+runtime/audit/archive_traces/
+runtime/audit/relocation/
+runtime/audit/post-relocation/
+# Generated backups
+*.bak.*
+*.backup_*
+*_backup.*
+# Local state and message outbox
+runtime/state/
+state/snapshots/
+state/watchdog_last.json
+bridge/outbox/
+# Secrets and local security material
+runtime/security/dpapi_keys/
+runtime/security/dpapi_vault.json
+# Temporary test artifacts
+test_events.jsonl
+test_audio.wav
+concurrency_test.db
+
+tools/voice_converter/.venv/
+
+runtime/evidence/*.db
+runtime/state/*.db
+
+# Node dependencies
+node_modules/
+
+# Build artifacts and local tooling caches (generated, reproducible)
+ezzio-desktop.zip
+scan-candidates-report_*.txt
+.antigravity/
+.brave-profile/
+runtime/models/whisper/
+outputs/

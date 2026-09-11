@@ -1,0 +1,4 @@
+{
+  "__init__": "def __init__(self, registry=None, key_pool=None, telemetry=None, **kwargs):\n    super().__init__(**kwargs)\n    self.registry = registry\n    self.key_pool = key_pool\n    self.telemetry = telemetry",
+  "invalidate_cache": "def invalidate_cache(self, *args, **kwargs) -> None:\n    if hasattr(super(), 'invalidate_cache'):\n        super().invalidate_cache(*args, **kwargs)"
+}

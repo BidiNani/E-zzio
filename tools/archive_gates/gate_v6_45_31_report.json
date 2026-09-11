@@ -1,0 +1,323 @@
+{
+  "handlers": [
+    {
+      "file": "audit\\snapshot_pre_forensic_restore_20260826_180311\\core_integrations_discord_discord_client.py",
+      "function": "on_ready",
+      "line": 160,
+      "is_hook": true,
+      "decorators": [
+        "bot.event"
+      ],
+      "args": [],
+      "downstream_calls": [],
+      "target_interactions": []
+    },
+    {
+      "file": "audit\\snapshot_pre_forensic_restore_20260826_180311\\core_integrations_discord_discord_client.py",
+      "function": "on_close",
+      "line": 175,
+      "is_hook": false,
+      "decorators": [
+        "bot.event"
+      ],
+      "args": [],
+      "downstream_calls": [],
+      "target_interactions": []
+    },
+    {
+      "file": "audit\\snapshot_pre_forensic_restore_20260826_180311\\core_integrations_discord_discord_client.py",
+      "function": "on_message",
+      "line": 182,
+      "is_hook": true,
+      "decorators": [
+        "bot.event"
+      ],
+      "args": [
+        "message"
+      ],
+      "downstream_calls": [],
+      "target_interactions": []
+    },
+    {
+      "file": "audit\\snapshot_pre_forensic_restore_20260826_180408\\core_integrations_discord_discord_client.py",
+      "function": "on_ready",
+      "line": 160,
+      "is_hook": true,
+      "decorators": [
+        "bot.event"
+      ],
+      "args": [],
+      "downstream_calls": [],
+      "target_interactions": []
+    },
+    {
+      "file": "audit\\snapshot_pre_forensic_restore_20260826_180408\\core_integrations_discord_discord_client.py",
+      "function": "on_close",
+      "line": 175,
+      "is_hook": false,
+      "decorators": [
+        "bot.event"
+      ],
+      "args": [],
+      "downstream_calls": [],
+      "target_interactions": []
+    },
+    {
+      "file": "audit\\snapshot_pre_forensic_restore_20260826_180408\\core_integrations_discord_discord_client.py",
+      "function": "on_message",
+      "line": 182,
+      "is_hook": true,
+      "decorators": [
+        "bot.event"
+      ],
+      "args": [
+        "message"
+      ],
+      "downstream_calls": [],
+      "target_interactions": []
+    },
+    {
+      "file": "audit\\snapshot_pre_restore_20260826_180137\\core_integrations_discord_discord_client.py",
+      "function": "on_ready",
+      "line": 160,
+      "is_hook": true,
+      "decorators": [
+        "bot.event"
+      ],
+      "args": [],
+      "downstream_calls": [],
+      "target_interactions": []
+    },
+    {
+      "file": "audit\\snapshot_pre_restore_20260826_180137\\core_integrations_discord_discord_client.py",
+      "function": "on_close",
+      "line": 175,
+      "is_hook": false,
+      "decorators": [
+        "bot.event"
+      ],
+      "args": [],
+      "downstream_calls": [],
+      "target_interactions": []
+    },
+    {
+      "file": "audit\\snapshot_pre_restore_20260826_180137\\core_integrations_discord_discord_client.py",
+      "function": "on_message",
+      "line": 182,
+      "is_hook": true,
+      "decorators": [
+        "bot.event"
+      ],
+      "args": [
+        "message"
+      ],
+      "downstream_calls": [],
+      "target_interactions": []
+    },
+    {
+      "file": "audit\\snapshot_pre_restore_20260826_180233\\core_integrations_discord_discord_client.py",
+      "function": "on_ready",
+      "line": 160,
+      "is_hook": true,
+      "decorators": [
+        "bot.event"
+      ],
+      "args": [],
+      "downstream_calls": [],
+      "target_interactions": []
+    },
+    {
+      "file": "audit\\snapshot_pre_restore_20260826_180233\\core_integrations_discord_discord_client.py",
+      "function": "on_close",
+      "line": 175,
+      "is_hook": false,
+      "decorators": [
+        "bot.event"
+      ],
+      "args": [],
+      "downstream_calls": [],
+      "target_interactions": []
+    },
+    {
+      "file": "audit\\snapshot_pre_restore_20260826_180233\\core_integrations_discord_discord_client.py",
+      "function": "on_message",
+      "line": 182,
+      "is_hook": true,
+      "decorators": [
+        "bot.event"
+      ],
+      "args": [
+        "message"
+      ],
+      "downstream_calls": [],
+      "target_interactions": []
+    },
+    {
+      "file": "core\\integrations\\discord\\discord_client.py",
+      "function": "on_ready",
+      "line": 160,
+      "is_hook": true,
+      "decorators": [
+        "bot.event"
+      ],
+      "args": [],
+      "downstream_calls": [],
+      "target_interactions": []
+    },
+    {
+      "file": "core\\integrations\\discord\\discord_client.py",
+      "function": "on_close",
+      "line": 175,
+      "is_hook": false,
+      "decorators": [
+        "bot.event"
+      ],
+      "args": [],
+      "downstream_calls": [],
+      "target_interactions": []
+    },
+    {
+      "file": "core\\integrations\\discord\\discord_client.py",
+      "function": "on_message",
+      "line": 182,
+      "is_hook": true,
+      "decorators": [
+        "bot.event"
+      ],
+      "args": [
+        "message"
+      ],
+      "downstream_calls": [],
+      "target_interactions": []
+    },
+    {
+      "file": "runtime\\bidi\\presence.py",
+      "function": "setup_hook",
+      "line": 108,
+      "is_hook": true,
+      "decorators": [],
+      "args": [
+        "self"
+      ],
+      "downstream_calls": [],
+      "target_interactions": []
+    },
+    {
+      "file": "runtime\\bidi\\presence.py",
+      "function": "on_ready",
+      "line": 115,
+      "is_hook": true,
+      "decorators": [],
+      "args": [
+        "self"
+      ],
+      "downstream_calls": [],
+      "target_interactions": []
+    },
+    {
+      "file": "runtime\\bidi\\presence.py",
+      "function": "on_message",
+      "line": 160,
+      "is_hook": true,
+      "decorators": [
+        "commands.Cog.listener()"
+      ],
+      "args": [
+        "self",
+        "message"
+      ],
+      "downstream_calls": [],
+      "target_interactions": []
+    },
+    {
+      "file": "runtime\\bidi\\presence.py",
+      "function": "slash_ezzio",
+      "line": 173,
+      "is_hook": false,
+      "decorators": [
+        "bot.tree.command(name='ezzio', description='Envoie un message \u00e0 E-ZZIO')",
+        "app_commands.describe(message='Ton message ou question technique')"
+      ],
+      "args": [
+        "interaction",
+        "message"
+      ],
+      "downstream_calls": [],
+      "target_interactions": []
+    },
+    {
+      "file": "runtime\\bidi\\presence.py",
+      "function": "slash_status",
+      "line": 186,
+      "is_hook": false,
+      "decorators": [
+        "bot.tree.command(name='status', description=\"Affiche l'\u00e9tat du noyau E-ZZIO\")"
+      ],
+      "args": [
+        "interaction"
+      ],
+      "downstream_calls": [],
+      "target_interactions": []
+    }
+  ],
+  "target_usages": {
+    "_build_canonical_router": [],
+    "IntentFabricConnector": [],
+    "CognitiveGateway": [
+      {
+        "file": "core\\ezzio_master.py",
+        "type": "IMPORT",
+        "source": "core.cognition.cognitive_gateway.CognitiveGateway"
+      },
+      {
+        "file": "core\\cognition\\legacy_llm_adapter.py",
+        "type": "IMPORT",
+        "source": "core.cognition.cognitive_gateway.CognitiveGateway"
+      },
+      {
+        "file": "runtime\\external\\ezzio_app.py",
+        "type": "IMPORT",
+        "source": "core.cognition.cognitive_gateway.CognitiveGateway"
+      }
+    ],
+    "AgentProviderAdapter": [
+      {
+        "file": "core\\agent\\coding_agent_loop.py",
+        "type": "IMPORT",
+        "source": "core.agent.agent_provider.AgentProviderAdapter"
+      },
+      {
+        "file": "core\\cognition\\cognitive_gateway.py",
+        "type": "IMPORT",
+        "source": "core.agent.agent_provider.AgentProviderAdapter"
+      }
+    ],
+    "AutonomousModelFabric": [
+      {
+        "file": "core\\intents\\fabric_connector.py",
+        "type": "IMPORT",
+        "source": "core.models.fabric.AutonomousModelFabric"
+      }
+    ],
+    "EzzioMaster": [],
+    "build_fabric": [
+      {
+        "file": "core\\intents\\fabric_connector.py",
+        "type": "IMPORT",
+        "source": "core.models.fabric.build_fabric"
+      },
+      {
+        "file": "core\\models\\admin.py",
+        "type": "IMPORT",
+        "source": "core.models.fabric.build_fabric"
+      }
+    ],
+    "CodingAgentHarness": [
+      {
+        "file": "ezzio_cli.py",
+        "type": "IMPORT",
+        "source": "core.agent.coding_agent_loop.CodingAgentHarness"
+      }
+    ]
+  }
+}
