@@ -160,8 +160,8 @@ async def get_dag_status(dag_id: str):
 async def list_missions():
     """Retourne la liste des missions des workers asynchrones."""
     from core.agent.mission_controller import mission_registry
-    missions = [m.to_dict() for m in mission_registry.list_missions()]
-    active = [m.to_dict() for m in mission_registry.list_active()]
+    missions = [m.to_dict() for m in mission_registry._missions.values()]
+    active = [m.to_dict() for m in [m for m in mission_registry._missions.values() if m.status.value in ('PENDING', 'RUNNING')]]
     return {"ok": True, "missions": missions, "active": active, "total": len(missions)}
 
 
