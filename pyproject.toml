@@ -49,10 +49,4 @@ ignore = [
     "E741",    # Variables à lettre unique
     "F811",    # Redéfinitions legacy conservées pour rétrocompatibilité
 ]
-
-[tool.pytest.ini_options]
-markers = [
-    "hardware: tests requiring connected physical devices (Android USB, audio interface)",
-    "optional_model: tests requiring optional heavy weights or optional native libraries (Kokoro ONNX, local models)",
-    "live_provider: tests requiring live cloud credentials and active network access",
-]
+

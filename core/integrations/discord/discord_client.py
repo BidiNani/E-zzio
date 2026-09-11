@@ -26,6 +26,11 @@ except Exception:
 
 _http_client = None
 
+# Exceptions reseau unifiees (httpx + aiohttp)
+import httpx as _httpx_lib
+DISCORD_NET_ERRORS = (aiohttp.ClientError, asyncio.TimeoutError, _httpx_lib.RequestError, _httpx_lib.TimeoutException)
+
+
 
 def get_http_client():
     """Singleton httpx partagé : 1 pool keepalive, 0 renégociation TLS/message."""
@@ -439,7 +444,7 @@ async def _handle_message(message):
                 else:
                     reply_text = str(data) if data is not None else "Réponse vide du noyau."
             else:
-                reply_text = f"Erreur de communication noyau (Code {resp.status})."
+                reply_text = f"Erreur de communication noyau (Code {resp.status_code})."
 
             from core.integrations.discord.ui_components import StreamEditor
 
@@ -450,7 +455,7 @@ async def _handle_message(message):
 
             await StreamEditor().render(_first_chunk, reply_text)
 
-        except (aiohttp.ClientError, asyncio.TimeoutError) as net_exc:
+        except DISCORD_NET_ERRORS as net_exc:
             logger.error("[DISCORD] Noyau injoignable : %s", net_exc)
             backend_down = "⚠️ Erreur noyau E-zzio : Le serveur local (:8001) ne répond pas. Vérifie son exécution."
             if is_private:
