@@ -4,7 +4,7 @@ Surveille l'intégrité opérationnelle du bot, de la passerelle et du Vault loc
 """
 
 import time
-import requests
+import httpx
 from core.tool_gateway.google_bridge import google_bridge
 
 
@@ -29,7 +29,7 @@ class DiscordWatchdog:
     def check_api_health(self) -> str:
         try:
             # Test de vie léger sur le endpoint local (timeout court)
-            resp = requests.get(self.local_api_url.replace("/chat", "/health"), timeout=1.0)
+            resp = httpx.get(self.local_api_url.replace("/chat", "/health"), timeout=1.0)
             return "ONLINE" if resp.status_code < 500 else "DEGRADED"
         except Exception:
             # Si l'API ne tourne pas en local lors des tests, on renvoie OFFLINE gérable

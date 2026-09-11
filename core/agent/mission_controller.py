@@ -71,6 +71,11 @@ class MissionTask:
         return True
 
 
+@dataclass
+class TaskGraph:
+    nodes: Dict[str, MissionTask] = field(default_factory=dict)
+
+
 class MissionRegistry:
     def __init__(self):
         self._missions: Dict[str, MissionRecord] = {}

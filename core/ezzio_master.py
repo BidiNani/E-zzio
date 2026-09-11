@@ -41,7 +41,7 @@ def _audit_command(action: str, payload: Dict[str, Any],
 class EzzioMaster:
     """Orchestrateur central E-ZZIO : conversation via GeminiProvider direct."""
 
-    def __init__(self, provider: Optional[GeminiProvider] = None) -> None:
+    def __init__(self, provider: Optional[GeminiProvider] = None, **kwargs: Any) -> None:
         self.provider = provider or GeminiProvider()
         self.memory = memory_gateway
         self._memory_initialized = False

@@ -1,7 +1,7 @@
 import os
 import time
 import base64
-import requests
+import httpx
 from dotenv import load_dotenv
 from pathlib import Path
 

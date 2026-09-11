@@ -1,5 +1,5 @@
 """
-E-ZZIO Core V10.3 — Swarm Module Compatibility Alias.
+E-ZZIO Sovereign Agent Swarm — Engine & Continuous Quality Sentinels.
 """
 from core.agents.swarm.engine import (
     SwarmEngine,
@@ -13,6 +13,9 @@ from core.agents.swarm.engine import (
     SwarmState,
     SwarmLimitError,
 )
+from core.agents.swarm.inspector import InspectorAgent
+from core.agents.swarm.watcher import WatcherAgent
+from core.agents.swarm.sentinel import SentinelAgent
 
 __all__ = [
     "SwarmEngine",
@@ -25,4 +28,7 @@ __all__ = [
     "SwarmMode",
     "SwarmState",
     "SwarmLimitError",
+    "InspectorAgent",
+    "WatcherAgent",
+    "SentinelAgent",
 ]

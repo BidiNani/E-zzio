@@ -142,6 +142,40 @@ class AuditLedger:
 
             return True, len(rows), None
 
+    def query_events(self, limit: int = 50, actor: Optional[str] = None) -> List[Dict[str, Any]]:
+        """Interroge le journal d'audit pour récupérer les derniers événements."""
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            if actor:
+                cursor.execute(
+                    "SELECT id, prev_hash, current_hash, timestamp, actor, action, payload_json, status FROM audit_trail WHERE actor = ? ORDER BY id DESC LIMIT ?",
+                    (actor, limit),
+                )
+            else:
+                cursor.execute(
+                    "SELECT id, prev_hash, current_hash, timestamp, actor, action, payload_json, status FROM audit_trail ORDER BY id DESC LIMIT ?",
+                    (limit,),
+                )
+            rows = cursor.fetchall()
+            results = []
+            for row in rows:
+                r_id, prev_h, curr_h, ts, act, action, payload_str, status = row
+                try:
+                    payload = json.loads(payload_str)
+                except Exception:
+                    payload = {}
+                results.append({
+                    "id": r_id,
+                    "prev_hash": prev_h,
+                    "current_hash": curr_h,
+                    "timestamp": ts,
+                    "actor": act,
+                    "action": action,
+                    "payload": payload,
+                    "status": status,
+                })
+            return results
+
 
 # Singleton global
 audit_ledger = AuditLedger()

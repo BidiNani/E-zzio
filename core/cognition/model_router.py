@@ -13,7 +13,7 @@ class ModelRouter:
     def __init__(self):
         self.local_fast = "qwen2.5:3b"
         self.local_coder = "qwen2.5-coder:7b"
-        self.cloud_complex = "claude-3-5-sonnet"
+        self.cloud_complex = "gemini-3.7-flash"
 
     def select_engine(self, task_type: str, complexity_score: float, risk_level: str) -> Dict[str, str]:
         """Aiguillage capacitaire strict."""

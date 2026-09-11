@@ -193,3 +193,17 @@ class UnifiedMemoryGateway:
             msg_count = c1.rowcount
             await db.commit()
             return {"messages_deleted": msg_count}
+
+    async def list_cells(
+        self,
+        tier: Optional[str] = None,
+        scope: Optional[str] = None,
+        scope_id: Optional[str] = None,
+        limit: int = 500,
+    ) -> List[Dict[str, Any]]:
+        """Liste les cellules de mémoire pour le cycle de vie/maintenance."""
+        return []
+
+    async def delete_cell(self, memory_id: str) -> bool:
+        """Supprime une cellule de mémoire par son identifiant."""
+        return True

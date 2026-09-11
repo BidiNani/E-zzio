@@ -5,7 +5,7 @@ import ipaddress
 from pathlib import Path
 from urllib.parse import urlparse
 
-import requests
+import httpx
 from dotenv import load_dotenv
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
@@ -253,7 +253,7 @@ def guarded_request(method, url, headers=None, params=None, json_body=None, time
         },
     )
 
-    response = requests.request(
+    response = httpx.request(
         method=method,
         url=url,
         headers=headers or {},

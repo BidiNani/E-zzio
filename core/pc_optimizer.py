@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any, Dict
 
 import psutil
-import requests
+import httpx
 import ollama
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")

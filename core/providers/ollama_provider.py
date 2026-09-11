@@ -35,7 +35,7 @@ _SHARED_CLIENT: httpx.AsyncClient | None = None
 def _shared_client() -> httpx.AsyncClient:
     """Client httpx partagé (keepalive) : 0 handshake TLS/pool par appel."""
     global _SHARED_CLIENT
-    if _SHARED_CLIENT is None or _SHARED_CLIENT.is_closed:
+    if _SHARED_CLIENT is None or getattr(_SHARED_CLIENT, "is_closed", False) or not hasattr(_SHARED_CLIENT, "stream"):
         _SHARED_CLIENT = httpx.AsyncClient(
             timeout=httpx.Timeout(connect=5.0, read=180.0, write=10.0, pool=10.0),
             limits=httpx.Limits(max_keepalive_connections=10, max_connections=20),

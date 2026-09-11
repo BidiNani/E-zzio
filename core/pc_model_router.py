@@ -8,7 +8,7 @@ import time
 from pathlib import Path
 from typing import Any, Dict
 
-import requests
+import httpx
 import ollama
 
 from core.response_guard import deterministic_reply, sanitize_ezzio_reply

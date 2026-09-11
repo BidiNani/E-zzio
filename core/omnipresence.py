@@ -5,7 +5,7 @@ import uuid
 from pathlib import Path
 from typing import Optional, Dict, Any
 
-import requests
+import httpx
 from dotenv import dotenv_values
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
@@ -204,7 +204,7 @@ def discord_send_bot_channel(content: str, channel_id: Optional[str] = None, all
         }
 
     url = f"https://discord.com/api/v10/channels/{channel_id}/messages"
-    r = requests.post(
+    r = httpx.post(
         url,
         headers={
             "Authorization": f"Bot {token}",
@@ -256,7 +256,7 @@ def messenger_send_text(text: str, recipient_psid: Optional[str] = None, allow_s
         "messaging_type": "RESPONSE",
     }
 
-    r = requests.post(
+    r = httpx.post(
         url,
         params={"access_token": token},
         json=payload,

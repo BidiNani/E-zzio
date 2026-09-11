@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 from typing import Optional
 
-import requests
+import httpx
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
 COMFY_ROOT = Path("G:/AI/external/ComfyUI")
@@ -39,7 +39,7 @@ def _cpu_env():
 
 def comfy_health():
     try:
-        r = requests.get(f"{COMFY_URL}/system_stats", timeout=5)
+        r = httpx.get(f"{COMFY_URL}/system_stats", timeout=5)
         return {
             "ok": r.status_code < 400,
             "status_code": r.status_code,
@@ -280,7 +280,7 @@ def queue_basic_generation(
 
     before = list_outputs(20)
 
-    response = requests.post(
+    response = httpx.post(
         f"{COMFY_URL}/prompt",
         json={"prompt": workflow},
         timeout=30,

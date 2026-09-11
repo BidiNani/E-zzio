@@ -20,6 +20,7 @@ class CostClass(str, enum.Enum):
     LOCAL = "LOCAL"
     FREE_ENDPOINT = "FREE_ENDPOINT"
     PAID = "PAID"
+    CLOUD = "CLOUD"
     UNKNOWN = "UNKNOWN"
 
 

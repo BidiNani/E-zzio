@@ -34,6 +34,7 @@ class CanonicalModelRecord:
 class CanonicalModelRegistry:
     def __init__(self):
         self._models = [
+            CanonicalModelRecord("gemini-3.7-flash", ModelSource.GEMINI),
             CanonicalModelRecord("gemini-3.6-flash", ModelSource.GEMINI),
             CanonicalModelRecord("qwen2.5-coder:7b", ModelSource.LOCAL),
             CanonicalModelRecord("llama-3.3-70b-versatile", ModelSource.GROQ),

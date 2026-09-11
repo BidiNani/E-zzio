@@ -6,7 +6,7 @@ import subprocess
 from pathlib import Path
 from typing import Optional
 
-import requests
+import httpx
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
 FORGE_ROOT = PROJECT_ROOT / "forge"
