@@ -191,3 +191,9 @@ capcap/
 E-ZZIO *.txt
 E-ZZIO *.md
 EZZIO_*.md
+*.gguf
+*.onnx
+dist/
+*.zip
+runtime/audit/
+tools/semantic_model/structural_graph/
