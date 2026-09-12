@@ -157,6 +157,7 @@ class OllamaProvider(BaseProvider, IResearchProvider):
             "model": target_model,
             "prompt": prompt,
             "stream": False,
+            "keep_alive": kwargs.get("keep_alive", "10m"),
             "think": kwargs.get("think", False),
             "options": {
                 "temperature": temperature,
@@ -260,6 +261,7 @@ class OllamaProvider(BaseProvider, IResearchProvider):
             "model": target_model,
             "prompt": prompt,
             "stream": True,
+            "keep_alive": kwargs.get("keep_alive", "10m"),
             "options": {
                 "temperature": temperature,
                 "num_predict": max_tokens,
@@ -298,6 +300,7 @@ class OllamaProvider(BaseProvider, IResearchProvider):
             "model": self.model,
             "prompt": query,
             "stream": True,
+            "keep_alive": kwargs.get("keep_alive", "10m"),
             "think": False,
             "options": {
                 "num_gpu": 0,

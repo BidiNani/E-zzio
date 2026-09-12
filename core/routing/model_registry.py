@@ -47,7 +47,7 @@ class CanonicalModelRegistry:
             CanonicalModelRecord("gemini-3.5-flash", ModelSource.GEMINI, role="REFACTOR", roles=["REFACTOR"], thinking_level="medium"),
             CanonicalModelRecord("gemini-2.5-flash", ModelSource.GEMINI, role="FALLBACK", roles=["FALLBACK"], thinking_level="off"),
             CanonicalModelRecord("qwen2.5-coder:7b-instruct-q4_K_M", ModelSource.LOCAL, role="LOCAL", roles=["LOCAL", "LOCAL_CODING"]),
-            CanonicalModelRecord("minicpm5-2b-godot:latest", ModelSource.LOCAL, role="FAST", roles=["FAST", "FAST_LOCAL"]),
+            CanonicalModelRecord("minicpm5-2b-godot:latest", ModelSource.LOCAL, role="FAST", roles=["FAST", "FAST_LOCAL", "FAST_CHAT"]),
             CanonicalModelRecord("phi4-mini:latest", ModelSource.LOCAL, role="LOCAL_MINI", roles=["LOCAL_MINI"]),
             CanonicalModelRecord("nemotron-3-nano:4b", ModelSource.LOCAL, role="LOCAL_THINKING", roles=["LOCAL_THINKING"], thinking_level="low"),
             CanonicalModelRecord("hermes3:8b", ModelSource.LOCAL, role="LOCAL_AGENT", roles=["LOCAL_AGENT"]),
