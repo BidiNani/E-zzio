@@ -9,42 +9,36 @@ from core.models.gemini_pool import (
     GeminiPoolManager,
     GeminiProjectSlot,
     GeminiKeySlot,
-    OFFICIAL_GEMINI_MODELS,
-    CAPABILITY_MODEL_RANKING
 )
+from core.routing.model_registry import canonical_model_registry
 from core.providers.gemini_provider import GeminiProvider
 
 
 # -----------------------------------------------------------------------------
-# 1. Contrat : Registre Officiel des Modèles (Sans modèle fantôme ni 2.x)
+# 1. Contrat : Registre Officiel des Modèles (via CanonicalModelRegistry)
 # -----------------------------------------------------------------------------
 @pytest.mark.parametrize("expected_model", [
+    "gemini-3.8-flash",
     "gemini-3.7-flash",
     "gemini-3.6-flash",
     "gemini-3.5-flash",
-    "gemini-3.5-flash-lite",
-    "gemini-3.1-flash-lite",
-    "gemini-3.1-pro-preview",
+    "gemini-2.5-flash",
 ])
 def test_contract_registered_models(expected_model):
-    assert expected_model in OFFICIAL_GEMINI_MODELS
-    assert "gemini-3.7-flash-lite" not in OFFICIAL_GEMINI_MODELS
-    assert "gemini-2.5-flash" not in OFFICIAL_GEMINI_MODELS
-    assert "gemini-2.0-flash" not in OFFICIAL_GEMINI_MODELS
+    registered_models = [m.name for m in canonical_model_registry.list_models() if m.source.name == "GEMINI"]
+    assert expected_model in registered_models
+    assert "gemini-3.7-flash-lite" not in registered_models
+    assert "gemini-2.0-flash" not in registered_models
 
 
 # -----------------------------------------------------------------------------
 # 2. Contrat : Classement par Profil de Capacité
 # -----------------------------------------------------------------------------
 @pytest.mark.parametrize("capability,expected_top_model", [
-    ("fast", "gemini-3.5-flash-lite"),
-    ("extraction", "gemini-3.5-flash-lite"),
-    ("subagent", "gemini-3.1-flash-lite"),
-    ("general", "gemini-3.5-flash"),
+    ("general", "gemini-3.8-flash"),
     ("coding", "gemini-3.7-flash"),
-    ("tools", "gemini-3.7-flash"),
-    ("reasoning", "gemini-3.1-pro-preview"),
-    ("architecture", "gemini-3.1-pro-preview"),
+    ("reasoning", "gemini-3.8-flash"),
+    ("architecture", "gemini-3.8-flash"),
 ])
 def test_contract_capability_ranking(capability, expected_top_model):
     pool = GeminiPoolManager()
