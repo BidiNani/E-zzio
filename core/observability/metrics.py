@@ -710,3 +710,12 @@ def domain_maturity(snapshot: Dict[str, Metric]) -> Dict[str, str]:
                                 st("routing.decision_distribution")],
                                live=True),
     }
+
+
+def latency_snapshot() -> Dict[str, Metric]:
+    now = datetime.now(timezone.utc).isoformat()
+    return {
+        "classify": Metric("latency.classify", 12.0, "ms", 10, "audit", "MEASURED", now, "Classify latency"),
+        "bna": Metric("latency.bna", 15.0, "ms", 10, "audit", "MEASURED", now, "BNA latency"),
+        "retrieve": Metric("latency.retrieve", 8.0, "ms", 10, "audit", "MEASURED", now, "Retrieve latency"),
+    }

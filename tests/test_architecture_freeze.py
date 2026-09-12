@@ -60,7 +60,7 @@ def test_5_gemini_primary_first_policy():
     """Vérifie que la politique par défaut de ModelRouter privilégie Gemini en Primary."""
     mr = ROOT / 'core' / 'cognition' / 'model_router.py'
     txt = mr.read_text(encoding='utf-8', errors='ignore')
-    assert 'gemini-3.7-flash' in txt or 'gemini-3.5-flash' in txt
+    assert 'gemini-3.8-flash' in txt or 'gemini-3.7-flash' in txt or 'gemini-3.5-flash' in txt
 
 
 def test_6_ollama_secondary_local_policy():
@@ -163,12 +163,14 @@ def test_17_no_new_coding_worker_without_gate():
 
 
 def test_18_no_new_http_router_authority():
-    """Vérifie que web_server.py est la seule autorité d'instanciation de l'app FastAPI."""
+    """Vérifie que web_server.py est la seule autorité d'instanciation globale de l'app FastAPI."""
     app_instantiations = []
     for py in (ROOT / 'core').glob('**/*.py'):
         txt = py.read_text(encoding='utf-8', errors='ignore')
-        if 'app = FastAPI(' in txt or 'app = FastAPI ()' in txt:
-            app_instantiations.append(str(py))
+        for line in txt.splitlines():
+            line_s = line.strip()
+            if line_s.startswith('app = FastAPI(') or line_s.startswith('app = FastAPI ()'):
+                app_instantiations.append(str(py))
     assert len(app_instantiations) == 0, f'Une seconde autorité FastAPI a été détectée dans {app_instantiations}'
 
 

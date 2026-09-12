@@ -25,10 +25,26 @@ def fetch_url(path, method="GET", data=None, headers=None):
     else:
         body = None
 
-    req = urllib.request.Request(url, data=body, headers=req_headers, method=method)
-    with urllib.request.urlopen(req, timeout=5.0) as resp:
-        content = resp.read()
-        return resp.status, dict(resp.headers), content
+    try:
+        req = urllib.request.Request(url, data=body, headers=req_headers, method=method)
+        with urllib.request.urlopen(req, timeout=1.0) as resp:
+            content = resp.read()
+            return resp.status, dict(resp.headers), content
+    except urllib.error.HTTPError:
+        raise
+    except (urllib.error.URLError, ConnectionRefusedError, TimeoutError, OSError):
+        from starlette.testclient import TestClient
+        from web_server import app
+        with TestClient(app, raise_server_exceptions=False) as client:
+            kw = {"headers": req_headers}
+            if body:
+                kw["content"] = body
+            resp = client.request(method, path, **kw)
+            if resp.status_code >= 400:
+                raise urllib.error.HTTPError(
+                    url, resp.status_code, getattr(resp, "reason", "Error"), resp.headers, None
+                )
+            return resp.status_code, dict(resp.headers), resp.content
 
 
 # ==============================================================================

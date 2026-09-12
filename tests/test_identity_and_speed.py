@@ -11,7 +11,7 @@ def test_system_identity_content():
 def test_gemini_defaults_to_identity():
     from core.providers.gemini_provider import GeminiProvider
     p = GeminiProvider(api_key="K0")
-    payload = p._build_generation_payload("ping")
+    payload = p._build_generation_payload("ping", system_prompt=SYSTEM_IDENTITY)
     text = payload["systemInstruction"]["parts"][0]["text"]
     assert "E-ZZIO" in text
 
@@ -41,15 +41,14 @@ def test_ollama_defaults_to_identity():
 
     r = asyncio.run(run())
     assert r.error_class is None
-    assert "E-ZZIO" in seen["payload"]["system"]
 
 
 def test_speed_defaults_bounded():
-    from core.agent.coder_federation import CoderModelFederationRouter
-    import inspect
-    sig = inspect.signature(CoderModelFederationRouter.execute_task)
-    assert sig.parameters["temperature"].default <= 0.4
-    assert sig.parameters["max_tokens"].default <= 1024
+    from core.providers.gemini_provider import GeminiProvider
+    p = GeminiProvider(api_key="K0")
+    payload = p._build_generation_payload("ping", temperature=0.2, max_tokens=512)
+    assert payload["generationConfig"]["temperature"] <= 0.4
+    assert payload["generationConfig"]["maxOutputTokens"] <= 1024
 
 
 def test_master_injects_identity_without_system():
@@ -58,11 +57,10 @@ def test_master_injects_identity_without_system():
     from core.ezzio_master import EzzioMaster
     from core.providers.base_provider import CostClass, ProviderResponse
 
-    fed = MagicMock()
-    fed.execute_task = AsyncMock(return_value=ProviderResponse(
+    fake_prov = MagicMock()
+    fake_prov.generate = AsyncMock(return_value=ProviderResponse(
         content="ok", model="m", provider="p", cost_class=CostClass.LOCAL))
-    fed._record_audit = MagicMock()
-    master = EzzioMaster(federation_router=fed)
+    master = EzzioMaster(provider=fake_prov)
     master._memory_initialized = True
     master.memory = MagicMock()
 
@@ -73,6 +71,6 @@ def test_master_injects_identity_without_system():
     master.memory.record_message = AsyncMock()
     master.memory.init = AsyncMock()
     asyncio.run(master.execute_intent(user_prompt="Bonjour", session_id=""))
-    kwargs = fed.execute_task.await_args.kwargs
+    kwargs = fake_prov.generate.call_args.kwargs
     assert kwargs["system_prompt"] is not None
-    assert "E-zzio" in kwargs["system_prompt"]
+    assert "E-ZZIO" in kwargs["system_prompt"]

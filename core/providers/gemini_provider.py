@@ -48,11 +48,14 @@ class GeminiProvider(BaseProvider, IResearchProvider):
         timeout: float = 45.0,
     ) -> None:
         load_secrets()
-        resolved_key = api_key if api_key is not None else get_api_key("GEMINI_API_KEY")
+        from core.config.secrets_loader import gemini_keys
+        available_keys = gemini_keys()
+        resolved_key = api_key if api_key is not None else (available_keys[0] if available_keys else None)
         if not resolved_key:
             resolved_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
 
         self.api_key = resolved_key.strip() if resolved_key else None
+        self._available_keys = available_keys
         self.model = model or os.getenv("GEMINI_MODEL", self.DEFAULT_MODEL)
         self.fallback_models = list(self.FALLBACK_MODELS)
         self.timeout = timeout
@@ -236,57 +239,70 @@ class GeminiProvider(BaseProvider, IResearchProvider):
             **kwargs,
         )
 
-        url = f"{self.base_url}/{target_model}:generateContent?key={self.api_key}"
+        keys_to_try = []
+        if self.api_key:
+            keys_to_try.append(self.api_key)
+        for k in getattr(self, "_available_keys", []):
+            if k and k not in keys_to_try:
+                keys_to_try.append(k)
+
         headers = {"Content-Type": "application/json"}
+        last_res = None
+        last_err_class = ProviderErrorClass.UNAUTHORIZED
 
         try:
             async with httpx.AsyncClient(timeout=self.timeout) as client:
-                res = await client.post(url, headers=headers, json=payload)
-                latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
+                for current_key in keys_to_try:
+                    url = f"{self.base_url}/{target_model}:generateContent?key={current_key}"
+                    res = await client.post(url, headers=headers, json=payload)
+                    latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
+                    if res.status_code == 200:
+                        self.api_key = current_key
+                        self._status = ProviderAvailability.AVAILABLE
+                        data = res.json()
+                        text_content = ""
+                        finish_reason = "stop"
+                        candidates = data.get("candidates", [])
+                        if candidates:
+                            first = candidates[0]
+                            parts = first.get("content", {}).get("parts", [])
+                            text_content = "".join(p.get("text", "") for p in parts)
+                            finish_reason = first.get("finishReason", "stop")
 
-                if res.status_code != 200:
-                    err_class = self.error_mapping(res.status_code, res.text)
-                    if res.status_code in (401, 403):
-                        self._status = ProviderAvailability.UNAUTHORIZED
-                    elif res.status_code == 429:
-                        self._status = ProviderAvailability.RATE_LIMITED
-                    return ProviderResponse(
-                        content="",
-                        model=target_model,
-                        provider=self.name,
-                        latency_ms=latency_ms,
-                        cost_class=CostClass.FREE_ENDPOINT,
-                        error_class=err_class,
-                        raw={"http_status": res.status_code, "text": res.text},
-                    )
+                        usage_meta = data.get("usageMetadata", {})
+                        usage = {
+                            "prompt_tokens": usage_meta.get("promptTokenCount", 0),
+                            "completion_tokens": usage_meta.get("candidatesTokenCount", 0),
+                            "total_tokens": usage_meta.get("totalTokenCount", 0),
+                        }
 
-                data = res.json()
-                text_content = ""
-                finish_reason = "stop"
-                candidates = data.get("candidates", [])
-                if candidates:
-                    first = candidates[0]
-                    parts = first.get("content", {}).get("parts", [])
-                    text_content = "".join(p.get("text", "") for p in parts)
-                    finish_reason = first.get("finishReason", "stop")
-
-                usage_meta = data.get("usageMetadata", {})
-                usage = {
-                    "prompt_tokens": usage_meta.get("promptTokenCount", 0),
-                    "completion_tokens": usage_meta.get("candidatesTokenCount", 0),
-                    "total_tokens": usage_meta.get("totalTokenCount", 0),
-                }
+                        return ProviderResponse(
+                            content=text_content,
+                            model=target_model,
+                            provider=self.name,
+                            finish_reason=finish_reason,
+                            usage=usage,
+                            latency_ms=latency_ms,
+                            cost_class=CostClass.FREE_ENDPOINT,
+                            error_class=None,
+                            raw=data,
+                        )
+                    else:
+                        last_res = res
+                        last_err_class = self.error_mapping(res.status_code, res.text)
+                        if res.status_code in (400, 401, 403):
+                            logger.warning("[GEMINI-PROVIDER] Clé API rejetée (HTTP %d). Essai de la clé suivante dans le pool.", res.status_code)
+                            continue
+                        break
 
                 return ProviderResponse(
-                    content=text_content,
+                    content="",
                     model=target_model,
                     provider=self.name,
-                    finish_reason=finish_reason,
-                    usage=usage,
                     latency_ms=latency_ms,
                     cost_class=CostClass.FREE_ENDPOINT,
-                    error_class=None,
-                    raw=data,
+                    error_class=last_err_class,
+                    raw={"http_status": last_res.status_code, "text": last_res.text} if last_res else {"error": "Aucune clé disponible"},
                 )
 
         except httpx.TimeoutException:

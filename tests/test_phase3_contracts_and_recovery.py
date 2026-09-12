@@ -35,7 +35,7 @@ async def test_chat_contract_explicit_types_and_fields():
 @pytest.mark.asyncio
 async def test_voice_contract_explicit_fields():
     gw = VoiceGateway()
-    mock_core = MagicMock()
+    mock_core = MagicMock(spec=["think"])
     mock_core.think = AsyncMock(return_value={"response": "Réponse vocale", "provider": "ollama"})
     
     res = await gw.process_voice_interaction(

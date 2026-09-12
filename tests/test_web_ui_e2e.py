@@ -30,6 +30,22 @@ BASE_URL = "http://127.0.0.1:8001/"
 PROFILE_BASE = r"C:\Users\enrik\AppData\Local\Temp\brave_e2e_forensic_suite"
 
 
+def _is_e2e_available():
+    if not os.path.exists(BRAVE_PATH):
+        return False
+    try:
+        with urllib.request.urlopen(BASE_URL, timeout=0.5) as r:
+            return r.status == 200
+    except Exception:
+        return False
+
+
+pytestmark = pytest.mark.skipif(
+    not _is_e2e_available(),
+    reason="Exécution E2E exige un serveur Web UI actif sur http://127.0.0.1:8001 et Brave Browser"
+)
+
+
 class BrowserCDPSession:
     def __init__(self, cdp_port=9223):
         self.cdp_port = cdp_port

@@ -44,9 +44,9 @@ def test_conversational_routing_policy_scenarios():
     assert r6["thinking_level"] == "medium"
     assert r6["role"] == "FORENSIC"
 
-    # 7. Fast / Local -> qwen2.5:3b (off)
+    # 7. Fast / Local -> minicpm5-2b-godot:latest (off)
     r7 = router.select_engine(task_type="fast_local", complexity_score=0.1)
-    assert r7["model"] == "qwen2.5:3b"
+    assert r7["model"] == "minicpm5-2b-godot:latest"
     assert r7["thinking_level"] == "off"
     assert r7["role"] == "FAST"
 

@@ -9,17 +9,14 @@ def get_secrets_path():
     return ROOT_DIR / "secrets" / ".env"
 
 
-def load_secrets():
-    """Charge les secrets depuis secrets/.env"""
-    secrets_path = get_secrets_path()
-
-    if secrets_path.exists():
-        load_dotenv(secrets_path, override=True)
-        return True
-    return False
+def load_secrets(override: bool = True) -> bool:
+    """Charge les secrets depuis secrets/.env via secrets_loader canonique."""
+    from core.config import secrets_loader
+    loaded = secrets_loader.load(override=override)
+    return bool(loaded)
 
 
 def get_api_key(name: str) -> str:
     """Récupère une clé API par nom"""
     load_secrets()
-    return os.getenv(name)
+    return os.getenv(name, "")

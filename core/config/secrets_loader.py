@@ -50,12 +50,31 @@ def load(override: bool = True) -> Dict[str, str]:
         load_dotenv(dotenv_path=str(ENV_PATH), override=override)
     except Exception as exc:
         logger.error("[SECRETS] load_dotenv impossible : %s", exc)
-    for line in ENV_PATH.read_text(encoding="utf-8", errors="ignore").splitlines():
-        s = line.strip()
-        if not s or s.startswith("#") or "=" not in line:
-            continue
-        k, _, v = line.partition("=")
-        loaded[k.strip()] = _clean(v)
+    try:
+        raw_text = ENV_PATH.read_text(encoding="utf-8-sig", errors="ignore")
+        for line in raw_text.splitlines():
+            s = line.strip()
+            if not s or s.startswith("#") or "=" not in s:
+                continue
+            k, _, v = line.partition("=")
+            key = k.strip().lstrip("\ufeff")
+            if key:
+                loaded[key] = _clean(v)
+    except Exception as exc:
+        logger.error("[SECRETS] Lecture secrets/.env impossible : %s", exc)
+
+    # Synchronisation canonique des alias
+    disc_val = loaded.get("DISCORD_BOT_TOKEN") or loaded.get("DISCORD_TOKEN") or os.environ.get("DISCORD_BOT_TOKEN") or os.environ.get("DISCORD_TOKEN", "")
+    disc_val = _clean(disc_val)
+    if disc_val:
+        loaded["DISCORD_BOT_TOKEN"] = disc_val
+        loaded["DISCORD_TOKEN"] = disc_val
+
+    gem_val = loaded.get("GEMINI_API_KEY") or loaded.get("GEMINI_API_KEY_1") or os.environ.get("GEMINI_API_KEY") or os.environ.get("GEMINI_API_KEY_1", "")
+    gem_val = _clean(gem_val)
+    if gem_val:
+        loaded["GEMINI_API_KEY"] = gem_val
+
     merged = dict(os.environ)
     if override:
         for k, v in loaded.items():
@@ -65,6 +84,8 @@ def load(override: bool = True) -> Dict[str, str]:
     else:
         for k, v in loaded.items():
             merged.setdefault(k, v)
+            if k not in os.environ:
+                os.environ[k] = v
     _refresh_owner(merged)
     return loaded
 

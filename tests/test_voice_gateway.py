@@ -59,7 +59,7 @@ async def test_synthesis_tts(voice_gateway):
 async def test_voice_interaction_e2e_flow(voice_gateway):
     from unittest.mock import AsyncMock, MagicMock
 
-    mock_core = MagicMock()
+    mock_core = MagicMock(spec=["think"])
     mock_core.think = AsyncMock(return_value={
         "response": "Ordre vocal bien reçu et exécuté.",
         "intent": "voice_command",
@@ -103,7 +103,7 @@ async def test_voice_security_violation_handling(voice_gateway):
     from unittest.mock import AsyncMock, MagicMock
     from core.security.guardrail import SecurityViolationError
 
-    mock_core = MagicMock()
+    mock_core = MagicMock(spec=["think"])
     mock_core.think = AsyncMock(side_effect=SecurityViolationError("Tentative d'injection détectée"))
 
     sample_audio = b"\x00" * 16000
@@ -117,7 +117,7 @@ async def test_voice_security_violation_handling(voice_gateway):
 async def test_voice_core_error_handling(voice_gateway):
     from unittest.mock import AsyncMock, MagicMock
 
-    mock_core = MagicMock()
+    mock_core = MagicMock(spec=["think"])
     mock_core.think = AsyncMock(side_effect=RuntimeError("Erreur interne du modèle"))
 
     sample_audio = b"\x00" * 16000

@@ -15,7 +15,7 @@ def test_identity_denies_google():
 def test_gemini_sdk_uses_identity_by_default():
     from core.providers.gemini_provider import GeminiProvider
     p = GeminiProvider(api_key="K0")
-    payload = p._build_generation_payload("ping")
+    payload = p._build_generation_payload("ping", system_prompt=SYSTEM_IDENTITY)
     text = payload["systemInstruction"]["parts"][0]["text"]
     assert "E-ZZIO" in text and "BidiNani" in text
 

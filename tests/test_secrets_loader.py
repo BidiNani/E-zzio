@@ -30,3 +30,12 @@ def test_groq_fallback():
     assert groq_key({"DISCORD_GROQ_API_KEY": "gd", "GROQ_API_KEY": "g1"}) == "gd"
     assert groq_key({"GROQ_API_KEY_2": "g2"}) == "g2"
     assert groq_key({}) == ""
+
+
+def test_load_and_env_path():
+    from core.config import secrets_loader
+    assert secrets_loader.ENV_PATH.is_absolute()
+    assert secrets_loader.ENV_PATH.name == ".env"
+    loaded = secrets_loader.load(override=True)
+    assert isinstance(loaded, dict)
+

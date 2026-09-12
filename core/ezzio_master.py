@@ -14,6 +14,7 @@ from typing import Any, Dict, Optional, List
 from core.providers.gemini_provider import GeminiProvider
 from core.providers.base_provider import ProviderResponse
 from core.memory.instance import memory_gateway
+from core.kernel.native_harness import NativeHarness
 
 logger = logging.getLogger("EzzioMaster")
 
@@ -45,6 +46,7 @@ class EzzioMaster:
         self.provider = provider or GeminiProvider()
         self.memory = memory_gateway
         self._memory_initialized = False
+        self.harness = NativeHarness(router=None, policy_guard=None, audit_ledger=None, workspace_root=r"G:\AI\E-zzio")
 
     async def _record_assistant_memory(self, res_dict: Dict[str, Any],
                                        session_id: str, channel: str) -> Dict[str, Any]:
@@ -255,6 +257,25 @@ class EzzioMaster:
             **kwargs
         )
         return res.get("response", "")
+
+    async def process_user_message(
+        self,
+        prompt: str = "",
+        message: str = "",
+        session_id: str = "",
+        channel: str = "web",
+        user_id: str = "operator",
+        **kwargs: Any
+    ) -> Dict[str, Any]:
+        """Alias de compatibilité pour le traitement des messages utilisateur via execute_intent."""
+        user_prompt = prompt or message
+        return await self.execute_intent(
+            user_prompt=user_prompt,
+            session_id=session_id,
+            channel=channel,
+            user_id=user_id,
+            **kwargs
+        )
 
     async def orchestrate_multi_agent_mission(
         self,
