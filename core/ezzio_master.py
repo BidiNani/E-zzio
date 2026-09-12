@@ -132,7 +132,12 @@ class EzzioMaster:
 
             is_mission = bool(mission_profile and mission_profile.upper() not in ["STANDARD", "CHAT", "LOW"])
             comp_score = 0.85 if is_mission else (0.4 if channel in ["discord", "chat", "integration_test"] else 0.6)
-            prompt_lower = (user_prompt or "").lower()
+            prompt_lower = (user_prompt or "").lower().strip()
+            
+            # Simple short greetings or ultra-fast path optimization
+            if not is_mission and (len(prompt_lower.split()) <= 3 or prompt_lower in ["salut", "bonjour", "hello", "ping"]):
+                comp_score = 0.1
+
             if "code" in prompt_lower or "architecture" in prompt_lower or "securite" in prompt_lower or "vault" in prompt_lower:
                 comp_score = max(comp_score, 0.75)
 
@@ -150,16 +155,26 @@ class EzzioMaster:
 
             chat_system = system_prompt or await self._build_chat_system_prompt(session_id)
             
-            # TODO: dynamic provider loading based on routing["provider"]
-            
-            resp: ProviderResponse = await self.provider.generate(
-                prompt=user_prompt or "",
-                system_prompt=chat_system if chat_system else None,
-                model=selected_model,
-                temperature=0.2,
-                max_tokens=512,
-                thinking_level=thinking_level,
-            )
+            # Dynamic provider selection (Ollama local vs Gemini API)
+            if routing.get("provider") == "ollama" and not force_cloud:
+                from core.providers.ollama_provider import OllamaProvider
+                ollama_prov = OllamaProvider(model=selected_model)
+                resp: ProviderResponse = await ollama_prov.generate(
+                    prompt=user_prompt or "",
+                    system_prompt=chat_system if chat_system else None,
+                    model=selected_model,
+                    temperature=0.2,
+                    max_tokens=512,
+                )
+            else:
+                resp: ProviderResponse = await self.provider.generate(
+                    prompt=user_prompt or "",
+                    system_prompt=chat_system if chat_system else None,
+                    model=selected_model,
+                    temperature=0.2,
+                    max_tokens=512,
+                    thinking_level=thinking_level,
+                )
             elapsed_ms = int((time.perf_counter() - start_time) * 1000)
 
             reply = resp.content or ""
