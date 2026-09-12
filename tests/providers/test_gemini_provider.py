@@ -37,7 +37,9 @@ def test_gemini_capabilities():
     caps = provider.capabilities()
     assert "TEXT" in caps
     assert "VISION" in caps
-    assert "REASONING" in caps
+    assert "FAST_INFERENCE" in caps
+    caps_37 = provider.capabilities("gemini-3.7-flash")
+    assert "REASONING" in caps_37
 
 
 @pytest.mark.parametrize("status_code, expected_class", [
@@ -99,29 +101,14 @@ async def test_gemini_health_unhealthy():
 @pytest.mark.asyncio
 async def test_gemini_generate_success():
     provider = GeminiProvider(api_key="mock-key")
-
-    class FakeResp:
-        text = "Gemini Cloud répond."
-        usage_metadata = None
-
-    class FakeModels:
-        async def generate_content(self, **kwargs):
-            return FakeResp()
-
-    class FakeAio:
-        models = FakeModels()
-
-    class FakeClient:
-        def __init__(self, api_key=None):
-            self.api_key = api_key
-
-        @property
-        def aio(self):
-            return FakeAio()
-
-    import google.genai as genai_pkg
-    with patch.object(genai_pkg, "Client") as mock_client:
-        mock_client.side_effect = lambda api_key=None: FakeClient(api_key)
+    fake_json = {
+        "candidates": [{"content": {"parts": [{"text": "Gemini Cloud répond."}]}}]
+    }
+    with patch("httpx.AsyncClient.post") as mock_post:
+        mock_resp = MagicMock()
+        mock_resp.status_code = 200
+        mock_resp.json.return_value = fake_json
+        mock_post.return_value = mock_resp
 
         res = await provider.generate(prompt="Bonjour")
         assert isinstance(res, ProviderResponse)
@@ -134,31 +121,11 @@ async def test_gemini_generate_success():
 @pytest.mark.asyncio
 async def test_gemini_generate_unauthorized():
     provider = GeminiProvider(api_key="invalid-key")
-
-    def boom_401():
-        from google.genai.errors import APIError
-        err = APIError.__new__(APIError)
-        err.code = 401
-        return err
-
-    class FakeModels:
-        async def generate_content(self, **kwargs):
-            raise boom_401()
-
-    class FakeAio:
-        models = FakeModels()
-
-    class FakeClient:
-        def __init__(self, api_key=None):
-            self.api_key = api_key
-
-        @property
-        def aio(self):
-            return FakeAio()
-
-    import google.genai as genai_pkg
-    with patch.object(genai_pkg, "Client") as mock_client:
-        mock_client.side_effect = lambda api_key=None: FakeClient(api_key)
+    with patch("httpx.AsyncClient.post") as mock_post:
+        mock_resp = MagicMock()
+        mock_resp.status_code = 401
+        mock_resp.text = "Unauthorized"
+        mock_post.return_value = mock_resp
 
         res = await provider.generate(prompt="Test")
         assert res.error_class == ProviderErrorClass.UNAUTHORIZED
@@ -197,31 +164,15 @@ async def test_gemini_stream():
 
 @pytest.mark.asyncio
 async def test_gemini_search_backwards_compatible():
-    # SDK google-genai : on mocke le client, plus httpx.
     provider = GeminiProvider(api_key="mock-key")
-
-    class FakeResp:
-        text = "Synthèse Gemini."
-        usage_metadata = None
-
-    class FakeModels:
-        async def generate_content(self, **kwargs):
-            return FakeResp()
-
-    class FakeAio:
-        models = FakeModels()
-
-    class FakeClient:
-        def __init__(self, api_key=None):
-            self.api_key = api_key
-
-        @property
-        def aio(self):
-            return FakeAio()
-
-    import google.genai as genai_pkg
-    with patch.object(genai_pkg, "Client") as mock_client:
-        mock_client.side_effect = lambda api_key=None: FakeClient(api_key)
+    fake_json = {
+        "candidates": [{"content": {"parts": [{"text": "Synthèse Gemini."}]}}]
+    }
+    with patch("httpx.AsyncClient.post") as mock_post:
+        mock_resp = MagicMock()
+        mock_resp.status_code = 200
+        mock_resp.json.return_value = fake_json
+        mock_post.return_value = mock_resp
 
         res = await provider.search("recherche")
         assert res["provider"] == "gemini"

@@ -70,7 +70,7 @@ class EzzioMaster:
                 logger.warning("[EzzioMaster] Memory record assistant failed: %s", exc)
         return res_dict
 
-    async def _build_chat_system_prompt(self, session_id: str = "") -> Optional[str]:
+    async def _build_chat_system_prompt(self, session_id: str = "", exclude_prompt: str = "") -> Optional[str]:
         """Identité canonique + derniers échanges."""
         try:
             from core.identity.canonical_identity import CanonicalIdentity
@@ -86,8 +86,11 @@ class EzzioMaster:
                     self._memory_initialized = True
                 hist = await self.memory.get_session_history(session_id, limit=6)
                 for h in (hist or [])[-6:]:
+                    content = str(h.get('content', ''))
+                    if exclude_prompt and content.strip() == exclude_prompt.strip():
+                        continue
                     role = "Utilisateur" if h.get("role") == "user" else "Assistant"
-                    ctx_lines.append(f"{role} : {str(h.get('content', ''))[:400]}")
+                    ctx_lines.append(f"{role} : {content[:400]}")
             except Exception:
                 pass
         parts = [persona.strip(), "- Réponds en français, direct et concis.",
@@ -153,7 +156,7 @@ class EzzioMaster:
             selected_model = routing["model"]
             thinking_level = routing.get("thinking_level")
 
-            chat_system = system_prompt or await self._build_chat_system_prompt(session_id)
+            chat_system = system_prompt or await self._build_chat_system_prompt(session_id, exclude_prompt=user_prompt)
             
             # Dynamic provider selection (Ollama local vs Gemini API)
             if routing.get("provider") == "ollama" and not force_cloud:
