@@ -16,7 +16,14 @@ class ModelRouter:
         http_client: Optional[httpx.AsyncClient] = None,
     ) -> None:
         self.ollama_url = ollama_url.rstrip("/")
-        self.gemini_api_key = gemini_api_key or os.getenv("GEMINI_API_KEY")
+        if not gemini_api_key:
+            try:
+                from core.config.secrets_loader import gemini_keys
+                g_keys = gemini_keys()
+                gemini_api_key = g_keys[0] if g_keys else os.getenv("GEMINI_API_KEY")
+            except Exception:
+                gemini_api_key = os.getenv("GEMINI_API_KEY")
+        self.gemini_api_key = gemini_api_key
         self._client = http_client
         # Gate unifié (§4) : le routeur cognitif legacy consomme l'autorité
         # canonique. Aucun modèle REJECTED/UNKNOWN ne peut jamais être rendu.
@@ -240,10 +247,17 @@ class ModelRouter:
         }
 
     async def get_providers_health(self) -> Dict[str, Any]:
-        """Fournit une synthèse complète de la santé de tous les providers configurés (Ollama, Gemini, Groq, Antigravity)."""
-        ollama_health = await self.probe_ollama()
-        gemini_health = await self.probe_gemini()
-        groq_health = await self.probe_groq()
+        """Fournit une synthèse complète de la santé de tous les providers configurés en parallèle."""
+        import asyncio
+        results = await asyncio.gather(
+            self.probe_ollama(),
+            self.probe_gemini(),
+            self.probe_groq(),
+            return_exceptions=True
+        )
+        ollama_health = results[0] if not isinstance(results[0], Exception) else {"online": False, "error": str(results[0])}
+        gemini_health = results[1] if not isinstance(results[1], Exception) else {"online": False, "error": str(results[1])}
+        groq_health = results[2] if not isinstance(results[2], Exception) else {"online": False, "error": str(results[2])}
         antigravity_health = self.probe_antigravity()
         return {
             "timestamp": time.time(),
@@ -253,7 +267,7 @@ class ModelRouter:
                 "groq": groq_health,
                 "antigravity": antigravity_health,
             },
-            "primary_available": ollama_health["online"] or gemini_health["online"] or groq_health["online"],
+            "primary_available": bool(ollama_health.get("online") or gemini_health.get("online") or groq_health.get("online")),
             "deterministic_support": {
                 "ollama": "DETERMINISTIC",
                 "gemini": "BEST_EFFORT_DETERMINISTIC",
