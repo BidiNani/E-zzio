@@ -10,7 +10,7 @@ class IntentDispatcher:
         text: str,
         session_id: str = "",
         speed: str = "fast",
-        force_cloud: bool = True,
+        force_cloud: bool = False,
         system_prompt: str = "",
         **kwargs
     ) -> Dict[str, Any]:
@@ -28,7 +28,7 @@ class IntentDispatcher:
         text: str,
         session_id: str = "",
         speed: str = "fast",
-        force_cloud: bool = True,
+        force_cloud: bool = False,
         system_prompt: str = "",
         **kwargs
     ) -> Dict[str, Any]:
@@ -39,7 +39,7 @@ class IntentDispatcher:
 dispatcher = IntentDispatcher()
 
 
-def dispatch(text: str, session_id: str = "", speed: str = "fast", force_cloud: bool = True, system_prompt: str = "", **kwargs) -> Dict[str, Any]:
+def dispatch(text: str, session_id: str = "", speed: str = "fast", force_cloud: bool = False, system_prompt: str = "", **kwargs) -> Dict[str, Any]:
     return dispatcher.dispatch(text=text, session_id=session_id, speed=speed, force_cloud=force_cloud, system_prompt=system_prompt, **kwargs)
 
 

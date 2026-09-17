@@ -43,11 +43,11 @@ class CanonicalModelRegistry:
         self._models = [
             CanonicalModelRecord("gemini-3.8-flash", ModelSource.GEMINI, role="MASTER", roles=["MASTER", "MASTER_STRATEGIC"], thinking_level="high"),
             CanonicalModelRecord("gemini-3.7-flash", ModelSource.GEMINI, role="CODING", roles=["CODING"], thinking_level="low"),
-            CanonicalModelRecord("gemini-3.6-flash", ModelSource.GEMINI, role="STANDARD_CHAT", roles=["STANDARD_CHAT", "FAST_CHAT", "FORENSIC"], thinking_level="medium"),
+            CanonicalModelRecord("gemini-3.6-flash", ModelSource.GEMINI, role="STANDARD_CHAT", roles=["STANDARD_CHAT", "FORENSIC"], thinking_level="medium"),
             CanonicalModelRecord("gemini-3.5-flash", ModelSource.GEMINI, role="REFACTOR", roles=["REFACTOR"], thinking_level="medium"),
             CanonicalModelRecord("gemini-2.5-flash", ModelSource.GEMINI, role="FALLBACK", roles=["FALLBACK"], thinking_level="off"),
             CanonicalModelRecord("qwen2.5-coder:7b-instruct-q4_K_M", ModelSource.LOCAL, role="LOCAL", roles=["LOCAL", "LOCAL_CODING"]),
-            CanonicalModelRecord("minicpm5-2b-godot:latest", ModelSource.LOCAL, role="FAST", roles=["FAST", "FAST_LOCAL", "FAST_CHAT"]),
+            CanonicalModelRecord("qwen3.5-mtp:4b", ModelSource.LOCAL, role="FAST", roles=["FAST", "FAST_LOCAL", "FAST_CHAT"]),
             CanonicalModelRecord("phi4-mini:latest", ModelSource.LOCAL, role="LOCAL_MINI", roles=["LOCAL_MINI"]),
             CanonicalModelRecord("nemotron-3-nano:4b", ModelSource.LOCAL, role="LOCAL_THINKING", roles=["LOCAL_THINKING"], thinking_level="low"),
             CanonicalModelRecord("hermes3:8b", ModelSource.LOCAL, role="LOCAL_AGENT", roles=["LOCAL_AGENT"]),

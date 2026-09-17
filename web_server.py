@@ -28,6 +28,8 @@ from routers.memory import router as memory_router
 from routers.perception import router as perception_router
 from routers.generators import router as generators_router
 from routers.capabilities import router as capabilities_router
+from routers.research import router as research_router, init_research_router
+from routers.webhook import router as webhook_router
 
 
 # 3. Cycle de vie et Gouvernance
@@ -36,6 +38,7 @@ async def lifespan(app: FastAPI):
     # setup_production_logging() # DÉSACTIVÉ POUR DEBUG
     from core.memory.instance import memory_gateway
     await memory_gateway.init()
+    await init_research_router()
     worker_manager.initialize_pool()
     yield
     worker_manager.shutdown()
@@ -44,16 +47,20 @@ async def lifespan(app: FastAPI):
 # 4. Initialisation de l'API
 app = FastAPI(title="E-ZZIO Sovereign API", version="v2.6-autonomic-tactical-core", lifespan=lifespan)
 
-# Desktop / Tauri / Vite local — CORS strictement limité aux origines locales.
+# Desktop / Tauri / Mobile Capacitor — CORS adapté aux environnements locaux et mobiles
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:1420",
         "http://127.0.0.1:1420",
+        "http://localhost",
+        "https://localhost",
+        "capacitor://localhost",
+        "tauri://localhost",
     ],
-    allow_credentials=False,
+    allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type"],
+    allow_headers=["Content-Type", "Authorization"],
 )
 
 import uuid
@@ -121,6 +128,8 @@ app.include_router(memory_router)
 app.include_router(perception_router)
 app.include_router(generators_router)
 app.include_router(capabilities_router)
+app.include_router(research_router)
+app.include_router(webhook_router)
 
 
 @app.get("/agent-view", response_class=HTMLResponse, include_in_schema=False)

@@ -52,6 +52,24 @@ class MissionRecord:
     result: Dict[str, Any] = field(default_factory=dict)
     created_at: str = ""
 
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "id": self.mission_id,
+            "mission_id": self.mission_id,
+            "title": self.goal,
+            "name": self.goal,
+            "description": self.goal,
+            "worker_type": self.worker_type,
+            "status": self.status.value if hasattr(self.status, "value") else str(self.status),
+            "request_id": self.request_id,
+            "model": self.model,
+            "provider": self.provider,
+            "result": self.result,
+            "created_at": self.created_at,
+            "createdAt": self.created_at,
+            "tasks": [],
+        }
+
 
 @dataclass
 class MissionTask:
@@ -88,6 +106,27 @@ class MissionRegistry:
 
     def list_all(self) -> List[MissionRecord]:
         return list(self._missions.values())
+
+    def cancel(self, mission_id: str) -> bool:
+        m = self._missions.get(mission_id)
+        if not m:
+            return False
+        m.status = MissionStatus.CANCELLED
+        return True
+
+    def pause(self, mission_id: str) -> bool:
+        m = self._missions.get(mission_id)
+        if not m:
+            return False
+        m.status = MissionStatus.PAUSED
+        return True
+
+    def resume(self, mission_id: str) -> bool:
+        m = self._missions.get(mission_id)
+        if not m:
+            return False
+        m.status = MissionStatus.RUNNING
+        return True
 
 
 mission_registry = MissionRegistry()

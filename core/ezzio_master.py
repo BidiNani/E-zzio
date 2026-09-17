@@ -143,10 +143,11 @@ class EzzioMaster:
             if not is_mission and (len(prompt_lower.split()) <= 3 or prompt_lower in ["salut", "bonjour", "hello", "ping"]):
                 comp_score = 0.1
 
-            if "code" in prompt_lower or "architecture" in prompt_lower or "securite" in prompt_lower or "vault" in prompt_lower:
+            is_coding = bool(re.search(r"\b(code|coder|coding|python|javascript|typescript|c\+\+|rust|html|css|sql|script|scripts|fonction|classes?|def\s|class\s|bug|refactor|debug|git)\b", prompt_lower))
+            if is_coding or "architecture" in prompt_lower or "securite" in prompt_lower or "vault" in prompt_lower:
                 comp_score = max(comp_score, 0.75)
 
-            task_t = "coding" if ("code" in prompt_lower or "script" in prompt_lower) else "general"
+            task_t = "coding" if is_coding else "general"
 
             routing = router.select_engine(
                 task_type=task_t,

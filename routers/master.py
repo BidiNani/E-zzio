@@ -174,4 +174,79 @@ async def cancel_mission_endpoint(mission_id: str):
     return {"ok": success, "mission_id": mission_id, "status": "CANCELLED" if success else "NOT_FOUND"}
 
 
+@router.get("/api/v1/missions/{mission_id}")
+@router.get("/missions/{mission_id}")
+async def get_mission_endpoint(mission_id: str):
+    """Retourne le détail d'une mission."""
+    from fastapi import HTTPException, status
+    from core.agent.mission_controller import mission_registry
+    m = mission_registry.get(mission_id)
+    if not m:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Mission '{mission_id}' non trouvée")
+    return {"ok": True, "mission": m.to_dict()}
+
+
+@router.post("/api/v1/missions/{mission_id}/pause")
+@router.post("/missions/{mission_id}/pause")
+async def pause_mission_endpoint(mission_id: str):
+    """Met en pause une mission."""
+    from core.agent.mission_controller import mission_registry
+    success = mission_registry.pause(mission_id)
+    return {"ok": success, "mission_id": mission_id, "status": "PAUSED" if success else "NOT_FOUND"}
+
+
+@router.post("/api/v1/missions/{mission_id}/resume")
+@router.post("/missions/{mission_id}/resume")
+async def resume_mission_endpoint(mission_id: str):
+    """Reprend une mission mise en pause."""
+    from core.agent.mission_controller import mission_registry
+    success = mission_registry.resume(mission_id)
+    return {"ok": success, "mission_id": mission_id, "status": "RUNNING" if success else "NOT_FOUND"}
+
+
+class GovernanceSettingsPayload(BaseModel):
+    local_only: Optional[bool] = None
+    cloud_fallback: Optional[bool] = None
+    max_budget_cents: Optional[int] = None
+
+
+_runtime_governance_settings = {
+    "local_only": False,
+    "cloud_fallback": True,
+    "max_budget_cents": 1000,
+    "profiles": {
+        "chat": "LOCAL_PREFERRED",
+        "coding": "CODER_FEDERATION",
+        "reasoning": "GEMINI_CLOUD",
+    },
+}
+
+
+@router.get("/api/v1/governance/settings")
+@router.get("/governance/settings")
+async def get_governance_settings():
+    """Retourne la configuration actuelle de gouvernance et de souveraineté locale."""
+    from core.routing.model_registry import canonical_model_registry
+    models = canonical_model_registry.list_models()
+    return {
+        "ok": True,
+        "settings": _runtime_governance_settings,
+        "registered_models_count": len(models),
+        "available_local_roles": [m.role for m in models if m.source.name == "LOCAL"],
+    }
+
+
+@router.post("/api/v1/governance/settings")
+@router.post("/governance/settings")
+async def update_governance_settings(payload: GovernanceSettingsPayload):
+    """Met à jour dynamiquement les réglages de gouvernance runtime."""
+    if payload.local_only is not None:
+        _runtime_governance_settings["local_only"] = payload.local_only
+    if payload.cloud_fallback is not None:
+        _runtime_governance_settings["cloud_fallback"] = payload.cloud_fallback
+    if payload.max_budget_cents is not None:
+        _runtime_governance_settings["max_budget_cents"] = payload.max_budget_cents
+    return {"ok": True, "settings": _runtime_governance_settings}
+
+
 

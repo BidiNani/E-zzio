@@ -50,13 +50,20 @@ class DeliberationOrchestrator:
             ContextSize, LatencyClass, PrivacyRequirement,
             TaskComplexity, TaskProfile, TaskType,
         )
-        tt = TaskType.CODING if task_type != "CHAT" else TaskType.CHAT
-        fast = task_type == "CRITIQUE"
+        task_upper = (task_type or "").upper()
+        if task_upper in ("CODING", "CODE", "CRITIQUE", "ARCHITECT", "SUPERVISEUR"):
+            tt = TaskType.CODING
+        elif task_upper in ("REASONING", "STRATEGIC", "DELIBERATE"):
+            tt = TaskType.REASONING
+        else:
+            tt = TaskType.GENERAL
+
+        fast = task_upper == "CRITIQUE"
         return TaskProfile(
-            complexity=TaskComplexity.SIMPLE if fast else TaskComplexity.STANDARD,
+            complexity=TaskComplexity.MICRO if fast else TaskComplexity.STANDARD,
             context_size=ContextSize.NORMAL,
-            latency_class=LatencyClass.HIGH if fast else LatencyClass.MEDIUM,
-            privacy_required=PrivacyRequirement.LOCAL_PREFERRED,
+            latency_preference=LatencyClass.FAST if fast else LatencyClass.BALANCED,
+            privacy=PrivacyRequirement.PREFER_LOCAL,
             task_type=tt,
         )
 
