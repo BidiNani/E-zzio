@@ -1,0 +1,10 @@
+#!/bin/sh
+# Refuse un message de commit déjà utilisé dans les 20 derniers commits.
+msg=$(head -n1 "$1")
+[ -z "$msg" ] && exit 0
+if git log --oneline -20 | grep -qF "$msg"; then
+  echo "❌ Message déjà utilisé dans les 20 derniers commits : $msg"
+  echo "   Reformule ou ajoute un scope distinct."
+  exit 1
+fi
+exit 0
