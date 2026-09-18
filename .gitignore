@@ -278,3 +278,6 @@ runtime/archive_*/
 
 # Backups locaux
 _backup_refonte_*/
+# Backups locaux (script finalize)
+runtime/backend_*.log
+runtime/backend_*.log.err
