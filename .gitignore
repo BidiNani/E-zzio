@@ -272,3 +272,6 @@ core/api_legacy.py
 
 # Backups tests obsolètes
 runtime/obsolete_tests_*/
+
+# Archives de backups (nettoyage 2026-09-18)
+runtime/archive_*/

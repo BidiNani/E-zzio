@@ -23,6 +23,7 @@ from runtime.execution.worker_bootstrap import worker_manager
 from runtime.routers.llm import router as llm_router
 from runtime.routers.mobile import router as mobile_router
 from routers.master import router as master_router
+from routers.health import router as health_router
 from routers.telemetry import router as telemetry_router, AGENT_VIEW_HTML
 from fastapi.responses import HTMLResponse
 from routers.memory import router as memory_router
@@ -117,6 +118,7 @@ async def get_perception_status():
 app.include_router(llm_router)
 app.include_router(mobile_router)
 app.include_router(master_router)
+app.include_router(health_router)
 app.include_router(telemetry_router)
 app.include_router(memory_router)
 app.include_router(perception_router)

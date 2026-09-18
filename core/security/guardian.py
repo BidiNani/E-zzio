@@ -82,6 +82,19 @@ class GuardianMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         t0 = time.perf_counter()
 
+        # --- 0. PRÉFLIGHT CORS OPTIONS (navigateur) — réponse immédiate
+        if request.method == "OPTIONS":
+            origin = request.headers.get("origin", "")
+            if origin and origin in self.cors_origins:
+                resp = Response(status_code=200)
+                resp.headers["Access-Control-Allow-Origin"] = origin
+                resp.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+                resp.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, X-Correlation-ID, X-Requested-With"
+                resp.headers["Access-Control-Allow-Credentials"] = "true"
+                resp.headers["Access-Control-Max-Age"] = "86400"
+                resp.headers["Vary"] = "Origin"
+                return resp
+
         # --- 1. Correlation ID (propagé ou généré)
         cid = request.headers.get("x-correlation-id") or f"req_{uuid.uuid4().hex[:12]}"
 
@@ -89,7 +102,7 @@ class GuardianMiddleware(BaseHTTPMiddleware):
         client_ip = request.client.host if request.client else "unknown"
         path = request.url.path
 
-        if path not in RATE_LIMIT_EXEMPT_PATHS:
+        if not any(path == exempt or path.startswith(exempt) for exempt in RATE_LIMIT_EXEMPT_PATHS):
             # [B2-FIX2] log temporaire pour debug rate limit
             log.info(f"[GUARDIAN][HIT] ip={client_ip} path={path}")
             allowed, remaining, retry_after = self.rate_limiter.check(client_ip)
