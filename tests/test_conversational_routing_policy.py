@@ -10,13 +10,13 @@ def test_conversational_routing_policy_scenarios():
 
     # 1. Chat simple (Discord / Messagerie) -> gemini-3.6-flash (off)
     r1 = router.select_engine(task_type="general", complexity_score=0.2, risk_level="low", channel="discord")
-    assert r1["model"] == "gemini-3.6-flash"
+    assert r1["model"] == "gemini-3.5-flash-lite"
     assert r1["thinking_level"] == "off"
     assert r1["role"] == "FAST_CHAT"
 
     # 2. Chat avec raisonnement léger -> gemini-3.6-flash (medium)
     r2 = router.select_engine(task_type="general", complexity_score=0.5, risk_level="low", channel="discord")
-    assert r2["model"] == "gemini-3.6-flash"
+    assert r2["model"] == "gemini-3.5-flash-lite"
     assert r2["thinking_level"] == "medium"
     assert r2["role"] == "STANDARD_CHAT"
 
@@ -46,7 +46,7 @@ def test_conversational_routing_policy_scenarios():
 
     # 7. Fast / Local -> minicpm5-2b-godot:latest (off)
     r7 = router.select_engine(task_type="fast_local", complexity_score=0.1)
-    assert r7["model"] == "gemini-3.6-flash"
+    assert r7["model"] == "gemini-3.5-flash-lite"
     assert r7["thinking_level"] == "off"
     assert r7["role"] == "FAST"
 

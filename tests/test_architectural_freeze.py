@@ -16,7 +16,7 @@ def test_freeze_single_routing_authority():
     from core.cognition.model_router import ModelRouter
     router = ModelRouter()
     res = router.select_engine(task_type="general", is_mission=True)
-    assert res["model"] == "gemini-3.6-flash"
+    assert res["model"] == "gemini-3.5-flash-lite"
 
 
 def test_freeze_vault_first_on_canonical_providers():
