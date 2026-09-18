@@ -24,21 +24,41 @@ from web_server import app
 
 
 def test_qg_frozen_core_integrity():
-    manifest_path = "docs/FROZEN_CORE_MANIFEST.json"
-    assert os.path.exists(manifest_path)
-    with open(manifest_path, encoding="utf-8") as f:
-        manifest = json.load(f)["components"]
+    """Frozen Core SHA256 integrity match."""
+    import hashlib
+    import json
+    from pathlib import Path
 
-    files = [
-        "core/capabilities/capability_policy.py",
-        "core/capabilities/registry.py",
-        "core/security/audit_ledger.py"
-    ]
-    for f in files:
-        assert os.path.exists(f)
-        h = hashlib.sha256(open(f, "rb").read()).hexdigest().lower()
-        expected = manifest.get(f, {}).get("sha256", "").lower()
-        assert h == expected, f"Frozen Core integrity breach on {f}"
+    root = Path(__file__).parent.parent
+    manifest_path = root / "docs" / "FROZEN_CORE_MANIFEST.json"
+
+    assert manifest_path.exists(), "Manifest Frozen Core introuvable"
+
+    with open(manifest_path, encoding="utf-8") as f:
+        raw = json.load(f)
+
+    # Support des 2 formats : "files" (nouveau) et "components" (ancien)
+    if "files" in raw:
+        manifest = raw["files"]
+    elif "components" in raw:
+        manifest = {
+            path: meta["sha256"] if isinstance(meta, dict) else meta
+            for path, meta in raw["components"].items()
+        }
+    else:
+        raise AssertionError("Format de manifest inconnu")
+
+    for rel_path, expected_hash in manifest.items():
+        target = root / rel_path
+        assert target.exists(), f"Fichier Core manquant : {rel_path}"
+
+        actual = hashlib.sha256(target.read_bytes()).hexdigest().upper()
+        expected = expected_hash.upper()
+        assert actual == expected, (
+            f"Frozen Core drift : {rel_path}\n"
+            f"  attendu : {expected}\n"
+            f"  actuel  : {actual}"
+        )
 
 
 def test_qg_canonical_providers_contracts():

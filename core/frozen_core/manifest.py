@@ -1,7 +1,7 @@
 """Frozen Core manifest — calcul et vérification d'intégrité.
 
 Le manifest est stocké dans docs/FROZEN_CORE_MANIFEST.json.
-Il est la SEULE source de vérité pour les hashes des fichiers protégés.
+Format unique : {"version": N, "files": {"path": "sha256"}}
 """
 from __future__ import annotations
 
@@ -15,7 +15,6 @@ REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 MANIFEST_PATH = REPO_ROOT / "docs" / "FROZEN_CORE_MANIFEST.json"
 
 # Liste canonique des fichiers sous Frozen Core.
-# Ajouter/retirer un fichier = modifier cette liste + regénérer le manifest.
 FROZEN_FILES: tuple[str, ...] = (
     "core/capabilities/capability_policy.py",
     "core/capabilities/registry.py",
@@ -37,10 +36,7 @@ class ManifestDriftError(RuntimeError):
 
 
 def compute_hash(filepath: Path) -> str:
-    """Hash SHA256 normalisé : contenu lu en binaire, hex uppercase.
-
-    On ne normalise PAS les fins de ligne (on veut détecter tout changement).
-    """
+    """Hash SHA256 normalisé : contenu lu en binaire, hex uppercase."""
     h = hashlib.sha256()
     with open(filepath, "rb") as f:
         while chunk := f.read(65536):
@@ -49,62 +45,47 @@ def compute_hash(filepath: Path) -> str:
 
 
 def load_manifest() -> dict[str, Any]:
-    """Charge le manifest. Supporte les formats 'components' et 'files'."""
+    """Charge le manifest. Retourne toujours {"version": N, "files": {...}}."""
     if not MANIFEST_PATH.exists():
-        return {"version": 1, "components": {}}
+        return {"version": 1, "files": {}}
+
     raw = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
 
-    # Normalisation interne : toujours exposer 'components' avec {sha256: ...}
-    if "components" in raw:
-        return raw
-    if "files" in raw:
-        # Migrer l'ancien format vers le nouveau
-        return {
-            "version": raw.get("version", 1),
-            "components": {
-                path: {"sha256": h}
-                for path, h in raw["files"].items()
-            },
+    # Migration automatique depuis l'ancien format "components"
+    if "components" in raw and "files" not in raw:
+        files = {
+            path: meta["sha256"] if isinstance(meta, dict) else meta
+            for path, meta in raw["components"].items()
         }
-    return {"version": 1, "components": {}}
+        return {"version": raw.get("version", 1), "files": files}
 
-
-def _get_manifest_hashes(manifest: dict[str, Any]) -> dict[str, str]:
-    """Extrait {path: sha256} du manifest, peu importe le format."""
-    if "components" in manifest:
-        return {path: meta["sha256"] for path, meta in manifest["components"].items()}
-    if "files" in manifest:
-        return dict(manifest["files"])
-    return {}
+    return raw
 
 
 def save_manifest(manifest: dict[str, Any]) -> None:
-    """Écrit le manifest au format 'components' (compatible tests existants)."""
+    """Écrit le manifest avec tri stable et indentation lisible."""
     MANIFEST_PATH.parent.mkdir(parents=True, exist_ok=True)
     payload = json.dumps(manifest, indent=2, sort_keys=True, ensure_ascii=False)
     MANIFEST_PATH.write_text(payload + "\n", encoding="utf-8", newline="\n")
 
 
 def regenerate_manifest() -> dict[str, Any]:
-    """Recalcule tous les hashes et réécrit le manifest au format 'components'."""
-    components: dict[str, dict[str, str]] = {}
+    """Recalcule tous les hashes et réécrit le manifest. Retourne le nouveau."""
+    files: dict[str, str] = {}
     for rel in FROZEN_FILES:
         fp = REPO_ROOT / rel
         if not fp.exists():
             raise FileNotFoundError(f"Frozen Core file introuvable : {rel}")
-        components[rel] = {"sha256": compute_hash(fp)}
-    manifest = {"version": 1, "components": components}
+        files[rel] = compute_hash(fp)
+    manifest = {"version": 1, "files": files}
     save_manifest(manifest)
     return manifest
 
 
 def verify_integrity() -> None:
-    """Vérifie l'intégrité. Lève ManifestDriftError si dérive détectée.
-
-    Utilisé par tous les tests Frozen Core (gate unique).
-    """
+    """Vérifie l'intégrité. Lève ManifestDriftError si dérive détectée."""
     manifest = load_manifest()
-    expected_files: dict[str, str] = _get_manifest_hashes(manifest)
+    expected_files: dict[str, str] = manifest.get("files", {})
     drifts: dict[str, dict[str, str]] = {}
 
     # 1. Fichiers protégés absents du manifest

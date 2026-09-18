@@ -1,14 +1,8 @@
 {
-  "components": {
-    "core/capabilities/capability_policy.py": {
-      "sha256": "25DD24E9527E76772BEC9E690FBE76F76CF90268CF03A3AB09B379DB9D5FACB8"
-    },
-    "core/capabilities/registry.py": {
-      "sha256": "0D322C81B7AC266D9F16D030BBBA8F82B687C3136100CDA4BA2D4587392FF092"
-    },
-    "core/security/audit_ledger.py": {
-      "sha256": "AEDD6A7C24EC8F757EEA1EFD05E72484520060B97AA8840A24C6AB8EAC141E6D"
-    }
+  "files": {
+    "core/capabilities/capability_policy.py": "25DD24E9527E76772BEC9E690FBE76F76CF90268CF03A3AB09B379DB9D5FACB8",
+    "core/capabilities/registry.py": "0D322C81B7AC266D9F16D030BBBA8F82B687C3136100CDA4BA2D4587392FF092",
+    "core/security/audit_ledger.py": "AEDD6A7C24EC8F757EEA1EFD05E72484520060B97AA8840A24C6AB8EAC141E6D"
   },
   "version": 1
 }
