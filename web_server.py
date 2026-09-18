@@ -126,10 +126,12 @@ app.include_router(generators_router)
 app.include_router(capabilities_router)
 app.include_router(research_router)
 from routers.accounts import router as accounts_router
+from routers.models_admin import router as models_admin_router
 from routers.search import router as search_router
 app.include_router(webhook_router)
 app.include_router(search_router)
 app.include_router(accounts_router)
+app.include_router(models_admin_router)
 
 
 @app.get("/agent-view", response_class=HTMLResponse, include_in_schema=False)
