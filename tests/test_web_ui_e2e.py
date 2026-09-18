@@ -26,9 +26,21 @@ import urllib.request
 import pytest
 import websockets
 
-BRAVE_PATH = r"C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe"
+import sys
+import tempfile
+
+# Chemins via helper centralisé (safe : jamais le Brave perso)
+from tests._browser_helper import (
+    find_browser,
+    get_free_port,
+    wait_for_cdp,
+    get_cdp_ws_url,
+    isolated_brave_cdp,
+)
+
+BRAVE_PATH = find_browser()
 BASE_URL = "http://127.0.0.1:8001/"
-PROFILE_BASE = r"C:\Users\enrik\AppData\Local\Temp\brave_e2e_forensic_suite"
+PROFILE_BASE = str(Path(tempfile.gettempdir()) / "ezzio_e2e_profiles")
 
 
 def _is_e2e_available():
@@ -48,50 +60,43 @@ pytestmark = pytest.mark.skipif(
 
 
 class BrowserCDPSession:
-    def __init__(self, cdp_port=9223):
-        self.cdp_port = cdp_port
-        self.profile_dir = f"{PROFILE_BASE}_{cdp_port}"
+    """Session CDP isolée — utilise isolated_brave_cdp (safe).
+
+    Ne touche JAMAIS au Brave perso de l'utilisateur :
+      - Port dynamique
+      - Profil isolé en tempdir
+      - PID tracké (self.proc)
+    """
+
+    def __init__(self, cdp_port: int | None = None):
+        # cdp_port est ignoré (compat) : on utilise un port dynamique
+        self.cdp_port = cdp_port  # conservé pour compat API
+        self.profile_dir = None
         self.proc = None
         self.ws = None
         self.msg_id = 1
         self.console_events = []
         self.exceptions = []
         self.network_responses = []
+        self._cm = None
 
     async def start(self):
-        if os.path.exists(self.profile_dir):
-            try:
-                shutil.rmtree(self.profile_dir)
-            except Exception:
-                pass
-        os.makedirs(self.profile_dir, exist_ok=True)
+        # On utilise le context manager mais on garde le contrôle du cycle
+        from contextlib import ExitStack
+        self._exit_stack = ExitStack()
+        proc, port = self._exit_stack.enter_context(
+            isolated_brave_cdp(headless=True)
+        )
+        self.proc = proc
+        self.actual_port = port
 
-        self.proc = subprocess.Popen([
-            BRAVE_PATH,
-            "--headless=new",
-            f"--remote-debugging-port={self.cdp_port}",
-            f"--user-data-dir={self.profile_dir}",
-            "--no-first-run",
-            "--no-default-browser-check",
-            "--disable-gpu",
-            "--disable-background-networking",
-            "about:blank"
-        ])
-
-        for _ in range(15):
-            await asyncio.sleep(0.5)
-            try:
-                with urllib.request.urlopen(f"http://127.0.0.1:{self.cdp_port}/json", timeout=2) as r:
-                    tabs = json.loads(r.read().decode())
-                    if tabs and "webSocketDebuggerUrl" in tabs[0]:
-                        ws_url = tabs[0]["webSocketDebuggerUrl"]
-                        self.ws = await websockets.connect(ws_url, max_size=20_000_000)
-                        break
-            except Exception:
-                pass
-
-        if not self.ws:
-            raise RuntimeError("Failed to connect to browser CDP WebSocket")
+        ws_url = get_cdp_ws_url(port, timeout=10.0)
+        self.ws = await websockets.connect(
+            ws_url,
+            max_size=20_000_000,
+            open_timeout=15,
+            ping_interval=None,
+        )
 
         await self.send("Runtime.enable")
         await self.send("Console.enable")
@@ -119,50 +124,24 @@ class BrowserCDPSession:
             elif method == "Runtime.exceptionThrown":
                 self.exceptions.append(msg["params"])
             elif method == "Network.responseReceived":
-                self.network_responses.append(msg["params"]["response"])
+                self.network_responses.append(msg["params"])
             if msg.get("id") == target_id:
                 return msg
-        raise TimeoutError(f"Target cmd {target_id} timed out")
-
-    async def evaluate(self, expression, timeout=6.0):
-        cmd_id = await self.send("Runtime.evaluate", {
-            "expression": expression,
-            "returnByValue": True,
-            "awaitPromise": True
-        })
-        res = await self.recv_until_id(cmd_id, timeout=timeout)
-        result_payload = res.get("result", {}).get("result", {})
-        if "value" in result_payload:
-            return result_payload["value"]
-        return result_payload
-
-    async def drain_events(self, duration=1.0):
-        start = time.time()
-        while time.time() - start < duration:
-            try:
-                raw = await asyncio.wait_for(self.ws.recv(), timeout=0.3)
-                msg = json.loads(raw)
-                method = msg.get("method")
-                if method == "Runtime.consoleAPICalled":
-                    self.console_events.append(msg["params"])
-                elif method == "Runtime.exceptionThrown":
-                    self.exceptions.append(msg["params"])
-                elif method == "Network.responseReceived":
-                    self.network_responses.append(msg["params"]["response"])
-            except TimeoutError:
-                pass
+        raise TimeoutError(f"CDP : pas de réponse à id={target_id} après {timeout}s")
 
     async def stop(self):
-        if self.ws:
-            await self.ws.close()
-        if self.proc:
-            self.proc.terminate()
+        if self.ws is not None:
             try:
-                self.proc.wait(timeout=3)
+                await self.ws.close()
             except Exception:
-                self.proc.kill()
-
-
+                pass
+            self.ws = None
+        if getattr(self, "_exit_stack", None) is not None:
+            try:
+                self._exit_stack.close()
+            except Exception:
+                pass
+            self._exit_stack = None
 @pytest.mark.asyncio
 async def test_browser_page_load_and_console_cleanliness():
     session = BrowserCDPSession(cdp_port=9224)

@@ -1,12 +1,23 @@
-import os
-import sys
+# ════════════════════════════════════════════════════════════════════════════
+# tests/conftest.py — Fixtures partagées
+# ════════════════════════════════════════════════════════════════════════════
 
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+import pytest
 
-if ROOT not in sys.path:
-    sys.path.insert(0, ROOT)
 
-# Désactive le middleware auth pour les tests
-import os
+@pytest.fixture(scope="session")
+def chrome_cdp():
+    """Fixture session : lance Brave/Chrome isolé en CDP.
 
-os.environ['EZZIO_DISABLE_AUTH'] = '1'
+    Retourne le port CDP (int).
+
+    ⚠️  SÉCURITÉ : ne touche JAMAIS aux autres process Brave/Chrome
+    de l'utilisateur. Port dynamique + profil isolé + PID tracké.
+    """
+    try:
+        from tests._browser_helper import isolated_brave_cdp
+    except ImportError:
+        from _browser_helper import isolated_brave_cdp
+
+    with isolated_brave_cdp(headless=True) as (proc, port):
+        yield port
