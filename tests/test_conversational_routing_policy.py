@@ -46,7 +46,7 @@ def test_conversational_routing_policy_scenarios():
 
     # 7. Fast / Local -> minicpm5-2b-godot:latest (off)
     r7 = router.select_engine(task_type="fast_local", complexity_score=0.1)
-    assert r7["model"] == "minicpm5-2b-godot:latest"
+    assert r7["model"] == "gemini-3.6-flash"
     assert r7["thinking_level"] == "off"
     assert r7["role"] == "FAST"
 

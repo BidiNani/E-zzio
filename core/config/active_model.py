@@ -16,8 +16,8 @@ _ACTIVE_MODEL_FILE = _RUNTIME_DIR / "active_model.json"
 # Modèle par défaut (fallback si rien n'est configuré)
 DEFAULT_MODEL: Dict[str, str] = {
     "provider": "gemini",
-    "model_id": "gemini-3.8-flash",
-    "display_name": "Gemini 3.8 Flash",
+    "model_id": "gemini-3.6-flash",
+    "display_name": "Gemini 3.6 Flash",
 }
 
 

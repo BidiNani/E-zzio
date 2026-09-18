@@ -16,7 +16,7 @@ async def test_official_web_server_mounted_endpoints():
         r_health = await client.get("/health")
         assert r_health.status_code == 200
         data_health = r_health.json()
-        assert data_health["service"] == "E-ZZIO"
+        assert data_health["service"] == "E-ZZIO Sovereign Platform"
         assert data_health["status"] == "ONLINE"
 
         # 2. Perception status monté sur le serveur officiel

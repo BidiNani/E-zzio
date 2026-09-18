@@ -266,3 +266,9 @@ desktop.ini
 probe_latencies.py
 run_test_subagent.py
 E-ZZIO/
+
+# Conflit Python résolu (2026-09-18)
+core/api_legacy.py
+
+# Backups tests obsolètes
+runtime/obsolete_tests_*/
