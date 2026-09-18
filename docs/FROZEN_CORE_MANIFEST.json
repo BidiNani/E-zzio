@@ -7,84 +7,84 @@
   "components": {
     "web_server.py": {
       "path": "web_server.py",
-      "sha256": "01a4662baedecd5944d50c3a3a06f2dc7ec8f0926363880d80d678ec1fe46e37",
+      "sha256": "88e71301973608d413f28883b5fd89d12f0acbbc193e0d90b9574e4a0c887c70",
       "role": "Canonical HTTP Entry Point & FastAPI ASGI Server",
       "authority": "ENTRY_POINT",
       "status": "FROZEN"
     },
     "core/sdk.py": {
       "path": "core/sdk.py",
-      "sha256": "dfd497f8a1324d7e74d0bc487a5452017ba611ae2ca051eb6cfb1303ecc08a3c",
+      "sha256": "cac2ab2043364e95878ecf0b0471fc1673bea216b24b93446dc67389f2e53de6",
       "role": "Unified In-Process Developer SDK Facade",
       "authority": "SDK_FACADE",
       "status": "FROZEN"
     },
     "core/cognition/cognitive_gateway.py": {
       "path": "core/cognition/cognitive_gateway.py",
-      "sha256": "7a08933e30878d2e09ef947b93f0686e60a77bbe44a8a676a1384ccff0c5ed02",
+      "sha256": "680c5540ce6808c7104940ac55d12bed06006e247e4e63d10ba4345dedab282a",
       "role": "Single Cognitive Intent & Execution Orchestrator",
       "authority": "COGNITIVE_AUTHORITY",
       "status": "FROZEN"
     },
     "core/cognition/model_router.py": {
       "path": "core/cognition/model_router.py",
-      "sha256": "aedb24eb62d6063518d5a213c711fccf36a54f1c73befdc59f3b653c0f446f6a",
+      "sha256": "b540bb2ae3adb86d8f87dd81b5b68e84d11a51cce748e79521b804725a117a98",
       "role": "Single Model Strategy & Profile Routing Authority",
       "authority": "MODEL_STRATEGY",
       "status": "FROZEN"
     },
     "core/models/gemini_pool.py": {
       "path": "core/models/gemini_pool.py",
-      "sha256": "73392a4be035e7515324ccc52cdbb0926e28310aedac281834757b4835961d22",
+      "sha256": "5f9df9b5db1881e3ec4d18526b28946fc780bd0751f7a51436d7b65221d9a21c",
       "role": "Multi-Project Gemini Infrastructure & 429 Rotation",
       "authority": "GEMINI_INFRASTRUCTURE",
       "status": "FROZEN"
     },
     "core/providers/gemini_provider.py": {
       "path": "core/providers/gemini_provider.py",
-      "sha256": "2c01965e94e4e09ed0f2623ec2ab389f6ba5cf5edb99da1974f10777be533e27",
+      "sha256": "795a5c9383715152c7c4680ac886815851344f75cd69572ff835247c68ef9fb8",
       "role": "Canonical Gemini Cloud Transport via HTTPX Async",
       "authority": "GEMINI_TRANSPORT",
       "status": "FROZEN"
     },
     "core/memory/unified_gateway.py": {
       "path": "core/memory/unified_gateway.py",
-      "sha256": "051980ab331f34abd8bf2a04bb8df4df9a166bf357dd5c703c0a6531d7eb9bc0",
+      "sha256": "4e3067dbd926ee5f89273ff7406558c18c416ca04bd9348fdc46ea443b5a54dc",
       "role": "Single Canonical Memory Gateway SQLite WAL + FTS5",
       "authority": "MEMORY_AUTHORITY",
       "status": "FROZEN"
     },
     "core/capabilities/capability_policy.py": {
       "path": "core/capabilities/capability_policy.py",
-      "sha256": "89a770354ebfe4233697f944f0963c3873b811af1c7df73e6dacc7aabb389ae2",
+      "sha256": "25dd24e9527e76772bec9e690fbe76f76cf90268cf03a3ab09b379db9d5facb8",
       "role": "Security Authorization Arbitrator (ALLOW/REQUIRE_HUMAN/DENY)",
       "authority": "SECURITY_POLICY",
       "status": "FROZEN"
     },
     "core/capabilities/registry.py": {
       "path": "core/capabilities/registry.py",
-      "sha256": "3ee057b327354faa95cf72a0a920a5eed4fa5df77ae87298615ed3860ffb0f68",
+      "sha256": "0d322c81b7ac266d9f16d030bbba8f82b687c3136100cda4ba2d4587392ff092",
       "role": "Canonical Capability Catalog & Execution Harness",
       "authority": "CAPABILITY_REGISTRY",
       "status": "FROZEN"
     },
     "core/security/audit_ledger.py": {
       "path": "core/security/audit_ledger.py",
-      "sha256": "9f2177c85d1c137f83df78b956ab89aac29ccd112dd6fa730b8cda8dbcfa7132",
+      "sha256": "aedd6a7c24ec8f757eea1efd05e72484520060b97aa8840a24c6ab8eac141e6d",
       "role": "Cryptographic SHA-256 Immutability & Audit Ledger",
       "authority": "AUDIT_AUTHORITY",
       "status": "FROZEN"
     },
     "core/security/secrets_vault.py": {
       "path": "core/security/secrets_vault.py",
-      "sha256": "688ca66ac67a150be1d103f9e7a85f49a178bac9f006e535354ce0ad1a293fd7",
+      "sha256": "40e5b718a55f9fcb7ea12cb82f017cf9b78bece4a811836ee18cc24627fff5ca",
       "role": "Encrypted Secrets & Token Provisioning (AES-256-GCM / DPAPI)",
       "authority": "SECRETS_AUTHORITY",
       "status": "FROZEN"
     },
     "core/agent/coding_agent_loop.py": {
       "path": "core/agent/coding_agent_loop.py",
-      "sha256": "74e8fc4f6ea1ed03b501aad25ca042296c9228d09e82d19374ebe0c6fad04d87",
+      "sha256": "1fe955aafa3ab026973a69ab075b53d9e358145add3b8424ce3853825dd95498",
       "role": "Single Canonical Autonomous Coding & Self-Healing Worker",
       "authority": "CODING_WORKER",
       "status": "FROZEN"
