@@ -259,3 +259,10 @@ desktop.ini
 
 # Git
 .git_backup/
+
+# ============================================================
+# B7-CLEAN — Scripts dev / exploration (2026-09-18)
+# ============================================================
+probe_latencies.py
+run_test_subagent.py
+E-ZZIO/
