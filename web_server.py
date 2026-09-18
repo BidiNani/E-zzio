@@ -127,17 +127,6 @@ from core.api.endpoints import router as ezzio_router
 app.include_router(ezzio_router)
 
 
-@app.get("/metrics")
-async def get_metrics():
-    from core.models.provider_health import probe_ollama_status
-    ollama_ok = probe_ollama_status()
-    return {
-        "ok": True,
-        "circuit_breaker": "CLOSED",
-        "providers_health": {
-            "ollama_local": "ONLINE" if ollama_ok else "OFFLINE"
-        }
-    }
 
 
 @app.get("/perception/status")
@@ -185,10 +174,6 @@ if web_static_dir.exists():
     app.mount("/static", StaticFiles(directory=str(web_static_dir)), name="static")
 
 
-@app.get("/health")
-@app.get("/ping")
-async def health_check():
-    return {"ok": True, "status": "ONLINE", "service": "E-ZZIO Sovereign Platform"}
 
 
 @app.get("/")

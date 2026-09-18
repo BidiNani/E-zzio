@@ -1,4 +1,4 @@
-"""Endpoints santé : /health, /ping, /metrics."""
+"""Endpoints sante : /health, /ping, /metrics."""
 import time
 
 from fastapi import APIRouter
@@ -16,4 +16,13 @@ async def health_check():
 
 @router.get("/metrics")
 async def get_metrics():
-    return {"uptime_s": round(time.time() - _start_time, 2)}
+    from core.models.provider_health import probe_ollama_status
+    ollama_ok = probe_ollama_status()
+    return {
+        "ok": True,
+        "uptime_s": round(time.time() - _start_time, 2),
+        "circuit_breaker": "CLOSED",
+        "providers_health": {
+            "ollama_local": "ONLINE" if ollama_ok else "OFFLINE"
+        },
+    }
