@@ -29,6 +29,10 @@ from core.providers.base_provider import (
 from core.providers.iresearch_provider import IResearchProvider
 from core.secrets import load_secrets
 
+from core.models.gemini_pool import gemini_pool  # noqa: F401
+# ↑ Import explicite : utilisé via globals() dans search(), exposé
+#   pour monkey-patch par les tests. Source : core/models/gemini_pool.py
+
 logger = logging.getLogger("GeminiProvider")
 
 

@@ -19,11 +19,9 @@ from PIL import Image
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 EVIDENCE_DIR = ROOT_DIR / "state" / "audit" / "visual" / "v9.4-counter-certification"
 
-FROZEN_CORE_EXPECTED = {
-    "core/capabilities/capability_policy.py": "89A770354EBFE4233697F944F0963C3873B811AF1C7DF73E6DACC7AABB389AE2",
-    "core/capabilities/registry.py": "3EE057B327354FAA95CF72A0A920A5EED4FA5DF77AE87298615ED3860FFB0F68",
-    "core/security/audit_ledger.py": "9F2177C85D1C137F83DF78B956AB89AAC29CCD112DD6FA730B8CDA8DBCFA7132",
-}
+# Frozen Core : la vérification est déléguée au gate central
+# (voir tests/test_frozen_core.py et core/frozen_core/manifest.py)
+from core.frozen_core import verify_integrity, ManifestDriftError
 
 EXPECTED_PNGS = [
     ("01-command-center.png", 1920, 1080),
@@ -48,12 +46,14 @@ def sha256_file(filepath: Path) -> str:
 
 
 def test_frozen_core_untouched():
-    """Verify zero drift on core capabilities and security audit ledger."""
-    for rel_path, expected_hash in FROZEN_CORE_EXPECTED.items():
-        fp = ROOT_DIR / rel_path
-        assert fp.exists(), f"Missing frozen core file: {rel_path}"
-        actual = sha256_file(fp)
-        assert actual == expected_hash, f"Frozen core drift in {rel_path}!"
+    """Verify zero drift on core capabilities and security audit ledger.
+
+    Délégué au gate central core.frozen_core — source de vérité unique.
+    """
+    try:
+        verify_integrity()
+    except ManifestDriftError as e:
+        pytest.fail(str(e))
 
 
 def test_evidence_directory_exists():

@@ -1,0 +1,16 @@
+#!/bin/sh
+# Pre-commit E-ZZIO : ruff + tests rapides (pas toute la suite)
+set -e
+
+# Détecter le python du venv
+PY=".venv/Scripts/python.exe"
+[ -f "$PY" ] || PY=".venv/bin/python"
+[ -f "$PY" ] || { echo "⚠️  Venv introuvable, skip pre-commit"; exit 0; }
+
+echo "→ ruff check..."
+"$PY" -m ruff check . --fix --quiet || true
+
+echo "→ pytest frozen core + gemini pool..."
+"$PY" -m pytest tests/test_frozen_core.py tests/test_gemini_pool.py -q --tb=short
+
+echo "✅ Pre-commit OK"
