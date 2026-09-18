@@ -125,20 +125,6 @@ async def correlation_id_middleware(request: Request, call_next):
 from core.api.endpoints import router as ezzio_router
 
 app.include_router(ezzio_router)
-# [DISABLED - doublon évité] @app.get("/health")
-async def health_check():
-    return {
-        "status": "ONLINE",
-        "ok": True,
-        "service": "E-ZZIO",
-        "pid": os.getpid(),
-        "worker_pool": {
-            "status": worker_manager.status,
-            "profile": worker_manager.profile_name,
-            "max_ram_gb": worker_manager.max_ram_gb,
-            "active_workers": worker_manager.max_workers,
-        },
-    }
 
 
 @app.get("/metrics")
