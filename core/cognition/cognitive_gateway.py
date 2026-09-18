@@ -11,6 +11,7 @@ from typing import Dict, Any, List, Optional
 from core.agent.agent_provider import AgentProviderAdapter
 from core.identity.canonical_identity import CanonicalIdentity
 from core.memory.unified_gateway import UnifiedMemoryGateway
+from core.security.untrusted import wrap_untrusted
 
 logger = logging.getLogger(__name__)
 
@@ -65,6 +66,9 @@ class CognitiveGateway:
         GATE D : Priorité absolue de la session active sur les archives FTS5.
         """
         await self.init()
+
+        # 0. Sanitization du prompt utilisateur (anti prompt-injection)
+        task = wrap_untrusted(task)
 
         # 1. Identité canonique (Inviolable)
         identity_prompt = "Tu es E-ZZIO, l'âme numérique souveraine conçue par ton créateur et Mentor BidiNani."
