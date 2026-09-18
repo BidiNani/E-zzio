@@ -8,15 +8,17 @@ Vérifie l'éradication des faux positifs (HTTP 200 != Ingestion réussie) :
 4. Protection contre les coquilles HTML vides dans SafeWebFetcher.
 """
 
-import pytest
 import asyncio
+
+import pytest
+
+from core.perception.safe_fetcher import SafeWebFetcher
 from core.perception.social_media_extractor import (
-    social_media_extractor,
+    IngestionContentStatus,
     SocialPlatform,
-    IngestionContentStatus
+    social_media_extractor,
 )
 from core.perception.unified_perception import UnifiedPerceptionPipeline
-from core.perception.safe_fetcher import SafeWebFetcher
 
 
 def test_social_url_classification():

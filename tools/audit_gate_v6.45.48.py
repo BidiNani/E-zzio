@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import json
 import sys
 from pathlib import Path
@@ -13,19 +14,19 @@ def main():
     print(f"[RACINE] {PROJECT_ROOT}\n")
 
     try:
-        from core.models.fabric import build_fabric
         from core.intents.fabric_connector import IntentFabricConnector
-        
+        from core.models.fabric import build_fabric
+
         print("[1] INSTANCIATION DE AutonomousModelFabric (build_fabric) :")
         fabric = build_fabric(project_root=PROJECT_ROOT)
-        print(f"  • Instance de Fabric créée avec succès.")
-        
+        print("  • Instance de Fabric créée avec succès.")
+
         # Q1 & Q2 : Chemin du registre chargé
         reg = getattr(fabric, "registry", None)
         reg_path = getattr(reg, "path", getattr(reg, "_path", "Inconnu"))
-        print(f"\n[2] PROVENANCE DU REGISTRE :")
+        print("\n[2] PROVENANCE DU REGISTRE :")
         print(f"  • Chemin effectif du fichier de registre : {reg_path}")
-        
+
         # Q3 : Contenu réel au démarrage
         all_recs = reg.all() if reg and hasattr(reg, "all") else []
         active_recs = reg.active() if reg and hasattr(reg, "active") else []
@@ -38,19 +39,19 @@ def main():
         router = getattr(fabric, "router", None)
         router_type = type(router).__name__ if router else "Aucun"
         model_list = getattr(router, "model_list", []) if router else []
-        print(f"\n[3] ROUTEUR DE LA FABRIC :")
+        print("\n[3] ROUTEUR DE LA FABRIC :")
         print(f"  • Type de router : {router_type}")
         print(f"  • Modèles configurés dans le routeur : {len(model_list)}")
         for m in model_list:
             print(f"    ↳ {m}")
 
         # Q5 : Test du pont de résolution Intent / Tier -> Modèle
-        print(f"\n[4] TEST DU PONT DE RÉSOLUTION INTENT/TIER :")
+        print("\n[4] TEST DU PONT DE RÉSOLUTION INTENT/TIER :")
         connector = IntentFabricConnector(fabric=fabric, project_root=str(PROJECT_ROOT))
         for test_intent in ["quick", "code_simple", "deep_reasoning"]:
             tier = connector.resolve_tier(test_intent)
             print(f"  • Intent '{test_intent}' → Palier résolu : '{tier}'")
-            
+
         out_report = {
             "registry_path": str(reg_path),
             "total_records": len(all_recs),

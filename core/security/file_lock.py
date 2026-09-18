@@ -5,9 +5,9 @@ pour garantir une exclusion mutuelle multi-processus indestructible et auto-libÃ
 """
 
 import os
+import random
 import sys
 import time
-import random
 from pathlib import Path
 
 
@@ -41,7 +41,7 @@ class ProcessFileLock:
 
                     fcntl.flock(self.fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
                 return self
-            except (IOError, OSError):
+            except OSError:
                 if time.time() - start_time > self.timeout:
                     try:
                         os.close(self.fd)

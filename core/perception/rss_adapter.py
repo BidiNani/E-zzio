@@ -6,17 +6,15 @@ Permet la veille technologique, sécuritaire (CVE) et le suivi de flux détermin
 3. Filtrage par mot-clé et limitation du nombre d'articles
 """
 from __future__ import annotations
-import os
-import re
-import time
+
 import logging
+import re
 import urllib.parse
 import xml.etree.ElementTree as ET
 from pathlib import Path
-from typing import Dict, Any, List, Optional
-import httpx
+from typing import Any
 
-from core.capabilities.capability_policy import CapabilityPolicy, PolicyDecision
+from core.capabilities.capability_policy import CapabilityPolicy
 from core.utils.http_pool import get_http_client
 
 logger = logging.getLogger("RSSAdapter")
@@ -44,8 +42,8 @@ class RSSAdapter:
         self,
         feed_url: str,
         limit: int = 10,
-        keyword_filter: Optional[str] = None
-    ) -> Dict[str, Any]:
+        keyword_filter: str | None = None
+    ) -> dict[str, Any]:
         """Récupère et extrait les entrées structurées d'un flux RSS ou Atom."""
         if not self._is_safe_url(feed_url):
             return {
@@ -79,16 +77,16 @@ class RSSAdapter:
         self,
         xml_content: str,
         limit: int = 10,
-        keyword_filter: Optional[str] = None,
+        keyword_filter: str | None = None,
         feed_url: str = ""
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Parse le contenu XML (RSS ou Atom) de manière déterministe."""
         try:
             root = ET.fromstring(xml_content)
         except Exception as exc:
             return {"ok": False, "error": f"Format XML invalide : {exc}"}
 
-        items: List[Dict[str, Any]] = []
+        items: list[dict[str, Any]] = []
 
         # 1. Format RSS 2.0 (<channel><item>...</item></channel>)
         channel = root.find("channel")

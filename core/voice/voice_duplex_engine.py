@@ -8,12 +8,14 @@ Architecture:
 - Pure In-Memory Audio Streams -> Zero persistent audio on disk for complete privacy
 """
 from __future__ import annotations
+
 import asyncio
-import time
-import struct
 import logging
+import struct
+import time
+from collections.abc import AsyncGenerator, Callable
 from enum import Enum
-from typing import Dict, Any, List, Optional, Callable, AsyncGenerator
+from typing import Any
 
 logger = logging.getLogger("VoiceDuplexEngine")
 
@@ -38,11 +40,11 @@ class VoiceDuplexEngine:
         self.fast_voice_model = fast_voice_model
         self.state = DuplexState.IDLE
         self._interrupt_event = asyncio.Event()
-        self._active_tts_task: Optional[asyncio.Task] = None
-        self._active_llm_task: Optional[asyncio.Task] = None
+        self._active_tts_task: asyncio.Task | None = None
+        self._active_llm_task: asyncio.Task | None = None
         self._output_stream = None  # sounddevice.OutputStream (optionnel, duck-typé)
-        self._spoken_text_buffer: List[str] = []
-        self._conversation_history: List[Dict[str, str]] = []
+        self._spoken_text_buffer: list[str] = []
+        self._conversation_history: list[dict[str, str]] = []
 
     def detect_voice_activity(self, audio_chunk: bytes) -> bool:
         """Détecte la présence de voix humaine dans le chunk audio (VAD instantané)."""
@@ -61,7 +63,7 @@ class VoiceDuplexEngine:
         """Raccorde le flux de sortie physique (sounddevice.OutputStream)."""
         self._output_stream = stream
 
-    def trigger_barge_in(self) -> Dict[str, Any]:
+    def trigger_barge_in(self) -> dict[str, Any]:
         """Interrompt immédiatement la parole d'E-zzio et annule la génération LLM/TTS."""
         start_t = time.perf_counter()
 
@@ -79,7 +81,7 @@ class VoiceDuplexEngine:
 
         # 1. Activation du signal d'interruption
         self._interrupt_event.set()
-        
+
         # 2. Annulation de la tâche TTS en cours si active
         if self._active_tts_task and not self._active_tts_task.done():
             self._active_tts_task.cancel()
@@ -110,8 +112,8 @@ class VoiceDuplexEngine:
     async def process_incoming_audio_stream(
         self,
         audio_stream: AsyncGenerator[bytes, None],
-        on_speech_start: Optional[Callable[[], None]] = None
-    ) -> AsyncGenerator[Dict[str, Any], None]:
+        on_speech_start: Callable[[], None] | None = None
+    ) -> AsyncGenerator[dict[str, Any], None]:
         """Traite le flux micro continu en temps réel avec détection d'interruption."""
         self.state = DuplexState.LISTENING
         self._interrupt_event.clear()
@@ -133,7 +135,7 @@ class VoiceDuplexEngine:
                     "chunk_bytes": len(chunk)
                 }
 
-    async def simulate_tts_speech(self, text_segments: List[str], delay_per_segment: float = 0.4) -> str:
+    async def simulate_tts_speech(self, text_segments: list[str], delay_per_segment: float = 0.4) -> str:
         """Simule la lecture TTS segment par segment, interruptible à tout moment par le VAD."""
         self.state = DuplexState.SPEAKING
         self._spoken_text_buffer.clear()

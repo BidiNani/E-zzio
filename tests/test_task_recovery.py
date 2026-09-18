@@ -1,8 +1,11 @@
-import pytest
-import aiosqlite
 import json
 from dataclasses import asdict
-from runtime.agent.contracts import AgentTask, AgentStatus
+
+import aiosqlite
+import pytest
+
+from runtime.agent.contracts import AgentStatus, AgentTask
+
 
 class TaskRecoveryStore:
     """Gestionnaire de persistance et de reprise de tâches E-ZZIO."""
@@ -62,28 +65,28 @@ async def test_task_checkpoint_interruption_and_recovery(tmp_path):
     db_path = str(tmp_path / "task_recovery.db")
     store = TaskRecoveryStore(db_path)
     await store.init()
-    
+
     t_id = "TASK_RECOVERY_TEST_001"
     s_id = "SESS_REC_01"
     obj = "Analyse et traitement de données persistantes"
-    
+
     # 1. Étape 1 : Création et checkpoint initial
     await store.save_checkpoint(t_id, s_id, obj, "EXECUTING", step_index=1, payload={"processed_items": 10})
-    
+
     # 2. Simulation d'un crash / redémarrage du processus
     reloaded_store = TaskRecoveryStore(db_path)
     await reloaded_store.init()
-    
+
     checkpoint = await reloaded_store.load_checkpoint(t_id)
     assert checkpoint is not None
     assert checkpoint["task_id"] == t_id
     assert checkpoint["status"] == "EXECUTING"
     assert checkpoint["step_index"] == 1
     assert checkpoint["payload"]["processed_items"] == 10
-    
+
     # 3. Reprise de la tâche et finalisation idempotente
     await reloaded_store.save_checkpoint(t_id, s_id, obj, "COMPLETED", step_index=2, payload={"processed_items": 20, "final": True})
-    
+
     final_checkpoint = await reloaded_store.load_checkpoint(t_id)
     assert final_checkpoint["status"] == "COMPLETED"
     assert final_checkpoint["step_index"] == 2

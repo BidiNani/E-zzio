@@ -7,14 +7,14 @@ INVARIANTS :
 3. SÉCURITÉ : Interdiction d'enregistrer les secrets/clés/credentials privés.
 """
 from __future__ import annotations
-import os
-import time
-import sqlite3
+
 import hashlib
 import logging
+import sqlite3
+import time
 from pathlib import Path
-from typing import Dict, Any, Optional
 from threading import Lock
+from typing import Any
 
 logger = logging.getLogger("EzzioResponseCache")
 
@@ -26,13 +26,13 @@ DEFAULT_TTL_SECONDS = 3600.0  # 1 heure par défaut
 class ResponseCache:
     """Cache technique de réponses d'inférence avec clé composite et invalidation TTL/Git."""
 
-    _instance: Optional["ResponseCache"] = None
+    _instance: ResponseCache | None = None
     _lock = Lock()
 
     def __new__(cls, db_path: Path | str = DEFAULT_CACHE_DB):
         with cls._lock:
             if cls._instance is None:
-                cls._instance = super(ResponseCache, cls).__new__(cls)
+                cls._instance = super().__new__(cls)
                 cls._instance._init_cache(db_path)
             return cls._instance
 
@@ -93,7 +93,7 @@ class ResponseCache:
         system_prompt: str = "",
         toolset: str = "",
         repo_revision: str = ""
-    ) -> Optional[Dict[str, Any]]:
+    ) -> dict[str, Any] | None:
         """Recherche dans le cache. Retourne la réponse si valide, None sinon."""
         key = self.compute_key(prompt, context, profile, system_prompt, toolset, repo_revision)
         now = time.time()
@@ -201,7 +201,7 @@ class ResponseCache:
             logger.error("[CACHE-PURGE-ERROR] %s", exc)
             return 0
 
-    def get_stats(self) -> Dict[str, Any]:
+    def get_stats(self) -> dict[str, Any]:
         """Retourne la télémétrie du cache."""
         total_items = 0
         try:

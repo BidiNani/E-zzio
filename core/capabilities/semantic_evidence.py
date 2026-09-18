@@ -21,7 +21,6 @@ import re
 import unicodedata
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Dict, List, Optional, Tuple
 
 
 class SemRelation(str, Enum):
@@ -97,7 +96,7 @@ def normalize_entity(text: str) -> str:
     return re.sub(r"\s+", " ", t).strip()
 
 
-def extract_measurements(text: str) -> List[Measurement]:
+def extract_measurements(text: str) -> list[Measurement]:
     """Nombres + unités explicites, signe inclus. Sans unité → ignoré."""
     out = []
     for m in _MEASURE_RE.finditer(text or ""):
@@ -122,7 +121,7 @@ def expand_scales(text: str) -> str:
     'm' minuscule seul (mètre) jamais expansé."""
     out = text or ""
     for pat, mult in _SCALE_WORDS:
-        def _rep(mm: "re.Match[str]") -> str:
+        def _rep(mm: re.Match[str]) -> str:
             try:
                 v = float(mm.group("n").replace(",", "."))
             except ValueError:
@@ -144,8 +143,8 @@ def lexical_overlap(a: str, b: str) -> float:
     return len(ta & tb) / len(ta | tb)
 
 
-def same_timeframe(pub_a: Optional[float], pub_b: Optional[float],
-                   window_days: float = 7.0) -> Optional[bool]:
+def same_timeframe(pub_a: float | None, pub_b: float | None,
+                   window_days: float = 7.0) -> bool | None:
     """True/False si les deux dates connues, None si inconnue (→ UNKNOWN)."""
     if not pub_a or not pub_b or pub_a <= 0 or pub_b <= 0:
         return None
@@ -157,8 +156,8 @@ class EvidenceNode:
     claim_id: str
     text: str
     origin: str  # domaine
-    published_at: Optional[float] = None
-    measurements: List[Measurement] = field(default_factory=list)
+    published_at: float | None = None
+    measurements: list[Measurement] = field(default_factory=list)
 
 
 @dataclass(frozen=True)
@@ -218,8 +217,8 @@ def relate(a: EvidenceNode, b: EvidenceNode) -> EvidenceEdge:
                         f"recouvrement {ov:.2f} : relation indécidable")
 
 
-def build_graph(nodes: List[EvidenceNode]) -> Tuple[List[EvidenceNode],
-                                                     List[EvidenceEdge]]:
+def build_graph(nodes: list[EvidenceNode]) -> tuple[list[EvidenceNode],
+                                                     list[EvidenceEdge]]:
     """Graphe léger : toutes les paires (borné par l'appelant via budgets)."""
     edges = []
     for i in range(len(nodes)):
@@ -228,8 +227,8 @@ def build_graph(nodes: List[EvidenceNode]) -> Tuple[List[EvidenceNode],
     return nodes, edges
 
 
-def contradiction_stances(edges: List[EvidenceEdge],
-                          origin_of: Dict[str, str]) -> List[Tuple[str, str, int]]:
+def contradiction_stances(edges: list[EvidenceEdge],
+                          origin_of: dict[str, str]) -> list[tuple[str, str, int]]:
     """Arêtes CONTRADICTS → positions déclarées (clé, origine, ±1) pour le
     detect_conflict existant. Une seule autorité de conflit."""
     stances = []
@@ -241,8 +240,8 @@ def contradiction_stances(edges: List[EvidenceEdge],
     return stances
 
 
-def evidence_groups(nodes: List[EvidenceNode],
-                    edges: List[EvidenceEdge]) -> List[List[str]]:
+def evidence_groups(nodes: list[EvidenceNode],
+                    edges: list[EvidenceEdge]) -> list[list[str]]:
     """Regroupe les nœuds liés par DERIVED_FROM/SAME_EVENT : 1 groupe =
     1 preuve (copies et miroirs jamais comptés comme confirmations)."""
     parent = {n.claim_id: n.claim_id for n in nodes}
@@ -257,7 +256,7 @@ def evidence_groups(nodes: List[EvidenceNode],
         if e.relation in (SemRelation.DERIVED_FROM, SemRelation.SAME_EVENT):
             a, b = find(e.left), find(e.right)
             parent[a] = b
-    groups: Dict[str, List[str]] = {}
+    groups: dict[str, list[str]] = {}
     for n in nodes:
         groups.setdefault(find(n.claim_id), []).append(n.claim_id)
     return sorted(groups.values(), key=len, reverse=True)

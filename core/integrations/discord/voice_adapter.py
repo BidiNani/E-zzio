@@ -9,17 +9,16 @@ import asyncio
 import logging
 import tempfile
 from pathlib import Path
-from typing import Dict, Optional
 
 logger = logging.getLogger("ezzio.discord.voice")
 
 DEFAULT_VOICE = "fr-FR-DeniseNeural"
 GROQ_STT_URL = "https://api.groq.com/openai/v1/audio/transcriptions"
 GROQ_STT_MODEL = "whisper-large-v3"
-_locks: Dict[int, asyncio.Lock] = {}
+_locks: dict[int, asyncio.Lock] = {}
 
 
-def resolve_groq_key() -> Optional[str]:
+def resolve_groq_key() -> str | None:
     """DISCORD_GROQ_API_KEY prioritaire, repli GROQ_API_KEY / _2 (env + secrets/.env)."""
     import os
     for name in ("DISCORD_GROQ_API_KEY", "GROQ_API_KEY", "GROQ_API_KEY_2"):

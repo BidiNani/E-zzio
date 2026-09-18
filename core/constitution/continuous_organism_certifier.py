@@ -4,15 +4,15 @@ Daemon d'auto-certification continue. Vérifie les 13 piliers (dont l'Intent Ali
 et la Continuity), historise les métriques et garantit l'état 10/10 en temps réel.
 """
 
-import sys
-import json
-import time
-import hmac
 import hashlib
+import hmac
+import json
 import logging
+import sys
+import time
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -29,11 +29,11 @@ class ContinuousOrganismCertifier:
         self.history_path = self.ledger_dir / "health_metrics_history.jsonl"
         self.ledger_dir.mkdir(parents=True, exist_ok=True)
 
-    def run_certification_tick(self, tick_id: int) -> Dict[str, Any]:
+    def run_certification_tick(self, tick_id: int) -> dict[str, Any]:
         """Exécute un cycle (tick) de certification des 13 piliers."""
 
         # Simulation de la collecte des métriques en temps réel
-        timestamp = datetime.now(timezone.utc).isoformat()
+        timestamp = datetime.now(UTC).isoformat()
 
         domains = {
             "01_CONSTITUTION": {"score": "10/10", "status": "PASS"},

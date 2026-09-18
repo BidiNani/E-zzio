@@ -8,14 +8,16 @@ E-ZZIO Core — Dynamic Model Qualification Pipeline.
 - Tolérance totale aux pannes réseau / mode OFFLINE
 """
 from __future__ import annotations
+
 import time
-from typing import Dict, Any, Optional
+from typing import Any
+
 from core.routing.model_registry import (
-    ModelQualificationStatus,
-    LatencyTier,
     CanonicalModelRecord,
+    CostClass,
+    LatencyTier,
+    ModelQualificationStatus,
     ModelSource,
-    CostClass
 )
 
 
@@ -29,8 +31,8 @@ class ModelQualificationPipeline:
         self,
         raw_name: str,
         source: ModelSource,
-        test_fn: Optional[callable] = None,
-    ) -> Dict[str, Any]:
+        test_fn: callable | None = None,
+    ) -> dict[str, Any]:
         """Exécute un test de qualification sur un modèle candidat."""
         start = time.time()
         test_prompt = "Say 'OK' and nothing else."

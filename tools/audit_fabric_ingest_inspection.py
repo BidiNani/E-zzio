@@ -1,30 +1,31 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_ingest_usage_in_fabric() -> Dict[str, Any]:
+def inspect_ingest_usage_in_fabric() -> dict[str, Any]:
     fabric_path = PROJECT_ROOT / "core" / "models" / "fabric.py"
     lifecycle_path = PROJECT_ROOT / "core" / "models" / "lifecycle.py"
-    
+
     results = {}
-    
+
     for path, name in [(fabric_path, "fabric"), (lifecycle_path, "lifecycle")]:
         if not path.exists():
             continue
         try:
             content = path.read_text(encoding="utf-8", errors="replace")
             tree = ast.parse(content, filename=str(path))
-            
+
             snippets = []
             lines = content.splitlines()
-            
+
             for node in ast.walk(tree):
                 if isinstance(node, ast.Call):
                     func = node.func
@@ -33,7 +34,7 @@ def inspect_ingest_usage_in_fabric() -> Dict[str, Any]:
                         func_name = func.id
                     elif isinstance(func, ast.Attribute):
                         func_name = func.attr
-                        
+
                     if "ingest" in func_name.lower():
                         start_line = max(0, node.lineno - 3)
                         end_line = min(len(lines), getattr(node, 'end_lineno', node.lineno + 3))
@@ -46,7 +47,7 @@ def inspect_ingest_usage_in_fabric() -> Dict[str, Any]:
             results[name] = snippets
         except Exception as e:
             results[name] = {"error": str(e)}
-            
+
     return results
 
 def main():

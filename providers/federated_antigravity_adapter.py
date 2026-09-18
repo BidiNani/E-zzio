@@ -2,17 +2,15 @@ from __future__ import annotations
 
 import asyncio
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
-from providers.provider_response import ProviderResponse
-
-from core.cognition.model_federation.base_provider import (
-    FederatedTaskRequest,
-    ProviderDomain,
-)
 from core.cognition.model_federation.antigravity_provider import (
     AntigravityFederatedProvider,
 )
+from core.cognition.model_federation.base_provider import (
+    FederatedTaskRequest,
+)
+from providers.provider_response import ProviderResponse
 
 
 class FederatedAntigravityAdapter:
@@ -31,7 +29,7 @@ class FederatedAntigravityAdapter:
         root_dir: Path = Path(r"G:\AI\E-zzio"),
     ) -> None:
         self.root_dir = root_dir
-        self._provider: Optional[AntigravityFederatedProvider] = None
+        self._provider: AntigravityFederatedProvider | None = None
 
     def _get_provider(self) -> AntigravityFederatedProvider:
         if self._provider is None:
@@ -129,8 +127,8 @@ class FederatedAntigravityAdapter:
     async def generate(
         self,
         prompt: str,
-        model: Optional[str] = None,
-        image_bytes: Optional[bytes] = None,
+        model: str | None = None,
+        image_bytes: bytes | None = None,
         capability: str = "default",
     ) -> ProviderResponse:
 

@@ -8,23 +8,25 @@ Vérifie de manière programmatique et stricte :
 5. Autonomous Agent Fleet readiness
 6. Absolute Scope Exclusion: No Unreal Engine artifacts or dependencies
 """
-import os
-import json
 import hashlib
+import json
+import os
+
 import pytest
+
+from core.agents.registry import AgentRegistry
 from core.providers.base_provider import BaseProvider
-from core.providers.ollama_provider import OllamaProvider
 from core.providers.gemini_provider import GeminiProvider
 from core.providers.groq_provider import GroqProvider
 from core.providers.nvidia_nim_provider import NvidiaNimProvider
-from core.agents.registry import AgentRegistry
+from core.providers.ollama_provider import OllamaProvider
 from web_server import app
 
 
 def test_qg_frozen_core_integrity():
     manifest_path = "docs/FROZEN_CORE_MANIFEST.json"
     assert os.path.exists(manifest_path)
-    with open(manifest_path, "r", encoding="utf-8") as f:
+    with open(manifest_path, encoding="utf-8") as f:
         manifest = json.load(f)["components"]
 
     files = [

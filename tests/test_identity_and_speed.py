@@ -19,6 +19,7 @@ def test_gemini_defaults_to_identity():
 def test_ollama_defaults_to_identity():
     import asyncio
     from unittest.mock import patch
+
     from core.providers.ollama_provider import OllamaProvider
 
     seen = {}
@@ -54,6 +55,7 @@ def test_speed_defaults_bounded():
 def test_master_injects_identity_without_system():
     import asyncio
     from unittest.mock import AsyncMock, MagicMock
+
     from core.ezzio_master import EzzioMaster
     from core.providers.base_provider import CostClass, ProviderResponse
 

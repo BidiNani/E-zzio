@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import json
 import sys
 from pathlib import Path
@@ -12,7 +13,7 @@ def inspect_snippets(file_rel_path: str, keywords: set[str], context_lines: int 
     if not p.exists():
         print(f"❌ Fichier introuvable : {file_rel_path}")
         return
-    
+
     print(f"\n📁 FICHIER : {file_rel_path}")
     print("-" * 80)
     try:
@@ -65,7 +66,7 @@ def main():
         "ornith_references": search_physical_tags("ornith-ezzio"),
         "modelfile_references": search_physical_tags("modelfile")
     }
-    
+
     out_file = PROJECT_ROOT / "tools" / "gate_v6_45_55_report.json"
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2)

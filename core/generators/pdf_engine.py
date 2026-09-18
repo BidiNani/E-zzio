@@ -3,16 +3,17 @@ E-ZZIO Sovereign Generator — PDF Document Engine.
 Génère des documents PDF professionnels et paginés via ReportLab Platypus.
 """
 from __future__ import annotations
-import os
-import logging
-from pathlib import Path
-from typing import Dict, Any, List, Optional
 
-from reportlab.lib.pagesizes import A4
+import logging
+import os
+from pathlib import Path
+from typing import Any
+
 from reportlab.lib import colors
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, HRFlowable
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import inch
+from reportlab.platypus import HRFlowable, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
 logger = logging.getLogger("PdfEngine")
 
@@ -29,9 +30,9 @@ class PdfEngine:
         self,
         filename: str,
         title: str,
-        sections: List[Dict[str, Any]],
+        sections: list[dict[str, Any]],
         author: str = "E-ZZIO Autonomous Core"
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Génère un document PDF paginé avec titres, textes, puces et tableaux.
         sections: [
@@ -57,7 +58,7 @@ class PdfEngine:
         )
 
         styles = getSampleStyleSheet()
-        
+
         # Styles personnalisés
         title_style = ParagraphStyle(
             'DocTitle',

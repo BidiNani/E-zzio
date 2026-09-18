@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from core.pc_commander import status, interpret, command
+from core.pc_commander import command, interpret, status
 
 router = APIRouter(tags=["pc-commander"])
 

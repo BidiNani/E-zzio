@@ -8,10 +8,12 @@ Valide :
 """
 import sqlite3
 from pathlib import Path
+
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
+import routers.approval as approval_router_mod
 from core.governance.approval import (
     ApprovalManager,
     ApprovalStatus,
@@ -21,7 +23,6 @@ from core.governance.approval.store import SqliteApprovalStore
 from core.security.audit_ledger import AuditLedger
 from core.tasks import manager as task_manager_mod
 from routers.approval import router as approval_router
-import routers.approval as approval_router_mod
 
 
 @pytest.fixture

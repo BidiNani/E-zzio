@@ -2,8 +2,11 @@
 tests/test_agent_capabilities.py — Security & Functional Unit tests for Capability Profiles & Autonomous Preflight Manager
 """
 import sys
+
 import pytest
+
 from core.agent.capability_manager import CapabilityManager, capability_manager
+
 
 def test_capability_profile_mapping():
     mgr = CapabilityManager()

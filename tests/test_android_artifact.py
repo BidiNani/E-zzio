@@ -1,10 +1,12 @@
 """
 Tests de conformité et de validation de l'APK compilé et rejet des faux APKs.
 """
-from pathlib import Path
-import zipfile
 import subprocess
+import zipfile
+from pathlib import Path
+
 import pytest
+
 
 def test_dist_android_apk_is_compiled_binary():
     """Vérifie que dist/android/E-ZzIO-v9.0.1.apk est un véritable binaire compilé."""

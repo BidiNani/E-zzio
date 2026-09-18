@@ -3,10 +3,11 @@ E-ZZIO V9.0 — ANTI-REGRESSION ARCHITECTURAL GUARD (20 TESTS)
 Vérifie contractuellement les 20 invariants fondamentaux de l'Architecture Freeze V9.0.
 """
 
-import pytest
 import os
 import re
 from pathlib import Path
+
+import pytest
 
 ROOT = Path(__file__).parent.parent
 

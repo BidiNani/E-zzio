@@ -9,8 +9,8 @@ from __future__ import annotations
 import json
 import os
 import time
-from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional
+from dataclasses import dataclass
+from typing import Any
 
 from core.health.evolution_decision import EvidenceClass
 
@@ -29,7 +29,7 @@ class EvolutionSignal:
     evidence_class: EvidenceClass = EvidenceClass.MEASURED_NOW
 
 
-def collect_diagnostic(now: Optional[float] = None) -> List[Dict[str, Any]]:
+def collect_diagnostic(now: float | None = None) -> list[dict[str, Any]]:
     """Signaux depuis l'observateur de santé existant (en mémoire)."""
     from core.health.diagnostic import full_diagnostic
 
@@ -53,7 +53,7 @@ def collect_diagnostic(now: Optional[float] = None) -> List[Dict[str, Any]]:
 
 
 def collect_breakers(state_path: str = "runtime/state/circuit_breakers.json",
-                     now: Optional[float] = None) -> List[Dict[str, Any]]:
+                     now: float | None = None) -> list[dict[str, Any]]:
     """États disjoncteurs par provider. Fichier absent = aucun signal."""
     if not os.path.exists(state_path):
         return []
@@ -84,7 +84,7 @@ def collect_breakers(state_path: str = "runtime/state/circuit_breakers.json",
 
 
 def collect_ledger_rates(ledger=None, window_sec: float = 3600.0,
-                         now: Optional[float] = None) -> List[Dict[str, Any]]:
+                         now: float | None = None) -> list[dict[str, Any]]:
     """Taux d'échec par action depuis le ledger (échecs/heure, observés)."""
     from core.security.audit_ledger import audit_ledger as default_ledger
 
@@ -96,8 +96,8 @@ def collect_ledger_rates(ledger=None, window_sec: float = 3600.0,
         return []
     if not hist:
         return []
-    totals: Dict[str, float] = {}
-    fails: Dict[str, float] = {}
+    totals: dict[str, float] = {}
+    fails: dict[str, float] = {}
     for key, n in hist.items():
         action = key.split("|", 1)[0]
         totals[action] = totals.get(action, 0.0) + n
@@ -126,7 +126,7 @@ STORAGE_WATCH = (
 )
 
 
-def collect_storage(root: str = ".", now: Optional[float] = None) -> List[Dict[str, Any]]:
+def collect_storage(root: str = ".", now: float | None = None) -> list[dict[str, Any]]:
     """Tailles observées. evidence_class=NOT_MEASURED sur delta : aucune
     proposition de croissance ne peut naître d'une mesure unique."""
     out = []
@@ -157,7 +157,7 @@ def collect_storage(root: str = ".", now: Optional[float] = None) -> List[Dict[s
     return out
 
 
-def normalize(raw: Dict[str, Any]) -> EvolutionSignal:
+def normalize(raw: dict[str, Any]) -> EvolutionSignal:
     """Frontière unique : brut → signal typé. Pure, totale, sans I/O."""
     try:
         cls = EvidenceClass(raw.get("evidence_class", "MEASURED_NOW"))

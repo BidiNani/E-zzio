@@ -1,26 +1,27 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_file_for_patterns(rel_path: str, targets: list[str]) -> Dict[str, Any]:
+def inspect_file_for_patterns(rel_path: str, targets: list[str]) -> dict[str, Any]:
     p = PROJECT_ROOT / rel_path
     if not p.exists():
         return {"exists": False}
-    
+
     try:
         content = p.read_text(encoding="utf-8", errors="replace")
         content_lower = content.lower()
         findings = {}
         for t in targets:
             findings[t] = t.lower() in content_lower
-        
+
         # Parse AST to find functions/methods related to writing or upserting
         tree = ast.parse(content, filename=str(p))
         methods = []
@@ -30,7 +31,7 @@ def inspect_file_for_patterns(rel_path: str, targets: list[str]) -> Dict[str, An
                 methods.append(node.name)
                 if any(w in node.name.lower() for w in {"save", "upsert", "write", "update", "store", "persist"}):
                     writes.append(node.name)
-                    
+
         return {
             "exists": True,
             "findings": findings,
@@ -41,7 +42,7 @@ def inspect_file_for_patterns(rel_path: str, targets: list[str]) -> Dict[str, An
     except Exception as e:
         return {"exists": True, "error": str(e)}
 
-def find_files_by_pattern(pattern: str) -> List[str]:
+def find_files_by_pattern(pattern: str) -> list[str]:
     matches = []
     for p in PROJECT_ROOT.glob(pattern):
         if set(p.parts) & EXCLUDED_DIRS:

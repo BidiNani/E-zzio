@@ -6,8 +6,7 @@ import re
 import subprocess
 import sys
 from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 logger = logging.getLogger("ezzio.self_healing")
 
@@ -20,12 +19,12 @@ class HealingReport:
     target: str
     attempts: int = 0
     fixed: bool = False
-    applied_diff: Optional[str] = None
+    applied_diff: str | None = None
     last_error: str = ""
-    history: List[Dict[str, Any]] = field(default_factory=list)
+    history: list[dict[str, Any]] = field(default_factory=list)
 
 
-def run_pytest_capture(*targets: str, timeout: int = 300) -> Dict[str, Any]:
+def run_pytest_capture(*targets: str, timeout: int = 300) -> dict[str, Any]:
     """Exécute pytest, capture stdout/stderr/retours (jamais levant)."""
     cmd = [sys.executable, "-m", "pytest", *targets, "-q", "-p", "no:randomly",
            "--tb=short"]

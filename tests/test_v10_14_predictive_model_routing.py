@@ -2,10 +2,11 @@
 Unit & Integration Test Suite for E-ZZIO V10.14 — Model Intelligence & Predictive Routing.
 """
 import pytest
+
 from core.operations.adaptive_model_optimizer import (
-    adaptive_model_optimizer,
-    TaskCategory,
     ModelResidencyState,
+    TaskCategory,
+    adaptive_model_optimizer,
 )
 
 

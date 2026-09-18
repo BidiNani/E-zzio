@@ -8,15 +8,13 @@ Certifie les capacités de traitement de bout en bout :
 4. Boucle d'auto-réparation bornée sur anomalie
 5. Intégration transparente avec CodingAgentHarness
 """
-import os
 import json
+import os
+
 import pytest
-from core.agent.complex_task_orchestrator import (
-    CodebaseImpactAnalyzer,
-    ComplexTaskEngine,
-    TaskStep
-)
+
 from core.agent.coding_agent_loop import CodingAgentHarness
+from core.agent.complex_task_orchestrator import CodebaseImpactAnalyzer, ComplexTaskEngine, TaskStep
 
 
 def test_impact_analyzer_finds_tests_and_ast_imports(tmp_path):
@@ -88,7 +86,7 @@ def test_end_to_end_complex_task_execution(tmp_path):
     assert os.path.exists(res["evidence"]["markdown"])
 
     # Vérification que le fichier a été corrigé
-    with open(mod_file, "r", encoding="utf-8") as f:
+    with open(mod_file, encoding="utf-8") as f:
         corrected = f.read()
     assert "return a * b" in corrected
 

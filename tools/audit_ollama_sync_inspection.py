@@ -1,39 +1,40 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_ollama_sync() -> Dict[str, Any]:
+def inspect_ollama_sync() -> dict[str, Any]:
     # Chercher des fichiers liés à ollama dans le projet
     ollama_files = []
     for p in PROJECT_ROOT.glob("**/*ollama*.py"):
         if set(p.parts) & EXCLUDED_DIRS:
             continue
         ollama_files.append(p)
-        
+
     results = {}
     for path in ollama_files:
         rel_path = str(path.relative_to(PROJECT_ROOT))
         try:
             content = path.read_text(encoding="utf-8", errors="replace")
             tree = ast.parse(content, filename=str(path))
-            
+
             functions = []
             classes = []
             calls_to_ingest = "ingest" in content or "lifecycle" in content
-            
+
             for node in ast.walk(tree):
                 if isinstance(node, ast.FunctionDef):
                     functions.append(node.name)
                 elif isinstance(node, ast.ClassDef):
                     classes.append(node.name)
-                    
+
             results[rel_path] = {
                 "classes": classes,
                 "functions": functions,
@@ -42,7 +43,7 @@ def inspect_ollama_sync() -> Dict[str, Any]:
             }
         except Exception as e:
             results[rel_path] = {"error": str(e)}
-            
+
     return results
 
 def main():

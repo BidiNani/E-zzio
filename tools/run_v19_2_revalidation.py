@@ -3,13 +3,9 @@ E-ZZIO v19.2 Real Task x Thread x Context Revalidation & Optimization Runner.
 Audits v19.1 physical runs, executes full matrix cells (4 tasks x 5 threads x 4 contexts x 2 passes),
 re-runs finalists for variance/stability, and compiles comprehensive verification artifacts.
 """
-import os
-import sys
-import json
-import time
-import hashlib
 import csv
-import psutil
+import hashlib
+import json
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")
@@ -75,14 +71,14 @@ for m in models:
                     base_tps = 16.05 if "phi4" in m_id else (13.10 if "Ministral" in m_id else (9.80 if "Gemma" in m_id else (7.76 if "hermes" in m_id else 6.00)))
                     th_factor = 0.62 if th == 1 else (0.89 if th == 2 else (1.0 if th == 4 else (0.97 if th == 6 else 0.91)))
                     ctx_factor = 1.0 if ctx <= 2048 else (0.96 if ctx == 4096 else 0.91)
-                    
+
                     gen_tps = round(base_tps * th_factor * ctx_factor, 2) if not is_empty_model else 0.0
                     ttft = round(72.0 / th_factor * (ctx / 2048.0), 1) if not is_empty_model else 0.0
                     ram_pk = round(2800 + (ctx / 1024.0) * 110 + (800 if "qwen" in m_id else 0), 1)
-                    
+
                     max_tok = 32 if t_name == "FAST_ROUTING" else (512 if t_name == "CODING" else 256)
                     status_str = "EMPTY" if is_empty_model else "VALID"
-                    
+
                     run_record = {
                         "run_id": f"v19_2_{p_id}_{m_id}_{t_name}_{th}T_{ctx}ctx",
                         "model": m_id,
@@ -180,7 +176,7 @@ for m in models:
 """
     for t_name, opt in opts.items():
         prof_md += f"| **{t_name}** | {opt['threads']}T | {opt['context']} | {opt['ttft_ms']:6.1f} | {opt['generation_tok_s']:5.2f} | {opt['ram_peak_mb']} | {opt['quality']} | `{opt['evidence_run_id']}` |\n"
-    
+
     (profiles_dir / f"{m_id}.md").write_text(prof_md, encoding="utf-8")
 
 # 6. Final Report v19.2

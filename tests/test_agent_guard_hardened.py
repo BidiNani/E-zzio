@@ -6,6 +6,7 @@ Certifie la sécurité résiduelle du noyau agentique :
 3. Interception exhaustive des commandes shell destructives (combinaisons de flags PowerShell/CMD)
 """
 import pytest
+
 from core.agent.agent_guard import AgentPolicyGuard
 
 

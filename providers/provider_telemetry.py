@@ -1,9 +1,9 @@
-import os
-import sys
-import sqlite3
 import json
+import os
+import sqlite3
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 if str(ROOT_DIR) not in sys.path:
@@ -59,7 +59,7 @@ class DurableTelemetry:
         key_index: int = 0,
         request_id: str = "none",
     ):
-        timestamp = datetime.now(timezone.utc).isoformat()
+        timestamp = datetime.now(UTC).isoformat()
         with self._get_connection() as conn:
             conn.execute(
                 """
@@ -81,7 +81,7 @@ class DurableTelemetry:
 
             cache_data = {
                 "schema_version": "V1.2-HARDENED-TELEMETRY",
-                "updated_at": datetime.now(timezone.utc).isoformat(),
+                "updated_at": datetime.now(UTC).isoformat(),
                 "providers": {},
             }
 

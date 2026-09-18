@@ -4,17 +4,17 @@ Route dynamiquement les modèles Ollama et gère les budgets de tokens
 en s'alignant sur les sources autorisées du contrat runtime (llm_dispatcher).
 """
 
-import sys
 import logging
+import sys
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from core.constitution.hardware_resource_governor import HardwareResourceGovernor
 from core.cognition.ecol_universal_enforcement import EcolUniversalGateway
+from core.constitution.hardware_resource_governor import HardwareResourceGovernor
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +36,7 @@ class ModelTokenGovernor:
             "NORMAL": {"default_model": "qwen2.5-coder:7b", "max_tokens_per_request": 4096, "concurrency_limit": 4},
         }
 
-    def evaluate_and_route(self, requested_task_type: str, estimated_tokens: int) -> Dict[str, Any]:
+    def evaluate_and_route(self, requested_task_type: str, estimated_tokens: int) -> dict[str, Any]:
         telemetry = self.hw_governor.get_system_telemetry()
         is_gaming = telemetry["gaming_detected"]
 

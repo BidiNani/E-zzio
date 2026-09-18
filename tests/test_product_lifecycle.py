@@ -6,10 +6,12 @@ Valide :
 3. Gouvernance des dépendances : conformité DEPENDENCIES.md
 4. Sécurité globale : non-exposition des secrets dans les logs, le terminal et les événements
 """
-from pathlib import Path
 import json
+from pathlib import Path
+
 import pytest
 from fastapi.testclient import TestClient
+
 from web_server import app
 
 

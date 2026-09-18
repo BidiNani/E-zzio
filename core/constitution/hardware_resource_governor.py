@@ -8,15 +8,15 @@ Provides deterministic resource verdicts: ALLOW, THROTTLE, QUEUE, DEFER, REJECT,
 from __future__ import annotations
 
 import logging
-import os
-import psutil
 import sys
 import threading
-from dataclasses import asdict, dataclass, field
-from datetime import datetime, timezone
+from dataclasses import dataclass, field
+from datetime import UTC, datetime
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
+
+import psutil
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -54,8 +54,8 @@ class ResourceDecision:
     allocated_ram_mb: int
     gpu_isolated: bool
     rationale: str
-    telemetry_snapshot: Dict[str, Any]
-    timestamp_utc: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    telemetry_snapshot: dict[str, Any]
+    timestamp_utc: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
 
 
 class HardwareResourceGovernor:
@@ -70,9 +70,9 @@ class HardwareResourceGovernor:
         self.max_threads_pressure = 8
         self.max_threads_gaming = 4
         self.max_threads_saturation = 2
-        
-        self.simulated_telemetry: Optional[Dict[str, Any]] = None
-        self.active_allocations: Dict[str, int] = {}  # task_id -> allocated_ram_mb
+
+        self.simulated_telemetry: dict[str, Any] | None = None
+        self.active_allocations: dict[str, int] = {}  # task_id -> allocated_ram_mb
         self._lock = threading.Lock()
 
         self.decision_engine = None
@@ -95,7 +95,7 @@ class HardwareResourceGovernor:
             pass
         return False
 
-    def get_system_telemetry(self) -> Dict[str, Any]:
+    def get_system_telemetry(self) -> dict[str, Any]:
         """Captures instantaneous real or simulated telemetry snapshot."""
         if self.simulated_telemetry:
             return self.simulated_telemetry
@@ -137,7 +137,7 @@ class HardwareResourceGovernor:
                 "error": str(e),
             }
 
-    def evaluate_pressure_level(self, telemetry: Dict[str, Any]) -> SystemPressureLevel:
+    def evaluate_pressure_level(self, telemetry: dict[str, Any]) -> SystemPressureLevel:
         """Determines the active physical pressure tier."""
         if telemetry.get("cpu_percent") is None or telemetry.get("ram_available_mb") is None:
             return SystemPressureLevel.INCOHERENT_TELEMETRY
@@ -162,7 +162,7 @@ class HardwareResourceGovernor:
         requested_threads: int = 1,
         requested_ram_mb: int = 512,
         priority: str = "normal",  # "low", "normal", "high", "critical"
-        override_flags: Optional[Dict[str, Any]] = None,
+        override_flags: dict[str, Any] | None = None,
     ) -> ResourceDecision:
         """
         Sovereign arbitration of physical resource allocations.
@@ -185,7 +185,7 @@ class HardwareResourceGovernor:
 
             telemetry = self.get_system_telemetry()
             pressure = self.evaluate_pressure_level(telemetry)
-            
+
             # Fail-Closed handling for incoherent telemetry
             if pressure == SystemPressureLevel.INCOHERENT_TELEMETRY:
                 return self._build_and_record_decision(
@@ -340,9 +340,9 @@ class HardwareResourceGovernor:
         ram_mb: int,
         gpu_iso: bool,
         rationale: str,
-        telemetry: Dict[str, Any],
+        telemetry: dict[str, Any],
     ) -> ResourceDecision:
-        dec_id = f"HRD-{datetime.now(timezone.utc).strftime('%Y%m%d')}-{task_id}"
+        dec_id = f"HRD-{datetime.now(UTC).strftime('%Y%m%d')}-{task_id}"
         rec = ResourceDecision(
             decision_id=dec_id,
             task_id=task_id,

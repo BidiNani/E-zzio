@@ -6,13 +6,11 @@ l'ordonnancement multi-modes (Immediate, Scheduled, Recurring, Event-Triggered),
 from __future__ import annotations
 
 import logging
-import uuid
 import time
-import json
+import uuid
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
 from enum import Enum
-from typing import Any, Dict, List, Optional, Set
+from typing import Any
 
 logger = logging.getLogger("ezzio.agent.strategic_master")
 
@@ -52,16 +50,16 @@ class StrategicGoal:
     description: str
     priority: GoalPriority = GoalPriority.NORMAL
     status: GoalStatus = GoalStatus.PLANNED
-    deadline: Optional[float] = None
-    parent_goal_id: Optional[str] = None
-    children_ids: List[str] = field(default_factory=list)
-    dependencies: List[str] = field(default_factory=list)
+    deadline: float | None = None
+    parent_goal_id: str | None = None
+    children_ids: list[str] = field(default_factory=list)
+    dependencies: list[str] = field(default_factory=list)
     progress: float = 0.0  # 0.0 à 100.0
-    checkpoints: List[Dict[str, Any]] = field(default_factory=list)
-    success_criteria: List[str] = field(default_factory=list)
+    checkpoints: list[dict[str, Any]] = field(default_factory=list)
+    success_criteria: list[str] = field(default_factory=list)
     budget: float = 100.0
     budget_used: float = 0.0
-    deduplication_key: Optional[str] = None
+    deduplication_key: str | None = None
     created_at: float = field(default_factory=time.time)
     updated_at: float = field(default_factory=time.time)
 
@@ -70,14 +68,14 @@ class StrategicGoal:
 class ScheduledTask:
     task_id: str
     goal_id: str
-    mission_id: Optional[str] = None
+    mission_id: str | None = None
     mode: SchedulingMode = SchedulingMode.IMMEDIATE
-    cron_pattern: Optional[str] = None
-    trigger_condition: Optional[str] = None
+    cron_pattern: str | None = None
+    trigger_condition: str | None = None
     status: str = "PENDING"  # PENDING, RUNNING, COMPLETED, FAILED
     next_run: float = field(default_factory=time.time)
     execution_count: int = 0
-    deduplication_key: Optional[str] = None
+    deduplication_key: str | None = None
 
 
 @dataclass
@@ -94,10 +92,10 @@ class StrategicMasterEngine:
     """Moteur souverain de planification stratégique long-terme d'E-ZZIO."""
 
     def __init__(self) -> None:
-        self.goals: Dict[str, StrategicGoal] = {}
-        self.scheduled_tasks: Dict[str, ScheduledTask] = {}
-        self.executed_dedup_keys: Set[str] = set()
-        self.risk_forecasts: Dict[str, RiskForecast] = {}
+        self.goals: dict[str, StrategicGoal] = {}
+        self.scheduled_tasks: dict[str, ScheduledTask] = {}
+        self.executed_dedup_keys: set[str] = set()
+        self.risk_forecasts: dict[str, RiskForecast] = {}
         self._is_active: bool = True
 
     def create_goal(
@@ -105,12 +103,12 @@ class StrategicMasterEngine:
         title: str,
         description: str,
         priority: GoalPriority = GoalPriority.NORMAL,
-        deadline: Optional[float] = None,
-        parent_goal_id: Optional[str] = None,
-        dependencies: Optional[List[str]] = None,
+        deadline: float | None = None,
+        parent_goal_id: str | None = None,
+        dependencies: list[str] | None = None,
         budget: float = 100.0,
-        success_criteria: Optional[List[str]] = None,
-        deduplication_key: Optional[str] = None,
+        success_criteria: list[str] | None = None,
+        deduplication_key: str | None = None,
     ) -> StrategicGoal:
         """Crée et enregistre un objectif persistant au sein du Strategic Master."""
         if deduplication_key and deduplication_key in self.executed_dedup_keys:
@@ -147,9 +145,9 @@ class StrategicMasterEngine:
         self,
         goal_id: str,
         mode: SchedulingMode = SchedulingMode.IMMEDIATE,
-        cron_pattern: Optional[str] = None,
-        trigger_condition: Optional[str] = None,
-        deduplication_key: Optional[str] = None,
+        cron_pattern: str | None = None,
+        trigger_condition: str | None = None,
+        deduplication_key: str | None = None,
     ) -> ScheduledTask:
         """Planifie l'exécution d'une tâche sous gouvernance du Scheduler."""
         if deduplication_key and deduplication_key in self.executed_dedup_keys:
@@ -190,7 +188,7 @@ class StrategicMasterEngine:
             goal.status = GoalStatus.COMPLETED
         return goal.progress
 
-    def forecast_risks(self, goal_id: str) -> List[RiskForecast]:
+    def forecast_risks(self, goal_id: str) -> list[RiskForecast]:
         """Analyse prédictive des risques d'échéances et de dépendances."""
         goal = self.goals.get(goal_id)
         if not goal:
@@ -229,7 +227,7 @@ class StrategicMasterEngine:
 
         return forecasts
 
-    def simulate_what_if(self, goal_id: str, hypothetical_change: str) -> Dict[str, Any]:
+    def simulate_what_if(self, goal_id: str, hypothetical_change: str) -> dict[str, Any]:
         """Simule l'impact d'une réallocation de ressources sans altérer l'état réel."""
         goal = self.goals.get(goal_id)
         if not goal:
@@ -258,7 +256,7 @@ class StrategicMasterEngine:
         logger.info(f"[STRATEGIC-MASTER] Replanning effectué pour {goal_id}: {reason}")
         return True
 
-    def cancel_goal_tree(self, root_goal_id: str, reason: str) -> List[str]:
+    def cancel_goal_tree(self, root_goal_id: str, reason: str) -> list[str]:
         """Kill Switch: annule proprement un objectif et toute sa sous-arborescence."""
         cancelled = []
         queue = [root_goal_id]

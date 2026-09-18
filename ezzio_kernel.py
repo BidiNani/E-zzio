@@ -6,20 +6,20 @@ Système nerveux central d'E-zzio. Unifie le démarrage, la vérification de l'A
 l'interrogation de l'ECOL Gateway, l'état matériel, la mémoire et le benchmark permanent.
 """
 
-import sys
-import json
-import hashlib
 import argparse
+import hashlib
+import json
+import sys
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from core.constitution.hardware_resource_governor import HardwareResourceGovernor
-from core.cognition.ecol_universal_enforcement import EcolUniversalGateway
 from core.cognition.decision_ledger import DecisionLedgerEngine, LedgerIntegrityError
+from core.cognition.ecol_universal_enforcement import EcolUniversalGateway
+from core.constitution.hardware_resource_governor import HardwareResourceGovernor
 
 
 class OrganismKernel:
@@ -34,7 +34,7 @@ class OrganismKernel:
         except Exception:
             pass
 
-    def verify_identity(self) -> Dict[str, Any]:
+    def verify_identity(self) -> dict[str, Any]:
         """Vérifie l'existence et l'intégrité du génome de l'organisme."""
         if not self.genome_path.exists():
             return {"status": "INVALID", "detail": "Genome file missing"}
@@ -50,7 +50,7 @@ class OrganismKernel:
             "sha256": file_hash[:16] + "...",
         }
 
-    def get_organism_status(self) -> Dict[str, Any]:
+    def get_organism_status(self) -> dict[str, Any]:
         """Exécute un diagnostic complet de tous les sous-systèmes de l'organisme."""
         # 1. Identité & Génome
         identity = self.verify_identity()
@@ -121,7 +121,7 @@ class OrganismKernel:
         task_type: str = "quick",
         model: str | None = None,
         route_level: str = "FAST",
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Entry point for any external interface (Discord, CLI, API).
 
         Routes the request through the full E-ZZIO chain:
@@ -143,6 +143,7 @@ class OrganismKernel:
         A Ledger block is ALWAYS committed, including on error (forensic invariant).
         """
         import asyncio
+
         import httpx
 
         # Allowed generative models — strict whitelist
@@ -249,7 +250,7 @@ class OrganismKernel:
                         error_detail  = f"Could not confirm unload of: {models_to_unload}"
                         response_text = f"[{error_code}: {error_detail}]"
 
-            except Exception as sw_exc:
+            except Exception:
                 # Switch check failure is non-blocking only if no prior model was detected
                 # (first launch — no model was running yet is normal)
                 pass

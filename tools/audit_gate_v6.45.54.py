@@ -1,14 +1,14 @@
 from __future__ import annotations
+
 import json
 import sys
 from pathlib import Path
-from typing import List, Dict
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def find_consumers(class_name: str) -> List[str]:
+def find_consumers(class_name: str) -> list[str]:
     matches = []
     for p in PROJECT_ROOT.glob("**/*.py"):
         if set(p.parts) & EXCLUDED_DIRS:
@@ -21,7 +21,7 @@ def find_consumers(class_name: str) -> List[str]:
             continue
     return matches
 
-def find_modelfiles_or_references(model_tags: list[str]) -> Dict[str, List[str]]:
+def find_modelfiles_or_references(model_tags: list[str]) -> dict[str, list[str]]:
     results = {tag: [] for tag in model_tags}
     for p in PROJECT_ROOT.glob("**/*"):
         if set(p.parts) & EXCLUDED_DIRS or p.is_dir():
@@ -49,7 +49,7 @@ def main():
 
     tags_to_find = ["ezzio-granite", "ornith-ezzio"]
     physical_map = find_modelfiles_or_references(tags_to_find)
-    print(f"\n[2] PROVENANCE PHYSIQUE DES MODÈLES OLLAMA :")
+    print("\n[2] PROVENANCE PHYSIQUE DES MODÈLES OLLAMA :")
     for tag, paths in physical_map.items():
         print(f"  • Tag [{tag}] référencé dans {len(paths)} fichiers :")
         for path in paths[:5]:
@@ -59,7 +59,7 @@ def main():
         "consumers": consumers,
         "physical_mapping": physical_map
     }
-    
+
     out_file = PROJECT_ROOT / "tools" / "gate_v6_45_54_report.json"
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2)

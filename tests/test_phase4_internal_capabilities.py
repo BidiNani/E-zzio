@@ -3,6 +3,7 @@ Phase 4 Test Suite — Validation des capacités internes (Test Loop, Rollback, 
 """
 
 import pytest
+
 from core.agent.coding_agent_loop import CodingAgentHarness
 from core.agent.patch_engine import PatchEngine
 from core.capabilities.capability_policy import CapabilityPolicy, PolicyDecision
@@ -11,13 +12,13 @@ from core.capabilities.capability_policy import CapabilityPolicy, PolicyDecision
 def test_phase4_task_complexity_routing():
     """Vérifie le routage modèle par niveau de difficulté."""
     harness = CodingAgentHarness()
-    
+
     # Simple recherche -> Modèle Lite
     assert harness.evaluate_task_complexity("cherche où est définie la fonction compute") == "gemini-3.5-flash-lite"
-    
+
     # Développement standard / Patch -> Modèle Flash
     assert harness.evaluate_task_complexity("corrige le bug dans math_utils") == "gemini-3.7-flash"
-    
+
     # Architecture lourde / AST -> Modèle Pro
     assert harness.evaluate_task_complexity("refactor et restructure l'architecture AST") == "gemini-3.1-pro"
 

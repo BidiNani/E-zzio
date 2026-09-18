@@ -5,7 +5,6 @@ import asyncio
 import contextvars
 import logging
 import time
-from typing import Dict, List, Optional, Tuple
 
 from pydantic import BaseModel, Field
 
@@ -16,19 +15,19 @@ logger = logging.getLogger("ezzio.telemetry")
 
 _trace_id_ctx: contextvars.ContextVar[str] = contextvars.ContextVar("trace_id", default="")
 _agent_id_ctx: contextvars.ContextVar[str] = contextvars.ContextVar("agent_id", default="")
-_parent_id_ctx: contextvars.ContextVar[Optional[str]] = contextvars.ContextVar("parent_id", default=None)
+_parent_id_ctx: contextvars.ContextVar[str | None] = contextvars.ContextVar("parent_id", default=None)
 
 
 class TraceEvent(BaseModel):
     trace_id: str
     timestamp: float = Field(default_factory=time.time)
     agent_id: str
-    parent_id: Optional[str] = None
+    parent_id: str | None = None
     event_type: str = Field(pattern="^(START|TOOL_CALL|TOOL_RESULT|STATUS_CHANGE|FINISH|ERROR)$")
     status: str = Field(pattern="^(PENDING|RUNNING|BLOCKED|SUCCESS|FAILED)$")
-    tool_name: Optional[str] = None
-    payload: Dict = Field(default_factory=dict)
-    duration_ms: Optional[float] = None
+    tool_name: str | None = None
+    payload: dict = Field(default_factory=dict)
+    duration_ms: float | None = None
 
     model_config = {"extra": "forbid"}
 
@@ -47,12 +46,12 @@ class AgentTracer:
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
-            cls._instance._subs: List[Tuple[asyncio.AbstractEventLoop, asyncio.Queue, Optional[str]]] = []
+            cls._instance._subs: list[tuple[asyncio.AbstractEventLoop, asyncio.Queue, str | None]] = []
             from collections import deque as _deque
             cls._instance._history = _deque(maxlen=MAX_HISTORY)
         return cls._instance
 
-    def subscribe(self, trace_id: Optional[str] = None) -> asyncio.Queue:
+    def subscribe(self, trace_id: str | None = None) -> asyncio.Queue:
         try:
             loop = asyncio.get_running_loop()
         except RuntimeError:
@@ -101,7 +100,7 @@ class AgentTracer:
                 pass
 
     # --- API contextuelle ---
-    def trace_context(self, trace_id: str, agent_id: str, parent_id: Optional[str] = None):
+    def trace_context(self, trace_id: str, agent_id: str, parent_id: str | None = None):
 
         class _Ctx:
             def __enter__(_s):
@@ -121,7 +120,7 @@ class AgentTracer:
         return _Ctx()
 
     def tool_call(self, tool_name: str, args=None, agent_id: str = "",
-                  trace_id: str = "", parent_id: Optional[str] = None) -> float:
+                  trace_id: str = "", parent_id: str | None = None) -> float:
         t0 = time.perf_counter()
         try:
             self.emit(TraceEvent(
@@ -150,7 +149,7 @@ class AgentTracer:
             pass
 
     def lifecycle(self, event_type: str, status: str, agent_id: str = "",
-                  trace_id: str = "", parent_id: Optional[str] = None,
+                  trace_id: str = "", parent_id: str | None = None,
                   payload=None) -> None:
         try:
             self.emit(TraceEvent(

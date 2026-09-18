@@ -3,13 +3,13 @@ core/agent/data_source_manager.py — Data Source Manager & Security Boundary fo
 Hierarchy: LOCAL_SQLITE -> LOCAL_FILE -> OPEN_DATA_API -> PUBLIC_FREE_API -> FREE_TIER_CLOUD -> PAID_CLOUD.
 """
 from __future__ import annotations
-import os
-import json
-import sqlite3
+
 import logging
-from typing import Dict, Any, List, Optional, Tuple, Union
-from enum import Enum
+import os
+import sqlite3
 from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any
 
 logger = logging.getLogger("ezzio.agent.data_source_manager")
 
@@ -41,17 +41,17 @@ class DataSourceRecord:
     source_type: DataSourceType
     location: str  # Chemin de fichier ou URL API
     read_only: bool = True
-    rate_limit_per_min: Optional[int] = None
+    rate_limit_per_min: int | None = None
     license_type: str = "open"
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    metadata: dict[str, Any] = field(default_factory=dict)
 
 
 class DataSourceManager:
     """Gestionnaire de sources de données : découverte, sélection par priorité, requêtes paramétrées et traçabilité."""
 
-    def __init__(self, workspace_root: Optional[str] = None):
+    def __init__(self, workspace_root: str | None = None):
         self.workspace_root = workspace_root or r"G:\AI\E-zzio"
-        self._sources: Dict[str, DataSourceRecord] = {}
+        self._sources: dict[str, DataSourceRecord] = {}
         self._register_default_local_sources()
 
     def _register_default_local_sources(self) -> None:
@@ -82,7 +82,7 @@ class DataSourceManager:
         self._sources[record.source_id] = record
         logger.info("[DATA-SOURCE] Source enregistrée : '%s' (%s)", record.source_id, record.source_type.value)
 
-    def discover_best_source(self, required_type: Optional[DataSourceType] = None) -> Optional[DataSourceRecord]:
+    def discover_best_source(self, required_type: DataSourceType | None = None) -> DataSourceRecord | None:
         """Sélectionne la source disponible la plus prioritaire selon la hiérarchie économique."""
         if not self._sources:
             return None
@@ -100,10 +100,10 @@ class DataSourceManager:
         self,
         source_id: str,
         sql_query: str,
-        params: Union[Tuple[Any, ...], Dict[str, Any]] = (),
+        params: tuple[Any, ...] | dict[str, Any] = (),
         is_write: bool = False,
-        agent_permissions: Optional[List[str]] = None
-    ) -> Dict[str, Any]:
+        agent_permissions: list[str] | None = None
+    ) -> dict[str, Any]:
         """Exécute de manière sécurisée une requête SQL paramétrée contre une base SQLite locale."""
         src = self._sources.get(source_id)
         if not src:
@@ -158,7 +158,7 @@ class DataSourceManager:
         }
         self._log_audit("DATA_PROVENANCE_RECORDED", payload)
 
-    def _log_audit(self, action: str, payload: Dict[str, Any]) -> None:
+    def _log_audit(self, action: str, payload: dict[str, Any]) -> None:
         """Méthode interne pour inscrire des événements d'audit."""
         try:
             from core.security.audit_ledger import AuditLedger

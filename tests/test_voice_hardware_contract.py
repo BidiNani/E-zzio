@@ -1,8 +1,11 @@
-import pytest
 import asyncio
 import sys
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
+
+import pytest
+
 from core.voice.voice_gateway import VoiceGateway, VoiceState
+
 
 def test_voice_hardware_enumeration_and_status():
     gw = VoiceGateway()
@@ -17,7 +20,7 @@ def test_voice_hardware_enumeration_and_status():
 async def test_voice_hardware_unavailable_fail_closed():
     gw = VoiceGateway()
     gw._hardware_available = False
-    
+
     with pytest.raises(RuntimeError) as exc_info:
         await gw.capture_audio()
     assert "VOICE_HARDWARE_ENVIRONMENT_LIMITED" in str(exc_info.value)
@@ -26,7 +29,7 @@ async def test_voice_hardware_unavailable_fail_closed():
 async def test_voice_hardware_mocked_capture():
     mock_sd = MagicMock()
     mock_sd.rec.return_value = MagicMock(tobytes=lambda: bytes(32000))
-    
+
     with patch.dict(sys.modules, {"sounddevice": mock_sd}):
         gw = VoiceGateway()
         gw._hardware_available = True

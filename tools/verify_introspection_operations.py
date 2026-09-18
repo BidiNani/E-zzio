@@ -1,11 +1,10 @@
 """
 Vérification expérimentale des 5 opérations d'introspection à la demande.
 """
-import os
-import sys
-import time
 import ast
 import json
+import sys
+import time
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")

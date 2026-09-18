@@ -4,14 +4,15 @@ Capteur d'observation longue durée. Mesure en continu le Ryzen 9, la RAM,
 l'espace NVMe, la coexistence Gaming (WoW) et consigne les métriques dans un ledger scellé.
 """
 
-import sys
-import json
-import psutil
-import hmac
 import hashlib
+import hmac
+import json
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
+
+import psutil
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -39,8 +40,8 @@ class LongRunMonitor:
         total_bytes = sum(f.stat().st_size for f in path.rglob("*") if f.is_file())
         return round(total_bytes / (1024 * 1024), 2)
 
-    def collect_metrics_tick(self) -> Dict[str, Any]:
-        timestamp = datetime.now(timezone.utc).isoformat()
+    def collect_metrics_tick(self) -> dict[str, Any]:
+        timestamp = datetime.now(UTC).isoformat()
 
         # CPU telemetry
         cpu_usage = psutil.cpu_percent(interval=1)

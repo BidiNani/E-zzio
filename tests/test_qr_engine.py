@@ -3,7 +3,9 @@ Tests unitaires pour le moteur QR Code (génération, décodage OpenCV et aller-
 """
 
 import os
+
 import pytest
+
 from core.perception.qr_engine import QREngine
 from core.perception.universal_reader import UniversalFileReader
 
@@ -48,8 +50,8 @@ def test_qr_empty_or_no_qr(tmp_path):
 
     # Image PNG vierge sans QR code
     blank_path = tmp_path / "blank.png"
-    import numpy as np
     import cv2
+    import numpy as np
     blank_img = np.ones((200, 200, 3), dtype=np.uint8) * 255
     cv2.imwrite(str(blank_path), blank_img)
 

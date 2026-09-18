@@ -1,20 +1,21 @@
+import logging
+import time
+import uuid
+from typing import Any
+
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
-from typing import Any, Dict, Optional, List
-import uuid
-import time
-import logging
 
 logger = logging.getLogger("ezzio.api.tasks")
 
 router = APIRouter(prefix="/api/v1/tasks", tags=["Tasks"])
 
-_TASKS_STORE: Dict[str, Dict[str, Any]] = {}
+_TASKS_STORE: dict[str, dict[str, Any]] = {}
 
 class TaskCreateRequest(BaseModel):
     objective: str = Field(..., description="Objectif de la tâche bornée")
-    session_id: Optional[str] = Field(default="default_task_session", description="Identifiant de session")
-    max_steps: Optional[int] = Field(default=5, description="Nombre maximum d'étapes")
+    session_id: str | None = Field(default="default_task_session", description="Identifiant de session")
+    max_steps: int | None = Field(default=5, description="Nombre maximum d'étapes")
 
 class TaskResponse(BaseModel):
     task_id: str
@@ -22,18 +23,18 @@ class TaskResponse(BaseModel):
     objective: str
     status: str
     step_index: int
-    current_step: Optional[str] = "INITIAL"
+    current_step: str | None = "INITIAL"
     progress: float = 0.0
-    tool: Optional[str] = None
-    provider: Optional[str] = "local"
+    tool: str | None = None
+    provider: str | None = "local"
     created_at: float
-    started_at: Optional[float] = None
-    completed_at: Optional[float] = None
+    started_at: float | None = None
+    completed_at: float | None = None
     updated_at: float
-    request_id: Optional[str] = None
-    verification: Optional[Dict[str, Any]] = None
-    result: Optional[Dict[str, Any]] = None
-    error: Optional[str] = None
+    request_id: str | None = None
+    verification: dict[str, Any] | None = None
+    result: dict[str, Any] | None = None
+    error: str | None = None
 
 @router.post("/", response_model=TaskResponse)
 async def create_task(payload: TaskCreateRequest):
@@ -73,35 +74,35 @@ async def run_task(task_id: str):
     task = _TASKS_STORE.get(task_id)
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
-    
+
     t0 = time.time()
     task["started_at"] = t0
     task["status"] = "EXECUTING"
     task["current_step"] = "EXECUTING"
     task["step_index"] = 1
     task["progress"] = 0.5
-    
+
     try:
         from runtime.agent.loop import AgentLoop
         from tools.fs_tools import observe_filesystem
-        
+
         loop = AgentLoop()
         agent_res = loop.run(task["objective"])
-        
+
         # Exécution réelle d'observation si demandée
         obs_data = None
         if any(w in task["objective"].lower() for w in ["observe", "inspect", "dossier", "fichiers"]):
             task["tool"] = "filesystem.observe"
             obs_data = observe_filesystem("core")
-            
+
         latency = (time.time() - t0) * 1000.0
-        
+
         verif_data = {
             "status": "VERIFIED",
             "evidence_count": agent_res.get("ledger_events", 0),
             "target_verified": True
         }
-        
+
         final_result = {
             "agent_state": agent_res.get("state", "COMPLETED"),
             "ledger_events": agent_res.get("ledger_events", 0),
@@ -109,7 +110,7 @@ async def run_task(task_id: str):
             "latency_ms": round(latency, 2),
             "verified": True
         }
-        
+
         now = time.time()
         task["status"] = "COMPLETED"
         task["current_step"] = "COMPLETED"
@@ -136,7 +137,7 @@ async def cancel_task(task_id: str):
     task = _TASKS_STORE.get(task_id)
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
-    
+
     task["status"] = "CANCELLED"
     task["updated_at"] = time.time()
     return task

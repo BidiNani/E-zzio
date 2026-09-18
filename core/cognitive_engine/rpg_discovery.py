@@ -38,7 +38,7 @@ def scan_corpus():
     for path in ROOT_DIR.rglob("*"):
         if path.is_file() and path.suffix.lower() in targets:
             try:
-                with open(path, "r", encoding="utf-8", errors="ignore") as f:
+                with open(path, encoding="utf-8", errors="ignore") as f:
                     content = f.read().lower()
 
                 hits = {kw: weight for kw, weight in RPG_MARKERS.items() if kw in content}

@@ -1,9 +1,11 @@
 """
 Tests unitaires et de conformité pour le projet Android natif d'E-ZzIO.
 """
-from pathlib import Path
 import re
+from pathlib import Path
+
 import pytest
+
 
 def test_android_project_files_integrity():
     """Vérifie la présence de tous les fichiers du sous-projet Android."""

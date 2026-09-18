@@ -3,9 +3,12 @@ E-ZZIO — Canonical Identity
 Fournisseur unique d'identité compilée pour le cerveau Cloud.
 """
 from __future__ import annotations
-import hashlib, json
+
+import hashlib
+import json
 from pathlib import Path
 from typing import Any
+
 
 class CanonicalIdentity:
     VERSION = "canonical-identity-1.0.6"

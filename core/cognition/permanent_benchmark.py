@@ -4,21 +4,21 @@ Capteur biologique permanent. Mesure en continu la santé matérielle (Ryzen 9, 
 l'état de la mémoire multi-couches, le volume décisionnel et l'intégrité globale.
 """
 
-import sys
-import json
-import hmac
 import hashlib
+import hmac
+import json
 import logging
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from core.constitution.hardware_resource_governor import HardwareResourceGovernor
 from core.cognition.ecol_universal_enforcement import EcolUniversalGateway
+from core.constitution.hardware_resource_governor import HardwareResourceGovernor
 
 logger = logging.getLogger(__name__)
 
@@ -33,11 +33,11 @@ class PermanentBenchmarkEngine:
         self.gateway = EcolUniversalGateway()
         self.gateway.register_gateway_action("RUN_ORGANISM_BENCHMARK")
 
-    def run_benchmark_tick(self) -> Dict[str, Any]:
+    def run_benchmark_tick(self) -> dict[str, Any]:
         """
         Exécute une passe de mesure biologique globale de l'organisme.
         """
-        timestamp = datetime.now(timezone.utc).isoformat()
+        timestamp = datetime.now(UTC).isoformat()
 
         # 1. Collecte télémétrie matérielle
         hw_telemetry = self.hw_gov.get_system_telemetry()

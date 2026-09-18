@@ -3,6 +3,7 @@ Phase 6 Test Suite — Validation des capacités SaaS externes (Google Workspace
 """
 
 import pytest
+
 from core.capabilities.capability_policy import CapabilityPolicy, PolicyDecision
 
 

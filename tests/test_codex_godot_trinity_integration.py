@@ -7,11 +7,12 @@ Certifie la conformité contractuelle des 3 piliers :
 """
 import os
 import sqlite3
-import pytest
 from pathlib import Path
 
-from core.signals.signal_bus import SignalBus
+import pytest
+
 from core.security.audit_ledger import AuditLedger
+from core.signals.signal_bus import SignalBus
 from core.studio.scaffolder import ProjectScaffolder
 
 

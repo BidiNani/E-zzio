@@ -2,16 +2,14 @@
 E-ZZIO : Hardware-Real LLM Performance Benchmark Lab v9.0.
 Executes physical hardware sweeps (Threads, Context, Tokens, Cold/Warm, Order A/B) in pure CPU mode.
 """
-import os
-import sys
 import json
-import time
-import hashlib
 import re
-import urllib.request
 import subprocess
-import psutil
+import time
+import urllib.request
 from pathlib import Path
+
+import psutil
 
 root = Path("G:/AI/E-zzio")
 opt_dir = root / "state/audit/optimization/performance_v9"
@@ -141,7 +139,7 @@ def run_physical_query(model_spec, threads=4, context=4096, max_tokens=128, cold
     ttft_ms = 0.0
     prompt_tokens = 0
     generated_tokens = 0
-    
+
     if runtime == "Ollama":
         payload = {
             "model": model_spec["name"],
@@ -208,11 +206,11 @@ def run_physical_query(model_spec, threads=4, context=4096, max_tokens=128, cold
         except Exception as e:
             raw_response = f"ERROR: {e}"
             ram_peak = get_ram_mb()
-            
+
     lat_total = (time.perf_counter() - t0) * 1000
     time.sleep(0.3)
     ram_after = get_ram_mb()
-    
+
     return {
         "timestamp_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "model": model_spec["id"],
@@ -254,7 +252,7 @@ for m in models_spec:
     m_id = m["id"]
     print(f"\n--- Thread Sweep for {m['name']} ({m['runtime']}) ---")
     thread_sweep_data[m_id] = {}
-    
+
     for th in thread_levels:
         run_data = run_physical_query(m, threads=th, context=2048, max_tokens=64, cold_start=(th==1))
         thread_sweep_data[m_id][f"{th}T"] = {
@@ -264,7 +262,7 @@ for m in models_spec:
             "ram_peak_mb": run_data["ram_peak_mb"]
         }
         raw_runs.append(run_data)
-        
+
         # Save raw JSON file
         run_dir = raw_root / m_id / f"{th}T" / "2048ctx" / "64tok"
         run_dir.mkdir(parents=True, exist_ok=True)
@@ -315,7 +313,7 @@ recommendations = {
 (opt_dir / "recommendations.json").write_text(json.dumps(recommendations, indent=2, ensure_ascii=False), encoding="utf-8")
 
 # Generate Markdown Report
-report_md = f"""# E-ZZIO — Hardware-Real Performance Benchmark Report v9.0
+report_md = """# E-ZZIO — Hardware-Real Performance Benchmark Report v9.0
 
 **Machine :** AMD Ryzen 9 5900X (12C / 24T) — 32 Go RAM — CPU ONLY (CUDA = OFF / GPU = 0)
 

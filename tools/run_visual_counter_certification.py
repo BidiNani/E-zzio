@@ -4,16 +4,15 @@ E-ZZIO V9.4 Living AI Office — Master Counter-Certification Pipeline
 Generates all certified visual artifacts (10 PNGs + 1 MP4 >= 30s) under fail-closed standard.
 Produces MANIFEST.json and V9.4-VISUAL-COUNTER-CERTIFICATION.md.
 """
-import os
-import sys
-import time
-import json
 import hashlib
+import json
 import subprocess
+import time
 from pathlib import Path
-from PIL import Image
-import numpy as np
+
 import cv2
+import numpy as np
+from PIL import Image
 
 ROOT_DIR = Path("G:/AI/E-zzio")
 OUTPUT_DIR = ROOT_DIR / "state" / "audit" / "visual" / "v9.4-counter-certification"
@@ -98,7 +97,7 @@ def step_captures():
             capture_android(out_file, orientation="portrait")
         elif kind == "mobile_landscape":
             capture_android(out_file, orientation="landscape")
-        
+
         im = Image.open(out_file)
         print(f"     [OK] {fname}: {im.size}, {out_file.stat().st_size} bytes")
 
@@ -136,7 +135,7 @@ def generate_video_record():
     print("  Triggering demo on Android and recording 32s via adb screenrecord...")
     subprocess.run([str(ADB_PATH), "shell", "am", "start", "-a", "android.intent.action.VIEW", "-d", "http://10.0.2.2:8001/?demo=1", "org.chromium.webview_shell/.WebViewBrowserActivity"], check=True)
     time.sleep(1.0)
-    
+
     print("  Recording 32 seconds from Android emulator screen...")
     rec_cmd = [str(ADB_PATH), "shell", "screenrecord", "--time-limit", "32", "--bit-rate", "6000000", "/sdcard/v94_cert.mp4"]
     subprocess.run(rec_cmd, check=True)
@@ -211,7 +210,7 @@ def generate_manifest():
             entry["frames"] = int(cnt)
             entry["type"] = "video/mp4"
             entry["codec"] = "h264"
-        
+
         manifest_entries[f.name] = entry
 
     manifest_path = OUTPUT_DIR / "MANIFEST.json"

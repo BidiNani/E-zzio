@@ -4,13 +4,14 @@ Capture et scelle l'état de référence de l'organisme (hashes constitutionnels
 état initial de la mémoire, configuration matérielle) pour lancer la campagne de certification.
 """
 
-import sys
-import json
 import hashlib
-import psutil
+import json
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
+
+import psutil
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -35,13 +36,13 @@ class BaselineLockProtocol:
         total = sum(f.stat().st_size for f in path.rglob("*") if f.is_file())
         return round(total / (1024 * 1024), 2)
 
-    def capture_baseline(self) -> Dict[str, Any]:
+    def capture_baseline(self) -> dict[str, Any]:
         genome_path = self.root_dir / "core" / "constitution" / "ezzio_genome.json"
         framework_path = self.root_dir / "core" / "constitution" / "ezzio_global_framework.py"
 
         baseline_data = {
             "baseline_id": "EZZIO_V8.9.4_BASELINE",
-            "locked_utc": datetime.now(timezone.utc).isoformat(),
+            "locked_utc": datetime.now(UTC).isoformat(),
             "status": "CONSTITUTION_FROZEN_AND_LOCKED",
             "integrity": {"genome_sha256": self.get_file_hash(genome_path), "framework_sha256": self.get_file_hash(framework_path)},
             "hardware_profile": {

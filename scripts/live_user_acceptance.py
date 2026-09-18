@@ -1,28 +1,26 @@
 import asyncio
 import os
 import sys
-import json
-import time
 from pathlib import Path
 
 # Setup paths
 ROOT = Path(r"G:/AI/E-zzio").resolve()
 sys.path.insert(0, str(ROOT))
 
-from tools.fs_tools import observe_filesystem, read_file
-from core.memory.unified_gateway import UnifiedMemoryGateway
-from core.evidence_store import EvidenceStore
-from runtime.agent.loop import AgentLoop
-from runtime.tools.tool_registry import ToolRegistry
-from runtime.policy.engine import PolicyEngine, PolicyDecision
-from interfaces.api.server import app
 from fastapi.testclient import TestClient
+from interfaces.api.server import app
+
+from core.evidence_store import EvidenceStore
+from core.memory.unified_gateway import UnifiedMemoryGateway
+from runtime.tools.tool_registry import ToolRegistry
+from tools.fs_tools import observe_filesystem
+
 
 async def run_live_acceptance():
     print("================================================================================")
     print("E-ZZIO - PHASE 9 LIVE USER ACCEPTANCE & PRODUCT VALIDATION")
     print("================================================================================\n")
-    
+
     results = {}
 
     # 1. LIVE START & READINESS
@@ -98,7 +96,7 @@ async def run_live_acceptance():
     ev_db = str(ROOT / "runtime" / "test_tmp" / "live_evidence_p9.db")
     ev_store = EvidenceStore(db_path=ev_db)
     await ev_store.init()
-    
+
     await ev_store.store(
         query="E-ZZIO Autonomous Operating System",
         provider="gemini",
@@ -118,11 +116,11 @@ async def run_live_acceptance():
     print("\n[STEP 6/11] Live Restart & Zero-Hallucination Memory Recovery...")
     gw_reloaded = UnifiedMemoryGateway(db_path=mem_db)
     await gw_reloaded.init()
-    
+
     history_after_restart = await gw_reloaded.get_session_history(sess_id)
     assert len(history_after_restart) == 6
     assert "E-ZZIO" in history_after_restart[0]["content"]
-    
+
     fts_res = await gw_reloaded.search_memory("E-ZZIO")
     assert len(fts_res["chat_history"]) >= 1
     print(f"  -> Successfully recovered {len(history_after_restart)} messages post-restart via SQLite WAL and FTS5.")
@@ -135,27 +133,27 @@ async def run_live_acceptance():
     task_db = str(ROOT / "runtime" / "test_tmp" / "live_tasks_recovery_p9.db")
     tm1 = PersistentTaskManager(task_db)
     await tm1.init()
-    
+
     live_t_id = "TASK_LIVE_P9_RECOVERY"
     await tm1.save_task(live_t_id, sess_id, "Tache longue duree", "EXECUTING", step_index=1, result={"step_1": "OK"})
-    
+
     # Process crash/restart simulation
     tm2 = PersistentTaskManager(task_db)
     await tm2.init()
     recovered_task = await tm2.get_task(live_t_id)
     assert recovered_task["status"] == "EXECUTING"
-    
+
     await tm2.save_task(live_t_id, sess_id, "Tache longue duree", "COMPLETED", step_index=2, result={"step_1": "OK", "step_2": "OK", "verified": True})
     final_task = await tm2.get_task(live_t_id)
     assert final_task["status"] == "COMPLETED"
-    print(f"  -> Task checkpoint retrieved and resumed to COMPLETED state without duplication.")
+    print("  -> Task checkpoint retrieved and resumed to COMPLETED state without duplication.")
     results["LIVE_TASK_RECOVERY"] = "REAL_LIVE_PROVEN"
 
     # 8. LIVE FAILURE & ADVERSARIAL REJECTION
     print("\n[STEP 8/11] Live Failure & Adversarial Rejection...")
     adv_obs = observe_filesystem("../../../Windows/System32")
     assert adv_obs["status"] == "DENIED"
-    
+
     reg = ToolRegistry()
     assert reg.authorize_tool("unknown_malicious_tool") is False
     print("  -> Path traversal and unknown tool calls strictly DENIED (fail-closed).")

@@ -4,7 +4,7 @@ Chargeur et découpeur documentaire pour le codebase et la documentation d'E-ZzI
 
 import logging
 from pathlib import Path
-from typing import Any
+
 from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
@@ -45,7 +45,7 @@ class CodebaseLoader:
     def load_file(self, file_path: Path) -> list[Document]:
         if not file_path.is_file() or file_path.suffix.lower() not in SUPPORTED_EXTENSIONS:
             return []
-        
+
         if file_path.name in IGNORE_FILES:
             return []
 
@@ -56,16 +56,16 @@ class CodebaseLoader:
             content = file_path.read_text(encoding="utf-8", errors="ignore")
             if not content.strip():
                 return []
-            
+
             relative_path = file_path.relative_to(settings.root_dir).as_posix() if file_path.is_relative_to(settings.root_dir) else file_path.name
-            
+
             metadata = {
                 "source": file_path.name,
                 "path": relative_path,
                 "extension": file_path.suffix.lower(),
                 "file_type": "code" if file_path.suffix in (".py", ".ps1") else "doc",
             }
-            
+
             raw_doc = Document(page_content=content, metadata=metadata)
             return self.text_splitter.split_documents([raw_doc])
         except Exception as exc:
@@ -82,11 +82,11 @@ class CodebaseLoader:
             return []
 
         all_docs: list[Document] = []
-        
+
         for item in target_dir.iterdir():
             if item.name in IGNORE_DIRS or item.name.startswith("."):
                 continue
-                
+
             if item.is_dir() and recursive:
                 all_docs.extend(self.load_directory(item, recursive=True))
             elif item.is_file() and item.suffix.lower() in SUPPORTED_EXTENSIONS:

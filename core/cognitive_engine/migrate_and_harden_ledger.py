@@ -4,11 +4,11 @@ Migre l'ancien registre non chaîné vers une blockchain de blocs immuables (SHA
 place l'exception de sécurité en tête de module, et ajoute l'empreinte runtime.
 """
 
-import json
 import hashlib
+import json
 import uuid
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 GOVERNOR_PATH = ROOT_DIR / "core" / "cognition" / "cognitive_governor.py"
@@ -194,7 +194,7 @@ def migrate_ledger():
     if LEDGER_PATH.exists():
         print("  * Analyse du registre existant pour migration cryptographique...")
         raw_lines = []
-        with open(LEDGER_PATH, "r", encoding="utf-8") as f:
+        with open(LEDGER_PATH, encoding="utf-8") as f:
             for line in f:
                 if line.strip():
                     try:
@@ -216,7 +216,7 @@ def migrate_ledger():
 
             for entry in raw_lines:
                 # Si l'enregistrement possède déjà un hash valide, on le garde ou on le relie
-                timestamp = entry.get("timestamp", datetime.now(timezone.utc).isoformat())
+                timestamp = entry.get("timestamp", datetime.now(UTC).isoformat())
                 task = entry.get("task", "legacy_migration_task")
                 priority = entry.get("priority", "normal")
                 est_cost = entry.get("estimated_cost", entry.get("cost", 0))

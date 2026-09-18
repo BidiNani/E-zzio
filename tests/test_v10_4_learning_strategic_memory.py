@@ -3,23 +3,24 @@ E-ZZIO V10.4 — Critical Test Suite: Strategic Memory, Adaptive Workforce & Lea
 Couvre les tests unitaires et scénarios End-to-End exigés par la spécification V10.4.
 """
 
-import pytest
-import sys
 import subprocess
+import sys
 import time
 
+import pytest
+
+from core.ezzio_master import EzzioMaster
 from core.memory import (
-    StrategicMemoryEngine,
-    strategic_memory,
-    MissionOutcome,
-    MemoryCategory,
     AgentReliabilityProfile,
+    FailurePattern,
+    MemoryCategory,
+    MissionOutcome,
     ModelReliabilityProfile,
     ProviderReliabilityProfile,
+    StrategicMemoryEngine,
     TeamPerformanceProfile,
-    FailurePattern,
+    strategic_memory,
 )
-from core.ezzio_master import EzzioMaster
 
 
 @pytest.fixture(autouse=True)

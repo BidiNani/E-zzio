@@ -3,10 +3,11 @@ E-ZZIO V7.31 — Identity Persistence Layer
 Gère le chargement, le hachage et le scellement de la spécification d'identité.
 """
 
-import os
 import hashlib
 import hmac
+import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent

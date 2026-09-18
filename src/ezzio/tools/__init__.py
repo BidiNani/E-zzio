@@ -3,9 +3,9 @@ Outils système et manipulation de fichiers pour E-ZzIO
 """
 
 from .file_tools import (
+    apply_file_patch,
     list_project_files,
     read_project_file,
-    apply_file_patch,
     verify_python_syntax,
 )
 from .system_tools import check_ollama_health, run_local_tests

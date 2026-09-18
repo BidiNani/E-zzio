@@ -5,10 +5,10 @@ de soumettre des requêtes d'exécution au Cognitive Governor sous un format de 
 Ne modifie en aucun cas le noyau ECOL certifié V7.65.
 """
 
-import sys
 import logging
+import sys
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -32,10 +32,10 @@ class EcolRuntimeContract:
     VALID_RISK_LEVELS = {"low", "medium", "high", "critical"}
     VALID_SOURCES = {"llm_dispatcher", "tool_runner", "memory_subsystem", "evolution_engine", "system_core"}
 
-    def __init__(self, governor: Optional[CognitiveGovernor] = None):
+    def __init__(self, governor: CognitiveGovernor | None = None):
         self.governor = governor if governor is not None else CognitiveGovernor()
 
-    def _validate_payload(self, payload: Dict[str, Any]):
+    def _validate_payload(self, payload: dict[str, Any]):
         """Valide la structure et les types du payload d'entrée selon le contrat V7.66."""
         if not isinstance(payload, dict):
             raise ContractValidationError("Le payload du contrat doit être un dictionnaire JSON valide.")
@@ -63,7 +63,7 @@ class EcolRuntimeContract:
         if not isinstance(cost, int) or cost < 0:
             raise ContractValidationError("Violation de contrat : 'estimated_cost' doit être un entier positif.")
 
-    def evaluate_request(self, payload: Dict[str, Any]) -> Dict[str, Any]:
+    def evaluate_request(self, payload: dict[str, Any]) -> dict[str, Any]:
         """
         Point d'entrée unique pour toute demande d'exécution des composants d'E-zzio.
         Applique le contrat, interroge le gouverneur et normalise la réponse.

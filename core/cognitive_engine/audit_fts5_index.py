@@ -4,9 +4,9 @@ Analyse en lecture seule : répartition par memory_type, détection des faibles 
 et identification des doublons de contenu/hash.
 """
 
+import json
 import sqlite3
 from pathlib import Path
-import json
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 INDEX_DB = ROOT_DIR / "runtime" / "cognitive" / "index" / "memory_index.sqlite"

@@ -2,8 +2,8 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 
 from core.project_janitor import (
-    maintenance_status,
     audit_project,
+    maintenance_status,
     quarantine_dust,
 )
 

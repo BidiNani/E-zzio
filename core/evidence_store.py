@@ -1,7 +1,8 @@
 import json
+from datetime import UTC, datetime
+from typing import Any
+
 import aiosqlite
-from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
 
 
 class EvidenceStore:
@@ -32,14 +33,14 @@ class EvidenceStore:
         query: str,
         provider: str,
         mode: str,
-        data: Dict[str, Any],
-        task_id: Optional[str] = None,
-        user_id: Optional[str] = None,
-        channel_id: Optional[str] = None,
-        created_at: Optional[str] = None,
+        data: dict[str, Any],
+        task_id: str | None = None,
+        user_id: str | None = None,
+        channel_id: str | None = None,
+        created_at: str | None = None,
     ) -> int:
         """Enregistre une preuve d'audit en garantissant le timestamp created_at."""
-        now_ts = created_at or datetime.now(timezone.utc).isoformat()
+        now_ts = created_at or datetime.now(UTC).isoformat()
         async with aiosqlite.connect(self.db_path) as db:
             cursor = await db.execute(
                 """
@@ -51,7 +52,7 @@ class EvidenceStore:
             await db.commit()
             return cursor.lastrowid
 
-    async def get_by_task(self, task_id: str) -> List[Dict[str, Any]]:
+    async def get_by_task(self, task_id: str) -> list[dict[str, Any]]:
         async with aiosqlite.connect(self.db_path) as db:
             db.row_factory = aiosqlite.Row
             cursor = await db.execute("SELECT * FROM evidence WHERE task_id = ? ORDER BY id DESC", (task_id,))
@@ -67,7 +68,7 @@ class EvidenceStore:
                 results.append(item)
             return results
 
-    async def get_by_query(self, query: str, limit: int = 5) -> List[Dict[str, Any]]:
+    async def get_by_query(self, query: str, limit: int = 5) -> list[dict[str, Any]]:
         """Recherche les traces d'investigation par mot-clé."""
         async with aiosqlite.connect(self.db_path) as db:
             db.row_factory = aiosqlite.Row

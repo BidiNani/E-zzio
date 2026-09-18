@@ -4,12 +4,12 @@ Classifie les incidents (corruption, épuisement, contournement), isole le compo
 fautif, déclenche un rollback de sécurité et consigne la leçon dans la mémoire L3.
 """
 
-import sys
 import json
 import logging
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -29,7 +29,7 @@ class SelfHealingEngine:
         self.gateway = EcolUniversalGateway()
         self.gateway.register_gateway_action("SELF_HEALING_RECOVERY")
 
-    def handle_incident(self, incident_type: str, component: str, error_details: str) -> Dict[str, Any]:
+    def handle_incident(self, incident_type: str, component: str, error_details: str) -> dict[str, Any]:
         """
         Gère un incident en appliquant une stratégie de confinement, de rollback
         et d'apprentissage sous le contrôle strict d'ECOL.
@@ -45,7 +45,7 @@ class SelfHealingEngine:
         recovery_action = strategies.get(incident_type, "ISOLATE_COMPONENT_AND_NOTIFY")
 
         incident_record = {
-            "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+            "timestamp_utc": datetime.now(UTC).isoformat(),
             "incident_type": incident_type,
             "faulty_component": component,
             "error_details": error_details,

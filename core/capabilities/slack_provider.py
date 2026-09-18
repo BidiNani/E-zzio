@@ -6,11 +6,11 @@ Permet d'envoyer des notifications et de lire des messages Slack sans aucun agr�
 3. Politique de sécurité : slack.read (ALLOW), slack.send (REQUIRE_HUMAN)
 """
 from __future__ import annotations
-import os
+
 import logging
+import os
 from pathlib import Path
-from typing import Dict, Any, List, Optional
-import httpx
+from typing import Any
 
 from core.capabilities.capability_policy import CapabilityPolicy, PolicyDecision
 from core.utils.http_pool import get_http_client
@@ -25,7 +25,7 @@ class SlackProvider:
         self.webhook_url = self._get_secret("SLACK_WEBHOOK_URL")
         self.bot_token = self._get_secret("SLACK_BOT_TOKEN")
 
-    def _get_secret(self, key: str) -> Optional[str]:
+    def _get_secret(self, key: str) -> str | None:
         """Récupère un secret depuis secrets/.env."""
         env_paths = [
             self.workspace_root / "secrets" / ".env",
@@ -42,10 +42,10 @@ class SlackProvider:
                     pass
         return os.environ.get(key)
 
-    async def send_message(self, text: str, channel: Optional[str] = None, require_approval: bool = True) -> Dict[str, Any]:
+    async def send_message(self, text: str, channel: str | None = None, require_approval: bool = True) -> dict[str, Any]:
         """Envoie un message sur Slack avec interception de sécurité REQUIRE_HUMAN."""
         decision, reason = self.policy.evaluate_scope("slack.send", {"target": channel or "webhook_default", "text": text})
-        
+
         # Interception de sécurité contractuelle
         if decision == PolicyDecision.REQUIRE_HUMAN and require_approval:
             return {

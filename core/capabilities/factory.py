@@ -5,16 +5,24 @@ Gère le cycle de vie complet, l'exécution sécurisée, le rollback et la self-
 des capacités externes sans modifier le Core V9.0.
 """
 from __future__ import annotations
-import os
+
 import json
 import logging
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any
 
-from core.capabilities.trust import TrustLevel, CapabilityStatus, CapabilityTrustGuard, HardwareProfile
-from core.capabilities.discovery import CapabilityDiscoveryEngine, CapabilityProposal
 from core.capabilities.capability_policy import CapabilityPolicy, PolicyDecision
-from core.capabilities.registry import capability_registry, CapabilityQualification, QualificationStatus
+from core.capabilities.discovery import CapabilityDiscoveryEngine, CapabilityProposal
+from core.capabilities.registry import (
+    CapabilityQualification,
+    QualificationStatus,
+    capability_registry,
+)
+from core.capabilities.trust import (
+    CapabilityStatus,
+    CapabilityTrustGuard,
+    HardwareProfile,
+)
 
 logger = logging.getLogger("CapabilityFactory")
 
@@ -29,7 +37,7 @@ class CapabilityFactory:
         self.discovery = CapabilityDiscoveryEngine(workspace_root=str(self.workspace_root))
         self.policy = CapabilityPolicy()
 
-    def describe_capabilities(self) -> Dict[str, Any]:
+    def describe_capabilities(self) -> dict[str, Any]:
         """Produit la description structurée de l'ensemble des capacités actuelles et acquérables."""
         registered = capability_registry.list_capabilities()
         hardware = HardwareProfile.detect_current()
@@ -50,7 +58,7 @@ class CapabilityFactory:
             }
         }
 
-    def acquire_capability(self, proposal: CapabilityProposal) -> Dict[str, Any]:
+    def acquire_capability(self, proposal: CapabilityProposal) -> dict[str, Any]:
         """
         Installe et qualifie une nouvelle capacité dans le sas externe après validation de sécurité.
         """
@@ -115,7 +123,7 @@ class CapabilityFactory:
             "message": f"Capacité '{proposal.name}' acquise et enregistrée sous contrôle de sécurité."
         }
 
-    def execute_sandboxed_capability(self, name: str, task: str, params: Dict[str, Any]) -> Dict[str, Any]:
+    def execute_sandboxed_capability(self, name: str, task: str, params: dict[str, Any]) -> dict[str, Any]:
         """Exécute une capacité sandboxée en validant les chemins d'accès et les frontières."""
         # 1. Vérification contre les écritures hostiles
         out_target = params.get("output_path") or params.get("target_path")
@@ -138,7 +146,7 @@ class CapabilityFactory:
             "execution_runtime": "G:\\AI\\external\\sandbox"
         }
 
-    def self_heal_capability(self, name: str) -> Dict[str, Any]:
+    def self_heal_capability(self, name: str) -> dict[str, Any]:
         """Détecte une anomalie, arrête la capacité et déclenche le rollback sans toucher au Core."""
         logger.warning("[SELF-HEALING] Anomalie détectée pour '%s'. Rollback immédiat.", name)
         rollback_res = self.rollback_capability(name)
@@ -149,7 +157,7 @@ class CapabilityFactory:
             "rollback_details": rollback_res
         }
 
-    def rollback_capability(self, name: str) -> Dict[str, Any]:
+    def rollback_capability(self, name: str) -> dict[str, Any]:
         """Rétrograde ou désactive une capacité dégradée sans toucher au Core."""
         target_dir = self.sandbox_base / name
         manifest_file = target_dir / "capability.manifest.json"

@@ -4,7 +4,9 @@ Tests unitaires pour le Dev Studio Project Scaffolder d'E-ZzIO.
 
 import os
 import shutil
+
 import pytest
+
 from core.studio.scaffolder import ProjectScaffolder, ScaffolderSecurityError
 
 
@@ -22,7 +24,7 @@ def test_scaffolder_python_cli(tmp_path):
 
 def test_scaffolder_godot_and_pygame(tmp_path):
     scaffolder = ProjectScaffolder(workspace_root=str(tmp_path))
-    
+
     # Test Godot
     manifest_godot = scaffolder.scaffold("snake_2d", project_type="godot", description="Jeu Snake")
     assert os.path.exists(os.path.join(manifest_godot["path"], "project.godot"))

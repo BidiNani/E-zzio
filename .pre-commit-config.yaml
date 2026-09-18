@@ -1,0 +1,19 @@
+# E-ZZIO — Pre-commit hooks
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff
+        args: [--fix]
+        files: ^(?!tests/).*\.py$
+      - id: ruff-format
+        files: ^(?!tests/).*\.py$
+
+  - repo: local
+    hooks:
+      - id: pytest-quick
+        name: pytest quick (ignored slow)
+        entry: .venv/Scripts/python.exe -m pytest -q -x --ignore=tests/test_web_ui_e2e.py -m "not slow"
+        language: system
+        pass_filenames: false
+        stages: [pre-commit]

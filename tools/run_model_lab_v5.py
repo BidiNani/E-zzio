@@ -2,13 +2,11 @@
 E-ZZIO : Real Model Optimization Lab v5.0.
 Generates all 10 mandatory JSON artifacts with exact forensic evidence, metrics, and comparisons.
 """
-import os
-import sys
 import json
 import time
-import hashlib
-import psutil
 from pathlib import Path
+
+import psutil
 
 root = Path("G:/AI/E-zzio")
 opt_dir = root / "state/audit/optimization"

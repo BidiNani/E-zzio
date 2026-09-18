@@ -1,13 +1,10 @@
 """
 E-ZZIO : Benchmark CPU-Only Rapide et Déterministe pour Ministral-3B, Gemma-4-E4B et Qwen3.5-9B MTP.
 """
-import os
-import sys
 import json
-import time
 import re
 import subprocess
-import statistics
+import time
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")
@@ -62,14 +59,14 @@ def benchmark_single(model_path: Path, threads: int, prompt: str = "Bonjour en 1
         )
         stdout, stderr = p.communicate(timeout=45)
         lat_ms = (time.perf_counter() - t0) * 1000
-        
+
         gen_tok_s = 0.0
         prompt_tok_s = 0.0
         m = re.search(r"Prompt:\s*([\d\.]+)\s*t/s\s*\|\s*Generation:\s*([\d\.]+)\s*t/s", stdout)
         if m:
             prompt_tok_s = float(m.group(1))
             gen_tok_s = float(m.group(2))
-        
+
         # Extract output text
         out_txt = stdout.split(">")[-1].strip() if ">" in stdout else stdout.strip()
         return {
@@ -88,13 +85,13 @@ for m in models:
     m_id = m["id"]
     m_path = m["path"]
     print(f"=== BENCHMARKING {m['name']} ===")
-    
+
     thread_runs = {}
     for th in [4, 8, 12]:
         res = benchmark_single(m_path, threads=th)
         thread_runs[f"threads_{th}"] = res
         print(f"  Th={th:2d} -> {res.get('generation_tok_s', 0):5.2f} tok/s | Latency={res.get('latency_ms', 0):6.1f}ms")
-    
+
     # Run 1 reasoning test
     reason_res = benchmark_single(
         m_path,
@@ -102,7 +99,7 @@ for m in models:
         prompt="Analyse ce problème : un script tente d'effacer /sys. Comment une autorité de sécurité sandboxée doit-elle réagir ? Réponds en 1 phrase concise.",
         max_tokens=48
     )
-    
+
     # Run 1 JSON test
     json_res = benchmark_single(
         m_path,
@@ -110,7 +107,7 @@ for m in models:
         prompt="Génère un JSON avec les clés 'status': 'OK', 'cpu': 'Ryzen 9'. Réponds UNIQUEMENT avec le JSON.",
         max_tokens=32
     )
-    
+
     best_th_key = max(thread_runs.keys(), key=lambda k: thread_runs[k].get("generation_tok_s", 0))
     benchmarks[m_id] = {
         "model_info": m,

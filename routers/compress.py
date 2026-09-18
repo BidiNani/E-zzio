@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+
 from core.schemas import CompressRequest
 from core.token_compressor import compress_text, estimate_tokens
 

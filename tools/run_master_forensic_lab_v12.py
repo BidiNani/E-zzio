@@ -2,15 +2,9 @@
 E-ZZIO : Master Model Forensic Performance, Context & Capability Revalidation Lab v12.0.
 Compiles forensic reconciliation, individual model profiles, hardware & capability matrices, and SHA256 hashes.
 """
-import os
-import sys
+import hashlib
 import json
 import time
-import hashlib
-import re
-import urllib.request
-import subprocess
-import psutil
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")

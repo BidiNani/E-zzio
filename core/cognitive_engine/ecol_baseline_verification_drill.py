@@ -4,9 +4,9 @@ Vérifie l'intégrité cryptographique absolue de la baseline ECOL V7.65
 en comparant les hashes réels au manifeste de référence. Aucune écriture.
 """
 
-import sys
-import json
 import hashlib
+import json
+import sys
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")

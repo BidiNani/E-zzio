@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
-from typing import List, Tuple
+
 from core.cognition.orchestration.arbiter import FederatedProposal
 
 
@@ -26,7 +26,7 @@ class CognitiveDissentEngine:
     MIN_CONFIDENCE_THRESHOLD = 0.65
     MAX_PERMISSIBLE_DISSENT_ENTROPY = 0.80
 
-    def evaluate_dissent(self, proposals: List[FederatedProposal]) -> DissentEvaluation:
+    def evaluate_dissent(self, proposals: list[FederatedProposal]) -> DissentEvaluation:
         """Analyzes divergence across multiple proposals and calculates dissent entropy."""
         if not proposals:
             return DissentEvaluation(

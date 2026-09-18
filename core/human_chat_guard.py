@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import re
-from typing import Any, Dict, Optional
+from typing import Any
 
 
 def normalize(text: str) -> str:
@@ -36,7 +36,7 @@ def next_optimization_reply() -> str:
     )
 
 
-def deterministic_human_reply(text: str) -> Optional[Dict[str, Any]]:
+def deterministic_human_reply(text: str) -> dict[str, Any] | None:
     if wants_system_state(text):
         return {
             "reply": system_state_reply(),

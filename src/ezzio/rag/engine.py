@@ -13,9 +13,9 @@ from langchain_chroma import Chroma
 from langchain_ollama import OllamaEmbeddings
 
 from ezzio.config import settings
-from ezzio.schemas import RAGResult
-from ezzio.rag.loader import CodebaseLoader
 from ezzio.llm.client import get_llm_client
+from ezzio.rag.loader import CodebaseLoader
+from ezzio.schemas import RAGResult
 
 logger = logging.getLogger("EzzioRAG")
 

@@ -1,10 +1,10 @@
+import logging
 import os
+import shutil
 import sqlite3
 import time
-import shutil
-import logging
-from logging.handlers import RotatingFileHandler
 from datetime import datetime
+from logging.handlers import RotatingFileHandler
 
 DB_PATH = r"G:\AI\E-zzio\data\workspace_index.db"
 LOG_PATH = r"G:\AI\E-zzio\data\index_engine.log"

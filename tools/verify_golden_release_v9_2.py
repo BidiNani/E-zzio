@@ -1,12 +1,12 @@
 """
 tools/verify_golden_release_v9_2.py - Verificateur d'integrite officielle Golden Release E-ZZIO V9.2.
 """
-import sys
-import os
-import json
 import hashlib
-import zipfile
+import json
+import os
 import subprocess
+import sys
+import zipfile
 from pathlib import Path
 
 ROOT = Path("G:/AI/E-zzio").resolve()

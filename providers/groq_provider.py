@@ -1,13 +1,14 @@
-import aiohttp
 import asyncio
 import time
-from typing import Optional, Dict, Any
+from typing import Any
+
+import aiohttp
 
 from providers.base_provider import BaseProvider
-from providers.secrets_loader import get_groq_keys
-from providers.provider_response import ProviderResponse
 from providers.key_scheduler import KeyScheduler
+from providers.provider_response import ProviderResponse
 from providers.provider_telemetry import provider_telemetry
+from providers.secrets_loader import get_groq_keys
 
 
 class GroqProvider(BaseProvider):
@@ -18,7 +19,7 @@ class GroqProvider(BaseProvider):
     def capabilities(self) -> list:
         return ["fast_chat", "realtime_discord", "quick_response", "fallback"]
 
-    def health(self) -> Dict[str, Any]:
+    def health(self) -> dict[str, Any]:
         active_count = self.scheduler.get_active_count()
         return {
             "provider": "groq",
@@ -32,8 +33,8 @@ class GroqProvider(BaseProvider):
     async def generate(
         self,
         prompt: str,
-        model: Optional[str] = "llama-3.3-70b-versatile",
-        image_bytes: Optional[bytes] = None,
+        model: str | None = "llama-3.3-70b-versatile",
+        image_bytes: bytes | None = None,
         capability: str = "default",
     ) -> ProviderResponse:
         max_retries = max(len(self.scheduler.keys), 1)

@@ -1,8 +1,11 @@
 import os
-import httpx
 from typing import Any
+
+import httpx
+
 from core.models.discovery.base import ProviderDiscovery
 from core.secrets import load_secrets
+
 
 class OpenRouterDiscovery(ProviderDiscovery):
     provider = "openrouter"

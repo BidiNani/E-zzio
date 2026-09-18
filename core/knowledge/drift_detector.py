@@ -11,11 +11,11 @@ import json
 import logging
 import os
 import sqlite3
-from dataclasses import asdict, dataclass
-from datetime import datetime, timezone
+from dataclasses import dataclass
+from datetime import UTC, datetime
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple, Union
+from typing import Any
 
 logger = logging.getLogger("ezzio.drift_detector")
 
@@ -40,17 +40,17 @@ class FileDriftStatus(str, Enum):
 class DriftResult:
     verdict: DriftVerdict
     generated_at_utc: str
-    metrics: Dict[str, Any]
-    reconciliation: Dict[str, Any]
-    file_changes_summary: Dict[str, int]
+    metrics: dict[str, Any]
+    reconciliation: dict[str, Any]
+    file_changes_summary: dict[str, int]
     symbol_changes_count: int
     api_changes_count: int
     db_changes_count: int
-    artifacts_written: List[str]
+    artifacts_written: list[str]
     evidence_path: str
     message: str
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "verdict": self.verdict.value,
             "generated_at_utc": self.generated_at_utc,
@@ -75,9 +75,9 @@ class ForensicDriftDetector:
 
     def __init__(
         self,
-        root_dir: Optional[Union[str, Path]] = None,
-        knowledge_dir: Optional[Union[str, Path]] = None,
-        drift_dir: Optional[Union[str, Path]] = None,
+        root_dir: str | Path | None = None,
+        knowledge_dir: str | Path | None = None,
+        drift_dir: str | Path | None = None,
     ):
         if root_dir is not None:
             self._root_dir = Path(root_dir).resolve()
@@ -94,12 +94,12 @@ class ForensicDriftDetector:
         else:
             self._drift_dir = (self._root_dir / "_forensic" / "drift").resolve()
 
-        self._map_manifest: Dict[str, Any] = {}
-        self._map_hashes: Dict[str, str] = {}
-        self._map_symbols: Dict[str, Any] = {}
-        self._map_apis: Dict[str, Any] = {}
-        self._map_databases: Dict[str, Any] = {}
-        self._map_master: Dict[str, Any] = {}
+        self._map_manifest: dict[str, Any] = {}
+        self._map_hashes: dict[str, str] = {}
+        self._map_symbols: dict[str, Any] = {}
+        self._map_apis: dict[str, Any] = {}
+        self._map_databases: dict[str, Any] = {}
+        self._map_master: dict[str, Any] = {}
         self._load_status: str = "UNINITIALIZED"
 
     @property
@@ -125,7 +125,7 @@ class ForensicDriftDetector:
             if filepath.is_symlink() and not filepath.exists():
                 try:
                     target = os.readlink(filepath)
-                    return hashlib.sha256(f"SYMLINK:{target}".encode("utf-8")).hexdigest()
+                    return hashlib.sha256(f"SYMLINK:{target}".encode()).hexdigest()
                 except Exception:
                     return hashlib.sha256(b"BROKEN_SYMLINK").hexdigest()
 
@@ -137,7 +137,7 @@ class ForensicDriftDetector:
         except PermissionError:
             try:
                 target = os.readlink(filepath)
-                return hashlib.sha256(f"SYMLINK:{target}".encode("utf-8")).hexdigest()
+                return hashlib.sha256(f"SYMLINK:{target}".encode()).hexdigest()
             except Exception:
                 return "PERMISSION_DENIED"
         except Exception:
@@ -150,17 +150,17 @@ class ForensicDriftDetector:
             return False
 
         try:
-            with open(self._knowledge_dir / "FILE_MANIFEST.json", "r", encoding="utf-8") as f:
+            with open(self._knowledge_dir / "FILE_MANIFEST.json", encoding="utf-8") as f:
                 self._map_manifest = json.load(f)
-            with open(self._knowledge_dir / "FILE_HASHES.json", "r", encoding="utf-8") as f:
+            with open(self._knowledge_dir / "FILE_HASHES.json", encoding="utf-8") as f:
                 self._map_hashes = json.load(f)
-            with open(self._knowledge_dir / "SYMBOL_INDEX.json", "r", encoding="utf-8") as f:
+            with open(self._knowledge_dir / "SYMBOL_INDEX.json", encoding="utf-8") as f:
                 self._map_symbols = json.load(f)
-            with open(self._knowledge_dir / "API_MAP.json", "r", encoding="utf-8") as f:
+            with open(self._knowledge_dir / "API_MAP.json", encoding="utf-8") as f:
                 self._map_apis = json.load(f)
-            with open(self._knowledge_dir / "DATABASE_MAP.json", "r", encoding="utf-8") as f:
+            with open(self._knowledge_dir / "DATABASE_MAP.json", encoding="utf-8") as f:
                 self._map_databases = json.load(f)
-            with open(self._knowledge_dir / "MASTER_KNOWLEDGE.json", "r", encoding="utf-8") as f:
+            with open(self._knowledge_dir / "MASTER_KNOWLEDGE.json", encoding="utf-8") as f:
                 self._map_master = json.load(f)
             self._load_status = "LOADED"
             return True
@@ -173,7 +173,7 @@ class ForensicDriftDetector:
         Executes complete physical vs map drift analysis.
         Fail-closed: returns CRITICAL_DRIFT or MAP_STALE on broken prerequisites.
         """
-        now_utc = datetime.now(timezone.utc).isoformat()
+        now_utc = datetime.now(UTC).isoformat()
 
         if not self.load_knowledge_map():
             verdict = DriftVerdict.MAP_STALE if "MISSING" in self._load_status else DriftVerdict.CRITICAL_DRIFT
@@ -192,7 +192,7 @@ class ForensicDriftDetector:
             )
 
         # 1. Scan physical filesystem snapshot
-        physical_files_map: Dict[str, Path] = {}
+        physical_files_map: dict[str, Path] = {}
 
         try:
             drift_rel = self._normalize_path(str(self._drift_dir.relative_to(self._root_dir)))
@@ -216,15 +216,15 @@ class ForensicDriftDetector:
                 full_p = Path(root) / fname
                 physical_files_map[rel_file] = full_p
 
-        physical_files_set: Set[str] = set(physical_files_map.keys())
-        map_files_set: Set[str] = set(self._map_hashes.keys())
+        physical_files_set: set[str] = set(physical_files_map.keys())
+        map_files_set: set[str] = set(self._map_hashes.keys())
 
         # 2. File Drift Classification with consistent set partitioning (eliminating TOCTOU race)
-        unchanged_files: List[Dict[str, Any]] = []
-        modified_files: List[Dict[str, Any]] = []
-        missing_files: List[Dict[str, Any]] = []
-        new_files: List[Dict[str, Any]] = []
-        unknown_files: List[Dict[str, Any]] = []
+        unchanged_files: list[dict[str, Any]] = []
+        modified_files: list[dict[str, Any]] = []
+        missing_files: list[dict[str, Any]] = []
+        new_files: list[dict[str, Any]] = []
+        unknown_files: list[dict[str, Any]] = []
 
         # Missing files: in map baseline, but absent from physical snapshot
         missing_set = map_files_set - physical_files_set
@@ -283,7 +283,7 @@ class ForensicDriftDetector:
             })
 
         # 3. Symbol Drift Analysis
-        symbol_changes: List[Dict[str, Any]] = []
+        symbol_changes: list[dict[str, Any]] = []
         affected_py_files = set()
         for f in modified_files:
             if f["path"].endswith(".py"):
@@ -306,7 +306,7 @@ class ForensicDriftDetector:
                         symbol_changes.append({"symbol_id": sym_id, "kind": "function", "change": "DELETED", "file": py_rel})
             else:
                 try:
-                    with open(py_full, "r", encoding="utf-8", errors="replace") as pf:
+                    with open(py_full, encoding="utf-8", errors="replace") as pf:
                         tree = ast.parse(pf.read(), filename=py_rel)
                     current_classes = {node.name for node in tree.body if isinstance(node, ast.ClassDef)}
                     current_funcs = {node.name for node in tree.body if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))}
@@ -327,7 +327,7 @@ class ForensicDriftDetector:
                     symbol_changes.append({"file": py_rel, "change": "PARSE_ERROR", "error": str(ast_err)})
 
         # 4. API Drift Analysis
-        api_changes: List[Dict[str, Any]] = []
+        api_changes: list[dict[str, Any]] = []
         for f in modified_files:
             if "router" in f["path"].lower() or "server.py" in f["path"].lower():
                 api_changes.append({
@@ -337,7 +337,7 @@ class ForensicDriftDetector:
                 })
 
         # 5. Database Drift Analysis
-        db_changes: List[Dict[str, Any]] = []
+        db_changes: list[dict[str, Any]] = []
         for db_rel, db_info in self._map_databases.get("databases", {}).items():
             db_full = self._root_dir / db_rel.replace("/", os.sep)
             if not db_full.exists():

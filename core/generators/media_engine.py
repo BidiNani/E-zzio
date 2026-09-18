@@ -3,14 +3,14 @@ E-ZZIO Sovereign Generator — Media & 3D Engine.
 Génération locale de maillages 3D (GLTF/OBJ), synthèses audio WAV et wrappers FFmpeg.
 """
 from __future__ import annotations
-import os
-import wave
-import struct
-import math
-import json
+
 import logging
+import math
+import os
+import struct
+import wave
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any
 
 logger = logging.getLogger("MediaEngine")
 
@@ -29,7 +29,7 @@ class MediaEngine:
         frequency_hz: float = 440.0,
         duration_sec: float = 1.0,
         sample_rate: int = 44100
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Génère une onde sonore pure WAV (STT/TTS testing ou alertes sonores).
         """
@@ -66,7 +66,7 @@ class MediaEngine:
         filename: str,
         size: float = 1.0,
         color_name: str = "CyberBlue"
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Génère un maillage 3D Wavefront (.obj) standard valide pour Godot, Blender ou WebGL.
         """

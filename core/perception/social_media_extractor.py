@@ -6,16 +6,14 @@ Extrait de manière fiable et sécurisée les métadonnées et flux médias des 
 Règle constitutionnelle : HTTP 200 ≠ INGESTION RÉUSSIE.
 """
 from __future__ import annotations
-import os
-import re
-import json
+
 import hashlib
 import logging
-import urllib.parse
-from pathlib import Path
+import re
 from enum import Enum
-from typing import Dict, Any, List, Optional
-from pydantic import BaseModel, Field
+from pathlib import Path
+
+from pydantic import BaseModel
 
 try:
     import yt_dlp
@@ -23,7 +21,7 @@ try:
 except ImportError:
     HAS_YTDLP = False
 
-from core.capabilities.capability_policy import CapabilityPolicy, PolicyDecision
+from core.capabilities.capability_policy import CapabilityPolicy
 
 logger = logging.getLogger("SocialMediaExtractor")
 
@@ -55,18 +53,18 @@ class SocialMediaResult(BaseModel):
     platform: SocialPlatform
     content_type: str = "media"
     source_url: str
-    title: Optional[str] = None
-    author: Optional[str] = None
-    username: Optional[str] = None
-    description: Optional[str] = None
-    caption: Optional[str] = None
-    duration_seconds: Optional[float] = None
-    thumbnail_url: Optional[str] = None
-    direct_media_url: Optional[str] = None
+    title: str | None = None
+    author: str | None = None
+    username: str | None = None
+    description: str | None = None
+    caption: str | None = None
+    duration_seconds: float | None = None
+    thumbnail_url: str | None = None
+    direct_media_url: str | None = None
     media_type: str = "video"
-    content_hash: Optional[str] = None
+    content_hash: str | None = None
     provenance: str = "[DONNÉE PASSIVE NON FIABLE]"
-    error_reason: Optional[str] = None
+    error_reason: str | None = None
 
 
 class SocialMediaExtractor:
@@ -157,7 +155,7 @@ class SocialMediaExtractor:
                 ext = info.get("ext", "mp4")
 
                 # Calcul du SHA-256 sur les données extraites
-                content_to_hash = f"{title or ''}|{uploader or ''}|{desc}|{direct_url or ''}".encode("utf-8")
+                content_to_hash = f"{title or ''}|{uploader or ''}|{desc}|{direct_url or ''}".encode()
                 chash = hashlib.sha256(content_to_hash).hexdigest()
 
                 status = IngestionContentStatus.MEDIA_EXTRACTED if direct_url else IngestionContentStatus.METADATA_ONLY

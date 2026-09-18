@@ -5,11 +5,11 @@ identifie les nœuds racines (Roots), ponts (Bridges) et terminaux (Finals),
 et exporte le manifeste mathématique `founding_kernel.json`.
 """
 
+import hashlib
 import json
 import re
-import hashlib
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 TARGET_DIRS = ["core", "runtime"]
@@ -31,7 +31,7 @@ def compute_sha256(file_path: Path) -> str:
 def extract_local_imports(file_path: Path, all_modules: set) -> list:
     imports = []
     try:
-        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+        with open(file_path, encoding="utf-8", errors="ignore") as f:
             for line in f:
                 line_stripped = line.strip()
                 if match := re.match(r"^(?:import|from)\s+([a-zA-Z0-9_\.]+)", line_stripped):
@@ -66,7 +66,7 @@ def analyze_kernel():
     nodes = {}
     for rel_path, path in file_map.items():
         stat = path.stat()
-        ctime = datetime.fromtimestamp(stat.st_ctime, timezone.utc).isoformat()
+        ctime = datetime.fromtimestamp(stat.st_ctime, UTC).isoformat()
         sha256 = compute_sha256(path)
         local_deps = extract_local_imports(path, all_modules)
 
@@ -125,7 +125,7 @@ def analyze_kernel():
     finals = [n for n in kernel_records if len(nodes[n["module"]]["dependents"]) == 0]
 
     report = {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "generated_at": datetime.now(UTC).isoformat(),
         "total_analyzed_nodes": len(kernel_records),
         "top_root_nodes": roots[:20],
         "top_bridge_nodes": bridges[:20],

@@ -1,10 +1,10 @@
-import os
 import json
+import os
+import socket
 import time
 import uuid
-import socket
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any
 
 import ollama
 from dotenv import dotenv_values
@@ -53,7 +53,7 @@ Lexique E-ZZIO :
 """.strip()
 
 
-def load_config() -> Dict[str, str]:
+def load_config() -> dict[str, str]:
     cfg = {}
     if SECRETS_FILE.exists():
         cfg.update({k: str(v or "") for k, v in dotenv_values(SECRETS_FILE).items()})
@@ -199,7 +199,7 @@ def verify_mobile_token(token: str):
     return bool(expected and token and token == expected)
 
 
-def write_json_event(folder: Path, kind: str, payload: Dict[str, Any]):
+def write_json_event(folder: Path, kind: str, payload: dict[str, Any]):
     event_id = f"{time.strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:10]}"
     record = {
         "id": event_id,
@@ -340,7 +340,7 @@ def available_commands():
     }
 
 
-def _compact_json(data: Dict[str, Any]):
+def _compact_json(data: dict[str, Any]):
     return json.dumps(data, ensure_ascii=False, indent=2)
 
 
@@ -420,6 +420,7 @@ def sanitize_reply(answer: str):
 
 
 from core.identity.canonical_identity import CanonicalIdentity
+
 
 def build_system_prompt(source: str, mode: str):
     canonical = CanonicalIdentity().build_system_prompt()

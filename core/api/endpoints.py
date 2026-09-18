@@ -7,14 +7,14 @@ Chaque endpoint retourne un JSON structuré :
 import os
 import platform
 import shutil
-import psutil
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+
+import psutil
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-from core.api.state_store import load, save, append, update, delete
+from core.api.state_store import append, delete, load, save, update
 
 router = APIRouter(prefix="/api", tags=["ezzio"])
 
@@ -31,7 +31,7 @@ class MissionCreate(BaseModel):
 
 class ObjectiveCreate(BaseModel):
     title: str
-    key_results: List[str] = []
+    key_results: list[str] = []
     progress: int = 0
 
 class ProjectCreate(BaseModel):
@@ -291,7 +291,7 @@ async def get_memory_content(path: str):
         raise HTTPException(404, "Fichier introuvable")
     try:
         import json
-        with open(target, "r", encoding="utf-8") as f:
+        with open(target, encoding="utf-8") as f:
             return {"ok": True, "data": json.load(f), "path": path}
     except Exception as e:
         raise HTTPException(500, str(e))

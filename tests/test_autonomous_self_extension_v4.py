@@ -14,16 +14,31 @@ Exécute et prouve empiriquement la chaîne complète de bout en bout :
 10. Preuve d'inviolabilité du Frozen Core.
 """
 
-import os
 import json
+import os
 import time
-import pytest
 from pathlib import Path
 
-from core.capabilities.trust import TrustLevel, CapabilityStatus, CapabilityTrustGuard, HardwareProfile
-from core.capabilities.discovery import CapabilityDiscoveryEngine, CapabilityProposal, LicenseClass, SourceTrustLevel
+import pytest
+
+from core.capabilities.discovery import (
+    CapabilityDiscoveryEngine,
+    CapabilityProposal,
+    LicenseClass,
+    SourceTrustLevel,
+)
 from core.capabilities.factory import CapabilityFactory
-from core.capabilities.registry import capability_registry, CapabilityQualification, QualificationStatus
+from core.capabilities.registry import (
+    CapabilityQualification,
+    QualificationStatus,
+    capability_registry,
+)
+from core.capabilities.trust import (
+    CapabilityStatus,
+    CapabilityTrustGuard,
+    HardwareProfile,
+    TrustLevel,
+)
 from core.memory.unified_gateway import UnifiedMemoryGateway
 
 

@@ -4,13 +4,13 @@ Connecte les messages Discord au graphe d'orchestration LangGraph avec persistan
 """
 
 import logging
-from typing import Any
+
 import discord
 from discord.ext import commands
 
 from ezzio.graph.workflow import app as graph_app
-from ezzio.tools.system_tools import check_ollama_health
 from ezzio.self_repair.auto_healer import AutoHealer
+from ezzio.tools.system_tools import check_ollama_health
 
 logger = logging.getLogger("EzzioDiscord")
 
@@ -32,16 +32,16 @@ class EzzioCog(commands.Cog, name="EzzioCore"):
                 "model_used": "",
             }
             config = {"configurable": {"thread_id": thread_id}}
-            
+
             try:
                 final_state = await graph_app.ainvoke(initial_state, config=config)
                 answer = final_state.get("answer", "Aucune réponse générée.")
                 model = final_state.get("model_used", "E-ZzIO")
                 route = final_state.get("route", "direct")
-                
+
                 header = f"**[E-ZzIO | Route: {route.upper()} | Modèle: {model}]**\n\n"
                 full_response = header + answer
-                
+
                 # Découpage si > 2000 caractères
                 if len(full_response) <= 2000:
                     await ctx.reply(full_response)

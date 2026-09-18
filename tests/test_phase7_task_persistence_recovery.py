@@ -1,7 +1,9 @@
-import pytest
-import aiosqlite
 import json
 import time
+
+import aiosqlite
+import pytest
+
 
 class PersistentTaskManager:
     def __init__(self, db_path: str):
@@ -55,23 +57,23 @@ async def test_phase7_task_persistence_restart_and_resume(tmp_path):
     db_file = str(tmp_path / "task_persistence_p7.db")
     mgr1 = PersistentTaskManager(db_file)
     await mgr1.init()
-    
+
     t_id = "TASK_P7_PERSIST_001"
     # Étape 1 : Création et interruption
     await mgr1.save_task(t_id, "SESS_P7", "Objectif lourd", "EXECUTING", step_index=1, result={"step_1": "DONE"})
-    
+
     # Étape 2 : Simulation crash et redémarrage avec un nouveau manager
     mgr2 = PersistentTaskManager(db_file)
     await mgr2.init()
-    
+
     t_recovered = await mgr2.get_task(t_id)
     assert t_recovered is not None
     assert t_recovered["status"] == "EXECUTING"
     assert t_recovered["step_index"] == 1
-    
+
     # Étape 3 : Reprise et complétion
     await mgr2.save_task(t_id, "SESS_P7", "Objectif lourd", "COMPLETED", step_index=2, result={"step_1": "DONE", "step_2": "DONE", "verified": True})
-    
+
     t_final = await mgr2.get_task(t_id)
     assert t_final["status"] == "COMPLETED"
     assert t_final["step_index"] == 2

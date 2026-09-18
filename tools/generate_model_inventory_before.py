@@ -1,12 +1,11 @@
 """
 E-ZZIO : Inventaire Initial Forensique des Modèles Locaux (Avant Découverte).
 """
-import os
-import sys
-import json
 import hashlib
-import psutil
+import json
 from pathlib import Path
+
+import psutil
 
 root = Path("G:/AI/E-zzio")
 ext_dir = Path("G:/AI/external")

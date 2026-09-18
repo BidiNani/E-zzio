@@ -1,23 +1,25 @@
-import pytest
 from typing import Any, Dict
+
+import pytest
+
+from core.providers.gemini_provider import GeminiProvider
 from core.providers.iresearch_provider import IResearchProvider
-from core.research_router import ResearchRouter
 from core.providers.jina_provider import JinaProvider
 from core.providers.tavily_provider import TavilyProvider
-from core.providers.gemini_provider import GeminiProvider
+from core.research_router import ResearchRouter
 
 
 class DummyProviderSuccess(IResearchProvider):
     name = "dummy_ok"
 
-    async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
+    async def search(self, query: str, **kwargs: Any) -> dict[str, Any]:
         return {"provider": "dummy_ok", "results": [f"Result for {query}"]}
 
 
 class DummyProviderFail(IResearchProvider):
     name = "dummy_fail"
 
-    async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
+    async def search(self, query: str, **kwargs: Any) -> dict[str, Any]:
         raise ConnectionError("Service injoignable")
 
 

@@ -10,9 +10,13 @@ import logging
 import time
 import urllib.request
 from pathlib import Path
-from typing import Any, Dict, List, Optional
 
-from core.cognition.model_federation.base_provider import BaseFederatedProvider, FederatedTaskRequest, FederatedTaskResult, ProviderDomain
+from core.cognition.model_federation.base_provider import (
+    BaseFederatedProvider,
+    FederatedTaskRequest,
+    FederatedTaskResult,
+    ProviderDomain,
+)
 from core.cognition.providers.key_pool import SovereignKeyPool
 
 logger = logging.getLogger(__name__)

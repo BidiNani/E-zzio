@@ -4,14 +4,14 @@ Agrège la télémétrie réelle du Hardware Governor (V7.71), du Model Governor
 et la baseline ECOL pour émettre un certificat global unifié, vivant et cryptographiquement signé.
 """
 
-import sys
-import json
-import hmac
 import hashlib
+import hmac
+import json
 import logging
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -29,7 +29,7 @@ class LiveOrganismCertifier:
         self.report_path = self.root_dir / "runtime" / "cognition" / "budget" / "EZZIO_LIVE_ORGANISM_CERTIFICATE.json"
         self.report_path.parent.mkdir(parents=True, exist_ok=True)
 
-    def generate_live_certificate(self) -> Dict[str, Any]:
+    def generate_live_certificate(self) -> dict[str, Any]:
         # 1. Collecte de la télémétrie matérielle réelle (Gaming H24)
         hw_telemetry = self.hw_gov.get_system_telemetry()
 
@@ -49,7 +49,7 @@ class LiveOrganismCertifier:
         certificate = {
             "organism": "E-ZZIO",
             "framework_version": "V7.73",
-            "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+            "timestamp_utc": datetime.now(UTC).isoformat(),
             "hardware_telemetry": hw_telemetry,
             "domains": domains,
             "global_status": "10/10 ABSOLUTE CERTIFIED (LIVE)",

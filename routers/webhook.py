@@ -4,7 +4,7 @@ import os
 import sqlite3
 import time
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.security.api_key import APIKeyHeader
@@ -90,11 +90,11 @@ async def n8n_webhook_receiver(request: Request, api_key: str = Depends(api_key_
         raise HTTPException(status_code=413, detail="Payload too large")
 
     try:
-        payload: Dict[str, Any] = json.loads(body_bytes)
+        payload: dict[str, Any] = json.loads(body_bytes)
     except Exception:
         raise HTTPException(status_code=400, detail="Invalid JSON")
 
-    context_files: List[Dict[str, Any]] = payload.get("context_files", [])
+    context_files: list[dict[str, Any]] = payload.get("context_files", [])
     if len(context_files) > MAX_FILES:
         raise HTTPException(status_code=400, detail="Too many files")
 
@@ -113,7 +113,7 @@ async def n8n_webhook_receiver(request: Request, api_key: str = Depends(api_key_
     try:
         if not getattr(_core, "_is_initialized", False):
             await _core.init()
-            setattr(_core, "_is_initialized", True)
+            _core._is_initialized = True
 
         res = await _core.think(user_id=user_id, message=message_str, session_id=session_id)
         return WebhookResponse(

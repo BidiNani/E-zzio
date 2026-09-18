@@ -2,11 +2,11 @@
 tests/test_web_access_manager.py — Deterministic Unit Tests for Universal Web Access & URL Manager
 """
 import pytest
-from core.agent.web_access_manager import (
-    WebAccessManager, WebAccessMode, web_access_manager
-)
-from core.agent.input_access_manager import InputType, InputDocument
+
 from core.agent.capability_manager import CapabilityManager
+from core.agent.input_access_manager import InputDocument, InputType
+from core.agent.web_access_manager import WebAccessManager, WebAccessMode, web_access_manager
+
 
 def test_ssrf_security_block():
     wam = WebAccessManager()

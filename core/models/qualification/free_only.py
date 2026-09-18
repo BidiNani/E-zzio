@@ -4,6 +4,7 @@ Robust multi-provider pricing parser with strict fail-closed semantics.
 """
 
 from __future__ import annotations
+
 from typing import Any
 
 FREE_POLICY_NAME = "FREE_ONLY"

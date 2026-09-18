@@ -5,18 +5,18 @@ contraindre l'exécution réelle des outils, scripts et dispatchers LLM
 aux verdicts du Cognitive Governor (ALLOW / DENY / REVIEW).
 """
 
-import sys
 import functools
 import logging
+import sys
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from core.cognition.ecol_runtime_contract import EcolRuntimeContract, ContractValidationError
 from core.cognition.cognitive_governor import LedgerSecurityError
+from core.cognition.ecol_runtime_contract import ContractValidationError, EcolRuntimeContract
 
 logger = logging.getLogger(__name__)
 

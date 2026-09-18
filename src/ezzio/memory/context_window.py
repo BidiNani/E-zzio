@@ -2,11 +2,9 @@
 Gestionnaire de fenêtrage glissant de contexte et de persistance mémorielle pour E-ZzIO.
 """
 
-import json
-import sqlite3
 import logging
+import sqlite3
 from pathlib import Path
-from typing import Any
 
 from ezzio.config import settings
 from ezzio.memory.token_compressor import get_token_compressor

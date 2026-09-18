@@ -1,6 +1,6 @@
 import re
 from enum import Enum
-from typing import Dict, Any, List, Optional
+from typing import Any
 
 
 class IntentType(Enum):
@@ -42,7 +42,7 @@ class IntentRouter:
         r"\b(raconte une histoire|écris un poème|invente|compose|génère un dialogue créatif)\b"
     ]
 
-    def classify(self, query: str) -> Dict[str, Any]:
+    def classify(self, query: str) -> dict[str, Any]:
         query_lower = query.lower()
 
         # 1. Détection mémoire / audit

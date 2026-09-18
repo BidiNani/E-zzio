@@ -9,16 +9,15 @@ Standard : Fail-Closed / Zéro fuite / Mode Offline Souverain.
 """
 from __future__ import annotations
 
-import os
 import json
-import time
-import asyncio
 import logging
-import httpx
-from typing import Any, AsyncIterator, Dict, List, Optional
+import os
+import time
+from collections.abc import AsyncIterator
+from typing import Any
 
-from core.secrets import load_secrets
-from core.providers.iresearch_provider import IResearchProvider
+import httpx
+
 from core.providers.base_provider import (
     BaseProvider,
     CostClass,
@@ -26,6 +25,8 @@ from core.providers.base_provider import (
     ProviderErrorClass,
     ProviderResponse,
 )
+from core.providers.iresearch_provider import IResearchProvider
+from core.secrets import load_secrets
 
 logger = logging.getLogger("OllamaProvider")
 
@@ -51,8 +52,8 @@ class OllamaProvider(BaseProvider, IResearchProvider):
 
     def __init__(
         self,
-        base_url: Optional[str] = None,
-        model: Optional[str] = None,
+        base_url: str | None = None,
+        model: str | None = None,
         timeout: float = 60.0,
     ) -> None:
         load_secrets()
@@ -74,11 +75,11 @@ class OllamaProvider(BaseProvider, IResearchProvider):
         """Vérifie si le démon Ollama répond sur le réseau local."""
         return self.availability() in (ProviderAvailability.AVAILABLE, ProviderAvailability.DEGRADED)
 
-    def cost_class(self, model: Optional[str] = None) -> CostClass:
+    def cost_class(self, model: str | None = None) -> CostClass:
         """Inférence locale = 0€ (LOCAL)."""
         return CostClass.LOCAL
 
-    def capabilities(self, model: Optional[str] = None) -> List[str]:
+    def capabilities(self, model: str | None = None) -> list[str]:
         """Retourne les capacités déduites pour les modèles locaux."""
         target = (model or self.model).lower()
         caps = ["TEXT", "LOCAL", "INSTRUCTION_FOLLOWING"]
@@ -92,7 +93,7 @@ class OllamaProvider(BaseProvider, IResearchProvider):
             caps.append("FAST_INFERENCE")
         return sorted(list(set(caps)))
 
-    def error_mapping(self, status_code: int, error_body: Optional[str] = None) -> ProviderErrorClass:
+    def error_mapping(self, status_code: int, error_body: str | None = None) -> ProviderErrorClass:
         """Mappe les statuts HTTP du serveur Ollama vers les classes canoniques."""
         if status_code == 404:
             return ProviderErrorClass.MODEL_NOT_FOUND
@@ -104,7 +105,7 @@ class OllamaProvider(BaseProvider, IResearchProvider):
             return ProviderErrorClass.PROVIDER_UNAVAILABLE
         return ProviderErrorClass.UNKNOWN_ERROR
 
-    async def health(self) -> Dict[str, Any]:
+    async def health(self) -> dict[str, Any]:
         """Vérifie la santé du démon Ollama et liste les modèles installés."""
         start_time = time.perf_counter()
         url = f"{self.base_url}/api/tags"
@@ -142,8 +143,8 @@ class OllamaProvider(BaseProvider, IResearchProvider):
     async def generate(
         self,
         prompt: str,
-        system_prompt: Optional[str] = None,
-        model: Optional[str] = None,
+        system_prompt: str | None = None,
+        model: str | None = None,
         temperature: float = 0.2,
         max_tokens: int = 512,
         **kwargs: Any,
@@ -248,8 +249,8 @@ class OllamaProvider(BaseProvider, IResearchProvider):
     async def stream(
         self,
         prompt: str,
-        system_prompt: Optional[str] = None,
-        model: Optional[str] = None,
+        system_prompt: str | None = None,
+        model: str | None = None,
         temperature: float = 0.2,
         max_tokens: int = 512,
         **kwargs: Any,
@@ -293,7 +294,7 @@ class OllamaProvider(BaseProvider, IResearchProvider):
         except Exception as exc:
             logger.warning("[OLLAMA STREAM ERROR] %s", exc)
 
-    async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
+    async def search(self, query: str, **kwargs: Any) -> dict[str, Any]:
         """Méthode de recherche canonique compatible IResearchProvider."""
         url = f"{self.base_url}/api/generate"
         payload = {

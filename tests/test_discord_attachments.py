@@ -1,7 +1,6 @@
 """Tests ingestion PJ Discord : règles de routage texte/code vs images."""
 import pytest
 
-
 TEXT_EXTS = (".log", ".py", ".gd", ".lua", ".txt", ".json", ".md")
 IMAGE_EXTS = (".png", ".jpg", ".jpeg", ".webp")
 

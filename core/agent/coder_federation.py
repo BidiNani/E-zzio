@@ -4,10 +4,10 @@ Re-exports canonical router types for historical test contracts while ensuring z
 """
 from dataclasses import dataclass, field
 from enum import Enum, auto
-from typing import Any, Dict, List, Optional
+from typing import Any
 
-from core.providers.base_provider import CostClass, ProviderResponse
 from core.ezzio_master import ezzio_master
+from core.providers.base_provider import CostClass, ProviderResponse
 
 
 class TaskComplexity(Enum):
@@ -51,7 +51,7 @@ class TaskProfile:
     context_size: ContextSize = ContextSize.MEDIUM
     latency_preference: LatencyClass = LatencyClass.BALANCED
     privacy: PrivacyRequirement = PrivacyRequirement.ALLOW_CLOUD
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    metadata: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -59,14 +59,14 @@ class ProviderCandidate:
     provider_name: str
     model_name: str
     cost_class: CostClass = CostClass.CLOUD
-    capabilities: List[str] = field(default_factory=list)
+    capabilities: list[str] = field(default_factory=list)
     is_local: bool = False
 
 
 @dataclass
 class RoutingPlan:
-    primary: Optional[ProviderCandidate] = None
-    fallback_chain: List[ProviderCandidate] = field(default_factory=list)
+    primary: ProviderCandidate | None = None
+    fallback_chain: list[ProviderCandidate] = field(default_factory=list)
 
 CoderRoutingPlan = RoutingPlan
 
@@ -98,7 +98,7 @@ class CoderModelFederationRouter:
 
     def __init__(
         self,
-        providers: Optional[Dict[str, Any]] = None,
+        providers: dict[str, Any] | None = None,
         cb: Any = None,
         audit_ledger: Any = None,
         max_cloud_budget_cents: int = 1000,
@@ -121,7 +121,7 @@ class CoderModelFederationRouter:
     async def execute_task(
         self,
         prompt: str,
-        profile: Optional[TaskProfile] = None,
+        profile: TaskProfile | None = None,
         system_prompt: str = "",
     ) -> ProviderResponse:
         res = await ezzio_master.execute_intent(user_prompt=prompt, system_prompt=system_prompt)

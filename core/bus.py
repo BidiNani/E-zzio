@@ -6,9 +6,9 @@ import asyncio
 import json
 import sqlite3
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 
 @dataclass
@@ -16,18 +16,18 @@ class AgentEvent:
     run_id: str
     event_type: str  # "plan", "thought", "tool_call", "terminal", "artifact", "final"
     agent_id: str
-    payload: Dict[str, Any]
+    payload: dict[str, Any]
     requires_approval: bool = False
-    event_id: Optional[int] = None
+    event_id: int | None = None
     created_at: str = field(
-        default_factory=lambda: datetime.now(timezone.utc).isoformat()
+        default_factory=lambda: datetime.now(UTC).isoformat()
     )
 
 
 class EventBus:
     def __init__(self, db_path: Path | str = "ezzio.db") -> None:
         self.db_path = Path(db_path)
-        self._subscribers: Dict[str, List[asyncio.Queue[AgentEvent]]] = {}
+        self._subscribers: dict[str, list[asyncio.Queue[AgentEvent]]] = {}
         self._init_db()
 
     def _get_connection(self) -> sqlite3.Connection:
@@ -65,7 +65,7 @@ class EventBus:
             )
 
     def register_run(self, run_id: str, prompt: str, profile: str = "normal") -> None:
-        now = datetime.now(timezone.utc).isoformat()
+        now = datetime.now(UTC).isoformat()
         with self._get_connection() as conn:
             conn.execute(
                 "INSERT INTO runs (run_id, prompt, profile, status, created_at) VALUES (?, ?, ?, ?, ?)",
@@ -116,12 +116,12 @@ class EventBus:
         """Supprime les événements plus anciens que le seuil (timestamps ISO)."""
         from datetime import timedelta as _td
 
-        cutoff = (datetime.now(timezone.utc) - _td(days=days)).isoformat()
+        cutoff = (datetime.now(UTC) - _td(days=days)).isoformat()
         with self._get_connection() as conn:
             cur = conn.execute("DELETE FROM events WHERE created_at < ?", (cutoff,))
             return cur.rowcount
 
-    def get_run_events(self, run_id: str) -> List[Dict[str, Any]]:
+    def get_run_events(self, run_id: str) -> list[dict[str, Any]]:
         with self._get_connection() as conn:
             rows = conn.execute(
                 "SELECT * FROM events WHERE run_id = ? ORDER BY id ASC", (run_id,)

@@ -17,11 +17,10 @@ Mode :
 from __future__ import annotations
 
 import logging
-import os
 import time
 import uuid
 from collections import defaultdict, deque
-from typing import Callable
+from collections.abc import Callable
 
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import JSONResponse
@@ -34,7 +33,6 @@ from core.app_config import (
     MAX_BODY_BYTES,
     RATE_LIMIT_EXEMPT_PATHS,
     RATE_LIMIT_PER_MIN,
-    REQUEST_TIMEOUT_S,
 )
 
 log = logging.getLogger("Guardian")
@@ -89,7 +87,7 @@ class GuardianMiddleware(BaseHTTPMiddleware):
                 resp = Response(status_code=200)
                 resp.headers["Access-Control-Allow-Origin"] = origin
                 resp.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, PATCH, OPTIONS"
-                resp.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, X-Correlation-ID, X-Requested-With"
+                resp.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, X-Correlation-ID, X-Requested-With, X-API-Key"
                 resp.headers["Access-Control-Allow-Credentials"] = "true"
                 resp.headers["Access-Control-Max-Age"] = "86400"
                 resp.headers["Vary"] = "Origin"
@@ -162,7 +160,7 @@ class GuardianMiddleware(BaseHTTPMiddleware):
             response.headers["Access-Control-Allow-Origin"] = origin
             response.headers["Access-Control-Allow-Credentials"] = "true"
             response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
-            response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, X-Correlation-ID"
+            response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, X-Correlation-ID, X-API-Key"
             response.headers["Vary"] = "Origin"
 
         # --- 7. Headers sécurité + télémétrie
@@ -200,5 +198,5 @@ def setup_guardian(app: FastAPI) -> None:
     log.info(f"[GUARDIAN] CORS origines : {len(ALLOWED_ORIGINS)}")
     log.info(f"[GUARDIAN] Rate limit    : {RATE_LIMIT_PER_MIN}/min par IP")
     log.info(f"[GUARDIAN] Body max      : {MAX_BODY_BYTES} octets")
-    log.info(f"[GUARDIAN] Prêt")
+    log.info("[GUARDIAN] Prêt")
 

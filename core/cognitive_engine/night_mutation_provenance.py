@@ -6,8 +6,8 @@ calcule les fenêtres de co-création temporelle (±10 min) et structure le grap
 
 import json
 import re
+from datetime import UTC, datetime, time
 from pathlib import Path
-from datetime import datetime, time, timezone
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 TARGET_DIRS = ["core", "runtime"]
@@ -23,7 +23,7 @@ def is_nocturnal_window(dt: datetime) -> bool:
 def extract_python_imports(file_path: Path) -> list:
     imports = []
     try:
-        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+        with open(file_path, encoding="utf-8", errors="ignore") as f:
             for line in f:
                 line_stripped = line.strip()
                 if match := re.match(r"^(?:import|from)\s+([a-zA-Z0-9_\.]+)", line_stripped):
@@ -89,7 +89,7 @@ def build_mutation_graph():
 
         node["co_created_window_10min"] = co_created
 
-    graph_data = {"generated_at": datetime.now(timezone.utc).isoformat(), "total_nodes": len(nodes), "nodes": nodes}
+    graph_data = {"generated_at": datetime.now(UTC).isoformat(), "total_nodes": len(nodes), "nodes": nodes}
 
     OUTPUT_REPORT.parent.mkdir(parents=True, exist_ok=True)
     with open(OUTPUT_REPORT, "w", encoding="utf-8") as f:

@@ -1,8 +1,9 @@
 from __future__ import annotations
+
 import ast
+import sys
 from dataclasses import dataclass, field
 from pathlib import Path
-import sys
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -65,23 +66,23 @@ class LineageVisitor(ast.NodeVisitor):
     def visit_Assign(self, node: ast.Assign):
         target_str = ast.unparse(node.targets[0])
         val_node = node.value
-        
+
         if isinstance(val_node, ast.Call):
             func_name = self._resolve_name(val_node.func)
             if func_name in TARGET_CLASSES or func_name in TARGET_FACTORIES:
                 scope_str = " -> ".join(self.scope_stack)
                 scope_type = "METHOD" if len(self.scope_stack) > 2 else ("FUNCTION" if len(self.scope_stack) == 2 else "MODULE_LEVEL (UNANCHORED)")
-                
+
                 args = [ast.unparse(a) for a in val_node.args]
                 kw = {k.arg: ast.unparse(k.value) for k in val_node.keywords if k.arg}
-                
+
                 # Qualification du statut d'ancrage
                 classification = "DIRECT_LOCAL"
                 if scope_type.startswith("MODULE_LEVEL"):
                     classification = "⚠️ UNANCHORED MODULE-LEVEL INSTANCE"
                 elif any(k in target_str for k in ("self.", "cls.", "app.state", "bot.")):
                     classification = "PERSISTENT ATTRIBUTE"
-                
+
                 self.lineages.append(
                     InstanceLineage(
                         file_path=self.rel_path,
@@ -99,11 +100,11 @@ class LineageVisitor(ast.NodeVisitor):
 
     def visit_Call(self, node: ast.Call):
         func_name = self._resolve_name(node.func)
-        
+
         # Traçage spécifique de build_fabric sans assignation
         if func_name == "build_fabric":
             self.build_fabric_call_count += 1
-            
+
         # Traçage des cogs Discord
         if isinstance(node.func, ast.Attribute) and node.func.attr == "add_cog":
             cog_arg = ast.unparse(node.args[0]) if node.args else "<inconnu>"
@@ -132,7 +133,7 @@ def main():
     print(f"[RACINE] {PROJECT_ROOT}\n")
 
     py_files = [p for p in PROJECT_ROOT.glob("**/*.py") if not (set(p.parts) & EXCLUDED_PARTS)]
-    
+
     all_lineages: list[InstanceLineage] = []
     all_cogs: list[CogRegistration] = []
     fabric_sites: list[tuple[str, int, str]] = []

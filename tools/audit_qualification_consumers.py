@@ -1,25 +1,25 @@
 from __future__ import annotations
+
 import json
-import ast
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_qualification_consumers() -> List[Dict[str, Any]]:
+def inspect_qualification_consumers() -> list[dict[str, Any]]:
     results = []
     target_terms = {"run_model", "modelrecord", "ingest_discovery", "upsert"}
-    
+
     for p in PROJECT_ROOT.glob("**/*.py"):
         if set(p.parts) & EXCLUDED_DIRS:
             continue
         try:
             content = p.read_text(encoding="utf-8", errors="replace")
             content_lower = content.lower()
-            
+
             hits = [term for term in target_terms if term in content_lower]
             if hits:
                 results.append({
@@ -55,7 +55,7 @@ def main():
         "writes_performed": 0,
         "runtime_mutations": 0
     }
-    
+
     out_file = PROJECT_ROOT / "tools" / "qualification_consumers_report.json"
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2)

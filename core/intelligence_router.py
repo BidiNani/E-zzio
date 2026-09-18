@@ -3,19 +3,20 @@ E-ZZIO V7.25.0 — Fault Tolerant Intelligence Core
 Intègre le Circuit Breaker, le chaînage SHA-256 du Ledger et la télémétrie Windows.
 """
 
+import hashlib
 import json
 import uuid
-import hashlib
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
-from core.routing.contracts import RouteConstraints, ExecutionDecision, Urgency
-from core.routing.scorer import RoutingScorer
-from core.routing.circuit_breaker import circuit_breaker
-from providers.provider_registry import _load_capabilities, _load_performance, get_provider_instance
-from providers.provider_response import ProviderResponse
 from ollama.adaptive_governor import ollama_governor
 from ollama.windows_telemetry import windows_memory
+
+from core.routing.circuit_breaker import circuit_breaker
+from core.routing.contracts import ExecutionDecision, RouteConstraints, Urgency
+from core.routing.scorer import RoutingScorer
+from providers.provider_registry import _load_capabilities, _load_performance, get_provider_instance
+from providers.provider_response import ProviderResponse
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 LOCAL_REGISTRY_PATH = ROOT_DIR / "runtime" / "models" / "model_registry.json"
@@ -55,7 +56,7 @@ class IntelligenceRouter:
         previous_hash = self._get_last_ledger_hash()
 
         payload = {
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "request_id": request_id,
             "intent": intent,
             "candidates": candidates,

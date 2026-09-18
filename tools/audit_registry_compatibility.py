@@ -1,16 +1,18 @@
 from __future__ import annotations
+
 import json
 import sys
-from pathlib import Path
 from dataclasses import fields
-from typing import Dict, Any
+from pathlib import Path
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from core.models.registry import ModelRecord, ModelRegistry
+from core.models.registry import ModelRecord
 
-def audit_registry_compatibility() -> Dict[str, Any]:
+
+def audit_registry_compatibility() -> dict[str, Any]:
     registry_path = PROJECT_ROOT / "data" / "models" / "registry.json"
     report = {
         "registry_exists": registry_path.exists(),
@@ -46,10 +48,10 @@ def audit_registry_compatibility() -> Dict[str, Any]:
         # Détection de champs inconnus (historiques) ou manquants
         raw_keys = set(raw.keys())
         unknown_keys = list(raw_keys - valid_fields)
-        
+
         # Test d'instanciation sécurisée (filtrage des kwargs non reconnus si nécessaire ou rapport d'alerte)
         filtered_raw = {k: v for k, v in raw.items() if k in valid_fields}
-        
+
         try:
             record = ModelRecord(**filtered_raw)
             report["valid_records"] += 1

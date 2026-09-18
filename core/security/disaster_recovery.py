@@ -6,6 +6,7 @@ en cas de destruction totale ou d'effacement du ledger actif (router_decisions.j
 
 import json
 from pathlib import Path
+
 from core.security.archive_validator import archive_validator
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent

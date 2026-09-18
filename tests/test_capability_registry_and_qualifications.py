@@ -1,11 +1,13 @@
 """
 Test unitaire du CapabilityRegistry et de la qualification formelle de web-search-mcp et crawl4ai-engine.
 """
-import pytest
-from unittest.mock import patch, AsyncMock
+from unittest.mock import AsyncMock, patch
+
 import httpx
-from core.capabilities.registry import CapabilityRegistry, capability_registry
+import pytest
+
 from core.capabilities.capability_qualification import CapabilityQualification, QualificationStatus
+from core.capabilities.registry import CapabilityRegistry, capability_registry
 
 
 def test_capability_registry_initialization():

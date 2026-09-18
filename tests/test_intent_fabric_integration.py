@@ -1,4 +1,5 @@
 import pytest
+
 pytestmark = pytest.mark.skip(
     reason="incompatibilite litellm.types.utils.MirroredPricingParams - a corriger separement, cf core/models/router.py"
 )
@@ -15,7 +16,8 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from dotenv import load_dotenv
-from core.intents.fabric_connector import IntentFabricConnector, IntentCategory
+
+from core.intents.fabric_connector import IntentCategory, IntentFabricConnector
 
 load_dotenv(PROJECT_ROOT / "secrets" / ".env", override=True)
 

@@ -1,12 +1,9 @@
-import os
 import json
-import time
+import os
 import shutil
 import subprocess
+import time
 from pathlib import Path
-from typing import Optional
-
-import httpx
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
 FORGE_ROOT = PROJECT_ROOT / "forge"
@@ -105,7 +102,7 @@ def status():
     }
 
 
-def save_prompt_file(kind: str, prompt: str, negative: str = "", meta: Optional[dict] = None):
+def save_prompt_file(kind: str, prompt: str, negative: str = "", meta: dict | None = None):
     stamp = time.strftime("%Y%m%d_%H%M%S")
     path = _safe_output_path(f"{kind}/prompt_{stamp}.json")
     payload = {

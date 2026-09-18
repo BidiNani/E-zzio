@@ -2,7 +2,8 @@
 E-ZZIO Web API — Capability Registry Router.
 Expose les capacités qualifiées et leur gouvernance via REST.
 """
-from typing import Dict, Any
+from typing import Any
+
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
@@ -13,7 +14,7 @@ router = APIRouter(prefix="/capabilities", tags=["Capabilities"])
 
 class CapabilityExecutionRequest(BaseModel):
     capability_name: str
-    parameters: Dict[str, Any] = {}
+    parameters: dict[str, Any] = {}
 
 
 @router.get("")

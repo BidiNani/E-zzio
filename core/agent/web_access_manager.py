@@ -3,15 +3,12 @@ core/agent/web_access_manager.py — Universal Web Access & URL Manager for E-ZZ
 Features: SSRF Protection, Access Mode Classification, HTML/JSON Extraction, Audit Provenance & Prompt Injection Isolation.
 """
 from __future__ import annotations
-import os
-import re
-import sys
-import json
+
 import logging
+import re
 from enum import Enum
+from typing import Any
 from urllib.parse import urlparse
-from typing import Dict, Any, List, Optional, Tuple
-from dataclasses import dataclass, field
 
 from core.agent.input_access_manager import InputDocument, InputType
 
@@ -41,11 +38,11 @@ BLOCKED_IP_PATTERNS = [
 class WebAccessManager:
     """Manager d'accès web universel : classification, protection SSRF, extraction HTML/JSON et traçabilité."""
 
-    def __init__(self, workspace_root: Optional[str] = None):
+    def __init__(self, workspace_root: str | None = None):
         self.workspace_root = workspace_root or r"G:\AI\E-zzio"
         self._user_agent = "E-ZZIO-Sovereign-Agent/1.0 (WebAccessManager; +http://127.0.0.1:8001)"
 
-    def is_ssrf_safe(self, url: str) -> Tuple[bool, str]:
+    def is_ssrf_safe(self, url: str) -> tuple[bool, str]:
         """Vérifie la sécurité de l'URL contre les attaques SSRF (IPs privées, localhost, schemes interdits)."""
         if not url or not isinstance(url, str):
             return False, "URL vide ou invalide."
@@ -161,7 +158,7 @@ class WebAccessManager:
         }
         self._log_audit("WEB_PROVENANCE_RECORDED", payload)
 
-    def _log_audit(self, action: str, payload: Dict[str, Any]) -> None:
+    def _log_audit(self, action: str, payload: dict[str, Any]) -> None:
         """Méthode interne d'enregistrement dans AuditLedger."""
         try:
             from core.security.audit_ledger import AuditLedger

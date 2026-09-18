@@ -1,5 +1,5 @@
-import os
 import hashlib
+import os
 
 # Répertoires strictement interdits à la modification / lecture par le LLM
 FORBIDDEN_DIRS = [r"G:\AI\E-zzio\secrets", r"G:\AI\E-zzio\.git", r"G:\AI\E-zzio\venv", r"G:\AI\E-zzio\__pycache__"]

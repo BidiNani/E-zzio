@@ -1,7 +1,12 @@
 """Always-on / barge-in / contrôle de tâches — classification, lifecycle, honnêteté."""
 from core.agent.interaction_control import (
-    InterruptionIntent as I, classify_interruption, control_for,
-    reconcile_after_restart, status_view,
+    InterruptionIntent as I,
+)
+from core.agent.interaction_control import (
+    classify_interruption,
+    control_for,
+    reconcile_after_restart,
+    status_view,
 )
 from core.agent.mission_controller import MissionTask, TaskStatus, WorkerRole
 

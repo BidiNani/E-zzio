@@ -5,7 +5,7 @@ import os
 import time
 import uuid
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from core.human_chat_guard import deterministic_human_reply, sanitize_human_chat_reply
 
@@ -48,7 +48,7 @@ def session_path(session: str) -> Path:
     return SESSIONS_ROOT / f"{safe_session_name(session)}.jsonl"
 
 
-def append_session(session: str, role: str, content: str, meta: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+def append_session(session: str, role: str, content: str, meta: dict[str, Any] | None = None) -> dict[str, Any]:
     event = {
         "id": str(uuid.uuid4()),
         "created_at": now(),
@@ -74,13 +74,13 @@ def append_session(session: str, role: str, content: str, meta: Optional[Dict[st
     return event
 
 
-def read_session(session: str, limit: int = 12) -> List[Dict[str, Any]]:
+def read_session(session: str, limit: int = 12) -> list[dict[str, Any]]:
     path = session_path(session)
     if not path.exists():
         return []
 
     lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
-    events: List[Dict[str, Any]] = []
+    events: list[dict[str, Any]] = []
 
     for line in lines[-max(1, min(int(limit), 100)) :]:
         try:
@@ -91,7 +91,7 @@ def read_session(session: str, limit: int = 12) -> List[Dict[str, Any]]:
     return events
 
 
-def list_sessions() -> Dict[str, Any]:
+def list_sessions() -> dict[str, Any]:
     sessions = []
 
     for path in sorted(SESSIONS_ROOT.glob("*.jsonl"), key=lambda p: p.stat().st_mtime, reverse=True):
@@ -138,7 +138,7 @@ def compact_context(session: str, limit: int = 8) -> str:
     return "\n".join(lines)
 
 
-def status() -> Dict[str, Any]:
+def status() -> dict[str, Any]:
     return {
         "ok": True,
         "version": "v2.20.1b-human-chat-truth-guard",
@@ -166,7 +166,7 @@ def status() -> Dict[str, Any]:
     }
 
 
-def build_brief() -> Dict[str, Any]:
+def build_brief() -> dict[str, Any]:
     maintenance = None
     human = None
     brain = None
@@ -226,7 +226,7 @@ def build_brief() -> Dict[str, Any]:
     }
 
 
-def command_reply(text: str, session: str) -> Optional[Dict[str, Any]]:
+def command_reply(text: str, session: str) -> dict[str, Any] | None:
     cmd = (text or "").strip().lower()
 
     if cmd in ("/help", "help"):
@@ -350,7 +350,7 @@ def command_reply(text: str, session: str) -> Optional[Dict[str, Any]]:
     return None
 
 
-def human_chat(text: str, session: str = "pc", task: str = "auto", speed: str = "auto", predict: int = 260) -> Dict[str, Any]:
+def human_chat(text: str, session: str = "pc", task: str = "auto", speed: str = "auto", predict: int = 260) -> dict[str, Any]:
     started = time.time()
     session = safe_session_name(session)
     text = text or ""

@@ -5,11 +5,11 @@ génère le manifeste cryptographique et initialise l'espace curatif
 `runtime/cognitive/curated/rpg_memory/`.
 """
 
-import sqlite3
-import json
 import hashlib
+import json
+import sqlite3
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 SNAPSHOT_DB = ROOT_DIR / "runtime" / "cognitive" / "snapshots" / "V7.58" / "memory_index.sqlite"
@@ -68,7 +68,7 @@ def recover_rpg_lineage():
     manifest_data = {
         "domain": "RPG_MEMORY",
         "version": "V7.60",
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "timestamp": datetime.now(UTC).isoformat(),
         "total_entries": len(recovered_entries),
         "entries_manifest": [{"source": e["source_path"], "sha256": e["sha256"]} for e in recovered_entries],
     }

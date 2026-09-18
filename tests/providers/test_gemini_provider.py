@@ -1,7 +1,9 @@
-import pytest
 import json
+from unittest.mock import AsyncMock, MagicMock, patch
+
 import httpx
-from unittest.mock import patch, AsyncMock, MagicMock
+import pytest
+
 from core.providers.base_provider import (
     BaseProvider,
     CostClass,
@@ -9,8 +11,8 @@ from core.providers.base_provider import (
     ProviderErrorClass,
     ProviderResponse,
 )
-from core.providers.iresearch_provider import IResearchProvider
 from core.providers.gemini_provider import GeminiProvider
+from core.providers.iresearch_provider import IResearchProvider
 
 
 def test_gemini_provider_structure():

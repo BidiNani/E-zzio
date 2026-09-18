@@ -5,16 +5,16 @@ Recherche, évalue et score de manière autonome les capacités selon les règle
 de licence et de profil matériel dynamique.
 """
 from __future__ import annotations
-import os
-import json
-import unicodedata
+
 import logging
+import unicodedata
 from enum import Enum
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any
+
 from pydantic import BaseModel, Field
 
-from core.capabilities.trust import TrustLevel, CapabilityStatus, HardwareProfile
+from core.capabilities.trust import CapabilityStatus, HardwareProfile, TrustLevel
 
 logger = logging.getLogger("CapabilityDiscovery")
 
@@ -43,14 +43,14 @@ class CapabilityProposal(BaseModel):
     trust_level: TrustLevel = Field(TrustLevel.TRUST_1_DISCOVERED)
     source_trust: SourceTrustLevel = Field(SourceTrustLevel.COMMUNITY_PROJECT)
     code_license: str = Field("UNKNOWN")
-    weights_license: Optional[str] = Field("N/A")
+    weights_license: str | None = Field("N/A")
     license_class: LicenseClass = Field(LicenseClass.UNKNOWN)
     commercial_allowed: bool = Field(False)
     locality: str = Field("LOCAL_SANDBOX", description="LOCAL_REAL, LOCAL_CPU, LOCAL_SANDBOX, CLOUD_API")
     min_vram_gb: float = Field(0.0)
     min_ram_gb: float = Field(1.0)
     hardware_fit: bool = Field(True)
-    required_permissions: List[str] = Field(default_factory=list)
+    required_permissions: list[str] = Field(default_factory=list)
     risk_level: str = Field("LOW", description="LOW, MEDIUM, HIGH, CRITICAL")
     install_target: str = Field("G:\\AI\\external\\capabilities\\")
     score: float = Field(0.0, description="Score composite 0-10")
@@ -69,7 +69,7 @@ class CapabilityDiscoveryEngine:
         self.hardware = HardwareProfile.detect_current()
         self.known_catalog = self._init_known_catalog()
 
-    def _init_known_catalog(self) -> Dict[str, Dict[str, Any]]:
+    def _init_known_catalog(self) -> dict[str, dict[str, Any]]:
         return {
             "kokoro-tts": {
                 "category": "audio",
@@ -151,7 +151,7 @@ class CapabilityDiscoveryEngine:
             }
         }
 
-    def compute_score(self, data: Dict[str, Any], fit: bool) -> float:
+    def compute_score(self, data: dict[str, Any], fit: bool) -> float:
         """Calcule un score déterministe basé sur l'utilité, la sécurité, la localité et la licence."""
         val = data.get("functional_value", 7.0)
         lic_penalty = 0.0 if data.get("comm") else 2.0
@@ -160,7 +160,7 @@ class CapabilityDiscoveryEngine:
         score = max(0.0, min(10.0, val - lic_penalty - hw_penalty - risk_penalty))
         return round(score, 1)
 
-    def discover_capability_for_task(self, query: str) -> List[CapabilityProposal]:
+    def discover_capability_for_task(self, query: str) -> list[CapabilityProposal]:
         """Recherche et qualifie les propositions candidates pour un besoin donné."""
         q_clean = strip_accents(query.lower())
         proposals = []

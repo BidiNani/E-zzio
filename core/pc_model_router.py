@@ -1,16 +1,15 @@
 from __future__ import annotations
-from core.identity.canonical_identity import CanonicalIdentity
 
+import json
 import os
 import re
-import json
 import time
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any
 
-import httpx
 import ollama
 
+from core.identity.canonical_identity import CanonicalIdentity
 from core.response_guard import deterministic_reply, sanitize_ezzio_reply
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
@@ -223,7 +222,7 @@ def ollama_models() -> list[str]:
         return []
 
 
-def is_available() -> Dict[str, Any]:
+def is_available() -> dict[str, Any]:
     """
     Healthcheck léger et rapide (pas de génération, juste /api/tags).
     Pensé pour être appelé par un futur Cognitive Router (dans
@@ -264,7 +263,7 @@ def classify_error(exc: Exception) -> str:
     return f"other:{name}"
 
 
-def load_policy() -> Dict[str, Any]:
+def load_policy() -> dict[str, Any]:
     if POLICY_PATH.exists():
         try:
             policy = json.loads(POLICY_PATH.read_text(encoding="utf-8"))
@@ -277,7 +276,7 @@ def load_policy() -> Dict[str, Any]:
     return DEFAULT_POLICY
 
 
-def save_policy(policy: Dict[str, Any]) -> Dict[str, Any]:
+def save_policy(policy: dict[str, Any]) -> dict[str, Any]:
     PERF_ROOT.mkdir(parents=True, exist_ok=True)
     policy["version"] = "v2.19-pc-policy-realign-and-healthcheck"
     POLICY_PATH.write_text(json.dumps(policy, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -357,7 +356,7 @@ def infer_task(text: str, requested_task: str = "auto", speed: str = "auto") -> 
     return "companion"
 
 
-def select_model(task: str = "auto", text: str = "", speed: str = "auto") -> Dict[str, Any]:
+def select_model(task: str = "auto", text: str = "", speed: str = "auto") -> dict[str, Any]:
     policy = load_policy()
     installed = ollama_models()
     resolved_task = infer_task(text, task, speed)
@@ -405,7 +404,7 @@ def select_model(task: str = "auto", text: str = "", speed: str = "auto") -> Dic
     }
 
 
-def router_status() -> Dict[str, Any]:
+def router_status() -> dict[str, Any]:
     policy = load_policy()
     bench = latest_guarded_bench()
     installed = ollama_models()
@@ -433,7 +432,7 @@ def router_status() -> Dict[str, Any]:
     }
 
 
-def chat_with_route(text: str, task: str = "auto", speed: str = "auto", predict: int = 260) -> Dict[str, Any]:
+def chat_with_route(text: str, task: str = "auto", speed: str = "auto", predict: int = 260) -> dict[str, Any]:
     route = select_model(task=task, text=text, speed=speed)
     if not route.get("ok"):
         return {"ok": False, "route": route, "reply": "Aucun modèle local installé ne correspond à cette tâche.", "error_kind": "no_candidate_installed"}
@@ -501,5 +500,5 @@ def chat_with_route(text: str, task: str = "auto", speed: str = "auto", predict:
         }
 
 
-def write_default_policy() -> Dict[str, Any]:
+def write_default_policy() -> dict[str, Any]:
     return save_policy(DEFAULT_POLICY)

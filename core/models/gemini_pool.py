@@ -5,15 +5,15 @@ la rotation immédiate sans sleep artificiel sur 429 (avec Retry-After),
 l'invalidation sur 401/403, et la sélection par profil de tâche.
 """
 from __future__ import annotations
+
+import logging
 import os
 import re
 import time
-import random
-import logging
-from typing import Any, Dict, List, Optional, Tuple
-from core.models.capability_registry_source import get_capability_registry
 from dataclasses import dataclass, field
 from threading import Lock
+
+from core.models.capability_registry_source import get_capability_registry
 
 logger = logging.getLogger("EzzioGeminiPool")
 
@@ -34,7 +34,7 @@ class GeminiKeySlot:
 @dataclass
 class GeminiProjectSlot:
     project_id: str
-    keys: List[GeminiKeySlot] = field(default_factory=list)
+    keys: list[GeminiKeySlot] = field(default_factory=list)
     blocked_until: float = 0.0
     current_key_index: int = 0
     total_requests: int = 0
@@ -46,7 +46,7 @@ class GeminiProjectSlot:
             return False
         return any(k.is_valid for k in self.keys)
 
-    def get_active_key(self) -> Tuple[int, Optional[str]]:
+    def get_active_key(self) -> tuple[int, str | None]:
         valid_indices = [idx for idx, k in enumerate(self.keys) if k.is_valid]
         if not valid_indices:
             return -1, None
@@ -76,9 +76,9 @@ class GeminiPoolManager:
     """Gestionnaire de pool de projets Google Gemini thread-safe et résilient."""
 
     def __init__(self):
-        self.projects: List[GeminiProjectSlot] = []
+        self.projects: list[GeminiProjectSlot] = []
         self._lock = Lock()
-        self._unsupported_models: Dict[str, float] = {}  # model -> blocked_until
+        self._unsupported_models: dict[str, float] = {}  # model -> blocked_until
         self._capability_registry = get_capability_registry()
         self._load_from_vault_and_env()
 
@@ -128,10 +128,10 @@ class GeminiPoolManager:
                     self.projects.append(existing)
                 existing.keys.append(GeminiKeySlot(key=env_v.strip()))
 
-    def get_candidate_models(self, capability: str = "general") -> List[str]:
+    def get_candidate_models(self, capability: str = "general") -> list[str]:
         """Retourne la liste ordonnée des modèles candidats via le registre canonique."""
         now = time.time()
-        
+
         # Map capability to role
         cap_to_role = {
             "fast": "FAST",
@@ -145,24 +145,24 @@ class GeminiPoolManager:
             "architecture": "MASTER"
         }
         target_role = cap_to_role.get(capability.lower(), "MASTER")
-        
+
         candidates = []
         for m in canonical_model_registry.list_models():
             if m.role == target_role and m.source.name == "GEMINI":
                 candidates.append(m.name)
-        
+
         if not candidates:
             # Fallback
             for m in canonical_model_registry.list_models():
                 if m.role == "MASTER" and m.source.name == "GEMINI":
                     candidates.append(m.name)
-                    
+
         return [
             m for m in candidates
             if self._unsupported_models.get(m, 0.0) <= now
         ]
 
-    def acquire_execution_target(self, capability: str = "general") -> Tuple[Optional[str], Optional[str], int, Optional[GeminiProjectSlot]]:
+    def acquire_execution_target(self, capability: str = "general") -> tuple[str | None, str | None, int, GeminiProjectSlot | None]:
         """
         Sélectionne le meilleur (modèle, clé, index_clé, projet) disponible immédiatement sans attente.
         """
@@ -184,7 +184,7 @@ class GeminiPoolManager:
 
             return selected_model, key, key_idx, selected_project
 
-    def acquire_target(self, capability: str = "general", model_override: Optional[str] = None) -> Tuple[str, str, int, GeminiProjectSlot]:
+    def acquire_target(self, capability: str = "general", model_override: str | None = None) -> tuple[str, str, int, GeminiProjectSlot]:
         """Acquiert un tuple (modèle, clé, index_clé, projet) avec prise en charge d'un modèle forcé."""
         selected_model, key, key_idx, selected_project = self.acquire_execution_target(capability)
         if not key or not selected_project:
@@ -195,11 +195,11 @@ class GeminiPoolManager:
 
     def handle_error(
         self,
-        project: Optional[GeminiProjectSlot],
-        key: Optional[str],
+        project: GeminiProjectSlot | None,
+        key: str | None,
         model: str,
         status_code: int,
-        headers: Optional[Dict[str, str]] = None
+        headers: dict[str, str] | None = None
     ) -> None:
         """Met à jour l'état du pool suite à un échec HTTP sans délai bloquant."""
         with self._lock:

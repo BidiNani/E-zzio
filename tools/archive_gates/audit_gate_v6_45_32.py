@@ -1,9 +1,10 @@
 from __future__ import annotations
+
 import ast
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, List, Set
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -23,11 +24,11 @@ class RecursiveDiscordTraceVisitor(ast.NodeVisitor):
         self.filepath = filepath
         self.rel_path = rel_path
         self.full_tree = full_tree
-        self.visited_functions: Set[str] = set()
-        self.chain_log: List[Dict[str, Any]] = []
+        self.visited_functions: set[str] = set()
+        self.chain_log: list[dict[str, Any]] = []
 
         # Indexation globale de toutes les fonctions et méthodes du fichier pour résolution récursive
-        self.function_registry: Dict[str, ast.FunctionDef | ast.AsyncFunctionDef] = {}
+        self.function_registry: dict[str, ast.FunctionDef | ast.AsyncFunctionDef] = {}
         for node in ast.walk(full_tree):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 self.function_registry[node.name] = node

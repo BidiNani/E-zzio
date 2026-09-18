@@ -11,7 +11,8 @@ import io
 import logging
 import re
 import time
-from typing import Any, Awaitable, Callable, List
+from collections.abc import Awaitable, Callable
+from typing import Any
 
 logger = logging.getLogger("ezzio.discord.ui")
 
@@ -47,7 +48,7 @@ def extract_code_blocks(markdown: str) -> str:
     return "\n\n".join(f"```\n{b.strip()}\n```" for b in blocks)
 
 
-def progressive_plan(text: str, limit: int = DISCORD_LIMIT) -> List[str]:
+def progressive_plan(text: str, limit: int = DISCORD_LIMIT) -> list[str]:
     """Snapshots croissants pour révélation (pur, testable)."""
     text = text or ""
     if len(text) <= max(FIRST_PAINT_MIN, 1):
@@ -95,7 +96,7 @@ class StreamEditor:
             await edit(content=text[: self.limit])
 
 
-def build_guide_view(pages: List[str], title: str, full_markdown: str):
+def build_guide_view(pages: list[str], title: str, full_markdown: str):
     """GuideNavigationView : pagination + export .md + extraction code."""
     import discord
 

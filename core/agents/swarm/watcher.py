@@ -4,11 +4,11 @@ Usage: python -m core.agents.swarm.watcher [--profile-async] [--root PATH]
 """
 from __future__ import annotations
 
-import ast
 import argparse
+import ast
 import os
 import sys
-from typing import Dict, Any, List
+from typing import Any
 
 
 class WatcherAgent:
@@ -18,7 +18,7 @@ class WatcherAgent:
         self.root_dir = root_dir
         self.target_dirs = ["core", "routers"]
 
-    def profile_file(self, file_path: str) -> Dict[str, Any]:
+    def profile_file(self, file_path: str) -> dict[str, Any]:
         metrics = {
             "async_def_count": 0,
             "httpx_client_instantiations": 0,
@@ -28,7 +28,7 @@ class WatcherAgent:
         }
 
         try:
-            with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+            with open(file_path, encoding="utf-8", errors="ignore") as f:
                 content = f.read()
 
             tree = ast.parse(content, filename=file_path)

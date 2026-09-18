@@ -4,12 +4,12 @@ Analyse les magasins de mémoire (memory_store), évalue l'âge, la duplication
 et la densité cognitive, et simule la compression sans perte des hashes d'origine.
 """
 
-import sys
-import json
 import hashlib
+import json
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -22,7 +22,7 @@ class MemoryIntelligenceAnalyzer:
         self.memory_store_dir = self.root_dir / "runtime" / "memory_store"
         self.memory_store_dir.mkdir(parents=True, exist_ok=True)
 
-    def scan_memory_store(self) -> Dict[str, Any]:
+    def scan_memory_store(self) -> dict[str, Any]:
         """Scanne le store mémoriel, évalue les fichiers, leur taille et leur empreinte."""
         files_found = []
         total_size_bytes = 0
@@ -42,14 +42,14 @@ class MemoryIntelligenceAnalyzer:
                     else:
                         hashes_seen[f_hash] = f.name
 
-                    mtime = datetime.fromtimestamp(f.stat().st_mtime, timezone.utc)
-                    age_days = (datetime.now(timezone.utc) - mtime).days
+                    mtime = datetime.fromtimestamp(f.stat().st_mtime, UTC)
+                    age_days = (datetime.now(UTC) - mtime).days
 
                     files_found.append({"filename": f.name, "size_bytes": size, "age_days": age_days, "sha256": f_hash[:16] + "..."})
 
         # S'il n'y a pas encore de fichiers, injectons un enregistrement synthétique de test pour valider l'analyseur
         if not files_found:
-            sample_record = {"concept": "Opti Ryzen 9 5900X", "source": "Session Dev", "timestamp": datetime.now(timezone.utc).isoformat()}
+            sample_record = {"concept": "Opti Ryzen 9 5900X", "source": "Session Dev", "timestamp": datetime.now(UTC).isoformat()}
             sample_path = self.memory_store_dir / "sample_memory_01.json"
             sample_path.write_text(json.dumps(sample_record, indent=2), encoding="utf-8")
             files_found.append(
@@ -63,7 +63,7 @@ class MemoryIntelligenceAnalyzer:
             total_size_bytes = sample_path.stat().st_size
 
         return {
-            "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+            "timestamp_utc": datetime.now(UTC).isoformat(),
             "total_files": len(files_found),
             "total_size_kb": round(total_size_bytes / 1024, 2),
             "duplicates_detected": duplicates_count,

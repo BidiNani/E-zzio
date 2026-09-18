@@ -83,7 +83,10 @@ for db in ("runtime/evidence/evidence.db", "data/ezzio.db",
 mem["dbs"] = dbs
 # persistance conversationnelle : record_message x2 + relecture
 try:
-    import asyncio, tempfile, os
+    import asyncio
+    import os
+    import tempfile
+
     from core.memory.unified_gateway import UnifiedMemoryGateway
 
     async def _t():

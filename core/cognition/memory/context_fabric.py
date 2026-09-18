@@ -9,10 +9,10 @@ from __future__ import annotations
 
 import json
 import logging
-from dataclasses import asdict, dataclass, field
-from datetime import datetime, timezone
+from dataclasses import dataclass, field
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -22,10 +22,10 @@ class CuratedContextPackage:
     task_id: str
     task_type: str
     timestamp_utc: str
-    working_context: Dict[str, Any] = field(default_factory=dict)
-    relevant_experiences: List[Dict[str, Any]] = field(default_factory=list)  # L3
-    relevant_semantics: List[Dict[str, Any]] = field(default_factory=list)    # L4
-    constitutional_rules: List[str] = field(default_factory=list)             # L5
+    working_context: dict[str, Any] = field(default_factory=dict)
+    relevant_experiences: list[dict[str, Any]] = field(default_factory=list)  # L3
+    relevant_semantics: list[dict[str, Any]] = field(default_factory=list)    # L4
+    constitutional_rules: list[str] = field(default_factory=list)             # L5
     sanitized_prompt_prefix: str = ""
 
 
@@ -35,7 +35,7 @@ class ContextFabric:
         self.memory_store_dir = self.root_dir / "runtime" / "memory_store"
         self.genome_path = self.root_dir / "core" / "constitution" / "ezzio_genome.json"
 
-    def _load_constitutional_rules(self) -> List[str]:
+    def _load_constitutional_rules(self) -> list[str]:
         """Loads immutable rules from L5 Genome."""
         if not self.genome_path.exists():
             return ["Sovereign rule: E-ZZIO is the sole authority."]
@@ -45,7 +45,7 @@ class ContextFabric:
         except Exception:
             return ["Sovereign rule: Protect execution integrity."]
 
-    def _retrieve_tier_memories(self, tier_name: str, keyword_filter: Optional[str] = None, limit: int = 5) -> List[Dict[str, Any]]:
+    def _retrieve_tier_memories(self, tier_name: str, keyword_filter: str | None = None, limit: int = 5) -> list[dict[str, Any]]:
         """Retrieves verified memories from a specific tier in runtime/memory_store/."""
         tier_dir = self.memory_store_dir / tier_name
         if not tier_dir.exists():
@@ -91,11 +91,11 @@ class ContextFabric:
         task_id: str,
         task_type: str,
         task_prompt: str,
-        working_context: Optional[Dict[str, Any]] = None,
+        working_context: dict[str, Any] | None = None,
     ) -> CuratedContextPackage:
         """Assembles a sovereign context package combining L0, L3, L4, and L5 memories."""
-        ts = datetime.now(timezone.utc).isoformat()
-        
+        ts = datetime.now(UTC).isoformat()
+
         # 1. L5 Constitutional Rules (Always Top Priority)
         constitution = self._load_constitutional_rules()
 

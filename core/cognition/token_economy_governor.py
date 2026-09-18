@@ -4,11 +4,11 @@ Gère l'économie des tokens d'E-zzio, répartit les quotas par catégorie de t�
 surveille la consommation en temps réel et bloque (Fail-Closed) tout dépassement de budget.
 """
 
-import sys
 import json
 import logging
+import sys
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -46,7 +46,7 @@ class TokenEconomyGovernor:
             }
             self.ledger_path.write_text(json.dumps(initial_ledger, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
-    def request_tokens(self, category: str, requested_tokens: int) -> Dict[str, Any]:
+    def request_tokens(self, category: str, requested_tokens: int) -> dict[str, Any]:
         """
         Vérifie et déduit les tokens demandés du budget de la catégorie sous le contrôle d'ECOL.
         """

@@ -8,16 +8,12 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
-from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 from core.governance.approval.models import (
-    ApprovalDecision,
     ApprovalRequest,
     ApprovalStatus,
     DecisionChoice,
-    ExecutionState,
     utc_now,
 )
 from core.governance.approval.store import SqliteApprovalStore
@@ -57,12 +53,12 @@ class ContextMismatchError(ApprovalError):
     pass
 
 
-def canonical_json(data: Dict[str, Any]) -> str:
+def canonical_json(data: dict[str, Any]) -> str:
     """Génère une représentation JSON canonique déterministe (clés triées, sans espace superfétatoire)."""
     return json.dumps(data, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
 
 
-def compute_payload_hash(data: Dict[str, Any]) -> str:
+def compute_payload_hash(data: dict[str, Any]) -> str:
     """Calcule l'empreinte SHA-256 du JSON canonique."""
     c_json = canonical_json(data)
     return hashlib.sha256(c_json.encode("utf-8")).hexdigest()
@@ -71,8 +67,8 @@ def compute_payload_hash(data: Dict[str, Any]) -> str:
 class ApprovalManager:
     def __init__(
         self,
-        store: Optional[SqliteApprovalStore] = None,
-        audit_ledger: Optional[AuditLedger] = None,
+        store: SqliteApprovalStore | None = None,
+        audit_ledger: AuditLedger | None = None,
     ):
         self.store = store or SqliteApprovalStore()
         self.audit_ledger = audit_ledger or AuditLedger()
@@ -85,10 +81,10 @@ class ApprovalManager:
         capability_name: str,
         scope: str,
         safe_summary: str,
-        params: Dict[str, Any],
+        params: dict[str, Any],
         ttl_seconds: int = 300,
         requested_by: str = "system",
-        approval_id: Optional[str] = None,
+        approval_id: str | None = None,
     ) -> ApprovalRequest:
         """Crée une nouvelle demande d'approbation scellée et l'enregistre dans l'AuditLedger."""
         c_params = canonical_json(params)
@@ -143,7 +139,7 @@ class ApprovalManager:
 
         return req
 
-    def get(self, approval_id: str) -> Optional[ApprovalRequest]:
+    def get(self, approval_id: str) -> ApprovalRequest | None:
         """Récupère une demande et évalue son expiration éventuelle."""
         req = self.store.get_by_id(approval_id)
         if not req:
@@ -156,7 +152,7 @@ class ApprovalManager:
 
         return req
 
-    def get_pending(self) -> List[ApprovalRequest]:
+    def get_pending(self) -> list[ApprovalRequest]:
         """Liste les demandes en attente valides (purge/expire celles dont le TTL est dépassé)."""
         all_pending = self.store.list_pending()
         valid_pending = []
@@ -175,7 +171,7 @@ class ApprovalManager:
         approval_id: str,
         choice: DecisionChoice,
         decided_by: str,
-        reason: Optional[str] = None,
+        reason: str | None = None,
     ) -> ApprovalRequest:
         """Enregistre la décision humaine sous transaction atomique et journalise dans l'audit."""
         new_status = ApprovalStatus.APPROVED if choice == DecisionChoice.APPROVE else ApprovalStatus.REJECTED
@@ -236,7 +232,7 @@ class ApprovalManager:
 
         return updated_req
 
-    def expire(self, approval_id: str) -> Optional[ApprovalRequest]:
+    def expire(self, approval_id: str) -> ApprovalRequest | None:
         """Marque explicitement une requête comme expirée."""
         req = self.store.get_by_id(approval_id)
         if not req or req.status != ApprovalStatus.PENDING:
@@ -279,7 +275,7 @@ class ApprovalManager:
 
         return updated
 
-    def cancel(self, approval_id: str, reason: str = "Tâche annulée") -> Optional[ApprovalRequest]:
+    def cancel(self, approval_id: str, reason: str = "Tâche annulée") -> ApprovalRequest | None:
         """Annule une demande en cours."""
         req = self.store.get_by_id(approval_id)
         if not req or req.status != ApprovalStatus.PENDING:
@@ -298,8 +294,8 @@ class ApprovalManager:
         self,
         approval_id: str,
         target_executor_func: Any,
-        expected_context: Optional[Dict[str, Any]] = None,
-    ) -> Dict[str, Any]:
+        expected_context: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
         """
         Déclenche la reprise de l'exécution sous barrière de sécurité et d'idempotence stricte.
         target_executor_func : async callable(capability_name, params)
@@ -375,7 +371,7 @@ class ApprovalManager:
 
         # 8. Exécution réelle de la fonction cible
         execution_success = False
-        result_to_return: Dict[str, Any] = {}
+        result_to_return: dict[str, Any] = {}
         try:
             res = await target_executor_func(req.capability_name, params)
             result_to_return = res

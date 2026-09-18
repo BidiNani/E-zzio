@@ -4,12 +4,13 @@ Gère la rotation et injecte une transaction d'ancrage (ARCHIVE_ANCHOR)
 pour lier mathématiquement le nouveau ledger actif aux archives scellées.
 """
 
-import os
-import json
 import hashlib
 import hmac
+import json
+import os
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
+
 from dotenv import load_dotenv
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
@@ -70,7 +71,7 @@ class LedgerArchiveEngine:
 
             prev_root = self._get_last_archive_root_hash()
 
-            root_payload = f"{content_sha256}:{prev_root}:{first_record['sequence']}:{last_record['sequence']}".encode("utf-8")
+            root_payload = f"{content_sha256}:{prev_root}:{first_record['sequence']}:{last_record['sequence']}".encode()
             archive_root_hash = hashlib.sha256(root_payload).hexdigest()
 
             metadata = {
@@ -81,7 +82,7 @@ class LedgerArchiveEngine:
                 "content_hash": content_sha256,
                 "previous_archive_root_hash": prev_root,
                 "archive_root_hash": archive_root_hash,
-                "archived_at": datetime.now(timezone.utc).isoformat(),
+                "archived_at": datetime.now(UTC).isoformat(),
             }
             meta_file_path.write_text(json.dumps(metadata, indent=2, ensure_ascii=False), encoding="utf-8")
 
@@ -92,7 +93,7 @@ class LedgerArchiveEngine:
 
             anchor_payload = {
                 "sequence": anchor_seq,
-                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "timestamp": datetime.now(UTC).isoformat(),
                 "request_id": f"system-anchor-{archive_index}",
                 "intent": "ARCHIVE_ANCHOR",
                 "candidates": [],
@@ -109,7 +110,7 @@ class LedgerArchiveEngine:
             anchor_payload["hash"] = anchor_hash
 
             if self.secret_key:
-                hmac_payload = f"{anchor_seq}:{last_hash}:{anchor_hash}".encode("utf-8")
+                hmac_payload = f"{anchor_seq}:{last_hash}:{anchor_hash}".encode()
                 anchor_signature = hmac.new(self.secret_key, hmac_payload, hashlib.sha256).hexdigest()
                 anchor_payload["signature"] = anchor_signature
 
@@ -136,7 +137,7 @@ class LedgerArchiveEngine:
             "last_sequence": seq,
             "last_hash": last_hash,
             "last_archive_root_hash": root_hash,
-            "updated_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(UTC).isoformat(),
         }
         STATE_PATH.write_text(json.dumps(state, indent=2), encoding="utf-8")
 

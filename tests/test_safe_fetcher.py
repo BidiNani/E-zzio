@@ -3,6 +3,7 @@ Tests unitaires pour le SafeWebFetcher et la protection Anti-SSRF.
 """
 
 import pytest
+
 from core.perception.safe_fetcher import SafeWebFetcher, SSRFSecurityError
 
 

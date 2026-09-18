@@ -9,16 +9,14 @@ Performs evidence-grounded cognitive arbitration, distinguishing between:
 
 from __future__ import annotations
 
-import json
 import logging
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from dataclasses import dataclass
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
 
-from core.cognition.orchestration.arbiter import FederatedProposal
 from core.cognition.epistemic.epistemic_analyzer import EpistemicAnalyzer, EpistemicScore
 from core.cognition.evidence.store import EvidenceStore
+from core.cognition.orchestration.arbiter import FederatedProposal
 
 logger = logging.getLogger(__name__)
 
@@ -34,11 +32,11 @@ class EpistemicVerdict:
     winning_action: str
     winning_epistemic_weight: float
     rationale: str
-    participating_scores: List[EpistemicScore]
+    participating_scores: list[EpistemicScore]
 
 
 class EpistemicArbiter:
-    def __init__(self, root_dir: Path = Path(r"G:\AI\E-zzio"), evidence_store: Optional[EvidenceStore] = None):
+    def __init__(self, root_dir: Path = Path(r"G:\AI\E-zzio"), evidence_store: EvidenceStore | None = None):
         self.root_dir = root_dir
         self.evidence_store = evidence_store
         self.analyzer = EpistemicAnalyzer(root_dir=self.root_dir, evidence_store=self.evidence_store)
@@ -47,14 +45,14 @@ class EpistemicArbiter:
         self,
         task_id: str,
         task_description: str,
-        proposals: List[FederatedProposal],
+        proposals: list[FederatedProposal],
     ) -> EpistemicVerdict:
         """Arbitrates candidate proposals using epistemic grounding and truth verification."""
         if not proposals:
             raise ValueError("FAIL-CLOSED: Epistemic arbiter requires at least one proposal.")
 
-        ts = datetime.now(timezone.utc).isoformat()
-        verdict_id = f"EPI-{datetime.now(timezone.utc).strftime('%Y%m%d')}-{task_id}"
+        ts = datetime.now(UTC).isoformat()
+        verdict_id = f"EPI-{datetime.now(UTC).strftime('%Y%m%d')}-{task_id}"
 
         scored = [self.analyzer.evaluate_proposal(p) for p in proposals]
         scored.sort(key=lambda x: x.composite_epistemic_weight, reverse=True)

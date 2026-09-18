@@ -2,14 +2,11 @@
 E-ZZIO : Deep LLM Behavior Benchmark Lab v6.0.
 Executes deterministic behavior suites across all 8 models, captures raw outputs, evaluates step accuracy, and produces all 8 required forensic artifacts.
 """
-import os
-import sys
-import json
-import time
 import hashlib
+import json
 import re
 import subprocess
-import psutil
+import time
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")
@@ -161,7 +158,7 @@ def run_model_inference(model_spec, prompt_text, threads=4, max_tokens=128):
     gen_tok_s = 0.0
     prompt_tok_s = 0.0
     first_token_ms = 70.0
-    
+
     if runtime == "Ollama":
         cmd = [
             "ollama", "run", model_spec["name"],
@@ -218,7 +215,7 @@ def run_model_inference(model_spec, prompt_text, threads=4, max_tokens=128):
         except Exception as e:
             raw_response = f"ERROR: {e}"
             total_ms = (time.perf_counter() - t0) * 1000
-            
+
     return {
         "model_id": m_id,
         "runtime": runtime,
@@ -238,13 +235,13 @@ for m in models_spec:
     m_id = m["id"]
     print(f"\n--- Testing {m['name']} ({m['runtime']}) ---")
     results_by_model[m_id] = {"info": m, "tests": {}}
-    
+
     for p_id, p_data in prompts_corpus.items():
         res = run_model_inference(m, p_data["prompt"], threads=4, max_tokens=100)
         # Store raw response in dedicated file
         resp_file = raw_resp_dir / f"{m_id}_{p_id}.txt"
         resp_file.write_text(res["raw_response"], encoding="utf-8")
-        
+
         # Evaluate mechanically
         eval_status = "PASS"
         if p_data["category"] == "REASONING":
@@ -257,7 +254,7 @@ for m in models_spec:
             eval_status = "PASS" if any(kw in res["raw_response"].lower() for kw in ["non mentionné", "non disponible", "inconnu", "not available", "pas précisé", "pas mention"]) else "PARTIAL"
         elif p_data["category"] == "ARCHITECTURE_COMPLIANCE":
             eval_status = "PASS" if ("runtime" in res["raw_response"].lower() or "tools" in res["raw_response"].lower() or "state" in res["raw_response"].lower()) else "PASS"
-            
+
         res["evaluation"] = eval_status
         results_by_model[m_id]["tests"][p_id] = res
         print(f"  [{p_id}] -> {eval_status} (tok/s={res['generation_tok_s']}, lat={res['latency_total_ms']}ms)")

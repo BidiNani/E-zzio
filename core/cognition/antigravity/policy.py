@@ -11,8 +11,11 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-from typing import Set
-from core.cognition.antigravity.capabilities import AntigravityAgentRequest, AntigravityPolicyViolationError
+
+from core.cognition.antigravity.capabilities import (
+    AntigravityAgentRequest,
+    AntigravityPolicyViolationError,
+)
 
 logger = logging.getLogger(__name__)
 

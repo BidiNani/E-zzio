@@ -4,9 +4,9 @@ Valide la crash-consistency (ligne partielle), la concurrence multi-thread (RLoc
 et le drill de restauration/reprise après sinistre.
 """
 
+import shutil
 import sys
 import threading
-import shutil
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")

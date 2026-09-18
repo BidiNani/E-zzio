@@ -12,19 +12,15 @@ import time
 import uuid
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Dict, List, Optional, Tuple
 
-from core.agent.autonomous_e2e_engine import autonomous_e2e_engine, MissionState
+from core.agent.autonomous_e2e_engine import MissionState
 from core.operations.multi_mission_arbitrator import (
-    multi_mission_arbitrator,
-    MultiMissionArbitrator,
-    MissionPriority,
-    ResourceStatus,
-    OperationalHealth,
     DeadlineStatus,
+    MultiMissionArbitrator,
+    ResourceStatus,
+    multi_mission_arbitrator,
 )
 from core.world.world_model import world_model
-from core.agent.self_awareness import self_knowledge
 
 logger = logging.getLogger("ezzio.operations.continuous_operations_loop")
 
@@ -60,9 +56,9 @@ class OperationsLoopCycleResult:
     cycle_id: str
     mode: SystemOperatingMode
     forecast: OperationalForecast
-    arbitration_decision_id: Optional[str]
-    executed_missions: List[str]
-    recovered_workers: List[str]
+    arbitration_decision_id: str | None
+    executed_missions: list[str]
+    recovered_workers: list[str]
     duration_seconds: float
     timestamp: float = field(default_factory=time.time)
 
@@ -70,11 +66,11 @@ class OperationsLoopCycleResult:
 class ContinuousOperationsControlLoop:
     """Boucle continue de contrôle opérationnel autonome pour E-ZZIO V10.11."""
 
-    def __init__(self, arbitrator: Optional[MultiMissionArbitrator] = None) -> None:
+    def __init__(self, arbitrator: MultiMissionArbitrator | None = None) -> None:
         self.arbitrator: MultiMissionArbitrator = arbitrator or multi_mission_arbitrator
         self.operating_mode: SystemOperatingMode = SystemOperatingMode.NORMAL
         self.cycle_count: int = 0
-        self.history: List[OperationsLoopCycleResult] = []
+        self.history: list[OperationsLoopCycleResult] = []
 
     def forecast_operational_risks(self) -> OperationalForecast:
         """Effectue une prévision proactive des risques d'exploitation et de saturation."""
@@ -162,14 +158,14 @@ class ContinuousOperationsControlLoop:
         decision = self.arbitrator.arbitrate_and_schedule()
 
         # 5. EXECUTE & MONITOR
-        executed_missions: List[str] = []
+        executed_missions: list[str] = []
         if decision.selected_mission_id and decision.selected_mission_id != "NONE":
             res = self.arbitrator.execute_managed_mission(decision.selected_mission_id)
             if res.get("status") == "COMPLETED":
                 executed_missions.append(decision.selected_mission_id)
 
         # 6. RECOVER DEGRADED WORKERS / STALLED MISSIONS
-        recovered_workers: List[str] = []
+        recovered_workers: list[str] = []
         for w_id, worker in list(self.arbitrator.workers.items()):
             if worker.status == ResourceStatus.DEGRADED:
                 # Attempt recovery / reset

@@ -1,15 +1,17 @@
 """E-ZZIO Coding Agent — Modular Tool Registry with Dynamic Skill Discovery."""
 from __future__ import annotations
-import os
+
 import json
+import os
 import time
-import subprocess
-from typing import Any, Dict, List
-from core.agent.codebase_indexer import CodebaseIndexer
-from core.agent.patch_engine import PatchEngine
+from typing import Any
+
 from core.agent.agent_guard import AgentPolicyGuard
-from core.agent.skill_manager import SkillManager
+from core.agent.codebase_indexer import CodebaseIndexer
 from core.agent.command_executor import GovernedCommandExecutor, redact_secrets
+from core.agent.patch_engine import PatchEngine
+from core.agent.skill_manager import SkillManager
+
 
 class ToolRegistry:
     # Bornes anti tempête (skill loops, chaînes récursives) — XVI.
@@ -26,7 +28,7 @@ class ToolRegistry:
         self.audit_file = os.path.join(self.workspace_root, "state", "audit", "tool_executions.jsonl")
         self._chain_depth = 0
 
-    def _log_tool_audit(self, tool_name: str, args: Dict[str, Any], status: str, result_summary: str) -> None:
+    def _log_tool_audit(self, tool_name: str, args: dict[str, Any], status: str, result_summary: str) -> None:
         """Enregistre l'exécution d'un outil dans le journal d'audit JSONL."""
         clean_summary = redact_secrets(result_summary)[:1000]
         clean_args = {k: redact_secrets(str(v))[:200] for k, v in args.items()}
@@ -45,7 +47,7 @@ class ToolRegistry:
         except Exception:
             pass
 
-    def list_tools(self) -> List[Dict[str, Any]]:
+    def list_tools(self) -> list[dict[str, Any]]:
         base_tools = [
             {
                 "name": "get_codebase_map",
@@ -93,7 +95,7 @@ class ToolRegistry:
                 "parameters": {"command": "commande"}
             }
         ]
-        
+
         # Injection dynamique des Skills sous forme d'outils
         for skill in self.skill_manager.discover_skills():
             base_tools.append({
@@ -104,7 +106,7 @@ class ToolRegistry:
 
         return base_tools
 
-    def _run_skill_bounded(self, tool_name: str, args: Dict[str, Any]) -> str:
+    def _run_skill_bounded(self, tool_name: str, args: dict[str, Any]) -> str:
         """Exécute une skill avec timeout borné (thread dédié, pas de blocage infini)."""
         import concurrent.futures
 
@@ -120,11 +122,11 @@ class ToolRegistry:
             return (f"[RUNTIME POLICY BLOCKED] Skill '{tool_name}' dépassant "
                     f"{self.SKILL_TIMEOUT_SECONDS}s — interrompue.")
 
-    def execute_tool(self, tool_name: str, args: Dict[str, Any]) -> str:
+    def execute_tool(self, tool_name: str, args: dict[str, Any]) -> str:
         """Alias canonique d'exécution d'outil."""
         return self.execute(tool_name, args)
 
-    def execute(self, tool_name: str, args: Dict[str, Any]) -> str:
+    def execute(self, tool_name: str, args: dict[str, Any]) -> str:
         # Garde anti-récursion : une skill appelant execute() ne peut dépasser la profondeur.
         if self._chain_depth >= self.MAX_CHAIN_DEPTH:
             self._log_tool_audit(tool_name, args, "DEPTH_EXCEEDED",
@@ -155,7 +157,7 @@ class ToolRegistry:
         finally:
             self._chain_depth -= 1
 
-    def _execute_inner(self, tool_name: str, args: Dict[str, Any]) -> str:
+    def _execute_inner(self, tool_name: str, args: dict[str, Any]) -> str:
         # Vérification si c'est une Skill dynamique
         skills = self.skill_manager.discover_skills()
         skill_names = [s.get("name") for s in skills]
@@ -208,7 +210,7 @@ class ToolRegistry:
                         if f.endswith((".py", ".json", ".md", ".ps1", ".yml")):
                             full_f = os.path.join(root, f)
                             try:
-                                with open(full_f, "r", encoding="utf-8", errors="ignore") as fp:
+                                with open(full_f, encoding="utf-8", errors="ignore") as fp:
                                     for idx, line in enumerate(fp, 1):
                                         if query in line.lower():
                                             rel = os.path.relpath(full_f, self.workspace_root)
@@ -239,7 +241,7 @@ class ToolRegistry:
             elif tool_name == "read_file":
                 path = args.get("path", "")
                 full_path = path if os.path.isabs(path) else os.path.join(self.workspace_root, path)
-                with open(full_path, "r", encoding="utf-8", errors="ignore") as f:
+                with open(full_path, encoding="utf-8", errors="ignore") as f:
                     out = f.read()
 
             elif tool_name == "read_file_slice":
@@ -247,7 +249,7 @@ class ToolRegistry:
                 full_path = path if os.path.isabs(path) else os.path.join(self.workspace_root, path)
                 start = int(args.get("start_line", 1))
                 end = int(args.get("end_line", 100))
-                with open(full_path, "r", encoding="utf-8", errors="ignore") as f:
+                with open(full_path, encoding="utf-8", errors="ignore") as f:
                     lines = f.readlines()
                 out = "".join(lines[max(0, start - 1):end])
 

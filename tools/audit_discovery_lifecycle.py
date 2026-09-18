@@ -1,27 +1,28 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_discovery_pipeline() -> Dict[str, Any]:
+def inspect_discovery_pipeline() -> dict[str, Any]:
     ingest_callers = []
     discovery_sources = []
-    
+
     target_methods = {"ingest_discovery", "discover", "discover_all", "qualify_candidates", "activate_qualified"}
-    
+
     for p in PROJECT_ROOT.glob("**/*.py"):
         if set(p.parts) & EXCLUDED_DIRS:
             continue
         try:
             content = p.read_text(encoding="utf-8", errors="replace")
             content_lower = content.lower()
-            
+
             for m in target_methods:
                 if m in content_lower:
                     rel_path = str(p.relative_to(PROJECT_ROOT))
@@ -32,7 +33,7 @@ def inspect_discovery_pipeline() -> Dict[str, Any]:
                             discovery_sources.append(rel_path)
         except Exception:
             continue
-            
+
     # Inspection spécifique de lifecycle.py pour voir comment ingest_discovery est défini
     lifecycle_path = PROJECT_ROOT / "core" / "models" / "lifecycle.py"
     lifecycle_methods = []
@@ -62,14 +63,14 @@ def main():
     print("[1] ANALYSE DE MODEL LIFECYCLE (core/models/lifecycle.py) :")
     print(f"  • Méthodes identifiées : {res['lifecycle_methods']}")
 
-    print(f"\n[2] APPELANTS DE LA MÉTHODE ingest_discovery :")
+    print("\n[2] APPELANTS DE LA MÉTHODE ingest_discovery :")
     if res["ingest_callers"]:
         for c in res["ingest_callers"]:
             print(f"  • {c}")
     else:
         print("  ❌ Aucun appel explicite à ingest_discovery trouvé dans les sources actives (hors définition).")
 
-    print(f"\n[3] SOURCES POTENTIELLES DE DISCOVERY / QUALIFICATION :")
+    print("\n[3] SOURCES POTENTIELLES DE DISCOVERY / QUALIFICATION :")
     for s in res["discovery_sources"][:10]:
         print(f"  • {s}")
 

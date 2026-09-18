@@ -3,10 +3,11 @@ E-ZZIO Sovereign Generator — Excel (XLSX) Spreadsheet Engine.
 Génère des classeurs Excel professionnels, stylisés et avec formules via openpyxl.
 """
 from __future__ import annotations
-import os
+
 import logging
+import os
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any
 
 logger = logging.getLogger("SheetEngine")
 
@@ -30,9 +31,9 @@ class SheetEngine:
     def generate_spreadsheet(
         self,
         filename: str,
-        sheets_data: List[Dict[str, Any]],
-        title: Optional[str] = None
-    ) -> Dict[str, Any]:
+        sheets_data: list[dict[str, Any]],
+        title: str | None = None
+    ) -> dict[str, Any]:
         """
         Génère un classeur XLSX multi-onglets avec mise en forme professionnelle.
         sheets_data: [
@@ -46,7 +47,7 @@ class SheetEngine:
         """
         try:
             import openpyxl
-            from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+            from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
             from openpyxl.utils import get_column_letter
         except ImportError as e:
             raise RuntimeError(

@@ -1,17 +1,19 @@
 """E-ZZIO Coding Agent — Modular Skill Loader & Registry."""
 from __future__ import annotations
-import os
+
 import importlib.util
 import json
-from typing import Any, Dict, List
+import os
+from typing import Any
+
 
 class SkillManager:
     def __init__(self, workspace_root: str):
         self.workspace_root = workspace_root
         self.skills_dir = os.path.join(workspace_root, "core", "agent", "skills")
-        self.loaded_skills: Dict[str, Any] = {}
+        self.loaded_skills: dict[str, Any] = {}
 
-    def discover_skills(self) -> List[Dict[str, Any]]:
+    def discover_skills(self) -> list[dict[str, Any]]:
         """Découvre toutes les skills ayant un manifeste valide."""
         skills_meta = []
         if not os.path.exists(self.skills_dir):
@@ -23,7 +25,7 @@ class SkillManager:
                 manifest_path = os.path.join(skill_path, "manifest.json")
                 if os.path.exists(manifest_path):
                     try:
-                        with open(manifest_path, "r", encoding="utf-8") as f:
+                        with open(manifest_path, encoding="utf-8") as f:
                             manifest = json.load(f)
                             manifest["_dir"] = skill_path
                             skills_meta.append(manifest)
@@ -31,7 +33,7 @@ class SkillManager:
                         print(f"[SKILL ERROR] Impossible de lire le manifeste de {entry}: {exc}")
         return skills_meta
 
-    def execute_skill(self, skill_name: str, args: Dict[str, Any]) -> str:
+    def execute_skill(self, skill_name: str, args: dict[str, Any]) -> str:
         """Exécute une skill dynamique par son nom."""
         skills = self.discover_skills()
         target = next((s for s in skills if s.get("name") == skill_name), None)

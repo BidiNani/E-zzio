@@ -4,25 +4,22 @@ Gère la persistance atomique, les transactions WAL et l'intégrité de la table
 """
 from __future__ import annotations
 
-import json
 import sqlite3
 import threading
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import List, Optional, Tuple
 
 from core.governance.approval.models import (
     ApprovalRequest,
     ApprovalStatus,
     ExecutionState,
 )
-from core.storage import storage
 
 DEFAULT_DB_PATH = Path(r"G:\AI\E-zzio\runtime\state\tasks.db")
 
 
 def utc_now() -> str:
-    return datetime.now(timezone.utc).isoformat()
+    return datetime.now(UTC).isoformat()
 
 
 class SqliteApprovalStore:
@@ -97,7 +94,7 @@ class SqliteApprovalStore:
                 ))
                 conn.commit()
 
-    def get_by_id(self, approval_id: str) -> Optional[ApprovalRequest]:
+    def get_by_id(self, approval_id: str) -> ApprovalRequest | None:
         with self._lock:
             with self._get_raw_connection() as conn:
                 row = conn.execute(
@@ -108,7 +105,7 @@ class SqliteApprovalStore:
                     return None
                 return self._row_to_request(row)
 
-    def list_pending(self) -> List[ApprovalRequest]:
+    def list_pending(self) -> list[ApprovalRequest]:
         with self._lock:
             with self._get_raw_connection() as conn:
                 rows = conn.execute(
@@ -122,8 +119,8 @@ class SqliteApprovalStore:
         new_status: ApprovalStatus,
         decided_by: str,
         decided_at: str,
-        reason: Optional[str] = None,
-    ) -> Tuple[bool, Optional[ApprovalRequest], str]:
+        reason: str | None = None,
+    ) -> tuple[bool, ApprovalRequest | None, str]:
         """Met à jour la décision sous transaction immédiate pour éviter tout TOCTOU."""
         with self._lock:
             conn = self._get_raw_connection()
@@ -173,7 +170,7 @@ class SqliteApprovalStore:
     def claim_execution_atomic(
         self,
         approval_id: str,
-    ) -> Tuple[bool, Optional[ApprovalRequest], str]:
+    ) -> tuple[bool, ApprovalRequest | None, str]:
         """
         Revendique le droit exclusif d'exécuter la requête approuvée.
         Passe atomiquement l'état d'exécution à RUNNING.
@@ -232,7 +229,7 @@ class SqliteApprovalStore:
         self,
         approval_id: str,
         success: bool,
-        result_cache: Optional[str] = None,
+        result_cache: str | None = None,
     ) -> None:
         """Finalise l'exécution en CONSUMED (si succès) ou FAILED_DURING_EXECUTION."""
         with self._lock:

@@ -1,4 +1,4 @@
-from .dag import TaskDAG, DAGNode, DAGExecutionStatus, CycleDetectedError, DependencyNotMetError
+from .dag import CycleDetectedError, DAGExecutionStatus, DAGNode, DependencyNotMetError, TaskDAG
 from .engine import DAGOrchestrator, dag_orchestrator
 
 __all__ = [

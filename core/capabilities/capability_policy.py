@@ -6,9 +6,10 @@ Enforces granular access control per scope:
 - DENY: Unauthorized or dangerous actions
 """
 from __future__ import annotations
+
 import logging
 from enum import Enum
-from typing import Dict, Any, Tuple
+from typing import Any
 
 logger = logging.getLogger("CapabilityPolicy")
 
@@ -26,7 +27,7 @@ class CapabilityPolicy:
         "gmail.read": PolicyDecision.ALLOW,
         "drive.read": PolicyDecision.ALLOW,
         "calendar.read": PolicyDecision.ALLOW,
-        
+
         # Google Workspace Mutating (Requiert validation humaine explicite)
         "gmail.send": PolicyDecision.REQUIRE_HUMAN,
         "gmail.delete": PolicyDecision.REQUIRE_HUMAN,
@@ -71,7 +72,7 @@ class CapabilityPolicy:
         "youtube.download": PolicyDecision.REQUIRE_HUMAN,
     }
 
-    def evaluate_scope(self, scope: str, metadata: Dict[str, Any] | None = None) -> Tuple[PolicyDecision, str]:
+    def evaluate_scope(self, scope: str, metadata: dict[str, Any] | None = None) -> tuple[PolicyDecision, str]:
         """Évalue si un scope d'action est autorisé, nécessite une confirmation humaine ou est rejeté."""
         meta = metadata or {}
         decision = self.SCOPE_POLICIES.get(scope, PolicyDecision.DENY)

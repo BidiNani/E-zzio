@@ -1,10 +1,12 @@
 """Endpoints REST de gestion des comptes connectés."""
 from __future__ import annotations
+
 from fastapi import APIRouter, HTTPException, Query, Request
 from fastapi.responses import HTMLResponse
+
 from core.accounts import store
-from core.accounts.oauth_registry import list_providers, get_provider
 from core.accounts.oauth_flow import build_authorize_url, exchange_code
+from core.accounts.oauth_registry import get_provider, list_providers
 
 router = APIRouter(prefix="/api/accounts", tags=["accounts"])
 

@@ -1,8 +1,11 @@
 """E-ZZIO Cloud Brain Broker — Canonical Cloud Execution Authority with Identity Cache & Streaming."""
 from __future__ import annotations
+
 import json
 import urllib.request
-from typing import Any, Dict, Generator
+from collections.abc import Generator
+from typing import Any
+
 from core.identity.canonical_identity import CanonicalIdentity
 from core.security.unified_vault import key_vault
 
@@ -20,7 +23,7 @@ def build_system_prompt() -> str:
     return _CACHED_SYSTEM_PROMPT
 
 
-def _fail_closed(message: str) -> Dict[str, Any]:
+def _fail_closed(message: str) -> dict[str, Any]:
     return {
         "response": message,
         "answer": message,
@@ -61,7 +64,7 @@ def cloud_chat(
     session_id: str = "",
     system_prompt: str = "",
     speed: str = "fast",
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Exécution Cloud canonique synchrone (non-streamé)."""
     if not text or not str(text).strip():
         return _fail_closed("[FAIL-CLOSED] Requête vide refusée.")

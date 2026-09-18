@@ -1,27 +1,28 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_fabric_and_qualification() -> Dict[str, Any]:
+def inspect_fabric_and_qualification() -> dict[str, Any]:
     fabric_path = PROJECT_ROOT / "core" / "models" / "fabric.py"
     qual_path = PROJECT_ROOT / "EZZIO_Model_Qualification_Gate_v4.2.py"
-    
+
     results = {}
-    
+
     for p, name in [(fabric_path, "fabric"), (qual_path, "qualification")]:
         if not p.exists():
             continue
         try:
             content = p.read_text(encoding="utf-8", errors="replace")
             tree = ast.parse(content, filename=str(p))
-            
+
             method_signatures = {}
             for node in ast.walk(tree):
                 if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
@@ -36,7 +37,7 @@ def inspect_fabric_and_qualification() -> Dict[str, Any]:
             }
         except Exception as e:
             results[name] = {"error": str(e)}
-            
+
     return results
 
 def main():
@@ -51,7 +52,7 @@ def main():
     for meth, details in res.get("fabric", {}).get("methods", {}).items():
         print(f"  - {meth} : args={details['args']} -> returns={details['returns']}")
 
-    print(f"\n[2] FONCTIONS DU BANC DE QUALIFICATION (EZZIO_Model_Qualification_Gate_v4.2.py)")
+    print("\n[2] FONCTIONS DU BANC DE QUALIFICATION (EZZIO_Model_Qualification_Gate_v4.2.py)")
     for meth, details in res.get("qualification", {}).get("methods", {}).items():
         print(f"  - {meth} : args={details['args']} -> returns={details['returns']}")
 

@@ -7,6 +7,7 @@ Alignée sur la stack Google Gemini :
 """
 
 from pathlib import Path
+
 from pydantic import Field
 from pydantic_settings import BaseSettings
 
@@ -18,7 +19,7 @@ class EzzioSettings(BaseSettings):
     cloud_model_lite: str = Field(default="gemini-3.5-flash-lite", description="Classifications d'intention ultra-rapides du routeur")
     cloud_model_pro: str = Field(default="gemini-3.1-pro", description="Tâches d'analyse complexe, AST lourd et auto-guérison")
     gemini_api_key: str | None = Field(default=None, description="Clé API Google Gemini")
-    
+
     # Aliases de compatibilité
     @property
     def gemini_model(self) -> str:
@@ -27,7 +28,7 @@ class EzzioSettings(BaseSettings):
     @property
     def gemini_pro_model(self) -> str:
         return self.cloud_model_pro
-    
+
     # Repli Souverain Local (Circuit Breaker Ollama)
     local_router_model: str = Field(default="ez-router", description="Modèle local pour la classification")
     local_core_model: str = Field(default="ez-core-safe", description="Modèle local pour les réponses logiques directes")
@@ -35,7 +36,7 @@ class EzzioSettings(BaseSettings):
     agent_model: str = Field(default="ez-agent-hermes", description="Modèle local agent pour les tâches autonomes")
     free_model: str = Field(default="ez-core-free", description="Modèle local non censuré")
     embedding_model: str = Field(default="bge-m3:latest", description="Modèle d'embedding vectoriel")
-    
+
     # Aliases de compatibilité pour le code existant
     @property
     def router_model(self) -> str:
@@ -51,17 +52,17 @@ class EzzioSettings(BaseSettings):
 
     # Réseau & Ollama
     ollama_url: str = Field(default="http://127.0.0.1:11434", description="URL IPv4 directe vers Ollama")
-    
+
     # Chemins
     root_dir: Path = Field(default=Path("G:/AI/E-zzio").resolve())
     data_dir: Path = Field(default=Path("G:/AI/E-zzio/data").resolve())
     chroma_db_dir: Path = Field(default=Path("G:/AI/E-zzio/data/chroma_db").resolve())
     state_db_path: Path = Field(default=Path("G:/AI/E-zzio/data/ezzio_state.db").resolve())
-    
+
     # API & Serveur
     api_host: str = Field(default="127.0.0.1")
     api_port: int = Field(default=8000)
-    
+
     # Paramètres RAG
     chunk_size: int = 800
     chunk_overlap: int = 120

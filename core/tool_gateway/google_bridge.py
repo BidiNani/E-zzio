@@ -3,14 +3,16 @@ E-ZZIO V7.40 — Google Identity Bridge & Secure Vault
 Gère le stockage chiffré et scellé des tokens OAuth2 sans polluer l'identité racine.
 """
 
-import json
 import base64
 import hashlib
 import hmac
-from contracts.config_port import IConfigProvider
+import json
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
+
 from cryptography.fernet import Fernet
+
+from contracts.config_port import IConfigProvider
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 VAULT_FILE = ROOT_DIR / "runtime" / "vault" / "google_oauth.vault"
@@ -38,7 +40,7 @@ class GoogleIdentityBridge:
             "access_token": access_token,
             "refresh_token": refresh_token,
             "scopes": scopes,
-            "updated_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(UTC).isoformat(),
             "expires_in": expires_in_sec,
         }
 

@@ -5,16 +5,16 @@ validée par le contrat runtime ECOL (system_core) avec chaînage cryptographiqu
 engagement de tête scellé, verrou transactionnel atomique et ancre d'époque monotone anti-rollback.
 """
 
-import sys
-import os
-import json
-import uuid
-import hmac
 import hashlib
+import hmac
+import json
 import logging
+import os
+import sys
+import uuid
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any, List, Optional
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -87,6 +87,7 @@ class InvalidSecretKeyError(LedgerIntegrityError):
 # Atomic Transaction Lock (Thread-Safe & Interprocess Protection)
 # ----------------------------------------------------------------------
 import threading
+
 _PROCESS_LOCK = threading.RLock()
 
 
@@ -108,7 +109,7 @@ class TransactionLock:
                     try:
                         msvcrt.locking(self._file_handle.fileno(), msvcrt.LK_NBLCK, 1)
                         break
-                    except (IOError, OSError, PermissionError):
+                    except (OSError, PermissionError):
                         import time
                         time.sleep(0.01)
             else:
@@ -156,7 +157,7 @@ class DecisionLedgerEngine:
         "signature_hmac",
     }
 
-    def __init__(self, root_dir: Path = ROOT_DIR, hmac_key: Optional[bytes] = None):
+    def __init__(self, root_dir: Path = ROOT_DIR, hmac_key: bytes | None = None):
         self.root_dir = root_dir
         self.ledger_path = self.root_dir / "runtime" / "cognition" / "budget" / "unified_decision_ledger.jsonl"
         self.ledger_path.parent.mkdir(parents=True, exist_ok=True)
@@ -171,7 +172,7 @@ class DecisionLedgerEngine:
         self.gateway.register_gateway_action("RECORD_ORGANISM_DECISION")
 
     @classmethod
-    def _resolve_secret_key(cls, explicit_key: Optional[bytes], root_dir: Path = ROOT_DIR) -> bytes:
+    def _resolve_secret_key(cls, explicit_key: bytes | None, root_dir: Path = ROOT_DIR) -> bytes:
         """Resolve HMAC key with strict Zero-Fallback policy.
 
         Sources allowed:
@@ -179,7 +180,7 @@ class DecisionLedgerEngine:
         2. Valid EZZIO_LEDGER_HMAC_KEY environment variable (min 16 bytes).
         3. Authenticated derivation from sealed ezzio_genome.json on organism root.
         """
-        key_bytes: Optional[bytes] = None
+        key_bytes: bytes | None = None
         if explicit_key is not None:
             if isinstance(explicit_key, (bytes, bytearray, memoryview)):
                 key_bytes = bytes(explicit_key)
@@ -215,7 +216,7 @@ class DecisionLedgerEngine:
             return 0, "0" * 64
 
         last_line = ""
-        with open(self.ledger_path, "r", encoding="utf-8") as f:
+        with open(self.ledger_path, encoding="utf-8") as f:
             for line in f:
                 if line.strip():
                     last_line = line.strip()
@@ -247,7 +248,7 @@ class DecisionLedgerEngine:
         temp_head = self.head_state_path.with_suffix(f".{uid}.tmp")
         with open(temp_head, "w", encoding="utf-8") as f:
             json.dump(sealed_head, f, indent=2, ensure_ascii=False)
-        
+
         # Retry replace for Windows file system stability
         for attempt in range(50):
             try:
@@ -262,7 +263,7 @@ class DecisionLedgerEngine:
         epoch_val = 1
         if self.monotonic_state_path.exists():
             try:
-                with open(self.monotonic_state_path, "r", encoding="utf-8") as mf:
+                with open(self.monotonic_state_path, encoding="utf-8") as mf:
                     old_mono = json.load(mf)
                     highest_idx = max(highest_idx, old_mono.get("highest_committed_index", 0))
                     epoch_val = old_mono.get("current_epoch", 0) + 1
@@ -281,7 +282,7 @@ class DecisionLedgerEngine:
         temp_mono = self.monotonic_state_path.with_suffix(f".{uid}.tmp")
         with open(temp_mono, "w", encoding="utf-8") as f:
             json.dump(sealed_mono, f, indent=2, ensure_ascii=False)
-        
+
         for attempt in range(50):
             try:
                 temp_mono.replace(self.monotonic_state_path)
@@ -291,16 +292,16 @@ class DecisionLedgerEngine:
                 time.sleep(0.005)
 
     def record_decision(
-        self, subsystem: str, decision_type: str, context: Dict[str, Any], action_payload: Dict[str, Any], rationale: str
-    ) -> Dict[str, Any]:
+        self, subsystem: str, decision_type: str, context: dict[str, Any], action_payload: dict[str, Any], rationale: str
+    ) -> dict[str, Any]:
         """
         Enregistre une décision unifiée de l'organisme sous verrou transactionnel atomique
         avec chaînage cryptographique, engagement de tête et ancre monotone.
         """
         with TransactionLock(self.lock_path):
             block_index, previous_hash = self._get_last_block_state()
-            decision_id = f"DEC-{datetime.now(timezone.utc).strftime('%Y%m%d')}-{uuid.uuid4().hex[:8].upper()}"
-            timestamp = datetime.now(timezone.utc).isoformat()
+            decision_id = f"DEC-{datetime.now(UTC).strftime('%Y%m%d')}-{uuid.uuid4().hex[:8].upper()}"
+            timestamp = datetime.now(UTC).isoformat()
 
             record = {
                 "block_index": block_index,
@@ -343,7 +344,7 @@ class DecisionLedgerEngine:
 
             return result
 
-    def query_decisions(self, subsystem: Optional[str] = None, limit: int = 5) -> List[Dict[str, Any]]:
+    def query_decisions(self, subsystem: str | None = None, limit: int = 5) -> list[dict[str, Any]]:
         """
         Interroge l'historique des décisions de l'organisme avec validation intégrale
         de la chaîne cryptographique, confrontation à la tête de référence et protection anti-rollback.
@@ -352,8 +353,8 @@ class DecisionLedgerEngine:
             if not self.ledger_path.exists():
                 return []
 
-            raw_lines: List[str] = []
-            with open(self.ledger_path, "r", encoding="utf-8") as f:
+            raw_lines: list[str] = []
+            with open(self.ledger_path, encoding="utf-8") as f:
                 for line in f:
                     clean_line = line.strip()
                     if clean_line:
@@ -368,7 +369,7 @@ class DecisionLedgerEngine:
                 raise HeadStateMissingError("FAIL-CLOSED: Trusted head state file (.ledger_head.json) is missing!")
 
             try:
-                with open(self.head_state_path, "r", encoding="utf-8") as hf:
+                with open(self.head_state_path, encoding="utf-8") as hf:
                     head_data = json.load(hf)
             except Exception as h_err:
                 logger.error(f"[FORENSIC AUDIT] Trusted head state corrupted: {h_err}")
@@ -389,7 +390,7 @@ class DecisionLedgerEngine:
             # 2. Monotonic State Anti-Rollback Verification
             if self.monotonic_state_path.exists():
                 try:
-                    with open(self.monotonic_state_path, "r", encoding="utf-8") as mf:
+                    with open(self.monotonic_state_path, encoding="utf-8") as mf:
                         mono_data = json.load(mf)
                     mono_sig = mono_data.get("epoch_signature_hmac")
                     unsigned_mono = {k: v for k, v in mono_data.items() if k != "epoch_signature_hmac"}
@@ -404,13 +405,13 @@ class DecisionLedgerEngine:
                                 f"FAIL-CLOSED: Rollback attack detected! "
                                 f"Current ledger head ({trusted_index}) is lower than historical monotonic floor ({highest_seen})."
                             )
-                except (RollbackAttackError,):
+                except RollbackAttackError:
                     raise
                 except Exception as m_err:
                     logger.warning(f"[FORENSIC AUDIT] Monotonic state check failed: {m_err}")
 
             # 3. Sequential Chain & Timestamp Monotonicity Verification
-            validated_decisions: List[Dict[str, Any]] = []
+            validated_decisions: list[dict[str, Any]] = []
             seen_ids = set()
             expected_prev_hash = "0" * 64
             expected_block_index = 0

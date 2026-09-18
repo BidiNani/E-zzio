@@ -4,7 +4,9 @@ Surveille l'intégrité opérationnelle du bot, de la passerelle et du Vault loc
 """
 
 import time
+
 import httpx
+
 from core.tool_gateway.google_bridge import google_bridge
 
 

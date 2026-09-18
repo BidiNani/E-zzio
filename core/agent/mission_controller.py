@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import enum
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 
 class MissionStatus(str, enum.Enum):
@@ -49,10 +49,10 @@ class MissionRecord:
     request_id: str = ""
     model: str = ""
     provider: str = ""
-    result: Dict[str, Any] = field(default_factory=dict)
+    result: dict[str, Any] = field(default_factory=dict)
     created_at: str = ""
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "id": self.mission_id,
             "mission_id": self.mission_id,
@@ -91,20 +91,20 @@ class MissionTask:
 
 @dataclass
 class TaskGraph:
-    nodes: Dict[str, MissionTask] = field(default_factory=dict)
+    nodes: dict[str, MissionTask] = field(default_factory=dict)
 
 
 class MissionRegistry:
     def __init__(self):
-        self._missions: Dict[str, MissionRecord] = {}
+        self._missions: dict[str, MissionRecord] = {}
 
     def register(self, record: MissionRecord) -> None:
         self._missions[record.mission_id] = record
 
-    def get(self, mission_id: str) -> Optional[MissionRecord]:
+    def get(self, mission_id: str) -> MissionRecord | None:
         return self._missions.get(mission_id)
 
-    def list_all(self) -> List[MissionRecord]:
+    def list_all(self) -> list[MissionRecord]:
         return list(self._missions.values())
 
     def cancel(self, mission_id: str) -> bool:

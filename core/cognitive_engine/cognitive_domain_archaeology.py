@@ -32,7 +32,7 @@ def run_domain_archaeology():
         for path in dir_path.rglob("*"):
             if path.is_file() and path.suffix.lower() in {".jsonl", ".json", ".md", ".txt"}:
                 try:
-                    with open(path, "r", encoding="utf-8", errors="ignore") as f:
+                    with open(path, encoding="utf-8", errors="ignore") as f:
                         content = f.read().lower()
 
                     matched_axes = {}

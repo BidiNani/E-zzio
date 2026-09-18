@@ -5,8 +5,9 @@ Gère la création et le cycle de vie des demandes d'évolution.
 
 import json
 import uuid
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
+
 from core.authority.authority_policy import authority_policy_engine
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
@@ -32,7 +33,7 @@ class EvolutionRequestEngine:
             "target": target,
             "reason": reason,
             "requested_by": requested_by,
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "policy_evaluation": policy_eval,
             "status": status,
         }

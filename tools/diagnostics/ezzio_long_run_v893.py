@@ -4,15 +4,16 @@ Gère la baseline de performance, calcule un Health Score dynamique pondéré,
 gère le mode maintenance de manière autonome et observe l'organisme.
 """
 
-import sys
-import json
-import psutil
-import hmac
-import hashlib
 import argparse
+import hashlib
+import hmac
+import json
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
+
+import psutil
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -33,7 +34,7 @@ class V893EnduranceOrchestrator:
         if not self.baseline_path.exists():
             baseline_data = {
                 "version": "V8.9.3",
-                "created_utc": datetime.now(timezone.utc).isoformat(),
+                "created_utc": datetime.now(UTC).isoformat(),
                 "metrics": {
                     "baseline_ram_usage_percent": 38.0,
                     "baseline_cpu_idle_percent": 2.0,
@@ -53,7 +54,7 @@ class V893EnduranceOrchestrator:
                 pass
         return False
 
-    def calculate_dynamic_health_score(self, cpu_usage: float, ram_percent: float, gaming_active: bool) -> Dict[str, Any]:
+    def calculate_dynamic_health_score(self, cpu_usage: float, ram_percent: float, gaming_active: bool) -> dict[str, Any]:
         stab_score = 100.0
         if ram_percent > 85.0:
             stab_score -= 30.0
@@ -93,13 +94,13 @@ class V893EnduranceOrchestrator:
 
         snapshots_dir = self.root_dir / "runtime" / "snapshots"
         snapshots_dir.mkdir(parents=True, exist_ok=True)
-        timestamp_str = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+        timestamp_str = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
         snap_id = f"MAINTENANCE_SNAP_{timestamp_str}"
         print(f"[MAINTENANCE] 3. Point de contrôle prêt : {snap_id}")
         print("[MAINTENANCE] Organisme prêt pour intervention / mise à jour.\n")
 
-    def collect_tick(self) -> Dict[str, Any]:
-        timestamp = datetime.now(timezone.utc).isoformat()
+    def collect_tick(self) -> dict[str, Any]:
+        timestamp = datetime.now(UTC).isoformat()
         cpu_usage = psutil.cpu_percent(interval=1)
         mem = psutil.virtual_memory()
         ram_percent = mem.percent

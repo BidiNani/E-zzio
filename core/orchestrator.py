@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import asyncio
-from typing import Any, Dict, List, Optional
+from typing import Any
+
 from core.bus import AgentEvent, EventBus
 from core.cognitive_router import ModelRouter
 from core.sandbox import SecuritySandbox
@@ -14,7 +14,7 @@ class Orchestrator:
         self,
         bus: EventBus,
         router: ModelRouter,
-        sandbox: Optional[SecuritySandbox] = None,
+        sandbox: SecuritySandbox | None = None,
     ) -> None:
         self.bus = bus
         self.router = router
@@ -26,7 +26,7 @@ class Orchestrator:
         prompt: str,
         profile: str = "normal",
         is_approved: bool = False,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         try:
             routes = self.router.resolve_route(profile)
             plan_steps = [
@@ -60,7 +60,7 @@ class Orchestrator:
                 )
             )
 
-            execution_details: Optional[Dict[str, Any]] = None
+            execution_details: dict[str, Any] | None = None
             clean_prompt = prompt.strip()
             if clean_prompt.startswith("exec:") or clean_prompt.startswith("run:"):
                 cmd = clean_prompt.split(":", 1)[1].strip()
@@ -128,12 +128,12 @@ class Orchestrator:
 
 # Canonical unification : ré-export des composants DAG V9.2
 from core.orchestration import (
-    TaskDAG,
-    DAGNode,
-    DAGExecutionStatus,
     CycleDetectedError,
-    DependencyNotMetError,
+    DAGExecutionStatus,
+    DAGNode,
     DAGOrchestrator,
+    DependencyNotMetError,
+    TaskDAG,
 )
 
 __all__ = [

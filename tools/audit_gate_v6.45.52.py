@@ -1,14 +1,12 @@
 from __future__ import annotations
-import ast
+
 import json
-import sys
 from pathlib import Path
-from typing import Any, Dict, List
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def scan_provenance(keywords: set[str]) -> Dict[str, List[str]]:
+def scan_provenance(keywords: set[str]) -> dict[str, list[str]]:
     matches = {kw: [] for kw in keywords}
     for p in PROJECT_ROOT.glob("**/*.py"):
         if set(p.parts) & EXCLUDED_DIRS:
@@ -50,7 +48,7 @@ def main():
         "gemini_provenance": gemini_res,
         "ollama_provenance": ollama_res
     }
-    
+
     out_file = PROJECT_ROOT / "tools" / "gate_v6_45_52_report.json"
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2)

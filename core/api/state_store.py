@@ -8,7 +8,7 @@ import json
 import uuid
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any
 
 _STATE_DIR = Path(__file__).resolve().parents[2] / "runtime" / "state"
 _STATE_DIR.mkdir(parents=True, exist_ok=True)
@@ -24,7 +24,7 @@ def load(name: str, default: Any = None) -> Any:
     if not p.exists():
         return default if default is not None else []
     try:
-        with open(p, "r", encoding="utf-8") as f:
+        with open(p, encoding="utf-8") as f:
             return json.load(f)
     except Exception:
         return default if default is not None else []
@@ -37,7 +37,7 @@ def save(name: str, data: Any) -> None:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
 
-def append(name: str, item: Dict[str, Any]) -> Dict[str, Any]:
+def append(name: str, item: dict[str, Any]) -> dict[str, Any]:
     """Ajoute un élément avec ID + timestamp automatiques."""
     items = load(name, [])
     item.setdefault("id", str(uuid.uuid4()))
@@ -47,7 +47,7 @@ def append(name: str, item: Dict[str, Any]) -> Dict[str, Any]:
     return item
 
 
-def update(name: str, item_id: str, patch: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+def update(name: str, item_id: str, patch: dict[str, Any]) -> dict[str, Any] | None:
     """Met à jour un élément par ID."""
     items = load(name, [])
     for item in items:

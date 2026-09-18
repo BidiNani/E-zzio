@@ -8,11 +8,12 @@ Enforces strictly Read-Only scopes:
 Zero third-party vendor lock-in. Authenticates via local OAuth refresh token or service credentials.
 """
 from __future__ import annotations
-import os
-import json
+
 import logging
+import os
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any
+
 import httpx
 
 from core.capabilities.capability_policy import CapabilityPolicy, PolicyDecision
@@ -34,7 +35,7 @@ class GoogleWorkspaceProvider:
         self.client_secret = self._get_secret("GOOGLE_WORKSPACE_CLIENT_SECRET")
         self.refresh_token = self._get_secret("GOOGLE_WORKSPACE_REFRESH_TOKEN")
 
-    def _get_secret(self, key: str) -> Optional[str]:
+    def _get_secret(self, key: str) -> str | None:
         """Récupère un secret depuis secrets/.env sans jamais l'exposer en clair."""
         env_paths = [
             self.workspace_root / "secrets" / ".env",
@@ -51,7 +52,7 @@ class GoogleWorkspaceProvider:
                     pass
         return os.environ.get(key)
 
-    async def _get_access_token(self) -> Optional[str]:
+    async def _get_access_token(self) -> str | None:
         """Échange le refresh token direct contre un access token éphémère (sans tiers)."""
         if not self.client_id or not self.client_secret or not self.refresh_token:
             logger.warning("[WORKSPACE-OAUTH] Identifiants OAuth non configurés dans secrets/.env")
@@ -74,7 +75,7 @@ class GoogleWorkspaceProvider:
             logger.error("[WORKSPACE-OAUTH-ERR] Erreur de transport OAuth : %s", exc)
         return None
 
-    async def list_recent_emails(self, limit: int = 5) -> Dict[str, Any]:
+    async def list_recent_emails(self, limit: int = 5) -> dict[str, Any]:
         """Lit les derniers messages Gmail (scope: gmail.read)."""
         decision, reason = self.policy.evaluate_scope("gmail.read", {"limit": limit})
         if decision != PolicyDecision.ALLOW:
@@ -101,7 +102,7 @@ class GoogleWorkspaceProvider:
         except Exception as exc:
             return {"ok": False, "error": str(exc)}
 
-    async def list_recent_files(self, limit: int = 5) -> Dict[str, Any]:
+    async def list_recent_files(self, limit: int = 5) -> dict[str, Any]:
         """Liste les fichiers récents Google Drive (scope: drive.read)."""
         decision, reason = self.policy.evaluate_scope("drive.read", {"limit": limit})
         if decision != PolicyDecision.ALLOW:
@@ -128,7 +129,7 @@ class GoogleWorkspaceProvider:
         except Exception as exc:
             return {"ok": False, "error": str(exc)}
 
-    async def list_upcoming_events(self, limit: int = 5) -> Dict[str, Any]:
+    async def list_upcoming_events(self, limit: int = 5) -> dict[str, Any]:
         """Liste les prochains événements Google Calendar (scope: calendar.read)."""
         decision, reason = self.policy.evaluate_scope("calendar.read", {"limit": limit})
         if decision != PolicyDecision.ALLOW:

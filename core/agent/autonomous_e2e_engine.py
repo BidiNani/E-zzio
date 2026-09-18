@@ -6,16 +6,15 @@ INTENT -> PLAN -> CAPABILITY RESOLUTION -> EXECUTION -> VERIFICATION -> RECOVERY
 from __future__ import annotations
 
 import logging
-import uuid
 import time
+import uuid
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any
 
-from core.agent.self_awareness import self_knowledge, EpistemicAction
 from core.agent.nothing_impossible import nothing_impossible
+from core.agent.self_awareness import self_knowledge
 from core.world.world_model import world_model
-from core.authority.user_preservation import user_preservation_gate
 
 logger = logging.getLogger("ezzio.agent.autonomous_e2e_engine")
 
@@ -59,24 +58,24 @@ class AutonomousMissionContract:
     mission_id: str
     objective: str
     user_intent: str
-    success_criteria: List[str] = field(default_factory=list)
-    constraints: List[str] = field(default_factory=list)
-    required_capabilities: List[str] = field(default_factory=list)
-    dependencies: Dict[str, List[str]] = field(default_factory=dict)  # node_id -> amont dependencies
-    plan_nodes: List[Dict[str, Any]] = field(default_factory=list)
-    assigned_agents: List[str] = field(default_factory=list)
-    assigned_tools: List[str] = field(default_factory=list)
-    assigned_models: List[str] = field(default_factory=list)
+    success_criteria: list[str] = field(default_factory=list)
+    constraints: list[str] = field(default_factory=list)
+    required_capabilities: list[str] = field(default_factory=list)
+    dependencies: dict[str, list[str]] = field(default_factory=dict)  # node_id -> amont dependencies
+    plan_nodes: list[dict[str, Any]] = field(default_factory=list)
+    assigned_agents: list[str] = field(default_factory=list)
+    assigned_tools: list[str] = field(default_factory=list)
+    assigned_models: list[str] = field(default_factory=list)
     risk_level: str = "R1"
     approval_requirements: bool = False
     execution_budget: float = 100.0
     budget_used: float = 0.0
-    deadline: Optional[float] = None
-    checkpoints: List[Dict[str, Any]] = field(default_factory=list)
+    deadline: float | None = None
+    checkpoints: list[dict[str, Any]] = field(default_factory=list)
     verification_policy: str = "STRICT_VERIFICATION"
     recovery_policy: str = "AUTO_RECOVER"
     current_state: MissionState = MissionState.RECEIVED
-    completion_state: Optional[str] = None
+    completion_state: str | None = None
     created_at: float = field(default_factory=time.time)
     updated_at: float = field(default_factory=time.time)
 
@@ -86,9 +85,9 @@ class ExecutionCheckpoint:
     checkpoint_id: str
     mission_id: str
     step_index: int
-    completed_nodes: List[str]
-    pending_nodes: List[str]
-    verified_artifacts: List[str]
+    completed_nodes: list[str]
+    pending_nodes: list[str]
+    verified_artifacts: list[str]
     budget_used: float
     retry_count: int
     timestamp: float = field(default_factory=time.time)
@@ -97,7 +96,7 @@ class ExecutionCheckpoint:
 class ResultVerificationEngine:
     """Moteur de vérification déterministe des résultats de tâche."""
 
-    def verify_node_output(self, node_type: str, output: Any) -> Tuple[bool, str]:
+    def verify_node_output(self, node_type: str, output: Any) -> tuple[bool, str]:
         """Vérifie la validité d'un résultat selon son type (CODE, FILE, RESEARCH, TOOL, DATA)."""
         if output is None:
             return False, "Output is None"
@@ -129,8 +128,8 @@ class AutonomousE2EEngine:
     """Moteur souverain d'exécution autonome End-to-End pour E-ZZIO V10.9."""
 
     def __init__(self) -> None:
-        self.missions: Dict[str, AutonomousMissionContract] = {}
-        self.checkpoints: Dict[str, List[ExecutionCheckpoint]] = {}
+        self.missions: dict[str, AutonomousMissionContract] = {}
+        self.checkpoints: dict[str, list[ExecutionCheckpoint]] = {}
         self.verifier = ResultVerificationEngine()
 
         # Invariants de protection et bornes de sécurité
@@ -145,9 +144,9 @@ class AutonomousE2EEngine:
         self,
         objective: str,
         user_intent: str,
-        success_criteria: Optional[List[str]] = None,
-        constraints: Optional[List[str]] = None,
-        required_capabilities: Optional[List[str]] = None,
+        success_criteria: list[str] | None = None,
+        constraints: list[str] | None = None,
+        required_capabilities: list[str] | None = None,
         execution_budget: float = 100.0,
         risk_level: str = "R1",
     ) -> AutonomousMissionContract:
@@ -170,10 +169,10 @@ class AutonomousE2EEngine:
         logger.info(f"[E2E-ENGINE] Contrat de mission créé: {mission_id} ({objective})")
         return contract
 
-    def detect_dag_cycle(self, nodes: List[Dict[str, Any]], dependencies: Dict[str, List[str]]) -> bool:
+    def detect_dag_cycle(self, nodes: list[dict[str, Any]], dependencies: dict[str, list[str]]) -> bool:
         """Détecte s'il existe un cycle dans le graphe DAG des dépendances."""
-        visited: Set[str] = set()
-        rec_stack: Set[str] = set()
+        visited: set[str] = set()
+        rec_stack: set[str] = set()
 
         def dfs(node_id: str) -> bool:
             visited.add(node_id)
@@ -196,7 +195,7 @@ class AutonomousE2EEngine:
                     return True
         return False
 
-    def build_execution_plan(self, mission_id: str, plan_nodes: List[Dict[str, Any]], dependencies: Dict[str, List[str]]) -> bool:
+    def build_execution_plan(self, mission_id: str, plan_nodes: list[dict[str, Any]], dependencies: dict[str, list[str]]) -> bool:
         """Construit et valide le plan DAG dépendant de la mission."""
         contract = self.missions.get(mission_id)
         if not contract:
@@ -217,7 +216,7 @@ class AutonomousE2EEngine:
         logger.info(f"[E2E-ENGINE] Plan DAG validé avec {len(plan_nodes)} nœuds pour {mission_id}")
         return True
 
-    def create_checkpoint(self, mission_id: str, step_index: int, completed_nodes: List[str], pending_nodes: List[str]) -> ExecutionCheckpoint:
+    def create_checkpoint(self, mission_id: str, step_index: int, completed_nodes: list[str], pending_nodes: list[str]) -> ExecutionCheckpoint:
         """Crée un point de restauration sécurisé (Checkpoint) pour la mission."""
         contract = self.missions.get(mission_id)
         cp_id = f"cp_{uuid.uuid4().hex[:6]}"
@@ -241,7 +240,7 @@ class AutonomousE2EEngine:
         logger.debug(f"[E2E-ENGINE] Checkpoint créé: {cp_id} pour {mission_id} (Étape {step_index})")
         return checkpoint
 
-    def resume_from_checkpoint(self, mission_id: str) -> Optional[ExecutionCheckpoint]:
+    def resume_from_checkpoint(self, mission_id: str) -> ExecutionCheckpoint | None:
         """Restaure l'exécution à partir du dernier checkpoint valide."""
         cps = self.checkpoints.get(mission_id, [])
         if not cps:
@@ -254,7 +253,7 @@ class AutonomousE2EEngine:
             logger.info(f"[E2E-ENGINE] Mission {mission_id} restaurée depuis le checkpoint {latest.checkpoint_id}")
         return latest
 
-    def execute_mission_e2e(self, mission_id: str) -> Dict[str, Any]:
+    def execute_mission_e2e(self, mission_id: str) -> dict[str, Any]:
         """Exécute la boucle autonome complète End-to-End avec vérification, auto-récupération et replanning."""
         contract = self.missions.get(mission_id)
         if not contract:
@@ -270,7 +269,7 @@ class AutonomousE2EEngine:
             }
 
         contract.current_state = MissionState.EXECUTING
-        completed_nodes: List[str] = []
+        completed_nodes: list[str] = []
         pending_nodes = [n["node_id"] for n in contract.plan_nodes]
         recovery_attempts = 0
         replan_attempts = 0

@@ -8,9 +8,9 @@ from __future__ import annotations
 
 import ast
 import os
-from typing import Any, Dict, List
+from typing import Any
 
-DORMANT_ZONES: List[Dict[str, str]] = [
+DORMANT_ZONES: list[dict[str, str]] = [
     {"zone": "src/ezzio", "status": "DORMANT", "owner": "personne (orphelin)",
      "reason": "stack autoporteuse non montée", "risk": "faible",
      "activation_path": "aucun (0 importateur)", "activation_blocked": "oui — non référencé",
@@ -118,10 +118,10 @@ KERNEL_SCAN_ROOTS = ["core/ezzio_master.py", "core/agent/coder_federation.py",
                      "core/routing/model_registry.py", "web_server.py", "routers"]
 
 
-def verify_containment(repo_root: str) -> List[Dict[str, Any]]:
+def verify_containment(repo_root: str) -> list[dict[str, Any]]:
     """Retourne les violations (vide = confinement intact)."""
-    violations: List[Dict[str, Any]] = []
-    targets: List[str] = []
+    violations: list[dict[str, Any]] = []
+    targets: list[str] = []
     for root in KERNEL_SCAN_ROOTS:
         p = os.path.join(repo_root, root)
         if os.path.isdir(p):
@@ -136,7 +136,7 @@ def verify_containment(repo_root: str) -> List[Dict[str, Any]]:
         except Exception:
             continue
         for node in ast.walk(tree):
-            mods: List[str] = []
+            mods: list[str] = []
             if isinstance(node, ast.ImportFrom) and node.module:
                 mods = [node.module]
             elif isinstance(node, ast.Import):

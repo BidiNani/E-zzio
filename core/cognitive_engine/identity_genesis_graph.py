@@ -4,10 +4,10 @@ Calcule l'horodatage, le hachage cryptographique et le graphe de références cr
 des 19 artefacts identitaires pour reconstituer la chronologie exacte de la forge d'E-ZZIO.
 """
 
-import json
 import hashlib
+import json
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 OUTPUT_REPORT = ROOT_DIR / "runtime" / "audit" / "system" / "identity_genesis_graph.json"
@@ -56,7 +56,7 @@ def build_genesis_graph():
         stat = full_path.stat()
         sha256 = compute_sha256(full_path)
 
-        with open(full_path, "r", encoding="utf-8", errors="ignore") as f:
+        with open(full_path, encoding="utf-8", errors="ignore") as f:
             content = f.read()
 
         # Recherche de références vers les autres fichiers de l'identité
@@ -74,8 +74,8 @@ def build_genesis_graph():
                 "sha256": sha256,
                 "size_bytes": stat.st_size,
                 "timestamps": {
-                    "created": datetime.fromtimestamp(stat.st_ctime, timezone.utc).isoformat(),
-                    "modified": datetime.fromtimestamp(stat.st_mtime, timezone.utc).isoformat(),
+                    "created": datetime.fromtimestamp(stat.st_ctime, UTC).isoformat(),
+                    "modified": datetime.fromtimestamp(stat.st_mtime, UTC).isoformat(),
                 },
                 "outgoing_references": references,
             }
@@ -84,7 +84,7 @@ def build_genesis_graph():
     # 2. Tri chronologique par date de création / modification
     nodes.sort(key=lambda x: x["timestamps"]["modified"])
 
-    graph_data = {"generated_at": datetime.now(timezone.utc).isoformat(), "total_nodes": len(nodes), "chronological_lineage": nodes}
+    graph_data = {"generated_at": datetime.now(UTC).isoformat(), "total_nodes": len(nodes), "chronological_lineage": nodes}
 
     OUTPUT_REPORT.parent.mkdir(parents=True, exist_ok=True)
     with open(OUTPUT_REPORT, "w", encoding="utf-8") as f:

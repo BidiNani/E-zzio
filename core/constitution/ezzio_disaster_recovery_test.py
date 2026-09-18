@@ -4,12 +4,12 @@ Valide l'exploitabilité d'un backup externe, vérifie les hashes SHA-256 de bou
 exécute une restauration isolée et valide le boot logique de l'organisme restauré.
 """
 
-import sys
-import json
 import hashlib
+import json
 import logging
+import sys
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -37,7 +37,7 @@ class DisasterRecoveryTester:
 
         return sorted(backups)[-1]
 
-    def run_round_trip_test(self) -> Dict[str, Any]:
+    def run_round_trip_test(self) -> dict[str, Any]:
         print("[*] Étape 1 : Localisation du backup externe le plus récent...")
         latest_backup = self.find_latest_backup()
         print(f"    Trouvé : {latest_backup.name}")

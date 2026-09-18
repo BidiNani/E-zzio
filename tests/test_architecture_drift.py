@@ -3,10 +3,11 @@ E-ZZIO V9.0 — ARCHITECTURE DRIFT DETECTION SUITE
 Vérifie en continu l'intégrité cryptographique des composants Frozen Core par rapport au manifeste.
 """
 
-import pytest
-import json
 import hashlib
+import json
 from pathlib import Path
+
+import pytest
 
 ROOT = Path(__file__).parent.parent
 
@@ -16,7 +17,7 @@ def test_core_manifest_integrity():
     manifest_file = ROOT / 'docs' / 'FROZEN_CORE_MANIFEST.json'
     assert manifest_file.exists(), 'Le manifeste FROZEN_CORE_MANIFEST.json doit exister'
     manifest = json.loads(manifest_file.read_text(encoding='utf-8'))
-    
+
     for rel_path, meta in manifest['components'].items():
         target_file = ROOT / rel_path
         assert target_file.exists(), f'Fichier Core manquant : {rel_path}'

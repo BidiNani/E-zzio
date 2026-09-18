@@ -10,18 +10,15 @@ Evaluates compressed context segments before delivery to downstream models:
 from __future__ import annotations
 
 import logging
-from dataclasses import asdict, dataclass, field
-from datetime import datetime, timezone
+from dataclasses import dataclass, field
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
 
 from core.cognition.compression.budget_engine import (
     ClassifiedContextSegment,
-    ContentCategory,
     ContextSensitivityTier,
 )
 from core.cognition.compression.compressor_fabric import (
-    CompressedSegmentResult,
     SovereignCompressorFabric,
 )
 from core.cognition.decision_ledger import DecisionLedgerEngine
@@ -37,7 +34,7 @@ class CompressionAuditVerdict:
     compression_ratio: float
     effective_text: str
     rationale: str
-    timestamp_utc: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    timestamp_utc: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
 
 
 class CompressionIntegrityGate:

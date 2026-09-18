@@ -2,8 +2,10 @@
 tests/test_conversational_routing_policy.py — Unit test for conversational routing policy
 """
 import pytest
+
 from core.cognition.model_router import ModelRouter
 from core.routing.model_registry import canonical_model_registry
+
 
 def test_conversational_routing_policy_scenarios():
     router = ModelRouter()

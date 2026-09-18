@@ -1,9 +1,11 @@
 """
 Tests des contrats d'exécution et de transport entre le client mobile Android et le backend E-ZzIO.
 """
-from fastapi.testclient import TestClient
 import pytest
+from fastapi.testclient import TestClient
+
 from web_server import app
+
 
 @pytest.fixture
 def client():

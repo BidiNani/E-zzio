@@ -12,9 +12,9 @@ from __future__ import annotations
 import importlib
 import os
 import sqlite3
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from typing import Any, Dict, List
+from dataclasses import dataclass
+from datetime import UTC, datetime
+from typing import Any
 
 KERNEL_MODULES = [
     "core.ezzio_master",
@@ -50,10 +50,10 @@ class HealthSignal:
     recommended_action: str = ""
     escalation_level: int = 0
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "signal_id": self.signal_id,
-            "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+            "timestamp_utc": datetime.now(UTC).isoformat(),
             "component": self.component,
             "domain": self.domain,
             "severity": self.severity,
@@ -66,7 +66,7 @@ class HealthSignal:
         }
 
 
-def check_kernel_imports(modules: List[str] | None = None) -> List[HealthSignal]:
+def check_kernel_imports(modules: list[str] | None = None) -> list[HealthSignal]:
     """Douleur structurelle : un module noyau non importable."""
     signals = []
     for name in modules or KERNEL_MODULES:
@@ -82,9 +82,9 @@ def check_kernel_imports(modules: List[str] | None = None) -> List[HealthSignal]
     return signals
 
 
-def check_model_registry() -> List[HealthSignal]:
+def check_model_registry() -> list[HealthSignal]:
     """Douleur décisionnelle : registre vide, défauts non installés, liens morts."""
-    from core.routing.model_registry import canonical_model_registry, ModelQualificationStatus
+    from core.routing.model_registry import ModelQualificationStatus, canonical_model_registry
 
     signals = []
     try:
@@ -110,7 +110,7 @@ def check_model_registry() -> List[HealthSignal]:
     return signals
 
 
-def check_databases(paths: List[str] | None = None) -> List[HealthSignal]:
+def check_databases(paths: list[str] | None = None) -> list[HealthSignal]:
     """Douleur métabolique : taille, WAL, pression."""
     signals = []
     for p in paths or ["runtime/evidence/evidence.db"]:
@@ -136,7 +136,7 @@ def check_databases(paths: List[str] | None = None) -> List[HealthSignal]:
     return signals
 
 
-def check_ollama_pool() -> List[HealthSignal]:
+def check_ollama_pool() -> list[HealthSignal]:
     """Douleur de capacité : défauts fédération vs artefacts installés."""
     try:
         from core.agent.coder_federation import CoderModelFederationRouter
@@ -163,7 +163,7 @@ def check_ollama_pool() -> List[HealthSignal]:
                          f"défauts installés parmi {len(installed)} artefacts", "health()")]
 
 
-def full_diagnostic() -> Dict[str, Any]:
+def full_diagnostic() -> dict[str, Any]:
     """Assemble l'état de santé logique (lecture seule)."""
     signals = check_kernel_imports() + check_model_registry() + check_databases() + check_ollama_pool()
     order = {"CRITICAL": 0, "SICK": 1, "DEGRADED": 2, "WATCH": 3, "UNKNOWN": 4, "HEALTHY": 5}
@@ -176,8 +176,8 @@ def full_diagnostic() -> Dict[str, Any]:
     }
 
 
-def record_evolution_event(signal: Dict[str, Any], treatment: str, result: str,
-                           ledger=None) -> Dict[str, Any]:
+def record_evolution_event(signal: dict[str, Any], treatment: str, result: str,
+                           ledger=None) -> dict[str, Any]:
     """Mémorise un diagnostic/traitement dans le ledger d'audit existant.
 
     Mémoire d'évolution (XXXVII) : anomalies, diagnostics, traitements,

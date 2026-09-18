@@ -8,11 +8,11 @@ Standard : Fail-Closed / Observabilité Totale / Zéro Leak de Secret.
 from __future__ import annotations
 
 import enum
-import time
 from abc import ABC, abstractmethod
+from collections.abc import AsyncIterator
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from typing import Any, AsyncIterator, Dict, List, Optional
+from datetime import UTC, datetime
+from typing import Any
 
 
 class CostClass(str, enum.Enum):
@@ -62,13 +62,13 @@ class ProviderResponse:
     role: str = "assistant"
     model: str = ""
     provider: str = ""
-    finish_reason: Optional[str] = "stop"
-    usage: Dict[str, int] = field(default_factory=dict)
+    finish_reason: str | None = "stop"
+    usage: dict[str, int] = field(default_factory=dict)
     latency_ms: float = 0.0
     cost_class: CostClass = CostClass.UNKNOWN
-    error_class: Optional[ProviderErrorClass] = None
-    raw: Optional[Dict[str, Any]] = None
-    timestamp_utc: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    error_class: ProviderErrorClass | None = None
+    raw: dict[str, Any] | None = None
+    timestamp_utc: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
 
 
 class BaseProvider(ABC):
@@ -87,17 +87,17 @@ class BaseProvider(ABC):
         return self.availability() in (ProviderAvailability.AVAILABLE, ProviderAvailability.DEGRADED)
 
     @abstractmethod
-    def cost_class(self, model: Optional[str] = None) -> CostClass:
+    def cost_class(self, model: str | None = None) -> CostClass:
         """Retourne la classe de coût pour le modèle demandé."""
         pass
 
     @abstractmethod
-    def capabilities(self, model: Optional[str] = None) -> List[str]:
+    def capabilities(self, model: str | None = None) -> list[str]:
         """Retourne les capacités applicables au modèle demandé."""
         pass
 
     @abstractmethod
-    async def health(self) -> Dict[str, Any]:
+    async def health(self) -> dict[str, Any]:
         """Vérifie la santé de l'endpoint et retourne un dictionnaire d'état."""
         pass
 
@@ -105,8 +105,8 @@ class BaseProvider(ABC):
     async def generate(
         self,
         prompt: str,
-        system_prompt: Optional[str] = None,
-        model: Optional[str] = None,
+        system_prompt: str | None = None,
+        model: str | None = None,
         temperature: float = 0.2,
         max_tokens: int = 512,
         **kwargs: Any
@@ -118,8 +118,8 @@ class BaseProvider(ABC):
     async def stream(
         self,
         prompt: str,
-        system_prompt: Optional[str] = None,
-        model: Optional[str] = None,
+        system_prompt: str | None = None,
+        model: str | None = None,
         temperature: float = 0.2,
         max_tokens: int = 512,
         **kwargs: Any
@@ -128,6 +128,6 @@ class BaseProvider(ABC):
         pass
 
     @abstractmethod
-    def error_mapping(self, status_code: int, error_body: Optional[str] = None) -> ProviderErrorClass:
+    def error_mapping(self, status_code: int, error_body: str | None = None) -> ProviderErrorClass:
         """Mappe un code d'erreur HTTP vers la typologie canonique E-ZzIO."""
         pass

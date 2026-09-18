@@ -4,13 +4,14 @@ Certifie les générateurs locaux XLSX, DOCX, ZIP sécurisé (Anti-Zip Slip), Au
 """
 import os
 import zipfile
-import pytest
 from pathlib import Path
 
-from core.generators.sheet_engine import SheetEngine
-from core.generators.doc_engine import DocEngine
+import pytest
+
 from core.generators.archive_engine import ArchiveEngine, ArchiveSecurityError
+from core.generators.doc_engine import DocEngine
 from core.generators.media_engine import MediaEngine
+from core.generators.sheet_engine import SheetEngine
 
 
 def test_sheet_engine_generation_with_formulas(tmp_path):

@@ -1,13 +1,11 @@
 import ast
-import difflib
 import hashlib
 import json
-import os
-import shutil
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Set, Tuple
+from typing import Any
+
 
 class EzzioCleanupV21Engine:
     """
@@ -23,21 +21,21 @@ class EzzioCleanupV21Engine:
         self.mode = mode
         self.output_dir = self.root / "_forensic" / "cleanup_v2_1" / run_id
         self.output_dir.mkdir(parents=True, exist_ok=True)
-        
+
         self.log_path = self.output_dir / "CLEANUP_V2_1_FORENSIC.log"
-        self.started_utc = datetime.now(timezone.utc).isoformat()
-        
-        self.inventory: Dict[str, Dict[str, Any]] = {}
-        self.reconciliation_data: Dict[str, Any] = {}
-        self.empty_dirs_classified: Dict[str, str] = {}
-        self.safe_empty_dirs: List[str] = []
-        self.preserved_empty_dirs: List[str] = []
-        self.deleted_empty_dirs: List[str] = []
-        
-        self.semantic_classification_matrix: List[Dict[str, Any]] = []
+        self.started_utc = datetime.now(UTC).isoformat()
+
+        self.inventory: dict[str, dict[str, Any]] = {}
+        self.reconciliation_data: dict[str, Any] = {}
+        self.empty_dirs_classified: dict[str, str] = {}
+        self.safe_empty_dirs: list[str] = []
+        self.preserved_empty_dirs: list[str] = []
+        self.deleted_empty_dirs: list[str] = []
+
+        self.semantic_classification_matrix: list[dict[str, Any]] = []
 
     def log(self, msg: str):
-        now = datetime.now(timezone.utc).isoformat()
+        now = datetime.now(UTC).isoformat()
         line = f"[{now}] [CLEANUP_V2.1] {msg}"
         print(line)
         with open(self.log_path, "a", encoding="utf-8") as f:
@@ -60,16 +58,16 @@ class EzzioCleanupV21Engine:
         self.log("Exécution de la réconciliation physique du delta d'inventaire...")
         v1_path = self.root / "_forensic" / "cleanup" / "run_cleanup_20260822T232019704Z" / "CLEANUP_CLASSIFICATION.json"
         v2_path = self.root / "_forensic" / "cleanup_v2" / "run_v2_20260822T232618" / "CLEANUP_V2_INVENTORY.json"
-        
+
         if v1_path.exists() and v2_path.exists():
             v1_keys = set(json.loads(v1_path.read_text(encoding="utf-8")).keys())
             v2_keys = set(json.loads(v2_path.read_text(encoding="utf-8")).keys())
-            
+
             delta_keys = v2_keys - v1_keys
             pyc_count = sum(1 for k in delta_keys if k.startswith("runtime/cache/pycache/"))
             forensic_count = sum(1 for k in delta_keys if k.startswith("_forensic/"))
             script_count = sum(1 for k in delta_keys if k.startswith("scripts/"))
-            
+
             self.reconciliation_data = {
                 "v1_1_post_cleanup_count": len(v1_keys),
                 "v2_inventory_count": len(v2_keys),
@@ -94,37 +92,37 @@ class EzzioCleanupV21Engine:
         """Classify empty directories into safe-to-purge cache folders vs preserved structural holders."""
         self.log("Classification et validation structurelle des 3 123 dossiers vides...")
         v2_empty_dirs_path = self.root / "_forensic" / "cleanup_v2" / "run_v2_20260822T232618" / "EMPTY_DIRECTORIES.json"
-        
+
         if not v2_empty_dirs_path.exists():
             self.log("EMPTY_DIRECTORIES.json introuvable.")
             return
 
-        all_empty_dirs: List[str] = json.loads(v2_empty_dirs_path.read_text(encoding="utf-8"))
-        
+        all_empty_dirs: list[str] = json.loads(v2_empty_dirs_path.read_text(encoding="utf-8"))
+
         # Architectural roots to preserve even if empty
         preserve_prefixes = [
             "models/", "bridge/", "state/", "data/", "v17/", "v18/", "v19/", "_EZZIO_TRUTH_REPORTS/",
             "core/", "interfaces/", "contracts/", "config/", "registry/", "recovery/", "tests/"
         ]
-        
+
         for rel_dir in all_empty_dirs:
             p = self.root / rel_dir
-            
+
             # Check if directory still physically exists and is 100% empty
             if not p.exists() or not p.is_dir():
                 continue
-                
+
             try:
                 children = list(p.iterdir())
             except Exception:
                 continue
-                
+
             if len(children) > 0:
                 continue  # Not empty anymore
-                
+
             # Classify
             is_preserve = any(rel_dir.startswith(pref) for pref in preserve_prefixes) and not any(c in rel_dir for c in ["/.pytest_cache", "/__pycache__", "/.ruff_cache", "/runtime/cache"])
-            
+
             if is_preserve:
                 self.preserved_empty_dirs.append(rel_dir)
                 self.empty_dirs_classified[rel_dir] = "PRESERVED_STRUCTURAL_PLACEHOLDER"
@@ -132,10 +130,10 @@ class EzzioCleanupV21Engine:
                 self.safe_empty_dirs.append(rel_dir)
                 self.empty_dirs_classified[rel_dir] = "SAFE_TO_PURGE_CACHE_DIR"
 
-        self.log(f"Résultats de classification des dossiers vides :")
+        self.log("Résultats de classification des dossiers vides :")
         self.log(f" - SAFE_TO_PURGE_CACHE_DIR : {len(self.safe_empty_dirs)}")
         self.log(f" - PRESERVED_STRUCTURAL_PLACEHOLDER : {len(self.preserved_empty_dirs)}")
-        
+
         if self.mode == "StructuralPurge":
             self.log("Exécution de la suppression contrôlée des dossiers vides de cache...")
             # Sort by descending length so deepest subdirs are deleted first
@@ -148,23 +146,23 @@ class EzzioCleanupV21Engine:
                         self.deleted_empty_dirs.append(rel_dir)
                 except Exception as e:
                     self.log(f"Warning suppression {rel_dir}: {e}")
-                    
+
             self.log(f"Suppression achevée : {len(self.deleted_empty_dirs)} / {len(self.safe_empty_dirs)} dossiers de cache supprimés.")
 
     def analyze_semantic_duplicates_ast(self):
         """Detailed AST & Interface analysis of the 302 semantic duplicate pairs (NO DELETIONS)."""
         self.log("Analyse sémantique et différentielle AST des 302 paires (READ-ONLY)...")
         v2_dups_path = self.root / "_forensic" / "cleanup_v2" / "run_v2_20260822T232618" / "SEMANTIC_DUPLICATES.json"
-        
+
         if not v2_dups_path.exists():
             return
-            
-        dups: List[Dict[str, Any]] = json.loads(v2_dups_path.read_text(encoding="utf-8"))
-        
+
+        dups: list[dict[str, Any]] = json.loads(v2_dups_path.read_text(encoding="utf-8"))
+
         for item in dups:
             p1_rel, p2_rel = item["file_a"], item["file_b"]
             p1, p2 = self.root / p1_rel, self.root / p2_rel
-            
+
             entry = {
                 "file_a": p1_rel,
                 "file_b": p2_rel,
@@ -173,14 +171,14 @@ class EzzioCleanupV21Engine:
                 "classification": "REVIEW_REQUIRED",
                 "rationale": ""
             }
-            
+
             # If both are in _EZZIO_TRUTH_REPORTS, they are historical forensic trials
             if "_EZZIO_TRUTH_REPORTS" in p1_rel or "_EZZIO_TRUTH_REPORTS" in p2_rel:
                 entry["classification"] = "HISTORICAL_FORENSIC_TRIAL"
                 entry["rationale"] = "Essai ou artefact d'un audit de réparation forensique passé. STRICTEMENT PRÉSERVÉ pour traçabilité."
                 self.semantic_classification_matrix.append(entry)
                 continue
-                
+
             # If both are python files, check AST function signatures
             if p1_rel.endswith(".py") and p2_rel.endswith(".py") and p1.exists() and p2.exists():
                 try:
@@ -188,15 +186,15 @@ class EzzioCleanupV21Engine:
                     t2 = p2.read_text(encoding="utf-8", errors="ignore")
                     tree1 = ast.parse(t1)
                     tree2 = ast.parse(t2)
-                    
+
                     funcs1 = {node.name for node in ast.walk(tree1) if isinstance(node, ast.FunctionDef)}
                     funcs2 = {node.name for node in ast.walk(tree2) if isinstance(node, ast.FunctionDef)}
-                    
+
                     entry["ast_comparable"] = True
                     entry["functions_shared"] = list(funcs1 & funcs2)
                     entry["functions_unique_to_a"] = list(funcs1 - funcs2)
                     entry["functions_unique_to_b"] = list(funcs2 - funcs1)
-                    
+
                     if funcs1 == funcs2 and len(funcs1) > 0 and item["similarity_ratio"] > 0.98:
                         entry["classification"] = "FUNCTIONAL_DUPLICATE_CANDIDATE"
                         entry["rationale"] = "Signatures de fonctions 100% identiques et similarité > 98%."
@@ -208,7 +206,7 @@ class EzzioCleanupV21Engine:
             else:
                 entry["classification"] = "POWERSHELL_OR_CONFIG_VARIANT"
                 entry["rationale"] = "Script de test ou configuration spécialisée."
-                
+
             self.semantic_classification_matrix.append(entry)
 
         self.log(f"Classification AST achevée pour les {len(self.semantic_classification_matrix)} paires.")
@@ -216,16 +214,16 @@ class EzzioCleanupV21Engine:
     def save_reports(self):
         """Save matrices and human report."""
         self.log("Sauvegarde des rapports Cleanup V2.1...")
-        
+
         (self.output_dir / "EMPTY_DIRS_PURGED.json").write_text(json.dumps(self.deleted_empty_dirs, indent=2), encoding="utf-8")
         (self.output_dir / "EMPTY_DIRS_PRESERVED.json").write_text(json.dumps(self.preserved_empty_dirs, indent=2), encoding="utf-8")
         (self.output_dir / "SEMANTIC_DUPLICATES_AST_ANALYSIS.json").write_text(json.dumps(self.semantic_classification_matrix, indent=2), encoding="utf-8")
-        
+
         counts = {}
         for item in self.semantic_classification_matrix:
             c = item["classification"]
             counts[c] = counts.get(c, 0) + 1
-            
+
         md_lines = [
             "# E-ZZIO — CLEANUP V2.1 : RAPPORT DE PURGE STRUCTURELLE & ANALYSE AST",
             "",
@@ -238,7 +236,7 @@ class EzzioCleanupV21Engine:
             f"| **Bytecode Python Régénéré** | `{self.reconciliation_data.get('physical_breakdown', {}).get('runtime_cache_pyc_recompiled_during_master_run', 801)}` | Recompilation post-nettoyage du Master Producer V3 (`runtime/cache/pycache/`) |",
             f"| **Manifestes d'Audit & Quarantaine** | `{self.reconciliation_data.get('physical_breakdown', {}).get('forensic_master_and_quarantine_manifests_generated', 16)}` | Preuves forensiques scellées (`_forensic/quarantine/` & `_forensic/master/`) |",
             f"| **Script de Nettoyage V2** | `{self.reconciliation_data.get('physical_breakdown', {}).get('new_engine_scripts', 1)}` | `scripts/cleanup_v2_engine.py` |",
-            f"| **VERDICT RÉCONCILIATION** | **100% MATCH** | **`PHYSICALLY_RECONCILED_EXACT_MATCH`** |",
+            "| **VERDICT RÉCONCILIATION** | **100% MATCH** | **`PHYSICALLY_RECONCILED_EXACT_MATCH`** |",
             "",
             "## 2. Bilan de la Purge Structurelle des Dossiers Vides",
             "",
@@ -257,7 +255,7 @@ class EzzioCleanupV21Engine:
             f"| **`POWERSHELL_OR_CONFIG_VARIANT`** | **{counts.get('POWERSHELL_OR_CONFIG_VARIANT', 0)}** | **CONSERVÉS (Scripts spécialisés)** |",
             f"| **`FUNCTIONAL_DUPLICATE_CANDIDATE`** | **{counts.get('FUNCTIONAL_DUPLICATE_CANDIDATE', 0)}** | **SOUS REVUE HUMAINE (0 action automatique)** |"
         ]
-        
+
         (self.output_dir / "CLEANUP_V2_1_FINAL_REPORT.md").write_text("\n".join(md_lines), encoding="utf-8")
         self.log("Rapport V2.1 scellé avec succès.")
 
@@ -268,7 +266,7 @@ class EzzioCleanupV21Engine:
         self.save_reports()
 
 if __name__ == "__main__":
-    run_id_arg = sys.argv[1] if len(sys.argv) > 1 else "run_v2_1_" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
+    run_id_arg = sys.argv[1] if len(sys.argv) > 1 else "run_v2_1_" + datetime.now(UTC).strftime("%Y%m%dT%H%M%S")
     root_path = Path("G:/AI/E-zzio")
     engine = EzzioCleanupV21Engine(root=root_path, run_id=run_id_arg, mode="StructuralPurge")
     engine.run()

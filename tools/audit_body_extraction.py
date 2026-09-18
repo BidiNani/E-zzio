@@ -1,22 +1,22 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def extract_function_body(file_path: Path, func_names: List[str]) -> Dict[str, str]:
+def extract_function_body(file_path: Path, func_names: list[str]) -> dict[str, str]:
     if not file_path.exists():
         return {}
-    
+
     try:
         content = file_path.read_text(encoding="utf-8", errors="replace")
         tree = ast.parse(content, filename=str(file_path))
-        
+
         extracted = {}
         for node in ast.walk(tree):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
@@ -64,7 +64,7 @@ def main():
         "writes_performed": 0,
         "runtime_mutations": 0
     }
-    
+
     out_file = PROJECT_ROOT / "tools" / "body_extraction_report.json"
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2)

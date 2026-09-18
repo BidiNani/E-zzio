@@ -1,8 +1,7 @@
-import time
-import subprocess
 import os
+import subprocess
+import time
 from pathlib import Path
-from typing import Optional
 
 import httpx
 
@@ -176,7 +175,7 @@ def model_vault_status():
     }
 
 
-def basic_workflow(prompt: str, negative: str = "", seed: Optional[int] = None, steps: int = 8, width: int = 384, height: int = 384):
+def basic_workflow(prompt: str, negative: str = "", seed: int | None = None, steps: int = 8, width: int = 384, height: int = 384):
     if seed is None:
         seed = int(time.time()) % 2147483647
 
@@ -251,7 +250,7 @@ def basic_workflow(prompt: str, negative: str = "", seed: Optional[int] = None, 
 
 
 def queue_basic_generation(
-    prompt: str, negative: str = "", seed: Optional[int] = None, steps: int = 8, width: int = 384, height: int = 384
+    prompt: str, negative: str = "", seed: int | None = None, steps: int = 8, width: int = 384, height: int = 384
 ):
     status = model_vault_status()
 

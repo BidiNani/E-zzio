@@ -3,16 +3,17 @@ E-ZZIO Sovereign Generator — Document Engine (DOCX & PDF).
 Génère des documents professionnels formatés Word (.docx) et des synthèses documentaires.
 """
 from __future__ import annotations
-import os
+
 import logging
+import os
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any
 
 try:
     import docx
-    from docx.shared import Inches, Pt, RGBColor
-    from docx.enum.text import WD_ALIGN_PARAGRAPH
     from docx.enum.table import WD_TABLE_ALIGNMENT
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+    from docx.shared import Inches, Pt, RGBColor
     DOCX_AVAILABLE = True
 except ImportError:
     DOCX_AVAILABLE = False
@@ -32,9 +33,9 @@ class DocEngine:
         self,
         filename: str,
         title: str,
-        sections: List[Dict[str, Any]],
+        sections: list[dict[str, Any]],
         author: str = "E-ZZIO Autonomous Core"
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Génère un document Word (.docx) élégant avec titres, paragraphes, listes et tableaux.
         sections: [

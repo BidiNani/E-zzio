@@ -1,16 +1,17 @@
-from typing import Any, Dict, List
+from typing import Any
+
+from core.providers.gemini_provider import GeminiProvider
 from core.providers.iresearch_provider import IResearchProvider
 from core.providers.jina_provider import JinaProvider
-from core.providers.tavily_provider import TavilyProvider
-from core.providers.gemini_provider import GeminiProvider
 from core.providers.searxng_provider import SearXNGProvider
+from core.providers.tavily_provider import TavilyProvider
 
 
 class ResearchRouter:
-    def __init__(self, providers: List[IResearchProvider]):
+    def __init__(self, providers: list[IResearchProvider]):
         self.providers = providers
 
-    async def search(self, query: str, mode: str = "FAST", **kwargs: Any) -> Dict[str, Any]:
+    async def search(self, query: str, mode: str = "FAST", **kwargs: Any) -> dict[str, Any]:
         if not self.providers:
             raise RuntimeError("Aucun fournisseur de recherche configuré.")
 
@@ -45,7 +46,7 @@ class ResearchRouter:
     async def search_all(self, query: str, providers, per_source: int = 5,
                          timeout_s: float = 15.0,
                          max_concurrency: int = 3,
-                         **provider_kwargs) -> Dict[str, Any]:
+                         **provider_kwargs) -> dict[str, Any]:
         """Fan-out borné et parallèle : chaque source garde son statut
         (SUCCESS/PARTIAL/FAILED/TIMEOUT). Un échec n'annule pas les autres.
         La méthode search() historique est inchangée."""
@@ -54,7 +55,7 @@ class ResearchRouter:
 
         sem = _aio.Semaphore(max(1, max_concurrency))
 
-        async def _one(provider) -> Dict[str, Any]:
+        async def _one(provider) -> dict[str, Any]:
             name = getattr(provider, "name", type(provider).__name__)
             t0 = _time.perf_counter()
             try:
@@ -64,7 +65,7 @@ class ResearchRouter:
                             provider.search(query, max_results=per_source,
                                             **provider_kwargs),
                             timeout=timeout_s)
-                    except _aio.TimeoutError:
+                    except TimeoutError:
                         return {"source": name, "status": "TIMEOUT",
                                 "latency_ms": int((_time.perf_counter() - t0) * 1000),
                                 "items": []}
@@ -101,18 +102,16 @@ _BREADTH_BUDGET = {
 
 
 async def run_live_research(query: str, providers=None,
-                            memory_hits=None) -> Dict[str, Any]:
+                            memory_hits=None) -> dict[str, Any]:
     """Chaîne live complète : plan → fan-out → normalize → dedup →
     claims → truth gate → assemblage déterministe. Aucune synthèse LLM :
     la réponse ne contient que ce que les sources déclarent + statuts
     explicites. Internal-first : hits mémoire inclus comme MEMORY_DERIVED."""
     import time as _time
+
     from core.capabilities.research_fabric import (
-        Breadth, classify_search, confidence_of, deduplicate, normalize_results,
-        origin_domain, quality_gate,
-    )
-    from core.capabilities.truth_engine import (
-        response_gate, source_results_to_claims,
+        Breadth,
+        classify_search,
     )
 
     t0 = _time.perf_counter()
@@ -125,8 +124,8 @@ async def run_live_research(query: str, providers=None,
                     if breadth.value in ("DEEP", "MAX") else {})
 
     if providers is None:
-        from core.providers.tavily_provider import TavilyProvider
         from core.capabilities.web_provider import WebProvider
+        from core.providers.tavily_provider import TavilyProvider
 
         providers = [TavilyProvider(), _DDGAdapter(WebProvider())]
 
@@ -143,16 +142,22 @@ async def run_live_research(query: str, providers=None,
 
 
 def _finish(query: str, intent, breadth, collected, fanout_sources,
-            memory_hits, t0) -> Dict[str, Any]:
+            memory_hits, t0) -> dict[str, Any]:
     """Normalisation → dedup → claims → gate → assemblage déterministe.
     Partagé par les modes parallèle et adaptatif (une seule autorité)."""
     import time as _time
+
     from core.capabilities.research_fabric import (
-        confidence_of, deduplicate, normalize_results, origin_domain,
+        confidence_of,
+        deduplicate,
+        normalize_results,
+        origin_domain,
         quality_gate,
     )
     from core.capabilities.truth_engine import (
-        response_gate, source_results_to_claims, verify_grounding,
+        response_gate,
+        source_results_to_claims,
+        verify_grounding,
     )
 
     now = _time.time()
@@ -168,11 +173,16 @@ def _finish(query: str, intent, breadth, collected, fanout_sources,
     # numériques opposées → detect_conflict existant (autorité unique).
     # Les claims en conflit avéré sont marqués AVANT le gate.
     from dataclasses import replace as _replace
-    from core.capabilities.semantic_evidence import (
-        EvidenceNode, SemRelation, build_graph, contradiction_stances,
-        evidence_groups, extract_measurements,
-    )
+
     from core.capabilities.research_fabric import detect_conflict
+    from core.capabilities.semantic_evidence import (
+        EvidenceNode,
+        SemRelation,
+        build_graph,
+        contradiction_stances,
+        evidence_groups,
+        extract_measurements,
+    )
     claim_ids = [f"c{i}" for i in range(len(claims))]
     nodes = [EvidenceNode(
         claim_id=cid, text=c.text,
@@ -217,7 +227,7 @@ def _finish(query: str, intent, breadth, collected, fanout_sources,
     sentence_check = {e["claim_id"]: _vsent(e["text"], _ev_ctx, now)[0]
                       for e in _entries}
 
-    by_state: Dict[str, list] = {}
+    by_state: dict[str, list] = {}
     for (claim, _), (_, action, reason) in zip(claims, decisions):
         by_state.setdefault(action.value, []).append((claim, reason))
     kept = by_state.get("KEEP", [])
@@ -298,7 +308,7 @@ class _DDGAdapter:
         self._web = web_provider
 
     async def search(self, query: str, max_results: int = 5,
-                     **_ignored) -> Dict[str, Any]:
+                     **_ignored) -> dict[str, Any]:
         raw = await self._web.search(query, limit=max_results)
         if not isinstance(raw, dict) or not raw.get("ok"):
             raise RuntimeError(str(raw.get("error", "web.search refusé"))
@@ -323,7 +333,7 @@ HIGH_RISK_KEYWORDS = _HIGH_RISK_KEYWORDS
 
 async def run_adaptive_research(query: str, providers=None,
                                 memory_hits=None, synthesize: bool = False,
-                                synthesizer=None) -> Dict[str, Any]:
+                                synthesizer=None) -> dict[str, Any]:
     """Fan-out adaptatif : UNE source → SUFFISANT ? → STOP, sinon source
     suivante. Gain marginal nul → STOP (VoI). Haut risque → toutes les
     origines disponibles. Même _finish que le mode parallèle (0 second
@@ -332,8 +342,12 @@ async def run_adaptive_research(query: str, providers=None,
     synthesize=True ajoute une synthèse LLM ancrée post-vérifiée
     (défaut False : assemblage déterministe, frugalité)."""
     import time as _time
+
     from core.capabilities.research_fabric import (
-        Breadth, classify_search, deduplicate, normalize_results,
+        Breadth,
+        classify_search,
+        deduplicate,
+        normalize_results,
     )
 
     t0 = _time.perf_counter()
@@ -347,8 +361,8 @@ async def run_adaptive_research(query: str, providers=None,
     high_risk = any(k in q.lower() for k in _HIGH_RISK_KEYWORDS)
 
     if providers is None:
-        from core.providers.tavily_provider import TavilyProvider
         from core.capabilities.web_provider import WebProvider
+        from core.providers.tavily_provider import TavilyProvider
 
         providers = [TavilyProvider(), _DDGAdapter(WebProvider())]
     ordered = [p for p in providers if getattr(p, "available", True)]
@@ -423,14 +437,16 @@ _SYNTH_SYSTEM = (
 async def grounded_synthesis(question: str, entries, llm=None,
                              model: str = "hermes3:8b",
                              max_tokens: int = 600,
-                             now: float = 0.0) -> Dict[str, Any]:
+                             now: float = 0.0) -> dict[str, Any]:
     """Synthèse LLM ancrée : contexte = preuves avec états explicites ;
     sortie = post-vérifiée phrase à phrase (verify_response). Le LLM est
     SYNTHESIZER, jamais autorité : tout ajout est REMOVE/BLOCK.
     llm injectable (fakes en tests) ; défaut = OllamaProvider local (0 quota)."""
     import time as _time
+
     from core.capabilities.truth_engine import (
-        build_evidence_context, verify_response,
+        build_evidence_context,
+        verify_response,
     )
 
     t0 = _time.perf_counter()

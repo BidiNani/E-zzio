@@ -1,6 +1,7 @@
 import pytest
+
 from core.security.guardrail import PromptGuard, SecurityViolationError
-from core.security.quota_manager import QuotaManager, QuotaExceededError
+from core.security.quota_manager import QuotaExceededError, QuotaManager
 
 
 def test_prompt_guard_heuristics():

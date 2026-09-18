@@ -1,5 +1,7 @@
-import httpx
 import logging
+
+import httpx
+
 from core.providers.iresearch_provider import IResearchProvider
 
 logger = logging.getLogger("ezzio.providers.searxng")

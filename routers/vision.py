@@ -1,7 +1,7 @@
-from fastapi import APIRouter, UploadFile, File, Form, HTTPException
+from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 
 from core.schemas import VisionPathRequest
-from core.vision_bridge import status, analyze_image_file, save_upload_bytes
+from core.vision_bridge import analyze_image_file, save_upload_bytes, status
 
 router = APIRouter(prefix="/vision", tags=["vision"])
 

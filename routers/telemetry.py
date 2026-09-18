@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import asyncio
-import json
 
 from fastapi import APIRouter, Query
 from fastapi.responses import HTMLResponse, StreamingResponse
@@ -57,7 +56,7 @@ async def telemetry_stream(trace_id: str = Query(default="")):
                 try:
                     ev = await asyncio.wait_for(q.get(), timeout=25.0)
                     yield f"data: {ev.model_dump_json()}\n\n"
-                except asyncio.TimeoutError:
+                except TimeoutError:
                     yield ": ping\n\n"
         finally:
             tracer.unsubscribe(q)

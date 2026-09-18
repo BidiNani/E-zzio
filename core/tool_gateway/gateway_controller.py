@@ -6,8 +6,8 @@ Passe-plat sécurisé pour toutes les interactions externes. Intercepte les appe
 
 import json
 import uuid
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 MANIFEST_FILE = ROOT_DIR / "runtime" / "tools" / "manifest.json"
@@ -46,7 +46,7 @@ class ToolGatewayController:
     def _log_action(self, action_id: str, tool_name: str, status: str, risk: str, payload: dict = None, intent: str = "") -> dict:
         record = {
             "action_id": action_id,
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "tool": tool_name,
             "intent": intent,
             "risk_level": risk,

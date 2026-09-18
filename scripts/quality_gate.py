@@ -1,5 +1,5 @@
-import sys
 import py_compile
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -27,6 +27,7 @@ def run_gate():
 
     print("[ÉTAPE 2/3] Validation SQLite WAL & FTS5...")
     import asyncio
+
     from core.memory.unified_gateway import UnifiedMemoryGateway
 
     async def test_mem():

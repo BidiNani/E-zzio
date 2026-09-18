@@ -9,8 +9,7 @@ from __future__ import annotations
 
 import logging
 import os
-import re
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 logger = logging.getLogger("ezzio.multi_agent")
 
@@ -26,7 +25,7 @@ DOMAIN_KEYWORDS = {
 AUTO_TRIGGER_ENV = "EZZIO_MULTI_AGENT"
 
 
-def analyze_domains(request: str) -> List[str]:
+def analyze_domains(request: str) -> list[str]:
     """Découpe une requête en domaines (lexical déterministe, 0 token)."""
     text = (request or "").lower()
     found = [d for d, kws in DOMAIN_KEYWORDS.items()
@@ -58,7 +57,7 @@ class MultiAgentFlow:
         self.federation = federation
         self.blackboard = blackboard
 
-    async def run(self, request: str, skeleton: str = "") -> Dict[str, Any]:
+    async def run(self, request: str, skeleton: str = "") -> dict[str, Any]:
         from core.agents.orchestrator import DeliberationOrchestrator
         domains = analyze_domains(request)
         orch = DeliberationOrchestrator(federation=self.federation,

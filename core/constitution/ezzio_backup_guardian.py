@@ -4,13 +4,13 @@ Sélectionne les organes vitaux, valide leur intégrité cryptographique,
 génère un manifeste SHA-256 et exporte l'archive vers un stockage externe sécurisé.
 """
 
-import sys
-import json
 import hashlib
+import json
 import logging
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -36,7 +36,7 @@ class EzzioBackupGuardian:
         self.gateway = EcolUniversalGateway()
         self.gateway.register_gateway_action("BACKUP_GUARDIAN_ARCHIVE")
 
-    def validate_organism_integrity(self) -> Dict[str, str]:
+    def validate_organism_integrity(self) -> dict[str, str]:
         """
         Vérifie l'existence et l'intégrité des organes critiques avant d'autoriser l'archivage.
         """
@@ -56,14 +56,14 @@ class EzzioBackupGuardian:
 
         return {"genome_hash": genome_hash, "constitution_hash": framework_hash}
 
-    def execute_secure_backup(self) -> Dict[str, Any]:
+    def execute_secure_backup(self) -> dict[str, Any]:
         """
         Exécute le backup sécurisé des organes vitaux vers la destination séparée sous le contrôle d'ECOL.
         """
         # 1. Validation préalable
         hashes = self.validate_organism_integrity()
 
-        timestamp_str = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+        timestamp_str = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
         backup_id = f"EZZIO_BACKUP_{timestamp_str}"
         backup_target_dir = self.safe_destination / backup_id
         backup_target_dir.mkdir(parents=True, exist_ok=True)
@@ -106,7 +106,7 @@ class EzzioBackupGuardian:
         # 3. Création du manifeste cryptographique global
         manifest = {
             "backup_id": backup_id,
-            "created_utc": datetime.now(timezone.utc).isoformat(),
+            "created_utc": datetime.now(UTC).isoformat(),
             "files_count": files_captured_count,
             "genome_hash": hashes["genome_hash"],
             "constitution_hash": hashes["constitution_hash"],

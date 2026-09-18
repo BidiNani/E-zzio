@@ -6,6 +6,7 @@ et mesure la convergence avec le manifeste founding_kernel.json.
 
 import json
 import re
+from datetime import UTC
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
@@ -17,7 +18,7 @@ OUTPUT_REPORT = ROOT_DIR / "runtime" / "audit" / "system" / "runtime_convergence
 def get_module_imports(file_path: Path) -> set:
     imports = set()
     try:
-        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+        with open(file_path, encoding="utf-8", errors="ignore") as f:
             for line in f:
                 line_stripped = line.strip()
                 if match := re.match(r"^(?:import|from)\s+([a-zA-Z0-9_\.]+)", line_stripped):
@@ -70,7 +71,7 @@ def run_convergence_test():
         print("[!] Erreur : Manifeste founding_kernel.json introuvable. Exécutez V7.59.8 d'abord.")
         return
 
-    with open(KERNEL_REPORT, "r", encoding="utf-8") as f:
+    with open(KERNEL_REPORT, encoding="utf-8") as f:
         kernel_data = json.load(f)
 
     kernel_modules = {item["module"] for item in kernel_data["full_kernel_registry"]}
@@ -84,7 +85,7 @@ def run_convergence_test():
     convergence_rate = round((len(converged) / len(kernel_modules)) * 100, 2) if kernel_modules else 0.0
 
     report = {
-        "timestamp": datetime.now(timezone.utc).isoformat() if "datetime" in globals() else "2026-08-12",
+        "timestamp": datetime.now(UTC).isoformat() if "datetime" in globals() else "2026-08-12",
         "total_kernel_modules": len(kernel_modules),
         "total_active_boot_modules": len(active_runtime_modules),
         "converged_modules_count": len(converged),
@@ -111,6 +112,6 @@ def run_convergence_test():
 
 
 if __name__ == "__main__":
-    from datetime import datetime, timezone
+    from datetime import datetime
 
     run_convergence_test()

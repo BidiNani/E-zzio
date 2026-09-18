@@ -1,13 +1,12 @@
 """
 tools/build_golden_archive_v9_3.py - Generation de l'archive Golden Source et du Manifest V9.3.
 """
-import os
-import zipfile
 import hashlib
 import json
-import subprocess
+import os
+import zipfile
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT = Path("G:/AI/E-zzio")
 RELEASES_DIR = ROOT / "dist/releases"
@@ -84,7 +83,7 @@ print(f"Archive generated: {archive_size} bytes, SHA-256: {archive_sha}")
 manifest = {
     "release": "E-ZZIO-V9.3-GOLDEN",
     "version": "9.3.0",
-    "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+    "timestamp_utc": datetime.now(UTC).isoformat(),
     "golden_baseline": "ezzio-v9.2-golden",
     "branch": "release/v9.3",
     "frozen_core": {

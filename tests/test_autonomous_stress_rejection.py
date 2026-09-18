@@ -7,17 +7,19 @@ Vérifie de manière concrète que le pipeline DISCOVER -> VERIFY -> SANDBOX rej
 3. Un composant défaillant lors de ses benchmarks en sandbox via CapabilityFactory.rollback_capability().
 """
 
-import pytest
 from pathlib import Path
-from core.capabilities.trust import TrustLevel, CapabilityStatus, CapabilityTrustGuard
+
+import pytest
+
 from core.capabilities.discovery import (
     CapabilityDiscoveryEngine,
     CapabilityProposal,
     LicenseClass,
-    SourceTrustLevel
+    SourceTrustLevel,
 )
 from core.capabilities.factory import CapabilityFactory
-from core.capabilities.registry import capability_registry, QualificationStatus
+from core.capabilities.registry import QualificationStatus, capability_registry
+from core.capabilities.trust import CapabilityStatus, CapabilityTrustGuard, TrustLevel
 
 
 @pytest.fixture

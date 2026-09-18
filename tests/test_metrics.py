@@ -171,7 +171,6 @@ def test_live_ledger_aggregation():
     Ce test est intégration : il dépend de l'état du ledger.
     S'il n'y a pas assez d'événements, on skip (comportement légitime).
     """
-    import pytest
     from core.security.audit_ledger import AuditLedger
     t0 = time.perf_counter()
     events = AuditLedger().query_events(limit=3000)

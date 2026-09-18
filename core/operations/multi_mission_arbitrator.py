@@ -7,22 +7,18 @@ S'appuie directement sur E-ZZIO Master et AutonomousE2EEngine (V10.9) sans dupli
 from __future__ import annotations
 
 import logging
-import uuid
 import time
+import uuid
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any
 
 from core.agent.autonomous_e2e_engine import (
-    autonomous_e2e_engine,
     AutonomousMissionContract,
-    ExecutionCheckpoint,
     MissionState,
-    ResultVerificationEngine,
+    autonomous_e2e_engine,
 )
-from core.agent.self_awareness import self_knowledge
 from core.world.world_model import world_model
-from core.authority.user_preservation import user_preservation_gate
 
 logger = logging.getLogger("ezzio.operations.multi_mission_arbitrator")
 
@@ -64,9 +60,9 @@ class DeadlineStatus(str, Enum):
 @dataclass
 class ManagedWorker:
     worker_id: str
-    capabilities: List[str]
+    capabilities: list[str]
     status: ResourceStatus = ResourceStatus.AVAILABLE
-    current_mission_id: Optional[str] = None
+    current_mission_id: str | None = None
     last_heartbeat: float = field(default_factory=time.time)
     fail_count: int = 0
 
@@ -75,8 +71,8 @@ class ManagedWorker:
 class ArbitrationDecision:
     decision_id: str
     selected_mission_id: str
-    deferred_mission_ids: List[str]
-    preempted_mission_ids: List[str]
+    deferred_mission_ids: list[str]
+    preempted_mission_ids: list[str]
     reason: str
     priority_score: float
     timestamp: float = field(default_factory=time.time)
@@ -91,9 +87,9 @@ class ManagedMission:
     wait_time_seconds: float = 0.0
     dynamic_priority_score: float = 0.0
     preemptible: bool = True
-    assigned_worker_ids: List[str] = field(default_factory=list)
-    parent_mission_id: Optional[str] = None
-    child_mission_ids: List[str] = field(default_factory=list)
+    assigned_worker_ids: list[str] = field(default_factory=list)
+    parent_mission_id: str | None = None
+    child_mission_ids: list[str] = field(default_factory=list)
     created_at: float = field(default_factory=time.time)
 
 
@@ -101,10 +97,10 @@ class MultiMissionArbitrator:
     """Arbitre d'opérations multi-missions et optimiseur de ressources pour E-ZZIO V10.10."""
 
     def __init__(self, max_concurrent_missions: int = 3, total_worker_slots: int = 4) -> None:
-        self.managed_missions: Dict[str, ManagedMission] = {}
-        self.workers: Dict[str, ManagedWorker] = {}
-        self.arbitration_history: List[ArbitrationDecision] = []
-        self.event_log: List[Dict[str, Any]] = []
+        self.managed_missions: dict[str, ManagedMission] = {}
+        self.workers: dict[str, ManagedWorker] = {}
+        self.arbitration_history: list[ArbitrationDecision] = []
+        self.event_log: list[dict[str, Any]] = []
 
         self.max_concurrent_missions: int = max_concurrent_missions
         self.total_worker_slots: int = total_worker_slots
@@ -129,7 +125,7 @@ class MultiMissionArbitrator:
         contract: AutonomousMissionContract,
         priority: MissionPriority = MissionPriority.NORMAL,
         preemptible: bool = True,
-        parent_mission_id: Optional[str] = None,
+        parent_mission_id: str | None = None,
     ) -> ManagedMission:
         """Enregistre une nouvelle mission dans le gestionnaire multi-missions."""
         mm = ManagedMission(
@@ -180,11 +176,11 @@ class MultiMissionArbitrator:
         mm.dynamic_priority_score = round(score, 2)
         return mm.dynamic_priority_score
 
-    def detect_multi_mission_deadlock(self) -> List[str]:
+    def detect_multi_mission_deadlock(self) -> list[str]:
         """Détecte s'il existe une dépendance circulaire ou un blocage de ressources entre missions."""
-        deadlocked: List[str] = []
-        visited: Set[str] = set()
-        rec_stack: Set[str] = set()
+        deadlocked: list[str] = []
+        visited: set[str] = set()
+        rec_stack: set[str] = set()
 
         def dfs(m_id: str) -> bool:
             visited.add(m_id)
@@ -251,7 +247,7 @@ class MultiMissionArbitrator:
 
         top_candidate = pending[0]
         deferred = [m.contract.mission_id for m in pending[1:]]
-        preempted: List[str] = []
+        preempted: list[str] = []
 
         # Check resource availability
         available_workers = [w for w in self.workers.values() if w.status == ResourceStatus.AVAILABLE]
@@ -344,7 +340,7 @@ class MultiMissionArbitrator:
         logger.info(f"[MULTIMISSION] Mission {mission_id} reprise depuis checkpoint {cp.checkpoint_id}")
         return True
 
-    def handle_worker_failure(self, worker_id: str) -> Optional[str]:
+    def handle_worker_failure(self, worker_id: str) -> str | None:
         """Gère la défaillance d'un worker en libérant la mission et en la réassignant."""
         worker = self.workers.get(worker_id)
         if not worker:
@@ -400,7 +396,7 @@ class MultiMissionArbitrator:
         logger.info(f"[MULTIMISSION] Mission {mission_id} annulée (Propagation enfant: {len(mm.child_mission_ids)})")
         return True
 
-    def execute_managed_mission(self, mission_id: str) -> Dict[str, Any]:
+    def execute_managed_mission(self, mission_id: str) -> dict[str, Any]:
         """Exécute de façon autonome une mission gérée sous contrôle de l'arbitre multi-missions."""
         mm = self.managed_missions.get(mission_id)
         if not mm:
@@ -428,7 +424,7 @@ class MultiMissionArbitrator:
 
         return res
 
-    def _emit_event(self, event_type: str, payload: Dict[str, Any]) -> None:
+    def _emit_event(self, event_type: str, payload: dict[str, Any]) -> None:
         """Émet un événement auditable sur le bus opérationnel."""
         event = {
             "event_id": f"evt_{uuid.uuid4().hex[:6]}",

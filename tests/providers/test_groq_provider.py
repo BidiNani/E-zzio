@@ -1,7 +1,10 @@
-import pytest
 import json
+from unittest.mock import AsyncMock, MagicMock, patch
+
 import httpx
-from unittest.mock import patch, AsyncMock, MagicMock
+import pytest
+
+from core.cognition.providers.key_pool import SovereignKeyPool
 from core.providers.base_provider import (
     BaseProvider,
     CostClass,
@@ -9,7 +12,6 @@ from core.providers.base_provider import (
     ProviderErrorClass,
     ProviderResponse,
 )
-from core.cognition.providers.key_pool import SovereignKeyPool
 from core.providers.groq_provider import GroqProvider
 
 

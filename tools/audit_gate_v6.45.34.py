@@ -1,9 +1,10 @@
 from __future__ import annotations
+
 import ast
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 EXCLUDED_DIRS = {"audit", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tests"}
@@ -13,9 +14,9 @@ IDENTITY_KEYWORDS = {"forge", "vault", "identity", "constitution", "organism_ide
 class IdentityAndKernelVisitor(ast.NodeVisitor):
     def __init__(self, rel_path: str):
         self.rel_path = rel_path
-        self.kernel_inits: List[Dict[str, Any]] = []
-        self.interface_inits: List[Dict[str, Any]] = []
-        self.identity_references: List[Dict[str, Any]] = []
+        self.kernel_inits: list[dict[str, Any]] = []
+        self.interface_inits: list[dict[str, Any]] = []
+        self.identity_references: list[dict[str, Any]] = []
 
     def visit_ClassDef(self, node: ast.ClassDef):
         if node.name in {"OrganismKernel", "EzzioInterface"}:
@@ -25,7 +26,7 @@ class IdentityAndKernelVisitor(ast.NodeVisitor):
                     for child in ast.walk(sub):
                         if isinstance(child, ast.Call):
                             inits.append(ast.unparse(child))
-                    
+
                     target_list = self.kernel_inits if node.name == "OrganismKernel" else self.interface_inits
                     target_list.append({
                         "file": self.rel_path,
@@ -65,7 +66,7 @@ def main():
     print(f"[RACINE] {PROJECT_ROOT}\n")
 
     py_files = [p for p in PROJECT_ROOT.glob("**/*.py") if not (set(p.parts) & EXCLUDED_DIRS)]
-    
+
     all_kernels = []
     all_interfaces = []
     all_identities = []

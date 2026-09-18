@@ -4,14 +4,13 @@ Isolation du drill dans un bac à sable pour éviter le déclenchement
 du Fail-Closed anti-sabotage avec le Ledger de production.
 """
 
-import os
 import json
 import logging
-import threading
+import os
 import shutil
+import threading
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Tuple
 
 logger = logging.getLogger(__name__)
 
@@ -60,7 +59,7 @@ class SecretSovereigntyLayer:
                     "keys": {
                         initial_key_id: {
                             "status": "ACTIVE",
-                            "created_at": datetime.now(timezone.utc).isoformat(),
+                            "created_at": datetime.now(UTC).isoformat(),
                             "algorithm": "HMAC-SHA256",
                         }
                     },
@@ -76,7 +75,7 @@ class SecretSovereigntyLayer:
             except Exception as e:
                 raise SecretSovereigntyError(f"FAIL CLOSED : Corruption structurelle du coffre : {e}")
 
-    def get_active_key_material(self) -> Tuple[str, bytes]:
+    def get_active_key_material(self) -> tuple[str, bytes]:
         with self._lock:
             vault = self.load_vault()
             active_id = vault.get("active_key_id")
@@ -119,7 +118,7 @@ class SecretSovereigntyLayer:
 
             vault["keys"][new_key_id] = {
                 "status": "ACTIVE",
-                "created_at": datetime.now(timezone.utc).isoformat(),
+                "created_at": datetime.now(UTC).isoformat(),
                 "algorithm": "HMAC-SHA256",
             }
             vault["active_key_id"] = new_key_id

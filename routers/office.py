@@ -6,20 +6,18 @@ leurs sous-agents, les tâches en cours, le flux d'événements et l'arbitrage H
 from __future__ import annotations
 
 import os
-import time
-from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
+from datetime import UTC, datetime
+from typing import Any
+
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
+from core.agents.registry import AgentStatus, agent_registry
 from core.governance.approval import (
-    ApprovalManager,
-    ApprovalStatus,
     approval_manager,
 )
-from core.tasks import manager as task_manager_mod
 from core.security.audit_ledger import audit_ledger
-from core.agents.registry import agent_registry, AgentStatus
+from core.tasks import manager as task_manager_mod
 
 router = APIRouter(tags=["AI Office"])
 
@@ -31,37 +29,37 @@ class AgentVisualState(BaseModel):
     role: str
     room: str  # "command_center", "dev_lab", "research_room", "test_lab", "security_vault", "docs_room", "devops_dock", "memory_core"
     status: str  # "IDLE", "WORKING", "WAITING_APPROVAL", "ERROR", "DONE"
-    task_id: Optional[str] = None
+    task_id: str | None = None
     current_action: str
     progress: int = 0
     model: str
     provider: str
     avatar: str  # identifiant de sprite pixel-art
     is_master: bool = False
-    parent_id: Optional[str] = None
-    tools: List[str] = Field(default_factory=list)
+    parent_id: str | None = None
+    tools: list[str] = Field(default_factory=list)
     last_event: str = ""
-    bubble: Optional[str] = None  # Bulle contextuelle vivante
-    collaborator_id: Optional[str] = None  # Agent partenaire de collaboration
-    code_activity: Optional[Dict[str, Any]] = None  # Info repo, branch, last test/file
-    terminal_logs: List[str] = Field(default_factory=list)  # Logs de terminal réels
+    bubble: str | None = None  # Bulle contextuelle vivante
+    collaborator_id: str | None = None  # Agent partenaire de collaboration
+    code_activity: dict[str, Any] | None = None  # Info repo, branch, last test/file
+    terminal_logs: list[str] = Field(default_factory=list)  # Logs de terminal réels
     # 2.5D Spatial Simulation Fields (V9.4 Living Office)
     x: float = 0.0
     y: float = 0.0
-    target_room: Optional[str] = None
-    target_x: Optional[float] = None
-    target_y: Optional[float] = None
+    target_room: str | None = None
+    target_x: float | None = None
+    target_y: float | None = None
     heading: str = "DOWN"  # "UP", "DOWN", "LEFT", "RIGHT"
     animation_state: str = "IDLE"  # "IDLE", "WALK", "WORK", "WAIT_APPROVAL", "ERROR", "DONE"
-    updated_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    updated_at: str = Field(default_factory=lambda: datetime.now(UTC).isoformat())
 
 
 class OfficeStateResponse(BaseModel):
     ok: bool = True
     master_authority: str = "E-ZZIO V9.0 SOVEREIGN MASTER"
-    summary: Dict[str, Any]
-    rooms: List[str]
-    agents: List[AgentVisualState]
+    summary: dict[str, Any]
+    rooms: list[str]
+    agents: list[AgentVisualState]
     pending_approvals_count: int
     active_tasks_count: int
     timestamp: str
@@ -87,7 +85,7 @@ async def get_office_state():
         pass
 
     # Agents réels du système souverain avec métadonnées vivantes
-    agents: List[AgentVisualState] = [
+    agents: list[AgentVisualState] = [
         # 1. 👑 E-ZZIO Master Governor
         AgentVisualState(
             agent_id="master_ezzio",
@@ -453,13 +451,13 @@ async def get_office_state():
         agents=agents,
         pending_approvals_count=len(pending_approvals),
         active_tasks_count=len(active_tasks),
-        timestamp=datetime.now(timezone.utc).isoformat(),
+        timestamp=datetime.now(UTC).isoformat(),
     )
 
 
 class OfficeLiveEventsResponse(BaseModel):
     ok: bool = True
-    events: List[Dict[str, Any]]
+    events: list[dict[str, Any]]
     total: int
 
 
@@ -477,7 +475,7 @@ async def get_office_live_events():
             cur = conn.execute("SELECT timestamp, actor, action, status FROM audit_trail ORDER BY id DESC LIMIT 8")
             for r in cur.fetchall():
                 ts, actor, action, status = r
-                t_str = datetime.fromtimestamp(ts, tz=timezone.utc).strftime("%H:%M:%S")
+                t_str = datetime.fromtimestamp(ts, tz=UTC).strftime("%H:%M:%S")
                 events.append({
                     "time": t_str,
                     "actor": actor,
@@ -524,7 +522,7 @@ class RoomDefinition(BaseModel):
     h: int
     door: TileCoord
     desk: TileCoord
-    subdesk: Optional[TileCoord] = None
+    subdesk: TileCoord | None = None
     color: str
     icon: str
     description: str
@@ -534,7 +532,7 @@ class OfficeMapResponse(BaseModel):
     grid_width: int = 36
     grid_height: int = 24
     tile_size: int = 28
-    rooms: Dict[str, RoomDefinition]
+    rooms: dict[str, RoomDefinition]
 
 
 CANONICAL_OFFICE_MAP = {

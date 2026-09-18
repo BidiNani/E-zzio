@@ -4,8 +4,8 @@ Audite rétroactivement l'intégrité de la chaîne d'archives pour détecter
 la moindre altération historique (tampering) dans les blocs scellés.
 """
 
-import json
 import hashlib
+import json
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
@@ -60,9 +60,7 @@ class ArchiveLineageValidator:
             # 3. Recalcul et vérification de l'archive_root_hash
             first_rec = json.loads(lines[0])
             last_rec = json.loads(lines[-1])
-            root_payload = f"{recalculated_content_hash}:{expected_prev_root}:{first_rec['sequence']}:{last_rec['sequence']}".encode(
-                "utf-8"
-            )
+            root_payload = f"{recalculated_content_hash}:{expected_prev_root}:{first_rec['sequence']}:{last_rec['sequence']}".encode()
             recalculated_root_hash = hashlib.sha256(root_payload).hexdigest()
 
             if recalculated_root_hash != meta.get("archive_root_hash"):

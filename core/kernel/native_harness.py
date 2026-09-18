@@ -8,17 +8,18 @@ Directly integrated with the microkernel primitives:
 - ToolRegistry (primitive tool execution)
 """
 from __future__ import annotations
+
+import logging
 import time
 import uuid
-import logging
-from enum import Enum
 from dataclasses import dataclass, field
-from typing import Dict, Any, Optional, List, Set, Tuple
+from enum import Enum
+from typing import Any
 
+from core.agent.agent_guard import AgentPolicyGuard
 from core.cognition.model_router import ModelRouter
 from core.memory.instance import memory_gateway
 from core.security.audit_ledger import AuditLedger
-from core.agent.agent_guard import AgentPolicyGuard
 from core.tools.registry import ToolRegistry
 
 logger = logging.getLogger("ezzio.harness")
@@ -49,7 +50,7 @@ class InvalidTransitionError(Exception):
 
 
 # Explicit FSM transition table
-LEGAL_TRANSITIONS: Dict[HarnessState, Set[HarnessState]] = {
+LEGAL_TRANSITIONS: dict[HarnessState, set[HarnessState]] = {
     HarnessState.INITIALIZING: {HarnessState.PERCEIVING, HarnessState.TERMINATED},
     HarnessState.PERCEIVING: {HarnessState.THINKING, HarnessState.TERMINATED},
     HarnessState.THINKING: {HarnessState.VALIDATING, HarnessState.TERMINATED},
@@ -70,8 +71,8 @@ class TaskSession:
     max_turns: int = 10
     heal_attempts: int = 0
     max_heal_attempts: int = 3
-    termination_reason: Optional[TerminationReason] = None
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    termination_reason: TerminationReason | None = None
+    metadata: dict[str, Any] = field(default_factory=dict)
 
 
 class NativeHarness:
@@ -82,10 +83,10 @@ class NativeHarness:
 
     def __init__(
         self,
-        router: Optional[ModelRouter] = None,
-        policy_guard: Optional[AgentPolicyGuard] = None,
-        audit_ledger: Optional[AuditLedger] = None,
-        tool_registry: Optional[ToolRegistry] = None,
+        router: ModelRouter | None = None,
+        policy_guard: AgentPolicyGuard | None = None,
+        audit_ledger: AuditLedger | None = None,
+        tool_registry: ToolRegistry | None = None,
         workspace_root: str = r"G:\AI\E-zzio"
     ) -> None:
         self.router = router or ModelRouter()
@@ -98,7 +99,7 @@ class NativeHarness:
         self,
         session: TaskSession,
         target_state: HarnessState,
-        metadata: Optional[Dict[str, Any]] = None
+        metadata: dict[str, Any] | None = None
     ) -> None:
         """Applique une transition FSM stricte et enregistre l'événement dans AuditLedger."""
         allowed = LEGAL_TRANSITIONS.get(session.current_state, set())
@@ -121,7 +122,7 @@ class NativeHarness:
         prev_state: HarnessState,
         new_state: HarnessState,
         status: str = "SUCCESS",
-        metadata: Optional[Dict[str, Any]] = None
+        metadata: dict[str, Any] | None = None
     ) -> None:
         payload = {
             "session_id": session.session_id,
@@ -143,7 +144,7 @@ class NativeHarness:
         except Exception as exc:
             logger.warning("[HARNESS AUDIT FAIL] %s", exc)
 
-    def sanitize_error(self, err: Exception, correlation_id: str) -> Dict[str, Any]:
+    def sanitize_error(self, err: Exception, correlation_id: str) -> dict[str, Any]:
         """Convertit une exception en structure sécurisée sans fuite de secrets."""
         raw_msg = str(err)
         safe_msg = raw_msg
@@ -167,7 +168,7 @@ class NativeHarness:
         max_turns: int = 10,
         max_heal_attempts: int = 3,
         **kwargs: Any
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Exécute le cycle de vie d'une tâche via la FSM Native Harness."""
         if not session_id:
             session_id = f"task-session-{uuid.uuid4().hex[:8]}"
@@ -196,7 +197,7 @@ class NativeHarness:
 
             # 2. PERCEIVING -> THINKING
             self.transition_to(session, HarnessState.THINKING)
-            
+
             # Select engine via canonical ModelRouter
             routing = self.router.select_engine(
                 task_type="general",
@@ -211,7 +212,7 @@ class NativeHarness:
             # Policy Guard evaluation
             tool_name = kwargs.get("tool_name")
             tool_args = kwargs.get("tool_args", {})
-            
+
             if tool_name:
                 allowed, reason = self.policy_guard.evaluate_intent(tool_name, tool_args)
                 if not allowed:

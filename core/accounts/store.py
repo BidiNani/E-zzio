@@ -13,9 +13,9 @@ import hashlib
 import json
 import logging
 import os
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 try:
     from cryptography.fernet import Fernet
@@ -29,7 +29,7 @@ _STORE_DIR = _ROOT / "runtime" / "accounts"
 _STORE_FILE = _STORE_DIR / "accounts.enc"
 
 
-def _load_master_secret() -> Optional[str]:
+def _load_master_secret() -> str | None:
     """Lit EZZIO_GATEWAY_SECRET depuis secrets/.env ou l'environnement."""
     env_path = _ROOT / "secrets" / ".env"
     if env_path.exists():
@@ -46,7 +46,7 @@ def _load_master_secret() -> Optional[str]:
     return os.environ.get("EZZIO_GATEWAY_SECRET")
 
 
-def _derive_fernet() -> "Fernet":
+def _derive_fernet() -> Fernet:
     """Dérive une clé Fernet 32-bytes URL-safe à partir du secret maître."""
     if Fernet is None:
         raise RuntimeError(
@@ -67,7 +67,7 @@ def _ensure_dir() -> None:
     _STORE_DIR.mkdir(parents=True, exist_ok=True)
 
 
-def _read_all() -> Dict[str, Any]:
+def _read_all() -> dict[str, Any]:
     """Lit l'intégralité du store. Retourne {} si vide."""
     if not _STORE_FILE.exists():
         return {}
@@ -84,7 +84,7 @@ def _read_all() -> Dict[str, Any]:
         return {}
 
 
-def _write_all(data: Dict[str, Any]) -> None:
+def _write_all(data: dict[str, Any]) -> None:
     """Écrit le store complet, chiffré."""
     _ensure_dir()
     cipher = _derive_fernet()
@@ -97,10 +97,10 @@ def _write_all(data: Dict[str, Any]) -> None:
 # API publique
 # ---------------------------------------------------------------------------
 
-def list_accounts() -> List[Dict[str, Any]]:
+def list_accounts() -> list[dict[str, Any]]:
     """Retourne la liste des comptes connectés (sans exposer les tokens)."""
     data = _read_all()
-    out: List[Dict[str, Any]] = []
+    out: list[dict[str, Any]] = []
     for provider, entry in data.items():
         if not isinstance(entry, dict):
             continue
@@ -116,7 +116,7 @@ def list_accounts() -> List[Dict[str, Any]]:
     return out
 
 
-def get_account(provider: str) -> Optional[Dict[str, Any]]:
+def get_account(provider: str) -> dict[str, Any] | None:
     """Retourne l'entrée brute (avec tokens) pour un provider."""
     data = _read_all()
     entry = data.get(provider)
@@ -127,23 +127,23 @@ def save_account(
     provider: str,
     *,
     access_token: str,
-    refresh_token: Optional[str] = None,
-    expires_in: Optional[int] = None,
-    scopes: Optional[List[str]] = None,
-    account_id: Optional[str] = None,
-    display_name: Optional[str] = None,
-    email: Optional[str] = None,
-    extra: Optional[Dict[str, Any]] = None,
-) -> Dict[str, Any]:
+    refresh_token: str | None = None,
+    expires_in: int | None = None,
+    scopes: list[str] | None = None,
+    account_id: str | None = None,
+    display_name: str | None = None,
+    email: str | None = None,
+    extra: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     """Enregistre (ou met à jour) un compte connecté."""
     data = _read_all()
-    now = datetime.now(timezone.utc).isoformat()
+    now = datetime.now(UTC).isoformat()
     expires_at = None
     if expires_in:
         from datetime import timedelta
-        expires_at = (datetime.now(timezone.utc) + timedelta(seconds=int(expires_in))).isoformat()
+        expires_at = (datetime.now(UTC) + timedelta(seconds=int(expires_in))).isoformat()
 
-    entry: Dict[str, Any] = {
+    entry: dict[str, Any] = {
         "provider": provider,
         "access_token": access_token,
         "refresh_token": refresh_token,

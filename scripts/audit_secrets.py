@@ -18,10 +18,10 @@ EXCLUDED_DIRS = {
 def audit_secrets() -> dict:
     findings = []
     scanned_files = 0
-    
+
     for root, dirs, files in os.walk(ROOT):
         dirs[:] = [d for d in dirs if d not in EXCLUDED_DIRS]
-        
+
         for file in files:
             ext = os.path.splitext(file)[1].lower()
             if ext in {".py", ".ps1", ".json", ".yaml", ".yml", ".md"}:

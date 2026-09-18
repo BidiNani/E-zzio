@@ -1,17 +1,20 @@
-import pytest
 import os
+
+import pytest
+
 from core.decision_router import DecisionRouter, SearchMode
-from core.providers.tavily_provider import TavilyProvider
+from core.providers.gemini_provider import GeminiProvider
 from core.providers.jina_provider import JinaProvider
 from core.providers.searxng_provider import SearxngProvider
-from core.providers.gemini_provider import GeminiProvider
+from core.providers.tavily_provider import TavilyProvider
+
 
 @pytest.mark.asyncio
 async def test_research_operational_router_instantiation_and_modes():
     p_tavily = TavilyProvider()
     p_jina = JinaProvider()
     p_searxng = SearxngProvider()
-    
+
     router = DecisionRouter([p_tavily, p_jina, p_searxng])
     assert router is not None
     assert SearchMode.FAST.value == "fast"
@@ -37,10 +40,10 @@ async def test_research_operational_provenance_contract():
             "timestamp": 1724342400
         }
     })
-    
+
     router = DecisionRouter([mock_tavily])
     res = await router.search("architecture souveraine", mode=SearchMode.FAST)
-    
+
     assert res["provider"] == "tavily"
     assert "data" in res
     assert "results" in res["data"]

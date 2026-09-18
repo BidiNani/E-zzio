@@ -9,9 +9,8 @@ from __future__ import annotations
 import logging
 import threading
 import time
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
-from typing import Dict, List, Optional, Tuple
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +36,7 @@ class KeySlot:
     failure_count: int = 0
     success_count: int = 0
     last_used_timestamp: float = 0.0
-    last_error_code: Optional[int] = None
+    last_error_code: int | None = None
 
     @classmethod
     def create(cls, slot_id: str, raw_key: str) -> KeySlot:
@@ -47,9 +46,9 @@ class KeySlot:
 
 
 class SovereignKeyPool:
-    def __init__(self, provider_name: str, raw_keys: List[str]):
+    def __init__(self, provider_name: str, raw_keys: list[str]):
         self.provider_name = provider_name
-        self.slots: List[KeySlot] = [
+        self.slots: list[KeySlot] = [
             KeySlot.create(slot_id=f"{provider_name}-key-{i+1:02d}", raw_key=k)
             for i, k in enumerate(raw_keys)
             if k and k.strip()
@@ -57,7 +56,7 @@ class SovereignKeyPool:
         self.current_index = 0
         self._lock = threading.Lock()
 
-    def get_next_key(self) -> Tuple[Optional[int], Optional[str], Optional[str]]:
+    def get_next_key(self) -> tuple[int | None, str | None, str | None]:
         """
         Thread-safe retrieval of next available key.
         Returns (slot_index, raw_secret, masked_key) or (None, None, None) if all exhausted.
@@ -125,7 +124,7 @@ class SovereignKeyPool:
                 slot.success_count += 1
                 slot.status = KeyStatus.AVAILABLE
 
-    def export_state(self) -> Dict[str, Any]:
+    def export_state(self) -> dict[str, Any]:
         """Exports pool state without leaking raw secrets for persistent recovery."""
         with self._lock:
             return {
@@ -145,7 +144,7 @@ class SovereignKeyPool:
                 ]
             }
 
-    def restore_state(self, state_dict: Dict[str, Any]) -> None:
+    def restore_state(self, state_dict: dict[str, Any]) -> None:
         """Restores cooldowns and status after service restart."""
         with self._lock:
             self.current_index = state_dict.get("current_index", 0)

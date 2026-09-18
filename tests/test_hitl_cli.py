@@ -10,10 +10,12 @@ Valide :
 """
 import io
 import sqlite3
-from contextlib import redirect_stdout, redirect_stderr
+from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
+
 import pytest
 
+import tools.ezzio_approval as cli_mod
 from core.governance.approval import (
     ApprovalManager,
     ApprovalStatus,
@@ -22,7 +24,6 @@ from core.governance.approval import (
 from core.governance.approval.store import SqliteApprovalStore
 from core.security.audit_ledger import AuditLedger
 from core.tasks import manager as task_manager_mod
-import tools.ezzio_approval as cli_mod
 
 
 @pytest.fixture

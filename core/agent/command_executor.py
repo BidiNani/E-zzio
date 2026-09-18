@@ -8,14 +8,14 @@ Fournit une exécution strictement gouvernée des commandes système :
 - Contrôle de budget et de timeout avec terminaison propre
 """
 from __future__ import annotations
-import os
-import sys
-import time
+
 import json
+import os
 import re
 import shlex
 import subprocess
-from typing import Dict, Any, List, Optional, Tuple
+import time
+from typing import Any
 
 SAFE_EXECUTABLES = {
     "python",
@@ -116,7 +116,7 @@ class GovernedCommandExecutor:
         self.default_timeout_sec = default_timeout_sec
         self.executed_commands_count = 0
 
-    def classify_action(self, command_str: str) -> Tuple[str, str]:
+    def classify_action(self, command_str: str) -> tuple[str, str]:
         """Classifie une commande en SAFE, SENSITIVE, ou CRITICAL.
         Applique une politique strictement FAIL-CLOSED : tout exécutable ou opérateur
         non explicitement autorisé est rejeté avec la classification CRITICAL.
@@ -193,10 +193,10 @@ class GovernedCommandExecutor:
     def execute(
         self,
         command: str,
-        cwd: Optional[str] = None,
-        timeout: Optional[int] = None,
-        env: Optional[Dict[str, str]] = None,
-    ) -> Dict[str, Any]:
+        cwd: str | None = None,
+        timeout: int | None = None,
+        env: dict[str, str] | None = None,
+    ) -> dict[str, Any]:
         """Exécute une commande sous gouvernance stricte et enregistre l'audit."""
         start_time = time.time()
         exec_cwd = os.path.abspath(cwd) if cwd else self.workspace_root
@@ -284,7 +284,7 @@ class GovernedCommandExecutor:
         self._log_audit(command, exec_cwd, res)
         return res
 
-    def _log_audit(self, command: str, cwd: str, result: Dict[str, Any]) -> None:
+    def _log_audit(self, command: str, cwd: str, result: dict[str, Any]) -> None:
         """Écrit l'événement dans le journal d'audit JSONL avec masquage des secrets."""
         clean_cmd = redact_secrets(command)
         clean_stdout = redact_secrets(result.get("stdout", ""))[:2000]

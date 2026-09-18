@@ -1,9 +1,8 @@
 import ast
 import json
 import logging
-from pathlib import Path
-from typing import Dict, List, Set, Tuple
 from collections import defaultdict
+from pathlib import Path
 
 logger = logging.getLogger("ezzio.core.dependency_graph_v49")
 
@@ -38,9 +37,9 @@ class DependencyGraphV49:
 
     def __init__(self, project_root: str = "."):
         self.project_root = Path(project_root).resolve()
-        self.import_map: Dict[str, Set[str]] = defaultdict(set)
-        self.reverse_map: Dict[str, Set[str]] = defaultdict(set)
-        self.file_to_module: Dict[str, str] = {}
+        self.import_map: dict[str, set[str]] = defaultdict(set)
+        self.reverse_map: dict[str, set[str]] = defaultdict(set)
+        self.file_to_module: dict[str, str] = {}
 
     def _should_exclude(self, path: Path) -> bool:
         for part in path.parts:
@@ -57,10 +56,10 @@ class DependencyGraphV49:
             parts[-1] = parts[-1].replace(".py", "")
         return ".".join(parts)
 
-    def _parse_imports(self, filepath: Path) -> Set[str]:
+    def _parse_imports(self, filepath: Path) -> set[str]:
         imports = set()
         try:
-            with open(filepath, "r", encoding="utf-8") as f:
+            with open(filepath, encoding="utf-8") as f:
                 content = f.read()
             tree = ast.parse(content)
             for node in ast.walk(tree):
@@ -97,13 +96,13 @@ class DependencyGraphV49:
                 logger.warning("[WARN] Erreur traitement %s : %s", filepath, e)
         logger.info("[OK] Graphe construit : %d fichiers, %d modules", len(self.import_map), len(self.reverse_map))
 
-    def get_dependents(self, module_name: str) -> List[str]:
+    def get_dependents(self, module_name: str) -> list[str]:
         return sorted(self.reverse_map.get(module_name, set()))
 
-    def get_dependencies(self, filepath: str) -> List[str]:
+    def get_dependencies(self, filepath: str) -> list[str]:
         return sorted(self.import_map.get(filepath, set()))
 
-    def get_transitive_closure(self, seed_files: List[str]) -> Set[str]:
+    def get_transitive_closure(self, seed_files: list[str]) -> set[str]:
         closure = set(seed_files)
         queue = list(seed_files)
         while queue:
@@ -118,7 +117,7 @@ class DependencyGraphV49:
                         break
         return closure
 
-    def find_orphans(self) -> List[str]:
+    def find_orphans(self) -> list[str]:
         orphans = []
         for filepath in self.import_map.keys():
             has_imports = len(self.import_map[filepath]) > 0
@@ -127,7 +126,7 @@ class DependencyGraphV49:
                 orphans.append(filepath)
         return sorted(orphans)
 
-    def find_circular_dependencies(self) -> List[Tuple[str, str]]:
+    def find_circular_dependencies(self) -> list[tuple[str, str]]:
         circular = []
         for filepath, imports in self.import_map.items():
             for imp in imports:
@@ -153,7 +152,7 @@ class DependencyGraphV49:
         logger.info("[OK] Graphe exporté vers %s", output_path)
         return output_path
 
-    def extend_scope_by_domain(self, domain_files: List[str]) -> List[str]:
+    def extend_scope_by_domain(self, domain_files: list[str]) -> list[str]:
         closure = self.get_transitive_closure(domain_files)
         return sorted(closure)
 

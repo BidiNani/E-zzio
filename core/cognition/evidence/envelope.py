@@ -10,10 +10,9 @@ import hashlib
 import hmac
 import json
 import uuid
-from dataclasses import asdict, dataclass, field
-from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any, Dict, Optional
+from dataclasses import asdict, dataclass
+from datetime import UTC, datetime
+from typing import Any
 
 
 @dataclass
@@ -31,8 +30,8 @@ class EvidenceEnvelope:
     execution_duration_ms: float
     verification_status: str = "VERIFIED_VALID"
     raw_payload_snippet: str = ""
-    ledger_decision_id: Optional[str] = None
-    envelope_signature_hmac: Optional[str] = None
+    ledger_decision_id: str | None = None
+    envelope_signature_hmac: str | None = None
 
     @classmethod
     def create(
@@ -46,12 +45,12 @@ class EvidenceEnvelope:
         execution_duration_ms: float,
         policy_status: str = "APPROVED",
         agent_version: str = "ezzio-federated-v1.0",
-        ledger_decision_id: Optional[str] = None,
-        signing_key: Optional[bytes] = None,
+        ledger_decision_id: str | None = None,
+        signing_key: bytes | None = None,
     ) -> EvidenceEnvelope:
         """Constructs and cryptographically seals an EvidenceEnvelope."""
-        ts = datetime.now(timezone.utc).isoformat()
-        evidence_id = f"EVID-{datetime.now(timezone.utc).strftime('%Y%m%d')}-{uuid.uuid4().hex[:8].upper()}"
+        ts = datetime.now(UTC).isoformat()
+        evidence_id = f"EVID-{datetime.now(UTC).strftime('%Y%m%d')}-{uuid.uuid4().hex[:8].upper()}"
 
         in_hash = hashlib.sha256(input_prompt.encode("utf-8")).hexdigest()
         out_hash = hashlib.sha256(output_payload.encode("utf-8")).hexdigest()
@@ -86,7 +85,7 @@ class EvidenceEnvelope:
         canonical = json.dumps(unsigned, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
         self.envelope_signature_hmac = hmac.new(key, canonical.encode("utf-8"), hashlib.sha256).hexdigest()
 
-    def verify_integrity(self, key: Optional[bytes] = None, raw_output: Optional[str] = None, raw_prompt: Optional[str] = None) -> bool:
+    def verify_integrity(self, key: bytes | None = None, raw_output: str | None = None, raw_prompt: str | None = None) -> bool:
         """Verifies payload hash matching and cryptographic signature."""
         if raw_prompt is not None:
             actual_in_hash = hashlib.sha256(raw_prompt.encode("utf-8")).hexdigest()
@@ -107,7 +106,7 @@ class EvidenceEnvelope:
 
         return True
 
-    def verify_ledger_confrontation(self, ledger_record: Dict[str, Any]) -> bool:
+    def verify_ledger_confrontation(self, ledger_record: dict[str, Any]) -> bool:
         """Confronts envelope metadata against the ground-truth frozen Decision Ledger block."""
         if not ledger_record:
             return False

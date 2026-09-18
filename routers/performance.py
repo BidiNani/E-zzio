@@ -2,12 +2,12 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 
 from core.pc_optimizer import (
-    performance_status,
-    warmup_profile,
-    quick_bench,
     bench_model,
-    pc_profile,
     ollama_tags,
+    pc_profile,
+    performance_status,
+    quick_bench,
+    warmup_profile,
 )
 
 router = APIRouter(prefix="/performance", tags=["performance"])

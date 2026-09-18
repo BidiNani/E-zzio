@@ -1,14 +1,11 @@
 """
 E-ZZIO : Benchmark et Évaluation des Capacités CPU-ONLY de Tous les Modèles (Baselines & Candidats).
 """
-import os
-import sys
 import json
-import time
 import re
-import subprocess
-import psutil
 import statistics
+import subprocess
+import time
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")
@@ -74,7 +71,7 @@ def run_llama_cli(model_path: Path, prompt: str, threads: int, max_tokens: int =
     )
     stdout, stderr = p.communicate(timeout=90)
     lat_ms = (time.perf_counter() - t0) * 1000
-    
+
     # Extract tok/s from output like [ Prompt: 53.1 t/s | Generation: 11.6 t/s ]
     gen_tok_s = 0.0
     prompt_tok_s = 0.0
@@ -82,7 +79,7 @@ def run_llama_cli(model_path: Path, prompt: str, threads: int, max_tokens: int =
     if m:
         prompt_tok_s = float(m.group(1))
         gen_tok_s = float(m.group(2))
-    
+
     return {
         "latency_ms": round(lat_ms, 2),
         "prompt_tok_s": prompt_tok_s,
@@ -97,10 +94,10 @@ capabilities_data = {}
 for m_info in models_to_benchmark:
     m_id = m_info["id"]
     m_path = m_info["path"]
-    print(f"\n========================================================")
+    print("\n========================================================")
     print(f"BENCHMARKING MODEL : {m_info['name']} ({m_info['param']} / {m_info['quant']})")
-    print(f"========================================================")
-    
+    print("========================================================")
+
     # 1. Thread Sweep & Repetitions
     thread_results = {}
     for th in [4, 8, 12, 24]:
@@ -109,7 +106,7 @@ for m_info in models_to_benchmark:
             res = run_llama_cli(m_path, "Explique brièvement le principe du CPU multithreading.", threads=th, max_tokens=32)
             runs.append(res["generation_tok_s"])
             print(f"  Th={th:2d} | Run {r_idx+1}: {res['generation_tok_s']:5.2f} tok/s (lat={res['latency_ms']:6.1f}ms)")
-        
+
         valid_runs = [r for r in runs if r > 0]
         thread_results[f"threads_{th}"] = {
             "runs": runs,
@@ -119,7 +116,7 @@ for m_info in models_to_benchmark:
             "max_tok_s": round(max(valid_runs), 2) if valid_runs else 0.0,
             "std_dev": round(statistics.stdev(valid_runs), 2) if len(valid_runs) > 1 else 0.0
         }
-    
+
     best_th_key = max(thread_results.keys(), key=lambda k: thread_results[k]["mean_tok_s"])
     benchmarks_data[m_id] = {
         "model_info": m_info,
@@ -129,7 +126,7 @@ for m_info in models_to_benchmark:
             "mean_tokens_per_second": thread_results[best_th_key]["mean_tok_s"]
         }
     }
-    
+
     # 2. Capability Evaluation
     print(f"--- Running Capability Tests for {m_id} ---")
     opt_th = benchmarks_data[m_id]["best_configuration"]["threads"]

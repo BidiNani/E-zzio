@@ -3,9 +3,10 @@ Maintenance automatisée pour bases SQLite WAL et indexation FTS5 pour E-ZzIO.
 Exécute les checkpoints WAL (TRUNCATE), l'optimisation des index et la purge.
 """
 
-import sqlite3
 import logging
+import sqlite3
 from pathlib import Path
+
 from ezzio.config import settings
 
 logger = logging.getLogger("EzzioMemoryMaintenance")
@@ -22,16 +23,16 @@ def checkpoint_sqlite_db(db_path: Path | str, mode: str = "TRUNCATE") -> dict:
             cursor = conn.cursor()
             cursor.execute(f"PRAGMA wal_checkpoint({mode});")
             res = cursor.fetchone()
-            
+
             # Optimisation des index SQLite
             cursor.execute("PRAGMA optimize;")
-            
+
             # Optimisation FTS5 si existante
             try:
                 cursor.execute("INSERT INTO session_messages_fts(session_messages_fts) VALUES('optimize');")
             except Exception:
                 pass
-                
+
             conn.commit()
 
         logger.info("[WAL-CHECKPOINT] Base %s compactée en mode %s (Busy: %s, Log: %s, Checkpointed: %s)", target.name, mode, res[0], res[1], res[2])
@@ -50,11 +51,11 @@ def checkpoint_sqlite_db(db_path: Path | str, mode: str = "TRUNCATE") -> dict:
 def run_full_wal_maintenance() -> dict:
     """Exécute la maintenance complète sur toutes les bases actives du projet."""
     results = {}
-    
+
     # 1. Base d'état E-ZzIO
     if settings.state_db_path.exists():
         results["ezzio_state"] = checkpoint_sqlite_db(settings.state_db_path, mode="TRUNCATE")
-        
+
     # 2. Evidence Store
     evidence_db = settings.root_dir / "runtime" / "evidence" / "evidence.db"
     if evidence_db.exists():

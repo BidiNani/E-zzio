@@ -3,10 +3,11 @@ E-ZZIO V7.29.3 — Identity Validator
 Vérifie la validité des ancres enregistrées dans runtime/identity/.
 """
 
-import os
 import hashlib
 import hmac
+import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent

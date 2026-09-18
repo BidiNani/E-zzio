@@ -4,15 +4,14 @@ Gère le cycle de vie des clés HMAC, les époques cryptographiques (ACTIVE vs V
 l'isolation de la racine de confiance et le Fail-Closed strict en cas de perte de clé.
 """
 
-import os
-import json
-import hmac
-import logging
 import hashlib
+import hmac
+import json
+import logging
+import os
 import threading
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Tuple
 
 logger = logging.getLogger(__name__)
 
@@ -56,7 +55,7 @@ class SecretSovereigntyLayer:
                     "keys": {
                         initial_key_id: {
                             "status": "ACTIVE",
-                            "created_at": datetime.now(timezone.utc).isoformat(),
+                            "created_at": datetime.now(UTC).isoformat(),
                             "algorithm": "HMAC-SHA256",
                         }
                     },
@@ -72,7 +71,7 @@ class SecretSovereigntyLayer:
             except Exception as e:
                 raise SecretSovereigntyError(f"FAIL CLOSED : Corruption du coffre-fort de clés : {e}")
 
-    def get_active_key_material(self) -> Tuple[str, bytes]:
+    def get_active_key_material(self) -> tuple[str, bytes]:
         """Récupère l'ID et la matière cryptographique de la clé active pour signer."""
         with self._lock:
             vault = self.load_vault()
@@ -122,7 +121,7 @@ class SecretSovereigntyLayer:
             # Enregistrement de la nouvelle clé ACTIVE
             vault["keys"][new_key_id] = {
                 "status": "ACTIVE",
-                "created_at": datetime.now(timezone.utc).isoformat(),
+                "created_at": datetime.now(UTC).isoformat(),
                 "algorithm": "HMAC-SHA256",
             }
             vault["active_key_id"] = new_key_id

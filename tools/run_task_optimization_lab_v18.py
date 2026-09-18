@@ -3,11 +3,7 @@ E-ZZIO Task-Specific Model Optimization Lab v18.0.
 Executes physical optimizations across tasks (Routing, Reasoning, Coding, Tools, Agent, Grounding, Long Context, Long Gen),
 evaluates threads, contexts, max_tokens, RAM, latency, and quality, and writes live evidence files.
 """
-import os
-import sys
 import json
-import time
-import hashlib
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")
@@ -138,7 +134,7 @@ for m in models:
 """
     for task_name, opt in m_opts.items():
         prof_md += f"| **{task_name}** | {opt['threads']}T | {opt['context']} | {opt['max_tokens']} | {opt['ttft_ms']:6.1f} | {opt['gen_tok_s']:5.2f} | {opt['ram_mb']} | {opt['quality']} | **{opt['status']}** |\n"
-    
+
     (opt_dir / f"MODEL_TASK_PROFILE_{m_id}.md").write_text(prof_md, encoding="utf-8")
 
 # FINAL REPORT v18

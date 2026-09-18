@@ -1,4 +1,5 @@
 import pytest
+
 from core.memory.unified_gateway import UnifiedMemoryGateway
 from core.router.intent_router import IntentRouter, IntentType
 

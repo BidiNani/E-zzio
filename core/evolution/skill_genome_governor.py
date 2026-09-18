@@ -4,12 +4,12 @@ Gère l'ADN des compétences (Skill Genome) et impose le cycle de quarantaine,
 de test en sandbox et de validation par la passerelle ECOL avant toute promotion.
 """
 
-import sys
 import json
 import logging
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -37,7 +37,7 @@ class SkillGenomeEngine:
 
     def evaluate_and_promote_skill(
         self, skill_id: str, skill_name: str, source_uri: str, risk_score: float, dependencies: list
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Soumet une nouvelle compétence à son Genome, vérifie son niveau de risque,
         simule son passage en sandbox et la promeut via ECOL si elle est jugée sûre.
@@ -55,7 +55,7 @@ class SkillGenomeEngine:
             "success_rate": 1.0,
             "dependencies": dependencies,
             "status": "QUARANTINE_PASSED",
-            "promoted_at_utc": datetime.now(timezone.utc).isoformat(),
+            "promoted_at_utc": datetime.now(UTC).isoformat(),
         }
 
         payload = {

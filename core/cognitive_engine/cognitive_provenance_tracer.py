@@ -9,8 +9,8 @@ Analyse la base FTS5 existante et classe chaque enregistrement selon la taxonomi
 6. SYNTHETIC_NOISE (tests, sandbox, fuzz)
 """
 
-import sqlite3
 import json
+import sqlite3
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")

@@ -4,8 +4,8 @@ Extrait des fenêtres de contexte (20 lignes) autour des marqueurs RPG dans les 
 Analyse en lecture seule pour différencier une "Connaissance" d'un "Inventaire technique".
 """
 
-from pathlib import Path
 import json
+from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 TARGET_FILE = ROOT_DIR / "tools/maintenance/logs/dump_complet.txt"
@@ -23,7 +23,7 @@ def qualify():
 
     findings = []
 
-    with open(TARGET_FILE, "r", encoding="utf-8", errors="ignore") as f:
+    with open(TARGET_FILE, encoding="utf-8", errors="ignore") as f:
         lines = f.readlines()
 
     for i, line in enumerate(lines):

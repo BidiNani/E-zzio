@@ -1,9 +1,10 @@
 from __future__ import annotations
+
 import ast
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 EXCLUDED_DIRS = {"audit", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tests"}
@@ -11,7 +12,7 @@ EXCLUDED_DIRS = {"audit", "snapshot", "snapshots", "backup", "backups", "old", "
 class ConsumerVisitor(ast.NodeVisitor):
     def __init__(self, rel_path: str):
         self.rel_path = rel_path
-        self.usages: List[Dict[str, Any]] = []
+        self.usages: list[dict[str, Any]] = []
 
     def visit_ImportFrom(self, node: ast.ImportFrom):
         if node.module and any(k in node.module for k in {"cognitive_router", "models.fabric", "models.registry"}):

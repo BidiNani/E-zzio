@@ -12,12 +12,10 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
-import re
-import time
 import uuid
-from dataclasses import dataclass, field, asdict
-from datetime import datetime, timedelta, timezone
-from typing import Any, Dict, List, Optional, Tuple
+from dataclasses import dataclass, field
+from datetime import UTC, datetime, timedelta
+from typing import Any
 
 logger = logging.getLogger("ezzio.memory.tiers")
 
@@ -50,7 +48,7 @@ class MemoryViolationError(ValueError):
 
 
 def _utcnow() -> str:
-    return datetime.now(timezone.utc).isoformat()
+    return datetime.now(UTC).isoformat()
 
 
 def detect_secret(content: str) -> bool:
@@ -71,21 +69,21 @@ class MemoryObject:
     scope_id: str = ""
     memory_type: str = "context"
     content: str = ""
-    provenance: Dict[str, Any] = field(default_factory=dict)
+    provenance: dict[str, Any] = field(default_factory=dict)
     truth_state: str = "unknown"
     importance: float = 0.5
     created_at: str = ""
     updated_at: str = ""
-    expires_at: Optional[str] = None
+    expires_at: str | None = None
     version: int = 1
-    parent_version: Optional[int] = None
+    parent_version: int | None = None
     privacy_class: str = "normal"
-    source_refs: Tuple[str, ...] = ()
-    evidence_refs: Tuple[str, ...] = ()
-    task_refs: Tuple[str, ...] = ()
-    project_refs: Tuple[str, ...] = ()
+    source_refs: tuple[str, ...] = ()
+    evidence_refs: tuple[str, ...] = ()
+    task_refs: tuple[str, ...] = ()
+    project_refs: tuple[str, ...] = ()
 
-    def validate(self) -> List[str]:
+    def validate(self) -> list[str]:
         errors = []
         if not self.memory_id:
             errors.append("memory_id requis")
@@ -113,13 +111,13 @@ class MemoryObject:
                           "(supported|verified + provenance)")
         return errors
 
-    def ensure_valid(self) -> "MemoryObject":
+    def ensure_valid(self) -> MemoryObject:
         errors = self.validate()
         if errors:
             raise MemoryViolationError("; ".join(errors))
         return self
 
-    def to_cell(self) -> Dict[str, Any]:
+    def to_cell(self) -> dict[str, Any]:
         now = _utcnow()
         prov = dict(self.provenance or {})
         prov.setdefault("source_refs", list(self.source_refs))
@@ -165,10 +163,10 @@ def classify_eligibility(content: str, memory_type: str = "context",
 
 def build_object(content: str, memory_type: str = "context",
                  scope: str = "task", scope_id: str = "",
-                 tier: Optional[str] = None,
+                 tier: str | None = None,
                  truth_state: str = "unknown",
                  importance: float = 0.5,
-                 provenance: Optional[Dict[str, Any]] = None,
+                 provenance: dict[str, Any] | None = None,
                  privacy_class: str = "normal") -> MemoryObject:
     """Construit un objet gouverné (TTL appliqué selon tier)."""
     tier = tier or {"task_context": "working", "project_context": "semantic",
@@ -179,7 +177,7 @@ def build_object(content: str, memory_type: str = "context",
     if detect_secret(content):
         privacy_class = "secret"
     ttl = TIER_TTL[tier]
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     expires = (now + ttl).isoformat() if ttl else None
     obj = MemoryObject(
         memory_id=f"mem_{uuid.uuid4().hex[:12]}", tier=tier, scope=scope,
@@ -191,8 +189,8 @@ def build_object(content: str, memory_type: str = "context",
     return obj.ensure_valid()
 
 
-def _audit(action: str, payload: Dict[str, Any],
-           status: str = "SUCCESS") -> Optional[str]:
+def _audit(action: str, payload: dict[str, Any],
+           status: str = "SUCCESS") -> str | None:
     try:
         from core.security.audit_ledger import AuditLedger
         res = AuditLedger().record_event(
@@ -204,7 +202,7 @@ def _audit(action: str, payload: Dict[str, Any],
         return None
 
 
-def is_expired(cell: Dict[str, Any], now: Optional[str] = None) -> bool:
+def is_expired(cell: dict[str, Any], now: str | None = None) -> bool:
     exp = cell.get("expires_at")
     if not exp:
         return False
@@ -249,7 +247,7 @@ async def promote(gateway, memory_id: str, to_tier: str,
     now = _utcnow()
     await gateway.update_cell_fields(memory_id, {
         "tier": to_tier, "updated_at": now,
-        "expires_at": (datetime.now(timezone.utc) + ttl).isoformat()
+        "expires_at": (datetime.now(UTC) + ttl).isoformat()
         if ttl else None})
     _audit("MEMORY_PROMOTED", {"memory_id": memory_id,
                                "from": cell["tier"], "to": to_tier,
@@ -269,7 +267,7 @@ async def demote(gateway, memory_id: str, to_tier: str,
     now = _utcnow()
     await gateway.update_cell_fields(memory_id, {
         "tier": to_tier, "updated_at": now,
-        "expires_at": (datetime.now(timezone.utc) + ttl).isoformat()
+        "expires_at": (datetime.now(UTC) + ttl).isoformat()
         if ttl else None})
     _audit("MEMORY_DEMOTED", {"memory_id": memory_id,
                               "from": cell["tier"], "to": to_tier,
@@ -362,12 +360,12 @@ async def mark_conflict(gateway, id_a: str, id_b: str) -> bool:
     return False
 
 
-def rank_score(cell: Dict[str, Any], now: Optional[str] = None) -> Tuple[float, Dict[str, float]]:
+def rank_score(cell: dict[str, Any], now: str | None = None) -> tuple[float, dict[str, float]]:
     """Score explicable : importance + fraîcheur + scope + vérité."""
-    parts: Dict[str, float] = {}
+    parts: dict[str, float] = {}
     parts["importance"] = float(cell.get("importance", 0.5)) * 0.4
     try:
-        age_h = (datetime.now(timezone.utc) - datetime.fromisoformat(
+        age_h = (datetime.now(UTC) - datetime.fromisoformat(
             cell.get("updated_at", now or _utcnow()))).total_seconds() / 3600.0
     except Exception:
         age_h = 24.0
@@ -382,9 +380,9 @@ def rank_score(cell: Dict[str, Any], now: Optional[str] = None) -> Tuple[float, 
 
 
 async def retrieve(gateway, query: str = "", task_id: str = "",
-                   project_id: str = "", tiers: Optional[List[str]] = None,
+                   project_id: str = "", tiers: list[str] | None = None,
                    max_memories: int = 5,
-                   max_chars: int = 4000) -> Dict[str, Any]:
+                   max_chars: int = 4000) -> dict[str, Any]:
     """RIGHT MEMORY/RIGHT TIME : FTS + isolation scope + budget + états."""
     tiers = tiers or ["working", "semantic"]
     if "persistent" in tiers and not (task_id or project_id or query):
@@ -443,7 +441,7 @@ _LONG_AGO_MARKERS = ("plusieurs mois", "il y a longtemps", "l'an dernier",
 
 
 def memory_need(prompt: str, has_active_tasks: bool = False
-                ) -> Tuple[str, List[str]]:
+                ) -> tuple[str, list[str]]:
     """Décision L0 du besoin mémoire (§5) : (besoin, tiers).
     NO_MEMORY | WORKING | SEMANTIC | PERSISTENT | MULTI_TIER."""
     t = (prompt or "").lower()
@@ -460,13 +458,13 @@ def memory_need(prompt: str, has_active_tasks: bool = False
     return "NO_MEMORY", []
 
 
-def workspace_view(project_id: str, tasks: List[Dict[str, Any]],
-                   cells: List[Dict[str, Any]],
-                   artifacts: List[Dict[str, Any]]) -> Dict[str, Any]:
+def workspace_view(project_id: str, tasks: list[dict[str, Any]],
+                   cells: list[dict[str, Any]],
+                   artifacts: list[dict[str, Any]]) -> dict[str, Any]:
     """Graphe minimal (§48) : project → tasks → memories → artifacts.
     Assembleur pur, sans nouvelle base (lectures existantes en entrée)."""
     task_ids = {t.get("mission_id", t.get("task_id", "")) for t in tasks}
-    mem_by_task: Dict[str, List[str]] = {}
+    mem_by_task: dict[str, list[str]] = {}
     proj_mems = []
     for c in cells:
         refs = set((c.get("provenance") or {}).get("task_refs", [])
@@ -477,7 +475,7 @@ def workspace_view(project_id: str, tasks: List[Dict[str, Any]],
                 mem_by_task.setdefault(h, []).append(c["memory_id"])
         elif c.get("scope") == "project":
             proj_mems.append(c["memory_id"])
-    art_by_task: Dict[str, List[str]] = {}
+    art_by_task: dict[str, list[str]] = {}
     for a in artifacts:
         tid = a.get("task_id", "")
         if tid in task_ids:

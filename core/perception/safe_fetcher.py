@@ -6,11 +6,13 @@ Protects the core runtime from Server-Side Request Forgery:
 - Passes downloaded content to UniversalFileReader for safe extraction
 """
 from __future__ import annotations
-import socket
+
 import ipaddress
 import logging
+import socket
+from typing import Any
 from urllib.parse import urlparse
-from typing import Dict, Any, Optional
+
 import httpx
 
 from core.perception.universal_reader import UniversalFileReader
@@ -78,7 +80,7 @@ class SafeWebFetcher:
 
         return hostname, safe_ip
 
-    async def fetch_url(self, url: str) -> Dict[str, Any]:
+    async def fetch_url(self, url: str) -> dict[str, Any]:
         """Récupère le contenu d'une URL externe de façon sécurisée (Anti-SSRF + Épinglage IP Anti-TOCTOU)."""
         try:
             hostname, safe_ip = self.validate_url_safety(url)
@@ -136,7 +138,7 @@ class SafeWebFetcher:
                     raw_text = r.text
                     clean_text = self.reader._read_text_file(
                         Path(url)
-                    ) if not "html" in content_type else self._clean_html_text(raw_text)
+                    ) if "html" not in content_type else self._clean_html_text(raw_text)
 
                     # Garde constitutionnelle : HTTP 200 ≠ Ingestion Réussie
                     # Si le texte extrait est vide ou correspond à une simple coquille HTML / mur de connexion

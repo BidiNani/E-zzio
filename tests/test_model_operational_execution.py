@@ -1,19 +1,22 @@
-import pytest
 import os
-from unittest.mock import patch, AsyncMock
+from unittest.mock import AsyncMock, patch
+
+import pytest
+
 from core.decision_router import DecisionRouter, SearchMode
-from core.providers.ollama_provider import OllamaProvider
 from core.providers.gemini_provider import GeminiProvider
+from core.providers.ollama_provider import OllamaProvider
+
 
 @pytest.mark.asyncio
 async def test_model_router_operational_multi_provider_routing():
     p_ollama = OllamaProvider()
     p_gemini = GeminiProvider(api_key="mock_key")
-    
+
     router = DecisionRouter([p_ollama, p_gemini])
     assert any(p.name == "ollama" for p in router.providers)
     assert any(p.name == "gemini" for p in router.providers)
-    
+
     # Test route locale vers Ollama
     with patch.object(p_ollama, "search", new_callable=AsyncMock) as mock_o:
         mock_o.return_value = {

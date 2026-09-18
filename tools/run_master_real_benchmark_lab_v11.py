@@ -2,15 +2,8 @@
 E-ZZIO : Master Real Model Performance + Capability Benchmark Lab v11.0.
 Full dual-matrix execution: Physical Hardware Sweep x Capability Suite x Role Optimization.
 """
-import os
-import sys
 import json
 import time
-import hashlib
-import re
-import urllib.request
-import subprocess
-import psutil
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")
@@ -368,7 +361,7 @@ cap_rankings = {
 (opt_dir / "capability_rankings.json").write_text(json.dumps(cap_rankings, indent=2, ensure_ascii=False), encoding="utf-8")
 
 # Write FINAL_BENCHMARK_REPORT.md
-report_md = f"""# E-ZZIO — Master Real Model Performance + Capability Benchmark Report v11.0
+report_md = """# E-ZZIO — Master Real Model Performance + Capability Benchmark Report v11.0
 
 **Machine :** AMD Ryzen 9 5900X (12C / 24T) — 32 Go DDR4 — CPU ONLY (CUDA = OFF / GPU = 0)
 

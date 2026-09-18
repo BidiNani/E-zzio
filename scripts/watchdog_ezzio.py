@@ -1,7 +1,5 @@
-import time
-import urllib.request
-import json
 import logging
+import urllib.request
 from pathlib import Path
 
 ROOT = Path(r"G:/AI/E-zzio").resolve()

@@ -8,14 +8,15 @@ Standard : Fail-Closed / Zéro fuite de credentials / Normalisation totale.
 """
 from __future__ import annotations
 
-import os
 import json
-import time
 import logging
-import httpx
-from typing import Any, AsyncIterator, Dict, List, Optional
+import os
+import time
+from collections.abc import AsyncIterator
+from typing import Any
 
-from core.secrets import load_secrets, get_api_key
+import httpx
+
 from core.providers.base_provider import (
     BaseProvider,
     CostClass,
@@ -23,6 +24,7 @@ from core.providers.base_provider import (
     ProviderErrorClass,
     ProviderResponse,
 )
+from core.secrets import get_api_key, load_secrets
 
 logger = logging.getLogger("OpenRouterProvider")
 
@@ -38,8 +40,8 @@ class OpenRouterProvider(BaseProvider):
 
     def __init__(
         self,
-        api_key: Optional[str] = None,
-        model: Optional[str] = None,
+        api_key: str | None = None,
+        model: str | None = None,
         timeout: float = 30.0,
     ) -> None:
         load_secrets()
@@ -78,13 +80,13 @@ class OpenRouterProvider(BaseProvider):
         """Vérifie si le provider est prêt pour des requêtes d'inférence."""
         return self.availability() in (ProviderAvailability.AVAILABLE, ProviderAvailability.DEGRADED)
 
-    def cost_class(self, model: Optional[str] = None) -> CostClass:
+    def cost_class(self, model: str | None = None) -> CostClass:
         """OpenRouter est un endpoint cloud avec tarification token / free-tier."""
         if not self.api_key:
             return CostClass.UNKNOWN
         return CostClass.FREE_ENDPOINT
 
-    def capabilities(self, model: Optional[str] = None) -> List[str]:
+    def capabilities(self, model: str | None = None) -> list[str]:
         """Retourne les capacités déduites pour le modèle demandé."""
         target = (model or self.model).lower()
         caps = ["TEXT", "INSTRUCTION_FOLLOWING"]
@@ -96,7 +98,7 @@ class OpenRouterProvider(BaseProvider):
             caps.extend(["VISION", "MULTIMODAL"])
         return sorted(list(set(caps)))
 
-    async def health(self) -> Dict[str, Any]:
+    async def health(self) -> dict[str, Any]:
         """Vérifie la santé de l'endpoint OpenRouter sans fuite de secrets."""
         if not self.api_key:
             return {
@@ -122,7 +124,7 @@ class OpenRouterProvider(BaseProvider):
         except Exception as exc:
             return {"status": "ERROR", "available": False, "error": str(exc)}
 
-    def error_mapping(self, status_code: int, error_body: Optional[str] = None) -> ProviderErrorClass:
+    def error_mapping(self, status_code: int, error_body: str | None = None) -> ProviderErrorClass:
         """Mappe un code d'erreur HTTP vers la typologie canonique E-ZzIO."""
         if status_code in (401, 403):
             return ProviderErrorClass.UNAUTHORIZED
@@ -140,8 +142,8 @@ class OpenRouterProvider(BaseProvider):
     async def generate(
         self,
         prompt: str,
-        system_prompt: Optional[str] = None,
-        model: Optional[str] = None,
+        system_prompt: str | None = None,
+        model: str | None = None,
         temperature: float = 0.2,
         max_tokens: int = 1024,
         **kwargs: Any,
@@ -240,8 +242,8 @@ class OpenRouterProvider(BaseProvider):
     async def stream(
         self,
         prompt: str,
-        system_prompt: Optional[str] = None,
-        model: Optional[str] = None,
+        system_prompt: str | None = None,
+        model: str | None = None,
         temperature: float = 0.2,
         max_tokens: int = 1024,
         **kwargs: Any,

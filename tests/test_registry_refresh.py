@@ -20,7 +20,7 @@ import os
 import sys
 import tempfile
 from pathlib import Path
-from unittest.mock import AsyncMock, patch, MagicMock
+from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
@@ -29,10 +29,9 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from core.models.registry import ModelRegistry, ModelRecord
 from core.models.lifecycle import ModelLifecycle
+from core.models.registry import ModelRecord, ModelRegistry
 from core.models.registry_refresh import _run_refresh, _write_audit, refresh_gemini_registry
-
 
 # ── Fixtures ─────────────────────────────────────────────────────────────────
 

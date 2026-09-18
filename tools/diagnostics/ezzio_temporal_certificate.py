@@ -4,12 +4,13 @@ Examine l'âge opérationnel, vérifie l'intégrité et produit les certificats
 d'endurance (24H, 72H, 7D, 30D) de manière strictement passive.
 """
 
-import sys
 import json
-import psutil
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
+
+import psutil
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -33,7 +34,7 @@ class TemporalCertificationEngine:
             return "MISSING"
         return "UNCHANGED"
 
-    def evaluate_and_certify(self) -> Dict[str, Any]:
+    def evaluate_and_certify(self) -> dict[str, Any]:
         existence = self.identity.get_existence_duration()
         total_days = existence["total_days_alive"]
 
@@ -54,11 +55,11 @@ class TemporalCertificationEngine:
         mem = psutil.virtual_memory()
 
         certificate = {
-            "certificate_id": f"CERT_{milestone}_{datetime.now(timezone.utc).strftime('%Y%m%d')}",
+            "certificate_id": f"CERT_{milestone}_{datetime.now(UTC).strftime('%Y%m%d')}",
             "milestone": milestone,
             "birth_timestamp": existence["birth_timestamp_utc"],
             "operational_age_days": total_days,
-            "certified_utc": datetime.now(timezone.utc).isoformat(),
+            "certified_utc": datetime.now(UTC).isoformat(),
             "metrics": {
                 "integrity_drift": drift,
                 "critical_incidents": 0,

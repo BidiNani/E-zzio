@@ -3,6 +3,7 @@ Tests unitaires pour le VisionEngine d'E-ZzIO.
 """
 
 import pytest
+
 from core.perception.vision_engine import VisionEngine
 
 

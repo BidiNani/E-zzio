@@ -3,15 +3,13 @@ E-ZZIO Full Physical Live Re-Execution Runner (Lab v19.1 Live).
 Executes direct live physical inference on all available local models across threads and contexts,
 recording genuine live run files with real-time process execution, timestamps, and memory captures.
 """
-import os
-import sys
 import json
-import time
-import hashlib
-import urllib.request
 import subprocess
-import psutil
+import time
+import urllib.request
 from pathlib import Path
+
+import psutil
 
 root = Path("G:/AI/E-zzio")
 v19_dir = root / "state/audit/optimization/performance_v19"
@@ -61,19 +59,19 @@ def run_physical_test(pass_id, model_obj, task_name, prompt_text, max_tokens, th
     m_tag = model_obj["tag"]
     runtime = model_obj["runtime"]
     run_id = f"rebench_{pass_id}_{m_id}_{task_name}_{threads}T_{context}ctx"
-    
+
     t_start = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     ram_before = get_ram_mb()
-    
+
     raw_stdout = ""
     raw_stderr = ""
     exit_code = 0
     tok_s = 0.0
     ttft_ms = 0.0
     pid = 0
-    
+
     t0 = time.perf_counter()
-    
+
     if runtime == "Ollama":
         payload = {
             "model": m_tag,
@@ -136,14 +134,14 @@ def run_physical_test(pass_id, model_obj, task_name, prompt_text, max_tokens, th
             raw_stderr = str(e)
             exit_code = 1
             ram_peak = get_ram_mb()
-            
+
     lat_total = (time.perf_counter() - t0) * 1000
     time.sleep(0.2)
     ram_after = get_ram_mb()
     t_end = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-    
+
     is_valid = exit_code == 0 and tok_s > 0
-    
+
     run_file_data = {
         "run_id": run_id,
         "pass": pass_id,
@@ -163,7 +161,7 @@ def run_physical_test(pass_id, model_obj, task_name, prompt_text, max_tokens, th
         "status": "VALID" if is_valid else ("EMPTY" if exit_code == 0 else "FAILED"),
         "raw_response_snippet": raw_stdout[:200]
     }
-    
+
     m_dir = live_runs_dir / m_id / task_name
     m_dir.mkdir(parents=True, exist_ok=True)
     (m_dir / f"{run_id}.json").write_text(json.dumps(run_file_data, indent=2, ensure_ascii=False), encoding="utf-8")

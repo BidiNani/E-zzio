@@ -1,27 +1,28 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_model_record_definition() -> Dict[str, Any]:
+def inspect_model_record_definition() -> dict[str, Any]:
     record_fields = []
     consumers = []
-    
+
     target_files = [
         "core/models/registry.py",
         "core/models/lifecycle.py",
         "core/models/fabric.py",
         "core/cognition/cognitive_router.py"
     ]
-    
+
     details = {}
-    
+
     for f in target_files:
         p = PROJECT_ROOT / f
         if not p.exists():
@@ -29,7 +30,7 @@ def inspect_model_record_definition() -> Dict[str, Any]:
         try:
             content = p.read_text(encoding="utf-8", errors="replace")
             tree = ast.parse(content, filename=str(p))
-            
+
             classes = []
             fields = []
             for node in ast.walk(tree):
@@ -45,7 +46,7 @@ def inspect_model_record_definition() -> Dict[str, Any]:
             }
         except Exception as e:
             details[f] = {"error": str(e)}
-            
+
     return details
 
 def main():

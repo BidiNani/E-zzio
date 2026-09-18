@@ -3,9 +3,11 @@ Tests unitaires pour le Dev Studio Project Builder d'E-ZzIO.
 """
 
 import os
+
 import pytest
+
+from core.studio.builder import BuilderSecurityError, ProjectBuilder
 from core.studio.scaffolder import ProjectScaffolder
-from core.studio.builder import ProjectBuilder, BuilderSecurityError
 
 
 def test_builder_run_python_and_tests(tmp_path):

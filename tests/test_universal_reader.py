@@ -4,7 +4,9 @@ Tests unitaires pour l'UniversalFileReader d'E-ZzIO.
 
 import os
 import zipfile
+
 import pytest
+
 from core.perception.universal_reader import UniversalFileReader
 
 

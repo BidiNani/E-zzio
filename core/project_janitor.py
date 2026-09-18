@@ -4,7 +4,7 @@ import py_compile
 import shutil
 import time
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
 CORE_DIR = PROJECT_ROOT / "core"
@@ -67,8 +67,8 @@ def allowed_for_file(path: Path, pattern: str) -> bool:
     return pattern in ALLOWED_PATTERN_FILES.get(rel, set())
 
 
-def interesting_files() -> List[Path]:
-    files: List[Path] = []
+def interesting_files() -> list[Path]:
+    files: list[Path] = []
 
     for root in [CORE_DIR, ROUTERS_DIR, SCRIPTS_DIR]:
         if root.exists():
@@ -81,8 +81,8 @@ def interesting_files() -> List[Path]:
     return sorted(set(files))
 
 
-def collect_pattern_issues(path: Path, text: str) -> List[Dict[str, Any]]:
-    issues: List[Dict[str, Any]] = []
+def collect_pattern_issues(path: Path, text: str) -> list[dict[str, Any]]:
+    issues: list[dict[str, Any]] = []
 
     for pattern in BAD_PATTERNS:
         if pattern not in text:
@@ -112,8 +112,8 @@ def collect_pattern_issues(path: Path, text: str) -> List[Dict[str, Any]]:
     return issues
 
 
-def audit_python(path: Path) -> Dict[str, Any]:
-    result: Dict[str, Any] = {
+def audit_python(path: Path) -> dict[str, Any]:
+    result: dict[str, Any] = {
         "path": str(path),
         "relative_path": rel_posix(path),
         "ok": True,
@@ -157,8 +157,8 @@ def audit_python(path: Path) -> Dict[str, Any]:
     return result
 
 
-def audit_text(path: Path) -> Dict[str, Any]:
-    result: Dict[str, Any] = {
+def audit_text(path: Path) -> dict[str, Any]:
+    result: dict[str, Any] = {
         "path": str(path),
         "relative_path": rel_posix(path),
         "ok": True,
@@ -188,7 +188,7 @@ def audit_text(path: Path) -> Dict[str, Any]:
     return result
 
 
-def audit_project() -> Dict[str, Any]:
+def audit_project() -> dict[str, Any]:
     files = interesting_files()
     results = []
 
@@ -221,8 +221,8 @@ def audit_project() -> Dict[str, Any]:
     }
 
 
-def dust_candidates() -> List[Dict[str, Any]]:
-    candidates: List[Dict[str, Any]] = []
+def dust_candidates() -> list[dict[str, Any]]:
+    candidates: list[dict[str, Any]] = []
 
     for path in PROJECT_ROOT.rglob("*"):
         if not path.exists():
@@ -260,7 +260,7 @@ def dust_candidates() -> List[Dict[str, Any]]:
     return candidates
 
 
-def quarantine_dust(apply: bool = False) -> Dict[str, Any]:
+def quarantine_dust(apply: bool = False) -> dict[str, Any]:
     candidates = dust_candidates()
     stamp = time.strftime("%Y%m%d_%H%M%S")
     target_root = QUARANTINE_DIR / f"dust_{stamp}"
@@ -303,7 +303,7 @@ def quarantine_dust(apply: bool = False) -> Dict[str, Any]:
     }
 
 
-def maintenance_status() -> Dict[str, Any]:
+def maintenance_status() -> dict[str, Any]:
     audit = audit_project()
     dust = dust_candidates()
 

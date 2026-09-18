@@ -11,12 +11,10 @@ from __future__ import annotations
 import json
 import logging
 import re
-import uuid
-from typing import List, Optional
 
 from core.agents.blackboard import Blackboard
 from core.agents.schemas import ADRRecord, AgentContribution
-from core.agents.token_frugality import enforce_unified_diff, prune_deliberation_context
+from core.agents.token_frugality import prune_deliberation_context
 
 logger = logging.getLogger("ezzio.deliberation")
 
@@ -38,7 +36,7 @@ def _extract_contribution(raw: str, agent_id: str, phase: str) -> AgentContribut
 
 
 class DeliberationOrchestrator:
-    def __init__(self, federation=None, blackboard: Optional[Blackboard] = None):
+    def __init__(self, federation=None, blackboard: Blackboard | None = None):
         if federation is None:
             from core.agent.coder_federation import coder_federation_router
             federation = coder_federation_router
@@ -47,8 +45,12 @@ class DeliberationOrchestrator:
 
     def _profile(self, task_type: str):
         from core.agent.coder_federation import (
-            ContextSize, LatencyClass, PrivacyRequirement,
-            TaskComplexity, TaskProfile, TaskType,
+            ContextSize,
+            LatencyClass,
+            PrivacyRequirement,
+            TaskComplexity,
+            TaskProfile,
+            TaskType,
         )
         task_upper = (task_type or "").upper()
         if task_upper in ("CODING", "CODE", "CRITIQUE", "ARCHITECT", "SUPERVISEUR"):

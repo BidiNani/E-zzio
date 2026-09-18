@@ -4,17 +4,17 @@ Orchestre activement les threads du Ryzen 9, surveille la pression RAM
 et ajuste dynamiquement les quotas d'exécution des workers d'E-zzio.
 """
 
-import sys
 import logging
+import sys
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from core.constitution.hardware_resource_governor import HardwareResourceGovernor
 from core.cognition.ecol_universal_enforcement import EcolUniversalGateway
+from core.constitution.hardware_resource_governor import HardwareResourceGovernor
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +31,7 @@ class HardwareOrchestrator:
         self.gateway = EcolUniversalGateway()
         self.gateway.register_gateway_action("HARDWARE_RESOURCE_ALLOCATE")
 
-    def allocate_execution_resources(self, task_name: str, requested_threads: int) -> Dict[str, Any]:
+    def allocate_execution_resources(self, task_name: str, requested_threads: int) -> dict[str, Any]:
         """
         Alloue dynamiquement les ressources CPU/RAM en fonction du mode de vie (Gaming / Normal)
         et vérifie que l'organisme ne met pas en péril la stabilité de la machine.

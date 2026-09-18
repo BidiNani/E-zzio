@@ -8,14 +8,13 @@ Fournit une observabilité continue, légère et locale :
 - Respect strict des secrets (zéro credential exposé)
 """
 from __future__ import annotations
-import os
+
 import json
-import time
-import uuid
 import logging
-from pathlib import Path
-from typing import Dict, Any, List, Optional
+import time
 from collections import deque
+from pathlib import Path
+from typing import Any
 
 logger = logging.getLogger("RoutingTelemetry")
 
@@ -33,7 +32,7 @@ class RoutingTelemetryEngine:
         self._recent_events: deque = deque(maxlen=max_memory_records)
         self._anomalies: deque = deque(maxlen=200)
         self._quota_transitions: deque = deque(maxlen=200)
-        self._profile_stats: Dict[str, Dict[str, Any]] = {
+        self._profile_stats: dict[str, dict[str, Any]] = {
             "fast": {"count": 0, "cache_hits": 0, "cloud_primary": 0, "cloud_failovers": 0, "ollama_fallbacks": 0, "latencies": []},
             "general": {"count": 0, "cache_hits": 0, "cloud_primary": 0, "cloud_failovers": 0, "ollama_fallbacks": 0, "latencies": []},
             "coding": {"count": 0, "cache_hits": 0, "cloud_primary": 0, "cloud_failovers": 0, "ollama_fallbacks": 0, "latencies": []},
@@ -52,9 +51,9 @@ class RoutingTelemetryEngine:
         latency_ms: float,
         success: bool,
         failover_count: int = 0,
-        attempted_targets: Optional[List[str]] = None,
-        error: Optional[str] = None
-    ) -> Dict[str, Any]:
+        attempted_targets: list[str] | None = None,
+        error: str | None = None
+    ) -> dict[str, Any]:
         """Enregistre un événement complet d'inférence."""
         clean_profile = profile.lower()
         ollama_used = (provider_selected == "ollama")
@@ -130,7 +129,7 @@ class RoutingTelemetryEngine:
         self._quota_transitions.append(transition)
         logger.info("[QUOTA-TRANSITION] %s: %s -> %s (%s)", model, previous_state, new_state, reason)
 
-    def _check_anomalies(self, event: Dict[str, Any]):
+    def _check_anomalies(self, event: dict[str, Any]):
         """Détecte les anomalies de routage et de qualité de service."""
         # 1. Ollama utilisé en mode nominal alors qu'aucun failover n'a eu lieu
         if event["ollama_used"] and event["failover_count"] == 0 and event["profile"] != "local_only":
@@ -148,7 +147,7 @@ class RoutingTelemetryEngine:
                 context=event
             )
 
-    def record_anomaly(self, anomaly_type: str, description: str, context: Dict[str, Any]):
+    def record_anomaly(self, anomaly_type: str, description: str, context: dict[str, Any]):
         """Enregistre une anomalie dans le journal des anomalies."""
         anom = {
             "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
@@ -164,7 +163,7 @@ class RoutingTelemetryEngine:
         except Exception:
             pass
 
-    def get_summary_metrics(self) -> Dict[str, Any]:
+    def get_summary_metrics(self) -> dict[str, Any]:
         """Calcule les métriques globales et par profil pour /metrics."""
         total_requests = len(self._recent_events)
         total_hits = sum(1 for e in self._recent_events if e.get("cache_status") == "CACHE_HIT")

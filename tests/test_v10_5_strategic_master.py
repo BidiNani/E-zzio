@@ -3,20 +3,21 @@ E-ZZIO V10.5 — Critical Test Suite: Strategic Master, Long-Horizon Planning, G
 Couvre les tests unitaires et scénarios End-to-End exigés par la spécification V10.5.
 """
 
-import pytest
-import sys
 import subprocess
+import sys
 import time
 
+import pytest
+
 from core.agent.strategic_master import (
+    GoalPriority,
+    GoalStatus,
+    RiskForecast,
+    ScheduledTask,
+    SchedulingMode,
+    StrategicGoal,
     StrategicMasterEngine,
     strategic_master,
-    StrategicGoal,
-    GoalStatus,
-    GoalPriority,
-    SchedulingMode,
-    ScheduledTask,
-    RiskForecast,
 )
 
 

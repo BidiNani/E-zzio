@@ -1,4 +1,5 @@
 import pytest
+
 from core.router.intent_router import IntentRouter, IntentType
 
 

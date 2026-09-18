@@ -5,21 +5,21 @@ Analyse l'intention de la tâche et sélectionne dynamiquement le domaine d'exé
 et avec enregistrement des décisions dans le Decision Ledger V10.0 gelé.
 """
 
-import sys
 import json
-import uuid
 import logging
+import sys
+import uuid
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from core.constitution.hardware_resource_governor import HardwareResourceGovernor
-from core.cognition.ecol_universal_enforcement import EcolUniversalGateway
 from core.cognition.decision_ledger import DecisionLedgerEngine
+from core.cognition.ecol_universal_enforcement import EcolUniversalGateway
 from core.cognition.model_federation.base_provider import ProviderDomain
+from core.constitution.hardware_resource_governor import HardwareResourceGovernor
 
 logger = logging.getLogger(__name__)
 
@@ -53,12 +53,12 @@ class CognitiveTaskClassifier:
         self.gateway.register_gateway_action("COGNITIVE_MODEL_ROUTE")
         self.decision_engine = None
         self.evidence_store = None
-        
+
         # Initialize Sovereign Key Pools for Cloud Providers
         from core.cognition.providers.key_pool import SovereignKeyPool
         self.gemini_pool = SovereignKeyPool("gemini", ["mock_gemini_key_1", "mock_gemini_key_2"])
         self.groq_pool = SovereignKeyPool("groq", ["mock_groq_key_1", "mock_groq_key_2"])
-        
+
         try:
             self.decision_engine = DecisionLedgerEngine(root_dir=self.root_dir)
             from core.cognition.evidence.store import EvidenceStore
@@ -66,7 +66,7 @@ class CognitiveTaskClassifier:
         except Exception:
             pass
 
-    def route_task(self, task_type: str, task_description: str, estimated_tokens: int = 500) -> Dict[str, Any]:
+    def route_task(self, task_type: str, task_description: str, estimated_tokens: int = 500) -> dict[str, Any]:
         """
         Classifie la tâche, interroge le gouverneur matériel (Gaming H24),
         sélectionne le domaine optimal (Local, Cloud, Antigravity) et consigne la décision dans le Ledger.

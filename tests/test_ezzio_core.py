@@ -1,16 +1,18 @@
-import pytest
 from typing import Any, Dict
-from runtime.core.ezzio_core import EzzioCore
-from core.memory.unified_gateway import UnifiedMemoryGateway
+
+import pytest
+
 from core.decision_router import DecisionRouter
+from core.memory.unified_gateway import UnifiedMemoryGateway
 from core.providers.iresearch_provider import IResearchProvider
+from runtime.core.ezzio_core import EzzioCore
 
 
 class MockTestProvider(IResearchProvider):
     def __init__(self, name: str):
         self.name = name
 
-    async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
+    async def search(self, query: str, **kwargs: Any) -> dict[str, Any]:
         return {
             "provider": self.name,
             "data": {"text": f"Réponse mockée par {self.name}", "results": [{"title": "Lien Mock", "url": "https://test.local"}]},

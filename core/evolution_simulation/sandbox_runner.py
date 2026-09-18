@@ -3,9 +3,9 @@ E-ZZIO V7.35 — Sandbox Runner
 Exécute un code candidat dans un environnement isolé pour mesurer ses performances empiriques.
 """
 
-import time
-import sys
 import io
+import sys
+import time
 
 
 class SandboxRunner:

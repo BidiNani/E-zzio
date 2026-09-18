@@ -5,12 +5,13 @@ Définit les niveaux de confiance stricts (Trust 0 à 4), la classification des 
 et la détection dynamique du profil matériel (CPU, RAM, GPU, VRAM).
 """
 from __future__ import annotations
-import os
-import shutil
+
 import logging
+import os
 from enum import Enum
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any
+
 from pydantic import BaseModel, Field
 
 logger = logging.getLogger("CapabilityTrust")
@@ -75,9 +76,9 @@ class CapabilityTrustGuard:
         cls,
         name: str,
         action: str,
-        target_path: Optional[str] = None,
-        requested_permissions: Optional[List[str]] = None
-    ) -> Dict[str, Any]:
+        target_path: str | None = None,
+        requested_permissions: list[str] | None = None
+    ) -> dict[str, Any]:
         """
         Vérification forensique stricte :
         - Bloque toute tentative d'écriture dans le Core ou les secrets (DENY immédiat).

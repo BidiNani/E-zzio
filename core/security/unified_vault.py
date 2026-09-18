@@ -1,10 +1,10 @@
 """Gestionnaire de clés centralisé avec support Multi-Key Rotation."""
 
+import itertools
 import os
 import re
-import itertools
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 ENV_FILES = [
@@ -18,8 +18,8 @@ class UnifiedKeyVault:
     """Singleton centralisant l'accès aux clés avec rotation multi-clés."""
 
     def __init__(self):
-        self._cache: Dict[str, str] = {}
-        self._key_iterators: Dict[str, Any] = {}
+        self._cache: dict[str, str] = {}
+        self._key_iterators: dict[str, Any] = {}
         self.reload()
 
     def reload(self) -> None:
@@ -55,10 +55,10 @@ class UnifiedKeyVault:
         val = self.get(key, str(default)).lower()
         return val in {"1", "true", "yes", "y", "on"}
 
-    def get_all_keys_for_provider(self, provider: str) -> List[str]:
+    def get_all_keys_for_provider(self, provider: str) -> list[str]:
         """Récupère l'ensemble des clés enregistrées pour un provider (multi-clés)."""
         p = provider.lower().strip()
-        keys: List[str] = []
+        keys: list[str] = []
 
         if p == "gemini":
             patterns = [r"^GEMINI_API_KEY(?:_\d+)?$", r"^GOOGLE_API_KEY(?:_\d+)?$"]

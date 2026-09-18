@@ -1,6 +1,8 @@
 import os
+from typing import Any
+
 import httpx
-from typing import Any, Dict, Optional
+
 from core.providers.iresearch_provider import IResearchProvider
 from core.secrets import load_secrets
 
@@ -8,12 +10,12 @@ from core.secrets import load_secrets
 class TavilyProvider(IResearchProvider):
     name: str = "tavily"
 
-    def __init__(self, api_key: Optional[str] = None):
+    def __init__(self, api_key: str | None = None):
         load_secrets()
         self.api_key = api_key or os.getenv("TAVILY_API_KEY")
         self.base_url = "https://api.tavily.com/search"
 
-    async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
+    async def search(self, query: str, **kwargs: Any) -> dict[str, Any]:
         if not self.api_key:
             raise RuntimeError(
                 "TAVILY_API_KEY manquante dans secrets/.env ou variables d'environnement"

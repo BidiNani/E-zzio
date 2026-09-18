@@ -4,10 +4,10 @@ Audit Read-Only de l'arborescence E-ZZIO.
 Catégorise les fichiers par rôle opérationnel.
 """
 
-import os
 import json
-from pathlib import Path
+import os
 from datetime import datetime
+from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 AUDIT_FILE = ROOT_DIR / "EZZIO_STRUCTURE_AUDIT_V810.json"

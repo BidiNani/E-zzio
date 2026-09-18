@@ -1,6 +1,6 @@
-import json
 import hashlib
-from datetime import datetime, timezone
+import json
+from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path("G:/AI/E-zzio")
@@ -37,7 +37,7 @@ provenance_seal = {
     "test_count": 111,
     "certification_status": "100_PERCENT_VERIFIED_PRODUCT_RELEASE",
     "status": "SEALED_IMMUTABLE_BASELINE",
-    "timestamp": datetime.now(timezone.utc).isoformat()
+    "timestamp": datetime.now(UTC).isoformat()
 }
 
 with open(SEAL_PATH, "w", encoding="utf-8") as f:

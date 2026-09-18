@@ -11,9 +11,9 @@ from dataclasses import dataclass, field
 from enum import StrEnum
 from typing import Any
 
+from core.models.errors import FabricError, ProviderExhaustedError
 from core.models.fabric import AutonomousModelFabric, build_fabric
 from core.models.registry import ModelTier
-from core.models.errors import FabricError, ProviderExhaustedError
 
 
 class IntentCategory(StrEnum):
@@ -67,12 +67,12 @@ class IntentFabricConnector:
         """Extrait et sépare les balises <think>...</think> de la réponse finale."""
         pattern = r"<think>(.*?)</think>"
         match = re.search(pattern, raw_content, flags=re.DOTALL)
-        
+
         if match:
             reasoning = match.group(1).strip()
             clean_content = re.sub(pattern, "", raw_content, flags=re.DOTALL).strip()
             return clean_content, reasoning
-        
+
         return raw_content.strip(), None
 
     async def execute_intent(
@@ -95,7 +95,7 @@ class IntentFabricConnector:
                 max_tokens=max_tokens,
             )
             elapsed_ms = round((time.perf_counter() - start_time) * 1000.0, 2)
-            
+
             raw_text = response.get("content", "")
             clean_text, reasoning_text = self._extract_reasoning(raw_text)
 

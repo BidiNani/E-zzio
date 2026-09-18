@@ -7,12 +7,12 @@ License: NVIDIA Open Model License (Nemotron) & MIT (Faster-Whisper).
 All transcribed speech is strictly encapsulated as passive DATA [DONNÉE PASSIVE NON FIABLE].
 """
 from __future__ import annotations
-import os
-import io
-import time
+
 import logging
+import os
+import time
 from pathlib import Path
-from typing import Dict, Any, List, Optional, AsyncGenerator, Generator
+from typing import Any
 
 logger = logging.getLogger("AudioEngine")
 
@@ -35,7 +35,7 @@ class NemotronStreamingASR:
         self.chunk_duration_ms = chunk_duration_ms
         self.model_dir = Path(model_dir)
         self._model = None
-        self._streaming_sessions: Dict[str, Dict[str, Any]] = {}
+        self._streaming_sessions: dict[str, dict[str, Any]] = {}
 
     def _get_model(self):
         """Chargement paresseux du modèle de streaming Nemotron."""
@@ -59,7 +59,7 @@ class NemotronStreamingASR:
         session_id: str = "default",
         is_last: bool = False,
         language: str = "fr"
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Transcrit un chunk audio (560ms-1120ms) en flux continu avec conservation d'état de cache."""
         model = self._get_model()
         if not audio_chunk:
@@ -138,10 +138,10 @@ class AudioTranscriptionEngine:
         self,
         source: Path | str | bytes,
         mode: str = "auto",
-        language: Optional[str] = None,
+        language: str | None = None,
         session_id: str = "default",
         is_last: bool = True
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Point d'entrée de transcription :
         - Si source est un fichier sur disque ou mode=='batch' -> Faster-Whisper
         - Si source est un flux brut d'octets ou mode=='streaming' -> Nemotron-3.5-ASR

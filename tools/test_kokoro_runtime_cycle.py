@@ -1,13 +1,12 @@
 """
 E-ZZIO : Test Runtime Réel du Cycle Complet Kokoro (Nominal -> Panne -> Fallback -> Restauration).
 """
-import os
-import sys
-import json
-import time
-import shutil
-import hashlib
 import asyncio
+import hashlib
+import json
+import shutil
+import sys
+import time
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")
@@ -15,6 +14,7 @@ if str(root) not in sys.path:
     sys.path.insert(0, str(root))
 
 from core.voice.voice_gateway import VoiceGateway
+
 ext_kokoro = Path("G:/AI/external/capabilities/kokoro-tts")
 models_dir = ext_kokoro / "models"
 model_file = models_dir / "kokoro-v0_19.onnx"
@@ -35,15 +35,15 @@ async def run_cycle():
     # ==========================================================================
     vg_nominal = VoiceGateway()
     assert vg_nominal.active_engine == "kokoro-82m-onnx", f"Expected kokoro-82m-onnx, got {vg_nominal.active_engine}"
-    
+
     t0 = time.perf_counter()
     audio_nominal = await vg_nominal.synthesize(test_phrase, voice="af_bella", lang="fr-fr")
     lat_nominal_ms = (time.perf_counter() - t0) * 1000
-    
+
     out_nominal = outputs_dir / "kokoro_runtime_nominal.wav"
     out_nominal.write_bytes(audio_nominal)
     hash_nominal = hashlib.sha256(audio_nominal).hexdigest()
-    
+
     cycle_evidence["1_nominal_case"] = {
         "active_engine": vg_nominal.active_engine,
         "output_file": str(out_nominal),
@@ -63,15 +63,15 @@ async def run_cycle():
     try:
         vg_fallback = VoiceGateway()
         assert vg_fallback.active_engine == "ezzio-procedural-tts", f"Expected ezzio-procedural-tts on failure, got {vg_fallback.active_engine}"
-        
+
         t0_f = time.perf_counter()
         audio_fallback = await vg_fallback.synthesize(test_phrase)
         lat_fallback_ms = (time.perf_counter() - t0_f) * 1000
-        
+
         out_fallback = outputs_dir / "kokoro_runtime_fallback.wav"
         out_fallback.write_bytes(audio_fallback)
         hash_fallback = hashlib.sha256(audio_fallback).hexdigest()
-        
+
         cycle_evidence["2_failure_and_fallback_case"] = {
             "active_engine": vg_fallback.active_engine,
             "output_file": str(out_fallback),
@@ -90,18 +90,18 @@ async def run_cycle():
         # ======================================================================
         if model_bak.exists():
             shutil.move(str(model_bak), str(model_file))
-    
+
     vg_recovered = VoiceGateway()
     assert vg_recovered.active_engine == "kokoro-82m-onnx", f"Expected kokoro-82m-onnx on recovery, got {vg_recovered.active_engine}"
-    
+
     t0_r = time.perf_counter()
     audio_recovered = await vg_recovered.synthesize(test_phrase, voice="af_bella", lang="fr-fr")
     lat_recovered_ms = (time.perf_counter() - t0_r) * 1000
-    
+
     out_recovered = outputs_dir / "kokoro_runtime_recovered.wav"
     out_recovered.write_bytes(audio_recovered)
     hash_recovered = hashlib.sha256(audio_recovered).hexdigest()
-    
+
     cycle_evidence["3_recovery_case"] = {
         "active_engine": vg_recovered.active_engine,
         "output_file": str(out_recovered),

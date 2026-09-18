@@ -1,13 +1,10 @@
 """
 E-ZZIO : Benchmark Propre CPU-Only pour Ministral-3B, Gemma-4-E4B et Qwen3.5-9B MTP.
 """
-import os
-import sys
 import json
-import time
 import re
 import subprocess
-import statistics
+import time
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")
@@ -66,14 +63,14 @@ def run_single(model_path: Path, threads: int, prompt: str = "Bonjour en 1 phras
         )
         stdout, stderr = p.communicate(input="/exit\n", timeout=60)
         lat_ms = (time.perf_counter() - t0) * 1000
-        
+
         gen_tok_s = 0.0
         prompt_tok_s = 0.0
         m = re.search(r"Prompt:\s*([\d\.]+)\s*t/s\s*\|\s*Generation:\s*([\d\.]+)\s*t/s", stdout)
         if m:
             prompt_tok_s = float(m.group(1))
             gen_tok_s = float(m.group(2))
-        
+
         out_txt = stdout.split(">")[-1].strip() if ">" in stdout else stdout.strip()
         return {
             "ok": True,
@@ -90,16 +87,16 @@ benchmarks = {}
 for m in models:
     m_id = m["id"]
     m_path = m["path"]
-    print(f"\n==================================================")
+    print("\n==================================================")
     print(f"BENCHMARKING MODEL: {m['name']} ({m['param']} / {m['quant']})")
-    print(f"==================================================")
-    
+    print("==================================================")
+
     thread_runs = {}
     for th in [4, 8, 12]:
         res = run_single(m_path, threads=th, prompt="Explique brièvement le parallélisme CPU sur un processeur 12 cœurs.")
         thread_runs[f"threads_{th}"] = res
         print(f"  Th={th:2d} -> Generation={res.get('generation_tok_s', 0):5.2f} tok/s | Prompt={res.get('prompt_tok_s', 0):5.1f} tok/s (lat={res.get('latency_ms', 0):6.1f}ms)")
-    
+
     # Run reasoning test
     reason_res = run_single(
         m_path,
@@ -107,7 +104,7 @@ for m in models:
         prompt="Analyse ce problème : un script tente d'effacer /sys. Comment une autorité de sécurité sandboxée doit-elle réagir ? Réponds en 1 phrase concise.",
         max_tokens=48
     )
-    
+
     # Run JSON test
     json_res = run_single(
         m_path,
@@ -115,10 +112,10 @@ for m in models:
         prompt="Génère un objet JSON avec les clés 'status': 'OK', 'cpu': 'Ryzen 9'. Réponds UNIQUEMENT avec le JSON.",
         max_tokens=32
     )
-    
+
     valid_th_keys = [k for k in thread_runs if thread_runs[k].get("generation_tok_s", 0) > 0]
     best_th_key = max(valid_th_keys, key=lambda k: thread_runs[k].get("generation_tok_s", 0)) if valid_th_keys else "threads_4"
-    
+
     benchmarks[m_id] = {
         "model_info": {
             "id": m["id"],

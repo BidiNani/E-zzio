@@ -1,21 +1,22 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_registry_and_lifecycle() -> Dict[str, Any]:
+def inspect_registry_and_lifecycle() -> dict[str, Any]:
     targets = [
         PROJECT_ROOT / "core" / "models" / "registry.py",
         PROJECT_ROOT / "core" / "models" / "lifecycle.py",
         PROJECT_ROOT / "core" / "models" / "fabric.py"
     ]
-    
+
     results = {}
     for path in targets:
         if not path.exists():
@@ -25,7 +26,7 @@ def inspect_registry_and_lifecycle() -> Dict[str, Any]:
             content = path.read_text(encoding="utf-8", errors="replace")
             tree = ast.parse(content, filename=str(path))
             lines = content.splitlines()
-            
+
             extracted = {}
             for node in ast.walk(tree):
                 if isinstance(node, (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)):
@@ -34,11 +35,11 @@ def inspect_registry_and_lifecycle() -> Dict[str, Any]:
                         start = node.lineno - 1
                         end = getattr(node, 'end_lineno', start + 45)
                         extracted[node.name] = "\n".join(lines[start:end])
-                        
+
             results[rel_path] = extracted
         except Exception as e:
             results[rel_path] = {"error": str(e)}
-            
+
     return results
 
 def main():

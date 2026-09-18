@@ -1,28 +1,29 @@
 import asyncio
+import json
 import os
 import sys
-import json
 import time
-import psutil
 from pathlib import Path
+
+import psutil
 
 ROOT = Path(r"G:/AI/E-zzio").resolve()
 sys.path.insert(0, str(ROOT))
 
 from fastapi.testclient import TestClient
 from interfaces.api.server import app
-from tools.fs_tools import observe_filesystem
+
 from core.memory.unified_gateway import UnifiedMemoryGateway
-from core.evidence_store import EvidenceStore
-from scripts.backup_ezzio import backup_ezzio, verify_backup
-from scripts.status_production import get_production_status
+from scripts.backup_ezzio import backup_ezzio
 from scripts.watchdog_ezzio import EzzioWatchdog
+from tools.fs_tools import observe_filesystem
+
 
 async def run_benchmarks():
     print("=== EXECUTING E-ZZIO PRODUCTION BENCHMARKS ===")
     metrics = {}
     proc = psutil.Process(os.getpid())
-    
+
     # 1. API Readiness
     client = TestClient(app)
     t0 = time.perf_counter()
@@ -30,7 +31,7 @@ async def run_benchmarks():
     t1 = time.perf_counter()
     metrics["readiness_ms"] = round((t1 - t0) * 1000, 2)
     assert r.status_code == 200
-    
+
     # 2. Chat Latency
     t0 = time.perf_counter()
     r_chat = client.post("/api/v1/chat", json={
@@ -46,12 +47,12 @@ async def run_benchmarks():
     os.makedirs(os.path.dirname(db_p), exist_ok=True)
     gw = UnifiedMemoryGateway(db_path=db_p)
     await gw.init()
-    
+
     t0 = time.perf_counter()
     await gw.record_message("BENCH_SESS_01", "user", "Benchmark Fact Data", {})
     t1 = time.perf_counter()
     metrics["memory_insert_ms"] = round((t1 - t0) * 1000, 2)
-    
+
     t0 = time.perf_counter()
     hist = await gw.get_session_history("BENCH_SESS_01")
     t1 = time.perf_counter()

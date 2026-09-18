@@ -2,15 +2,14 @@
 E-ZZIO : CPU Parallelism & Multi-Threading Sweep Benchmark on AMD Ryzen 9 5900X (12C / 24T).
 Strict CPU-ONLY (GPU = 0, CUDA = OFF, GPU_LAYERS = 0, CUDA_VISIBLE_DEVICES = -1).
 """
+import json
 import os
 import sys
-import json
 import time
-import psutil
-import asyncio
-import numpy as np
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
+
+import psutil
 
 root = Path("G:/AI/E-zzio")
 if str(root) not in sys.path:
@@ -39,7 +38,6 @@ results = {"hardware": cpu_info, "benchmarks": {}}
 # ==============================================================================
 print("=== 1. BENCHMARKING KOKORO-82M ONNX THREAD SWEEP ===")
 import onnxruntime as ort
-import soundfile as sf
 from kokoro_onnx import Kokoro
 
 model_p = "G:/AI/external/capabilities/kokoro-tts/models/kokoro-v0_19.onnx"
@@ -53,15 +51,15 @@ for th in thread_sweep:
     so.intra_op_num_threads = th
     so.inter_op_num_threads = 1
     so.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
-    
+
     session = ort.InferenceSession(model_p, sess_options=so, providers=["CPUExecutionProvider"])
     k = Kokoro.from_session(session, voices_p)
-    
+
     s, sr = k.create(kokoro_test_phrase, voice="af_bella", speed=1.0, lang="fr-fr")
     lat_ms = (time.perf_counter() - t0) * 1000
     dur_s = len(s) / sr
     rtf = (lat_ms / 1000.0) / dur_s
-    
+
     kokoro_results.append({
         "threads": th,
         "latency_ms": round(lat_ms, 2),
@@ -88,6 +86,7 @@ results["benchmarks"]["kokoro_tts"] = {
 # ==============================================================================
 print("\n=== 2. BENCHMARKING UNIVERSAL READER CONCURRENT INGESTION ===")
 from core.perception.universal_reader import UniversalFileReader
+
 ufr = UniversalFileReader()
 # Find sample test files in repo
 sample_files = list(root.glob("core/**/*.py"))[:50]
@@ -100,7 +99,7 @@ for workers in [1, 2, 4, 8, 12, 16, 20, 24]:
         for f in futs: f.result()
     lat_ms = (time.perf_counter() - t0) * 1000
     throughput = len(sample_files) / (lat_ms / 1000.0)
-    
+
     reader_results.append({
         "workers": workers,
         "total_latency_ms": round(lat_ms, 2),
@@ -121,6 +120,7 @@ results["benchmarks"]["universal_reader"] = {
 # ==============================================================================
 print("\n=== 3. BENCHMARKING AST INTROSPECTION SWEEP ===")
 import ast
+
 
 def parse_ast_file(p: Path):
     try:
@@ -161,6 +161,7 @@ results["benchmarks"]["ast_introspection"] = {
 # ==============================================================================
 print("\n=== 4. BENCHMARKING OLLAMA CPU NUM_THREAD SWEEP ===")
 import httpx
+
 ollama_url = "http://127.0.0.1:11434"
 
 ollama_results = {}
@@ -202,7 +203,7 @@ with httpx.Client(timeout=180.0) as client:
                     print(f"  num_thread={th:2d} -> HTTP {r.status_code}")
             except Exception as exc:
                 print(f"  num_thread={th:2d} -> Error: {exc}")
-        
+
         if m_sweep:
             best_th = max(m_sweep, key=lambda x: x["tokens_per_second"])
             ollama_results[friendly_name] = {

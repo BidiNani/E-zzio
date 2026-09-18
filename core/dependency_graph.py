@@ -1,7 +1,6 @@
 import ast
-from pathlib import Path
-from typing import Dict, List, Set
 import logging
+from pathlib import Path
 
 logger = logging.getLogger("ezzio.core.dependency_graph")
 
@@ -31,8 +30,8 @@ class DependencyGraphBuilder:
 
     def __init__(self, project_root: str = "."):
         self.project_root = Path(project_root)
-        self.import_map: Dict[str, Set[str]] = {}  # fichier → ensemble des imports
-        self.reverse_map: Dict[str, Set[str]] = {}  # module → ensemble des fichiers qui l'importent
+        self.import_map: dict[str, set[str]] = {}  # fichier → ensemble des imports
+        self.reverse_map: dict[str, set[str]] = {}  # module → ensemble des fichiers qui l'importent
 
     def _should_exclude(self, path: Path) -> bool:
         """Vérifie si un chemin doit être exclu."""
@@ -41,11 +40,11 @@ class DependencyGraphBuilder:
                 return True
         return False
 
-    def _parse_imports(self, filepath: Path) -> Set[str]:
+    def _parse_imports(self, filepath: Path) -> set[str]:
         """Extrait les imports d'un fichier Python."""
         imports = set()
         try:
-            with open(filepath, "r", encoding="utf-8") as f:
+            with open(filepath, encoding="utf-8") as f:
                 content = f.read()
 
             tree = ast.parse(content)
@@ -61,7 +60,7 @@ class DependencyGraphBuilder:
 
         return imports
 
-    def build(self, seed_files: List[str] = None):
+    def build(self, seed_files: list[str] = None):
         """
         Construit le graphe de dépendances.
         seed_files : liste de fichiers de départ (ex: bot.py, server.py)
@@ -93,10 +92,10 @@ class DependencyGraphBuilder:
 
         logger.info(f"[OK] Graphe construit : {len(self.import_map)} fichiers, {len(self.reverse_map)} modules")
 
-    def get_dependents(self, module_name: str) -> List[str]:
+    def get_dependents(self, module_name: str) -> list[str]:
         """Retourne tous les fichiers qui importent un module donné."""
         return sorted(self.reverse_map.get(module_name, set()))
 
-    def get_dependencies(self, filepath: str) -> List[str]:
+    def get_dependencies(self, filepath: str) -> list[str]:
         """Retourne tous les modules importés par un fichier donné."""
         return sorted(self.import_map.get(filepath, set()))

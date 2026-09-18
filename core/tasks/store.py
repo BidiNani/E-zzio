@@ -1,14 +1,15 @@
 import json
 import sqlite3
 from pathlib import Path
-from typing import List, Optional, Protocol
+from typing import Protocol
+
 from core.tasks.models import Task, TaskState
 
 
 class ITaskStore(Protocol):
     def save(self, task: Task) -> None: ...
-    def get_by_id(self, task_id: str) -> Optional[Task]: ...
-    def list_by_state(self, state: TaskState) -> List[Task]: ...
+    def get_by_id(self, task_id: str) -> Task | None: ...
+    def list_by_state(self, state: TaskState) -> list[Task]: ...
 
 
 class SqliteTaskStore:
@@ -72,14 +73,14 @@ class SqliteTaskStore:
             )
             conn.commit()
 
-    def get_by_id(self, task_id: str) -> Optional[Task]:
+    def get_by_id(self, task_id: str) -> Task | None:
         with self._get_connection() as conn:
             row = conn.execute("SELECT * FROM governed_tasks WHERE task_id = ?", (task_id,)).fetchone()
             if not row:
                 return None
             return self._row_to_task(row)
 
-    def list_by_state(self, state: TaskState) -> List[Task]:
+    def list_by_state(self, state: TaskState) -> list[Task]:
         with self._get_connection() as conn:
             rows = conn.execute("SELECT * FROM governed_tasks WHERE state = ?", (state.value,)).fetchall()
             return [self._row_to_task(row) for row in rows]

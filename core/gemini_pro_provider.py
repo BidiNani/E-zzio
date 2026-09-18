@@ -1,6 +1,6 @@
 import os
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Intégration du module d'optimisation et de compression de tokens[cite: 1]
 sys.path.append(str(Path(__file__).resolve().parent.parent / "runtime" / "optimization"))

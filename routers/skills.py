@@ -1,6 +1,7 @@
-from fastapi import APIRouter, HTTPException, Body
-from pathlib import Path
 import sys
+from pathlib import Path
+
+from fastapi import APIRouter, Body, HTTPException
 
 # Import du gestionnaire de skills
 sys.path.append(str(Path(__file__).resolve().parent.parent / "runtime" / "skills"))

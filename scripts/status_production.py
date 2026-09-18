@@ -1,9 +1,8 @@
-import os
-import sys
 import json
-import urllib.request
+import os
 import subprocess
-import shutil
+import sys
+import urllib.request
 from pathlib import Path
 
 ROOT = Path(r"G:/AI/E-zzio").resolve()
@@ -14,7 +13,7 @@ def get_production_status() -> dict:
         "timestamp": os.getenv("EZZIO_STATUS_TIME", ""),
         "components": {}
     }
-    
+
     # 1. E-ZZIO API / Readiness
     try:
         req = urllib.request.Request("http://127.0.0.1:8000/api/v1/health/readiness")

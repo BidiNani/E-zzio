@@ -9,17 +9,15 @@ Standard : Fail-Closed / Zéro fuite de credentials / Normalisation totale.
 """
 from __future__ import annotations
 
-import os
 import json
-import time
-import asyncio
 import logging
-import httpx
-from typing import Any, AsyncIterator, Dict, List, Optional
+import os
+import time
+from collections.abc import AsyncIterator
+from typing import Any
 
-from core.secrets import load_secrets, get_api_key
-from core.models.gemini_pool import gemini_pool
-from core.providers.iresearch_provider import IResearchProvider
+import httpx
+
 from core.config.active_model import get_active_gemini_model
 from core.providers.base_provider import (
     BaseProvider,
@@ -28,6 +26,8 @@ from core.providers.base_provider import (
     ProviderErrorClass,
     ProviderResponse,
 )
+from core.providers.iresearch_provider import IResearchProvider
+from core.secrets import load_secrets
 
 logger = logging.getLogger("GeminiProvider")
 
@@ -40,12 +40,12 @@ class GeminiProvider(BaseProvider, IResearchProvider):
     # Défaut stable du provider ; l'autorité de routage
     # (core/routing/model_registry.py) est la seule source de vérité.
     DEFAULT_MODEL: str = "gemini-3.5-flash-lite"
-    FALLBACK_MODELS: List[str] = ["gemini-3.6-flash", "gemini-3.8-flash"]
+    FALLBACK_MODELS: list[str] = ["gemini-3.6-flash", "gemini-3.8-flash"]
 
     def __init__(
         self,
-        api_key: Optional[str] = None,
-        model: Optional[str] = None,
+        api_key: str | None = None,
+        model: str | None = None,
         timeout: float = 120.0,
     ) -> None:
         load_secrets()
@@ -77,13 +77,13 @@ class GeminiProvider(BaseProvider, IResearchProvider):
         """Vérifie si le provider est prêt pour des requêtes."""
         return self.availability() in (ProviderAvailability.AVAILABLE, ProviderAvailability.DEGRADED)
 
-    def cost_class(self, model: Optional[str] = None) -> CostClass:
+    def cost_class(self, model: str | None = None) -> CostClass:
         """Endpoint Google AI Studio avec quota gratuit officiel."""
         if not self.api_key:
             return CostClass.UNKNOWN
         return CostClass.FREE_ENDPOINT
 
-    def capabilities(self, model: Optional[str] = None) -> List[str]:
+    def capabilities(self, model: str | None = None) -> list[str]:
         """Retourne les capacités déduites pour les modèles Gemini."""
         target = (model or self.model).lower()
         caps = ["TEXT", "VISION", "MULTIMODAL", "INSTRUCTION_FOLLOWING"]
@@ -93,7 +93,7 @@ class GeminiProvider(BaseProvider, IResearchProvider):
             caps.extend(["REASONING", "CODING", "TOOL_USE"])
         return sorted(list(set(caps)))
 
-    def error_mapping(self, status_code: int, error_body: Optional[str] = None) -> ProviderErrorClass:
+    def error_mapping(self, status_code: int, error_body: str | None = None) -> ProviderErrorClass:
         """Mappe les statuts HTTP de l'API Google vers les classes canoniques."""
         if status_code in (401, 403):
             return ProviderErrorClass.UNAUTHORIZED
@@ -114,17 +114,17 @@ class GeminiProvider(BaseProvider, IResearchProvider):
     def _build_generation_payload(
         self,
         prompt: str,
-        system_prompt: Optional[str] = None,
-        thinking_level: Optional[str] = None,
+        system_prompt: str | None = None,
+        thinking_level: str | None = None,
         temperature: float = 0.2,
         max_tokens: int = 512,
         **kwargs: Any,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Construit la charge utile standard Gemini v1beta."""
         contents = [{"parts": [{"text": prompt}]}]
-        payload: Dict[str, Any] = {"contents": contents}
+        payload: dict[str, Any] = {"contents": contents}
 
-        generation_config: Dict[str, Any] = {
+        generation_config: dict[str, Any] = {
             "temperature": temperature,
             "maxOutputTokens": max_tokens,
         }
@@ -152,7 +152,7 @@ class GeminiProvider(BaseProvider, IResearchProvider):
 
         return payload
 
-    async def health(self) -> Dict[str, Any]:
+    async def health(self) -> dict[str, Any]:
         """Vérifie la santé de l'API Gemini via listing des modèles."""
         start_time = time.perf_counter()
         if not self.api_key:
@@ -211,11 +211,11 @@ class GeminiProvider(BaseProvider, IResearchProvider):
     async def generate(
         self,
         prompt: str,
-        system_prompt: Optional[str] = None,
-        model: Optional[str] = None,
+        system_prompt: str | None = None,
+        model: str | None = None,
         temperature: float = 0.2,
         max_tokens: int = 512,
-        thinking_level: Optional[str] = None,
+        thinking_level: str | None = None,
         **kwargs: Any,
     ) -> ProviderResponse:
         """Exécute une génération normalisée avec gestion d'erreurs."""
@@ -349,11 +349,11 @@ class GeminiProvider(BaseProvider, IResearchProvider):
     async def stream(
         self,
         prompt: str,
-        system_prompt: Optional[str] = None,
-        model: Optional[str] = None,
+        system_prompt: str | None = None,
+        model: str | None = None,
         temperature: float = 0.2,
         max_tokens: int = 512,
-        thinking_level: Optional[str] = None,
+        thinking_level: str | None = None,
         **kwargs: Any,
     ) -> AsyncIterator[str]:
         """Diffuse les tokens au fil de la génération via streamGenerateContent."""
@@ -397,14 +397,14 @@ class GeminiProvider(BaseProvider, IResearchProvider):
         except Exception as exc:
             logger.warning("[GEMINI STREAM ERROR] %s", exc)
 
-    async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
+    async def search(self, query: str, **kwargs: Any) -> dict[str, Any]:
         """Méthode de recherche canonique compatible IResearchProvider avec support du pool multi-projets."""
         capability = kwargs.get("capability")
         if capability:
             # Mode routé par le pool multi-projets
             pool_inst = globals().get("gemini_pool")
             target_model = kwargs.get("model") or self.model
-            
+
             # Essayer d'obtenir la cible depuis le pool
             attempts = 0
             while attempts < 3:
@@ -447,7 +447,7 @@ class GeminiProvider(BaseProvider, IResearchProvider):
                                 status_code=response.status_code,
                                 headers=dict(response.headers),
                             )
-                except Exception as exc:
+                except Exception:
                     pool_inst.handle_error(
                         project=selected_proj,
                         key=key,

@@ -5,8 +5,8 @@ et 55 entrées experience_ledger du snapshot V7.58 pour cartographier
 le modèle d'organes, de talents et de genèse cognitive.
 """
 
-import sqlite3
 import json
+import sqlite3
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")

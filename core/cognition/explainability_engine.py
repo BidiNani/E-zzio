@@ -4,11 +4,11 @@ Interroge les ledgers de gouvernance et les journaux d'exécution pour fournir
 une explication détaillée et contextualisée de chaque décision prise par l'organisme.
 """
 
-import sys
 import json
 import logging
+import sys
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -28,7 +28,7 @@ class ExplainabilityEngine:
         self.root_dir = root_dir
         self.evolution_ledger_dir = self.root_dir / "runtime" / "ecol" / "evolution_ledger"
 
-    def explain_action(self, action_name: str) -> Dict[str, Any]:
+    def explain_action(self, action_name: str) -> dict[str, Any]:
         """
         Recherche dans les journaux d'audit de l'organisme la dernière occurrence
         d'une action et en restitue la justification contextuelle (Fail-Closed si introuvable).

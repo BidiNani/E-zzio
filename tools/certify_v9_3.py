@@ -2,14 +2,13 @@
 E-ZZIO V9.3 — Visual Reveal & Product UX Master Certifier (Python Engine).
 Executes the full 10-step certification pipeline deterministically.
 """
-import sys
-import os
-import json
 import hashlib
-import zipfile
+import json
+import os
 import subprocess
+import sys
+import zipfile
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parent.parent
 os.chdir(ROOT)

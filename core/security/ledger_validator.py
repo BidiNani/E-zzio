@@ -3,11 +3,12 @@ E-ZZIO V7.29.1 — Ledger Validator (Identity Seal Verification)
 Vérifie l'intégrité de la chaîne et la validité des sceaux d'identité embarqués.
 """
 
-import os
-import json
 import hashlib
 import hmac
+import json
+import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
@@ -70,7 +71,7 @@ class LedgerValidator:
                 return {"valid": False, "broken_at_line": line_num, "error": f"HASH INVALID à la ligne {line_num}"}
 
             if self.secret_key and stored_sig:
-                hmac_payload = f"{seq}:{stored_previous}:{stored_hash}".encode("utf-8")
+                hmac_payload = f"{seq}:{stored_previous}:{stored_hash}".encode()
                 calculated_sig = hmac.new(self.secret_key, hmac_payload, hashlib.sha256).hexdigest()
                 if not hmac.compare_digest(calculated_sig, stored_sig):
                     return {"valid": False, "broken_at_line": line_num, "error": f"HMAC INVALID à la ligne {line_num}"}

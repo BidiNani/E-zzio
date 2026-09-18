@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-import os
-import sys
 import json
-import time
+import os
 import socket
+import sys
+import time
 from pathlib import Path
 
 import psutil

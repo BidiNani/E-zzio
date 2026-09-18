@@ -2,14 +2,14 @@
 E-ZZIO V9.2 — Master Forensic Gap Closure Certifier (Python Engine).
 Executes the full 9-step certification pipeline deterministically.
 """
-import sys
-import os
-import json
 import hashlib
-import zipfile
+import json
+import os
 import subprocess
+import sys
+import zipfile
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parent.parent
 os.chdir(ROOT)
@@ -119,7 +119,7 @@ audit_dir.mkdir(parents=True, exist_ok=True)
 report_file = audit_dir / "certification_v9_2_full_report.json"
 
 report = {
-    "timestamp": datetime.now(timezone.utc).isoformat(),
+    "timestamp": datetime.now(UTC).isoformat(),
     "version": "9.2.0",
     "status": "100_PERCENT_VERIFIED_SOVEREIGN_PLATFORM",
     "frozen_core": "3/3 PASS (INTACT)",

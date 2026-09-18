@@ -217,6 +217,7 @@ def test_no_auto_activation():
     Tous les modèles Gemini dans le registre réel sont CANDIDATE, jamais ACTIVE.
     """
     from pathlib import Path
+
     from core.models.registry import ModelRegistry
 
     registry = ModelRegistry(Path("G:/AI/E-zzio/data/models/registry.json"))

@@ -3,9 +3,9 @@ E-ZZIO Core — Organism Identity & Existence Counter (V8.10)
 Calcule l'âge opérationnel de l'organisme à partir de sa naissance physique sur NTFS.
 """
 
-from datetime import datetime, timezone
-from pathlib import Path
 import json
+from datetime import UTC, datetime
+from pathlib import Path
 
 
 class OrganismIdentity:
@@ -24,10 +24,10 @@ class OrganismIdentity:
             except Exception:
                 pass
         # Parse en UTC
-        self.birth_dt = datetime.fromisoformat(self.birth_str).replace(tzinfo=timezone.utc)
+        self.birth_dt = datetime.fromisoformat(self.birth_str).replace(tzinfo=UTC)
 
     def get_existence_duration(self) -> dict:
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         diff = now - self.birth_dt
 
         days = diff.days

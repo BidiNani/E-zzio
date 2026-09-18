@@ -4,9 +4,9 @@ Valide l'intégrité globale du répertoire de baseline : vérifie que tous les 
 du manifeste sont conformes et qu'aucun fichier non répertorié (fantôme) n'y subsiste.
 """
 
-import sys
-import json
 import hashlib
+import json
+import sys
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")

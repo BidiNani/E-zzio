@@ -1,4 +1,5 @@
 import pytest
+
 from core.rag.simple_rag import SimpleRAG
 
 

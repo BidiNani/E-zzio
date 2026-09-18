@@ -1,12 +1,10 @@
 """
 Phase 2 : Baseline Avant Activation Runtime de Kokoro-82M.
 """
-import os
-import sys
-import json
-import time
 import hashlib
+import json
 import subprocess
+import time
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")
@@ -40,7 +38,11 @@ for auth in frozen_authorities:
 git_st = subprocess.run(["git", "status", "--short"], cwd=root, capture_output=True, text=True).stdout.strip()
 
 # Package versions
-import kokoro_onnx, onnxruntime, soundfile, numpy
+import kokoro_onnx
+import numpy
+import onnxruntime
+import soundfile
+
 packages_info = {
     "kokoro_onnx": kokoro_onnx.__version__ if hasattr(kokoro_onnx, "__version__") else "0.6.1",
     "onnxruntime": onnxruntime.__version__,

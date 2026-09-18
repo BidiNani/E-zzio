@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import os
 import time
+from datetime import UTC
 from pathlib import Path
 from typing import Any
 
@@ -12,14 +13,13 @@ from .discovery.gemini import GeminiDiscovery
 from .discovery.groq import GroqDiscovery
 from .discovery.litellm import LiteLLMDiscovery
 from .discovery.openrouter import OpenRouterDiscovery
-
 from .key_pool import KeyPoolManager
 from .lifecycle import ModelLifecycleManager
+from .qualification.free_only import filter_free_only
+from .qualification.gate import QualificationGate
 from .registry import ModelLifecycle, ModelRegistry
 from .router import EzzioRouter
 from .telemetry import SafeTelemetry
-from .qualification.gate import QualificationGate
-from .qualification.free_only import filter_free_only
 
 
 class AutonomousModelFabric:
@@ -70,7 +70,7 @@ class AutonomousModelFabric:
 
             try:
                 raw_models = await adapter.discover(key)
-                
+
                 accepted, rejected, stats = filter_free_only(raw_models)
                 print(
                     f"[FREE_ONLY] {provider.upper():<12} : "
@@ -429,13 +429,13 @@ class AutonomousModelFabric:
         operator: str = "system",
         new_tier: str | None = None,
     ) -> bool:
-        from datetime import datetime, timezone
+        from datetime import datetime
         entry = self.registry.get(provider, model_id)
         if entry is None:
             return False
 
         old_state = getattr(entry, "lifecycle", "DISCOVERED")
-        now_iso = datetime.now(timezone.utc).isoformat()
+        now_iso = datetime.now(UTC).isoformat()
 
         allowed = {
             ("DISCOVERED", "CANDIDATE"): ["discovery"],
@@ -454,29 +454,29 @@ class AutonomousModelFabric:
             raise RuntimeError(f"Transition illégale : {old_state} -> {new_state} par {actor}")
 
         if new_state == "QUARANTINED":
-            setattr(entry, "tier", "UNQUALIFIED")
-            setattr(entry, "failure_count", int(getattr(entry, "failure_count", 0)) + 1)
-            setattr(entry, "last_quarantine_at", now_iso)
-            setattr(entry, "last_quarantine_reason", reason[:300])
-            setattr(entry, "last_quarantine_operator", operator)
+            entry.tier = "UNQUALIFIED"
+            entry.failure_count = int(getattr(entry, "failure_count", 0)) + 1
+            entry.last_quarantine_at = now_iso
+            entry.last_quarantine_reason = reason[:300]
+            entry.last_quarantine_operator = operator
             if hasattr(self, "router") and hasattr(self.router, "invalidate_cache"):
                 self.router.invalidate_cache(provider, model_id)
 
         elif new_state == "CANDIDATE" and old_state == "QUARANTINED":
             failures = int(getattr(entry, "failure_count", 0))
-            setattr(entry, "historical_failures", int(getattr(entry, "historical_failures", 0)) + failures)
-            setattr(entry, "failure_count", 0)
-            setattr(entry, "rehabilitation_count", int(getattr(entry, "rehabilitation_count", 0)) + 1)
-            setattr(entry, "rehabilitated_at", now_iso)
-            setattr(entry, "rehabilitated_by", operator)
-            setattr(entry, "rehabilitation_reason", reason[:300])
-            setattr(entry, "tier", "UNQUALIFIED")
+            entry.historical_failures = int(getattr(entry, "historical_failures", 0)) + failures
+            entry.failure_count = 0
+            entry.rehabilitation_count = int(getattr(entry, "rehabilitation_count", 0)) + 1
+            entry.rehabilitated_at = now_iso
+            entry.rehabilitated_by = operator
+            entry.rehabilitation_reason = reason[:300]
+            entry.tier = "UNQUALIFIED"
 
         elif new_state == "ACTIVE" and new_tier:
-            setattr(entry, "tier", new_tier)
+            entry.tier = new_tier
 
-        setattr(entry, "lifecycle", new_state)
-        setattr(entry, "updated_at", now_iso)
+        entry.lifecycle = new_state
+        entry.updated_at = now_iso
         if hasattr(self, "_sync_router_with_registry"):
             self._sync_router_with_registry()
         self.registry.save()
@@ -545,7 +545,7 @@ class AutonomousModelFabric:
                     provider = str(getattr(entry, "provider", "openai")).lower()
                     model_id = str(getattr(entry, "model_id", "gpt-4"))
                     tier = str(getattr(entry, "tier", "FAST") or "FAST").upper()
-                    
+
                     deployment_dict = {
                         "model_name": tier,
                         "litellm_params": {

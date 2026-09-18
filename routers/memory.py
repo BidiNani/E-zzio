@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+
 from core.memory.instance import memory_gateway
 from core.schemas import MemoryQuery
 

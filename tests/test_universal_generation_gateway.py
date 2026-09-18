@@ -6,15 +6,16 @@ Valide la passerelle multimodale par message en langage naturel :
 - Confinement absolu dans outputs/ ou projects/ (zéro pollution de la racine)
 - Gestion honnête et transparente de la limite matérielle (Vidéo / VRAM 4 Go)
 """
-import pytest
 import os
 import wave
 import zipfile
 from pathlib import Path
-from openpyxl import load_workbook
+
+import pytest
 from docx import Document
-from pptx import Presentation
+from openpyxl import load_workbook
 from PIL import Image
+from pptx import Presentation
 
 from core.generators.generation_router import GenerationRouter
 from core.perception.qr_engine import QREngine
@@ -31,11 +32,11 @@ async def test_universal_routing_spreadsheet(router, tmp_path):
     res = await router.route_and_generate(msg)
     assert res["ok"] is True
     assert res["intent"] == "SPREADSHEET"
-    
+
     file_path = Path(res["path"])
     assert file_path.exists()
     assert file_path.parent == tmp_path / "outputs"
-    
+
     # Validation structurelle OpenXML XLSX
     wb = load_workbook(str(file_path), data_only=False)
     assert "Budget_Mensuel" in wb.sheetnames
@@ -51,11 +52,11 @@ async def test_universal_routing_presentation(router, tmp_path):
     res = await router.route_and_generate(msg)
     assert res["ok"] is True
     assert res["intent"] == "PRESENTATION"
-    
+
     file_path = Path(res["path"])
     assert file_path.exists()
     assert file_path.parent == tmp_path / "outputs"
-    
+
     # Validation structurelle PPTX
     prs = Presentation(str(file_path))
     assert len(prs.slides) == 3
@@ -69,12 +70,12 @@ async def test_universal_routing_pdf(router, tmp_path):
     res = await router.route_and_generate(msg)
     assert res["ok"] is True
     assert res["intent"] == "PDF"
-    
+
     file_path = Path(res["path"])
     assert file_path.exists()
     assert file_path.parent == tmp_path / "outputs"
     assert res["size_bytes"] > 1000
-    
+
     # Validation header PDF
     content = file_path.read_bytes()
     assert content.startswith(b"%PDF-")
@@ -86,11 +87,11 @@ async def test_universal_routing_document(router, tmp_path):
     res = await router.route_and_generate(msg)
     assert res["ok"] is True
     assert res["intent"] == "DOCUMENT"
-    
+
     file_path = Path(res["path"])
     assert file_path.exists()
     assert file_path.parent == tmp_path / "outputs"
-    
+
     # Validation structurelle DOCX
     doc = Document(str(file_path))
     assert len(doc.paragraphs) > 0
@@ -105,11 +106,11 @@ async def test_universal_routing_image(router, tmp_path):
     assert res["ok"] is True
     assert res["intent"] == "IMAGE"
     assert res["generation_time_ms"] > 0
-    
+
     file_path = Path(res["path"])
     assert file_path.exists()
     assert file_path.parent == tmp_path / "outputs"
-    
+
     # Validation format et dimensions d'image
     with Image.open(str(file_path)) as img:
         assert img.format == "PNG"
@@ -123,7 +124,7 @@ async def test_universal_routing_qr_code(router, tmp_path):
     assert res["ok"] is True
     assert res["intent"] == "QR_CODE"
     assert "https://e-zzio.ai/docs" in res["data_encoded"]
-    
+
     file_path = Path(res["path"])
     assert file_path.exists()
     assert file_path.parent == tmp_path / "outputs"
@@ -135,7 +136,7 @@ async def test_universal_routing_archive(router, tmp_path):
     res = await router.route_and_generate(msg)
     assert res["ok"] is True
     assert res["intent"] == "ARCHIVE"
-    
+
     file_path = Path(res["path"])
     assert file_path.exists()
     assert zipfile.is_zipfile(str(file_path))
@@ -147,7 +148,7 @@ async def test_universal_routing_audio(router, tmp_path):
     res = await router.route_and_generate(msg)
     assert res["ok"] is True
     assert res["intent"] == "AUDIO"
-    
+
     file_path = Path(res["path"])
     assert file_path.exists()
     with wave.open(str(file_path), "rb") as wf:
@@ -161,7 +162,7 @@ async def test_universal_routing_3d(router, tmp_path):
     res = await router.route_and_generate(msg)
     assert res["ok"] is True
     assert res["intent"] == "3D_MESH"
-    
+
     file_path = Path(res["path"])
     assert file_path.exists()
     content = file_path.read_text(encoding="utf-8")
@@ -206,10 +207,10 @@ async def test_outputs_confinement_integrity(router, tmp_path):
     await router.route_and_generate("Génère une présentation")
     await router.route_and_generate("Fais un rapport PDF")
     await router.route_and_generate("Génère une bannière image")
-    
+
     outputs_files = list((tmp_path / "outputs").glob("*"))
     assert len(outputs_files) >= 4
-    
+
     # Vérifier qu'aucun fichier généré n'est à la racine de tmp_path
     root_files = [f for f in tmp_path.iterdir() if f.is_file()]
     assert len(root_files) == 0

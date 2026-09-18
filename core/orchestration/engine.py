@@ -7,13 +7,12 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from datetime import datetime, timezone
-from typing import Any, Callable, Coroutine, Dict, List, Optional
+from collections.abc import Callable, Coroutine
+from typing import Any
 
 from core.orchestration.dag import (
     DAGExecutionStatus,
     DAGNode,
-    DependencyNotMetError,
     TaskDAG,
     utc_now,
 )
@@ -22,13 +21,13 @@ from core.security.audit_ledger import AuditLedger
 logger = logging.getLogger("DAGOrchestrator")
 
 
-TaskHandler = Callable[[DAGNode], Coroutine[Any, Any, Dict[str, Any]]]
+TaskHandler = Callable[[DAGNode], Coroutine[Any, Any, dict[str, Any]]]
 
 
 class DAGOrchestrator:
     """Moteur d'exécution multi-agent pour les graphes de tâches (DAG)."""
 
-    _instance: Optional[DAGOrchestrator] = None
+    _instance: DAGOrchestrator | None = None
 
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
@@ -38,15 +37,15 @@ class DAGOrchestrator:
 
     def __init__(
         self,
-        audit_ledger: Optional[AuditLedger] = None,
+        audit_ledger: AuditLedger | None = None,
         max_concurrency: int = 4,
     ):
         if getattr(self, "_initialized", False):
             return
         self.audit_ledger = audit_ledger or AuditLedger()
         self.semaphore = asyncio.Semaphore(max_concurrency)
-        self.handlers: Dict[str, TaskHandler] = {}
-        self._active_dags: Dict[str, TaskDAG] = {}
+        self.handlers: dict[str, TaskHandler] = {}
+        self._active_dags: dict[str, TaskDAG] = {}
         self._lock = asyncio.Lock()
         self._initialized = True
 
@@ -58,8 +57,8 @@ class DAGOrchestrator:
     async def execute_dag(
         self,
         dag: TaskDAG,
-        default_handler: Optional[TaskHandler] = None,
-    ) -> Dict[str, Any]:
+        default_handler: TaskHandler | None = None,
+    ) -> dict[str, Any]:
         """Exécute un DAG jusqu'à complétion ou échec fail-closed."""
         dag.validate()
         async with self._lock:
@@ -129,7 +128,7 @@ class DAGOrchestrator:
         self,
         node: DAGNode,
         dag: TaskDAG,
-        default_handler: Optional[TaskHandler],
+        default_handler: TaskHandler | None,
     ) -> None:
         async with self.semaphore:
             node.status = DAGExecutionStatus.RUNNING
@@ -231,7 +230,7 @@ class DAGOrchestrator:
                     if curr_id in other.dependencies and other.status == DAGExecutionStatus.PENDING:
                         to_skip.add(other.task_id)
 
-    def get_dag(self, dag_id: str) -> Optional[TaskDAG]:
+    def get_dag(self, dag_id: str) -> TaskDAG | None:
         return self._active_dags.get(dag_id)
 
 

@@ -6,16 +6,15 @@ Garantit une traçabilité immuable, inaltérable et vérifiable mathématiqueme
 3. Fonction de vérification d'intégrité de la chaîne complète
 """
 from __future__ import annotations
-import os
-import time
-import json
-import sqlite3
-import hashlib
-import logging
-from pathlib import Path
-from typing import Dict, Any, List, Optional, Tuple
 
+import hashlib
+import json
+import logging
+import sqlite3
 import threading
+import time
+from pathlib import Path
+from typing import Any
 
 logger = logging.getLogger("AuditLedger")
 
@@ -80,9 +79,9 @@ class AuditLedger:
         self,
         actor: str,
         action: str,
-        payload: Dict[str, Any],
+        payload: dict[str, Any],
         status: str = "SUCCESS"
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Enregistre un nouvel événement dans le journal scellé (Sérialisation Thread-Safe)."""
         payload_str = json.dumps(payload, sort_keys=True, ensure_ascii=False)
 
@@ -115,7 +114,7 @@ class AuditLedger:
             "status": status
         }
 
-    def verify_chain_integrity(self) -> Tuple[bool, int, Optional[str]]:
+    def verify_chain_integrity(self) -> tuple[bool, int, str | None]:
         """
         Vérifie mathématiquement chaque maillon de la chaîne cryptographique.
         Retourne (is_valid, total_events_checked, error_message).

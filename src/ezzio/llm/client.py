@@ -8,11 +8,11 @@ Optimisations actives :
 
 import json
 import logging
-import asyncio
+from collections.abc import AsyncGenerator
 from pathlib import Path
-from typing import AsyncGenerator
+
 import httpx
-from langchain_core.messages import SystemMessage, HumanMessage
+from langchain_core.messages import HumanMessage, SystemMessage
 
 from ezzio.config import settings
 from ezzio.llm.circuit_breaker import CircuitBreaker
@@ -46,7 +46,7 @@ class HybridLLMClient:
     def __init__(self) -> None:
         self.api_key = _get_gemini_api_key()
         self.circuit_breaker = CircuitBreaker(failure_threshold=3, cooldown_seconds=15.0)
-        
+
         # Modèles Gemini officiels 3.x supportés (sans modèles 2.x dépréciés)
         self.online_gemini_models = [
             "gemini-3.7-flash",

@@ -4,7 +4,8 @@ Vérifie que web_server.py est la passerelle unique pour /health, /master/chat, 
 """
 
 import pytest
-from httpx import AsyncClient, ASGITransport
+from httpx import ASGITransport, AsyncClient
+
 from web_server import app
 
 

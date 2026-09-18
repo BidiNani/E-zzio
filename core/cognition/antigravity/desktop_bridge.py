@@ -4,7 +4,7 @@ import json
 import subprocess
 import threading
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any
 
 
 class AntigravityDesktopBridge:
@@ -30,7 +30,7 @@ class AntigravityDesktopBridge:
         self.node_executable = node_executable
         self.bridge_script = self.bridge_dir / "ezzio_antigravity_bridge.js"
 
-        self._process: Optional[subprocess.Popen[str]] = None
+        self._process: subprocess.Popen[str] | None = None
         self._lock = threading.Lock()
 
     @property
@@ -61,7 +61,7 @@ class AntigravityDesktopBridge:
             bufsize=1,
         )
 
-    def request(self, action: str, **payload: Any) -> Dict[str, Any]:
+    def request(self, action: str, **payload: Any) -> dict[str, Any]:
         with self._lock:
             self.start()
 
@@ -128,14 +128,14 @@ class AntigravityDesktopBridge:
         self,
         cascade_id: str,
         timeout_ms: int = 600000,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Waits for the current Desktop cascade turn and returns its result."""
         return self.request(
             "await_result",
             cascadeId=cascade_id,
             timeoutMs=timeout_ms,
         )
-    def history_detail(self, cascade_id: str) -> Dict[str, Any]:
+    def history_detail(self, cascade_id: str) -> dict[str, Any]:
         """Returns the latest serialized Desktop cascade step."""
         return self.request(
             "history_detail",
@@ -144,7 +144,7 @@ class AntigravityDesktopBridge:
     def classify_history_detail(
         self,
         cascade_id: str,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Classifies the latest Desktop cascade state without generating."""
         detail = self.history_detail(cascade_id)
 
@@ -213,7 +213,7 @@ class AntigravityDesktopBridge:
             "stepCount": detail.get("stepCount", 0),
         }
     def shutdown(self) -> None:
-        process: Optional[subprocess.Popen[str]]
+        process: subprocess.Popen[str] | None
 
         with self._lock:
             process = self._process
@@ -253,7 +253,7 @@ class AntigravityDesktopBridge:
             except subprocess.TimeoutExpired:
                 pass
 
-    def __enter__(self) -> "AntigravityDesktopBridge":
+    def __enter__(self) -> AntigravityDesktopBridge:
         self.start()
         return self
 

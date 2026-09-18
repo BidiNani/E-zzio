@@ -1,7 +1,9 @@
-import os
-import hmac
 import hashlib
+import hmac
+import os
+
 from dotenv import load_dotenv
+
 from core.identity.canonical_identity import CanonicalIdentity
 
 load_dotenv()

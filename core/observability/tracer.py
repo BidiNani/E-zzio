@@ -1,6 +1,7 @@
-import aiosqlite
 import logging
-from datetime import datetime, timezone
+from datetime import UTC, datetime
+
+import aiosqlite
 
 logger = logging.getLogger("ezzio.observability")
 
@@ -42,7 +43,7 @@ class ExecutionTracer:
     ):
         try:
             await self.init()
-            now = datetime.now(timezone.utc).isoformat()
+            now = datetime.now(UTC).isoformat()
             async with aiosqlite.connect(self.db_path) as db:
                 await db.execute(
                     """INSERT INTO execution_traces 

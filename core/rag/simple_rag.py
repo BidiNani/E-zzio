@@ -1,9 +1,10 @@
-import aiosqlite
 import json
 import logging
 import os
 import re
-from typing import Any, Dict, List, Optional
+from typing import Any
+
+import aiosqlite
 
 logger = logging.getLogger("ezzio.rag")
 
@@ -73,7 +74,7 @@ class SimpleRAG:
             await db.commit()
             logger.info("[RAG] Base de connaissances FTS5 initialisée : %s", self.db_path)
 
-    async def add_document(self, content: str, metadata: Optional[Dict[str, Any]] = None, tag: str = "general") -> int:
+    async def add_document(self, content: str, metadata: dict[str, Any] | None = None, tag: str = "general") -> int:
         """Ajoute un document à la base de connaissances."""
         meta_str = json.dumps(metadata) if metadata else None
         async with aiosqlite.connect(self.db_path) as db:
@@ -84,7 +85,7 @@ class SimpleRAG:
             await db.commit()
             return cursor.lastrowid
 
-    async def add_documents(self, docs: List[Dict[str, Any]]) -> List[int]:
+    async def add_documents(self, docs: list[dict[str, Any]]) -> list[int]:
         """Insertion par lot pour de hautes performances."""
         ids = []
         async with aiosqlite.connect(self.db_path) as db:
@@ -101,7 +102,7 @@ class SimpleRAG:
             await db.commit()
         return ids
 
-    async def search_documents(self, query: str, limit: int = 5, tag: Optional[str] = None) -> List[Dict[str, Any]]:
+    async def search_documents(self, query: str, limit: int = 5, tag: str | None = None) -> list[dict[str, Any]]:
         """Recherche plein texte par pertinence BM25 avec fallback si pas de correspondance FTS5."""
         if not query or not query.strip():
             return []

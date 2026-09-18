@@ -1,13 +1,4 @@
 """E-ZZIO — configuration centrale (dont chargeur de secrets) + config LAN."""
-from core.config.secrets_loader import (
-    discord_owner_id,
-    discord_token,
-    gemini_keys,
-    groq_key,
-    load,
-    log_secrets_diagnostics,
-)
-
 # ============================================================
 # Configuration LAN / Mode (ex-core/config.py)
 # ============================================================
@@ -23,6 +14,14 @@ from core.app_config import (
     MASK_ERRORS,
     RATE_LIMIT,
     REQUIRE_AUTH,
+)
+from core.config.secrets_loader import (
+    discord_owner_id,
+    discord_token,
+    gemini_keys,
+    groq_key,
+    load,
+    log_secrets_diagnostics,
 )
 
 __all__ = [

@@ -3,17 +3,19 @@ E-ZZIO Core V10.6 — Test Suite for World Model Engine & Proactive Master.
 Valide la représentation d'état, la détection de dérive, l'évaluation de risques/opportunités,
 l'exécution d'actions autonomes sécurisées, la protection anti-boucle, et la dégradation élégante.
 """
-import pytest
 import time
+
+import pytest
+
 from core.world.world_model import (
-    WorldModelEngine,
-    WorldEntity,
+    ActionClassification,
     EntityType,
-    StateSource,
     FreshnessStatus,
     RiskCategory,
-    ActionClassification,
     ScenarioType,
+    StateSource,
+    WorldEntity,
+    WorldModelEngine,
 )
 
 

@@ -12,6 +12,7 @@ Garanties :
 from __future__ import annotations
 
 import logging
+
 from fastapi import APIRouter
 
 logger = logging.getLogger("EzzioRegistryRouter")

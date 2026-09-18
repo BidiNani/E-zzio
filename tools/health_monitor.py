@@ -12,25 +12,22 @@ Vérifie l'état opérationnel complet de la plateforme :
 4. Génération de state/audit/health_status.json
 """
 from __future__ import annotations
+
+import json
 import os
 import sys
-import json
 import time
 import urllib.request
-from typing import Dict, Any
+from typing import Any
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
 from core.routing.circuit_breaker import circuit_breaker
-from core.providers.ollama_provider import OllamaProvider
-from core.providers.gemini_provider import GeminiProvider
-from core.providers.groq_provider import GroqProvider
-from core.providers.nvidia_nim_provider import NvidiaNimProvider
 
 
-def check_ollama_health() -> Dict[str, Any]:
+def check_ollama_health() -> dict[str, Any]:
     url = "http://localhost:11434/api/tags"
     cb_state = circuit_breaker.get_state("ollama")
     try:
@@ -54,13 +51,13 @@ def check_ollama_health() -> Dict[str, Any]:
         }
 
 
-def check_gemini_health() -> Dict[str, Any]:
+def check_gemini_health() -> dict[str, Any]:
     cb_state = circuit_breaker.get_state("gemini")
     key = os.getenv("GEMINI_API_KEY")
     env_file = os.path.join(REPO_ROOT, "secrets", ".env")
     if not key and os.path.exists(env_file):
         try:
-            for line in open(env_file, "r", encoding="utf-8").readlines():
+            for line in open(env_file, encoding="utf-8").readlines():
                 if "GEMINI_API_KEY" in line:
                     key = line.split("=")[1].strip()
                     break
@@ -81,7 +78,7 @@ def check_gemini_health() -> Dict[str, Any]:
     }
 
 
-def check_groq_health() -> Dict[str, Any]:
+def check_groq_health() -> dict[str, Any]:
     cb_state = circuit_breaker.get_state("groq")
     key = os.getenv("GROQ_API_KEY")
     if not key:
@@ -97,7 +94,7 @@ def check_groq_health() -> Dict[str, Any]:
     }
 
 
-def check_nvidia_health() -> Dict[str, Any]:
+def check_nvidia_health() -> dict[str, Any]:
     cb_state = circuit_breaker.get_state("nvidia")
     key = os.getenv("NVIDIA_API_KEY") or os.getenv("NVIDIA_NIM_API_KEY")
     if not key:
@@ -118,7 +115,7 @@ def check_frozen_core_status() -> bool:
     if not os.path.exists(manifest_path):
         return False
     import hashlib
-    with open(manifest_path, "r", encoding="utf-8") as f:
+    with open(manifest_path, encoding="utf-8") as f:
         manifest = json.load(f)["components"]
     files = ["core/capabilities/capability_policy.py", "core/capabilities/registry.py", "core/security/audit_ledger.py"]
     for f in files:
@@ -131,7 +128,7 @@ def check_frozen_core_status() -> bool:
     return True
 
 
-def run_full_health_check() -> Dict[str, Any]:
+def run_full_health_check() -> dict[str, Any]:
     """Exécute un audit de santé complet de la plateforme."""
     fc_ok = check_frozen_core_status()
     providers = {

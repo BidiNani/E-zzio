@@ -6,12 +6,10 @@ les performances d'équipe, les schémas d'échec et les stratégies de récupé
 from __future__ import annotations
 
 import logging
-import math
 import time
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
 from enum import Enum
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any
 
 logger = logging.getLogger("ezzio.memory.strategic")
 
@@ -39,7 +37,7 @@ class AgentReliabilityProfile:
     tasks_completed: int = 0
     tasks_failed: int = 0
     total_latency: float = 0.0
-    specialization_scores: Dict[str, float] = field(default_factory=dict)
+    specialization_scores: dict[str, float] = field(default_factory=dict)
     confidence: float = 0.0  # 0.0 à 1.0
     last_updated: float = field(default_factory=time.time)
 
@@ -109,7 +107,7 @@ class FailurePattern:
     category: str
     error_signature: str
     count: int = 1
-    best_recovery_strategy: Optional[str] = None
+    best_recovery_strategy: str | None = None
 
 
 class StrategicMemoryEngine:
@@ -118,11 +116,11 @@ class StrategicMemoryEngine:
     MIN_SAMPLE_SIZE_FOR_CONFIDENCE = 3
 
     def __init__(self) -> None:
-        self.agent_profiles: Dict[str, AgentReliabilityProfile] = {}
-        self.model_profiles: Dict[str, ModelReliabilityProfile] = {}
-        self.provider_profiles: Dict[str, ProviderReliabilityProfile] = {}
-        self.team_profiles: Dict[str, TeamPerformanceProfile] = {}
-        self.failure_patterns: Dict[str, FailurePattern] = {}
+        self.agent_profiles: dict[str, AgentReliabilityProfile] = {}
+        self.model_profiles: dict[str, ModelReliabilityProfile] = {}
+        self.provider_profiles: dict[str, ProviderReliabilityProfile] = {}
+        self.team_profiles: dict[str, TeamPerformanceProfile] = {}
+        self.failure_patterns: dict[str, FailurePattern] = {}
         self.exploration_budget: float = 100.0  # budget dédié aux tests d'exploration
         self.exploration_used: float = 0.0
         self._is_available: bool = True
@@ -133,12 +131,12 @@ class StrategicMemoryEngine:
         outcome: MissionOutcome,
         duration: float,
         cost: float,
-        agents_used: List[str],
+        agents_used: list[str],
         model_used: str,
         provider_used: str,
         task_type: str = "CODING",
-        error: Optional[str] = None,
-        recovery_action: Optional[str] = None,
+        error: str | None = None,
+        recovery_action: str | None = None,
     ) -> None:
         """Enregistre les résultats réels d'une mission et met à jour les métriques d'apprentissage."""
         if not self._is_available:
@@ -213,7 +211,7 @@ class StrategicMemoryEngine:
 
         logger.info(f"[STRATEGIC-MEMORY] Mission {mission_id} enregistrée: {outcome.value}")
 
-    def recommend_best_team(self, task_type: str) -> List[str]:
+    def recommend_best_team(self, task_type: str) -> list[str]:
         """Propose l'équipe d'agents historiquement la plus efficace."""
         if not self._is_available or not self.team_profiles:
             return ["coder_worker", "qa_tester"]
@@ -242,7 +240,7 @@ class StrategicMemoryEngine:
         best_prov = max(valid_provs, key=lambda p: (p.availability, -p.failures_count))
         return best_prov.provider_id
 
-    def explain_decision(self, agent_id: str, model_id: str) -> Dict[str, Any]:
+    def explain_decision(self, agent_id: str, model_id: str) -> dict[str, Any]:
         """Fournit une explication transparente et observable sur la recommandation."""
         a_prof = self.agent_profiles.get(agent_id)
         m_prof = self.model_profiles.get(model_id)

@@ -5,9 +5,10 @@ DOM contracts, security escaping, and bidirectional backend integration.
 """
 import json
 import re
-import urllib.request
 import urllib.error
+import urllib.request
 from pathlib import Path
+
 import pytest
 
 BASE_URL = "http://127.0.0.1:8001"
@@ -34,6 +35,7 @@ def fetch_url(path, method="GET", data=None, headers=None):
         raise
     except (urllib.error.URLError, ConnectionRefusedError, TimeoutError, OSError):
         from starlette.testclient import TestClient
+
         from web_server import app
         with TestClient(app, raise_server_exceptions=False) as client:
             kw = {"headers": req_headers}

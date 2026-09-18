@@ -1,9 +1,9 @@
 """
 core/routing/model_registry.py — Compatibility re-exports for canonical model registry
 """
-from enum import Enum, auto
 from dataclasses import dataclass, field
-from typing import List, Optional
+from enum import Enum, auto
+
 
 class ModelSource(Enum):
     LOCAL = auto()
@@ -31,7 +31,7 @@ class CanonicalModelRecord:
     qualification_status: ModelQualificationStatus = ModelQualificationStatus.QUALIFIED
     enabled: bool = True
     role: str = "general"
-    roles: List[str] = field(default_factory=list)
+    roles: list[str] = field(default_factory=list)
     thinking_level: str = "off"
 
     def __post_init__(self):
@@ -57,13 +57,13 @@ class CanonicalModelRegistry:
     def list_models(self, qualified_only: bool = True, include_disabled: bool = False):
         return self._models
 
-    def get(self, name: str) -> Optional[CanonicalModelRecord]:
+    def get(self, name: str) -> CanonicalModelRecord | None:
         for m in self._models:
             if m.name == name:
                 return m
         return None
 
-    def get_by_role(self, role: str) -> Optional[CanonicalModelRecord]:
+    def get_by_role(self, role: str) -> CanonicalModelRecord | None:
         for m in self._models:
             if role in m.roles or m.role == role:
                 return m

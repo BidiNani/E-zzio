@@ -11,7 +11,6 @@ from __future__ import annotations
 import enum
 import logging
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -45,7 +44,7 @@ class ContextBudgetEngine:
     def __init__(self):
         pass
 
-    def classify_segment(self, segment_id: str, text: str, hint_category: Optional[str] = None) -> ClassifiedContextSegment:
+    def classify_segment(self, segment_id: str, text: str, hint_category: str | None = None) -> ClassifiedContextSegment:
         """Classifies a context segment into its appropriate tier and strategy."""
         clean_text = text.strip()
         chars = len(clean_text)

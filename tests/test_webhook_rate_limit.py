@@ -5,8 +5,9 @@ au lieu de dependre de la latence d'Ollama (30-50s/appel) qui rend
 tout test via HTTP end-to-end lent et ambigu.
 """
 
-import pytest
 import time
+
+import pytest
 
 
 @pytest.fixture

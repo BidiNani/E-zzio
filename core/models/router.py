@@ -7,13 +7,22 @@ litellm.Router Types - includes RouterConfig, UpdateRouterConfig, ModelInfo etc
 import datetime
 import enum
 from dataclasses import dataclass
-from typing import Any, ClassVar, Final, Generic, Literal, TypeVar, get_type_hints
+from typing import (
+    Any,
+    ClassVar,
+    Final,
+    Generic,
+    Literal,
+    Protocol,
+    Required,
+    TypeVar,
+    get_type_hints,
+)
 
 import httpx
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
-from typing_extensions import Protocol, Required, TypedDict, runtime_checkable
-
 from litellm._uuid import uuid
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from typing_extensions import TypedDict, runtime_checkable
 
 # Fallback type pour l'objet fichier OpenAI obsolète
 OpenAIFileObject = Any
@@ -134,8 +143,8 @@ def _as_utc(value: datetime.datetime | None) -> datetime.datetime | None:
     if value is None:
         return None
     if value.tzinfo is None:
-        return value.replace(tzinfo=datetime.timezone.utc)
-    return value.astimezone(datetime.timezone.utc)
+        return value.replace(tzinfo=datetime.UTC)
+    return value.astimezone(datetime.UTC)
 
 
 class ModelInfo(MirroredPricingParams):
@@ -1001,6 +1010,7 @@ class AdaptiveRouterPreferences(BaseModel):
 # E-ZZIO EzzioRouter (Bridge vers litellm.Router avec support Registry/KeyPool/Telemetry)
 # ==============================================================================
 from litellm import Router as LiteLLM_BaseRouter
+
 
 class EzzioRouter(LiteLLM_BaseRouter):
     """

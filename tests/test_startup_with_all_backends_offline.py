@@ -3,9 +3,10 @@ Test de conformité de l'invariant d'indépendance de démarrage :
 Prouve que web_server.py démarre et reste accessible même si Ollama est complètement OFFLINE.
 """
 import pytest
-from httpx import AsyncClient, ASGITransport
-from web_server import app
+from httpx import ASGITransport, AsyncClient
+
 from core.models.provider_health import probe_ollama_status
+from web_server import app
 
 
 @pytest.mark.asyncio

@@ -6,15 +6,14 @@ qui dialogue directement avec le ApprovalManager canonique sans contournement.
 from __future__ import annotations
 
 import logging
-from datetime import datetime, timezone
-from typing import Any, Dict, Optional
+from datetime import UTC, datetime
+from typing import Any
 
 from core.governance.approval import (
     ApprovalExpiredError,
     ApprovalManager,
     ApprovalStatus,
     DecisionChoice,
-    DoubleExecutionError,
     StateTransitionError,
     approval_manager,
 )
@@ -25,7 +24,7 @@ logger = logging.getLogger("DiscordHITL")
 def format_time_remaining(expires_at_str: str) -> str:
     try:
         exp_dt = datetime.fromisoformat(expires_at_str)
-        now_dt = datetime.now(timezone.utc)
+        now_dt = datetime.now(UTC)
         diff = int((exp_dt - now_dt).total_seconds())
         if diff <= 0:
             return "00:00 (Expiré)"
@@ -38,10 +37,10 @@ def format_time_remaining(expires_at_str: str) -> str:
 class DiscordApprovalController:
     """Contrôleur applicatif pour les interactions d'approbation Discord."""
 
-    def __init__(self, manager: Optional[ApprovalManager] = None):
+    def __init__(self, manager: ApprovalManager | None = None):
         self.manager = manager or approval_manager
 
-    def build_approval_embed_payload(self, approval_id: str) -> Dict[str, Any]:
+    def build_approval_embed_payload(self, approval_id: str) -> dict[str, Any]:
         """Génère le dictionnaire de rendu Discord pour une demande d'approbation."""
         req = self.manager.get(approval_id)
         if not req:
@@ -51,7 +50,7 @@ class DiscordApprovalController:
 
         return {
             "title": "🛡️ E-ZZIO HITL — Validation Requise",
-            "description": f"Une action sensible requiert votre validation humaine explicite.",
+            "description": "Une action sensible requiert votre validation humaine explicite.",
             "fields": [
                 {"name": "ID Approbation", "value": f"`{req.approval_id}`", "inline": True},
                 {"name": "Tâche", "value": f"`{req.task_id}`", "inline": True},
@@ -71,8 +70,8 @@ class DiscordApprovalController:
         choice_str: str,
         user_id: str,
         username: str,
-        reason: Optional[str] = None,
-    ) -> Dict[str, Any]:
+        reason: str | None = None,
+    ) -> dict[str, Any]:
         """Traite le clic d'un bouton Discord en déléguant au ApprovalManager."""
         try:
             choice = DecisionChoice(choice_str.upper())

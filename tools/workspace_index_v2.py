@@ -1,8 +1,8 @@
-import os
-import sqlite3
 import hashlib
-import time
+import os
 import shutil
+import sqlite3
+import time
 
 DB_PATH = r"G:\AI\E-zzio\data\workspace_index.db"
 BACKUP_PATH = r"G:\AI\E-zzio\data\workspace_index.db.bak"

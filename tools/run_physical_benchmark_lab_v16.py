@@ -2,16 +2,14 @@
 E-ZZIO Real Physical Benchmark Lab v16.0 Live Execution Engine.
 Strictly executes physical runs, captures PID, stdout/stderr, native metrics, RAM, and writes live_runs/*.json.
 """
-import os
-import sys
 import json
-import time
-import hashlib
 import re
-import urllib.request
 import subprocess
-import psutil
+import time
+import urllib.request
 from pathlib import Path
+
+import psutil
 
 root = Path("G:/AI/E-zzio")
 opt_dir = root / "state/audit/optimization/performance_v16"
@@ -117,14 +115,14 @@ def execute_live_run(pass_id, model_obj, threads, context=2048, max_tokens=64, r
     m_tag = model_obj["tag"]
     runtime = model_obj["runtime"]
     run_id = f"{pass_id}_{m_id}_{threads}T_{context}ctx_{max_tokens}tok_run{run_idx}"
-    
+
     model_live_dir = live_runs_dir / m_id
     model_live_dir.mkdir(parents=True, exist_ok=True)
-    
+
     t_start_iso = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     ram_before = get_ram_mb()
     cpu_before = psutil.cpu_percent(interval=0.1)
-    
+
     pid = 0
     raw_stdout = ""
     raw_stderr = ""
@@ -134,9 +132,9 @@ def execute_live_run(pass_id, model_obj, threads, context=2048, max_tokens=64, r
     prompt_tokens = 50
     generated_tokens = 0
     load_ms = 0.0
-    
+
     t0 = time.perf_counter()
-    
+
     if runtime == "Ollama":
         payload = {
             "model": m_tag,
@@ -209,13 +207,13 @@ def execute_live_run(pass_id, model_obj, threads, context=2048, max_tokens=64, r
             raw_stderr = str(e)
             exit_code = 1
             ram_peak = get_ram_mb()
-            
+
     lat_total = (time.perf_counter() - t0) * 1000
     time.sleep(0.3)
     ram_after = get_ram_mb()
     cpu_after = psutil.cpu_percent(interval=0.1)
     t_end_iso = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-    
+
     run_record = {
         "run_id": run_id,
         "pass_id": pass_id,
@@ -255,7 +253,7 @@ def execute_live_run(pass_id, model_obj, threads, context=2048, max_tokens=64, r
         "cuda_used": False,
         "status": "VALID" if exit_code == 0 else "FAILED"
     }
-    
+
     # Write live run proof file immediately
     (model_live_dir / f"{run_id}.json").write_text(json.dumps(run_record, indent=2, ensure_ascii=False), encoding="utf-8")
     return run_record

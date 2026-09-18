@@ -8,9 +8,9 @@ la confiance naît de comptages réels, jamais de pourcentages inventés.
 from __future__ import annotations
 
 import hashlib
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 from urllib.parse import urlparse
 
 
@@ -57,7 +57,7 @@ class Confidence(str, Enum):
     UNKNOWN = "UNKNOWN"
 
 
-_INTENT_KEYWORDS: Tuple[Tuple[SearchIntent, Tuple[str, ...]], ...] = (
+_INTENT_KEYWORDS: tuple[tuple[SearchIntent, tuple[str, ...]], ...] = (
     (SearchIntent.MONITORING, ("surveille", "monitor", "watch", "alerte", "suivi")),
     (SearchIntent.NEWS, ("news", "nouvelles", "actualité", "actualités", "dernières",
                          "aujourd'hui", "hier", "breaking", "veille")),
@@ -69,7 +69,7 @@ _INTENT_KEYWORDS: Tuple[Tuple[SearchIntent, Tuple[str, ...]], ...] = (
                                 "combien", "quand", "what is", "who is", "define")),
 )
 
-_BREADTH_KEYWORDS: Tuple[Tuple[Breadth, Tuple[str, ...]], ...] = (
+_BREADTH_KEYWORDS: tuple[tuple[Breadth, tuple[str, ...]], ...] = (
     (Breadth.QUICK, ("vite", "rapidement", "quick", "bref", "en deux mots")),
     (Breadth.DEEP, ("complète", "approfondie", "étude", "complète", "détaillée",
                      "deep", "thorough")),
@@ -78,7 +78,7 @@ _BREADTH_KEYWORDS: Tuple[Tuple[Breadth, Tuple[str, ...]], ...] = (
 )
 
 
-def classify_search(text: str) -> Tuple[SearchIntent, Breadth, List[str]]:
+def classify_search(text: str) -> tuple[SearchIntent, Breadth, list[str]]:
     """Intention + profondeur. Inconnu → (RESEARCH, QUICK, confiance basse)."""
     t = (text or "").lower()
     intent, breadth, reasons = SearchIntent.RESEARCH, Breadth.NORMAL, ["défaut"]
@@ -108,12 +108,12 @@ class SourceResult:
     locator: str  # url ou chemin
     content: str
     retrieved_at: float = 0.0
-    published_at: Optional[float] = None
+    published_at: float | None = None
     trust: Trust = Trust.UNKNOWN
     provenance: str = ""  # requête d'origine + date de collecte
 
 
-def _parse_pub_date(pub: Any) -> Optional[float]:
+def _parse_pub_date(pub: Any) -> float | None:
     """Timestamp, ISO-8601 ou date simple → epoch. Échec → None (UNKNOWN)."""
     if pub is None:
         return None
@@ -139,8 +139,8 @@ def _clean_locator(url: str) -> str:
     return loc
 
 
-def normalize_results(provider: str, items: List[Dict[str, Any]],
-                      query: str = "", now: float = 0.0) -> List[SourceResult]:
+def normalize_results(provider: str, items: list[dict[str, Any]],
+                      query: str = "", now: float = 0.0) -> list[SourceResult]:
     """Formes tavily/searxng/génériques → SourceResult. Pure et tolérante."""
     out = []
     for it in items or []:
@@ -172,7 +172,7 @@ def origin_domain(locator: str) -> str:
     return ".".join(parts[-2:]) if len(parts) >= 2 else host
 
 
-def deduplicate(results: List[SourceResult]) -> Tuple[List[SourceResult], Dict[str, int]]:
+def deduplicate(results: list[SourceResult]) -> tuple[list[SourceResult], dict[str, int]]:
     """Déduplique (locator nettoyé + hash contenu). Retourne (uniques, stats
     honnêtes : pages, documents distincts, origines indépendantes)."""
     seen, unique = set(), []
@@ -188,7 +188,7 @@ def deduplicate(results: List[SourceResult]) -> Tuple[List[SourceResult], Dict[s
                     "independent_origins": len(origins)}
 
 
-def freshness_of(published_at: Optional[float], now: float,
+def freshness_of(published_at: float | None, now: float,
                  volatility_days: float = 30.0) -> Freshness:
     """Fraîcheur contextuelle : la volatilité du sujet donne l'échelle."""
     if not published_at or published_at <= 0:
@@ -217,12 +217,12 @@ def confidence_of(n_independent: int, corroborated: bool, conflicts: bool,
     return Confidence.MEDIUM
 
 
-def detect_conflict(stances: List[Tuple[str, str, int]]) -> List[str]:
+def detect_conflict(stances: list[tuple[str, str, int]]) -> list[str]:
     """Oppositions déclarées (clé, source, +1/-1/0) → clés en CONFLIT.
 
     Aucune NLP : l'appelant fournit les positions. Origines distinctes exigées.
     """
-    by_key: Dict[str, Dict[str, int]] = {}
+    by_key: dict[str, dict[str, int]] = {}
     for key, source, stance in stances:
         by_key.setdefault(key, {})[source] = stance
     conflicts = []
@@ -235,7 +235,7 @@ def detect_conflict(stances: List[Tuple[str, str, int]]) -> List[str]:
 
 def quality_gate(n_independent: int, has_primary: bool, freshness_ok: bool,
                  conflicts_checked: bool, traced: bool,
-                 uncertainty_explicit: bool) -> Tuple[str, List[str]]:
+                 uncertainty_explicit: bool) -> tuple[str, list[str]]:
     """Grille §47 : COMPLETE ou INCOMPLETE + manques explicites."""
     missing = []
     if n_independent < 2:
@@ -253,7 +253,7 @@ def quality_gate(n_independent: int, has_primary: bool, freshness_ok: bool,
     return ("COMPLETE", []) if not missing else ("INCOMPLETE", missing)
 
 
-def mark_untrusted(results: List[SourceResult]) -> List[Dict[str, Any]]:
+def mark_untrusted(results: list[SourceResult]) -> list[dict[str, Any]]:
     """Enveloppe UNTRUSTED + provenance avant tout contexte modèle."""
     from core.security.untrusted import wrap_untrusted
 
@@ -266,7 +266,7 @@ def mark_untrusted(results: List[SourceResult]) -> List[Dict[str, Any]]:
 
 
 async def save_research_session(gateway, session_id: str, query: str,
-                                summary: str, locators: List[str]) -> None:
+                                summary: str, locators: list[str]) -> None:
     """Mémorise une session de recherche via le gateway existant (0 nouveau store)."""
     content = (f"[RESEARCH] query={query[:200]} | "
                f"sources={len(locators)} | {summary[:500]} | "

@@ -3,9 +3,19 @@ confiance par preuves, conflits déclarés, grille qualité, UNTRUSTED."""
 import pytest
 
 from core.capabilities.research_fabric import (
-    Breadth, Confidence, Freshness, SearchIntent, SourceResult,
-    classify_search, confidence_of, deduplicate, detect_conflict,
-    freshness_of, mark_untrusted, normalize_results, quality_gate,
+    Breadth,
+    Confidence,
+    Freshness,
+    SearchIntent,
+    SourceResult,
+    classify_search,
+    confidence_of,
+    deduplicate,
+    detect_conflict,
+    freshness_of,
+    mark_untrusted,
+    normalize_results,
+    quality_gate,
     save_research_session,
 )
 

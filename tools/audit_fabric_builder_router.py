@@ -1,34 +1,35 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_fabric_builder_and_router() -> Dict[str, Any]:
+def inspect_fabric_builder_and_router() -> dict[str, Any]:
     fabric_path = PROJECT_ROOT / "core" / "models" / "fabric.py"
     router_path = PROJECT_ROOT / "core" / "models" / "router.py"
-    
+
     results = {}
-    
+
     for label, path in [("fabric", fabric_path), ("router", router_path)]:
         if path.exists():
             try:
                 content = path.read_text(encoding="utf-8", errors="replace")
                 tree = ast.parse(content, filename=str(path))
                 lines = content.splitlines()
-                
+
                 methods = {}
                 for node in ast.walk(tree):
                     if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                         start = node.lineno - 1
                         end = getattr(node, 'end_lineno', start + 35)
                         methods[node.name] = "\n".join(lines[start:end])
-                        
+
                 results[label] = {
                     "exists": True,
                     "methods": methods
@@ -37,7 +38,7 @@ def inspect_fabric_builder_and_router() -> Dict[str, Any]:
                 results[label] = {"exists": True, "error": str(e)}
         else:
             results[label] = {"exists": False}
-            
+
     return results
 
 def main():

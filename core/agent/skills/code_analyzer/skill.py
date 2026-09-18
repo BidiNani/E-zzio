@@ -1,5 +1,6 @@
-import os
 import ast
+import os
+
 
 def run(args: dict, workspace_root: str) -> str:
     path = args.get("path", "")
@@ -7,14 +8,14 @@ def run(args: dict, workspace_root: str) -> str:
     if not os.path.exists(full_path):
         return f"[ERROR] Fichier introuvable pour analyse : {path}"
 
-    with open(full_path, "r", encoding="utf-8", errors="ignore") as f:
+    with open(full_path, encoding="utf-8", errors="ignore") as f:
         code = f.read()
 
     try:
         tree = ast.parse(code)
         functions = [node.name for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
         classes = [node.name for node in ast.walk(tree) if isinstance(node, ast.ClassDef)]
-        
+
         report = {
             "file": path,
             "lines": len(code.splitlines()),

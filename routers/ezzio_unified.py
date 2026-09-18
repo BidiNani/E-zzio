@@ -1,6 +1,6 @@
-from fastapi import APIRouter, UploadFile, File, Form
+
+from fastapi import APIRouter, File, Form, UploadFile
 from pydantic import BaseModel
-from typing import Optional
 
 from core.ezzio_message_brain import handle_message, save_upload
 
@@ -28,7 +28,7 @@ async def message_json(req: MessageJson):
 
 
 @router.post("/api/ezzio/message")
-async def message(text: str = Form(""), file: Optional[UploadFile] = File(None)):
+async def message(text: str = Form(""), file: UploadFile | None = File(None)):
     image_path = None
     if file is not None:
         content = await file.read()

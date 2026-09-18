@@ -1,9 +1,10 @@
 from __future__ import annotations
+
 import ast
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 EXCLUDED_DIRS = {"audit", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tests"}
@@ -11,8 +12,8 @@ EXCLUDED_DIRS = {"audit", "snapshot", "snapshots", "backup", "backups", "old", "
 class Trace36Visitor(ast.NodeVisitor):
     def __init__(self, rel_path: str):
         self.rel_path = rel_path
-        self.extracted_items: List[Dict[str, Any]] = []
-        self.preferred_model_usages: List[Dict[str, Any]] = []
+        self.extracted_items: list[dict[str, Any]] = []
+        self.preferred_model_usages: list[dict[str, Any]] = []
 
     def visit_ClassDef(self, node: ast.ClassDef):
         if node.name in {"CanonicalIdentity", "OrganismKernel"}:

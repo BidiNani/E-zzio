@@ -4,13 +4,14 @@ Condense la télémétrie, l'état des stores, l'intégrité (Drift) et les règ
 en un rapport synthétique journalier pour éviter la saturation des logs.
 """
 
-import sys
-import json
-import psutil
 import hashlib
+import json
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
+
+import psutil
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -44,9 +45,9 @@ class DailyReportGenerator:
         count = sum(1 for line in ledger_path.read_text(encoding="utf-8").splitlines() if line.strip())
         return count
 
-    def generate_report(self) -> Dict[str, Any]:
-        timestamp_str = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
-        date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    def generate_report(self) -> dict[str, Any]:
+        timestamp_str = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
+        date_str = datetime.now(UTC).strftime("%Y-%m-%d")
 
         # Hardware snapshot
         cpu = psutil.cpu_percent(interval=1)
@@ -66,7 +67,7 @@ class DailyReportGenerator:
         report_data = {
             "report_id": f"DAILY_HEALTH_{timestamp_str}",
             "date": date_str,
-            "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+            "timestamp_utc": datetime.now(UTC).isoformat(),
             "hardware": {
                 "cpu_usage_percent": cpu,
                 "ram_usage_percent": mem.percent,

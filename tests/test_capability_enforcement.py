@@ -2,10 +2,12 @@
 Suite de tests de gouvernance et de pré-vol de sécurité : CapabilityPolicy ↔ CapabilityRegistry.
 Valide l'interception stricte des scopes ALLOW, REQUIRE_HUMAN et DENY.
 """
-import pytest
 from unittest.mock import AsyncMock, patch
-from core.capabilities.registry import CapabilityRegistry, capability_registry
+
+import pytest
+
 from core.capabilities.capability_policy import PolicyDecision
+from core.capabilities.registry import CapabilityRegistry, capability_registry
 
 
 @pytest.mark.asyncio

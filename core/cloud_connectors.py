@@ -1,11 +1,11 @@
+import base64
 import os
 import time
-import base64
-import httpx
-from dotenv import load_dotenv
 from pathlib import Path
 
-from core.cloud_guard import guarded_request, cloud_status
+from dotenv import load_dotenv
+
+from core.cloud_guard import cloud_status, guarded_request
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
 SECRETS_PATH = PROJECT_ROOT / "secrets" / ".env"
@@ -126,7 +126,7 @@ def blizzard_token():
     blizzard_region()
     token_url = "https://oauth.battle.net/token"
 
-    auth_raw = f"{client_id}:{client_secret}".encode("utf-8")
+    auth_raw = f"{client_id}:{client_secret}".encode()
     auth_b64 = base64.b64encode(auth_raw).decode("ascii")
 
     response = requests.post(

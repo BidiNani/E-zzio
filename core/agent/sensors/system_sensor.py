@@ -1,11 +1,14 @@
 """E-ZZIO Autonomous Agent — Host Hardware & Runtime Telemetry Sensor."""
 from __future__ import annotations
+
+import json
 import os
 import shutil
-import psutil
 import urllib.request
-import json
-from typing import Any, Dict
+from typing import Any
+
+import psutil
+
 
 class SystemSensor:
     def __init__(self, workspace_root: str = "G:\\AI\\E-zzio"):
@@ -24,11 +27,11 @@ class SystemSensor:
             return None
         return None
 
-    def get_system_telemetry(self) -> Dict[str, Any]:
+    def get_system_telemetry(self) -> dict[str, Any]:
         """Collecte les métriques matérielles et distingue modèles installés vs actifs."""
         cpu_pct = psutil.cpu_percent(interval=0.1)
         mem = psutil.virtual_memory()
-        
+
         drive = os.path.splitdrive(os.path.abspath(self.workspace_root))[0] or "G:"
         disk = shutil.disk_usage(drive)
 

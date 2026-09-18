@@ -37,7 +37,7 @@ class CognitiveGatekeeper:
     def _load_policy(self):
         if POLICY_FILE.exists():
             try:
-                with open(POLICY_FILE, "r", encoding="utf-8") as f:
+                with open(POLICY_FILE, encoding="utf-8") as f:
                     data = json.load(f)
                     self.protected_paths = {p.replace("\\", "/") for p in data.get("exact_paths", [])}
             except Exception:

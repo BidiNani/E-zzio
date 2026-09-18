@@ -4,14 +4,14 @@ Consigne, protège et applique les directives permanentes du mentor (BidiNani),
 garantissant qu'aucune décision autonome ne puisse contourner les règles humaines.
 """
 
-import sys
-import json
-import hmac
-import hashlib
 import argparse
+import hashlib
+import hmac
+import json
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any, List
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -34,7 +34,7 @@ class HumanOverrideLedger:
                 "source": "BidiNani",
                 "priority": "IMMUTABLE",
                 "reason": "Priorité absolue au jeu World of Warcraft, interdiction d'utiliser le GPU pour l'IA.",
-                "created_utc": datetime.now(timezone.utc).isoformat(),
+                "created_utc": datetime.now(UTC).isoformat(),
                 "permanent": True,
             }
             self.register_override(
@@ -44,9 +44,9 @@ class HumanOverrideLedger:
                 priority=default_rule["priority"],
             )
 
-    def register_override(self, rule_id: str, directive: str, reason: str, priority: str = "IMMUTABLE") -> Dict[str, Any]:
+    def register_override(self, rule_id: str, directive: str, reason: str, priority: str = "IMMUTABLE") -> dict[str, Any]:
         """Enregistre une directive humaine dans le registre avec scellement HMAC."""
-        timestamp = datetime.now(timezone.utc).isoformat()
+        timestamp = datetime.now(UTC).isoformat()
         record = {
             "rule_id": rule_id,
             "directive": directive,
@@ -66,13 +66,13 @@ class HumanOverrideLedger:
 
         return sealed_record
 
-    def get_all_overrides(self) -> List[Dict[str, Any]]:
+    def get_all_overrides(self) -> list[dict[str, Any]]:
         """Lit et retourne l'ensemble des règles humaines enregistrées."""
         if not self.ledger_path.exists():
             return []
 
         overrides = []
-        with open(self.ledger_path, "r", encoding="utf-8") as f:
+        with open(self.ledger_path, encoding="utf-8") as f:
             for line in f:
                 if line.strip():
                     overrides.append(json.loads(line))

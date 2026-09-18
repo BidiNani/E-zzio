@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Any
 
 from .free_only import annotate_free_status
-from .policies import policy_allows, reject_reason
+from .policies import policy_allows
 from .probes import exact_text_probe, openai_compatible_probe
 
 

@@ -10,10 +10,9 @@ décide jamais (PROPOSE ≠ IMPLEMENT, moteur d'évolution réutilisé).
 from __future__ import annotations
 
 import logging
-import time
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional, Tuple
+from datetime import UTC, datetime
+from typing import Any
 
 logger = logging.getLogger("ezzio.observability")
 
@@ -42,7 +41,7 @@ class Metric:
     timestamp: str = ""
     note: str = ""
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {"metric": self.metric, "value": self.value,
                 "unit": self.unit, "n": self.n, "source": self.source,
                 "status": self.status, "timestamp": self.timestamp,
@@ -50,10 +49,10 @@ class Metric:
 
 
 def _now() -> str:
-    return datetime.now(timezone.utc).isoformat()
+    return datetime.now(UTC).isoformat()
 
 
-def _dedupe(events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+def _dedupe(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Replay-safe : un id d'événement ne compte qu'une fois (§43)."""
     seen = set()
     out = []
@@ -65,15 +64,15 @@ def _dedupe(events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     return out
 
 
-def _payload(e: Dict[str, Any]) -> Dict[str, Any]:
+def _payload(e: dict[str, Any]) -> dict[str, Any]:
     p = e.get("payload", {})
     return p if isinstance(p, dict) else {}
 
 
-def worker_effectiveness(events: List[Dict[str, Any]]) -> Dict[str, Metric]:
+def worker_effectiveness(events: list[dict[str, Any]]) -> dict[str, Metric]:
     """Efficacité L1 par worker_type (ledger WORKER_RESULT/REQUEST)."""
     events = _dedupe(events)
-    by_worker: Dict[str, Dict[str, int]] = {}
+    by_worker: dict[str, dict[str, int]] = {}
     for e in events:
         if e.get("action") not in ("WORKER_RESULT", "WORKER_REQUEST"):
             continue
@@ -93,7 +92,7 @@ def worker_effectiveness(events: List[Dict[str, Any]]) -> Dict[str, Metric]:
             else:
                 slot["other"] += 1
     out = {}
-    raw: Dict[str, Dict[str, int]] = {}
+    raw: dict[str, dict[str, int]] = {}
     legacy_unattributed = 0
     for wt, s in by_worker.items():
         term = s["completed"] + s["failed"] + s["other"]
@@ -121,13 +120,13 @@ def worker_effectiveness(events: List[Dict[str, Any]]) -> Dict[str, Metric]:
     return out
 
 
-def memory_effectiveness(cells: List[Dict[str, Any]],
-                         mem_events: List[Dict[str, Any]]) -> Dict[str, Metric]:
+def memory_effectiveness(cells: list[dict[str, Any]],
+                         mem_events: list[dict[str, Any]]) -> dict[str, Metric]:
     """Efficacité mémoire : distribution, usage observé, lifecycle."""
     mem_events = _dedupe(mem_events)
     n = len(cells)
-    by_tier: Dict[str, int] = {}
-    by_truth: Dict[str, int] = {}
+    by_tier: dict[str, int] = {}
+    by_truth: dict[str, int] = {}
     accessed = 0
     for c in cells:
         by_tier[c.get("tier", "?")] = by_tier.get(c.get("tier", "?"), 0) + 1
@@ -136,7 +135,7 @@ def memory_effectiveness(cells: List[Dict[str, Any]],
         if int(c.get("access_count", 0) or 0) > 0:
             accessed += 1
     usefulness = round(accessed / n, 3) if n else 0.0
-    acts: Dict[str, int] = {}
+    acts: dict[str, int] = {}
     for e in mem_events:
         if str(e.get("action", "")).startswith("MEMORY_"):
             acts[e["action"]] = acts.get(e["action"], 0) + 1
@@ -156,10 +155,10 @@ def memory_effectiveness(cells: List[Dict[str, Any]],
     }
 
 
-def task_effectiveness(missions: List[Dict[str, Any]]) -> Dict[str, Metric]:
+def task_effectiveness(missions: list[dict[str, Any]]) -> dict[str, Metric]:
     """Terminal states du registre (mesure, pas de prédiction)."""
-    dist: Dict[str, int] = {}
-    by_worker: Dict[str, Dict[str, int]] = {}
+    dist: dict[str, int] = {}
+    by_worker: dict[str, dict[str, int]] = {}
     for m in missions:
         st = m.get("status", "?") if isinstance(m, dict) else "?"
         dist[st] = dist.get(st, 0) + 1
@@ -176,10 +175,10 @@ def task_effectiveness(missions: List[Dict[str, Any]]) -> Dict[str, Metric]:
     }
 
 
-def routing_distribution(events: List[Dict[str, Any]]) -> Metric:
+def routing_distribution(events: list[dict[str, Any]]) -> Metric:
     """Distribution des décisions (issues NON reliées → PARTIAL honnête)."""
     events = _dedupe(events)
-    dist: Dict[str, int] = {}
+    dist: dict[str, int] = {}
     for e in events:
         a = e.get("action", "")
         if a in ("STATUS_QUERY", "CANCEL_REQUEST", "PAUSE_QUERY",
@@ -193,9 +192,9 @@ def routing_distribution(events: List[Dict[str, Any]]) -> Metric:
                   "faux lien décision→succès).")
 
 
-def truth_from_metadata(metas: List[Dict[str, Any]]) -> Metric:
+def truth_from_metadata(metas: list[dict[str, Any]]) -> Metric:
     """Verdicts Truth persistés (Wave 6) — distribution, jamais d'optimisme."""
-    dist: Dict[str, int] = {}
+    dist: dict[str, int] = {}
     for m in metas:
         v = m.get("truth_gate")
         if v:
@@ -206,9 +205,9 @@ def truth_from_metadata(metas: List[Dict[str, Any]]) -> Metric:
                   "Optimiser vers fewer blocks est INTERDIT (§15).")
 
 
-def cost_model(metas: List[Dict[str, Any]]) -> Dict[str, Metric]:
+def cost_model(metas: list[dict[str, Any]]) -> dict[str, Metric]:
     """Coûts : comptes par provider ; prix inconnus → UNKNOWN_COST."""
-    prov: Dict[str, int] = {}
+    prov: dict[str, int] = {}
     for m in metas:
         p = str(m.get("provider", "unknown") or "unknown")
         prov[p] = prov.get(p, 0) + 1
@@ -229,13 +228,13 @@ def cost_model(metas: List[Dict[str, Any]]) -> Dict[str, Metric]:
     }
 
 
-def security_blocks(events: List[Dict[str, Any]]) -> Metric:
+def security_blocks(events: list[dict[str, Any]]) -> Metric:
     """Blocs de sécurité (une hausse n'est pas un échec, §37)."""
     events = _dedupe(events)
     watched = ("CONTRACT_REJECT", "UNKNOWN_WORKER_REJECT",
                "MASTER_TARGET_REJECTED", "APPROVAL_REJECTED",
                "MODEL_DIVERGENCE")
-    dist: Dict[str, int] = {}
+    dist: dict[str, int] = {}
     for e in events:
         a = e.get("action", "")
         if a in watched or e.get("status") in ("REJECTED", "BLOCKED"):
@@ -247,15 +246,15 @@ def security_blocks(events: List[Dict[str, Any]]) -> Metric:
                   "Blocks = défenses actives, pas des échecs.")
 
 
-def latency_snapshot() -> Dict[str, Metric]:
+def latency_snapshot() -> dict[str, Metric]:
     """Micro-benchs déterministes (tmp store : 0 pollution prod)."""
     import asyncio as _aio
     import os as _os
     import tempfile as _tf
     import time as _t
+
     from core.agent.interaction_control import classify_interruption
-    from core.capabilities.workspace_decisions import (
-        DecisionState, best_next_action)
+    from core.capabilities.workspace_decisions import DecisionState, best_next_action
     t0 = _t.perf_counter()
     for _ in range(100):
         classify_interruption("Où en sont les tâches ?")
@@ -267,8 +266,8 @@ def latency_snapshot() -> Dict[str, Metric]:
     bna_ms = (_t.perf_counter() - t0) / 100 * 1000
 
     async def _ret():
-        from core.memory.unified_gateway import UnifiedMemoryGateway
         from core.memory import tiers as _tiers
+        from core.memory.unified_gateway import UnifiedMemoryGateway
         tmp = _tf.mkdtemp(prefix="ezzio-lat-")
         g = UnifiedMemoryGateway(
             db_path=_os.path.join(tmp, "lat.db"))
@@ -294,11 +293,10 @@ def latency_snapshot() -> Dict[str, Metric]:
     }
 
 
-def build_proposals(snapshot: Dict[str, Metric]) -> List[Dict[str, Any]]:
+def build_proposals(snapshot: dict[str, Metric]) -> list[dict[str, Any]]:
     """Propositions gouvernées (dossiers compatibles evolution_decision).
     PROPOSE seul : jamais d'advance() ici."""
-    from core.health.evolution_decision import (
-        EvidenceClass, OpportunityDossier, decide)
+    from core.health.evolution_decision import EvidenceClass, OpportunityDossier, decide
     proposals = []
     by_name = {}
     for k, m in snapshot.items():
@@ -306,7 +304,7 @@ def build_proposals(snapshot: Dict[str, Metric]) -> List[Dict[str, Any]]:
 
     def _dossier(signal: str, value: float, baseline: float,
                  root_cause: str, impact: float, risk: float,
-                 reversibility: float, nxt: str) -> Dict[str, Any]:
+                 reversibility: float, nxt: str) -> dict[str, Any]:
         d = OpportunityDossier(
             signal=signal, evidence_class=EvidenceClass.MEASURED_NOW,
             source="wave6-metrics", current_value=value, baseline=baseline,
@@ -340,13 +338,13 @@ def build_proposals(snapshot: Dict[str, Metric]) -> List[Dict[str, Any]]:
     return proposals
 
 
-def dashboard(snapshot: Dict[str, Metric]) -> Dict[str, Any]:
+def dashboard(snapshot: dict[str, Metric]) -> dict[str, Any]:
     """Réponses aux 6 questions §40 (structure, jamais autorité)."""
     by_name = {}
     for k, m in snapshot.items():
         by_name[getattr(m, "metric", k)] = m
 
-    def _get(name: str) -> Dict[str, Any]:
+    def _get(name: str) -> dict[str, Any]:
         m = by_name.get(name)
         return m.to_dict() if m else {"status": "UNMEASURED", "n": 0}
     degrading = []
@@ -388,15 +386,15 @@ class Outcome:
     link: str = "ASSOCIATED"
     success_state: str = "UNKNOWN"
     verification_state: str = "NOT_MEASURED"
-    quality_signals: Dict[str, Any] = field(default_factory=dict)
-    cost: Dict[str, Any] = field(default_factory=dict)
-    latency_ms: Optional[float] = None
+    quality_signals: dict[str, Any] = field(default_factory=dict)
+    cost: dict[str, Any] = field(default_factory=dict)
+    latency_ms: float | None = None
     retries: int = 0
     truth_outcome: str = "NOT_MEASURED"
     user_correction: bool = False
     timestamp: str = ""
 
-    def validate(self) -> List[str]:
+    def validate(self) -> list[str]:
         errors = []
         if not self.outcome_id:
             errors.append("outcome_id requis")
@@ -408,7 +406,7 @@ class Outcome:
             errors.append("UNKNOWN ne devient jamais SUCCESS")
         return errors
 
-    def ensure_valid(self) -> "Outcome":
+    def ensure_valid(self) -> Outcome:
         errors = self.validate()
         if errors:
             raise ValueError("; ".join(errors))
@@ -442,7 +440,7 @@ def build_outcome(decision: str, execution: str, result_state: str,
         success_state=state, truth_outcome=truth_outcome, **kw).ensure_valid()
 
 
-def linkage_gaps(events: List[Dict[str, Any]]) -> Dict[str, int]:
+def linkage_gaps(events: list[dict[str, Any]]) -> dict[str, int]:
     events = _dedupe(events)
     requested, results = set(), set()
     decisions, executions = set(), set()
@@ -472,7 +470,7 @@ def linkage_gaps(events: List[Dict[str, Any]]) -> Dict[str, int]:
     }
 
 
-def research_marginal(rounds: List[Dict[str, Any]]) -> Dict[str, Any]:
+def research_marginal(rounds: list[dict[str, Any]]) -> dict[str, Any]:
     out = []
     prev_o, prev_c = 0, 0
     for i, r in enumerate(rounds):
@@ -489,12 +487,12 @@ def research_marginal(rounds: List[Dict[str, Any]]) -> Dict[str, Any]:
                                    if r["marginal"] == "LOW_MARGINAL_VALUE")}
 
 
-def over_signals(snapshot: Dict[str, Metric]) -> Dict[str, Metric]:
+def over_signals(snapshot: dict[str, Metric]) -> dict[str, Metric]:
     by_name = {}
     for k, m in snapshot.items():
         by_name[getattr(m, "metric", k)] = m
     now = _now()
-    out: Dict[str, Metric] = {}
+    out: dict[str, Metric] = {}
     mem = by_name.get("memory.usefulness_accessed")
     if mem and mem.n >= MEASURED_BAR and float(mem.value or 0) == 0.0:
         out["over_memory"] = Metric(
@@ -518,8 +516,8 @@ def new_experiment_id(task_class: str) -> str:
     return "exp_" + task_class + "_" + _uuid.uuid4().hex[:8]
 
 
-def validate_comparison(a: Dict[str, Any],
-                        b: Dict[str, Any]) -> Tuple[str, List[str]]:
+def validate_comparison(a: dict[str, Any],
+                        b: dict[str, Any]) -> tuple[str, list[str]]:
     reasons = []
     for dim in ("task_class", "constraints", "evaluation", "verification"):
         if a.get(dim) != b.get(dim):
@@ -529,11 +527,11 @@ def validate_comparison(a: Dict[str, Any],
     return "COMPARABLE", []
 
 
-def false_success_scan(events: List[Dict[str, Any]],
-                       missions: List[Dict[str, Any]]) -> List[str]:
+def false_success_scan(events: list[dict[str, Any]],
+                       missions: list[dict[str, Any]]) -> list[str]:
     events = _dedupe(events)
     findings = []
-    by_request: Dict[str, List[Dict[str, Any]]] = {}
+    by_request: dict[str, list[dict[str, Any]]] = {}
     for e in events:
         p = _payload(e)
         key = str(p.get("request_id", "") or p.get("mission_id", ""))
@@ -559,20 +557,20 @@ def false_success_scan(events: List[Dict[str, Any]],
     return findings
 
 
-def prod_only(events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+def prod_only(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Hygiène §21/22 : exclut le résidu de tests ; l'historique sans
     marquage (legacy) est conservé, jamais effacé."""
     return [e for e in events if _payload(e).get("env") != "test"]
 
 
-def model_effectiveness(events: List[Dict[str, Any]]) -> Dict[str, Metric]:
+def model_effectiveness(events: list[dict[str, Any]]) -> dict[str, Metric]:
     """Efficacité par modèle RÉEL (P0 §5-7) : CONV_MODEL (chemin conv,
     session liée) + CODER_MODEL_EXECUTION_SUCCESS (fédération :
     successful_provider/model, replis). Le plan sélectionné n'est jamais
     compté comme exécuté : divergence = repli observé."""
     events = _dedupe(events)
     now = _now()
-    agg: Dict[str, Dict[str, int]] = {}
+    agg: dict[str, dict[str, int]] = {}
     diverged = 0
     n_conv = n_fed = 0
     for e in events:
@@ -618,7 +616,7 @@ def model_effectiveness(events: List[Dict[str, Any]]) -> Dict[str, Metric]:
     return out
 
 
-def memory_outcome_link(events: List[Dict[str, Any]]) -> Dict[str, Metric]:
+def memory_outcome_link(events: list[dict[str, Any]]) -> dict[str, Metric]:
     """Lien mémoire→tâche (P0 §10) : MEMORY_USED (ids+session) croisé avec
     WORKER_MEMORY (ids+mission) et WORKER_RESULT (mission). Niveau
     ASSOCIATED : la récupération précède le résultat, causalité non
@@ -661,7 +659,7 @@ def memory_outcome_link(events: List[Dict[str, Any]]) -> Dict[str, Metric]:
     return out
 
 
-def domain_maturity(snapshot: Dict[str, Metric]) -> Dict[str, str]:
+def domain_maturity(snapshot: dict[str, Metric]) -> dict[str, str]:
     """Matrice de maturité §49-52 : niveau par domaine depuis les statuts
     mesurés. Ne saute jamais de niveau ; PRODUCTION_READY exige
     CALIBRATED + 0 UNKNOWN critique (jamais atteint par défaut)."""
@@ -673,7 +671,7 @@ def domain_maturity(snapshot: Dict[str, Metric]) -> Dict[str, str]:
         m = by_name.get(name)
         return m.status if m else "UNMEASURED"
 
-    def level(statuses: List[str], live: bool = False) -> str:
+    def level(statuses: list[str], live: bool = False) -> str:
         if any(s == "UNMEASURED" for s in statuses):
             return "FUNCTIONAL"
         if any(s == "EARLY_SIGNAL" for s in statuses):
@@ -712,8 +710,8 @@ def domain_maturity(snapshot: Dict[str, Metric]) -> Dict[str, str]:
     }
 
 
-def latency_snapshot() -> Dict[str, Metric]:
-    now = datetime.now(timezone.utc).isoformat()
+def latency_snapshot() -> dict[str, Metric]:
+    now = datetime.now(UTC).isoformat()
     return {
         "classify": Metric("latency.classify", 12.0, "ms", 10, "audit", "MEASURED", now, "Classify latency"),
         "bna": Metric("latency.bna", 15.0, "ms", 10, "audit", "MEASURED", now, "BNA latency"),

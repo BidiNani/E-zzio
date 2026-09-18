@@ -1,7 +1,8 @@
 """E-ZZIO Minimal Agent CLI — Direct Task Runner."""
-import sys
 import argparse
+
 from core.agent.coding_agent_loop import CodingAgentHarness
+
 
 def main():
     parser = argparse.ArgumentParser(description="E-ZZIO Autonomous Agent CLI")
@@ -10,9 +11,9 @@ def main():
     parser.add_argument("--task", type=str, help="Tâche ponctuelle à exécuter directement")
     args = parser.parse_args()
 
-    print(f"\n=======================================================")
+    print("\n=======================================================")
     print(f" E-ZZIO AGENTIC HARNESS (Backend: {args.backend})")
-    print(f"=======================================================\n")
+    print("=======================================================\n")
 
     agent = CodingAgentHarness(backend=args.backend)
 

@@ -3,9 +3,11 @@ E-ZZIO V9.0 — OLLAMA NON-BLOCKING STARTUP INVARIANT TEST
 Vérifie qu'E-ZZIO démarre et répond avec succès même quand Ollama est indisponible.
 """
 
-import pytest
 from unittest.mock import patch
-from core.models.provider_health import probe_ollama_status, get_providers_health
+
+import pytest
+
+from core.models.provider_health import get_providers_health, probe_ollama_status
 
 
 def test_ollama_failure_does_not_block_health():

@@ -5,8 +5,8 @@ E-ZZIO V7.59.2 — Forensic Recall Audit (Read-Only)
 3. Vérification de l'étanchéité face au bruit de laboratoire (SYNTHETIC_NOISE).
 """
 
-import sqlite3
 import json
+import sqlite3
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")

@@ -12,12 +12,13 @@ Outil central d'exploitation et de diagnostic sécurisé en mode STABLE :
 - report   : Génération consolidée du rapport opérationnel global
 """
 from __future__ import annotations
-import os
-import sys
-import json
+
 import argparse
+import json
+import os
 import subprocess
-from typing import Dict, Any, List
+import sys
+from typing import Any
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if REPO_ROOT not in sys.path:
@@ -64,8 +65,6 @@ def run_subcommand_health() -> int:
 
 
 def run_subcommand_security() -> int:
-    import tools.check_frozen_core as cfc
-    import tools.check_secrets as cs
     print("--- 1. Frozen Core Integrity Check ---")
     res_fc = subprocess.run([sys.executable, "tools/check_frozen_core.py"], cwd=REPO_ROOT)
     print("--- 2. Secret Leak Scan ---")
@@ -81,7 +80,7 @@ def run_subcommand_storage() -> int:
     print("============================================================")
     print("E-ZZIO STORAGE & VOLUMETRIC AUDIT")
     print("============================================================")
-    large_files: List[Dict[str, Any]] = []
+    large_files: list[dict[str, Any]] = []
     threshold_bytes = 50 * 1024 * 1024  # 50MB
 
     for root, dirs, files in os.walk(REPO_ROOT):
@@ -122,8 +121,8 @@ def run_subcommand_git() -> int:
 
 
 def run_subcommand_report() -> int:
-    import tools.health_monitor as hm
     import tools.discover_models as dm
+    import tools.health_monitor as hm
 
     health = hm.run_full_health_check()
     models = dm.discover_all_models()
@@ -172,7 +171,7 @@ def run_subcommand_report() -> int:
     with open(out_md, "w", encoding="utf-8") as f:
         f.write(md_content)
 
-    print(f"[SUCCESS] Final operations report generated:")
+    print("[SUCCESS] Final operations report generated:")
     print(f"- JSON: {out_json}")
     print(f"- MD  : {out_md}")
     return 0

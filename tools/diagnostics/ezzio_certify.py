@@ -4,19 +4,19 @@ Exécute la batterie de tests d'intégrité, simule un chaos contrôlé (corrupt
 et délivre le certificat officiel de l'organisme E-zzio.
 """
 
-import sys
 import logging
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from ezzio_kernel import OrganismKernel
 from core.cognition.self_healing_engine import SelfHealingEngine
 from core.constitution.snapshot_restore_engine import SnapshotRestoreEngine
+from ezzio_kernel import OrganismKernel
 
 logging.basicConfig(level=logging.WARNING)
 
@@ -27,7 +27,7 @@ class OrganismCertificationHarness:
         self.healer = SelfHealingEngine()
         self.restorer = SnapshotRestoreEngine()
 
-    def run_certification_suite(self) -> Dict[str, Any]:
+    def run_certification_suite(self) -> dict[str, Any]:
         results = {}
 
         # 1. Test Identité & Génome
@@ -77,7 +77,7 @@ class OrganismCertificationHarness:
         global_status = "OPERATIONAL & CERTIFIED" if passes >= (total - 1) else "DEGRADED"
 
         certificate = {
-            "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+            "timestamp_utc": datetime.now(UTC).isoformat(),
             "certification_level": "V8.9.1-ENDURANCE-CHAOS",
             "tests": results,
             "passed_count": passes,

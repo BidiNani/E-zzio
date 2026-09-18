@@ -3,25 +3,23 @@
 Version épurée : GeminiProvider direct, plus de fédération/missions/workers.
 """
 from __future__ import annotations
-import re
-import uuid
-import time
-import asyncio
-import logging
-from datetime import datetime, timezone
-from typing import Any, Dict, Optional, List
 
-from core.providers.gemini_provider import GeminiProvider
-from core.providers.base_provider import ProviderResponse
-from core.memory.instance import memory_gateway
+import logging
+import re
+import time
+from typing import Any
+
 from core.kernel.native_harness import NativeHarness
+from core.memory.instance import memory_gateway
+from core.providers.base_provider import ProviderResponse
+from core.providers.gemini_provider import GeminiProvider
 
 logger = logging.getLogger("EzzioMaster")
 
 _command_ledger = None
 
 
-def _audit_command(action: str, payload: Dict[str, Any],
+def _audit_command(action: str, payload: dict[str, Any],
                    status: str = "SUCCESS") -> None:
     """Chaîne d'audit des commandes : ledger scellé, jamais bloquant."""
     global _command_ledger
@@ -42,14 +40,14 @@ def _audit_command(action: str, payload: Dict[str, Any],
 class EzzioMaster:
     """Orchestrateur central E-ZZIO : conversation via GeminiProvider direct."""
 
-    def __init__(self, provider: Optional[GeminiProvider] = None, **kwargs: Any) -> None:
+    def __init__(self, provider: GeminiProvider | None = None, **kwargs: Any) -> None:
         self.provider = provider or GeminiProvider()
         self.memory = memory_gateway
         self._memory_initialized = False
         self.harness = NativeHarness(router=None, policy_guard=None, audit_ledger=None, workspace_root=r"G:\AI\E-zzio")
 
-    async def _record_assistant_memory(self, res_dict: Dict[str, Any],
-                                       session_id: str, channel: str) -> Dict[str, Any]:
+    async def _record_assistant_memory(self, res_dict: dict[str, Any],
+                                       session_id: str, channel: str) -> dict[str, Any]:
         if session_id and res_dict.get("response"):
             try:
                 if not self._memory_initialized:
@@ -72,7 +70,7 @@ class EzzioMaster:
                 logger.warning("[EzzioMaster] Memory record assistant failed: %s", exc)
         return res_dict
 
-    async def _build_chat_system_prompt(self, session_id: str = "", exclude_prompt: str = "") -> Optional[str]:
+    async def _build_chat_system_prompt(self, session_id: str = "", exclude_prompt: str = "") -> str | None:
         """Identité canonique + derniers échanges."""
         try:
             from core.identity.canonical_identity import CanonicalIdentity
@@ -80,7 +78,7 @@ class EzzioMaster:
         except Exception:
             persona = ("Tu es E-ZZIO, orchestrateur souverain : direct, concis, loyal, "
                        "jamais un autre modèle. Tu réponds en français.")
-        ctx_lines: List[str] = []
+        ctx_lines: list[str] = []
         if session_id:
             try:
                 if not self._memory_initialized:
@@ -109,11 +107,11 @@ class EzzioMaster:
         session_id: str = "",
         system_prompt: str = "",
         mission_profile: str = "STANDARD",
-        model_target: Optional[str] = "auto",
+        model_target: str | None = "auto",
         channel: str = "web",
         user_id: str = "operator",
         **kwargs: Any
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Exécute la requête utilisateur via GeminiProvider direct."""
         start_time = time.perf_counter()
 
@@ -138,7 +136,7 @@ class EzzioMaster:
             is_mission = bool(mission_profile and mission_profile.upper() not in ["STANDARD", "CHAT", "LOW"])
             comp_score = 0.85 if is_mission else (0.4 if channel in ["discord", "chat", "integration_test"] else 0.6)
             prompt_lower = (user_prompt or "").lower().strip()
-            
+
             # Simple short greetings or ultra-fast path optimization
             if not is_mission and (len(prompt_lower.split()) <= 3 or prompt_lower in ["salut", "bonjour", "hello", "ping"]):
                 comp_score = 0.1
@@ -160,7 +158,7 @@ class EzzioMaster:
             thinking_level = routing.get("thinking_level")
 
             chat_system = system_prompt or await self._build_chat_system_prompt(session_id, exclude_prompt=user_prompt)
-            
+
             # Dynamic provider selection (Ollama local vs Gemini API)
             # Cloud-First par défaut : Cloud Gemini en priorité absolue.
             is_local = (routing.get("provider") == "ollama" and not force_cloud)
@@ -294,7 +292,7 @@ class EzzioMaster:
         channel: str = "web",
         user_id: str = "operator",
         **kwargs: Any
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Alias de compatibilité pour le traitement des messages utilisateur via execute_intent."""
         user_prompt = prompt or message
         return await self.execute_intent(
@@ -308,11 +306,11 @@ class EzzioMaster:
     async def orchestrate_multi_agent_mission(
         self,
         mission_prompt: str,
-        subtask_specs: Optional[List[Dict[str, Any]]] = None,
+        subtask_specs: list[dict[str, Any]] | None = None,
         session_id: str = "",
         channel: str = "web",
         user_id: str = "operator"
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Décompose une mission en sous-tâches agentiques, consulte ModelRouter par sous-tâche, agrège et valide les résultats, puis produit la synthèse finale Master."""
         from core.cognition.model_router import ModelRouter
         router = ModelRouter()

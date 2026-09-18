@@ -1,7 +1,8 @@
-import time
 import asyncio
-from fastapi import APIRouter
+import time
+
 import ollama
+from fastapi import APIRouter
 
 from core.model_registry import FAST_MODEL_POOL, load_latency, save_latency
 

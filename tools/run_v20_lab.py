@@ -3,12 +3,8 @@ E-ZZIO Exhaustive Real Task x Thread x Context Optimization Lab v20.0 Runner.
 Compiles and generates the complete 2240 runs matrix (8 models x 7 tasks x 5 threads x 4 contexts x 2 passes),
 verifies all mathematical invariants, performs thread/context analysis, quality assessment, and exports all v20 artifacts.
 """
-import os
-import sys
-import json
-import time
-import hashlib
 import csv
+import json
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")
@@ -80,14 +76,14 @@ for m in models:
                     base_tps = 16.05 if "phi4" in m_id else (13.10 if "Ministral" in m_id else (9.80 if "Gemma" in m_id else (7.76 if "hermes" in m_id else 6.00)))
                     th_factor = 0.62 if th == 1 else (0.89 if th == 2 else (1.0 if th == 4 else (0.97 if th == 6 else 0.91)))
                     ctx_factor = 1.0 if ctx <= 2048 else (0.96 if ctx == 4096 else 0.91)
-                    
+
                     gen_tps = round(base_tps * th_factor * ctx_factor, 2) if not is_empty else 0.0
                     ttft = round(72.0 / th_factor * (ctx / 2048.0), 1) if not is_empty else 0.0
                     ram_pk = round(2800 + (ctx / 1024.0) * 110 + (800 if "qwen" in m_id else 0), 1)
-                    
+
                     max_tok = 32 if t_name == "FAST_ROUTING" else (1024 if t_name == "LONG_GENERATION" else (512 if t_name in ["CODING", "LONG_CONTEXT"] else 256))
                     status_str = "EMPTY_OUTPUT" if is_empty else "VALID"
-                    
+
                     run_id = f"v20_{p_id}_{m_id}_{t_name}_{th}T_{ctx}ctx"
                     row = {
                         "run_id": run_id,
@@ -186,7 +182,7 @@ pid_audit = {
 (v20_dir / "pid_audit.json").write_text(json.dumps(pid_audit, indent=2), encoding="utf-8")
 
 # 6. Final Report Markdown
-final_report_md = f"""# 🏛️ E-ZZIO — EXHAUSTIVE REAL TASK × THREAD × CONTEXT OPTIMIZATION LAB v20.0
+final_report_md = """# 🏛️ E-ZZIO — EXHAUSTIVE REAL TASK × THREAD × CONTEXT OPTIMIZATION LAB v20.0
 
 ============================================================
 

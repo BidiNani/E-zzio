@@ -2,13 +2,10 @@
 E-ZZIO Phase 1 & 2 Execution — Codebase Memory Structural Analysis & AST Rule Checks.
 """
 import ast
-import os
-import sys
-import time
-import json
 import hashlib
+import json
+import time
 from pathlib import Path
-from typing import Dict, List, Set, Any
 
 root = Path("G:/AI/E-zzio")
 ts = int(time.time())
@@ -42,7 +39,7 @@ index_duration_ms = round((time.perf_counter() - t0_start) * 1000, 2)
 
 # Query 1 : Transitive closure from web_server.py
 t0_q1 = time.perf_counter()
-import_graph: Dict[str, Set[str]] = {}
+import_graph: dict[str, set[str]] = {}
 for rel_path, data in py_files.items():
     imports = set()
     for node in ast.walk(data["tree"]):
@@ -54,7 +51,7 @@ for rel_path, data in py_files.items():
     import_graph[rel_path] = imports
 
 # Compute transitive dependencies from web_server.py
-def get_transitive_deps(start_module: str) -> Set[str]:
+def get_transitive_deps(start_module: str) -> set[str]:
     visited = set()
     queue = [start_module]
     while queue:

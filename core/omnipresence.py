@@ -1,9 +1,9 @@
-import os
 import json
+import os
 import time
 import uuid
 from pathlib import Path
-from typing import Optional, Dict, Any
+from typing import Any
 
 import httpx
 from dotenv import dotenv_values
@@ -34,7 +34,7 @@ for key, value in CPU_ONLY_ENV.items():
     os.environ[key] = value
 
 
-def load_config() -> Dict[str, str]:
+def load_config() -> dict[str, str]:
     cfg = {}
     if SECRETS_FILE.exists():
         cfg.update({k: str(v or "") for k, v in dotenv_values(SECRETS_FILE).items()})
@@ -72,7 +72,7 @@ def now_stamp() -> str:
     return time.strftime("%Y%m%d_%H%M%S")
 
 
-def write_event(kind: str, payload: Dict[str, Any], folder: Path = OUTBOX) -> Dict[str, Any]:
+def write_event(kind: str, payload: dict[str, Any], folder: Path = OUTBOX) -> dict[str, Any]:
     event_id = f"{now_stamp()}_{uuid.uuid4().hex[:10]}"
     record = {
         "id": event_id,
@@ -85,7 +85,7 @@ def write_event(kind: str, payload: Dict[str, Any], folder: Path = OUTBOX) -> Di
     return {"ok": True, "id": event_id, "path": str(path), "record": record}
 
 
-def status() -> Dict[str, Any]:
+def status() -> dict[str, Any]:
     cfg = load_config()
     return {
         "version": "v2.11-omnipresence-hub",
@@ -119,7 +119,7 @@ def status() -> Dict[str, Any]:
     }
 
 
-def inbox_add(source: str, text: str, user: str = "unknown", metadata: Optional[Dict[str, Any]] = None):
+def inbox_add(source: str, text: str, user: str = "unknown", metadata: dict[str, Any] | None = None):
     payload = {
         "source": source,
         "user": user,
@@ -129,7 +129,7 @@ def inbox_add(source: str, text: str, user: str = "unknown", metadata: Optional[
     return write_event("inbox.message", payload, INBOX)
 
 
-def outbox_add(target: str, text: str, metadata: Optional[Dict[str, Any]] = None):
+def outbox_add(target: str, text: str, metadata: dict[str, Any] | None = None):
     payload = {
         "target": target,
         "text": text,
@@ -138,7 +138,7 @@ def outbox_add(target: str, text: str, metadata: Optional[Dict[str, Any]] = None
     return write_event("outbox.message", payload, OUTBOX)
 
 
-def discord_send_webhook(content: str, username: str = "E-ZZIO", allow_send: Optional[bool] = None):
+def discord_send_webhook(content: str, username: str = "E-ZZIO", allow_send: bool | None = None):
     cfg = load_config()
     webhook = cfg.get("DISCORD_WEBHOOK_URL", "").strip()
 
@@ -177,7 +177,7 @@ def discord_send_webhook(content: str, username: str = "E-ZZIO", allow_send: Opt
     }
 
 
-def discord_send_bot_channel(content: str, channel_id: Optional[str] = None, allow_send: Optional[bool] = None):
+def discord_send_bot_channel(content: str, channel_id: str | None = None, allow_send: bool | None = None):
     cfg = load_config()
     token = cfg.get("DISCORD_BOT_TOKEN", "").strip()
     channel_id = channel_id or cfg.get("DISCORD_DEFAULT_CHANNEL_ID", "").strip()
@@ -223,7 +223,7 @@ def discord_send_bot_channel(content: str, channel_id: Optional[str] = None, all
     }
 
 
-def messenger_send_text(text: str, recipient_psid: Optional[str] = None, allow_send: Optional[bool] = None):
+def messenger_send_text(text: str, recipient_psid: str | None = None, allow_send: bool | None = None):
     cfg = load_config()
     token = cfg.get("META_PAGE_ACCESS_TOKEN", "").strip()
     recipient_psid = recipient_psid or cfg.get("META_DEFAULT_RECIPIENT_PSID", "").strip()

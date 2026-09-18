@@ -1,12 +1,13 @@
 """Déclaration des providers OAuth supportés."""
 from __future__ import annotations
+
 import os
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 _ROOT = Path(__file__).resolve().parents[2]
 
-def _read_secret(key: str) -> Optional[str]:
+def _read_secret(key: str) -> str | None:
     env_path = _ROOT / "secrets" / ".env"
     if env_path.exists():
         try:
@@ -22,7 +23,7 @@ def _read_secret(key: str) -> Optional[str]:
             pass
     return os.environ.get(key) or None
 
-PROVIDERS: Dict[str, Dict[str, Any]] = {
+PROVIDERS: dict[str, dict[str, Any]] = {
     "discord": {
         "name": "Discord", "icon": "discord", "category": "chat", "color": "#5865F2",
         "doc_url": "https://discord.com/developers/applications",
@@ -106,8 +107,8 @@ PROVIDERS: Dict[str, Dict[str, Any]] = {
     },
 }
 
-def list_providers() -> List[Dict[str, Any]]:
-    out: List[Dict[str, Any]] = []
+def list_providers() -> list[dict[str, Any]]:
+    out: list[dict[str, Any]] = []
     for pid, cfg in PROVIDERS.items():
         cid = _read_secret(cfg["client_id_env"])
         csec = _read_secret(cfg["client_secret_env"])
@@ -120,7 +121,7 @@ def list_providers() -> List[Dict[str, Any]]:
         })
     return out
 
-def get_provider(pid: str) -> Optional[Dict[str, Any]]:
+def get_provider(pid: str) -> dict[str, Any] | None:
     cfg = PROVIDERS.get(pid)
     if not cfg:
         return None

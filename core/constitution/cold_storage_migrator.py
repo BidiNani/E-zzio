@@ -4,11 +4,11 @@ Déplace de manière sécurisée les éléments historiques lourds vers l'archiv
 en générant un manifeste cryptographique (SHA-256) avec possibilité de rollback.
 """
 
-import shutil
-import json
 import hashlib
+import json
+import shutil
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 COLD_STORAGE_DIR = ROOT_DIR / "archive" / "cold_storage"
@@ -29,8 +29,8 @@ def execute_cold_storage_migration():
     targets = [ROOT_DIR / "runtime" / "audit" / "full_reuse", ROOT_DIR / "runtime" / "audit" / "full_scan"]
 
     manifest = {
-        "migration_id": f"COLD_STORAGE_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}",
-        "executed_utc": datetime.now(timezone.utc).isoformat(),
+        "migration_id": f"COLD_STORAGE_{datetime.now(UTC).strftime('%Y%m%d_%H%M%S')}",
+        "executed_utc": datetime.now(UTC).isoformat(),
         "migrated_items": [],
     }
 

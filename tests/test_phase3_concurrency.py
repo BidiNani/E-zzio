@@ -1,18 +1,21 @@
-import pytest
 import asyncio
 from unittest.mock import AsyncMock, patch
+
+import pytest
+
 from core.memory.unified_gateway import UnifiedMemoryGateway
-from routers.chat import post_chat, ChatRequest, init_chat_router, _core, _memory_gateway
+from routers.chat import ChatRequest, _core, _memory_gateway, init_chat_router, post_chat
+
 
 @pytest.mark.asyncio
 async def test_unified_memory_high_concurrency_writes_and_reads(tmp_path):
     db_path = str(tmp_path / "high_concurrency.db")
     gw = UnifiedMemoryGateway(db_path=db_path)
     await gw.init()
-    
+
     num_sessions = 10
     messages_per_session = 5
-    
+
     # 1. Écritures concurrentes massives
     async def session_worker(sess_idx):
         sess_name = f"HIGH_CONC_SESS_{sess_idx}"
@@ -26,16 +29,16 @@ async def test_unified_memory_high_concurrency_writes_and_reads(tmp_path):
             # Lecture intermédiaire concurrente
             hist = await gw.get_session_history(sess_name)
             assert len(hist) > 0
-            
+
     workers = [session_worker(i) for i in range(num_sessions)]
     await asyncio.gather(*workers)
-    
+
     # 2. Vérification d'intégrité et de non-pollution inter-sessions
     for i in range(num_sessions):
         sess_name = f"HIGH_CONC_SESS_{i}"
         hist = await gw.get_session_history(sess_name)
         assert len(hist) == messages_per_session
-        
+
         # Vérification qu'aucun message d'une autre session n'est présent
         for m in hist:
             assert f"Sess{i}_" in m["content"]
@@ -51,9 +54,9 @@ async def test_unified_memory_high_concurrency_writes_and_reads(tmp_path):
 @pytest.mark.asyncio
 async def test_concurrent_core_requests_isolation():
     await init_chat_router()
-    
+
     num_concurrent_requests = 10
-    
+
     async def dynamic_search(query=None, prompt=None, **kwargs):
         text_in = query or prompt or ""
         tokens = [w for w in text_in.split() if w.startswith("TOK-")]
@@ -63,7 +66,7 @@ async def test_concurrent_core_requests_isolation():
             "model": "gpt-oss-20b",
             "data": {"text": f"Confirmation code {tok}"}
         }
-        
+
     with patch.object(_core.ollama, "search", side_effect=dynamic_search):
         async def request_task(req_id_idx):
             sess_id = f"CONCURRENT_CORE_SESS_{req_id_idx}"
@@ -73,15 +76,15 @@ async def test_concurrent_core_requests_isolation():
                 user_id=f"user_{req_id_idx}",
                 session_id=sess_id
             )
-            
+
             resp = await post_chat(req)
             assert tok_code in resp.response
             assert resp.session_id == sess_id
-            
+
             # Vérification de l'historique dans la session isolée
             hist = await _memory_gateway.get_session_history(sess_id)
             assert len(hist) >= 2
             assert any(tok_code in m["content"] for m in hist)
-            
+
         tasks = [request_task(i) for i in range(num_concurrent_requests)]
         await asyncio.gather(*tasks)

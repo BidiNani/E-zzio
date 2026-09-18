@@ -1,18 +1,15 @@
 """
 E-ZZIO : Qualification End-to-End Complète de Kokoro-82M (ONNX CPU).
 """
-import os
-import sys
-import json
-import time
-import math
-import wave
-import struct
 import hashlib
+import json
+import os
+import time
+from pathlib import Path
+
+import numpy as np
 import psutil
 import soundfile as sf
-import numpy as np
-from pathlib import Path
 from kokoro_onnx import Kokoro
 
 root = Path("G:/AI/E-zzio")
@@ -115,11 +112,11 @@ for p_id, txt in corpus_texts:
     t0 = time.perf_counter()
     s, sr = kokoro.create(txt, voice="af_bella", speed=1.0, lang="fr-fr")
     lat_ms = (time.perf_counter() - t0) * 1000
-    
+
     out_f = outputs_dir / f"kokoro_corpus_{p_id}.wav"
     sf.write(str(out_f), s, sr)
     raw = out_f.read_bytes()
-    
+
     dur = len(s) / sr
     corpus_results.append({
         "id": p_id,

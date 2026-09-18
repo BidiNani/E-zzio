@@ -7,11 +7,11 @@ et l'acquisition souveraine d'outils gratuits (Free-First Tool Acquisition).
 from __future__ import annotations
 
 import logging
-import uuid
 import time
+import uuid
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 logger = logging.getLogger("ezzio.agent.self_awareness")
 
@@ -65,13 +65,13 @@ class CapabilityContract:
     name: str
     description: str
     status: CapabilityState = CapabilityState.AVAILABLE
-    required_tools: List[str] = field(default_factory=list)
-    supported_agents: List[str] = field(default_factory=list)
-    supported_models: List[str] = field(default_factory=list)
-    supported_providers: List[str] = field(default_factory=list)
+    required_tools: list[str] = field(default_factory=list)
+    supported_agents: list[str] = field(default_factory=list)
+    supported_models: list[str] = field(default_factory=list)
+    supported_providers: list[str] = field(default_factory=list)
     confidence: float = 1.0  # 0.0 à 1.0
     qualification: str = "QUALIFIED"
-    constraints: List[str] = field(default_factory=list)
+    constraints: list[str] = field(default_factory=list)
     risk: str = "LOW"
     source: str = "SYSTEM_NATIVE"
     last_verified: float = field(default_factory=time.time)
@@ -89,7 +89,7 @@ class ToolRecord:
     capability_added: str
     installed_at: float = field(default_factory=time.time)
     scope: str = "project_scope"
-    dependencies: List[str] = field(default_factory=list)
+    dependencies: list[str] = field(default_factory=list)
     security_status: str = "SAFE"
     status: ToolPromotionStatus = ToolPromotionStatus.ACTIVE
     health_score: float = 1.0
@@ -100,9 +100,9 @@ class SelfKnowledgeEngine:
     """Moteur de Connaissance de Soi et d'Acquisition d'Outils Gratuits pour E-ZZIO V10.7."""
 
     def __init__(self) -> None:
-        self.capabilities: Dict[str, CapabilityContract] = {}
-        self.tool_registry: Dict[str, ToolRecord] = {}
-        self.known_failures: List[Dict[str, Any]] = []
+        self.capabilities: dict[str, CapabilityContract] = {}
+        self.tool_registry: dict[str, ToolRecord] = {}
+        self.known_failures: list[dict[str, Any]] = []
         self._initialize_native_capabilities()
 
     def _initialize_native_capabilities(self) -> None:
@@ -133,7 +133,7 @@ class SelfKnowledgeEngine:
         for cap in native_caps:
             self.capabilities[cap.capability_id] = cap
 
-    def query_capability(self, query: str) -> Dict[str, Any]:
+    def query_capability(self, query: str) -> dict[str, Any]:
         """Répond à la question 'Est-ce que tu sais faire X ?' sans inventer de capacités."""
         query_clean = query.lower()
         matched = []
@@ -186,7 +186,7 @@ class SelfKnowledgeEngine:
             return EpistemicAction.RESEARCH
         return EpistemicAction.RESEARCH
 
-    def detect_gap(self, task_description: str) -> Dict[str, Any]:
+    def detect_gap(self, task_description: str) -> dict[str, Any]:
         """Distingue entre KNOWLEDGE GAP (recherche nécessaire) et CAPABILITY GAP (outil/agent nécessaire)."""
         desc = task_description.lower()
         if "how to" in desc or "explain" in desc or "what is" in desc:
@@ -202,7 +202,7 @@ class SelfKnowledgeEngine:
                 "explanation": "Missing technical execution capability. Free tool acquisition pipeline engaged.",
             }
 
-    def discover_free_tool(self, missing_capability: str) -> Optional[Dict[str, Any]]:
+    def discover_free_tool(self, missing_capability: str) -> dict[str, Any] | None:
         """Cherche un outil gratuit/open-source local sans clé API requise."""
         # Simulation déterministe de découverte d'outil open-source
         tool_name = f"free_{missing_capability.lower().replace(' ', '_')}_utility"
@@ -218,7 +218,7 @@ class SelfKnowledgeEngine:
             "security_status": "SAFE",
         }
 
-    def qualify_tool(self, tool_info: Dict[str, Any]) -> Dict[str, Any]:
+    def qualify_tool(self, tool_info: dict[str, Any]) -> dict[str, Any]:
         """Qualifie la licence, la sécurité, la gratuité et la réversibilité d'un outil."""
         cost = tool_info.get("cost", "UNKNOWN").upper()
         license_str = tool_info.get("license", "UNKNOWN").upper()
@@ -235,7 +235,7 @@ class SelfKnowledgeEngine:
             "overall_status": "QUALIFIED" if (is_free and is_safe_license) else "REJECTED_OR_HITL",
         }
 
-    def evaluate_installation_gate(self, tool_info: Dict[str, Any]) -> Tuple[bool, str]:
+    def evaluate_installation_gate(self, tool_info: dict[str, Any]) -> tuple[bool, str]:
         """Portail d'installation: NECESSARY + FREE + COMPATIBLE + SAFE + REVERSIBLE + AUTHORIZED."""
         qualification = self.qualify_tool(tool_info)
 
@@ -253,7 +253,7 @@ class SelfKnowledgeEngine:
 
         return True, "AUTHORIZED_FOR_AUTO_INSTALL"
 
-    def install_and_register_tool(self, tool_info: Dict[str, Any]) -> Dict[str, Any]:
+    def install_and_register_tool(self, tool_info: dict[str, Any]) -> dict[str, Any]:
         """Installe l'outil dans un scope isolé, l'enregistre et exécute un auto-test."""
         can_install, reason = self.evaluate_installation_gate(tool_info)
         if not can_install:
@@ -313,7 +313,7 @@ class SelfKnowledgeEngine:
         logger.warning(f"[TOOL-ROLLBACK] Outil désactivé/désinstallé: {tool_id}")
         return True
 
-    def explain_tool_acquisition(self, tool_id: str) -> Dict[str, Any]:
+    def explain_tool_acquisition(self, tool_id: str) -> dict[str, Any]:
         """Explique la provenance et les raisons du choix d'un outil."""
         record = self.tool_registry.get(tool_id)
         if not record:

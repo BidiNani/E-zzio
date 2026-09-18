@@ -4,15 +4,17 @@ Permet à CognitiveGateway et aux composants du Core d'interroger la cartographi
 structurelle et physique du dépôt sans créer de mémoire concurrente.
 """
 from __future__ import annotations
+
 import json
 import os
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any
+
 
 class CodebaseMapReader:
     """Lecteur optimisé en lecture seule de la cartographie E-ZZIO."""
 
-    def __init__(self, root_dir: Optional[str] = None):
+    def __init__(self, root_dir: str | None = None):
         if root_dir:
             self.root_dir = Path(root_dir).resolve()
         else:
@@ -21,9 +23,9 @@ class CodebaseMapReader:
         self.mapping_dir = self.root_dir / "state" / "audit" / "current" / "mapping"
         self.docs_map_file = self.root_dir / "docs" / "EZZIO_MAP.md"
 
-        self._dep_graph: Optional[Dict[str, Any]] = None
-        self._content_sum: Optional[Dict[str, Any]] = None
-        self._entrypoint_chains: Optional[Dict[str, Any]] = None
+        self._dep_graph: dict[str, Any] | None = None
+        self._content_sum: dict[str, Any] | None = None
+        self._entrypoint_chains: dict[str, Any] | None = None
 
     def _load_data(self) -> None:
         if self._dep_graph is None:
@@ -65,17 +67,17 @@ class CodebaseMapReader:
                 pass
         return "Cartographie E-ZZIO non disponible."
 
-    def lookup_file(self, rel_path: str) -> Optional[Dict[str, Any]]:
+    def lookup_file(self, rel_path: str) -> dict[str, Any] | None:
         """Renvoie les informations détaillées d'un fichier spécifique."""
         self._load_data()
         norm_path = rel_path.replace("\\", "/").strip("/")
-        
+
         info = {}
         if self._content_sum and norm_path in self._content_sum:
             info["summary"] = self._content_sum[norm_path]
         if self._dep_graph and norm_path in self._dep_graph:
             info["dependencies"] = self._dep_graph[norm_path]
-            
+
         return info if info else None
 
     def query_context(self, user_query: str) -> str:
@@ -85,13 +87,13 @@ class CodebaseMapReader:
 
         # Détection de mots-clés spécifiques
         matched_files = []
-        
+
         # 1. Recherche directe par chemin de fichier
         for path, data in (self._content_sum or {}).items():
             path_name = os.path.basename(path).lower()
             if path.lower() in query_lower or (len(path_name) > 4 and path_name in query_lower):
                 matched_files.append((path, data, "exact_file_match"))
-                
+
         # 2. Recherche par concept fonctionnel
         keywords_map = {
             "chiffrement": ["core/security/secrets_vault.py", "core/security/audit_ledger.py"],

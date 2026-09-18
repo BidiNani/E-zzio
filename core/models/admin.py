@@ -88,7 +88,7 @@ def main() -> None:
         if success:
             print(f"[PASS] Modèle {args.provider}/{args.model_id} réhabilité avec succès vers CANDIDATE.")
         else:
-            print(f"[FAIL] Échec de la réhabilitation.", file=sys.stderr)
+            print("[FAIL] Échec de la réhabilitation.", file=sys.stderr)
             sys.exit(1)
 
 

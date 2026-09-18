@@ -1,12 +1,11 @@
 """
 tools/build_release_inventory_v9_2.py - Generation de state/audit/golden/v9.2/
 """
-import os
-import json
 import hashlib
+import json
 import subprocess
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT = Path("G:/AI/E-zzio")
 GOLDEN_DIR = ROOT / "state/audit/golden/v9.2"
@@ -32,7 +31,7 @@ release_id = {
     "release": "V9.2",
     "release_type": "GOLDEN_RELEASE",
     "status": "IMMUTABLE_BASELINE",
-    "timestamp": datetime.now(timezone.utc).isoformat(),
+    "timestamp": datetime.now(UTC).isoformat(),
     "tag": "ezzio-v9.2-golden",
     "baseline": "ezzio-v9.1-golden",
     "external_block": "Antigravity = BLOCKED_BY_EXTERNAL_QUOTA"
@@ -130,7 +129,7 @@ lock_data = {
     "release": "E-ZZIO V9.2",
     "status": "SEALED",
     "immutable": True,
-    "lock_timestamp": datetime.now(timezone.utc).isoformat(),
+    "lock_timestamp": datetime.now(UTC).isoformat(),
     "authorized_by": "Master Governor Sovereign Architecture",
     "golden_commit": head_commit
 }

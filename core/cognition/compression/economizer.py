@@ -12,25 +12,20 @@ Enforces Epistemic Invariants:
 
 from __future__ import annotations
 
-import hashlib
-import json
 import logging
 import re
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 
 from core.cognition.compression.budget_engine import (
-    ClassifiedContextSegment,
     ContentCategory,
-    ContextSensitivityTier,
     ContextBudgetEngine,
 )
 from core.cognition.compression.compressor_fabric import (
-    CompressedSegmentResult,
     SovereignCompressorFabric,
 )
 from core.cognition.compression.integrity_gate import (
@@ -52,9 +47,9 @@ class EconomizedContextPackage:
     net_tokens_saved: int
     effective_reduction_percent: float
     effective_prompt_text: str
-    segment_verdicts: List[CompressionAuditVerdict]
+    segment_verdicts: list[CompressionAuditVerdict]
     integrity_status: str  # "ALL_SEGMENTS_CERTIFIED", "PARTIAL_FALLBACK", "INTEGRITY_ABSTAIN"
-    timestamp_utc: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    timestamp_utc: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
 
 
 class SovereignContextEconomizer:
@@ -64,7 +59,7 @@ class SovereignContextEconomizer:
         self.fabric = SovereignCompressorFabric(root_dir=self.root_dir)
         self.integrity_gate = CompressionIntegrityGate(root_dir=self.root_dir)
 
-    def deduplicate_exact_lines(self, text: str) -> Tuple[str, int]:
+    def deduplicate_exact_lines(self, text: str) -> tuple[str, int]:
         """Engine 1: Lossless Exact Deduplication for repeating logs or stdout lines."""
         lines = text.splitlines()
         if len(lines) <= 1:
@@ -78,7 +73,7 @@ class SovereignContextEconomizer:
             normalized = line.strip()
             # Extract core message by stripping standard ISO or date timestamp prefixes
             core_msg = re.sub(r"^\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}(?:\.\d+)?\s*", "", normalized)
-            
+
             if len(core_msg) > 10 and core_msg in seen_patterns:
                 removed_count += 1
                 continue
@@ -90,13 +85,13 @@ class SovereignContextEconomizer:
     def economize_context_payload(
         self,
         task_id: str,
-        raw_segments: List[Dict[str, Any]],  # [{"id": "seg1", "text": "...", "hint": "..."}]
+        raw_segments: list[dict[str, Any]],  # [{"id": "seg1", "text": "...", "hint": "..."}]
     ) -> EconomizedContextPackage:
         """
         Processes multi-part context segments through the 3-engine pipeline
         and validates epistemic retention via the CompressionIntegrityGate.
         """
-        pkg_id = f"ECO-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}-{task_id}"
+        pkg_id = f"ECO-{datetime.now(UTC).strftime('%Y%m%d%H%M%S')}-{task_id}"
         total_orig_chars = 0
         total_econ_chars = 0
         total_orig_tokens = 0

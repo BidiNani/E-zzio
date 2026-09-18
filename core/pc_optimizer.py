@@ -1,16 +1,16 @@
 from __future__ import annotations
-from core.identity.canonical_identity import CanonicalIdentity
 
+import json
 import os
 import re
-import json
 import time
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any
 
-import psutil
-import httpx
 import ollama
+import psutil
+
+from core.identity.canonical_identity import CanonicalIdentity
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
 STATE_ROOT = PROJECT_ROOT / "state"
@@ -163,7 +163,7 @@ def collect_bad_hits(low: str):
     return hits
 
 
-def identity_score(text: str) -> Dict[str, Any]:
+def identity_score(text: str) -> dict[str, Any]:
     cleaned = clean_reply(text)
     low = cleaned.lower()
 
@@ -197,7 +197,7 @@ def identity_score(text: str) -> Dict[str, Any]:
     }
 
 
-def pc_profile() -> Dict[str, Any]:
+def pc_profile() -> dict[str, Any]:
     mem = psutil.virtual_memory()
 
     disks = []
@@ -252,7 +252,7 @@ def pc_profile() -> Dict[str, Any]:
     }
 
 
-def ollama_tags() -> Dict[str, Any]:
+def ollama_tags() -> dict[str, Any]:
     try:
         response = requests.get("http://127.0.0.1:11434/api/tags", timeout=5)
         data = response.json()
@@ -267,7 +267,7 @@ def model_available(model: str) -> bool:
     return model in tags.get("models", [])
 
 
-def warmup_model(model: str, prompt: str = "Réponds uniquement par: OK", timeout_sec: int = 120) -> Dict[str, Any]:
+def warmup_model(model: str, prompt: str = "Réponds uniquement par: OK", timeout_sec: int = 120) -> dict[str, Any]:
     started = time.time()
 
     if not model_available(model):
@@ -315,7 +315,7 @@ def warmup_model(model: str, prompt: str = "Réponds uniquement par: OK", timeou
         }
 
 
-def warmup_profile(level: str = "fast") -> Dict[str, Any]:
+def warmup_profile(level: str = "fast") -> dict[str, Any]:
     level = (level or "fast").lower().strip()
 
     if level == "normal":
@@ -350,7 +350,7 @@ def warmup_profile(level: str = "fast") -> Dict[str, Any]:
     return report
 
 
-def bench_model(model: str, prompt: str = IDENTITY_PROMPT, predict: int = 80) -> Dict[str, Any]:
+def bench_model(model: str, prompt: str = IDENTITY_PROMPT, predict: int = 80) -> dict[str, Any]:
     started = time.time()
 
     if not model_available(model):
@@ -405,7 +405,7 @@ def bench_model(model: str, prompt: str = IDENTITY_PROMPT, predict: int = 80) ->
         }
 
 
-def quick_bench() -> Dict[str, Any]:
+def quick_bench() -> dict[str, Any]:
     candidates = [
         "qwen3:1.7b",
         "llama3.2:3b",
@@ -452,7 +452,7 @@ def quick_bench() -> Dict[str, Any]:
     return report
 
 
-def performance_status() -> Dict[str, Any]:
+def performance_status() -> dict[str, Any]:
     return {
         "ok": True,
         "version": "v2.15.3b-negation-aware-bench-guard",

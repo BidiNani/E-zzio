@@ -4,10 +4,12 @@ Agrégateur contextuel pur : Identité, Mémoire FTS5, Historique de session.
 Délégation intégrale des contraintes au sous-système de routage (GATE A & GATE D).
 """
 from __future__ import annotations
-import os
+
 import asyncio
 import logging
-from typing import Dict, Any, List, Optional
+import os
+from typing import Any
+
 from core.agent.agent_provider import AgentProviderAdapter
 from core.identity.canonical_identity import CanonicalIdentity
 from core.memory.unified_gateway import UnifiedMemoryGateway
@@ -22,7 +24,7 @@ class CognitiveGateway:
         os.makedirs(os.path.dirname(db_path), exist_ok=True)
         self.memory_gateway = UnifiedMemoryGateway(db_path=db_path)
         self._initialized = False
-        self._adapter: Optional[AgentProviderAdapter] = None
+        self._adapter: AgentProviderAdapter | None = None
         self._background_tasks: set[asyncio.Task] = set()
 
         try:
@@ -58,8 +60,8 @@ class CognitiveGateway:
         task: str,
         session_id: str = "default",
         priority: str = "normal",
-        constraints: Optional[Dict[str, Any]] = None,
-    ) -> Dict[str, Any]:
+        constraints: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
         """
         Agrège le contexte et délègue l'arbitrage à la chaîne de routage.
         GATE A : Zéro sélection en dur du modèle ou du provider.
@@ -98,7 +100,7 @@ class CognitiveGateway:
             logger.debug("[GATEWAY-RECALL-SKIP] %s", e)
 
         full_system_prompt = identity_prompt + ("\n" + episodic_context if episodic_context else "")
-        messages: List[Dict[str, str]] = [{"role": "system", "content": full_system_prompt}]
+        messages: list[dict[str, str]] = [{"role": "system", "content": full_system_prompt}]
 
         # 3. Historique de la session active (Vérité courante Turn 1..N-1)
         try:
@@ -142,8 +144,8 @@ class CognitiveGateway:
         task: str,
         session_id: str = "default",
         priority: str = "normal",
-        constraints: Optional[Dict[str, Any]] = None,
-    ) -> Dict[str, Any]:
+        constraints: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
         """Passerelle synchrone."""
         try:
             loop = asyncio.get_event_loop()

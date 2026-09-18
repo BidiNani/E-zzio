@@ -14,13 +14,12 @@ import json
 import logging
 import uuid
 from dataclasses import asdict, dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
 
+from core.cognition.decision_ledger import DecisionLedgerEngine
 from core.cognition.evidence.envelope import EvidenceEnvelope
 from core.cognition.evidence.store import EvidenceStore
-from core.cognition.decision_ledger import DecisionLedgerEngine
 
 logger = logging.getLogger(__name__)
 
@@ -64,7 +63,7 @@ class SovereignMemoryManager:
         tier: str,
         content: str,
         source: str,
-        evidence_envelope: Optional[EvidenceEnvelope] = None,
+        evidence_envelope: EvidenceEnvelope | None = None,
         importance: float = 1.0,
         compression_ratio: float = 1.0,
     ) -> MemoryRecord:
@@ -95,8 +94,8 @@ class SovereignMemoryManager:
         tier_dir.mkdir(parents=True, exist_ok=True)
 
         prefix = tier[:3]
-        mem_id = f"{prefix}-{datetime.now(timezone.utc).strftime('%Y%m%d')}-{uuid.uuid4().hex[:8].upper()}"
-        ts = datetime.now(timezone.utc).isoformat()
+        mem_id = f"{prefix}-{datetime.now(UTC).strftime('%Y%m%d')}-{uuid.uuid4().hex[:8].upper()}"
+        ts = datetime.now(UTC).isoformat()
         content_hash = hashlib.sha256(content.encode("utf-8")).hexdigest()
 
         rec = MemoryRecord(
@@ -133,7 +132,7 @@ class SovereignMemoryManager:
         logger.info(f"[SOVEREIGN MEMORY] Successfully ingested memory '{mem_id}' into tier '{tier}'.")
         return rec
 
-    def retrieve_memory(self, memory_id: str) -> Optional[MemoryRecord]:
+    def retrieve_memory(self, memory_id: str) -> MemoryRecord | None:
         """Searches and loads a memory record across all tiers."""
         for json_path in self.store_dir.rglob(f"{memory_id}.json"):
             try:

@@ -10,10 +10,11 @@ Ensures fail-closed visual evidence contract:
 import hashlib
 import json
 from pathlib import Path
+
+import cv2
+import numpy as np
 import pytest
 from PIL import Image
-import numpy as np
-import cv2
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 EVIDENCE_DIR = ROOT_DIR / "state" / "audit" / "visual" / "v9.4-counter-certification"

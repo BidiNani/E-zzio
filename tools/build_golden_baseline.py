@@ -1,8 +1,7 @@
-import os
-import json
 import hashlib
+import json
 import subprocess
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path("G:/AI/E-zzio")
@@ -27,7 +26,7 @@ release_identity = {
     "source_revision": "dde4d186ce8cee1bdcfa42f6850763adb08b25f8",
     "source_revision_short": "dde4d18",
     "branch": "checkpoint/voice-capabilities-hardware-agent-20260816",
-    "certification_date": datetime.now(timezone.utc).isoformat(),
+    "certification_date": datetime.now(UTC).isoformat(),
     "certification_status": "100_PERCENT_VERIFIED_PRODUCT_RELEASE",
     "external_block": "Antigravity = BLOCKED_BY_EXTERNAL_QUOTA"
 }
@@ -137,7 +136,7 @@ test_results = {
     "failed": 0,
     "skipped": 0,
     "duration_seconds": 5.11,
-    "timestamp": datetime.now(timezone.utc).isoformat(),
+    "timestamp": datetime.now(UTC).isoformat(),
     "status": "100% PASS",
     "suites": [
         "tests/test_hitl_approval.py",
@@ -206,7 +205,7 @@ with open(GOLDEN_DIR / "dependency_manifest.json", "w", encoding="utf-8") as f:
     json.dump(dependency_manifest, f, indent=2)
 
 # 10. Asset Manifest
-with open(ROOT / "assets/ASSET_LICENSES.json", "r", encoding="utf-8") as f:
+with open(ROOT / "assets/ASSET_LICENSES.json", encoding="utf-8") as f:
     asset_licenses = json.load(f)
 asset_manifest = {
     "ledger_file": "assets/ASSET_LICENSES.json",
@@ -237,7 +236,7 @@ release_lock = {
     "ai_office_pass": True,
     "offline_resilience_pass": True,
     "pending_gates_count": 0,
-    "timestamp": datetime.now(timezone.utc).isoformat()
+    "timestamp": datetime.now(UTC).isoformat()
 }
 with open(GOLDEN_DIR / "release_lock.json", "w", encoding="utf-8") as f:
     json.dump(release_lock, f, indent=2)

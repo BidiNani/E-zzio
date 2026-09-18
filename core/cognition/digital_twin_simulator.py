@@ -4,17 +4,17 @@ Exécute des simulations d'impact (ressources, tokens, conformité constitutionn
 sur un jumeau numérique virtuel avant d'autoriser toute modification sur l'organisme réel.
 """
 
-import sys
 import logging
+import sys
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from core.constitution.hardware_resource_governor import HardwareResourceGovernor
 from core.cognition.ecol_universal_enforcement import EcolUniversalGateway
+from core.constitution.hardware_resource_governor import HardwareResourceGovernor
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +31,7 @@ class DigitalTwinSimulator:
         self.gateway = EcolUniversalGateway()
         self.gateway.register_gateway_action("DIGITAL_TWIN_SIMULATE")
 
-    def simulate_change(self, change_type: str, parameters: Dict[str, Any]) -> Dict[str, Any]:
+    def simulate_change(self, change_type: str, parameters: dict[str, Any]) -> dict[str, Any]:
         """
         Simule l'impact d'un changement (ex: compression mémoire massive, run d'un agent lourd)
         sur le jumeau numérique avant validation par ECOL.

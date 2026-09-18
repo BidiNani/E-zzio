@@ -5,11 +5,9 @@ Usage: python -m core.agents.swarm.sentinel [--audit-core] [--root PATH]
 from __future__ import annotations
 
 import argparse
-import json
 import os
 import subprocess
 import sys
-from typing import Dict, Any
 
 
 class SentinelAgent:

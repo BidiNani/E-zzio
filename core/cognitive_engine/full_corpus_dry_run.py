@@ -4,10 +4,10 @@ Scanne le corpus complet, applique le CognitiveGatekeeper, et produit
 le rapport final de préparation à l'indexation.
 """
 
-import sys
 import json
-from pathlib import Path
+import sys
 from collections import Counter
+from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:

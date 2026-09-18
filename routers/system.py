@@ -1,12 +1,12 @@
-import os
 import logging
+import os
+
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security.api_key import APIKeyHeader
 from pydantic import BaseModel
-from typing import List, Optional
 
-from core.system_cleanup import SystemCleanupService
 from core.dependency_graph_v49 import DependencyGraphV49
+from core.system_cleanup import SystemCleanupService
 
 logger = logging.getLogger("ezzio.routers.system")
 
@@ -29,12 +29,12 @@ class CleanupRequest(BaseModel):
 
 
 class CleanupReport(BaseModel):
-    folders_removed: List[str] = []
-    folders_skipped: List[str] = []
-    files_removed: List[str] = []
-    files_skipped: List[str] = []
+    folders_removed: list[str] = []
+    folders_skipped: list[str] = []
+    files_removed: list[str] = []
+    files_skipped: list[str] = []
     space_freed_bytes: int = 0
-    error: Optional[str] = None
+    error: str | None = None
 
 
 @router.post("/cleanup", response_model=CleanupReport)
@@ -57,20 +57,20 @@ async def system_cleanup(request: CleanupRequest, api_key: str = Depends(api_key
 class DependencyGraphResponse(BaseModel):
     total_files: int
     total_modules: int
-    orphans: List[str]
-    circular_dependencies: List[List[str]]
+    orphans: list[str]
+    circular_dependencies: list[list[str]]
     graph_path: str
 
 
 class DependencyQueryRequest(BaseModel):
-    files: List[str]
+    files: list[str]
     include_transitive: bool = True
 
 
 class DependencyQueryResponse(BaseModel):
-    closure: List[str]
-    direct_dependencies: List[str]
-    dependents: List[str]
+    closure: list[str]
+    direct_dependencies: list[str]
+    dependents: list[str]
 
 
 @router.get("/dependencies", response_model=DependencyGraphResponse, tags=["Dependencies"])
@@ -128,7 +128,7 @@ async def query_dependencies(request: DependencyQueryRequest, api_key: str = Dep
     return DependencyQueryResponse(closure=sorted(closure), direct_dependencies=sorted(direct_deps), dependents=sorted(dependents))
 
 
-@router.get("/dependencies/orphans", response_model=List[str], tags=["Dependencies"])
+@router.get("/dependencies/orphans", response_model=list[str], tags=["Dependencies"])
 async def get_orphan_files(api_key: str = Depends(api_key_header)):
     """
     Retourne la liste des fichiers orphelins (aucun import, aucun fichier ne les importe).
@@ -142,7 +142,7 @@ async def get_orphan_files(api_key: str = Depends(api_key_header)):
     return graph.find_orphans()
 
 
-@router.get("/dependencies/circular", response_model=List[List[str]], tags=["Dependencies"])
+@router.get("/dependencies/circular", response_model=list[list[str]], tags=["Dependencies"])
 async def get_circular_dependencies(api_key: str = Depends(api_key_header)):
     """
     Retourne la liste des dépendances circulaires détectées.
@@ -196,8 +196,8 @@ class OrphanCleanupRequest(BaseModel):
 
 
 class OrphanCleanupReport(BaseModel):
-    orphans_found: List[str]
-    orphans_removed: List[str]
+    orphans_found: list[str]
+    orphans_removed: list[str]
     space_freed_bytes: int = 0
 
 

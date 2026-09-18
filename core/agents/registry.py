@@ -8,9 +8,9 @@ import asyncio
 import logging
 import time
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from enum import Enum
-from typing import Any, Dict, List, Optional, Set
+from typing import Any
 
 logger = logging.getLogger("AgentRegistry")
 
@@ -25,7 +25,7 @@ class AgentStatus(str, Enum):
     ERROR = "ERROR"
 
 
-ALLOWED_AGENT_TRANSITIONS: Dict[AgentStatus, Set[AgentStatus]] = {
+ALLOWED_AGENT_TRANSITIONS: dict[AgentStatus, set[AgentStatus]] = {
     AgentStatus.IDLE: {AgentStatus.BUSY, AgentStatus.WAITING_APPROVAL, AgentStatus.DEGRADED, AgentStatus.OFFLINE, AgentStatus.ERROR},
     AgentStatus.BUSY: {AgentStatus.IDLE, AgentStatus.WAITING_APPROVAL, AgentStatus.BLOCKED, AgentStatus.DEGRADED, AgentStatus.ERROR},
     AgentStatus.WAITING_APPROVAL: {AgentStatus.BUSY, AgentStatus.IDLE, AgentStatus.BLOCKED, AgentStatus.ERROR},
@@ -42,7 +42,7 @@ class InvalidAgentTransitionError(Exception):
 
 
 def utc_now() -> str:
-    return datetime.now(timezone.utc).isoformat()
+    return datetime.now(UTC).isoformat()
 
 
 
@@ -55,30 +55,30 @@ class AgentDescriptor:
     avatar: str
     model: str
     provider: str
-    tools: List[str] = field(default_factory=list)
-    capabilities: List[str] = field(default_factory=list)
+    tools: list[str] = field(default_factory=list)
+    capabilities: list[str] = field(default_factory=list)
     risk_level: str = "LOW"
     status: AgentStatus = AgentStatus.IDLE
     current_action: str = "Ready"
     progress: int = 0
-    current_task_id: Optional[str] = None
-    bubble: Optional[str] = None
+    current_task_id: str | None = None
+    bubble: str | None = None
     is_master: bool = False
-    parent_id: Optional[str] = None
-    collaborator_id: Optional[str] = None
+    parent_id: str | None = None
+    collaborator_id: str | None = None
     last_heartbeat: float = field(default_factory=time.time)
     registered_at: str = field(default_factory=utc_now)
-    code_activity: Optional[Dict[str, Any]] = None
-    terminal_logs: List[str] = field(default_factory=list)
+    code_activity: dict[str, Any] | None = None
+    terminal_logs: list[str] = field(default_factory=list)
     depth: int = 0
     max_depth: int = 3
     budget: float = 100.0
     budget_used: float = 0.0
-    children_ids: List[str] = field(default_factory=list)
+    children_ids: list[str] = field(default_factory=list)
     ephemeral: bool = False
     lifecycle_state: str = "READY"
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "agent_id": self.agent_id,
             "name": self.name,
@@ -115,7 +115,7 @@ class AgentDescriptor:
 class AgentRegistry:
     """Registre singleton souverain de gestion d'agents."""
 
-    _instance: Optional[AgentRegistry] = None
+    _instance: AgentRegistry | None = None
 
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
@@ -126,7 +126,7 @@ class AgentRegistry:
     def __init__(self):
         if getattr(self, "_initialized", False):
             return
-        self._agents: Dict[str, AgentDescriptor] = {}
+        self._agents: dict[str, AgentDescriptor] = {}
         self._lock = asyncio.Lock()
         self._sync_lock = asyncio.Lock()
         self._register_default_agents()
@@ -401,13 +401,13 @@ class AgentRegistry:
     def register(self, desc: AgentDescriptor) -> None:
         self._agents[desc.agent_id] = desc
 
-    def get_agent(self, agent_id: str) -> Optional[AgentDescriptor]:
+    def get_agent(self, agent_id: str) -> AgentDescriptor | None:
         return self._agents.get(agent_id)
 
-    def get_agent_by_role(self, role: str) -> Optional[AgentDescriptor]:
+    def get_agent_by_role(self, role: str) -> AgentDescriptor | None:
         """Recherche un agent par identifiant canonique de rôle ou nom de worker."""
         role_upper = role.upper().replace("-", "_").strip()
-        
+
         # Mappages directs pour les rôles demandés
         role_alias_map = {
             "CODER_AGENT": "coder_worker",
@@ -453,23 +453,23 @@ class AgentRegistry:
                 return agent
         return None
 
-    def find_agents_by_capability(self, capability: str) -> List[AgentDescriptor]:
+    def find_agents_by_capability(self, capability: str) -> list[AgentDescriptor]:
         """Retourne tous les agents possédant une capacité donnée."""
         cap_upper = capability.upper().strip()
         return [a for a in self._agents.values() if cap_upper in [c.upper() for c in a.capabilities]]
 
-    def list_agents(self) -> List[AgentDescriptor]:
+    def list_agents(self) -> list[AgentDescriptor]:
         return list(self._agents.values())
 
     def update_status(
         self,
         agent_id: str,
         status: AgentStatus,
-        current_action: Optional[str] = None,
-        progress: Optional[int] = None,
-        task_id: Optional[str] = None,
-        bubble: Optional[str] = None,
-        log_line: Optional[str] = None,
+        current_action: str | None = None,
+        progress: int | None = None,
+        task_id: str | None = None,
+        bubble: str | None = None,
+        log_line: str | None = None,
         force: bool = False,
     ) -> None:
         agent = self._agents.get(agent_id)
@@ -504,7 +504,7 @@ class AgentRegistry:
             if agent.status in (AgentStatus.DEGRADED, AgentStatus.OFFLINE):
                 agent.status = AgentStatus.IDLE
 
-    def check_heartbeats(self, degraded_threshold_sec: float = 30.0, offline_threshold_sec: float = 90.0) -> List[Dict[str, Any]]:
+    def check_heartbeats(self, degraded_threshold_sec: float = 30.0, offline_threshold_sec: float = 90.0) -> list[dict[str, Any]]:
         """Vérifie les battements de cœur et dégrade/met hors-ligne les agents silencieux."""
         now = time.time()
         events = []

@@ -10,11 +10,9 @@ from __future__ import annotations
 import json
 import logging
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
-
-from core.cognition.evidence.envelope import EvidenceEnvelope
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -25,9 +23,9 @@ class FederatedProposal:
     model_name: str
     proposal_text: str
     confidence: float
-    evidence_id: Optional[str] = None
-    suggested_action: Optional[str] = None
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    evidence_id: str | None = None
+    suggested_action: str | None = None
+    metadata: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -40,7 +38,7 @@ class ArbitratedDecision:
     arbitration_rationale: str
     consensus_score: float
     selected_action: str
-    participating_proposals: List[FederatedProposal]
+    participating_proposals: list[FederatedProposal]
     constitutional_verified: bool
     status: str = "ARBITRATED_SUCCESS"
 
@@ -52,7 +50,7 @@ class SovereignArbiter:
         from core.cognition.orchestration.dissent_engine import CognitiveDissentEngine
         self.dissent_engine = CognitiveDissentEngine()
 
-    def _load_constitutional_invariants(self) -> List[str]:
+    def _load_constitutional_invariants(self) -> list[str]:
         """Loads immutable constitutional rules."""
         if not self.genome_path.exists():
             return []
@@ -66,14 +64,14 @@ class SovereignArbiter:
         self,
         task_id: str,
         task_description: str,
-        proposals: List[FederatedProposal],
+        proposals: list[FederatedProposal],
     ) -> ArbitratedDecision:
         """Arbitrates between competing proposals based on Constitution, logic, and safety."""
         if not proposals:
             raise ValueError("FAIL-CLOSED: Cannot arbitrate with zero proposals.")
 
-        ts = datetime.now(timezone.utc).isoformat()
-        decision_id = f"ARB-{datetime.now(timezone.utc).strftime('%Y%m%d')}-{task_id}"
+        ts = datetime.now(UTC).isoformat()
+        decision_id = f"ARB-{datetime.now(UTC).strftime('%Y%m%d')}-{task_id}"
 
         # 1. Epistemic Dissent Evaluation
         dissent_eval = self.dissent_engine.evaluate_dissent(proposals)

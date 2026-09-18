@@ -3,15 +3,17 @@ E-ZZIO Core — Capability Registry & Qualification Authority.
 Gère l'enregistrement, la validation et l'exécution sécurisée des capacités externes qualifiées.
 """
 from __future__ import annotations
+
 import logging
-from typing import Dict, Any, List, Optional
-from core.capabilities.capability_qualification import CapabilityQualification, QualificationStatus
+from typing import Any
+
 from core.capabilities.capability_policy import CapabilityPolicy, PolicyDecision
-from core.capabilities.web_provider import WebProvider
+from core.capabilities.capability_qualification import CapabilityQualification, QualificationStatus
+from core.capabilities.composio_provider import ComposioProvider
 from core.capabilities.github_provider import GitHubProvider
 from core.capabilities.google_workspace_provider import GoogleWorkspaceProvider
 from core.capabilities.slack_provider import SlackProvider
-from core.capabilities.composio_provider import ComposioProvider
+from core.capabilities.web_provider import WebProvider
 from core.perception.youtube_adapter import YouTubeAdapter
 
 logger = logging.getLogger("CapabilityRegistry")
@@ -21,7 +23,7 @@ class CapabilityRegistry:
     """Registre souverain des capacités qualifiées d'E-ZZIO."""
 
     def __init__(self):
-        self.qualifications: Dict[str, CapabilityQualification] = {}
+        self.qualifications: dict[str, CapabilityQualification] = {}
         self.policy = CapabilityPolicy()
         self.web_provider = WebProvider()
         self.github_provider = GitHubProvider()
@@ -211,16 +213,16 @@ class CapabilityRegistry:
         self.qualifications[qualification.name] = qualification
         logger.info("[CAPABILITY-REGISTER] Capacité '%s' enregistrée avec le statut %s", qualification.name, qualification.status.value)
 
-    def get_qualification(self, name: str) -> Optional[CapabilityQualification]:
+    def get_qualification(self, name: str) -> CapabilityQualification | None:
         return self.qualifications.get(name)
 
-    def get_capability(self, name: str) -> Optional[CapabilityQualification]:
+    def get_capability(self, name: str) -> CapabilityQualification | None:
         return self.qualifications.get(name)
 
-    def list_qualified_capabilities(self) -> List[str]:
+    def list_qualified_capabilities(self) -> list[str]:
         return [name for name, q in self.qualifications.items() if q.status == QualificationStatus.QUALIFIED]
 
-    def list_capabilities(self) -> List[Dict[str, Any]]:
+    def list_capabilities(self) -> list[dict[str, Any]]:
         return [
             {
                 "name": q.name,
@@ -233,7 +235,7 @@ class CapabilityRegistry:
             for q in self.qualifications.values()
         ]
 
-    def resolve_scope(self, name: str, params: Dict[str, Any]) -> str:
+    def resolve_scope(self, name: str, params: dict[str, Any]) -> str:
         """Résout le scope d'autorisation pour une capacité et ses paramètres donnés."""
         if "scope" in params and isinstance(params["scope"], str):
             return params["scope"]
@@ -299,7 +301,7 @@ class CapabilityRegistry:
 
         return f"unknown.{name}"
 
-    async def execute_capability(self, name: str, params: Dict[str, Any]) -> Dict[str, Any]:
+    async def execute_capability(self, name: str, params: dict[str, Any]) -> dict[str, Any]:
         """Exécute une capacité sous contrôle de sécurité strict et de politique de gouvernance."""
         qualif = self.get_qualification(name)
         if not qualif:

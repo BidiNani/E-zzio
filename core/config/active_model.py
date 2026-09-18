@@ -5,27 +5,25 @@ Lit/écrit runtime/active_model.json. Tous les providers et routers
 doivent importer get_active_model() / set_active_model() depuis ici.
 """
 import json
-import os
 from pathlib import Path
-from typing import Any, Dict, Optional
 
 # Chemin du fichier de persistance
 _RUNTIME_DIR = Path(__file__).resolve().parents[2] / "runtime"
 _ACTIVE_MODEL_FILE = _RUNTIME_DIR / "active_model.json"
 
 # Modèle par défaut (fallback si rien n'est configuré)
-DEFAULT_MODEL: Dict[str, str] = {
+DEFAULT_MODEL: dict[str, str] = {
     "provider": "gemini",
     "model_id": "gemini-3.6-flash",
     "display_name": "Gemini 3.6 Flash",
 }
 
 
-def get_active_model() -> Dict[str, str]:
+def get_active_model() -> dict[str, str]:
     """Retourne le modèle actif (depuis le fichier ou défaut)."""
     try:
         if _ACTIVE_MODEL_FILE.exists():
-            with open(_ACTIVE_MODEL_FILE, "r", encoding="utf-8") as f:
+            with open(_ACTIVE_MODEL_FILE, encoding="utf-8") as f:
                 data = json.load(f)
                 if "provider" in data and "model_id" in data:
                     return data
@@ -34,7 +32,7 @@ def get_active_model() -> Dict[str, str]:
     return dict(DEFAULT_MODEL)
 
 
-def set_active_model(provider: str, model_id: str, display_name: Optional[str] = None) -> Dict[str, str]:
+def set_active_model(provider: str, model_id: str, display_name: str | None = None) -> dict[str, str]:
     """Définit le modèle actif et le persiste."""
     _RUNTIME_DIR.mkdir(parents=True, exist_ok=True)
     data = {

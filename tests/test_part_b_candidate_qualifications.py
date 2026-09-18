@@ -7,14 +7,14 @@ Certifie les 4 capacités candidates retenues avec preuves mathématiques et ré
 4. BackupEngine (Architecture CAS, déduplication réelle 100% sur fichiers inchangés, restauration)
 """
 import os
-import pytest
 from pathlib import Path
 
-from core.perception.rss_adapter import RSSAdapter
-from core.capabilities.web_provider import WebProvider
-from core.security.secrets_vault import SecretsVault
-from core.security.backup_engine import BackupEngine
+import pytest
 
+from core.capabilities.web_provider import WebProvider
+from core.perception.rss_adapter import RSSAdapter
+from core.security.backup_engine import BackupEngine
+from core.security.secrets_vault import SecretsVault
 
 SAMPLE_RSS_XML = """<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">

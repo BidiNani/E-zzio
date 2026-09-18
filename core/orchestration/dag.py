@@ -6,9 +6,9 @@ from __future__ import annotations
 
 import uuid
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from enum import Enum
-from typing import Any, Callable, Coroutine, Dict, List, Optional, Set
+from typing import Any
 
 
 class DAGExecutionStatus(str, Enum):
@@ -32,7 +32,7 @@ class DependencyNotMetError(Exception):
 
 
 def utc_now() -> str:
-    return datetime.now(timezone.utc).isoformat()
+    return datetime.now(UTC).isoformat()
 
 
 @dataclass
@@ -40,23 +40,23 @@ class DAGNode:
     task_id: str
     title: str
     action_type: str
-    payload: Dict[str, Any] = field(default_factory=dict)
-    dependencies: List[str] = field(default_factory=list)
-    parent_id: Optional[str] = None
+    payload: dict[str, Any] = field(default_factory=dict)
+    dependencies: list[str] = field(default_factory=list)
+    parent_id: str | None = None
     agent_id: str = "coder_worker"
     provider: str = "local_ollama"
     policy_decision: str = "ALLOW"
-    approval_id: Optional[str] = None
+    approval_id: str | None = None
     status: DAGExecutionStatus = DAGExecutionStatus.PENDING
-    result: Optional[Dict[str, Any]] = None
-    error: Optional[str] = None
+    result: dict[str, Any] | None = None
+    error: str | None = None
     retry_count: int = 0
     max_retries: int = 2
-    started_at: Optional[str] = None
-    completed_at: Optional[str] = None
+    started_at: str | None = None
+    completed_at: str | None = None
     correlation_id: str = field(default_factory=lambda: f"corr_{uuid.uuid4().hex[:12]}")
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "task_id": self.task_id,
             "title": self.title,
@@ -83,10 +83,10 @@ class DAGNode:
 class TaskDAG:
     """Graphe acyclique de tâches avec validation topologique et détection de cycle."""
 
-    def __init__(self, dag_id: Optional[str] = None, name: str = "sovereign_task_workflow"):
+    def __init__(self, dag_id: str | None = None, name: str = "sovereign_task_workflow"):
         self.dag_id = dag_id or f"dag_{uuid.uuid4().hex[:12]}"
         self.name = name
-        self.nodes: Dict[str, DAGNode] = {}
+        self.nodes: dict[str, DAGNode] = {}
         self.created_at = utc_now()
 
     def add_node(
@@ -94,15 +94,15 @@ class TaskDAG:
         task_id: str,
         title: str,
         action_type: str,
-        payload: Optional[Dict[str, Any]] = None,
-        dependencies: Optional[List[str]] = None,
-        parent_id: Optional[str] = None,
+        payload: dict[str, Any] | None = None,
+        dependencies: list[str] | None = None,
+        parent_id: str | None = None,
         agent_id: str = "coder_worker",
         provider: str = "local_ollama",
         policy_decision: str = "ALLOW",
-        approval_id: Optional[str] = None,
+        approval_id: str | None = None,
         max_retries: int = 2,
-        correlation_id: Optional[str] = None,
+        correlation_id: str | None = None,
     ) -> DAGNode:
         if task_id in self.nodes:
             raise ValueError(f"Node with task_id '{task_id}' already exists in DAG {self.dag_id}.")
@@ -126,7 +126,7 @@ class TaskDAG:
         return node
 
 
-    def get_node(self, task_id: str) -> Optional[DAGNode]:
+    def get_node(self, task_id: str) -> DAGNode | None:
         return self.nodes.get(task_id)
 
     def validate(self) -> None:
@@ -138,8 +138,8 @@ class TaskDAG:
                 if dep == task_id:
                     raise CycleDetectedError(f"Self-dependency detected on node '{task_id}'.")
 
-        visiting: Set[str] = set()
-        visited: Set[str] = set()
+        visiting: set[str] = set()
+        visited: set[str] = set()
 
         def dfs(curr_id: str):
             visiting.add(curr_id)
@@ -155,11 +155,11 @@ class TaskDAG:
             if task_id not in visited:
                 dfs(task_id)
 
-    def get_topological_order(self) -> List[str]:
+    def get_topological_order(self) -> list[str]:
         """Retourne la séquence d'exécution ordonnée selon les dépendances."""
         self.validate()
-        adj: Dict[str, List[str]] = {k: [] for k in self.nodes}
-        indeg: Dict[str, int] = {k: 0 for k in self.nodes}
+        adj: dict[str, list[str]] = {k: [] for k in self.nodes}
+        indeg: dict[str, int] = {k: 0 for k in self.nodes}
 
         for task_id, node in self.nodes.items():
             indeg[task_id] = len(node.dependencies)
@@ -182,9 +182,9 @@ class TaskDAG:
 
         return order
 
-    def get_ready_nodes(self) -> List[DAGNode]:
+    def get_ready_nodes(self) -> list[DAGNode]:
         """Retourne tous les nœuds prêts à être exécutés (dépendances toutes COMPLETED)."""
-        ready: List[DAGNode] = []
+        ready: list[DAGNode] = []
         for node in self.nodes.values():
             if node.status != DAGExecutionStatus.PENDING:
                 continue
@@ -204,7 +204,7 @@ class TaskDAG:
     def is_failed(self) -> bool:
         return any(node.status == DAGExecutionStatus.FAILED for node in self.nodes.values())
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "dag_id": self.dag_id,
             "name": self.name,

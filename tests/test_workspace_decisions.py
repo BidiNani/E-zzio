@@ -2,12 +2,20 @@
 stall, plan source (modes existants), gaps."""
 import pytest
 
-from core.capabilities.workspace_decisions import (
-    DecisionState, NextAction, SourceCandidate, StallVerdict,
-    assess_stall, best_next_action, best_source_next, feedback_to_signal,
-    gap_report, internal_first_order, source_plan,
-)
 from core.capabilities.research_fabric import Breadth, SearchIntent
+from core.capabilities.workspace_decisions import (
+    DecisionState,
+    NextAction,
+    SourceCandidate,
+    StallVerdict,
+    assess_stall,
+    best_next_action,
+    best_source_next,
+    feedback_to_signal,
+    gap_report,
+    internal_first_order,
+    source_plan,
+)
 
 
 def test_best_next_action_priority():

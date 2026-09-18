@@ -3,10 +3,10 @@ E-ZZIO V7.45 — Immutable Audit Ledger (Hash Chaining)
 Garantit l'intégrité infalsifiable des journaux d'événements par liaison cryptographique (Blockchain-lite).
 """
 
-import json
 import hashlib
+import json
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 
 class ImmutableAuditLedger:
@@ -28,7 +28,7 @@ class ImmutableAuditLedger:
 
     def append_event(self, event_type: str, data: dict) -> dict:
         prev_hash = self._get_last_hash()
-        timestamp = datetime.now(timezone.utc).isoformat()
+        timestamp = datetime.now(UTC).isoformat()
 
         record = {"timestamp": timestamp, "event": event_type, "data": data, "previous_hash": prev_hash}
 

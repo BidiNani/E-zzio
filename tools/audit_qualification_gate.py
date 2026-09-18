@@ -1,31 +1,32 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_qualification_gate() -> Dict[str, Any]:
+def inspect_qualification_gate() -> dict[str, Any]:
     gate_path = PROJECT_ROOT / "core" / "models" / "qualification" / "gate.py"
     if not gate_path.exists():
         return {"exists": False}
-    
+
     try:
         content = gate_path.read_text(encoding="utf-8", errors="replace")
         tree = ast.parse(content, filename=str(gate_path))
         lines = content.splitlines()
-        
+
         functions_source = {}
         for node in ast.walk(tree):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 start = node.lineno - 1
                 end = getattr(node, 'end_lineno', start + 40)
                 functions_source[node.name] = "\n".join(lines[start:end])
-                
+
         # Chercher les call-sites de qualify_openai_compatible ou QualificationGate dans toute la codebase
         callsites = []
         for p in PROJECT_ROOT.glob("**/*.py"):
@@ -37,7 +38,7 @@ def inspect_qualification_gate() -> Dict[str, Any]:
                     callsites.append(str(p.relative_to(PROJECT_ROOT)))
             except Exception:
                 continue
-                
+
         return {
             "exists": True,
             "gate_functions": functions_source,

@@ -1,8 +1,10 @@
 """Tests unitaires déterministes pour EzzioMaster — Dédoublonnage du contexte et continuité multi-tours."""
 
-import pytest
 import asyncio
 from unittest.mock import AsyncMock, MagicMock
+
+import pytest
+
 from core.ezzio_master import EzzioMaster
 from core.providers.base_provider import CostClass, ProviderResponse
 

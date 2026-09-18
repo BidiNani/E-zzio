@@ -9,6 +9,7 @@ Responsabilité:
 
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 ROOT_DIR = Path("G:/AI/E-zzio").resolve()

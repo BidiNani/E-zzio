@@ -1,9 +1,10 @@
 from __future__ import annotations
+
 import ast
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 EXCLUDED_DIRS = {"audit", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tests"}
@@ -11,9 +12,9 @@ EXCLUDED_DIRS = {"audit", "snapshot", "snapshots", "backup", "backups", "old", "
 class KernelInterfaceVisitor(ast.NodeVisitor):
     def __init__(self, rel_path: str):
         self.rel_path = rel_path
-        self.interface_definitions: List[Dict[str, Any]] = []
-        self.kernel_calls: List[Dict[str, Any]] = []
-        self.handle_methods: List[Dict[str, Any]] = []
+        self.interface_definitions: list[dict[str, Any]] = []
+        self.kernel_calls: list[dict[str, Any]] = []
+        self.handle_methods: list[dict[str, Any]] = []
 
     def visit_ClassDef(self, node: ast.ClassDef):
         for sub in node.body:
@@ -54,7 +55,7 @@ def main():
     print(f"[RACINE] {PROJECT_ROOT}\n")
 
     py_files = [p for p in PROJECT_ROOT.glob("**/*.py") if not (set(p.parts) & EXCLUDED_DIRS)]
-    
+
     all_methods = []
     all_calls = []
 
@@ -70,7 +71,7 @@ def main():
         except Exception as e:
             print(f"[WARN] Erreur parsing {rel_path} : {e}", file=sys.stderr)
 
-    print(f"[1] MÉTHODES CLÉS DÉTECTÉES (handle / _get_kernel / get_organism_status)")
+    print("[1] MÉTHODES CLÉS DÉTECTÉES (handle / _get_kernel / get_organism_status)")
     for m in all_methods:
         print(f"  • [{m['file']}] class {m['class']} -> def {m['method']}() (ligne {m['line']})")
         print(f"    Extrait : {m['code']}...\n")

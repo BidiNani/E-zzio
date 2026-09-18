@@ -21,8 +21,8 @@ from __future__ import annotations
 import asyncio
 import logging
 import time
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from dataclasses import dataclass
+from datetime import UTC, datetime
 from typing import Any
 
 logger = logging.getLogger("EzzioRegistryRefreshService")
@@ -160,7 +160,7 @@ class GeminiRegistryRefreshService:
                 result = await refresh_gemini_registry_async()
             except Exception as exc:
                 self._stats.failure += 1
-                self._stats.last_failure_iso = datetime.now(timezone.utc).isoformat()
+                self._stats.last_failure_iso = datetime.now(UTC).isoformat()
                 logger.warning(
                     "[REGISTRY-SERVICE] Refresh ÉCHEC (trigger=%s) : %s : %s",
                     trigger,
@@ -171,7 +171,7 @@ class GeminiRegistryRefreshService:
 
             elapsed = time.perf_counter() - t0
             self._stats.success += 1
-            self._stats.last_success_iso = datetime.now(timezone.utc).isoformat()
+            self._stats.last_success_iso = datetime.now(UTC).isoformat()
             self._stats.last_discovered = result.get("discovered_count", 0)
             self._stats.last_new = len(result.get("new_models", []))
             self._stats.last_superseded = len(result.get("superseded_models", []))

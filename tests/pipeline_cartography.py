@@ -1,6 +1,6 @@
-import sys
-import json
 import inspect
+import json
+import sys
 from pathlib import Path
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
@@ -34,7 +34,7 @@ try:
     print("\n--- [LIFECYCLE MANAGER CARTOGRAPHY] ---")
     sig = inspect.signature(ModelLifecycleManager.transition) if hasattr(ModelLifecycleManager, "transition") else "N/A"
     print(f"  transition signature : {sig}")
-    
+
     # Recherche des matrices de transition ou règles d'acteurs dans le source
     source_lc = inspect.getsource(ModelLifecycleManager)
     print("  Extrait des règles de transition (ModelLifecycleManager) :")
@@ -62,7 +62,7 @@ try:
     print("\n--- [FABRIC DISCOVERY & ORCHESTRATION CARTOGRAPHY] ---")
     methods = [m[0] for m in inspect.getmembers(AutonomousModelFabric, predicate=inspect.function) if not m[0].startswith("_")]
     print(f"  Méthodes publiques de la Fabric : {methods}")
-    
+
     source_fab = inspect.getsource(AutonomousModelFabric)
     print("  Extrait de AutonomousModelFabric (découverte / transition) :")
     for line in source_fab.splitlines():

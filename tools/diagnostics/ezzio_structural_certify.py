@@ -4,8 +4,8 @@ Audit Read-Only de la zone active, vérification du File Registry,
 contrôle d'absence de dépendances cassées vers le Cold Storage.
 """
 
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 REGISTRY_FILE = ROOT_DIR / "core" / "constitution" / "ezzio_file_registry.json"
@@ -52,7 +52,7 @@ def run_structural_certification():
     manifest_path = ROOT_DIR / "archive" / "cold_storage" / "archive_manifest.json"
     archive_status = "SEALED" if manifest_path.exists() else "UNSEALED"
 
-    print(f" Timestamp UTC      : {datetime.now(timezone.utc).isoformat()}")
+    print(f" Timestamp UTC      : {datetime.now(UTC).isoformat()}")
     print("-" * 60)
     print(f" [CHECK 1] Active Zone Integrity   : [{active_zone_status}]")
     print(f" [CHECK 2] File Registry Presence  : [{registry_status}]")

@@ -7,11 +7,12 @@ Valide l'execution reelle sur peripherique physique ou AVD :
 4. Absence du flag DEBUGGABLE dans le package installe (pure release)
 5. Demarrage de l'activite MainActivity sans crash (zero exception fatale)
 """
-from pathlib import Path
 import shutil
 import subprocess
-import pytest
+from pathlib import Path
 from unittest.mock import patch
+
+import pytest
 
 pytestmark = pytest.mark.hardware
 

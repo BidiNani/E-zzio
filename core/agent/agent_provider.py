@@ -1,14 +1,16 @@
 """E-ZZIO Autonomous Agent — Unified Router Bridge with Strict Fail-Closed Boundaries."""
 from __future__ import annotations
-import os
-import re
+
 import json
 import logging
-import urllib.request
+import os
+import re
 import urllib.error
-from typing import Any, Dict, List, Optional
-from core.security.unified_vault import key_vault
+import urllib.request
+from typing import Any
+
 from core.models.router import EzzioRouter
+from core.security.unified_vault import key_vault
 
 os.environ["LITELLM_LOG"] = "ERROR"
 logging.getLogger("LiteLLM").setLevel(logging.ERROR)
@@ -24,7 +26,7 @@ class RouteIntegrityError(RuntimeError):
 class AgentProviderAdapter:
     AUTHORIZED_MODELS = {"cloud_gemini", "cloud_groq"}
 
-    def __init__(self, backend: str = "cloud_gemini", local_model: Optional[str] = None):
+    def __init__(self, backend: str = "cloud_gemini", local_model: str | None = None):
         self.backend = backend
         self.local_model = local_model
         self.router = self._build_canonical_router()
@@ -103,7 +105,7 @@ class AgentProviderAdapter:
 
     def chat_completion(
         self,
-        messages: List[Dict[str, str]],
+        messages: list[dict[str, str]],
         force_cloud: bool = False,
         speed: str = "fast"
     ) -> str:
@@ -117,7 +119,7 @@ class AgentProviderAdapter:
 
         # Master Chat est cloud-only ; aucune préparation Ollama.
 
-        call_kwargs: Dict[str, Any] = {
+        call_kwargs: dict[str, Any] = {
             "model": target_model,
             "messages": messages,
             "temperature": 0.3,
@@ -141,7 +143,7 @@ class AgentProviderAdapter:
 
             for fallback_model in fallback_order:
                 # Fallback cloud : aucune préparation Ollama.
-                fb_kwargs: Dict[str, Any] = {
+                fb_kwargs: dict[str, Any] = {
                     "model": fallback_model,
                     "messages": messages,
                     "temperature": 0.3,

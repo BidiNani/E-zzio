@@ -1,4 +1,7 @@
-import hashlib, json, sys
+import hashlib
+import json
+import sys
+
 files = ['core/capabilities/capability_policy.py', 'core/capabilities/registry.py', 'core/security/audit_ledger.py']
 manifest = json.load(open('docs/FROZEN_CORE_MANIFEST.json'))['components']
 for f in files:

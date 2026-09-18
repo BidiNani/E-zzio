@@ -2,13 +2,10 @@
 E-ZZIO : Master Full Model Forensic Benchmark & CPU Optimization Gate v4.0.
 Compiles all physical evidence, benchmarks, thread sweeps, capabilities, and registers.
 """
-import os
-import sys
 import json
-import time
-import hashlib
-import psutil
 from pathlib import Path
+
+import psutil
 
 root = Path("G:/AI/E-zzio")
 ext_dir = Path("G:/AI/external")

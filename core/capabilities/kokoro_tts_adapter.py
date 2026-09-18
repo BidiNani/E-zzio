@@ -7,14 +7,14 @@ En cas d'indisponibilité ou d'erreur, bascule automatiquement et gracieusement
 sur le synthétiseur PCM/WAV procédural déterministe interne (ezzio-procedural-tts).
 """
 from __future__ import annotations
-import os
-import io
-import wave
-import time
-import logging
+
 import hashlib
+import io
+import logging
+import time
+import wave
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Any
 
 logger = logging.getLogger("KokoroTTSAdapter")
 
@@ -64,8 +64,8 @@ class KokoroTTSAdapter:
         voice: str = "af_bella",
         speed: float = 1.0,
         lang: str = "fr-fr",
-        output_path: Optional[Path | str] = None
-    ) -> Dict[str, Any]:
+        output_path: Path | str | None = None
+    ) -> dict[str, Any]:
         """
         Synthétise du texte en audio WAV.
         Si Kokoro est disponible, génère une voix neuronale haute fidélité.

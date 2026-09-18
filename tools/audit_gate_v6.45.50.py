@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import ast
 import json
 import sys
@@ -32,11 +33,11 @@ def main():
         return
 
     print(f"📁 Fichier canonique trouvé : {router_path.relative_to(PROJECT_ROOT)}")
-    
+
     try:
         tree = ast.parse(content, filename=str(router_path))
         extracted = {}
-        
+
         for stmt in tree.body:
             if isinstance(stmt, ast.ClassDef) and stmt.name == "EzzioRouter":
                 print(f"\n  🏛️  CLASS EzzioRouter (ligne {stmt.lineno})")

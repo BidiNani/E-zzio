@@ -2,14 +2,13 @@
 E-ZZIO V9.4 — Visual Reveal & Product UX Master Certifier (Python Engine).
 Executes the full 10-step certification pipeline deterministically.
 """
-import sys
-import os
-import json
 import hashlib
-import zipfile
+import json
+import os
 import subprocess
+import sys
+import zipfile
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parent.parent
 os.chdir(ROOT)
@@ -120,7 +119,7 @@ video_demo = vis_dir / "E-ZZIO-V9.4-AI-OFFICE-DEMO.mp4"
 if not video_demo.exists() or video_demo.stat().st_size < 100000:
     print(f"[FAIL] Video demo {video_demo} manquante ou vide.")
     sys.exit(1)
-print(f"[OK] 8/8 captures visuelles + 1 video MP4 certifiees presentes et valides.")
+print("[OK] 8/8 captures visuelles + 1 video MP4 certifiees presentes et valides.")
 
 # 8. Documentation Suite Verification
 print("[8/10] Verification de la suite documentaire V9.4...")

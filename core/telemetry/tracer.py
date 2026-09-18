@@ -6,12 +6,12 @@ Permet de tracer les requêtes à travers les composants (FastAPI -> CognitiveGa
 3. Ne remplace ni AuditLedger (sécurité/immutabilité) ni SQLite telemetry (métriques)
 """
 from __future__ import annotations
-import os
+
+import logging
 import time
 import uuid
-import logging
-from typing import Dict, Any, Optional
 from dataclasses import dataclass, field
+from typing import Any
 
 logger = logging.getLogger("EzzioTracer")
 
@@ -21,13 +21,13 @@ class TraceSpan:
     name: str
     trace_id: str
     span_id: str
-    parent_span_id: Optional[str] = None
+    parent_span_id: str | None = None
     start_time: float = field(default_factory=time.time)
-    end_time: Optional[float] = None
-    attributes: Dict[str, Any] = field(default_factory=dict)
+    end_time: float | None = None
+    attributes: dict[str, Any] = field(default_factory=dict)
     status: str = "UNSET"
 
-    def end(self, status: str = "OK", error: Optional[str] = None):
+    def end(self, status: str = "OK", error: str | None = None):
         self.end_time = time.time()
         self.status = "ERROR" if error else status
         if error:
@@ -52,9 +52,9 @@ class OpenTelemetryBridge:
     def start_span(
         self,
         name: str,
-        trace_id: Optional[str] = None,
-        parent_span_id: Optional[str] = None,
-        attributes: Optional[Dict[str, Any]] = None
+        trace_id: str | None = None,
+        parent_span_id: str | None = None,
+        attributes: dict[str, Any] | None = None
     ) -> TraceSpan:
         """Démarre un nouveau span de trace distribuée."""
         t_id = trace_id or self.generate_trace_id()

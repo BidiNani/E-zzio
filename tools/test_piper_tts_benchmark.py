@@ -1,14 +1,12 @@
 """
 E-ZZIO : Benchmark et Qualification de Piper TTS (CPU ONLY).
 """
-import os
-import sys
-import io
-import time
-import json
-import wave
 import hashlib
+import json
+import time
+import wave
 from pathlib import Path
+
 from piper import PiperVoice
 
 root = Path("G:/AI/E-zzio")

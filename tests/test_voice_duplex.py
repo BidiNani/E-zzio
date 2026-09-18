@@ -5,8 +5,10 @@ Tests unitaires pour le moteur vocal Duplex et l'interruption en temps réel (Ba
 import asyncio
 import struct
 import time
+
 import pytest
-from core.voice.voice_duplex_engine import VoiceDuplexEngine, DuplexState
+
+from core.voice.voice_duplex_engine import DuplexState, VoiceDuplexEngine
 
 
 def test_vad_speech_detection():

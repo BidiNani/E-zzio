@@ -3,15 +3,14 @@ core/agent/input_access_manager.py — Universal Input Access & Realization Mana
 Classification: LOCAL_FILE, LOCAL_DIRECTORY, URL, WEB_PAGE, PDF, IMAGE, AUDIO, VIDEO, ARCHIVE, DATABASE.
 """
 from __future__ import annotations
-import os
-import sys
-import json
-import zipfile
+
 import logging
+import os
+import zipfile
+from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
-from typing import Dict, Any, List, Optional, Union
-from dataclasses import dataclass, field
+from typing import Any
 
 logger = logging.getLogger("ezzio.agent.input_access_manager")
 
@@ -41,17 +40,17 @@ class InputDocument:
     input_type: InputType
     status: str  # READY / PARTIAL / UNAVAILABLE / AUTH_REQUIRED / BLOCKED
     content_text: str = ""
-    binary_reference: Optional[Union[bytes, str]] = None
-    visual_references: List[Dict[str, Any]] = field(default_factory=list)
-    extracted_data: Dict[str, Any] = field(default_factory=dict)
-    metadata: Dict[str, Any] = field(default_factory=dict)
-    provenance: Dict[str, Any] = field(default_factory=dict)
+    binary_reference: bytes | str | None = None
+    visual_references: list[dict[str, Any]] = field(default_factory=list)
+    extracted_data: dict[str, Any] = field(default_factory=dict)
+    metadata: dict[str, Any] = field(default_factory=dict)
+    provenance: dict[str, Any] = field(default_factory=dict)
 
 
 class InputAccessManager:
     """Manager d'accès universel aux entrées (fichiers, dossiers, URLs, PDF, images, médias, archives)."""
 
-    def __init__(self, workspace_root: Optional[str] = None):
+    def __init__(self, workspace_root: str | None = None):
         self.workspace_root = Path(workspace_root or r"G:\AI\E-zzio").resolve()
 
     def classify_input(self, target: str) -> InputType:
@@ -140,7 +139,7 @@ class InputAccessManager:
             if size > MAX_FILE_READ_BYTES:
                 return InputDocument(source=file_path, input_type=InputType.LOCAL_FILE, status="BLOCKED", content_text="Fichier trop volumineux.")
 
-            with open(path, "r", encoding="utf-8", errors="ignore") as f:
+            with open(path, encoding="utf-8", errors="ignore") as f:
                 content = f.read(max_chars)
 
             self._log_provenance(file_path, "LOCAL_FILE", len(content))

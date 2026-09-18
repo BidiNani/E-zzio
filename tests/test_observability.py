@@ -1,14 +1,17 @@
-import pytest
 import os
 import re
+
+import pytest
+
 from core.observability.tracer import ExecutionTracer
+
 
 @pytest.mark.asyncio
 async def test_execution_tracer_lifecycle(tmp_path):
     db_file = str(tmp_path / "test_tracer.db")
     tracer = ExecutionTracer(db_path=db_file)
     await tracer.init()
-    
+
     await tracer.log_trace(
         provider="ollama",
         mode="local_chat",
@@ -18,7 +21,7 @@ async def test_execution_tracer_lifecycle(tmp_path):
         request_id="req_obs_001",
         model="gpt-oss-20b"
     )
-    
+
     traces = await tracer.get_recent_traces(limit=5)
     assert len(traces) == 1
     t = traces[0]
@@ -35,7 +38,7 @@ async def test_observability_no_secret_leakage(tmp_path):
     db_file = str(tmp_path / "test_tracer_sec.db")
     tracer = ExecutionTracer(db_path=db_file)
     await tracer.init()
-    
+
     # Enregistrement d'une trace
     await tracer.log_trace(
         provider="gemini",
@@ -46,7 +49,7 @@ async def test_observability_no_secret_leakage(tmp_path):
         request_id="req_sec_001",
         model="gemini-3.7-flash"
     )
-    
+
     traces = await tracer.get_recent_traces(limit=10)
     for row in traces:
         for k, v in row.items():

@@ -1,9 +1,10 @@
 """E-ZZIO FastAPI Router — Universal Perception Endpoints."""
 from __future__ import annotations
-import os
+
 import shutil
 from pathlib import Path
-from fastapi import APIRouter, UploadFile, File, Form, HTTPException
+
+from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 from pydantic import BaseModel
 
 from core.perception.unified_perception import UnifiedPerceptionPipeline

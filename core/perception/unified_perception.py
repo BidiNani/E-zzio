@@ -4,17 +4,16 @@ Ingests ANY external input (URL, image, PDF, audio, video, Office doc, archive, 
 routes to the appropriate specialized engine, and normalizes it as passive DATA.
 """
 from __future__ import annotations
-import os
-import re
+
 import logging
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Any
 
-from core.perception.universal_reader import UniversalFileReader
-from core.perception.safe_fetcher import SafeWebFetcher
-from core.perception.vision_engine import VisionEngine
 from core.perception.audio_engine import AudioTranscriptionEngine
+from core.perception.safe_fetcher import SafeWebFetcher
 from core.perception.social_media_extractor import social_media_extractor
+from core.perception.universal_reader import UniversalFileReader
+from core.perception.vision_engine import VisionEngine
 
 logger = logging.getLogger("UnifiedPerception")
 
@@ -35,7 +34,7 @@ class UnifiedPerceptionPipeline:
         mode: str = "auto",
         session_id: str = "default",
         is_last: bool = True
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Point d'entrée universel : perçoit, décode et normalise n'importe quelle entrée."""
         # 0. Cas flux binaire brut direct (Streaming Audio / Données)
         if isinstance(input_target, bytes):

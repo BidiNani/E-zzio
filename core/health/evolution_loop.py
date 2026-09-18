@@ -9,17 +9,20 @@ CRITICAL). N'écrit rien, n'exécute rien, n'approuve rien.
 from __future__ import annotations
 
 import hashlib
-from dataclasses import dataclass, field
-from typing import Collection, Dict, List, Optional, Tuple
+from collections.abc import Collection
+from dataclasses import dataclass
 
 from core.health.evolution_decision import (
-    EvidenceClass, OpportunityDossier, OpportunityState, Verdict, advance, decide,
+    EvidenceClass,
+    OpportunityDossier,
+    OpportunityState,
+    Verdict,
+    decide,
 )
 from core.health.evolution_signals import EvolutionSignal
 
-
 # Table déterministe signal → (catégorie cause, confiance). Défaut = UNKNOWN.
-ROOT_CAUSE_MAP: Tuple[Tuple[str, str, float], ...] = (
+ROOT_CAUSE_MAP: tuple[tuple[str, str, float], ...] = (
     ("breaker:", "PROVIDER", 0.85),
     ("ledger:TOOL_EXEC", "TOOL", 0.7),
     ("ledger:MODEL", "MODEL", 0.7),
@@ -33,7 +36,7 @@ ROOT_CAUSE_MAP: Tuple[Tuple[str, str, float], ...] = (
 )
 
 # Mots-clés signaux → capacités existantes candidates (existing-first explicite).
-EXISTING_HINTS: Tuple[Tuple[str, str], ...] = (
+EXISTING_HINTS: tuple[tuple[str, str], ...] = (
     ("breaker:", "circuit_breaker+fallback_chain (core/routing)"),
     ("ledger:TOOL_EXEC", "ToolRegistry guard+timeout (core/agent/tools_registry)"),
     ("health:db:", "UnifiedMemoryGateway WAL+prune (core/memory)"),
@@ -46,7 +49,7 @@ EXISTING_HINTS: Tuple[Tuple[str, str], ...] = (
 @dataclass(frozen=True)
 class EvidenceBundle:
     component: str
-    signals: Tuple[EvolutionSignal, ...]
+    signals: tuple[EvolutionSignal, ...]
     root_cause: str
     confidence: float
 
@@ -54,17 +57,17 @@ class EvidenceBundle:
 @dataclass(frozen=True)
 class EvolutionProposal:
     proposal_id: str
-    signal_ids: Tuple[str, ...]
+    signal_ids: tuple[str, ...]
     component: str
     root_cause: str
     confidence: float
     score: float
     verdict: Verdict
-    reasons: Tuple[str, ...]
+    reasons: tuple[str, ...]
     risk: float
     cost: float
     recommended_change: str
-    tests_required: Tuple[str, ...]
+    tests_required: tuple[str, ...]
     benchmark_required: bool
     rollback_plan: str
     provenance: str
@@ -79,9 +82,9 @@ def _component_of(signal_id: str) -> str:
     return signal_id
 
 
-def correlate(signals: List[EvolutionSignal]) -> List[EvidenceBundle]:
+def correlate(signals: list[EvolutionSignal]) -> list[EvidenceBundle]:
     """Regroupe par composant ; symptomes corrélés = un seul faisceau."""
-    groups: Dict[str, List[EvolutionSignal]] = {}
+    groups: dict[str, list[EvolutionSignal]] = {}
     for s in signals:
         groups.setdefault(_component_of(s.signal_id), []).append(s)
     bundles = []
@@ -99,7 +102,7 @@ def correlate(signals: List[EvolutionSignal]) -> List[EvidenceBundle]:
 
 
 def check_existing(bundle: EvidenceBundle,
-                   inventory: Collection[str]) -> Tuple[bool, str]:
+                   inventory: Collection[str]) -> tuple[bool, str]:
     """Existing-first : le faisceau correspond-il à une capacité connue ?"""
     inv = {str(i) for i in inventory}
     for prefix, capability in EXISTING_HINTS:
@@ -116,9 +119,9 @@ def fingerprint(bundle: EvidenceBundle, kind: str) -> str:
     return hashlib.sha1(raw.encode("utf-8")).hexdigest()[:16]
 
 
-def suppress_duplicates(proposals: List[EvolutionProposal],
+def suppress_duplicates(proposals: list[EvolutionProposal],
                         active_fingerprints: Collection[str]
-                        ) -> Tuple[List[EvolutionProposal], int]:
+                        ) -> tuple[list[EvolutionProposal], int]:
     """Anti-tempête pure : un problème actif = une proposition."""
     active = set(active_fingerprints)
     kept, dropped = [], 0
@@ -133,7 +136,7 @@ def suppress_duplicates(proposals: List[EvolutionProposal],
 
 def propose(bundle: EvidenceBundle, kind: str, recommended_change: str,
             inventory: Collection[str], recent_change_ids: Collection[str] = (),
-            ) -> Tuple[EvolutionProposal, OpportunityDossier]:
+            ) -> tuple[EvolutionProposal, OpportunityDossier]:
     """Construit le dossier depuis le faisceau, décide, fige en PROPOSED."""
     if bundle.root_cause == "UNKNOWN":
         rc, conf = "", bundle.confidence

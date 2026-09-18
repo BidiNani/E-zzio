@@ -10,7 +10,6 @@ from __future__ import annotations
 import asyncio
 import queue
 import sys
-import threading
 import time
 from pathlib import Path
 
@@ -37,9 +36,9 @@ def main() -> int:
     except Exception as exc:
         print(f"[FATAL] faster-whisper indisponible : {exc}")
         return 2
-    from core.voice.voice_duplex_engine import VoiceDuplexEngine
     from core.capabilities.kokoro_tts_adapter import KokoroTTSAdapter
     from core.ezzio_master import ezzio_master
+    from core.voice.voice_duplex_engine import VoiceDuplexEngine
 
     print("[*] Chargement STT local (tiny, 1er lancement = téléchargement ~75 Mo)...")
     stt = WhisperModel(STT_MODEL, device="cpu", compute_type="int8")
@@ -77,6 +76,7 @@ def main() -> int:
             if not raw or r.get("fallback_used"):
                 continue
             import io
+
             import soundfile as sf
             samples, sr = sf.read(io.BytesIO(raw), dtype="float32")
             engine._spoken_text_buffer.append(seg)

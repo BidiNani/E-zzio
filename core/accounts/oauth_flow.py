@@ -1,20 +1,23 @@
 """Génération URL authorize + échange code->token."""
 from __future__ import annotations
+
 import logging
 import secrets
-from typing import Any, Dict, Optional
+from typing import Any
 from urllib.parse import urlencode
+
 import httpx
+
 from core.accounts import store
 from core.accounts.oauth_registry import get_provider
 
 logger = logging.getLogger("OAuthFlow")
-_STATES: Dict[str, str] = {}
+_STATES: dict[str, str] = {}
 
 def _redirect_uri(provider_id: str, base_url: str) -> str:
     return f"{base_url.rstrip('/')}/api/accounts/callback/{provider_id}"
 
-def build_authorize_url(provider_id: str, base_url: str) -> Dict[str, Any]:
+def build_authorize_url(provider_id: str, base_url: str) -> dict[str, Any]:
     cfg = get_provider(provider_id)
     if not cfg:
         return {"ok": False, "error": f"Provider inconnu : {provider_id}"}
@@ -44,7 +47,7 @@ def build_authorize_url(provider_id: str, base_url: str) -> Dict[str, Any]:
     return {"ok": True, "url": f"{cfg['authorize_url']}?{urlencode(params)}",
             "state": state, "provider": provider_id}
 
-async def exchange_code(provider_id: str, code: str, state: str, base_url: str) -> Dict[str, Any]:
+async def exchange_code(provider_id: str, code: str, state: str, base_url: str) -> dict[str, Any]:
     if _STATES.pop(state, None) != provider_id:
         return {"ok": False, "error": "STATE_INVALID", "message": "State OAuth invalide."}
     cfg = get_provider(provider_id)
@@ -70,7 +73,7 @@ async def exchange_code(provider_id: str, code: str, state: str, base_url: str) 
         refresh_token = tok.get("refresh_token")
         expires_in = tok.get("expires_in")
         scopes = (tok.get("scope") or "").split() or cfg["scopes"]
-        profile: Dict[str, Any] = {}
+        profile: dict[str, Any] = {}
         try:
             pr = await client.get(cfg["userinfo_url"],
                 headers={"Authorization": f"Bearer {access_token}",

@@ -1,7 +1,9 @@
 import io
-import pytest
 import struct
 import wave
+
+import pytest
+
 from core.voice.voice_gateway import VoiceGateway, VoiceState
 
 
@@ -90,10 +92,10 @@ async def test_voice_interaction_e2e_flow(voice_gateway):
 async def test_voice_empty_or_short_input(voice_gateway):
     from unittest.mock import MagicMock
     mock_core = MagicMock()
-    
+
     res1 = await voice_gateway.process_voice_interaction(b"", mock_core)
     assert res1["status"] == "empty_input"
-    
+
     res2 = await voice_gateway.process_voice_interaction(b"\x00", mock_core)
     assert res2["status"] == "empty_input"
 
@@ -101,6 +103,7 @@ async def test_voice_empty_or_short_input(voice_gateway):
 @pytest.mark.asyncio
 async def test_voice_security_violation_handling(voice_gateway):
     from unittest.mock import AsyncMock, MagicMock
+
     from core.security.guardrail import SecurityViolationError
 
     mock_core = MagicMock(spec=["think"])

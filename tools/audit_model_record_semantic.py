@@ -1,26 +1,27 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_semantic_contracts() -> Dict[str, Any]:
+def inspect_semantic_contracts() -> dict[str, Any]:
     registry_path = PROJECT_ROOT / "core" / "models" / "registry.py"
     if not registry_path.exists():
         return {"exists": False}
-    
+
     try:
         content = registry_path.read_text(encoding="utf-8", errors="replace")
         tree = ast.parse(content, filename=str(registry_path))
-        
+
         enums = {}
         init_signature = None
-        
+
         for node in ast.walk(tree):
             if isinstance(node, ast.ClassDef):
                 if node.name in {"ModelTier", "ModelLifecycle"}:
@@ -38,7 +39,7 @@ def inspect_semantic_contracts() -> Dict[str, Any]:
                         if isinstance(sub, (ast.FunctionDef, ast.AsyncFunctionDef)) and sub.name == "__init__":
                             args = [arg.arg for arg in sub.args.args]
                             init_signature = args
-                            
+
         return {
             "exists": True,
             "enums": enums,
@@ -59,7 +60,7 @@ def main():
     for enum_name, values in res.get("enums", {}).items():
         print(f"  - {enum_name} : {values}")
 
-    print(f"\n[2] SIGNATURE D'INITIALISATION DE ModelRecord")
+    print("\n[2] SIGNATURE D'INITIALISATION DE ModelRecord")
     print(f"  - Arguments __init__ : {res.get('model_record_init_args', 'Non trouvé')}")
 
     print("\n" + "=" * 80)

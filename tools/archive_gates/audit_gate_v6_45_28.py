@@ -1,8 +1,9 @@
 from __future__ import annotations
+
 import ast
+import sys
 from dataclasses import dataclass, field
 from pathlib import Path
-import sys
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -53,7 +54,7 @@ class SovereignFlowVisitor(ast.NodeVisitor):
         self.rel_path = rel_path
         self.is_active = is_active
         self.scope_stack: list[str] = ["<module>"]
-        
+
         self.calls: list[CallRecord] = []
         self.bindings: list[StateBinding] = []
         self.entrypoints: list[EntrypointRecord] = []
@@ -84,7 +85,7 @@ class SovereignFlowVisitor(ast.NodeVisitor):
 
     def visit_Call(self, node: ast.Call):
         func_name = self._resolve_name(node.func)
-        
+
         # 1. Capture des constructeurs et fabriques cibles
         if func_name in TARGET_CLASSES or func_name in TARGET_FACTORIES:
             args = [ast.unparse(a) for a in node.args]

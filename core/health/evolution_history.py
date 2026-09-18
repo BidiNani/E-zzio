@@ -8,9 +8,9 @@ L'apprentissage porte sur données et décisions, jamais sur auto-mutation.
 from __future__ import annotations
 
 import statistics
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 MIN_SAMPLES_TREND = 5
 
@@ -46,7 +46,7 @@ class SeriesStats:
     rate_per_day: float
 
 
-def series_stats(values: List[Tuple[float, float]]) -> Optional[SeriesStats]:
+def series_stats(values: list[tuple[float, float]]) -> SeriesStats | None:
     """(timestamp, valeur) → statistiques compactes. Vide = None, jamais zéro."""
     if not values:
         return None
@@ -62,7 +62,7 @@ def series_stats(values: List[Tuple[float, float]]) -> Optional[SeriesStats]:
     )
 
 
-def classify_trend(values: List[Tuple[float, float]]) -> Trend:
+def classify_trend(values: list[tuple[float, float]]) -> Trend:
     """Tendance déterministe sur valeurs ordonnées. n < 5 = INSUFFICIENT_DATA."""
     if len(values) < MIN_SAMPLES_TREND:
         return Trend.INSUFFICIENT_DATA
@@ -96,8 +96,8 @@ def classify_trend(values: List[Tuple[float, float]]) -> Trend:
     return Trend.STABLE
 
 
-def detect_recurrence(event_times: List[float], same_fingerprint: bool,
-                      min_occurrences: int = 3) -> Tuple[bool, float]:
+def detect_recurrence(event_times: list[float], same_fingerprint: bool,
+                      min_occurrences: int = 3) -> tuple[bool, float]:
     """Échec→réparation→échec répété = problème récurrent, pas incidents isolés."""
     if not same_fingerprint or len(event_times) < min_occurrences:
         return False, 0.0
@@ -110,7 +110,7 @@ def detect_recurrence(event_times: List[float], same_fingerprint: bool,
     return True, max(conf, 0.0)
 
 
-def detect_oscillation(recent_kinds: List[str]) -> bool:
+def detect_oscillation(recent_kinds: list[str]) -> bool:
     """A→B→A→B : gel d'évolution, retour à la cause racine."""
     seq = [k for k in recent_kinds if k]
     if len(seq) < 4:
@@ -121,7 +121,7 @@ def detect_oscillation(recent_kinds: List[str]) -> bool:
 
 def check_budget(window_changes: int, window_lines: int, window_risk: float,
                  max_changes: int = 3, max_lines: int = 300,
-                 max_risk: float = 15.0) -> Tuple[bool, str]:
+                 max_risk: float = 15.0) -> tuple[bool, str]:
     """Budget borné et gouverné : dépassé = STOP, même à signaux multiples."""
     if window_changes >= max_changes:
         return False, f"budget changements épuisé ({window_changes}/{max_changes})"
@@ -132,7 +132,7 @@ def check_budget(window_changes: int, window_lines: int, window_risk: float,
     return True, "budget disponible"
 
 
-def effectiveness(decisions: List[Dict[str, Any]]) -> Dict[str, Any]:
+def effectiveness(decisions: list[dict[str, Any]]) -> dict[str, Any]:
     """Rapport implémentées/bénéfice démontré. Faible taux = attendre, pas forcer."""
     impl = [d for d in decisions if d.get("verdict") == "IMPLEMENT"]
     benefited = [d for d in impl if d.get("outcome") in ("SUCCESS", "PARTIAL")]
@@ -144,7 +144,7 @@ def effectiveness(decisions: List[Dict[str, Any]]) -> Dict[str, Any]:
     }
 
 
-def calibrate(predicted: List[float], actual_gain: List[bool]) -> Dict[str, Any]:
+def calibrate(predicted: list[float], actual_gain: list[bool]) -> dict[str, Any]:
     """Confiance prédite vs bénéfice réel. n<3 = non calibré, pas de conclusion."""
     pairs = [(p, a) for p, a in zip(predicted, actual_gain)]
     if len(pairs) < 3:
@@ -156,8 +156,8 @@ def calibrate(predicted: List[float], actual_gain: List[bool]) -> Dict[str, Any]
             "samples": len(pairs)}
 
 
-def build_snapshot(signal_sizes: Dict[str, float], health_system: str,
-                   ledger_events: int) -> Dict[str, Any]:
+def build_snapshot(signal_sizes: dict[str, float], health_system: str,
+                   ledger_events: int) -> dict[str, Any]:
     """Snapshot compact (~200 o) destiné au ledger existant, pas à un store."""
     return {"kind": "HEALTH_SNAPSHOT", "system": health_system,
             "ledger_events": ledger_events,
@@ -165,7 +165,7 @@ def build_snapshot(signal_sizes: Dict[str, float], health_system: str,
 
 
 def outcome_payload(proposal_id: str, expected: str, actual: str,
-                    outcome: Outcome, rollback: str) -> Dict[str, Any]:
+                    outcome: Outcome, rollback: str) -> dict[str, Any]:
     """Charge EVOLUTION_OUTCOME : attendu vs réel, vers le ledger existant."""
     return {"kind": "EVOLUTION_OUTCOME", "proposal_id": proposal_id,
             "expected": expected, "actual": actual,

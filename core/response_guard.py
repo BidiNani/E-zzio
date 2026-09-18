@@ -1,8 +1,8 @@
 from __future__ import annotations
-from core.identity.canonical_identity import CanonicalIdentity
 
 import re
-from typing import Optional
+
+from core.identity.canonical_identity import CanonicalIdentity
 
 OFFICIAL_IDENTITY = CanonicalIdentity().build_system_prompt()
 
@@ -24,7 +24,7 @@ def _clean(text: str) -> str:
     return text
 
 
-def deterministic_reply(prompt: str, task: str) -> Optional[str]:
+def deterministic_reply(prompt: str, task: str) -> str | None:
     low = (prompt or "").lower()
     task = (task or "auto").lower().strip()
 

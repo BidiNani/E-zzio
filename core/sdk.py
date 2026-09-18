@@ -9,17 +9,16 @@ Offre une interface de haut niveau, solide et consolidée pour interagir avec to
 6. Sécurité & Télémétrie (ezzio.get_status)
 """
 from __future__ import annotations
-import os
-import asyncio
-from typing import Any, Dict, List, Optional
-from pathlib import Path
 
+from pathlib import Path
+from typing import Any
+
+from core.capabilities.registry import capability_registry
 from core.ezzio_master import ezzio_master
 from core.generators.generation_router import generation_router
-from core.perception.universal_reader import UniversalReader
 from core.memory.instance import memory_gateway
-from core.capabilities.registry import capability_registry
-from core.models.gemini_pool import gemini_pool, MODEL_LIFECYCLE_REGISTRY
+from core.models.gemini_pool import MODEL_LIFECYCLE_REGISTRY, gemini_pool
+from core.perception.universal_reader import UniversalReader
 
 
 class EzzioSDK:
@@ -44,7 +43,7 @@ class EzzioSDK:
         speed: str = "fast",
         force_cloud: bool = True,
         session_id: str = "default"
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Échange cognitif avec E-ZZIO (CognitiveGateway + Mémoire + Identité)."""
         await self.init()
         return await self.master.execute_intent(
@@ -54,31 +53,31 @@ class EzzioSDK:
             session_id=session_id
         )
 
-    async def generate(self, user_message: str) -> Dict[str, Any]:
+    async def generate(self, user_message: str) -> dict[str, Any]:
         """Génération multimodale universelle à partir d'un prompt en langage naturel."""
         return await self.generator.route_and_generate(user_message=user_message)
 
-    async def perceive(self, path_or_url: str) -> Dict[str, Any]:
+    async def perceive(self, path_or_url: str) -> dict[str, Any]:
         """Perception et extraction universelle de documents, médias ou pages web."""
         if path_or_url.startswith("http://") or path_or_url.startswith("https://"):
             return await self.capabilities.execute_capability("crawl4ai-engine", {"target_url": path_or_url})
         return self.reader.read_file(path_or_url)
 
-    async def search_memory(self, query: str, limit: int = 5) -> Dict[str, Any]:
+    async def search_memory(self, query: str, limit: int = 5) -> dict[str, Any]:
         """Recherche dans la mémoire épisodique et sémantique FTS5 SQLite."""
         await self.init()
         return await self.memory.search_memory(query=query, limit=limit)
 
-    async def get_session_history(self, session_id: str = "default", limit: int = 10) -> List[Dict[str, Any]]:
+    async def get_session_history(self, session_id: str = "default", limit: int = 10) -> list[dict[str, Any]]:
         """Récupère l'historique d'une session de conversation."""
         await self.init()
         return await self.memory.get_session_history(session_id=session_id, limit=limit)
 
-    async def execute_capability(self, capability_name: str, parameters: Dict[str, Any] | None = None) -> Dict[str, Any]:
+    async def execute_capability(self, capability_name: str, parameters: dict[str, Any] | None = None) -> dict[str, Any]:
         """Exécute une capacité externe qualifiée (SaaS, Web, Modèles)."""
         return await self.capabilities.execute_capability(capability_name, parameters or {})
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_status(self) -> dict[str, Any]:
         """Retourne l'état complet du système, des capacités et des modèles."""
         return {
             "status": "ONLINE",

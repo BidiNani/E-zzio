@@ -4,15 +4,18 @@ Corrige la gestion des niveaux de risque critiques au niveau de l'adaptateur
 pour garantir le blocage immédiat (Fail-Closed) des compétences non vérifiées.
 """
 
-import sys
 import logging
+import sys
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from core.cognition.ecol_runtime_interceptor import EcolRuntimeInterceptor, ExecutionBlockedByEcolError
+from core.cognition.ecol_runtime_interceptor import (
+    EcolRuntimeInterceptor,
+    ExecutionBlockedByEcolError,
+)
 
 logger = logging.getLogger(__name__)
 

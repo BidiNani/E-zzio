@@ -4,8 +4,8 @@ Inspecte de près le contenu des 62 RPG_MEMORY, traque les 8 SYNTHETIC_NOISE
 et évalue un échantillon de security_audit pour certifier l'absence de faux positifs.
 """
 
-import sys
 import sqlite3
+import sys
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")

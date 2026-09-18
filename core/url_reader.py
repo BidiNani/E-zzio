@@ -1,7 +1,7 @@
-import re
 import logging
+import re
+
 import httpx
-from typing import List, Optional
 
 logger = logging.getLogger("ezzio.core.url_reader")
 
@@ -12,12 +12,12 @@ class UrlReader:
     URL_REGEX = re.compile(r'https?://[^\s<>"]+|www\.[^\s<>"]+')
 
     @classmethod
-    def extract_urls(cls, text: str) -> List[str]:
+    def extract_urls(cls, text: str) -> list[str]:
         """Extrait toutes les URLs présentes dans un texte."""
         return cls.URL_REGEX.findall(text)
 
     @classmethod
-    async def fetch_url_content(cls, url: str) -> Optional[str]:
+    async def fetch_url_content(cls, url: str) -> str | None:
         """
         Récupère le contenu d'une URL.
         Utilise Jina Reader (r.jina.ai) pour transformer n'importe quelle page en Markdown propre,

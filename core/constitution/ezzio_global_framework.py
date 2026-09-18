@@ -4,14 +4,14 @@ E-ZZIO Core — Constitution & Global Certification Framework (V7.70.2)
 et génère dynamiquement le certificat global de l'organisme (10/10 Matrix).
 """
 
-import sys
-import json
-import hmac
 import hashlib
+import hmac
+import json
 import logging
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -50,7 +50,7 @@ class EzzioGlobalCertifier:
         self.report_path = self.root_dir / "runtime" / "cognition" / "budget" / "EZZIO_ORGANISM_CERTIFICATE.json"
         self.report_path.parent.mkdir(parents=True, exist_ok=True)
 
-    def audit_organism(self) -> Dict[str, Any]:
+    def audit_organism(self) -> dict[str, Any]:
         """
         Exécute un audit transversal de l'organisme E-zzio pour attester
         objectivement chaque domaine de la matrice 10/10.
@@ -77,7 +77,7 @@ class EzzioGlobalCertifier:
             "organism": "E-ZZIO",
             "framework_version": "V7.70.2",
             "constitution_version": EzzioConstitution.CONSTITUTION_VERSION,
-            "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+            "timestamp_utc": datetime.now(UTC).isoformat(),
             "domains": domains,
             "global_status": "10/10 ABSOLUTE CERTIFIED" if not baseline_drift else "DEGRADED",
             "metrics": {

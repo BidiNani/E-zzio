@@ -1,10 +1,10 @@
 """E-ZZIO Coding Agent — Surgical Patch & Diff Engine with Snapshot & Audit."""
 from __future__ import annotations
-import os
-import time
+
 import json
+import os
 import shutil
-from typing import Optional
+import time
 
 
 class PatchEngine:
@@ -18,7 +18,7 @@ class PatchEngine:
     def _resolve_path(self, rel_path: str) -> str:
         return rel_path if os.path.isabs(rel_path) else os.path.join(self.workspace_root, rel_path)
 
-    def _log_audit(self, action: str, rel_path: str, status: str, details: Optional[str] = None) -> None:
+    def _log_audit(self, action: str, rel_path: str, status: str, details: str | None = None) -> None:
         audit_file = os.path.join(self.audit_dir, "auto_modifications.jsonl")
         entry = {
             "timestamp": time.time(),
@@ -30,7 +30,7 @@ class PatchEngine:
         with open(audit_file, "a", encoding="utf-8") as f:
             f.write(json.dumps(entry) + "\n")
 
-    def create_snapshot(self, rel_path: str) -> Optional[str]:
+    def create_snapshot(self, rel_path: str) -> str | None:
         """Crée une copie de sauvegarde .bak du fichier avant modification."""
         full_path = self._resolve_path(rel_path)
         if not os.path.exists(full_path):
@@ -74,7 +74,7 @@ class PatchEngine:
             self._log_audit("apply_patch", rel_path, "FAILED", details="File not found")
             return f"[ERROR] Fichier cible introuvable pour patch : {rel_path}"
 
-        with open(full_path, "r", encoding="utf-8", errors="ignore") as f:
+        with open(full_path, encoding="utf-8", errors="ignore") as f:
             content = f.read()
 
         if search_block not in content:

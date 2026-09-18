@@ -6,11 +6,13 @@ Enregistre de manière inviolable et auditable les preuves d'exécution de chaqu
 - Persistance JSON et rapport Markdown synthétique dans state/evidence/
 """
 from __future__ import annotations
+
+import json
 import os
 import time
-import json
-from dataclasses import dataclass, field, asdict
-from typing import Dict, Any, List, Optional
+from dataclasses import asdict, dataclass, field
+from typing import Any
+
 from core.agent.command_executor import redact_secrets
 
 
@@ -18,9 +20,9 @@ from core.agent.command_executor import redact_secrets
 class CodingTaskEvidence:
     task_id: str
     plan: str = ""
-    files_changed: List[str] = field(default_factory=list)
-    commands: List[Dict[str, Any]] = field(default_factory=list)
-    tests: List[Dict[str, Any]] = field(default_factory=list)
+    files_changed: list[str] = field(default_factory=list)
+    commands: list[dict[str, Any]] = field(default_factory=list)
+    tests: list[dict[str, Any]] = field(default_factory=list)
     result: str = "PENDING"  # SUCCESS, FAILED, ROLLBACK, ABORTED
     rollback_state: bool = False
     final_diff: str = ""
@@ -28,9 +30,9 @@ class CodingTaskEvidence:
     provider: str = "unknown"
     cost_class: str = "FREE_ONLY"
     start_time: float = field(default_factory=time.time)
-    end_time: Optional[float] = None
+    end_time: float | None = None
     duration_sec: float = 0.0
-    human_approved: Optional[bool] = None
+    human_approved: bool | None = None
     notes: str = ""
 
     def complete(self, result: str, final_diff: str = "", rollback_applied: bool = False) -> None:
@@ -49,7 +51,7 @@ class EvidenceLogger:
         self.evidence_dir = os.path.join(self.workspace_root, "state", "evidence")
         os.makedirs(self.evidence_dir, exist_ok=True)
 
-    def record_evidence(self, evidence: CodingTaskEvidence) -> Dict[str, str]:
+    def record_evidence(self, evidence: CodingTaskEvidence) -> dict[str, str]:
         """Persiste la preuve en JSON et en Markdown structuré.
 
         Returns:

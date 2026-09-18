@@ -5,15 +5,16 @@ la santé du stockage NVMe, l'auto-récupération, l'évolution en quarantaine
 et l'observabilité (Self-Awareness).
 """
 
-import sys
-import json
-import psutil
-import hmac
 import hashlib
+import hmac
+import json
 import logging
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
+
+import psutil
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -31,7 +32,7 @@ class ExtendedOrganismCertifier:
         self.report_path = self.root_dir / "runtime" / "cognition" / "budget" / "EZZIO_EXTENDED_ORGANISM_CERTIFICATE.json"
         self.report_path.parent.mkdir(parents=True, exist_ok=True)
 
-    def audit_extended_domains(self) -> Dict[str, Any]:
+    def audit_extended_domains(self) -> dict[str, Any]:
         hw_telemetry = self.hw_gov.get_system_telemetry()
 
         # Vérification NVMe / Stockage (G:\ racine)
@@ -81,7 +82,7 @@ class ExtendedOrganismCertifier:
         certificate = {
             "organism": "E-ZZIO",
             "framework_version": "V7.74",
-            "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+            "timestamp_utc": datetime.now(UTC).isoformat(),
             "hardware_telemetry": hw_telemetry,
             "domains": all_domains,
             "global_status": "10/10 FULL-SPECTRUM ORGANISM CERTIFIED",

@@ -8,10 +8,12 @@ Enforces strictly Read-Only scopes by default:
 Authenticates directly via local GITHUB_TOKEN in secrets/.env (zero third-party aggregator).
 """
 from __future__ import annotations
-import os
+
 import logging
+import os
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any
+
 import httpx
 
 from core.capabilities.capability_policy import CapabilityPolicy, PolicyDecision
@@ -27,7 +29,7 @@ class GitHubProvider:
         self.github_token = self._get_secret("GITHUB_TOKEN") or self._get_secret("GH_TOKEN")
         self.api_base = "https://api.github.com"
 
-    def _get_secret(self, key: str) -> Optional[str]:
+    def _get_secret(self, key: str) -> str | None:
         """Récupère le jeton GitHub depuis secrets/.env sans l'exposer."""
         env_paths = [
             self.workspace_root / "secrets" / ".env",
@@ -44,7 +46,7 @@ class GitHubProvider:
                     pass
         return os.environ.get(key)
 
-    def _get_headers(self) -> Dict[str, str]:
+    def _get_headers(self) -> dict[str, str]:
         headers = {
             "Accept": "application/vnd.github+json",
             "User-Agent": "E-ZzIO-Autonomous-Agent/2.0",
@@ -53,7 +55,7 @@ class GitHubProvider:
             headers["Authorization"] = f"Bearer {self.github_token}"
         return headers
 
-    async def get_repo_info(self, owner: str, repo: str) -> Dict[str, Any]:
+    async def get_repo_info(self, owner: str, repo: str) -> dict[str, Any]:
         """Lit les informations d'un dépôt GitHub (scope: github.read)."""
         decision, reason = self.policy.evaluate_scope("github.read", {"owner": owner, "repo": repo})
         if decision != PolicyDecision.ALLOW:
@@ -80,7 +82,7 @@ class GitHubProvider:
         except Exception as exc:
             return {"ok": False, "error": str(exc)}
 
-    async def list_issues(self, owner: str, repo: str, state: str = "open", limit: int = 5) -> Dict[str, Any]:
+    async def list_issues(self, owner: str, repo: str, state: str = "open", limit: int = 5) -> dict[str, Any]:
         """Liste les issues d'un dépôt GitHub (scope: github.read)."""
         decision, reason = self.policy.evaluate_scope("github.read", {"owner": owner, "repo": repo})
         if decision != PolicyDecision.ALLOW:
@@ -107,7 +109,7 @@ class GitHubProvider:
         except Exception as exc:
             return {"ok": False, "error": str(exc)}
 
-    async def list_pull_requests(self, owner: str, repo: str, state: str = "open", limit: int = 5) -> Dict[str, Any]:
+    async def list_pull_requests(self, owner: str, repo: str, state: str = "open", limit: int = 5) -> dict[str, Any]:
         """Liste les Pull Requests d'un dépôt (scope: github.read)."""
         decision, reason = self.policy.evaluate_scope("github.read", {"owner": owner, "repo": repo})
         if decision != PolicyDecision.ALLOW:
@@ -134,7 +136,7 @@ class GitHubProvider:
         except Exception as exc:
             return {"ok": False, "error": str(exc)}
 
-    async def create_pull_request(self, owner: str, repo: str, title: str, head: str, base: str = "main", body: str = "") -> Dict[str, Any]:
+    async def create_pull_request(self, owner: str, repo: str, title: str, head: str, base: str = "main", body: str = "") -> dict[str, Any]:
         """Création d'une PR protégée par REQUIRE_HUMAN (scope: github.pr_create)."""
         decision, reason = self.policy.evaluate_scope("github.pr_create", {"owner": owner, "repo": repo, "title": title})
         if decision != PolicyDecision.ALLOW:

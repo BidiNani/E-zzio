@@ -4,14 +4,15 @@
 # ==============================================================================
 import os
 import sys
-import uvicorn
-from pathlib import Path
 from contextlib import asynccontextmanager
+from pathlib import Path
+
+import uvicorn
 from fastapi import FastAPI
-from core.security.guardian import setup_guardian
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+
+from core.security.guardian import setup_guardian
 
 # 1. Configuration stricte du Path AVANT les imports locaux
 ROOT_PATH = Path(r"G:\AI\E-zzio")
@@ -19,19 +20,22 @@ if str(ROOT_PATH) not in sys.path:
     sys.path.insert(0, str(ROOT_PATH))
 
 # 2. Imports locaux
+from fastapi.responses import HTMLResponse
+
+from routers.capabilities import router as capabilities_router
+from routers.generators import router as generators_router
+from routers.health import router as health_router
+from routers.master import router as master_router
+from routers.memory import router as memory_router
+from routers.perception import router as perception_router
+from routers.research import init_research_router
+from routers.research import router as research_router
+from routers.telemetry import AGENT_VIEW_HTML
+from routers.telemetry import router as telemetry_router
+from routers.webhook import router as webhook_router
 from runtime.execution.worker_bootstrap import worker_manager
 from runtime.routers.llm import router as llm_router
 from runtime.routers.mobile import router as mobile_router
-from routers.master import router as master_router
-from routers.health import router as health_router
-from routers.telemetry import router as telemetry_router, AGENT_VIEW_HTML
-from fastapi.responses import HTMLResponse
-from routers.memory import router as memory_router
-from routers.perception import router as perception_router
-from routers.generators import router as generators_router
-from routers.capabilities import router as capabilities_router
-from routers.research import router as research_router, init_research_router
-from routers.webhook import router as webhook_router
 
 
 # 3. Cycle de vie et Gouvernance
@@ -53,29 +57,43 @@ setup_guardian(app)
 # Desktop / Tauri / Mobile Capacitor — CORS adapté aux environnements locaux et mobiles
 # [B2-FIX2] CORSMiddleware retiré — géré par Guardian
 
-import uuid
-from fastapi import Request
-
-
-
-
 # ============================================================
 # AUTH MIDDLEWARE — API key (X-API-Key)
+# Inactif si EZZIO_API_KEY est vide OU si EZZIO_DISABLE_AUTH=1
 # ============================================================
 import os as _os
+import uuid
+
+from fastapi import Request
 
 _EZZIO_API_KEY = _os.getenv("EZZIO_API_KEY", "")
+_EZZIO_DISABLE_AUTH = _os.getenv("EZZIO_DISABLE_AUTH", "0") == "1"
 _PROTECTED_PREFIXES = ("/master/", "/api/accounts/", "/api/models/select")
 _PUBLIC_PATHS = {"/health", "/ping", "/metrics", "/api/_routes", "/", "/agent-view"}
 
 
 @app.middleware("http")
 async def api_key_middleware(request: Request, call_next):
+    # Désactivé explicitement (tests, dev) ou clé non configurée
+    if _EZZIO_DISABLE_AUTH or not _EZZIO_API_KEY:
+        return await call_next(request)
+
     path = request.url.path
 
-    # Endpoints publics : passent
     if path in _PUBLIC_PATHS or path.startswith("/perception/"):
         return await call_next(request)
+
+    if any(path.startswith(p) for p in _PROTECTED_PREFIXES):
+        provided = request.headers.get("X-API-Key", "")
+        if provided != _EZZIO_API_KEY:
+            from fastapi.responses import JSONResponse
+            return JSONResponse(
+                status_code=401,
+                content={"detail": "API key required. Set X-API-Key header."},
+            )
+
+    return await call_next(request)
+
 
     # Endpoints protégés : clé requise
     if any(path.startswith(p) for p in _PROTECTED_PREFIXES):
@@ -105,6 +123,7 @@ async def correlation_id_middleware(request: Request, call_next):
 # E-ZZIO API Router (missions, approvals, files, etc.)
 # ============================================================
 from core.api.endpoints import router as ezzio_router
+
 app.include_router(ezzio_router)
 # [DISABLED - doublon évité] @app.get("/health")
 async def health_check():
@@ -163,6 +182,7 @@ app.include_router(research_router)
 from routers.accounts import router as accounts_router
 from routers.models_admin import router as models_admin_router
 from routers.search import router as search_router
+
 app.include_router(webhook_router)
 app.include_router(search_router)
 app.include_router(accounts_router)
@@ -199,8 +219,8 @@ if __name__ == "__main__":
 # ============================================================
 # ENDPOINTS MODÈLES — Sélection dynamique (ajouté 2026-09-17)
 # ============================================================
+
 from core.config.active_model import get_active_model, set_active_model
-import httpx
 
 # Catalogue des modèles Gemini valides au 17/09/2026
 GEMINI_MODELS_CATALOG = [
@@ -218,12 +238,11 @@ async def list_models():
     Liste tous les modèles disponibles, groupés par clé API.
     Utilise la découverte dynamique existante (core/models/discovery/).
     """
-    from core.config.active_model import get_active_model
-    from core.models.gemini_pool import gemini_pool
     from core.models.discovery.gemini import GeminiDiscovery
-    from core.models.discovery.ollama import OllamaDiscovery
     from core.models.discovery.groq import GroqDiscovery
+    from core.models.discovery.ollama import OllamaDiscovery
     from core.models.discovery.openrouter import OpenRouterDiscovery
+    from core.models.gemini_pool import gemini_pool
 
     active = get_active_model()
 
@@ -334,6 +353,7 @@ async def list_tools():
     Affiche leur statut : clé configurée, actif/inactif.
     """
     import os
+
     from core.secrets import load_secrets
 
     load_secrets()
@@ -392,13 +412,14 @@ async def list_models_registry():
     """
     import json
     from pathlib import Path
+
     from core.models.key_pool import KeyPoolManager
 
     # 1. Charger le registre
     registry_path = Path("G:/AI/E-zzio/data/models/registry.json")
     registry_models = {}
     if registry_path.exists():
-        with open(registry_path, "r", encoding="utf-8") as f:
+        with open(registry_path, encoding="utf-8") as f:
             data = json.load(f)
             registry_models = data.get("models", {})
 

@@ -11,12 +11,11 @@ from __future__ import annotations
 
 import json
 import logging
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional
 
-from core.cognition.orchestration.arbiter import FederatedProposal
 from core.cognition.evidence.store import EvidenceStore
+from core.cognition.orchestration.arbiter import FederatedProposal
 
 logger = logging.getLogger(__name__)
 
@@ -30,17 +29,17 @@ class EpistemicScore:
     constitutional_adherence: float
     composite_epistemic_weight: float
     is_vetoed: bool = False
-    veto_reason: Optional[str] = None
+    veto_reason: str | None = None
 
 
 class EpistemicAnalyzer:
-    def __init__(self, root_dir: Path = Path(r"G:\AI\E-zzio"), evidence_store: Optional[EvidenceStore] = None):
+    def __init__(self, root_dir: Path = Path(r"G:\AI\E-zzio"), evidence_store: EvidenceStore | None = None):
         self.root_dir = root_dir
         self.evidence_store = evidence_store
         self.memory_store_dir = self.root_dir / "runtime" / "memory_store"
         self.genome_path = self.root_dir / "core" / "constitution" / "ezzio_genome.json"
 
-    def _load_constitutional_invariants(self) -> List[str]:
+    def _load_constitutional_invariants(self) -> list[str]:
         if not self.genome_path.exists():
             return []
         try:
@@ -60,7 +59,7 @@ class EpistemicAnalyzer:
                 try:
                     data = json.loads(json_file.read_text(encoding="utf-8"))
                     content = str(data.get("content", "")).lower()
-                    
+
                     # Memory explicitly teaches: "Éviter le conflit Global Mutex"
                     if "global mutex" in content:
                         if ("avoid" in text_low or "non-blocking" in text_low or "contextual" in text_low) and "global mutex" in text_low:

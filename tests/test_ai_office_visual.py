@@ -21,9 +21,10 @@ Valide :
 18. security gate (pas de bypass de politique)
 """
 from pathlib import Path
+
 import pytest
 from fastapi.testclient import TestClient
-from web_server import app
+
 from core.governance.approval import (
     ApprovalManager,
     ApprovalStatus,
@@ -31,6 +32,7 @@ from core.governance.approval import (
     approval_manager,
 )
 from core.governance.approval.models import ApprovalRequest
+from web_server import app
 
 
 @pytest.fixture

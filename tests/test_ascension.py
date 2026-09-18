@@ -64,8 +64,7 @@ def test_domain_maturity_never_skips():
 
 def test_recovery_unknown_after_restart():
     """Registre non persistant : après perte, UNKNOWN, jamais RECOVERED."""
-    from core.agent.mission_controller import (
-        MissionRegistry, MissionRecord, MissionStatus)
+    from core.agent.mission_controller import MissionRecord, MissionRegistry, MissionStatus
     reg = MissionRegistry()
     rec = MissionRecord(mission_id="recov-1", goal="t",
                         worker_type="CODER_WORKER",
@@ -105,8 +104,9 @@ def test_no_fake_cost_latency_property():
 
 
 def test_no_cross_task_memory_property():
-    from core.memory.tiers import retrieve
     import asyncio as _aio
+
+    from core.memory.tiers import retrieve
 
     class _GW:
         async def search_cells(self, query, tiers=None, **kw):
@@ -127,7 +127,7 @@ def test_no_cross_task_memory_property():
 async def test_conv_model_audited_with_session():
     import core.ezzio_master as _m
     from core.ezzio_master import EzzioMaster
-    from core.providers.base_provider import ProviderResponse, CostClass
+    from core.providers.base_provider import CostClass, ProviderResponse
     recorded = []
     _orig = _m._audit_command
     _m._audit_command = lambda a, p, s="SUCCESS": recorded.append((a, p, s))
@@ -151,9 +151,10 @@ async def test_conv_model_audited_with_session():
 async def test_memory_ab_local_harness():
     """A/B mémoire local (§11/§55) : même tâche, ON vs OFF, 0 quota."""
     import time as _t
-    from core.ezzio_master import EzzioMaster
+
     from core.agent.coder_federation import CoderModelFederationRouter
-    from core.providers.base_provider import ProviderResponse, CostClass
+    from core.ezzio_master import EzzioMaster
+    from core.providers.base_provider import CostClass, ProviderResponse
     router = CoderModelFederationRouter(providers={})
 
     async def fake_execute(prompt, profile, **kwargs):

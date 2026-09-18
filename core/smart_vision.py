@@ -7,7 +7,7 @@ import re
 import time
 import urllib.request
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
 INBOX = PROJECT_ROOT / "forge" / "vision" / "inbox"
@@ -72,7 +72,7 @@ def _b64(path: Path) -> str:
     return base64.b64encode(path.read_bytes()).decode("ascii")
 
 
-def infer_kind(path: str = "", prompt: str = "") -> Dict[str, Any]:
+def infer_kind(path: str = "", prompt: str = "") -> dict[str, Any]:
     text = f"{Path(path).name} {prompt}".lower()
     technical = any(w in text for w in TECH_WORDS)
     logo = any(w in text for w in LOGO_WORDS)
@@ -193,7 +193,7 @@ def clean_reply(reply: str, path: str = "", prompt: str = "") -> str:
     return text
 
 
-def ollama_vision(path: Path, prompt: str) -> Dict[str, Any]:
+def ollama_vision(path: Path, prompt: str) -> dict[str, Any]:
     payload = {
         "model": VISION_MODEL,
         "prompt": prompt,
@@ -226,7 +226,7 @@ def ollama_vision(path: Path, prompt: str) -> Dict[str, Any]:
     }
 
 
-def analyze_path(path: str, prompt: str = "") -> Dict[str, Any]:
+def analyze_path(path: str, prompt: str = "") -> dict[str, Any]:
     started = time.time()
     p = Path(path)
 

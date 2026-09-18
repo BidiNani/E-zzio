@@ -7,15 +7,17 @@ Valide :
 - Statut de fail-safe Antigravity : BLOCKED_BY_EXTERNAL_QUOTA
 """
 from pathlib import Path
+
 import pytest
 from fastapi.testclient import TestClient
-from web_server import app
+
 from core.governance.approval import (
     ApprovalManager,
     ApprovalStatus,
     approval_manager,
 )
 from core.governance.approval.models import ApprovalRequest
+from web_server import app
 
 
 @pytest.fixture

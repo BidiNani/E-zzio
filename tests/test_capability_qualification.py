@@ -2,6 +2,7 @@
 Test de validation du contrat de qualification des capacités (Capability Qualification).
 """
 import pytest
+
 from core.capabilities.capability_qualification import CapabilityQualification, QualificationStatus
 
 

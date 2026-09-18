@@ -1,9 +1,10 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -20,26 +21,26 @@ def find_qualification_script() -> Optional[Path]:
         return p
     return None
 
-def inspect_qualification_file(p: Path) -> Dict[str, Any]:
+def inspect_qualification_file(p: Path) -> dict[str, Any]:
     try:
         content = p.read_text(encoding="utf-8", errors="replace")
         tree = ast.parse(content, filename=str(p))
-        
+
         functions = []
         classes = []
         returns_records = False
         produces_tiers = False
-        
+
         for node in ast.walk(tree):
             if isinstance(node, ast.ClassDef):
                 classes.append(node.name)
             elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 functions.append(node.name)
-                
+
         content_lower = content.lower()
         returns_records = "modelrecord" in content_lower or "record" in content_lower
         produces_tiers = "tier" in content_lower or "fast" in content_lower or "heavy" in content_lower
-        
+
         return {
             "exists": True,
             "path": str(p.relative_to(PROJECT_ROOT)),
@@ -82,7 +83,7 @@ def main():
         "writes_performed": 0,
         "runtime_mutations": 0
     }
-    
+
     out_file = PROJECT_ROOT / "tools" / "qualification_output_report.json"
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2)

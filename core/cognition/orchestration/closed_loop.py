@@ -8,22 +8,20 @@ Ensures no external model or agent can ever self-declare success.
 
 from __future__ import annotations
 
-import json
 import logging
 import uuid
 from dataclasses import asdict, dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
 
+from core.cognition.decision_ledger import DecisionLedgerEngine
+from core.cognition.epistemic.epistemic_arbiter import EpistemicArbiter
 from core.cognition.evidence.envelope import EvidenceEnvelope
 from core.cognition.evidence.store import EvidenceStore
 from core.cognition.memory.context_fabric import ContextFabric
 from core.cognition.memory.memory_manager import SovereignMemoryManager
 from core.cognition.observation.reality_verifier import ObservableRealityVerifier, ObservationRecord
-from core.cognition.epistemic.epistemic_arbiter import EpistemicArbiter, EpistemicVerdict
 from core.cognition.orchestration.arbiter import FederatedProposal
-from core.cognition.decision_ledger import DecisionLedgerEngine
 
 logger = logging.getLogger(__name__)
 
@@ -34,12 +32,12 @@ class ClosedLoopResult:
     task_id: str
     task_type: str
     status: str  # "CLOSED_LOOP_SUCCESS", "OBSERVATION_FAILED_REJECTED", "EPISTEMIC_ABSTAIN"
-    observation_record: Optional[ObservationRecord]
-    evidence_id: Optional[str]
+    observation_record: ObservationRecord | None
+    evidence_id: str | None
     epistemic_state: str
-    ledger_decision_id: Optional[str]
+    ledger_decision_id: str | None
     rationale: str
-    timestamp_utc: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    timestamp_utc: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
 
 
 class ClosedLoopCognitiveEngine:
@@ -66,10 +64,10 @@ class ClosedLoopCognitiveEngine:
         target_file_path: Path,
         expected_action: str,  # "FILE_CREATED", "FILE_MODIFIED"
         agent_raw_output: str,
-        pre_file_hash: Optional[str] = None,
+        pre_file_hash: str | None = None,
     ) -> ClosedLoopResult:
         """Executes full closed-loop verification over an agent's claimed file action."""
-        cycle_id = f"LOOP-{datetime.now(timezone.utc).strftime('%Y%m%d')}-{uuid.uuid4().hex[:8].upper()}"
+        cycle_id = f"LOOP-{datetime.now(UTC).strftime('%Y%m%d')}-{uuid.uuid4().hex[:8].upper()}"
 
         # 1. Independent Physical Reality Observation
         if expected_action == "FILE_CREATED":

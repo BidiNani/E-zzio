@@ -7,14 +7,16 @@ Uses local qwen2.5vl:3b (Ollama CPU-only) for:
 - Anti-Prompt Injection filtering
 """
 from __future__ import annotations
-import os
+
 import base64
-import logging
+import os
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any
+
 import httpx
 
-def normalize_ollama_url(url_or_host: Optional[str]) -> str:
+
+def normalize_ollama_url(url_or_host: str | None) -> str:
     """Normalise proprement l'URL d'Ollama, qu'elle commence par http:// ou soit un host:port brut."""
     raw = (url_or_host or "").strip()
     if not raw:
@@ -29,14 +31,14 @@ VISION_MODEL = os.environ.get("EZZIO_VISION_MODEL", "qwen2.5vl:3b")
 
 
 class VisionEngine:
-    def __init__(self, ollama_url: Optional[str] = None, model: str = VISION_MODEL):
+    def __init__(self, ollama_url: str | None = None, model: str = VISION_MODEL):
         if ollama_url is not None:
             self.ollama_url = normalize_ollama_url(ollama_url)
         else:
             self.ollama_url = normalize_ollama_url(os.environ.get("OLLAMA_HOST", "http://127.0.0.1:11434"))
         self.model = model
 
-    def _encode_image_base64(self, image_path: Path | str) -> Optional[str]:
+    def _encode_image_base64(self, image_path: Path | str) -> str | None:
         """Encode une image en base64 pour transmission à Ollama."""
         path = Path(image_path)
         if not path.exists() or not path.is_file():
@@ -47,7 +49,7 @@ class VisionEngine:
             logger.error("[VISION-BASE64-ERR] Échec encodage image : %s", exc)
             return None
 
-    async def describe_image(self, image_path: Path | str, prompt: str = "") -> Dict[str, Any]:
+    async def describe_image(self, image_path: Path | str, prompt: str = "") -> dict[str, Any]:
         """Analyse visuelle et description d'image / schéma / capture d'écran."""
         path = Path(image_path)
         b64_data = self._encode_image_base64(path)
@@ -108,7 +110,7 @@ class VisionEngine:
         except Exception as exc:
             return {"ok": False, "status": "EXCEPTION", "error": str(exc)}
 
-    async def extract_ocr_text(self, image_path: Path | str) -> Dict[str, Any]:
+    async def extract_ocr_text(self, image_path: Path | str) -> dict[str, Any]:
         """Extrait verbatim tout texte ou tableau présent dans l'image (OCR)."""
         ocr_prompt = (
             "Extrais textuellement tout le texte visible dans cette image ou capture d'écran, mot pour mot.\n"

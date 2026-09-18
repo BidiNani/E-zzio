@@ -1,8 +1,9 @@
+import ast
+import difflib
 import os
 import shutil
-import difflib
-import ast
-from tools.guard import is_path_allowed, check_for_infinite_loop
+
+from tools.guard import check_for_infinite_loop, is_path_allowed
 
 
 def generate_unified_diff(original_text: str, modified_text: str, file_path: str) -> str:
@@ -40,7 +41,7 @@ def calculate_confidence_score(file_path: str, new_content: str) -> tuple[float,
 
     # 4. Analyse de la taille du Diff
     if os.path.exists(file_path):
-        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+        with open(file_path, encoding="utf-8", errors="ignore") as f:
             old_content = f.read()
 
         diff_lines = len(list(difflib.unified_diff(old_content.splitlines(), new_content.splitlines())))
@@ -63,7 +64,7 @@ def apply_patch_safely(file_path: str, new_content: str) -> str:
         # 2. Lecture ancien contenu pour le .patch
         old_content = ""
         if os.path.exists(file_path):
-            with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+            with open(file_path, encoding="utf-8", errors="ignore") as f:
                 old_content = f.read()
             # Sauvegarde préventive .bak
             shutil.copy2(file_path, file_path + ".bak")

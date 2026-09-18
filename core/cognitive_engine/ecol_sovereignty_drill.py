@@ -4,9 +4,9 @@ Teste l'inviolabilité HMAC, la résistance aux attaques par rejeu, la divergenc
 et la certification du démarrage à froid (Cold Boot).
 """
 
-import sys
 import json
 import shutil
+import sys
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")

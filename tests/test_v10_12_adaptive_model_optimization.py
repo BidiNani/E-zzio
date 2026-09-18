@@ -1,15 +1,16 @@
 """
 Unit & Integration Test Suite for E-ZZIO V10.12 — Adaptive Model & Execution Optimization.
 """
-import pytest
-import time
 import shutil
+import time
 from pathlib import Path
 
-from core.agent.autonomous_e2e_engine import autonomous_e2e_engine, MissionState
+import pytest
+
+from core.agent.autonomous_e2e_engine import MissionState, autonomous_e2e_engine
 from core.operations.adaptive_model_optimizer import (
-    adaptive_model_optimizer,
     ModelResidencyState,
+    adaptive_model_optimizer,
 )
 
 

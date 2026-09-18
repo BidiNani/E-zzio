@@ -1,11 +1,10 @@
 """
 E-ZZIO : Recherche Active des Modèles Candidats sur Hugging Face API et Ollama Registry.
 """
-import os
-import sys
 import json
-import httpx
 from pathlib import Path
+
+import httpx
 
 root = Path("G:/AI/E-zzio")
 

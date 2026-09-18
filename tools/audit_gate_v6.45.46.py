@@ -1,13 +1,13 @@
 from __future__ import annotations
+
 import ast
 import json
-import sys
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
-def extract_method_code(file_path: Path, target_methods: set[str]) -> Dict[str, str]:
+def extract_method_code(file_path: Path, target_methods: set[str]) -> dict[str, str]:
     if not file_path.exists():
         return {"error": f"Fichier introuvable: {file_path}"}
     try:
@@ -32,7 +32,7 @@ def main():
     print("=" * 80)
     print(f"[RACINE] {PROJECT_ROOT}\n")
 
-    report: Dict[str, Any] = {}
+    report: dict[str, Any] = {}
 
     # 1. Inspection de IntentFabricConnector
     connector_path = PROJECT_ROOT / "core" / "intents" / "fabric_connector.py"

@@ -3,11 +3,10 @@ Benchmark statistique réel pour UnifiedMemoryGateway (SQLite WAL + FTS5).
 Mesure les latences p50, p95, p99 sur insertion massive (1000 messages) et recherche textuelle FTS5.
 """
 import asyncio
-import time
-import os
-import sys
 import statistics
+import sys
 import tempfile
+import time
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
@@ -51,7 +50,7 @@ async def run_benchmark():
         ins_p99 = statistics.quantiles(insert_latencies_ms, n=100)[98]
         ins_avg = statistics.mean(insert_latencies_ms)
 
-        print(f"  ✔ Insertion 1k messages terminée.")
+        print("  ✔ Insertion 1k messages terminée.")
         print(f"    - Moyenne : {ins_avg:.2f} ms")
         print(f"    - p50     : {ins_p50:.2f} ms")
         print(f"    - p95     : {ins_p95:.2f} ms")
@@ -83,7 +82,7 @@ async def run_benchmark():
         srch_p99 = statistics.quantiles(search_latencies_ms, n=100)[98]
         srch_avg = statistics.mean(search_latencies_ms)
 
-        print(f"  ✔ 100 recherches FTS5 validées (0 échec).")
+        print("  ✔ 100 recherches FTS5 validées (0 échec).")
         print(f"    - Moyenne : {srch_avg:.2f} ms")
         print(f"    - p50     : {srch_p50:.2f} ms")
         print(f"    - p95     : {srch_p95:.2f} ms")

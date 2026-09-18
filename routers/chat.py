@@ -1,12 +1,13 @@
 import logging
+from typing import Any
+
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
-from typing import Any, Dict, Optional
 
-from runtime.core.ezzio_core import EzzioCore
 from core.memory.unified_gateway import UnifiedMemoryGateway
 from core.system_cleanup import SystemCleanupService
 from core.url_reader import UrlReader
+from runtime.core.ezzio_core import EzzioCore
 
 logger = logging.getLogger("ezzio.api.chat")
 
@@ -25,7 +26,7 @@ async def init_chat_router():
 class ChatRequest(BaseModel):
     message: str = Field(..., description="Message de l'utilisateur")
     user_id: str = Field(default="user_default", description="Identifiant unique utilisateur")
-    session_id: Optional[str] = Field(default=None, description="Identifiant de session de conversation")
+    session_id: str | None = Field(default=None, description="Identifiant de session de conversation")
 
 
 class ChatResponse(BaseModel):
@@ -34,7 +35,7 @@ class ChatResponse(BaseModel):
     provider: str
     mode: str
     session_id: str
-    data: Dict[str, Any] = Field(default_factory=dict)
+    data: dict[str, Any] = Field(default_factory=dict)
 
 
 @router.post("", response_model=ChatResponse)

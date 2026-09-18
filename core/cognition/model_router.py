@@ -4,7 +4,7 @@ Sélectionne le moteur cognitif en fonction du vecteur de coût et de la capacit
 """
 
 import logging
-from typing import Dict
+
 from core.routing.model_registry import canonical_model_registry
 
 logger = logging.getLogger(__name__)
@@ -22,7 +22,7 @@ class ModelRouter:
         channel: str = "web",
         is_mission: bool = False,
         **kwargs
-    ) -> Dict[str, str]:
+    ) -> dict[str, str]:
         """Aiguillage capacitaire et conversationnel basé sur le registre canonique."""
         task_lower = (task_type or "").lower()
 

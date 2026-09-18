@@ -1,7 +1,7 @@
 import logging
 import shutil
 from pathlib import Path
-from typing import Dict, List, Any
+from typing import Any
 
 logger = logging.getLogger("ezzio.core.cleanup")
 
@@ -25,11 +25,11 @@ class SystemCleanupService:
 
     def run_cleanup(
         self, dry_run: bool = True, remove_logs: bool = True, remove_temp: bool = True, remove_archives: bool = True
-    ) -> Dict[str, Any]:
-        folders_removed: List[str] = []
-        folders_skipped: List[str] = []
-        files_removed: List[str] = []
-        files_skipped: List[str] = []
+    ) -> dict[str, Any]:
+        folders_removed: list[str] = []
+        folders_skipped: list[str] = []
+        files_removed: list[str] = []
+        files_skipped: list[str] = []
         space_freed = 0
 
         # 1. Dossiers archives & scratch

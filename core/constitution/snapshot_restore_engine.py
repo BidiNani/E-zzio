@@ -4,13 +4,13 @@ Gère l'auto-bootstrap, la vérification d'intégrité SHA-256 et la restauratio
 atomique (Time Travel) sous le contrôle strict de la passerelle ECOL.
 """
 
-import sys
-import json
 import hashlib
+import json
 import logging
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -36,9 +36,9 @@ class SnapshotRestoreEngine:
         self.gateway = EcolUniversalGateway()
         self.gateway.register_gateway_action("ATOMIC_SNAPSHOT_RESTORE")
 
-    def create_bootstrap_snapshot(self) -> Dict[str, Any]:
+    def create_bootstrap_snapshot(self) -> dict[str, Any]:
         """Crée un point de référence initial si aucun snapshot n'existe."""
-        timestamp_str = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+        timestamp_str = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
         snapshot_name = f"EZZIO_STATE_{timestamp_str}"
         snapshot_path = self.snapshots_dir / snapshot_name
         snapshot_path.mkdir(parents=True, exist_ok=True)
@@ -46,7 +46,7 @@ class SnapshotRestoreEngine:
         for s in ["constitution", "cognition", "memory", "skills", "ledgers"]:
             (snapshot_path / s).mkdir(exist_ok=True)
 
-        manifest = {"snapshot_id": snapshot_name, "created_at_utc": datetime.now(timezone.utc).isoformat(), "files_captured": []}
+        manifest = {"snapshot_id": snapshot_name, "created_at_utc": datetime.now(UTC).isoformat(), "files_captured": []}
 
         sources_to_capture = [
             (self.root_dir / "core" / "constitution" / "ezzio_genome.json", "constitution"),
@@ -81,7 +81,7 @@ class SnapshotRestoreEngine:
         manifest_path.write_text(json.dumps(final_manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         return final_manifest
 
-    def restore_snapshot(self, snapshot_id: str) -> Dict[str, Any]:
+    def restore_snapshot(self, snapshot_id: str) -> dict[str, Any]:
         """
         Vérifie le manifeste cryptographique d'un snapshot et restaure l'organisme
         à l'état enregistré de manière atomique sous le contrôle d'ECOL.

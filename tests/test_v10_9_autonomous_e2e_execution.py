@@ -4,6 +4,7 @@ Valide le contrat de mission, l'exécution DAG, les checkpoints/reprise, la vér
 la récupération autonome (Self-Healing), l'adaptabilité du replanning et le scénario E2E complet.
 """
 import pytest
+
 from core.agent.autonomous_e2e_engine import (
     AutonomousE2EEngine,
     MissionState,

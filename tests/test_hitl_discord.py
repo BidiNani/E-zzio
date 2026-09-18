@@ -11,6 +11,7 @@ Valide sans appel réseau réel :
 """
 import sqlite3
 from pathlib import Path
+
 import pytest
 
 from core.governance.approval import (
@@ -19,9 +20,9 @@ from core.governance.approval import (
     DecisionChoice,
 )
 from core.governance.approval.store import SqliteApprovalStore
+from core.integrations.discord.hitl_bridge import DiscordApprovalController
 from core.security.audit_ledger import AuditLedger
 from core.tasks import manager as task_manager_mod
-from core.integrations.discord.hitl_bridge import DiscordApprovalController
 
 
 @pytest.fixture

@@ -2,11 +2,17 @@
 tests/test_universal_input_access.py — Deterministic Multimodal Extraction Unit Tests
 """
 import os
+
 import pytest
-from core.agent.input_access_manager import (
-    InputAccessManager, InputType, InputDocument, input_access_manager
-)
+
 from core.agent.capability_manager import CapabilityManager
+from core.agent.input_access_manager import (
+    InputAccessManager,
+    InputDocument,
+    InputType,
+    input_access_manager,
+)
+
 
 def test_multimodal_classification():
     iam = InputAccessManager()

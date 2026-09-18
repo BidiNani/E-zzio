@@ -5,24 +5,24 @@ Analyse l'intention utilisateur, extrait les paramètres requis, choisit des val
 et route vers le moteur souverain adéquat avec confinement strict dans outputs/ ou projects/.
 """
 from __future__ import annotations
-import os
+
+import logging
 import re
 import time
-import logging
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any
 
-from core.generators.sheet_engine import SheetEngine
-from core.generators.doc_engine import DocEngine
-from core.generators.slide_engine import SlideEngine
-from core.generators.pdf_engine import PdfEngine
-from core.generators.image_engine import ImageEngine
+from core.capabilities.capability_policy import CapabilityPolicy
 from core.generators.archive_engine import ArchiveEngine
+from core.generators.doc_engine import DocEngine
+from core.generators.image_engine import ImageEngine
 from core.generators.media_engine import MediaEngine
+from core.generators.pdf_engine import PdfEngine
+from core.generators.sheet_engine import SheetEngine
+from core.generators.slide_engine import SlideEngine
 from core.perception.qr_engine import QREngine
-from core.studio.scaffolder import ProjectScaffolder
 from core.studio.builder import ProjectBuilder
-from core.capabilities.capability_policy import CapabilityPolicy, PolicyDecision
+from core.studio.scaffolder import ProjectScaffolder
 
 logger = logging.getLogger("GenerationRouter")
 
@@ -98,7 +98,7 @@ class GenerationRouter:
 
         return "UNKNOWN"
 
-    async def route_and_generate(self, user_message: str) -> Dict[str, Any]:
+    async def route_and_generate(self, user_message: str) -> dict[str, Any]:
         """
         Interprète le message, extrait les métadonnées et exécute la génération souveraine.
         """

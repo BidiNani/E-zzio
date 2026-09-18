@@ -2,26 +2,27 @@
 core/agent/capability_manager.py — Capability Profiles, Tool Discovery & Autonomous Preflight Manager for E-ZZIO Agents.
 """
 from __future__ import annotations
-import sys
-import os
-import logging
+
 import importlib.util
+import logging
+import os
 import subprocess
-from typing import Dict, Any, List, Optional
+import sys
 from dataclasses import dataclass, field
+from typing import Any
 
 logger = logging.getLogger("ezzio.agent.capability_manager")
 
 @dataclass
 class CapabilityProfile:
     role: str
-    tools: List[str] = field(default_factory=list)
-    skills: List[str] = field(default_factory=list)
-    dependencies: List[str] = field(default_factory=list)
-    permissions: List[str] = field(default_factory=list)
+    tools: list[str] = field(default_factory=list)
+    skills: list[str] = field(default_factory=list)
+    dependencies: list[str] = field(default_factory=list)
+    permissions: list[str] = field(default_factory=list)
 
 # Registre des profils de capacités par rôle
-CAPABILITY_PROFILES: Dict[str, CapabilityProfile] = {
+CAPABILITY_PROFILES: dict[str, CapabilityProfile] = {
     "CODING": CapabilityProfile(
         role="CODING",
         tools=["filesystem", "python", "git", "pytest", "database_connector", "input_extractor"],
@@ -111,10 +112,10 @@ ALLOWED_DEPENDENCY_WHITELIST: set[str] = {
 class CapabilityManager:
     """Gestionnaire de capacités : preflight, vérification d'outils et installation autonome venv-local sécurisée."""
 
-    def __init__(self, workspace_root: Optional[str] = None):
+    def __init__(self, workspace_root: str | None = None):
         self.workspace_root = workspace_root or r"G:\AI\E-zzio"
         self.python_bin = sys.executable
-        self._cache: Dict[str, bool] = {}
+        self._cache: dict[str, bool] = {}
 
     def get_profile(self, role: str) -> CapabilityProfile:
         """Retourne le profil de capacités pour un rôle donné ou le profil FAST par défaut."""
@@ -172,7 +173,7 @@ class CapabilityManager:
             logger.error("[CAPABILITY] Erreur lors de l'installation de '%s' : %s", package_name, exc)
             return False
 
-    def preflight_check(self, role: str, auto_install: bool = True) -> Dict[str, Any]:
+    def preflight_check(self, role: str, auto_install: bool = True) -> dict[str, Any]:
         """Effectue le preflight des dépendances et outils requis pour un rôle agentique."""
         profile = self.get_profile(role)
         missing_deps = []

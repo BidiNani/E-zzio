@@ -4,11 +4,11 @@ Provides structured, provable, read-only introspection capabilities grounded exc
 in the Self-Knowledge Map artifacts (_forensic/knowledge/).
 """
 
-from dataclasses import dataclass, asdict
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
 import json
 import logging
+from dataclasses import asdict, dataclass
+from pathlib import Path
+from typing import Any
 
 logger = logging.getLogger("ezzio.self_awareness")
 
@@ -21,13 +21,13 @@ class IntrospectionResult:
     """
     status: str  # "FOUND", "UNKNOWN", "ERROR"
     data: Any
-    source_artifact: Optional[str]
+    source_artifact: str | None
     target: str
     confidence: float  # 1.0 = backed by verified map artifact, 0.0 = unknown
-    evidence_path: Optional[str] = None
-    message: Optional[str] = None
+    evidence_path: str | None = None
+    message: str | None = None
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return asdict(self)
 
 
@@ -52,15 +52,15 @@ class SelfAwarenessGateway:
         "master": "MASTER_KNOWLEDGE.json",
     }
 
-    def __init__(self, knowledge_dir: Optional[Union[str, Path]] = None):
+    def __init__(self, knowledge_dir: str | Path | None = None):
         if knowledge_dir is not None:
             self._knowledge_dir = Path(knowledge_dir).resolve()
         else:
             base_dir = Path(__file__).resolve().parent.parent.parent
             self._knowledge_dir = (base_dir / "_forensic" / "knowledge").resolve()
 
-        self._cache: Dict[str, Any] = {}
-        self._load_errors: Dict[str, str] = {}
+        self._cache: dict[str, Any] = {}
+        self._load_errors: dict[str, str] = {}
         self._load_all_artifacts()
 
     def _load_all_artifacts(self) -> None:
@@ -77,7 +77,7 @@ class SelfAwarenessGateway:
                 continue
 
             try:
-                with open(file_path, "r", encoding="utf-8") as f:
+                with open(file_path, encoding="utf-8") as f:
                     self._cache[key] = json.load(f)
             except Exception as e:
                 self._load_errors[key] = f"JSON corruption/parse error in {fname}: {e}"
@@ -224,7 +224,7 @@ class SelfAwarenessGateway:
             message=f"No SHA-256 hash found for file '{file_path}'."
         )
 
-    def find_files(self, query: str, category: Optional[str] = None, limit: int = 50) -> IntrospectionResult:
+    def find_files(self, query: str, category: str | None = None, limit: int = 50) -> IntrospectionResult:
         """Searches files in the manifest by substring/extension/category."""
         manifest = self._cache.get("manifest")
         if not manifest:
@@ -260,7 +260,7 @@ class SelfAwarenessGateway:
             message=f"Found {len(results)} files matching query '{query}'."
         )
 
-    def find_symbol(self, symbol_name: str, symbol_type: Optional[str] = None) -> IntrospectionResult:
+    def find_symbol(self, symbol_name: str, symbol_type: str | None = None) -> IntrospectionResult:
         """
         Searches Python classes, Python functions, or PowerShell functions by name.
         """
@@ -387,7 +387,7 @@ class SelfAwarenessGateway:
             message=f"Module '{module_path}' not found in reverse import graph."
         )
 
-    def get_api_routes(self, filter_query: Optional[str] = None) -> IntrospectionResult:
+    def get_api_routes(self, filter_query: str | None = None) -> IntrospectionResult:
         """Retrieves HTTP and WebSocket API routes mapped across E-ZZIO OS."""
         apis = self._cache.get("apis")
         if not apis:
@@ -420,7 +420,7 @@ class SelfAwarenessGateway:
             confidence=1.0 if (http_routes or ws_routes) else 0.0
         )
 
-    def get_database_info(self, table_or_db: Optional[str] = None) -> IntrospectionResult:
+    def get_database_info(self, table_or_db: str | None = None) -> IntrospectionResult:
         """Retrieves SQLite schema definitions, tables, triggers, and referencing code files."""
         db_map = self._cache.get("databases")
         if not db_map:

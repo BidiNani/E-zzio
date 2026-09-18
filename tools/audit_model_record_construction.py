@@ -1,31 +1,32 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_record_construction() -> Dict[str, Any]:
+def inspect_record_construction() -> dict[str, Any]:
     registry_path = PROJECT_ROOT / "core" / "models" / "registry.py"
     fabric_path = PROJECT_ROOT / "core" / "models" / "fabric.py"
-    
+
     results = {}
-    
+
     for p, name in [(registry_path, "registry"), (fabric_path, "fabric")]:
         if not p.exists():
             continue
         try:
             content = p.read_text(encoding="utf-8", errors="replace")
             tree = ast.parse(content, filename=str(p))
-            
+
             records_instantiated = []
             decorators = []
             winners_logic = []
-            
+
             for node in ast.walk(tree):
                 if isinstance(node, ast.ClassDef):
                     for dec in node.decorator_list:
@@ -38,13 +39,13 @@ def inspect_record_construction() -> Dict[str, Any]:
                         records_instantiated.append(node.func.id)
                     elif isinstance(node.func, ast.Attribute) and "Record" in node.func.attr:
                         records_instantiated.append(node.func.attr)
-                        
+
             if name == "fabric":
                 for node in ast.walk(tree):
                     if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                         if "winner" in node.name.lower() or "qualif" in node.name.lower():
                             winners_logic.append(node.name)
-                            
+
             results[name] = {
                 "decorators": decorators,
                 "records_instantiated": list(set(records_instantiated)),
@@ -52,7 +53,7 @@ def inspect_record_construction() -> Dict[str, Any]:
             }
         except Exception as e:
             results[name] = {"error": str(e)}
-            
+
     return results
 
 def main():
@@ -66,7 +67,7 @@ def main():
     print("[1] ANALYSE DE LA DÉCORATION DE CLASSES (ex: dataclass)")
     print(f"  - Registre / Modèles : {res.get('registry', {}).get('decorators', [])}")
 
-    print(f"\n[2] LOGIQUE DE SÉLECTION DES WINNERS (Fabric)")
+    print("\n[2] LOGIQUE DE SÉLECTION DES WINNERS (Fabric)")
     print(f"  - Fonctions clés : {res.get('fabric', {}).get('winners_logic', [])}")
 
     print("\n" + "=" * 80)

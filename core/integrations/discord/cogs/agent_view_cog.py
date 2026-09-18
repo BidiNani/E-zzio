@@ -4,7 +4,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import time
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 logger = logging.getLogger("ezzio.discord.agentview")
 
@@ -16,7 +16,7 @@ AGENT_ICON = {"orchestrateur": "🤖", "architecte": "🔍", "coder": "⚙️",
               "quality": "🛡", "default": "🔹"}
 
 
-def render_ascii_tree(root_label: str, children: List[Dict[str, Any]]) -> str:
+def render_ascii_tree(root_label: str, children: list[dict[str, Any]]) -> str:
     """Arbre monospace : agents + outils + statuts + latences."""
     lines = [root_label]
     for i, ch in enumerate(children):
@@ -45,7 +45,7 @@ class AgentViewTracker:
     def __init__(self, send, edit):
         self._send = send
         self._edit = edit
-        self._nodes: Dict[str, Dict[str, Any]] = {}
+        self._nodes: dict[str, dict[str, Any]] = {}
         self._root = "🤖 Orchestrateur"
         self._last_edit = 0.0
         self._dirty = False
@@ -69,7 +69,7 @@ class AgentViewTracker:
         self._dirty = True
 
     def render(self) -> str:
-        agents: Dict[str, Dict[str, Any]] = {}
+        agents: dict[str, dict[str, Any]] = {}
         for key, node in self._nodes.items():
             if ":" in key:
                 base = key.split(":")[0]
@@ -102,7 +102,7 @@ class AgentViewTracker:
         except Exception as exc:
             logger.warning("[AGENTVIEW] edit impossible : %s", exc)
 
-    async def run(self, queue: "asyncio.Queue", stop_after_idle: float = 300.0) -> None:
+    async def run(self, queue: asyncio.Queue, stop_after_idle: float = 300.0) -> None:
         """Boucle de consommation : termine après inactivité (jamais de 429)."""
         idle_since = time.monotonic()
         while True:
@@ -110,7 +110,7 @@ class AgentViewTracker:
                 ev = await asyncio.wait_for(queue.get(), timeout=1.0)
                 self.ingest(ev)
                 idle_since = time.monotonic()
-            except asyncio.TimeoutError:
+            except TimeoutError:
                 if self._dirty:
                     await self.maybe_flush(force=False)
                 if time.monotonic() - idle_since > stop_after_idle:

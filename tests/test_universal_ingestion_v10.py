@@ -4,15 +4,16 @@ Vérifie la robustesse de l'ingestion universelle, le contrat de données,
 l'anti-disguise executable, l'anti-zip-slip/bomb et l'édition d'image déterministe.
 """
 
-import pytest
 import io
 import json
 import zipfile
 from pathlib import Path
+
+import pytest
 from PIL import Image
 
-from core.perception.universal_reader import UniversalFileReader
 from core.generators.image_engine import ImageEngine
+from core.perception.universal_reader import UniversalFileReader
 
 
 @pytest.fixture

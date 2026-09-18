@@ -10,21 +10,20 @@ from __future__ import annotations
 import ast
 import hashlib
 import logging
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
 
 @dataclass
 class ObservationRecord:
-    target_path: Optional[str]
+    target_path: str | None
     observed_action: str  # "FILE_CREATED", "FILE_MODIFIED", "SYNTAX_VERIFIED", "COMMAND_EXECUTED"
     is_verified: bool
     observation_details: str
-    pre_sha256: Optional[str] = None
-    post_sha256: Optional[str] = None
+    pre_sha256: str | None = None
+    post_sha256: str | None = None
     file_size_bytes: int = 0
 
 

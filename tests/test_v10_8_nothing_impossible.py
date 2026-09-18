@@ -4,6 +4,7 @@ Valide l'évaluation de faisabilité, la détection et résolution de gaps, la c
 la création autonome d'outils et d'adaptateurs, la résolution itérative et la règle du "No Dead-End".
 """
 import pytest
+
 from core.agent.nothing_impossible import (
     FeasibilityEngine,
     FeasibilityState,

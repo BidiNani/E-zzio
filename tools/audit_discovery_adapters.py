@@ -1,19 +1,20 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_discovery_adapters() -> Dict[str, Any]:
+def inspect_discovery_adapters() -> dict[str, Any]:
     disc_dir = PROJECT_ROOT / "core" / "models" / "discovery"
     if not disc_dir.exists():
         return {"exists": False}
-        
+
     results = {}
     for p in disc_dir.glob("*.py"):
         if p.name == "__init__":
@@ -23,18 +24,18 @@ def inspect_discovery_adapters() -> Dict[str, Any]:
             content = p.read_text(encoding="utf-8", errors="replace")
             tree = ast.parse(content, filename=str(p))
             lines = content.splitlines()
-            
+
             funcs = {}
             for node in ast.walk(tree):
                 if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                     start = node.lineno - 1
                     end = getattr(node, 'end_lineno', start + 35)
                     funcs[node.name] = "\n".join(lines[start:end])
-                    
+
             results[rel_path] = funcs
         except Exception as e:
             results[rel_path] = {"error": str(e)}
-            
+
     return results
 
 def main():

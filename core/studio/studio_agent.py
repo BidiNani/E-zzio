@@ -9,15 +9,15 @@ End-to-end pipeline:
 6. Delivery Manifest with Execution Commands & Results
 """
 from __future__ import annotations
-import os
-import re
-import logging
-from pathlib import Path
-from typing import Dict, Any, Optional
 
-from core.studio.scaffolder import ProjectScaffolder
-from core.studio.builder import ProjectBuilder
+import logging
+import re
+from pathlib import Path
+from typing import Any
+
 from core.agent.coding_agent_loop import CodingAgentHarness
+from core.studio.builder import ProjectBuilder
+from core.studio.scaffolder import ProjectScaffolder
 
 logger = logging.getLogger("DevStudioAgent")
 
@@ -29,7 +29,7 @@ class DevStudioAgent:
         self.builder = ProjectBuilder(str(self.workspace_root))
         self.max_repair_attempts = 3
 
-    def classify_project_intent(self, prompt: str) -> Dict[str, str]:
+    def classify_project_intent(self, prompt: str) -> dict[str, str]:
         """Détermine le type de projet et le nom optimal à partir du prompt utilisateur."""
         lower = prompt.lower()
 
@@ -58,7 +58,7 @@ class DevStudioAgent:
             "description": prompt
         }
 
-    def build_project_pipeline(self, prompt: str) -> Dict[str, Any]:
+    def build_project_pipeline(self, prompt: str) -> dict[str, Any]:
         """Exécute la chaîne complète de création, codage, test et validation."""
         # 1. Classification
         spec = self.classify_project_intent(prompt)
@@ -118,7 +118,7 @@ class DevStudioAgent:
         project_type: str,
         project_dir: Path,
         harness: CodingAgentHarness
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Exécute les tests réels et applique une boucle d'auto-réparation en cas d'erreur."""
         for attempt in range(1, self.max_repair_attempts + 1):
             if project_type == "python_cli":
@@ -140,7 +140,7 @@ class DevStudioAgent:
                 return {"ok": True, "status": "VERIFIED_OPERATIONAL", "attempt": attempt, "details": res}
 
             logger.warning("[STUDIO-HEAL] Tentative %d/%d : Échec d'exécution (%s). Auto-correction...", attempt, self.max_repair_attempts, res.get("error") or res.get("stderr"))
-            
+
             # Injection du traceback d'erreur pour auto-correction
             error_msg = res.get("stderr") or res.get("error") or "Erreur d'exécution"
             heal_prompt = f"L'exécution du projet a échoué avec l'erreur suivante :\n{error_msg}\nCorrige immédiatement les fichiers du projet."

@@ -1,5 +1,5 @@
-import pathlib
 import logging
+import pathlib
 
 logger = logging.getLogger("ezzio.codebase")
 
@@ -34,7 +34,7 @@ class CodebaseIndexer:
         if not target_path.exists() or not target_path.is_file():
             return f"[-] Erreur : Fichier introuvable ({relative_path})"
         try:
-            with open(target_path, "r", encoding="utf-8") as f:
+            with open(target_path, encoding="utf-8") as f:
                 return f.read()
         except Exception as e:
             return f"[-] Erreur de lecture : {e}"

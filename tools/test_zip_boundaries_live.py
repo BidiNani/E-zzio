@@ -1,9 +1,9 @@
 """
 E-ZZIO Section 4 : Test Réel des Limites et Frontières de Sécurité ZIP (Cas A à E).
 """
-import zipfile
 import json
 import sys
+import zipfile
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")
@@ -11,6 +11,7 @@ if str(root) not in sys.path:
     sys.path.insert(0, str(root))
 
 from core.perception.universal_reader import UniversalFileReader
+
 tmp_dir = root / "runtime/test_tmp/zip_boundary_fixtures"
 tmp_dir.mkdir(parents=True, exist_ok=True)
 

@@ -4,24 +4,26 @@ Passerelle API REST & Streaming SSE asynchrone pour E-ZzIO.
 
 import json
 import logging
-from typing import AsyncGenerator
+from collections.abc import AsyncGenerator
 from pathlib import Path
-from fastapi import FastAPI, HTTPException, Request
+
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse, HTMLResponse
+from fastapi.responses import HTMLResponse, StreamingResponse
 
 from ezzio.config import settings
-from ezzio.schemas import ChatRequest, ChatResponse, HealthStatus
 from ezzio.graph.workflow import app as graph_app
 from ezzio.rag.engine import get_rag_engine
+from ezzio.schemas import ChatRequest, ChatResponse, HealthStatus
+from ezzio.self_repair.auto_healer import AutoHealer
+from ezzio.self_repair.codebase_catalog import get_codebase_catalog
 from ezzio.tools.file_tools import list_project_files
 from ezzio.tools.system_tools import check_ollama_health
-from ezzio.self_repair.codebase_catalog import get_codebase_catalog
-from ezzio.self_repair.auto_healer import AutoHealer
 
 logger = logging.getLogger("EzzioAPI")
 
 from contextlib import asynccontextmanager
+
 from ezzio.memory.maintenance import run_full_wal_maintenance
 
 
@@ -119,9 +121,9 @@ async def chat(request: ChatRequest):
         "sources": [],
         "model_used": "",
     }
-    
+
     config = {"configurable": {"thread_id": request.thread_id}}
-    
+
     try:
         final_state = await graph_app.ainvoke(initial_state, config=config)
         return ChatResponse(
@@ -140,23 +142,23 @@ async def chat(request: ChatRequest):
 async def event_generator(query: str, thread_id: str) -> AsyncGenerator[str, None]:
     """Générateur SSE pour streamer les événements et la réponse en temps réel token-par-token."""
     yield f"data: {json.dumps({'event': 'status', 'message': 'Connexion neuronale à Gemini Flash...'})}\n\n"
-    
+
     try:
         from ezzio.llm.client import get_llm_client
         from ezzio.memory.context_window import get_context_manager
-        
+
         ctx_mgr = get_context_manager()
         history = ctx_mgr.get_pruned_context(thread_id)
-        
+
         # Contexte léger (derniers 4 échanges)
         context_blocks = []
         for msg in history[-4:]:
             role = "Utilisateur" if msg["role"] == "user" else "Assistant"
             context_blocks.append(f"{role}: {msg['content']}")
-            
+
         history_str = "\n".join(context_blocks)
         full_prompt = f"Historique récent :\n{history_str}\n\nNouvelle question : {query}" if history_str else query
-        
+
         try:
             from core.cloud_brain_broker import build_system_prompt
             system_prompt = build_system_prompt()
@@ -164,20 +166,20 @@ async def event_generator(query: str, thread_id: str) -> AsyncGenerator[str, Non
             system_prompt = "Tu es E-ZZIO, âme numérique souveraine et assistant technique d'élite conçu par BidiNani."
 
         yield f"data: {json.dumps({'event': 'route', 'route': 'direct', 'model': f'{settings.cloud_model_primary} (Streaming SSE)'})}\n\n"
-        
+
         llm = get_llm_client()
         full_answer = []
-        
+
         async for token in llm.astream(prompt=full_prompt, system_prompt=system_prompt):
             full_answer.append(token)
             yield f"data: {json.dumps({'event': 'token', 'chunk': token})}\n\n"
-            
+
         final_text = "".join(full_answer)
-        
+
         # Sauvegarde mémorielle
         ctx_mgr.add_message(thread_id, "user", query)
         ctx_mgr.add_message(thread_id, "assistant", final_text)
-        
+
         yield f"data: {json.dumps({'event': 'done', 'sources': []})}\n\n"
     except Exception as exc:
         logger.error("Erreur SSE : %s", exc, exc_info=True)

@@ -5,17 +5,18 @@ import time
 
 sys.path.insert(0, os.getcwd())
 
-from core.secrets import load_secrets
-from core.memory.unified_gateway import UnifiedMemoryGateway
-from core.router.intent_router import IntentRouter, IntentType
-from core.providers.ollama_provider import OllamaProvider
-from core.providers.gemini_provider import GeminiProvider
-from core.providers.tavily_provider import TavilyProvider
-from runtime.core.ezzio_core import EzzioCore
-from interfaces.api.server import app
-from routers.research import _evidence_store
-from routers.chat import _core as chat_core
 import httpx
+from interfaces.api.server import app
+
+from core.memory.unified_gateway import UnifiedMemoryGateway
+from core.providers.gemini_provider import GeminiProvider
+from core.providers.ollama_provider import OllamaProvider
+from core.providers.tavily_provider import TavilyProvider
+from core.router.intent_router import IntentRouter, IntentType
+from core.secrets import load_secrets
+from routers.chat import _core as chat_core
+from routers.research import _evidence_store
+from runtime.core.ezzio_core import EzzioCore
 
 
 async def run_master_check():

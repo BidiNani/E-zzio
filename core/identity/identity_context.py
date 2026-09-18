@@ -3,12 +3,13 @@ E-ZZIO V7.31 — Immutable Identity Context
 Représente l'objet d'identité scellé et gelé généré au boot.
 """
 
-import os
 import hashlib
 import hmac
+import os
 import uuid
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
+
 from dotenv import load_dotenv
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
@@ -27,7 +28,7 @@ class ImmutableIdentityContext:
         self.secret_key = secret.encode("utf-8")
 
         self._boot_session_id = f"sess-{uuid.uuid4().hex[:12]}"
-        self._boot_timestamp = datetime.now(timezone.utc).isoformat()
+        self._boot_timestamp = datetime.now(UTC).isoformat()
 
         self._constitution_hash = self._hash_file(CONFIG_DIR / "constitution.json")
         self._persona_hash = self._hash_file(CONFIG_DIR / "persona.json")

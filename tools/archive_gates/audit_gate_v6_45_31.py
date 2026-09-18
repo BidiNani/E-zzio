@@ -1,9 +1,10 @@
 from __future__ import annotations
+
 import ast
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, List, Set
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -28,12 +29,12 @@ class DiscordForensicVisitor(ast.NodeVisitor):
     def __init__(self, filepath: Path, rel_path: str):
         self.filepath = filepath
         self.rel_path = rel_path
-        self.imports: Dict[str, str] = {}
-        self.global_vars: Dict[str, str] = {}
-        self.detected_handlers: List[Dict[str, Any]] = []
-        self.current_scope: List[str] = []
-        self.current_args: Set[str] = set()
-        self.instantiations: Dict[str, str] = {}
+        self.imports: dict[str, str] = {}
+        self.global_vars: dict[str, str] = {}
+        self.detected_handlers: list[dict[str, Any]] = []
+        self.current_scope: list[str] = []
+        self.current_args: set[str] = set()
+        self.instantiations: dict[str, str] = {}
 
     def visit_Import(self, node: ast.Import):
         for alias in node.names:
@@ -150,9 +151,9 @@ def main():
     print(f"[RACINE] {PROJECT_ROOT}\n")
 
     py_files = [p for p in PROJECT_ROOT.glob("**/*.py") if not (set(p.parts) & EXCLUDED_DIRS)]
-    
-    all_handlers: List[Dict[str, Any]] = []
-    target_usages: Dict[str, List[Dict[str, str]]] = {obj: [] for obj in TARGET_OBJECTS}
+
+    all_handlers: list[dict[str, Any]] = []
+    target_usages: dict[str, list[dict[str, str]]] = {obj: [] for obj in TARGET_OBJECTS}
 
     for path in py_files:
         rel_path = str(path.relative_to(PROJECT_ROOT))

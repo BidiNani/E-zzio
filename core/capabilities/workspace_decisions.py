@@ -8,9 +8,8 @@ agent au-delà de select_worker_for_intent (fleet), policy (policy).
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
-from typing import Dict, List, Optional, Tuple
 
 from core.capabilities.research_fabric import Breadth, SearchIntent
 from core.decision_router import SearchMode
@@ -47,7 +46,7 @@ class DecisionState:
     risk_high: bool = False
 
 
-def best_next_action(s: DecisionState) -> Tuple[NextAction, str]:
+def best_next_action(s: DecisionState) -> tuple[NextAction, str]:
     """Priorité : sécurité > annulation > clarification > mesure > délégation."""
     if s.blocked_on_policy or s.risk_high:
         return NextAction.ESCALATE, "policy/risque : escalade"
@@ -76,7 +75,7 @@ class SourceCandidate:
     already_covered: bool = False
 
 
-def best_source_next(candidates: List[SourceCandidate]) -> Optional[str]:
+def best_source_next(candidates: list[SourceCandidate]) -> str | None:
     """Valeur d'information par coût. Couvert ou coût nul→ ignoré ; vide → None."""
     best, best_ratio = None, 0.0
     for c in candidates:
@@ -89,7 +88,7 @@ def best_source_next(candidates: List[SourceCandidate]) -> Optional[str]:
 
 
 def internal_first_order(has_internal_match: bool, freshness_required: bool
-                         ) -> List[str]:
+                         ) -> list[str]:
     """INTERNAL-FIRST quand pertinent, EXTERNAL pour validation/fraîcheur."""
     if has_internal_match and not freshness_required:
         return ["internal"]
@@ -98,7 +97,7 @@ def internal_first_order(has_internal_match: bool, freshness_required: bool
     return ["external"]
 
 
-_FEEDBACK_SIGNALS: Tuple[Tuple[str, str], ...] = (
+_FEEDBACK_SIGNALS: tuple[tuple[str, str], ...] = (
     ("c'est faux", "answer_incorrect"),
     ("pas ce que je voulais", "intent_mismatch"),
     ("mauvaise source", "source_bad"),
@@ -109,7 +108,7 @@ _FEEDBACK_SIGNALS: Tuple[Tuple[str, str], ...] = (
 
 
 def feedback_to_signal(text: str, task_id: str = "",
-                       model: str = "") -> Optional[Dict[str, str]]:
+                       model: str = "") -> dict[str, str] | None:
     """Retour utilisateur → signal qualité pour la boucle d'évolution."""
     t = (text or "").lower()
     for marker, kind in _FEEDBACK_SIGNALS:
@@ -119,7 +118,7 @@ def feedback_to_signal(text: str, task_id: str = "",
     return None
 
 
-def assess_stall(state: str, last_event_age_s: Optional[float],
+def assess_stall(state: str, last_event_age_s: float | None,
                  timeout_s: float, waiting_label: str = "") -> StallVerdict:
     """État + âge du dernier événement → verdict. Âge inconnu → UNKNOWN."""
     s = (state or "").upper()
@@ -134,14 +133,14 @@ def assess_stall(state: str, last_event_age_s: Optional[float],
     return StallVerdict.RUNNING
 
 
-_BREADTH_MODE: Dict[Breadth, SearchMode] = {
+_BREADTH_MODE: dict[Breadth, SearchMode] = {
     Breadth.QUICK: SearchMode.FAST,
     Breadth.NORMAL: SearchMode.RESEARCH,
     Breadth.DEEP: SearchMode.FORENSIC,
     Breadth.MAX: SearchMode.FORENSIC,
 }
 
-_BREADTH_BUDGET: Dict[Breadth, Dict[str, int]] = {
+_BREADTH_BUDGET: dict[Breadth, dict[str, int]] = {
     Breadth.QUICK: {"max_results": 3, "max_providers": 1, "timeout_s": 20},
     Breadth.NORMAL: {"max_results": 5, "max_providers": 2, "timeout_s": 45},
     Breadth.DEEP: {"max_results": 8, "max_providers": 3, "timeout_s": 120},
@@ -149,15 +148,15 @@ _BREADTH_BUDGET: Dict[Breadth, Dict[str, int]] = {
 }
 
 
-def source_plan(intent: SearchIntent, breadth: Breadth) -> Dict[str, object]:
+def source_plan(intent: SearchIntent, breadth: Breadth) -> dict[str, object]:
     """Plan : mode du DecisionRouter existant + budgets bornés (MAX ≠ illimité)."""
     return {"mode": _BREADTH_MODE[breadth].value,
             "budget": dict(_BREADTH_BUDGET[breadth]),
             "intent": intent.value}
 
 
-def gap_report(known: List[str], missing: List[str], conflicted: List[str],
-               verify: List[str]) -> Dict[str, List[str]]:
+def gap_report(known: list[str], missing: list[str], conflicted: list[str],
+               verify: list[str]) -> dict[str, list[str]]:
     """WHAT WE KNOW / DON'T KNOW / CONFLICTED / VERIFY — depuis fabric."""
     return {"known": list(known), "unknown": list(missing),
             "conflicted": list(conflicted), "to_verify": list(verify)}

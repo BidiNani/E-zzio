@@ -4,9 +4,9 @@ Garantit que le test de rupture de chaîne (Chain Break) injecte bien un second 
 avant de corrompre le lien.
 """
 
-import sys
 import json
 import shutil
+import sys
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")

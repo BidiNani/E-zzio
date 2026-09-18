@@ -8,10 +8,12 @@ Politique de sécurité (CapabilityPolicy) :
 - composio.execute_write : Actions d'écriture / modification (REQUIRE_HUMAN)
 """
 from __future__ import annotations
-import os
+
 import logging
+import os
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any
+
 import httpx
 
 from core.capabilities.capability_policy import CapabilityPolicy, PolicyDecision
@@ -28,7 +30,7 @@ class ComposioProvider:
         self.api_key = self._get_secret("COMPOSIO_API_KEY")
         self.api_base = "https://backend.composio.dev/api/v1"
 
-    def _get_secret(self, key: str) -> Optional[str]:
+    def _get_secret(self, key: str) -> str | None:
         """Récupère la clé Composio depuis secrets/.env ou variables d'environnement."""
         env_paths = [
             self.workspace_root / "secrets" / ".env",
@@ -49,7 +51,7 @@ class ComposioProvider:
         """Indique si la clé d'API Composio est présente."""
         return bool(self.api_key and len(self.api_key.strip()) > 5)
 
-    def _get_headers(self) -> Dict[str, str]:
+    def _get_headers(self) -> dict[str, str]:
         headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
@@ -59,7 +61,7 @@ class ComposioProvider:
             headers["X-API-KEY"] = self.api_key
         return headers
 
-    async def list_available_apps(self) -> Dict[str, Any]:
+    async def list_available_apps(self) -> dict[str, Any]:
         """Liste les intégrations SaaS disponibles (scope: composio.read)."""
         decision, reason = self.policy.evaluate_scope("composio.read", {})
         if decision != PolicyDecision.ALLOW:
@@ -93,9 +95,9 @@ class ComposioProvider:
     async def execute_action(
         self,
         action_name: str,
-        params: Dict[str, Any],
+        params: dict[str, Any],
         is_write: bool = False
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Exécute une action SaaS sous contrôle strict des scopes de gouvernance.
         Les actions d'écriture nécessitent validation humaine explicite.

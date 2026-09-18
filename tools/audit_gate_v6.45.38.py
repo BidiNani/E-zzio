@@ -1,9 +1,10 @@
 from __future__ import annotations
+
 import ast
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 EXCLUDED_DIRS = {"audit", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tests"}
@@ -11,7 +12,7 @@ EXCLUDED_DIRS = {"audit", "snapshot", "snapshots", "backup", "backups", "old", "
 class OllamaProviderVisitor(ast.NodeVisitor):
     def __init__(self, rel_path: str):
         self.rel_path = rel_path
-        self.provider_nodes: List[Dict[str, Any]] = []
+        self.provider_nodes: list[dict[str, Any]] = []
 
     def visit_ClassDef(self, node: ast.ClassDef):
         if "OllamaProvider" in node.name:
@@ -49,9 +50,9 @@ def main():
     print(f"[+] Classes OllamaProvider trouvées : {len(found_providers)}\n")
 
     for item in found_providers:
-        print(f"=" * 80)
+        print("=" * 80)
         print(f" FICHIER : {item['file']} | CLASS : {item['class']} (ligne {item['line']})")
-        print(f"=" * 80)
+        print("=" * 80)
         print(item['code'])
         print("\n")
 

@@ -3,9 +3,10 @@ Tests unitaires pour la Capability Policy et les connecteurs Google Workspace, G
 """
 
 import pytest
+
 from core.capabilities.capability_policy import CapabilityPolicy, PolicyDecision
-from core.capabilities.google_workspace_provider import GoogleWorkspaceProvider
 from core.capabilities.github_provider import GitHubProvider
+from core.capabilities.google_workspace_provider import GoogleWorkspaceProvider
 from core.capabilities.web_provider import WebProvider
 
 

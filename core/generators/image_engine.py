@@ -5,15 +5,16 @@ Offre une séparation nette entre :
 2. CloudImageCapability (Gemini Image) : Génération et retouche d'images IA génératives haute fidélité.
 """
 from __future__ import annotations
-import os
-import time
-import math
+
 import hashlib
 import logging
+import os
+import time
 from pathlib import Path
-from typing import Dict, Any, List, Optional, Tuple
+from typing import Any
 
-from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageEnhance
+from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont
+
 from core.capabilities.capability_policy import CapabilityPolicy, PolicyDecision
 
 logger = logging.getLogger("ImageEngine")
@@ -29,10 +30,10 @@ class LocalProceduralImageEngine:
         self,
         filename: str,
         title: str,
-        subtitle: Optional[str] = None,
+        subtitle: str | None = None,
         width: int = 1200,
         height: int = 630
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         t0 = time.perf_counter()
         clean_name = os.path.basename(filename.strip())
         if not clean_name.endswith(".png") and not clean_name.endswith(".jpg"):
@@ -66,7 +67,7 @@ class LocalProceduralImageEngine:
             title_font = ImageFont.truetype("arial.ttf", size=48)
             sub_font = ImageFont.truetype("arial.ttf", size=24)
             badge_font = ImageFont.truetype("arial.ttf", size=16)
-        except IOError:
+        except OSError:
             title_font = ImageFont.load_default()
             sub_font = ImageFont.load_default()
             badge_font = ImageFont.load_default()
@@ -100,8 +101,8 @@ class LocalProceduralImageEngine:
         self,
         input_path: Path | str,
         output_filename: str,
-        operations: List[Dict[str, Any]]
-    ) -> Dict[str, Any]:
+        operations: list[dict[str, Any]]
+    ) -> dict[str, Any]:
         """
         Applique une suite d'opérations d'édition déterministes sur une image source (sans écraser l'original).
         Opérations supportées : crop, resize, rotate, flip, brightness, contrast, blur, text_overlay, watermark.
@@ -187,7 +188,7 @@ class CloudImageCapability:
         prompt: str,
         filename: str,
         model_name: str = "gemini-3.1-flash-image"
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         clean_name = os.path.basename(filename.strip())
         if not clean_name.endswith(".png") and not clean_name.endswith(".jpg"):
             clean_name += ".png"
@@ -226,10 +227,10 @@ class ImageEngine:
         self,
         filename: str,
         title: str,
-        subtitle: Optional[str] = None,
+        subtitle: str | None = None,
         width: int = 1200,
         height: int = 630
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         return self.local_engine.generate_tech_banner(
             filename=filename,
             title=title,
@@ -242,8 +243,8 @@ class ImageEngine:
         self,
         input_path: Path | str,
         output_filename: str,
-        operations: List[Dict[str, Any]]
-    ) -> Dict[str, Any]:
+        operations: list[dict[str, Any]]
+    ) -> dict[str, Any]:
         return self.local_engine.edit_image(
             input_path=input_path,
             output_filename=output_filename,
@@ -255,7 +256,7 @@ class ImageEngine:
         prompt: str,
         filename: str,
         is_generative_ai: bool = False
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         if is_generative_ai:
             return await self.cloud_engine.generate_ai_image(prompt=prompt, filename=filename)
         return self.local_engine.generate_tech_banner(filename=filename, title=prompt)

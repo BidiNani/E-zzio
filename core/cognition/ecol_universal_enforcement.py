@@ -5,13 +5,14 @@ impose une passerelle d'exécution universelle (No Bypass) et journalise
 les tentatives d'évolution dans un ledger dédié.
 """
 
-import sys
-import json
 import hashlib
+import json
 import logging
+import sys
+from collections.abc import Callable
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any, Callable
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -56,7 +57,7 @@ class EcolUniversalGateway:
             manifest_data = {
                 "contract_filename": "ecol_runtime_contract.py",
                 "sha256": sha256_hash,
-                "sealed_at_utc": datetime.now(timezone.utc).isoformat(),
+                "sealed_at_utc": datetime.now(UTC).isoformat(),
                 "status": "SEALED",
             }
             manifest_path.write_text(json.dumps(manifest_data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -80,7 +81,7 @@ class EcolUniversalGateway:
         """Enregistre une action comme 'Passerelle Obligatoire' (Anti-Bypass)."""
         self._registered_gateway_actions.add(action_name)
 
-    def execute_via_gateway(self, action: str, payload: Dict[str, Any], target_func: Callable, *args, **kwargs) -> Any:
+    def execute_via_gateway(self, action: str, payload: dict[str, Any], target_func: Callable, *args, **kwargs) -> Any:
         """
         Passerelle d'exécution universelle (No Bypass).
         Interdit toute exécution si l'action n'est pas enregistrée ou si le gouverneur refuse.
@@ -92,7 +93,7 @@ class EcolUniversalGateway:
 
         # Journalisation spécifique dans l'Evolution / Execution Ledger
         attempt_record = {
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "action": action,
             "source": payload.get("source_component", "unknown"),
             "status": "PENDING_EVALUATION",
@@ -129,7 +130,7 @@ class EcolUniversalGateway:
 
     def _log_evolution_attempt(self, record: dict):
         """Enregistre l'essai dans un fichier journalier indépendant (Evolution Ledger)."""
-        date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        date_str = datetime.now(UTC).strftime("%Y-%m-%d")
         ledger_file = self.evolution_ledger_dir / f"evolution_audit_{date_str}.jsonl"
 
         with open(ledger_file, "a", encoding="utf-8") as f:

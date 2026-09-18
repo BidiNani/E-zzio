@@ -1,23 +1,24 @@
 from __future__ import annotations
+
 import ast
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 EXCLUDED_DIRS = {"audit", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tests"}
 
 DECISION_KEYWORDS = {
     "selected_model", "preferred_model", "model =", "provider =", "provider_name =",
-    "registry.get", "registry.resolve", "fabric.route", "fabric.select", 
+    "registry.get", "registry.resolve", "fabric.route", "fabric.select",
     "router.route", "router.resolve", "build_fabric"
 }
 
 class DecisionPathVisitor(ast.NodeVisitor):
     def __init__(self, rel_path: str):
         self.rel_path = rel_path
-        self.decisions_found: List[Dict[str, Any]] = []
+        self.decisions_found: list[dict[str, Any]] = []
 
     def visit_Assign(self, node: ast.Assign):
         target_str = ast.unparse(node.targets) if node.targets else ""
@@ -63,9 +64,9 @@ def main():
             print(f"[WARN] Erreur parsing {rel_path} : {e}", file=sys.stderr)
 
     print(f"[+] Points de décision / résolution détectés : {len(all_decisions)}")
-    
+
     # Affichage d'un échantillon ciblé ou groupé par fichier clé
-    key_files_summary: Dict[str, int] = {}
+    key_files_summary: dict[str, int] = {}
     for d in all_decisions:
         key_files_summary[d['file']] = key_files_summary.get(d['file'], 0) + 1
 

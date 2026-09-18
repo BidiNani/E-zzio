@@ -1,12 +1,10 @@
 """
 E-ZZIO : Téléchargement et Vérification de Qwen3.5-9B-MTP.
 """
-import os
-import sys
-import json
-import time
 import hashlib
+import json
 from pathlib import Path
+
 from huggingface_hub import hf_hub_download
 
 root = Path("G:/AI/E-zzio")

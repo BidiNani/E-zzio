@@ -23,6 +23,7 @@ def test_gemini_sdk_uses_identity_by_default():
 def test_ollama_defaults_to_identity():
     import asyncio
     from unittest.mock import patch
+
     from core.providers.ollama_provider import OllamaProvider
 
     seen = {}

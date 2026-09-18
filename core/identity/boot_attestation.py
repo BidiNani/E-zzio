@@ -4,12 +4,12 @@ Génère la preuve d'attestation au démarrage (boot_attestation.json).
 """
 
 import json
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
+from core.identity.identity_chain_validator import identity_chain_validator
 from core.identity.identity_context import ImmutableIdentityContext
 from core.identity.identity_guardian import IdentityGuardian
-from core.identity.identity_chain_validator import identity_chain_validator
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 ATTESTATION_FILE = ROOT_DIR / "runtime" / "identity" / "boot_attestation.json"
@@ -25,7 +25,7 @@ class BootAttestationEngine:
 
         attestation = {
             "boot_session_id": context.boot_session_id,
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "identity_root_hash": context.identity_root_hash,
             "signature": context.signature,
             "guardian_status": audit_res.get("state"),

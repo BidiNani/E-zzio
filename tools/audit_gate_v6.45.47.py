@@ -1,9 +1,9 @@
 from __future__ import annotations
+
 import ast
 import json
-import sys
 from pathlib import Path
-from typing import Any, Dict, List, Set
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git"}
@@ -11,9 +11,9 @@ EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups",
 class ExecutionChainVisitor(ast.NodeVisitor):
     def __init__(self, rel_path: str):
         self.rel_path = rel_path
-        self.imports: List[str] = []
-        self.calls: List[str] = []
-        self.assignments: List[str] = []
+        self.imports: list[str] = []
+        self.calls: list[str] = []
+        self.assignments: list[str] = []
 
     def visit_Import(self, node: ast.Import):
         for alias in node.names:
@@ -44,7 +44,7 @@ def main():
     print(f"[RACINE] {PROJECT_ROOT}\n")
 
     py_files = [p for p in PROJECT_ROOT.glob("**/*.py") if not (set(p.parts) & EXCLUDED_DIRS)]
-    
+
     # Cibles prioritaires d'exécution active
     entry_candidates = [
         "runtime/bidi/presence.py",
@@ -53,7 +53,7 @@ def main():
         "core/ezzio_master.py"
     ]
 
-    report: Dict[str, Any] = {}
+    report: dict[str, Any] = {}
 
     for rel_path_str in entry_candidates:
         p = PROJECT_ROOT / rel_path_str

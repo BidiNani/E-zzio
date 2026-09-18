@@ -1,9 +1,9 @@
 import asyncio
+import hashlib
+import json
 import os
 import sys
-import json
 import time
-import hashlib
 from pathlib import Path
 
 ROOT = Path(r"G:/AI/E-zzio").resolve()
@@ -12,27 +12,28 @@ sys.path.insert(0, str(ROOT))
 CERT_DIR = ROOT / "_forensic" / "final_certification"
 os.makedirs(CERT_DIR, exist_ok=True)
 
-from tools.fs_tools import observe_filesystem, read_file
-from core.memory.unified_gateway import UnifiedMemoryGateway
-from core.evidence_store import EvidenceStore
-from runtime.agent.loop import AgentLoop
-from runtime.tools.tool_registry import ToolRegistry
-from runtime.policy.engine import PolicyEngine, PolicyDecision
-from interfaces.api.server import app
 from fastapi.testclient import TestClient
+from interfaces.api.server import app
+
+from core.evidence_store import EvidenceStore
+from core.memory.unified_gateway import UnifiedMemoryGateway
+from runtime.policy.engine import PolicyEngine
+from runtime.tools.tool_registry import ToolRegistry
 from tests.test_phase7_task_persistence_recovery import PersistentTaskManager
+from tools.fs_tools import observe_filesystem
+
 
 async def run_master_certification():
     print("================================================================================")
     print("E-ZZIO - MASTER FINAL REAL PRODUCT CERTIFICATION RUNNER")
     print("================================================================================\n")
-    
+
     # 1. Environment & Baseline
     kdir = ROOT / "_forensic" / "knowledge"
     mk_sha = hashlib.sha256((kdir / "MASTER_KNOWLEDGE.json").read_bytes()).hexdigest()
     fh_sha = hashlib.sha256((kdir / "FILE_HASHES.json").read_bytes()).hexdigest()
     dd_sha = hashlib.sha256((ROOT / "core" / "knowledge" / "drift_detector.py").read_bytes()).hexdigest()
-    
+
     baseline = {
         "MASTER_KNOWLEDGE_SHA256": mk_sha,
         "FILE_HASHES_SHA256": fh_sha,
@@ -40,7 +41,7 @@ async def run_master_certification():
         "timestamp": time.time()
     }
     (CERT_DIR / "baseline.json").write_text(json.dumps(baseline, indent=2), encoding="utf-8")
-    
+
     env_info = {
         "os": sys.platform,
         "python": sys.version,
@@ -54,7 +55,7 @@ async def run_master_certification():
     client = TestClient(app)
     r_ready = client.get("/api/v1/health/readiness")
     r_sys = client.get("/api/v1/system/status")
-    
+
     cp_evidence = {
         "readiness_code": r_ready.status_code,
         "readiness_body": r_ready.json(),
@@ -74,11 +75,11 @@ async def run_master_certification():
     t_id = r_create.json()["task_id"]
     r_run = client.post(f"/api/v1/tasks/{t_id}/run")
     t_data = r_run.json()
-    
+
     obs = observe_filesystem("core")
     py_files = [f for f in obs["files"].keys() if f.endswith(".py")]
     real_count = len(py_files)
-    
+
     task_evidence = {
         "task_id": t_id,
         "session_id": sess_id,
@@ -88,7 +89,7 @@ async def run_master_certification():
         "verification": t_data["verification"]
     }
     (CERT_DIR / "task_evidence.json").write_text(json.dumps(task_evidence, indent=2), encoding="utf-8")
-    
+
     fs_evidence = {
         "total_files_observed": obs["total_files"],
         "total_py_files": real_count,
@@ -103,7 +104,7 @@ async def run_master_certification():
     os.makedirs(os.path.dirname(mem_db), exist_ok=True)
     gw1 = UnifiedMemoryGateway(db_path=mem_db)
     await gw1.init()
-    
+
     # 5 tours
     await gw1.record_message(sess_id, "user", "Le noyau E-ZZIO applique une politique fail-closed.", {"t": 1})
     await gw1.record_message(sess_id, "assistant", "Noté : politique fail-closed.", {"t": 1})
@@ -111,13 +112,13 @@ async def run_master_certification():
     await gw1.record_message(sess_id, "assistant", "Le noyau applique une politique fail-closed.", {"t": 2})
     await gw1.record_message(sess_id, "user", "Synthèse de la sécurité ?", {"t": 3})
     await gw1.record_message(sess_id, "assistant", "Synthèse : sécurité fail-closed intégrée.", {"t": 3})
-    
+
     # Restart
     gw2 = UnifiedMemoryGateway(db_path=mem_db)
     await gw2.init()
     history = await gw2.get_session_history(sess_id)
     search_res = await gw2.search_memory("fail-closed")
-    
+
     mem_evidence = {
         "session_id": sess_id,
         "history_count": len(history),
@@ -156,7 +157,7 @@ async def run_master_certification():
     await tm.init()
     rec_tid = "TASK_CERT_REC_01"
     await tm.save_task(rec_tid, sess_id, "Tâche de certification", "EXECUTING", step_index=1, result={"init": "OK"})
-    
+
     # Reload
     tm_reloaded = PersistentTaskManager(task_db)
     await tm_reloaded.init()
@@ -164,7 +165,7 @@ async def run_master_certification():
     assert t_rec["status"] == "EXECUTING"
     await tm_reloaded.save_task(rec_tid, sess_id, "Tâche de certification", "COMPLETED", step_index=2, result={"init": "OK", "final": "OK", "verified": True})
     t_final = await tm_reloaded.get_task(rec_tid)
-    
+
     rec_evidence = {
         "task_id": rec_tid,
         "recovered_status": t_rec["status"],
@@ -178,13 +179,13 @@ async def run_master_certification():
     print("\n[6/10] Verifying Security Adversarial Matrix...")
     obs_adv1 = observe_filesystem("../../../Windows/System32")
     obs_adv2 = observe_filesystem("C:/Windows/System32")
-    
+
     policy = PolicyEngine(constitution={"kernel_lock": True, "immutable_paths": ["core/constitution"]})
     dec = policy.evaluate_intent("hacker", "modify", "core/constitution/axioms.json", ["modify"])
-    
+
     reg = ToolRegistry()
     auth_ghost = reg.authorize_tool("ghost_malicious_tool")
-    
+
     sec_evidence = {
         "traversal_relative": obs_adv1["status"],
         "traversal_absolute": obs_adv2["status"],
@@ -215,7 +216,7 @@ async def run_master_certification():
         "contains_brand": "E‑ZZIO" in r_hud.text
     }
     (CERT_DIR / "hud_evidence.json").write_text(json.dumps(hud_evidence, indent=2), encoding="utf-8")
-    
+
     from core.observability.tracer import ExecutionTracer
     tr_db = str(ROOT / "runtime" / "test_tmp" / "cert_tracer_final.db")
     tracer = ExecutionTracer(db_path=tr_db)
@@ -289,7 +290,7 @@ async def run_master_certification():
         "status": "SUCCESS"
     }
     (CERT_DIR / "final_verdict.json").write_text(json.dumps(final_verdict, indent=2), encoding="utf-8")
-    
+
     print("\n================================================================================")
     print("FINAL VERDICT: EZZIO_100_PERCENT_REAL_PRODUCT_CERTIFIED")
     print("================================================================================\n")

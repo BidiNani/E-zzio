@@ -8,15 +8,17 @@ Couvre de manière exhaustive :
 4. Protection Git et rejet des commandes destructrices (reset --hard, clean -fd)
 5. Génération et persistance des preuves d'exécution (Evidence Logger & Secret Redaction)
 """
+import json
 import os
 import sys
-import json
+
 import pytest
-from core.agent.tools_registry import ToolRegistry
+
 from core.agent.agent_guard import AgentPolicyGuard, CodingAgentBudget
-from core.agent.patch_engine import PatchEngine
 from core.agent.command_executor import GovernedCommandExecutor, redact_secrets
-from core.agent.evidence_logger import EvidenceLogger, CodingTaskEvidence
+from core.agent.evidence_logger import CodingTaskEvidence, EvidenceLogger
+from core.agent.patch_engine import PatchEngine
+from core.agent.tools_registry import ToolRegistry
 
 
 def test_autonomous_cycle_sandbox_inspect_patch_verify(tmp_path):
@@ -204,14 +206,14 @@ def test_evidence_logger_generation(tmp_path):
     assert os.path.exists(paths["markdown"])
 
     # Vérification masquage dans le json
-    with open(paths["json"], "r", encoding="utf-8") as f:
+    with open(paths["json"], encoding="utf-8") as f:
         data = json.load(f)
     assert data["result"] == "SUCCESS"
     assert "AIza" not in data["final_diff"]
     assert "[REDACTED_SECRET]" in data["final_diff"]
 
     # Vérification markdown
-    with open(paths["markdown"], "r", encoding="utf-8") as f:
+    with open(paths["markdown"], encoding="utf-8") as f:
         md_txt = f.read()
     assert "TASK_TEST_001" in md_txt
     assert "🟢 SUCCESS" in md_txt

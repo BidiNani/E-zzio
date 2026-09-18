@@ -1,15 +1,12 @@
 """
 E-ZZIO : Deep LLM Behavior Benchmark Lab v6.0 (High-Speed Native API Engine)
 """
-import os
-import sys
-import json
-import time
 import hashlib
+import json
 import re
-import urllib.request
 import subprocess
-import psutil
+import time
+import urllib.request
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")
@@ -160,14 +157,14 @@ def query_ollama(model_name: str, prompt: str, threads: int = 4):
     with urllib.request.urlopen(req, timeout=60) as resp:
         res_json = json.loads(resp.read().decode("utf-8"))
     lat_ms = (time.perf_counter() - t0) * 1000
-    
+
     raw = res_json.get("response", "")
     eval_count = res_json.get("eval_count", 1)
     eval_duration = res_json.get("eval_duration", 1) # nanoseconds
     tok_s = round(eval_count / (eval_duration / 1e9), 2) if eval_duration > 0 else 0.0
     prompt_eval_duration = res_json.get("prompt_eval_duration", 1)
     first_token_ms = round(prompt_eval_duration / 1e6, 1)
-    
+
     return {
         "latency_total_ms": round(lat_ms, 2),
         "first_token_ms": first_token_ms,
@@ -199,17 +196,17 @@ def query_llama_cpp(model_path: Path, prompt: str, threads: int = 4, max_tokens:
     )
     stdout, stderr = p.communicate(input="/exit\n", timeout=45)
     lat_ms = (time.perf_counter() - t0) * 1000
-    
+
     gen_tok_s = 0.0
     prompt_tok_s = 0.0
     m = re.search(r"Prompt:\s*([\d\.]+)\s*t/s\s*\|\s*Generation:\s*([\d\.]+)\s*t/s", stdout)
     if m:
         prompt_tok_s = float(m.group(1))
         gen_tok_s = float(m.group(2))
-    
+
     raw = stdout.split(">")[-1].strip() if ">" in stdout else stdout.strip()
     first_token_ms = round(1000.0 / max(prompt_tok_s, 1.0), 1)
-    
+
     return {
         "latency_total_ms": round(lat_ms, 2),
         "first_token_ms": first_token_ms,
@@ -223,22 +220,22 @@ results_by_model = {}
 
 for m in models_spec:
     m_id = m["id"]
-    print(f"\n==================================================")
+    print("\n==================================================")
     print(f"TESTING MODEL: {m['name']} ({m['runtime']})")
-    print(f"==================================================")
+    print("==================================================")
     results_by_model[m_id] = {"info": m, "tests": {}}
-    
+
     for p_id, p_data in prompts_corpus.items():
         try:
             if m["runtime"] == "Ollama":
                 res = query_ollama(m["name"], p_data["prompt"], threads=4)
             else:
                 res = query_llama_cpp(m["path"], p_data["prompt"], threads=4, max_tokens=100)
-            
+
             # Save raw response
             resp_file = raw_resp_dir / f"{m_id}_{p_id}.txt"
             resp_file.write_text(res["raw_response"], encoding="utf-8")
-            
+
             # Deterministic evaluation
             eval_status = "PASS"
             if p_data["category"] == "REASONING":
@@ -251,7 +248,7 @@ for m in models_spec:
                 eval_status = "PASS" if any(kw in res["raw_response"].lower() for kw in ["non mentionné", "non disponible", "inconnu", "not available", "pas précisé", "pas mention", "n'est pas indiquée", "ne mentionne pas"]) else "PARTIAL"
             elif p_data["category"] == "ARCHITECTURE_COMPLIANCE":
                 eval_status = "PASS" if ("runtime" in res["raw_response"].lower() or "tools" in res["raw_response"].lower() or "state" in res["raw_response"].lower() or "audit" in res["raw_response"].lower()) else "PASS"
-                
+
             res["evaluation"] = eval_status
             results_by_model[m_id]["tests"][p_id] = res
             print(f"  [{p_id:25s}] -> {eval_status:7s} | {res['generation_tok_s']:5.2f} tok/s | {res['latency_total_ms']:7.1f} ms")
@@ -265,7 +262,7 @@ for m_id, m_data in results_by_model.items():
     passes = sum(1 for t in tests.values() if t.get("evaluation") == "PASS")
     tok_s_vals = [t.get("generation_tok_s", 0) for t in tests.values() if t.get("generation_tok_s", 0) > 0]
     lat_vals = [t.get("latency_total_ms", 0) for t in tests.values() if t.get("latency_total_ms", 0) > 0]
-    
+
     stats_table[m_id] = {
         "success_rate": f"{passes}/{len(tests)} ({round(passes/max(len(tests),1)*100, 1)}%)",
         "median_tok_s": round(sorted(tok_s_vals)[len(tok_s_vals)//2], 2) if tok_s_vals else 0.0,

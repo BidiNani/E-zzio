@@ -1,14 +1,18 @@
 """E-ZZIO Coding Agent — Optimized Autonomous Loop with Context Truncation for Local Models."""
 from __future__ import annotations
+
 import json
 import time
 import uuid
-from typing import Any, Dict, Generator, Optional
-from core.agent.agent_provider import AgentProviderAdapter
-from core.agent.tools_registry import ToolRegistry
+from collections.abc import Generator
+from typing import Any
+
 from core.agent.agent_guard import CodingAgentBudget
-from core.agent.evidence_logger import EvidenceLogger, CodingTaskEvidence
+from core.agent.agent_provider import AgentProviderAdapter
 from core.agent.complex_task_orchestrator import ComplexTaskEngine
+from core.agent.evidence_logger import CodingTaskEvidence, EvidenceLogger
+from core.agent.tools_registry import ToolRegistry
+
 
 class CodingAgentHarness:
     def __init__(self, workspace_root: str = "G:\\AI\\E-zzio", backend: str = "cloud_gemini", local_model: str = "ornith-1.5:9b"):
@@ -38,9 +42,9 @@ class CodingAgentHarness:
         self,
         objective: str,
         max_steps: int = 5,
-        task_id: Optional[str] = None,
-        budget: Optional[CodingAgentBudget] = None,
-    ) -> Generator[Dict[str, Any], None, None]:
+        task_id: str | None = None,
+        budget: CodingAgentBudget | None = None,
+    ) -> Generator[dict[str, Any], None, None]:
         t_id = task_id or f"task_{int(time.time())}_{uuid.uuid4().hex[:6]}"
         active_budget = budget or CodingAgentBudget(max_iterations=max_steps)
         evidence = CodingTaskEvidence(
@@ -51,7 +55,7 @@ class CodingAgentHarness:
         )
 
         codebase_map = self.registry.execute("get_codebase_map", {})
-        
+
         system_context = (
             "Tu es l'agent de code souverain d'E-ZZIO.\n"
             f"Cartographie du dépôt :\n{codebase_map}\n\n"
@@ -78,7 +82,7 @@ class CodingAgentHarness:
                 break
 
             prompt_text = history[-1]["parts"][0]["text"]
-            
+
             res = self.provider.chat(text=prompt_text, system_prompt=system_context)
             answer = res.get("response", "").strip()
 
@@ -123,7 +127,7 @@ class CodingAgentHarness:
                 evidence.commands.append({"command": t_args.get("command", ""), "exit_code": 0})
 
             raw_observation = self.registry.execute(t_name, t_args)
-            
+
             # Application de l'optimisation de contexte
             observation = self._optimize_observation(raw_observation)
 
@@ -144,10 +148,10 @@ class CodingAgentHarness:
     def run_complex_mission(
         self,
         objective: str,
-        target_files: Optional[List[str]] = None,
-        patch_actions: Optional[List[Dict[str, str]]] = None,
+        target_files: List[str] | None = None,
+        patch_actions: List[dict[str, str]] | None = None,
         auto_repair: bool = True,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Exécute une mission complexe de bout en bout avec orchestration complète."""
         return self.complex_engine.execute_complex_task(
             objective=objective,

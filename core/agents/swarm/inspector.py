@@ -4,11 +4,11 @@ Usage: python -m core.agents.swarm.inspector [--strict] [--path PATH]
 """
 from __future__ import annotations
 
-import ast
 import argparse
+import ast
 import os
 import sys
-from typing import List, Dict, Any
+from typing import Any
 
 
 class InspectorAgent:
@@ -18,10 +18,10 @@ class InspectorAgent:
         self.root_dir = root_dir
         self.target_dirs = ["core", "routers"]
 
-    def inspect_file(self, file_path: str) -> Dict[str, Any]:
+    def inspect_file(self, file_path: str) -> dict[str, Any]:
         issues = []
         try:
-            with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+            with open(file_path, encoding="utf-8", errors="ignore") as f:
                 content = f.read()
 
             tree = ast.parse(content, filename=file_path)

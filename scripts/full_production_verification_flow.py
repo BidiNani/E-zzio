@@ -1,11 +1,8 @@
 import asyncio
-import os
-import sys
-import json
-import time
 import hashlib
+import os
 import subprocess
-import shutil
+import sys
 import urllib.request
 from pathlib import Path
 
@@ -15,34 +12,34 @@ sys.path.insert(0, str(ROOT))
 CERT_DIR = ROOT / "_forensic" / "final_integration"
 os.makedirs(CERT_DIR, exist_ok=True)
 
-from tools.fs_tools import observe_filesystem, read_file
-from core.memory.unified_gateway import UnifiedMemoryGateway
-from core.evidence_store import EvidenceStore
-from runtime.agent.loop import AgentLoop
-from runtime.tools.tool_registry import ToolRegistry
-from runtime.policy.engine import PolicyEngine, PolicyDecision
-from interfaces.api.server import app
 from fastapi.testclient import TestClient
-from tests.test_phase7_task_persistence_recovery import PersistentTaskManager
+from interfaces.api.server import app
+
+from core.evidence_store import EvidenceStore
 from core.integrations.discord.discord_client import resolve_discord_token
+from core.memory.unified_gateway import UnifiedMemoryGateway
+from runtime.tools.tool_registry import ToolRegistry
 from scripts.backup_ezzio import backup_ezzio, verify_backup
 from scripts.status_production import get_production_status
 from scripts.watchdog_ezzio import EzzioWatchdog
+from tests.test_phase7_task_persistence_recovery import PersistentTaskManager
+from tools.fs_tools import observe_filesystem
+
 
 async def run_full_flow():
     print("================================================================================")
     print("E-ZZIO - COMPLETE PHYSICAL END-TO-END PRODUCTION FLOW VERIFICATION")
     print("================================================================================\n")
-    
+
     flow_results = {}
-    
+
     # 1. WINDOWS & SNAPSHOTS
     print("[STEP 1/15] Windows & Master Forensic Snapshots...")
     kdir = ROOT / "_forensic" / "knowledge"
     mk_sha = hashlib.sha256((kdir / "MASTER_KNOWLEDGE.json").read_bytes()).hexdigest()
     fh_sha = hashlib.sha256((kdir / "FILE_HASHES.json").read_bytes()).hexdigest()
     dd_sha = hashlib.sha256((ROOT / "core" / "knowledge" / "drift_detector.py").read_bytes()).hexdigest()
-    
+
     assert mk_sha == "4749be7e614b4bb8c76c957b3523e6b80b42764eb29616d42229317c98bd2403"
     assert fh_sha == "c68760bae4a279b00c299e0d601075c855bdca0cf4241e33722d2d4e13dca1db"
     assert dd_sha == "cf31ce728e955e35b84e22034b1087e542ca2bc33dcf07cd84e038dcf9275020"
@@ -93,13 +90,13 @@ async def run_full_flow():
     os.makedirs(os.path.dirname(mem_db), exist_ok=True)
     gw = UnifiedMemoryGateway(db_path=mem_db)
     await gw.init()
-    
+
     await gw.record_message("SESS_A", "user", "FAIT_CONFIDENTIEL_A", {})
     await gw.record_message("SESS_B", "user", "FAIT_CONFIDENTIEL_B", {})
-    
+
     hist_a = await gw.get_session_history("SESS_A")
     hist_b = await gw.get_session_history("SESS_B")
-    
+
     assert len(hist_a) == 1 and hist_a[0]["content"] == "FAIT_CONFIDENTIEL_A"
     assert len(hist_b) == 1 and hist_b[0]["content"] == "FAIT_CONFIDENTIEL_B"
     flow_results["MEMORY_ISOLATION"] = "REAL_PROVEN"
@@ -127,7 +124,7 @@ async def run_full_flow():
     assert r_task_run.status_code == 200
     t_res = r_task_run.json()
     assert t_res["status"] == "COMPLETED"
-    
+
     obs = observe_filesystem("core")
     py_files = [f for f in obs["files"].keys() if f.endswith(".py")]
     real_count = len(py_files)
@@ -176,7 +173,7 @@ async def run_full_flow():
     await tm.init()
     rec_t_id = "TASK_FLOW_REC_01"
     await tm.save_task(rec_t_id, sess_id, "Tâche test recovery", "EXECUTING", 1, {"p": 1})
-    
+
     tm2 = PersistentTaskManager(task_db)
     await tm2.init()
     recovered = await tm2.get_task(rec_t_id)

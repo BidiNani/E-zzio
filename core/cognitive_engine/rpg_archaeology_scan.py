@@ -5,8 +5,8 @@ Scanne uniquement les dossiers sources (state, bridge, registry, memory)
 Exclut strictement tout ce qui est audit, forensic, ou dump.
 """
 
-import os
 import json
+import os
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
@@ -35,7 +35,7 @@ def scan():
             if file.endswith((".md", ".jsonl", ".txt", ".json", ".sqlite")):
                 path = Path(root) / file
                 try:
-                    with open(path, "r", encoding="utf-8", errors="ignore") as f:
+                    with open(path, encoding="utf-8", errors="ignore") as f:
                         content = f.read().lower()
 
                     hits = [word for word in RPG_CLUSTERS if word in content]

@@ -1,6 +1,6 @@
+import os
 import subprocess
 import sys
-import os
 
 
 def test_python_syntax(file_path: str) -> str:

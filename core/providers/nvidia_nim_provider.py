@@ -8,16 +8,17 @@ Standard : Fail-Closed / Zéro fuite de credentials / Normalisation totale.
 """
 from __future__ import annotations
 
-import os
-import json
 import base64
-import time
+import json
 import logging
-import httpx
+import os
+import time
+from collections.abc import AsyncIterator
 from pathlib import Path
-from typing import Any, AsyncIterator, Dict, List, Optional
+from typing import Any
 
-from core.secrets import load_secrets, get_api_key
+import httpx
+
 from core.providers.base_provider import (
     BaseProvider,
     CostClass,
@@ -25,6 +26,7 @@ from core.providers.base_provider import (
     ProviderErrorClass,
     ProviderResponse,
 )
+from core.secrets import get_api_key, load_secrets
 
 logger = logging.getLogger("NvidiaNimProvider")
 
@@ -39,7 +41,7 @@ class NvidiaNimProvider(BaseProvider):
     DEFAULT_VISION_MODEL: str = "meta/llama-3.2-11b-vision-instruct"
     DEFAULT_IMAGE_MODEL: str = "stabilityai/stable-diffusion-xl"
 
-    def __init__(self, api_key: Optional[str] = None, timeout: float = 30.0):
+    def __init__(self, api_key: str | None = None, timeout: float = 30.0):
         load_secrets()
         # Autorité credentials : core/security/unified_vault.py. Fallbacks compat conservés.
         # Fail-closed : une clé explicitement vide ("") désactive tout repli ambient.
@@ -75,13 +77,13 @@ class NvidiaNimProvider(BaseProvider):
         """Vérifie si le provider est prêt pour des requêtes d'inférence."""
         return self.availability() in (ProviderAvailability.AVAILABLE, ProviderAvailability.DEGRADED)
 
-    def cost_class(self, model: Optional[str] = None) -> CostClass:
+    def cost_class(self, model: str | None = None) -> CostClass:
         """Politique de coût E-ZzIO : FREE_ENDPOINT pour le quota d'évaluation Build."""
         if not self.api_key:
             return CostClass.UNKNOWN
         return CostClass.FREE_ENDPOINT
 
-    def capabilities(self, model: Optional[str] = None) -> List[str]:
+    def capabilities(self, model: str | None = None) -> list[str]:
         """Retourne les capacités déduites pour le modèle cible."""
         target = (model or self.DEFAULT_LLM_MODEL).lower()
         if "vision" in target or "vlm" in target or "fuyu" in target:
@@ -94,7 +96,7 @@ class NvidiaNimProvider(BaseProvider):
             return ["EMBEDDING"]
         return ["TEXT", "INSTRUCTION_FOLLOWING", "TOOL_USE"]
 
-    def error_mapping(self, status_code: int, error_body: Optional[str] = None) -> ProviderErrorClass:
+    def error_mapping(self, status_code: int, error_body: str | None = None) -> ProviderErrorClass:
         """Mappe les statuts HTTP de l'API NVIDIA vers les classes d'erreurs canoniques."""
         if status_code in (401, 403):
             return ProviderErrorClass.UNAUTHORIZED
@@ -112,7 +114,7 @@ class NvidiaNimProvider(BaseProvider):
             return ProviderErrorClass.BAD_REQUEST
         return ProviderErrorClass.UNKNOWN_ERROR
 
-    async def health(self) -> Dict[str, Any]:
+    async def health(self) -> dict[str, Any]:
         """Sonde de santé de l'API NVIDIA NIM (catalogue public ou auth)."""
         if self.availability() == ProviderAvailability.NOT_CONFIGURED:
             return {
@@ -164,8 +166,8 @@ class NvidiaNimProvider(BaseProvider):
     async def generate(
         self,
         prompt: str,
-        system_prompt: Optional[str] = None,
-        model: Optional[str] = None,
+        system_prompt: str | None = None,
+        model: str | None = None,
         temperature: float = 0.2,
         max_tokens: int = 512,
         **kwargs: Any
@@ -228,7 +230,7 @@ class NvidiaNimProvider(BaseProvider):
 
                 try:
                     data = resp.json()
-                except Exception as json_err:
+                except Exception:
                     return ProviderResponse(
                         content="",
                         role="assistant",
@@ -327,8 +329,8 @@ class NvidiaNimProvider(BaseProvider):
     async def stream(
         self,
         prompt: str,
-        system_prompt: Optional[str] = None,
-        model: Optional[str] = None,
+        system_prompt: str | None = None,
+        model: str | None = None,
         temperature: float = 0.2,
         max_tokens: int = 512,
         **kwargs: Any
@@ -381,12 +383,12 @@ class NvidiaNimProvider(BaseProvider):
     async def generate_text(
         self,
         prompt: str,
-        system_prompt: Optional[str] = None,
-        model: Optional[str] = None,
+        system_prompt: str | None = None,
+        model: str | None = None,
         temperature: float = 0.2,
         max_tokens: int = 512,
         **kwargs: Any
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Méthode de rétrocompatibilité renvoyant la structure de dictionnaire historique."""
         resp = await self.generate(
             prompt=prompt,
@@ -410,10 +412,10 @@ class NvidiaNimProvider(BaseProvider):
         self,
         prompt: str,
         image_path: str | Path,
-        model: Optional[str] = None,
+        model: str | None = None,
         max_tokens: int = 256,
         **kwargs: Any
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Inférence multimodale / vision sur image locale."""
         if self.availability() == ProviderAvailability.NOT_CONFIGURED:
             raise RuntimeError("[FAIL-CLOSED] NVIDIA_API_KEY manquante dans SecretsVault")
@@ -472,7 +474,7 @@ class NvidiaNimProvider(BaseProvider):
             "raw": data
         }
 
-    async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
+    async def search(self, query: str, **kwargs: Any) -> dict[str, Any]:
         """Exécute une inférence / recherche compatible DecisionRouter."""
         resp = await self.generate(
             prompt=query,

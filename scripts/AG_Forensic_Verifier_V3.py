@@ -1,10 +1,10 @@
-import sys
-import os
-import json
 import hashlib
+import json
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any, List, Tuple
+from typing import Any
+
 
 class AGForensicVerifierV3:
     """
@@ -20,22 +20,22 @@ class AGForensicVerifierV3:
         self.raw_dir = self.run_dir / "raw"
         self.log_file = self.run_dir / "PRODUCER_EXECUTION.log"
         self.manifest_file = self.run_dir / "PRODUCER_RUN_MANIFEST.json"
-        
+
         self.gates_results = {}
         self.recalculated_hashes = {}
         self.contradictions = []
         self.findings = []
         self.verdict = "EZZIO_MASTER_V3_FAIL_CLOSED"
-        self.arbitration_timestamp = datetime.now(timezone.utc).isoformat()
+        self.arbitration_timestamp = datetime.now(UTC).isoformat()
 
     def sha256_file(self, path: Path) -> str:
         if not path.exists():
             return ""
         return hashlib.sha256(path.read_bytes()).hexdigest().lower()
 
-    def run_arbitration(self) -> Dict[str, Any]:
+    def run_arbitration(self) -> dict[str, Any]:
         print(f"=== AG FORENSIC VERIFIER V3 — ARBITRATION START: {self.run_id} ===")
-        
+
         # Check basic existence of run directory
         if not self.run_dir.exists() or not self.raw_dir.exists() or not self.manifest_file.exists():
             self.gates_results["GATE_0_STRUCTURE"] = {
@@ -46,7 +46,7 @@ class AGForensicVerifierV3:
             return self._build_report()
 
         manifest_data = json.loads(self.manifest_file.read_text(encoding="utf-8"))
-        
+
         # --------------------------------------------------------------------
         # Gate 3: Double Integrity (Independent SHA-256 and Size Recalculation)
         # --------------------------------------------------------------------
@@ -62,7 +62,7 @@ class AGForensicVerifierV3:
             recomputed_hash = self.sha256_file(fpath)
             recomputed_size = fpath.stat().st_size
             self.recalculated_hashes[fname] = recomputed_hash
-            
+
             match_hash = (recomputed_hash == dinfo.get("sha256"))
             match_size = (recomputed_size == dinfo.get("size_bytes"))
             if not (match_hash and match_size):
@@ -70,7 +70,7 @@ class AGForensicVerifierV3:
                 g3_details[fname] = f"MISMATCH: hash_match={match_hash}, size_match={match_size}"
             else:
                 g3_details[fname] = "MATCH"
-                
+
         self.gates_results["GATE_3_DOUBLE_INTEGRITY"] = {
             "status": "PASS" if g3_passed else "FAIL",
             "recalculated_count": len(self.recalculated_hashes),
@@ -118,20 +118,20 @@ class AGForensicVerifierV3:
         if pre_snap_p.exists() and post_snap_p.exists():
             pre_snap = json.loads(pre_snap_p.read_text(encoding="utf-8"))
             post_snap = json.loads(post_snap_p.read_text(encoding="utf-8"))
-            
+
             pre_keys = set(pre_snap.keys())
             post_keys = set(post_snap.keys())
-            
+
             added = list(post_keys - pre_keys)
             deleted = list(pre_keys - post_keys)
             modified = []
             for k in (pre_keys & post_keys):
                 if pre_snap[k]["sha256"] != post_snap[k]["sha256"]:
                     modified.append(k)
-                    
+
             g6_diffs = {"modified": len(modified), "added": len(added), "deleted": len(deleted)}
             g6_passed = (len(modified) == 0 and len(added) == 0 and len(deleted) == 0)
-            
+
         self.gates_results["GATE_6_MUTATION_WATCHDOG"] = {
             "status": "PASS" if g6_passed else "FAIL",
             "diffs": g6_diffs
@@ -143,19 +143,19 @@ class AGForensicVerifierV3:
         sanctuary_p = self.raw_dir / "SANCTUARY_SNAPSHOT.json"
         sanctuary_data = json.loads(sanctuary_p.read_text(encoding="utf-8")) if sanctuary_p.exists() else {}
         anchors = sanctuary_data.get("anchors", {})
-        
+
         expected_anchors = {
             "MASTER_KNOWLEDGE.json": "4749be7e614b4bb8c76c957b3523e6b80b42764eb29616d42229317c98bd2403",
             "FILE_HASHES.json": "c68760bae4a279b00c299e0d601075c855bdca0cf4241e33722d2d4e13dca1db",
             "drift_detector.py": "cf31ce728e955e35b84e22034b1087e542ca2bc33dcf07cd84e038dcf9275020"
         }
-        
+
         anchors_ok = True
         for a_name, exp_h in expected_anchors.items():
             act_h = anchors.get(a_name, {}).get("sha256")
             if act_h != exp_h:
                 anchors_ok = False
-                
+
         self.gates_results["GATE_1_SANCTUARY_ANCHORS"] = {
             "status": "PASS" if anchors_ok else "FAIL",
             "anchors_verified": len(expected_anchors)
@@ -168,7 +168,7 @@ class AGForensicVerifierV3:
         docker_p = self.raw_dir / "DOCKER_INSPECT_DATA.json"
         net_data = json.loads(net_p.read_text(encoding="utf-8")) if net_p.exists() else {}
         docker_data = json.loads(docker_p.read_text(encoding="utf-8")) if docker_p.exists() else {}
-        
+
         tcp_v4_3000 = net_data.get("tcp_layers", {}).get("open_webui_ipv4_3000", False)
         tcp_v6_3000 = net_data.get("tcp_layers", {}).get("open_webui_ipv6_3000", False)
         http_v4_3000 = net_data.get("http_layers", {}).get("open_webui_ipv4", {}).get("success", False)
@@ -176,7 +176,7 @@ class AGForensicVerifierV3:
         http_loc_3000 = net_data.get("http_layers", {}).get("open_webui_localhost", {}).get("success", False)
         docker_running = docker_data.get("running", False)
         docker_healthy = docker_data.get("health") == "healthy"
-        
+
         # Contradiction resolution:
         # Why is TCP 127.0.0.1:3000 False while Docker is healthy and IPv6 [::1]:3000 is 200 OK?
         if not tcp_v4_3000 and tcp_v6_3000 and http_v6_3000 and docker_healthy:
@@ -193,13 +193,13 @@ class AGForensicVerifierV3:
                 "root_cause": "WSL2 relay (wslrelay.exe) operating with IPv6-only loopback binding [::1]:3000 on Windows host. Container application is fully operational.",
                 "verdict_impact": "WARNING_EXTERNAL_NON_BLOCKING"
             })
-            
+
         self.gates_results["GATE_7_CONTRADICTION_ENGINE"] = {
             "status": "PASS",
             "contradictions_analyzed": len(self.contradictions),
             "resolutions": self.contradictions
         }
-        
+
         self.gates_results["GATE_8_MULTI_LAYER_NETWORK"] = {
             "status": "PASS",
             "ipv6_operational": (tcp_v6_3000 and http_v6_3000 and http_loc_3000),
@@ -213,7 +213,7 @@ class AGForensicVerifierV3:
         sec_data = json.loads(sec_p.read_text(encoding="utf-8")) if sec_p.exists() else {}
         zero_leak = (sec_data.get("values_exposed") is False)
         classified_cnt = sec_data.get("classified_count", 0)
-        
+
         self.gates_results["GATE_9_ADVERSARIAL_SECRETS"] = {
             "status": "PASS" if zero_leak else "FAIL",
             "classified_candidates": classified_cnt,
@@ -225,7 +225,7 @@ class AGForensicVerifierV3:
         # --------------------------------------------------------------------
         pytest_p = self.raw_dir / "PYTEST_STRUCTURED_DATA.json"
         pytest_data = json.loads(pytest_p.read_text(encoding="utf-8")) if pytest_p.exists() else {}
-        
+
         py_collected = pytest_data.get("collected", 0)
         py_executed = pytest_data.get("executed", 0)
         py_passed = pytest_data.get("passed", 0)
@@ -234,10 +234,10 @@ class AGForensicVerifierV3:
         py_xfailed = pytest_data.get("xfailed", 0)
         py_errors = pytest_data.get("errors", 0)
         py_exit = pytest_data.get("exit_code", -1)
-        
+
         invariant_ok = (py_executed == (py_passed + py_failed + py_skipped + py_xfailed))
         pytest_pass = (invariant_ok and py_exit == 0 and py_failed == 0 and py_errors == 0 and py_passed > 0)
-        
+
         self.gates_results["GATE_10_PYTEST_EXACT_INVARIANT"] = {
             "status": "PASS" if pytest_pass else "FAIL",
             "collected": py_collected,
@@ -253,18 +253,18 @@ class AGForensicVerifierV3:
         # --------------------------------------------------------------------
         any_fail = any(g.get("status") == "FAIL" for g in self.gates_results.values())
         has_warnings = len(self.contradictions) > 0
-        
+
         if any_fail:
             self.verdict = "EZZIO_MASTER_V3_FAIL_CLOSED"
         elif has_warnings:
             self.verdict = "EZZIO_MASTER_V3_INDEPENDENTLY_CERTIFIED_WITH_WARNINGS"
         else:
             self.verdict = "EZZIO_MASTER_V3_100_PERCENT_INDEPENDENTLY_CERTIFIED"
-            
+
         print(f"=== ARBITRATION VERDICT: {self.verdict} ===")
         return self._build_report()
 
-    def _build_report(self) -> Dict[str, Any]:
+    def _build_report(self) -> dict[str, Any]:
         report = {
             "schema_version": "3.0",
             "plane": "PLANE_3_ARBITER",
@@ -276,11 +276,11 @@ class AGForensicVerifierV3:
             "contradictions": self.contradictions,
             "recalculated_hashes": self.recalculated_hashes
         }
-        
+
         # Save Arbitration JSON
         arb_json = self.run_dir / "AG_INDEPENDENT_ARBITRATION.json"
         arb_json.write_text(json.dumps(report, indent=2), encoding="utf-8")
-        
+
         # Save Arbitration Markdown Report
         md_lines = [
             "# E-ZZIO — AG INDEPENDENT FORENSIC ARBITRATION REPORT V3",
@@ -299,20 +299,20 @@ class AGForensicVerifierV3:
             "| Porte | Intitulé | Statut | Détails Physiques |",
             "|---|---|:---:|---|"
         ]
-        
+
         for gname, gdata in self.gates_results.items():
             status = gdata.get("status", "UNKNOWN")
             details_str = json.dumps(gdata, ensure_ascii=False)
             if len(details_str) > 80:
                 details_str = details_str[:77] + "..."
             md_lines.append(f"| `{gname}` | {gname.replace('_', ' ')} | **{status}** | `{details_str}` |")
-            
+
         md_lines.extend([
             "",
             "## 3. Moteur de Résolution des Contradictions",
             ""
         ])
-        
+
         if not self.contradictions:
             md_lines.append("- Aucune contradiction physique détectée.")
         else:
@@ -322,7 +322,7 @@ class AGForensicVerifierV3:
                 md_lines.append(f"  - **Résolution**: {c['resolution']}")
                 md_lines.append(f"  - **Cause racine**: {c['root_cause']}")
                 md_lines.append(f"  - **Impact Verdict**: `{c['verdict_impact']}`")
-                
+
         md_lines.extend([
             "",
             "## 4. Verdict Final Indépendant",
@@ -331,10 +331,10 @@ class AGForensicVerifierV3:
             "",
             "> **Note de Souveraineté** : Ce verdict a été calculé et signé exclusivement par l'Arbitre AG (Plane 3) après recalcul indépendant de 100% des hachages primaires, sans qu'aucune déclaration du producteur E-ZZIO (Plane 1) ne puisse influencer ou forcer le PASS."
         ])
-        
+
         arb_md = self.run_dir / "AG_INDEPENDENT_VERDICT.md"
         arb_md.write_text("\n".join(md_lines), encoding="utf-8")
-        
+
         print(f"Artefacts d'arbitrage générés sous : {self.run_dir}")
         return report
 

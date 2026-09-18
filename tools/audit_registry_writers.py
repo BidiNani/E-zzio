@@ -1,30 +1,30 @@
 from __future__ import annotations
+
 import json
-import ast
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_registry_writers() -> List[Dict[str, Any]]:
+def inspect_registry_writers() -> list[dict[str, Any]]:
     results = []
     patterns = {"ModelRecord", "upsert", "save", "ModelRegistry", "ingest", "activate"}
-    
+
     for p in PROJECT_ROOT.glob("**/*.py"):
         if set(p.parts) & EXCLUDED_DIRS:
             continue
         try:
             content = p.read_text(encoding="utf-8", errors="replace")
             content_lower = content.lower()
-            
+
             # Vérifier si le fichier manipule le registre ou des enregistrements
             has_record = "modelrecord" in content_lower
             has_upsert = "upsert" in content_lower
             has_save = "save(" in content_lower or "save_registry" in content_lower
-            
+
             if has_record or has_upsert or has_save:
                 rel_path = str(p.relative_to(PROJECT_ROOT))
                 results.append({
@@ -50,7 +50,7 @@ def main():
 
     print("[WRITERS] Fichiers manipulant l'écriture/les records du Registre :\n")
     canonical_writer = "ABSENT / NON DÉTERMINÉ"
-    
+
     for w in writers:
         print(f"  • Fichier : {w['file']}")
         print(f"    - ModelRecord(...) : {'YES' if w['has_model_record'] else 'NO'}")
@@ -87,7 +87,7 @@ def main():
             "runtime_mutations": 0
         }
     }
-    
+
     out_file = PROJECT_ROOT / "tools" / "registry_writer_forensics_report.json"
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2)

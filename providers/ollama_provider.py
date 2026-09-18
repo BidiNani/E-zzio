@@ -4,7 +4,8 @@ Pont entre l'Intelligence Router et le Governor local. Respecte le contrat BaseP
 """
 
 import time
-from typing import Optional, Dict, Any
+from typing import Any
+
 from providers.base_provider import BaseProvider
 from providers.provider_response import ProviderResponse
 
@@ -16,12 +17,12 @@ class OllamaProvider(BaseProvider):
     def capabilities(self) -> list:
         return ["reasoning", "coding", "fast_chat", "vision", "local_privacy"]
 
-    def health(self) -> Dict[str, Any]:
+    def health(self) -> dict[str, Any]:
         # En production, interrogera l'API /api/tags d'Ollama [non vérifié]
         return {"provider": "ollama", "healthy": True, "status": "OPERATIONAL", "capabilities": self.capabilities()}
 
     async def generate(
-        self, prompt: str, model: Optional[str] = "qwen3:8b", image_bytes: Optional[bytes] = None, capability: str = "default"
+        self, prompt: str, model: str | None = "qwen3:8b", image_bytes: bytes | None = None, capability: str = "default"
     ) -> ProviderResponse:
         import aiohttp
 

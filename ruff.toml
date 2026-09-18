@@ -1,0 +1,25 @@
+# E-ZZIO — Configuration ruff
+line-length = 100
+target-version = "py312"
+
+[lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+]
+ignore = [
+    "E501",  # line-too-long (géré par line-length)
+    "B008",  # function-call-in-default-argument (FastAPI Depends)
+    "E402",  # module-import-not-at-top (lazy imports volontaires)
+]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+
+[lint.per-file-ignores]
+"tests/*" = ["F401", "F841"]  # imports/vars non utilisés dans les tests

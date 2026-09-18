@@ -4,12 +4,10 @@ Performs strict read-only audit of performance_v18, extracts all raw run files, 
 classifies claims, detects historical reuse, downgrades unverified claims to BEST_AMONG_TESTED/UNVERIFIED,
 and generates all required certification artifacts in reconciliation/.
 """
-import os
-import sys
+import csv
+import hashlib
 import json
 import time
-import hashlib
-import csv
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")
@@ -61,7 +59,7 @@ for m_id, tasks in task_opts.items():
         # Determine status
         is_empty = cfg.get("status") == "EMPTY_OUTPUT_OLLAMA"
         status_val = "EMPTY" if is_empty else ("VALID" if cfg.get("status") == "REPRODUCED" else "UNVERIFIED")
-        
+
         # P1 Entry
         r_p1 = {
             "run_id": f"v18_P1_{m_id}_{t_name}_{cfg.get('threads')}T_{cfg.get('context')}ctx",
@@ -90,7 +88,7 @@ for m_id, tasks in task_opts.items():
             "quality": cfg.get("quality", "N/A")
         }
         actual_runs.append(r_p1)
-        
+
         # P2 Entry
         r_p2 = dict(r_p1)
         r_p2["run_id"] = f"v18_P2_{m_id}_{t_name}_{cfg.get('threads')}T_{cfg.get('context')}ctx"

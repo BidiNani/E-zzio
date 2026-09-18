@@ -5,20 +5,21 @@ le visualiseur de diff HITL V2, et la résilience des sondes providers.
 """
 import asyncio
 from pathlib import Path
+
 import pytest
 
+from core.agents.registry import AgentDescriptor, AgentRegistry, AgentStatus, agent_registry
+from core.artifacts.provenance import ArtifactProvenanceEngine, ArtifactSeal
+from core.cognitive_router import ModelRouter
+from core.governance.diff_viewer import HITLDiffViewer
 from core.orchestration.dag import (
-    TaskDAG,
-    DAGNode,
-    DAGExecutionStatus,
     CycleDetectedError,
+    DAGExecutionStatus,
+    DAGNode,
     DependencyNotMetError,
+    TaskDAG,
 )
 from core.orchestration.engine import DAGOrchestrator
-from core.agents.registry import AgentRegistry, AgentDescriptor, AgentStatus, agent_registry
-from core.artifacts.provenance import ArtifactProvenanceEngine, ArtifactSeal
-from core.governance.diff_viewer import HITLDiffViewer
-from core.cognitive_router import ModelRouter
 from core.security.audit_ledger import AuditLedger
 
 

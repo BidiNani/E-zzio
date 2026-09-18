@@ -4,13 +4,13 @@ Teste les dernières frontières de confiance (incohérence d'ID, corruption de 
 échec DPAPI et disaster recovery complet) pour l'obtention objective du 10/10.
 """
 
-import os
-import json
 import ctypes
+import json
 import logging
+import os
 import shutil
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 logger = logging.getLogger(__name__)
 
@@ -69,7 +69,7 @@ class FinalCertificationManager:
         vault = {
             "active_key_id": key_id,
             "protection_mode": "WINDOWS_DPAPI_USER_CURRENT",
-            "keys": {key_id: {"status": "ACTIVE", "created_at": datetime.now(timezone.utc).isoformat()}},
+            "keys": {key_id: {"status": "ACTIVE", "created_at": datetime.now(UTC).isoformat()}},
         }
         self.vault_path.write_text(self._canonical_dump(vault) + "\n", encoding="utf-8")
         return raw_secret
@@ -186,7 +186,7 @@ def run_final_certification():
         "target": "E-ZZIO Cognitive Governance (ECOL)",
         "certification_level": score,
         "version": "V7.65",
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "timestamp": datetime.now(UTC).isoformat(),
         "final_trust_boundary_results": test_results,
         "overall_governance_status": overall_status,
     }

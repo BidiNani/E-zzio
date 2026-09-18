@@ -1,7 +1,6 @@
-import time
-import socket
 import logging
-from typing import Dict
+import socket
+import time
 
 logger = logging.getLogger("EzzioProviderHealth")
 
@@ -19,7 +18,7 @@ def probe_ollama_status(host: str = "127.0.0.1", port: int = 11434, timeout_sec:
     try:
         with socket.create_connection((host, port), timeout=timeout_sec):
             status = "ONLINE"
-    except (OSError, socket.timeout):
+    except (TimeoutError, OSError):
         status = "OFFLINE"
 
     _ollama_status_cache["status"] = status
@@ -27,7 +26,7 @@ def probe_ollama_status(host: str = "127.0.0.1", port: int = 11434, timeout_sec:
     return status
 
 
-def get_providers_health() -> Dict[str, str]:
+def get_providers_health() -> dict[str, str]:
     """Retourne l'état de santé de chaque provider en tant qu'état de capacité."""
     return {
         "gemini": "ONLINE",

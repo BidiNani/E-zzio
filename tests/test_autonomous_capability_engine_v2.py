@@ -8,14 +8,20 @@ Vérifie l'ensemble du cycle de vie v2 :
 - Exécution protégée, auto-guérison et rollback
 """
 
-import pytest
 import json
 from pathlib import Path
 
-from core.capabilities.trust import TrustLevel, CapabilityStatus, CapabilityTrustGuard, HardwareProfile
+import pytest
+
 from core.capabilities.discovery import CapabilityDiscoveryEngine, LicenseClass
 from core.capabilities.factory import CapabilityFactory
-from core.capabilities.registry import capability_registry, QualificationStatus
+from core.capabilities.registry import QualificationStatus, capability_registry
+from core.capabilities.trust import (
+    CapabilityStatus,
+    CapabilityTrustGuard,
+    HardwareProfile,
+    TrustLevel,
+)
 
 
 @pytest.fixture

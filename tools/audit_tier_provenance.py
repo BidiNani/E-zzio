@@ -1,18 +1,19 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_tier_assignment() -> Dict[str, Any]:
+def inspect_tier_assignment() -> dict[str, Any]:
     tier_terms = {"FAST", "MID", "HEAVY", "SPECIALIZED", "UNQUALIFIED"}
     results = {}
-    
+
     for p in PROJECT_ROOT.glob("**/*.py"):
         if set(p.parts) & EXCLUDED_DIRS:
             continue
@@ -25,14 +26,14 @@ def inspect_tier_assignment() -> Dict[str, Any]:
                 for node in ast.walk(tree):
                     if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                         functions_or_methods.append(node.name)
-                        
+
                 results[str(p.relative_to(PROJECT_ROOT))] = {
                     "matched_terms": found_terms,
                     "functions": functions_or_methods
                 }
         except Exception as e:
             results[str(p.relative_to(PROJECT_ROOT))] = {"error": str(e)}
-            
+
     return results
 
 def main():

@@ -12,15 +12,15 @@ from __future__ import annotations
 
 import logging
 import time
-import uuid
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import Any, Dict, List, Optional, Tuple, Callable
+from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass
+from enum import Enum
+from typing import Any
 
-from core.agent.autonomous_e2e_engine import autonomous_e2e_engine, MissionState, ResultVerificationEngine
-from core.operations.multi_mission_arbitrator import multi_mission_arbitrator, MultiMissionArbitrator
-from core.operations.continuous_operations_loop import continuous_operations_loop
+from core.agent.autonomous_e2e_engine import (
+    ResultVerificationEngine,
+)
 from runtime.model_router.providers.ollama import OllamaProvider
 
 logger = logging.getLogger("ezzio.operations.adaptive_model_optimizer")
@@ -76,7 +76,7 @@ class AdaptiveModelExecutionOptimizer:
     """Optimiseur adaptatif de latence d'exécution, résidabilité et budgeting dynamique V10.13."""
 
     def __init__(self) -> None:
-        self.residency_registry: Dict[str, ModelResidencyProfile] = {}
+        self.residency_registry: dict[str, ModelResidencyProfile] = {}
         self.provider = OllamaProvider(base_url="http://localhost:11434")
         self.verifier = ResultVerificationEngine()
         self.executor = ThreadPoolExecutor(max_workers=4)
@@ -115,7 +115,7 @@ class AdaptiveModelExecutionOptimizer:
             return PrewarmDecision.DEFER
         return PrewarmDecision.DO_NOT_PREWARM
 
-    def prewarm_model(self, model_name: str) -> Dict[str, Any]:
+    def prewarm_model(self, model_name: str) -> dict[str, Any]:
         """Pré-chauffe un modèle via une micro-invocation contrôlée pour éviter le cold start."""
         self._register_model(model_name)
         prof = self.residency_registry[model_name]
@@ -134,7 +134,7 @@ class AdaptiveModelExecutionOptimizer:
         logger.info(f"[PREWARM] Modèle '{model_name}' pré-chauffé avec succès en {load_ms} ms")
         return {"model_name": model_name, "status": "RESIDENT", "load_ms": load_ms}
 
-    def evict_idle_models(self, active_models: List[str], force: False = False) -> List[str]:
+    def evict_idle_models(self, active_models: list[str], force: False = False) -> list[str]:
         """Éviction sécurisée des modèles inactifs hors mission active."""
         evicted = []
         now = time.time()
@@ -154,7 +154,7 @@ class AdaptiveModelExecutionOptimizer:
 
     def estimate_dynamic_token_budget(
         self, task_category: TaskCategory, prompt_len: int, schema_required: bool = False
-    ) -> Dict[str, int]:
+    ) -> dict[str, int]:
         """Calcule un budget dynamique de tokens suffisant avec marge de sécurité."""
         base_budgets = {
             TaskCategory.SIMPLE: 15,
@@ -190,7 +190,7 @@ class AdaptiveModelExecutionOptimizer:
             return True
         return False
 
-    def select_latency_aware_model(self, task_type: str, preferred_model: Optional[str] = None) -> str:
+    def select_latency_aware_model(self, task_type: str, preferred_model: str | None = None) -> str:
         """Sélectionne le modèle le plus adapté en privilégiant les modèles résidents (WARM)."""
         target = preferred_model or "phi4-mini:latest"
         self._register_model(target)
@@ -215,9 +215,9 @@ class AdaptiveModelExecutionOptimizer:
         self,
         prompt: str,
         task_type: str = "GENERIC",
-        model: Optional[str] = None,
+        model: str | None = None,
         max_tokens: int = 30,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Exécute un appel modèle optimisé (warm-start, cap de tokens, mesure haute précision)."""
         selected_model = self.select_latency_aware_model(task_type, preferred_model=model)
         profile = self.residency_registry[selected_model]
@@ -255,8 +255,8 @@ class AdaptiveModelExecutionOptimizer:
         task_category: TaskCategory = TaskCategory.STANDARD,
         context_len: int = 500,
         local_only: bool = True,
-        preferred_model: Optional[str] = None,
-    ) -> Dict[str, Any]:
+        preferred_model: str | None = None,
+    ) -> dict[str, Any]:
         """Sélectionne le meilleur modèle de manière prédictive et déterministe avec explication de décision.
         
         Hiérarchie de décision :
@@ -323,10 +323,10 @@ class AdaptiveModelExecutionOptimizer:
         self,
         prompt: str,
         task_category: TaskCategory = TaskCategory.STANDARD,
-        model: Optional[str] = None,
+        model: str | None = None,
         schema_required: bool = False,
         max_expansions: int = 2,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Exécute un appel avec budgeting dynamique de tokens et sélection prédictive V10.14."""
         routing_res = self.predictive_select_model(
             task_category=task_category,
@@ -382,7 +382,7 @@ class AdaptiveModelExecutionOptimizer:
             "truncated": True,
         }
 
-    def execute_parallel_nodes(self, independent_node_fns: List[Callable[[], Any]]) -> List[Any]:
+    def execute_parallel_nodes(self, independent_node_fns: list[Callable[[], Any]]) -> list[Any]:
         """Exécute en parallèle les tâches indépendantes du DAG."""
         t0 = time.perf_counter()
         futures = [self.executor.submit(fn) for fn in independent_node_fns]

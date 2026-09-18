@@ -3,13 +3,13 @@ E-ZZIO V7.58 — Cognitive Extractor (Forensic Dry-Run 2)
 Cible l'exhaustivité (.txt, .json) et intègre le Pare-Feu Cognitif.
 """
 
-import os
-import sys
-import json
-import sqlite3
 import hashlib
+import json
+import os
+import sqlite3
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -26,7 +26,7 @@ class ExtractorDryRun:
     def __init__(self):
         self.validator = MemoryValidator()
         self.stats = {
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "status": "DRY_RUN",
             "files_scanned": 0,
             "metrics": {"PROTECTED": 0, "QUALIFIED": 0, "REJECTED": 0, "ERRORS": 0},
@@ -47,7 +47,7 @@ class ExtractorDryRun:
     def simulate_jsonl(self, file_path: Path):
         count = 0
         try:
-            with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+            with open(file_path, encoding="utf-8", errors="ignore") as f:
                 for _ in f:
                     count += 1
             self.stats["extraction_potential"]["jsonl_records"] += count

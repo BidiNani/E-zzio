@@ -6,8 +6,8 @@ l'autorisation Cloud (cloud_guard / EZZIO_CLOUD_ALLOW_SEND).
 Expose des contrats standardisés pour le futur Unified Intelligence Router.
 """
 
-import os
 import json
+import os
 from pathlib import Path
 
 ROOT_DIR = Path("G:/AI/E-zzio").resolve()

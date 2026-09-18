@@ -8,8 +8,9 @@ Certifie contractuellement les 5 capacités qualifiées / candidates :
 5. glm-5.3-candidate (Candidat LLM sous statut CANDIDATE / Fail-Closed)
 """
 import pytest
-from core.capabilities.registry import CapabilityRegistry
+
 from core.capabilities.capability_qualification import QualificationStatus
+from core.capabilities.registry import CapabilityRegistry
 
 
 @pytest.mark.asyncio

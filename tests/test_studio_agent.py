@@ -4,7 +4,9 @@ Tests unitaires et d'intégration pour le DevStudioAgent d'E-ZzIO.
 
 import os
 import shutil
+
 import pytest
+
 from core.studio.studio_agent import DevStudioAgent
 
 

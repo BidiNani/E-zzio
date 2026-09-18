@@ -1,7 +1,6 @@
 import ast
 import logging
 from pathlib import Path
-from typing import Dict, List, Optional, Set
 
 logger = logging.getLogger("ezzio.scope_resolver")
 
@@ -9,7 +8,7 @@ logger = logging.getLogger("ezzio.scope_resolver")
 class DomainScopeResolver:
     """Résout le graphe de dépendances et extrait le scope de fichiers par domaine (V49.2)."""
 
-    DOMAIN_SEEDS: Dict[str, List[str]] = {
+    DOMAIN_SEEDS: dict[str, list[str]] = {
         "memory": [
             "core/memory/unified_gateway.py",
             "core/memory_core.py",
@@ -30,11 +29,11 @@ class DomainScopeResolver:
         ],
     }
 
-    def __init__(self, root_dir: Optional[str] = None):
+    def __init__(self, root_dir: str | None = None):
         self.root = Path(root_dir).resolve() if root_dir else Path.cwd().resolve()
-        self._dep_graph: Dict[str, Set[str]] = {}
-        self._reverse_dep_graph: Dict[str, Set[str]] = {}
-        self._missing_seeds: Dict[str, List[str]] = {}
+        self._dep_graph: dict[str, set[str]] = {}
+        self._reverse_dep_graph: dict[str, set[str]] = {}
+        self._missing_seeds: dict[str, list[str]] = {}
         self._validate_seeds()
         self.build_dependency_graph()
 
@@ -51,7 +50,7 @@ class DomainScopeResolver:
                     missing,
                 )
 
-    EXCLUDED_DIRS: Set[str] = {
+    EXCLUDED_DIRS: set[str] = {
         ".venv",
         ".venv_311_archive",
         ".venv_312",
@@ -119,7 +118,7 @@ class DomainScopeResolver:
             except Exception as e:
                 logger.debug("Parsing AST ignoré pour %s: %s", rel_path, e)
 
-    def resolve_scope(self, domain: str, max_depth: int = 1) -> List[str]:
+    def resolve_scope(self, domain: str, max_depth: int = 1) -> list[str]:
         if domain not in self.DOMAIN_SEEDS:
             logger.info("[SCOPE RESOLVER] Domaine '%s' non déclaré dans DOMAIN_SEEDS.", domain)
             return []
@@ -135,7 +134,7 @@ class DomainScopeResolver:
             )
             return []
 
-        resolved: Set[str] = set()
+        resolved: set[str] = set()
         queue = [(s, 0) for s in existing_seeds]
 
         while queue:

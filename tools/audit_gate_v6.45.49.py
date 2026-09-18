@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import ast
 import json
 import sys
@@ -24,18 +25,18 @@ def main():
     print("=" * 80)
     print(" GATE v6.45.49 — CORRIGÉ (EXCLUSION TOOLS)")
     print("=" * 80)
-    
+
     router_path = find_ezzio_router_file()
     if not router_path or not router_path.exists():
         print("❌ Fichier EzzioRouter introuvable dans le workspace actif (hors tools).")
         return
 
     print(f"📁 Fichiers source du routeur détecté : {router_path.relative_to(PROJECT_ROOT)}")
-    
+
     try:
         content = router_path.read_text(encoding="utf-8", errors="replace")
         tree = ast.parse(content, filename=str(router_path))
-        
+
         extracted_methods = {}
         for stmt in tree.body:
             if isinstance(stmt, ast.ClassDef) and ("Router" in stmt.name):

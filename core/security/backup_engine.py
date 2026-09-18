@@ -7,14 +7,15 @@ Garantit des sauvegardes fiables, mathématiquement dédupliquées et protégée
 4. Restauration fidèle et calcul précis du ratio de déduplication
 """
 from __future__ import annotations
+
+import hashlib
+import json
+import logging
 import os
 import time
-import json
 import zlib
-import hashlib
-import logging
 from pathlib import Path
-from typing import Dict, Any, List, Optional, Tuple
+from typing import Any
 
 logger = logging.getLogger("BackupEngine")
 
@@ -52,7 +53,7 @@ class BackupEngine:
                 return True
         return False
 
-    def _store_blob(self, raw_bytes: bytes) -> Tuple[str, int, bool]:
+    def _store_blob(self, raw_bytes: bytes) -> tuple[str, int, bool]:
         """
         Stocke un blob dans le CAS s'il n'existe pas déjà.
         Retourne (sha256_hash, stored_bytes, is_new).
@@ -70,7 +71,7 @@ class BackupEngine:
         obj_file.write_bytes(compressed)
         return sha, len(compressed), True
 
-    def _read_blob(self, sha: str) -> Optional[bytes]:
+    def _read_blob(self, sha: str) -> bytes | None:
         """Lit et décompresse un blob depuis le CAS."""
         prefix = sha[:2]
         obj_file = self.objects_dir / prefix / f"{sha}.blob"
@@ -78,14 +79,14 @@ class BackupEngine:
             return None
         return zlib.decompress(obj_file.read_bytes())
 
-    def create_snapshot(self, label: str = "manual") -> Dict[str, Any]:
+    def create_snapshot(self, label: str = "manual") -> dict[str, Any]:
         """Crée un snapshot dédupliqué du workspace via le CAS."""
         timestamp = time.strftime("%Y%m%d_%H%M%S")
         clean_label = "".join(c if c.isalnum() or c in ("-", "_") else "_" for c in label)
         snap_id = f"snapshot_{timestamp}_{clean_label}"
         manifest_file = self.snapshots_dir / f"{snap_id}.json"
 
-        manifest: Dict[str, Any] = {
+        manifest: dict[str, Any] = {
             "snapshot_id": snap_id,
             "timestamp": time.time(),
             "label": clean_label,

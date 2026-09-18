@@ -5,7 +5,7 @@ import os
 import time
 import uuid
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
 STATE_ROOT = PROJECT_ROOT / "state"
@@ -31,7 +31,7 @@ CPU_ONLY_ENV = {
 for key, value in CPU_ONLY_ENV.items():
     os.environ[key] = value
 
-ACTION_REGISTRY: Dict[str, Dict[str, Any]] = {
+ACTION_REGISTRY: dict[str, dict[str, Any]] = {
     "maintenance_status": {
         "label": "Lire l'état maintenance",
         "safe": True,
@@ -109,18 +109,18 @@ def now() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%S")
 
 
-def append_jsonl(path: Path, event: Dict[str, Any]) -> None:
+def append_jsonl(path: Path, event: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(event, ensure_ascii=False) + "\n")
 
 
-def read_jsonl(path: Path, limit: int = 500) -> List[Dict[str, Any]]:
+def read_jsonl(path: Path, limit: int = 500) -> list[dict[str, Any]]:
     if not path.exists():
         return []
 
     lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
-    output: List[Dict[str, Any]] = []
+    output: list[dict[str, Any]] = []
 
     for line in lines[-max(1, min(int(limit), 5000)) :]:
         try:
@@ -131,7 +131,7 @@ def read_jsonl(path: Path, limit: int = 500) -> List[Dict[str, Any]]:
     return output
 
 
-def registry() -> Dict[str, Any]:
+def registry() -> dict[str, Any]:
     return {
         "ok": True,
         "version": "v2.21.3-safe-action-hygiene",
@@ -146,9 +146,9 @@ def registry() -> Dict[str, Any]:
     }
 
 
-def run_index() -> Dict[str, Dict[str, Any]]:
+def run_index() -> dict[str, dict[str, Any]]:
     runs = read_jsonl(RUNS_PATH, limit=5000)
-    index: Dict[str, Dict[str, Any]] = {}
+    index: dict[str, dict[str, Any]] = {}
 
     for run in runs:
         proposal_id = run.get("proposal_id")
@@ -158,9 +158,9 @@ def run_index() -> Dict[str, Dict[str, Any]]:
     return index
 
 
-def augment_queue_items(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+def augment_queue_items(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     runs_by_proposal = run_index()
-    augmented: List[Dict[str, Any]] = []
+    augmented: list[dict[str, Any]] = []
 
     for item in items:
         clone = dict(item)
@@ -187,7 +187,7 @@ def augment_queue_items(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     return augmented
 
 
-def ledger(limit: int = 100) -> Dict[str, Any]:
+def ledger(limit: int = 100) -> dict[str, Any]:
     raw_items = read_jsonl(QUEUE_PATH, limit=limit)
     items = augment_queue_items(raw_items)
 
@@ -215,7 +215,7 @@ def ledger(limit: int = 100) -> Dict[str, Any]:
     }
 
 
-def status() -> Dict[str, Any]:
+def status() -> dict[str, Any]:
     data = ledger(limit=5000)
     runs = read_jsonl(RUNS_PATH, limit=50)
 
@@ -242,7 +242,7 @@ def status() -> Dict[str, Any]:
     }
 
 
-def propose_action(action: str, params: Optional[Dict[str, Any]] = None, reason: str = "") -> Dict[str, Any]:
+def propose_action(action: str, params: dict[str, Any] | None = None, reason: str = "") -> dict[str, Any]:
     params = params or {}
 
     if action not in ACTION_REGISTRY:
@@ -286,7 +286,7 @@ def propose_action(action: str, params: Optional[Dict[str, Any]] = None, reason:
     return proposal
 
 
-def queue(limit: int = 50) -> Dict[str, Any]:
+def queue(limit: int = 50) -> dict[str, Any]:
     items = augment_queue_items(read_jsonl(QUEUE_PATH, limit=limit))
     return {
         "ok": True,
@@ -296,7 +296,7 @@ def queue(limit: int = 50) -> Dict[str, Any]:
     }
 
 
-def find_proposal(proposal_id: str) -> Optional[Dict[str, Any]]:
+def find_proposal(proposal_id: str) -> dict[str, Any] | None:
     items = read_jsonl(QUEUE_PATH, limit=5000)
     for item in reversed(items):
         if item.get("id") == proposal_id:
@@ -304,11 +304,11 @@ def find_proposal(proposal_id: str) -> Optional[Dict[str, Any]]:
     return None
 
 
-def already_executed(proposal_id: str) -> Optional[Dict[str, Any]]:
+def already_executed(proposal_id: str) -> dict[str, Any] | None:
     return run_index().get(proposal_id)
 
 
-def run_action_logic(action: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+def run_action_logic(action: str, params: dict[str, Any] | None = None) -> dict[str, Any]:
     params = params or {}
 
     if action == "maintenance_status":
@@ -382,7 +382,7 @@ def run_action_logic(action: str, params: Optional[Dict[str, Any]] = None) -> Di
     }
 
 
-def run_proposal(proposal_id: str, confirmation: str = "") -> Dict[str, Any]:
+def run_proposal(proposal_id: str, confirmation: str = "") -> dict[str, Any]:
     proposal = find_proposal(proposal_id)
     if not proposal:
         return {
@@ -458,7 +458,7 @@ def run_proposal(proposal_id: str, confirmation: str = "") -> Dict[str, Any]:
     return run
 
 
-def quick_action(action: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+def quick_action(action: str, params: dict[str, Any] | None = None) -> dict[str, Any]:
     params = params or {}
 
     if action not in ACTION_REGISTRY:
@@ -491,9 +491,9 @@ def quick_action(action: str, params: Optional[Dict[str, Any]] = None) -> Dict[s
 CANCELS_PATH = QUEUE_ROOT / "cancellations.jsonl"
 
 
-def cancel_index() -> Dict[str, Dict[str, Any]]:
+def cancel_index() -> dict[str, dict[str, Any]]:
     cancellations = read_jsonl(CANCELS_PATH, limit=5000)
-    index: Dict[str, Dict[str, Any]] = {}
+    index: dict[str, dict[str, Any]] = {}
 
     for item in cancellations:
         proposal_id = item.get("proposal_id")
@@ -503,10 +503,10 @@ def cancel_index() -> Dict[str, Dict[str, Any]]:
     return index
 
 
-def augment_queue_items(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+def augment_queue_items(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     runs_by_proposal = run_index()
     cancels_by_proposal = cancel_index()
-    augmented: List[Dict[str, Any]] = []
+    augmented: list[dict[str, Any]] = []
 
     for item in items:
         clone = dict(item)
@@ -551,7 +551,7 @@ def augment_queue_items(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     return augmented
 
 
-def ledger(limit: int = 100) -> Dict[str, Any]:
+def ledger(limit: int = 100) -> dict[str, Any]:
     raw_items = read_jsonl(QUEUE_PATH, limit=limit)
     items = augment_queue_items(raw_items)
 
@@ -582,7 +582,7 @@ def ledger(limit: int = 100) -> Dict[str, Any]:
     }
 
 
-def status() -> Dict[str, Any]:
+def status() -> dict[str, Any]:
     data = ledger(limit=5000)
     runs = read_jsonl(RUNS_PATH, limit=50)
 
@@ -612,7 +612,7 @@ def status() -> Dict[str, Any]:
     }
 
 
-def cancel_proposal(proposal_id: str, reason: str = "annulation manuelle") -> Dict[str, Any]:
+def cancel_proposal(proposal_id: str, reason: str = "annulation manuelle") -> dict[str, Any]:
     proposal = find_proposal(proposal_id)
     if not proposal:
         return {
@@ -655,7 +655,7 @@ def cancel_proposal(proposal_id: str, reason: str = "annulation manuelle") -> Di
     return event
 
 
-def cancel_pending(reason: str = "nettoyage file pending") -> Dict[str, Any]:
+def cancel_pending(reason: str = "nettoyage file pending") -> dict[str, Any]:
     data = ledger(limit=5000)
     pending = [item for item in data.get("items", []) if not item.get("executed") and not item.get("cancelled")]
     cancelled = []
@@ -680,7 +680,7 @@ def cancel_pending(reason: str = "nettoyage file pending") -> Dict[str, Any]:
     }
 
 
-def run_proposal(proposal_id: str, confirmation: str = "") -> Dict[str, Any]:
+def run_proposal(proposal_id: str, confirmation: str = "") -> dict[str, Any]:
     proposal = find_proposal(proposal_id)
     if not proposal:
         return {

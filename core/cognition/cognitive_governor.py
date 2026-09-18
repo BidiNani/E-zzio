@@ -4,15 +4,15 @@ Garantit l'intégrité absolue via une chaîne SHA-256 scellée par une signatur
 et un manifeste d'intégrité global.
 """
 
-import os
-import json
-import hmac
-import logging
 import hashlib
+import hmac
+import json
+import logging
+import os
 import threading
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -80,7 +80,7 @@ class CognitiveGovernor:
 
         last_hash = "0000000000000000000000000000000000000000000000000000000000000000"
         try:
-            with open(self.ledger_path, "r", encoding="utf-8") as f:
+            with open(self.ledger_path, encoding="utf-8") as f:
                 for line in f:
                     stripped = line.strip()
                     if not stripped:
@@ -116,7 +116,7 @@ class CognitiveGovernor:
             ]
 
             block_count = 0
-            with open(self.ledger_path, "r", encoding="utf-8") as f:
+            with open(self.ledger_path, encoding="utf-8") as f:
                 for line_num, line in enumerate(f, 1):
                     stripped = line.strip()
                     if not stripped:
@@ -198,7 +198,7 @@ class CognitiveGovernor:
         if not self.ledger_path.exists():
             return 0
         try:
-            with open(self.ledger_path, "r", encoding="utf-8") as f:
+            with open(self.ledger_path, encoding="utf-8") as f:
                 for line in f:
                     stripped = line.strip()
                     if not stripped:
@@ -218,7 +218,7 @@ class CognitiveGovernor:
             "kernel_version": self.kernel_version,
             "total_blocks": total_blocks,
             "head_hash": head_hash,
-            "attestation_timestamp": datetime.now(timezone.utc).isoformat(),
+            "attestation_timestamp": datetime.now(UTC).isoformat(),
         }
         manifest_str = self._canonical_dump(manifest_data)
         manifest_signature = self._compute_hmac(manifest_str)
@@ -233,7 +233,7 @@ class CognitiveGovernor:
         except Exception as e:
             raise LedgerSecurityError(f"Échec critique de l'écriture du manifeste d'intégrité : {e}")
 
-    def evaluate_and_record(self, task: str, estimated_tokens: int, priority: str = "normal", risk_level: str = "low") -> Dict[str, Any]:
+    def evaluate_and_record(self, task: str, estimated_tokens: int, priority: str = "normal", risk_level: str = "low") -> dict[str, Any]:
         with CognitiveGovernor._class_lock:
             self.verify_ledger_chain()
 
@@ -254,7 +254,7 @@ class CognitiveGovernor:
                 reason = "Rejet : Tâche à haut risque non justifiée."
 
             prev_hash = self._get_last_hash_unlocked()
-            timestamp = datetime.now(timezone.utc).isoformat()
+            timestamp = datetime.now(UTC).isoformat()
 
             block_payload = {
                 "runtime_id": self.runtime_id,
@@ -297,7 +297,7 @@ class CognitiveGovernor:
                 raise LedgerSecurityError(f"Échec critique de l'écriture durable (fsync) : {e}")
 
             # Recompte du nombre total de blocs et mise à jour du manifeste signé
-            total_blocks = sum(1 for line in open(self.ledger_path, "r", encoding="utf-8") if line.strip())
+            total_blocks = sum(1 for line in open(self.ledger_path, encoding="utf-8") if line.strip())
             self._update_manifest(total_blocks, record_hash)
 
             self.verify_ledger_chain()

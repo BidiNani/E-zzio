@@ -1,7 +1,7 @@
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from core.storage import storage
 
@@ -35,7 +35,7 @@ ALLOWED_TRANSITIONS = {
 
 
 def utc_now() -> str:
-    return datetime.now(timezone.utc).isoformat()
+    return datetime.now(UTC).isoformat()
 
 
 class TaskManager:
@@ -69,7 +69,7 @@ class TaskManager:
         title: str,
         workspace: str,
         scope: dict[str, Any],
-        plan: Optional[dict[str, Any]] = None,
+        plan: dict[str, Any] | None = None,
     ) -> str:
         if not task_id.strip():
             raise ValueError("task_id ne peut pas être vide.")
@@ -110,7 +110,7 @@ class TaskManager:
 
         return task_id
 
-    def get_task(self, task_id: str) -> Optional[dict[str, Any]]:
+    def get_task(self, task_id: str) -> dict[str, Any] | None:
         with storage.get_connection(DB_PATH) as conn:
             row = conn.execute(
                 """
@@ -152,8 +152,8 @@ class TaskManager:
         task_id: str,
         next_state: str,
         *,
-        approval_id: Optional[str] = None,
-        error_message: Optional[str] = None,
+        approval_id: str | None = None,
+        error_message: str | None = None,
     ) -> dict[str, Any]:
         if next_state not in TASK_STATES:
             raise ValueError(f"État inconnu : {next_state}")

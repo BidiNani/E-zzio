@@ -4,13 +4,13 @@ Surveille l'intégrité des fichiers critiques de l'organisme et classifie
 les modifications (Inchangé, Évolution autorisée, Override humain, Dérive inconnue).
 """
 
-import sys
-import json
-import hashlib
 import argparse
+import hashlib
+import json
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -27,7 +27,7 @@ class DriftDetectorEngine:
     def _ensure_baseline(self):
         """Initialise la baseline des hashes approuvés si absente."""
         if not self.baseline_path.exists():
-            baseline = {"version": "V8.9.4.1", "created_utc": datetime.now(timezone.utc).isoformat(), "files": {}}
+            baseline = {"version": "V8.9.4.1", "created_utc": datetime.now(UTC).isoformat(), "files": {}}
             critical_files = [
                 self.root_dir / "core" / "constitution" / "ezzio_genome.json",
                 self.root_dir / "core" / "constitution" / "ezzio_global_framework.py",
@@ -39,7 +39,7 @@ class DriftDetectorEngine:
                     baseline["files"][rel] = h
             self.baseline_path.write_text(json.dumps(baseline, indent=2, ensure_ascii=False), encoding="utf-8")
 
-    def scan_and_classify(self) -> Dict[str, Any]:
+    def scan_and_classify(self) -> dict[str, Any]:
         """Scanne les fichiers critiques et classifie les états d'intégrité."""
         baseline_data = json.loads(self.baseline_path.read_text(encoding="utf-8"))
         stored_hashes = baseline_data.get("files", {})
@@ -70,7 +70,7 @@ class DriftDetectorEngine:
                 "expected_hash": expected_hash[:16] + "..." if expected_hash else "N/A",
             }
 
-        return {"timestamp_utc": datetime.now(timezone.utc).isoformat(), "scan_mode": "CLASSIFICATION_NON_BLOCKING", "report": report}
+        return {"timestamp_utc": datetime.now(UTC).isoformat(), "scan_mode": "CLASSIFICATION_NON_BLOCKING", "report": report}
 
 
 def main():

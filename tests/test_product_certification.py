@@ -11,11 +11,13 @@ Valide :
 8. Multi-client consistency (mêmes IDs d'approbation et agents sur Desktop et Mobile)
 9. Sécurité absolue : zéro secret stocké dans l'APK ou dans l'interface
 """
-from pathlib import Path
 import json
 import zipfile
+from pathlib import Path
+
 import pytest
 from fastapi.testclient import TestClient
+
 from web_server import app
 
 

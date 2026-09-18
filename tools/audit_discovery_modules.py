@@ -1,18 +1,19 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_discovery_modules() -> Dict[str, Any]:
+def inspect_discovery_modules() -> dict[str, Any]:
     discovery_dir = PROJECT_ROOT / "core" / "models" / "discovery"
     results = {}
-    
+
     if discovery_dir.exists() and discovery_dir.is_dir():
         for p in discovery_dir.glob("**/*.py"):
             rel = str(p.relative_to(PROJECT_ROOT))
@@ -29,7 +30,7 @@ def inspect_discovery_modules() -> Dict[str, Any]:
                 results[rel] = {"error": str(e)}
     else:
         results["discovery_dir"] = "Not found"
-        
+
     # Chercher aussi partout ailleurs des fichiers contenant 'discovery'
     other_discovery = []
     for p in PROJECT_ROOT.glob("**/*.py"):
@@ -37,7 +38,7 @@ def inspect_discovery_modules() -> Dict[str, Any]:
             continue
         if "discovery" in p.name.lower():
             other_discovery.append(str(p.relative_to(PROJECT_ROOT)))
-            
+
     return {
         "discovery_folder_files": results,
         "other_discovery_files": other_discovery

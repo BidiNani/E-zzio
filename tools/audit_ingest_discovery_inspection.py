@@ -1,33 +1,34 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_ingest_discovery() -> Dict[str, Any]:
+def inspect_ingest_discovery() -> dict[str, Any]:
     lifecycle_path = PROJECT_ROOT / "core" / "models" / "lifecycle.py"
     if not lifecycle_path.exists():
         return {"exists": False}
-    
+
     try:
         content = lifecycle_path.read_text(encoding="utf-8", errors="replace")
         tree = ast.parse(content, filename=str(lifecycle_path))
-        
+
         ingest_source = ""
         lines = content.splitlines()
-        
+
         for node in ast.walk(tree):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 if node.name == "ingest_discovery":
                     start_line = node.lineno - 1
                     end_line = getattr(node, 'end_lineno', start_line + 30)
                     ingest_source = "\n".join(lines[start_line:end_line])
-                    
+
         return {
             "exists": True,
             "ingest_source": ingest_source

@@ -3,11 +3,9 @@ Forensic parser and auditor for performance_v17 live_runs.
 Strict read-only inspection of live_runs/*.json. No new benchmark execution.
 Computes inventory, validates PID, timestamps, parameters, claims vs reality.
 """
-import os
-import sys
+import hashlib
 import json
 import time
-import hashlib
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")
@@ -25,14 +23,14 @@ for p in sorted(live_runs_dir.rglob("*.json")):
     f_size = len(content_bytes)
     f_sha = hashlib.sha256(content_bytes).hexdigest()
     mtime = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(p.stat().st_mtime))
-    
+
     files_list.append({
         "path": str(p.relative_to(root)),
         "size_bytes": f_size,
         "sha256": f_sha,
         "modified_time": mtime
     })
-    
+
     try:
         data = json.loads(content_bytes.decode("utf-8"))
         data["_file_path"] = str(p.relative_to(root))
@@ -60,13 +58,13 @@ for r in runs_data:
     ctx = r.get("context_requested")
     tok = r.get("max_tokens")
     t_start = r.get("timestamp_start")
-    
+
     key = (p_id, m_id, th, ctx, tok, t_start)
     if key in unique_runs:
         duplicates.append(r["_file_path"])
     else:
         unique_runs[key] = r
-        
+
     # Revalidation criteria
     has_pid = bool(r.get("pid") is not None and r.get("pid") != 0)
     # Ollama uses pid=11434 (port identifier) or actual daemon
@@ -75,14 +73,14 @@ for r in runs_data:
     tok_s = r.get("generation_tok_s", 0.0)
     has_output = bool(r.get("raw_response_snippet") or r.get("raw_stdout"))
     exit_0 = r.get("exit_code") == 0
-    
+
     val_status = "VALID"
     if not exit_0 or tok_s == 0.0:
         if m_id == "llama3.1-8b-abliterated":
             val_status = "EMPTY_OUTPUT"
         else:
             val_status = "FAILED"
-            
+
     validation_records.append({
         "run_id": run_id,
         "file": r["_file_path"],
@@ -113,7 +111,7 @@ for m in models_all:
     valid_m = len([r for r in (m_runs_p1 + m_runs_p2) if r.get("status") == "VALID"])
     failed_m = len([r for r in (m_runs_p1 + m_runs_p2) if r.get("status") == "FAILED"])
     empty_m = len([r for r in (m_runs_p1 + m_runs_p2) if r.get("status") == "EMPTY"])
-    
+
     model_pass_matrix[m] = {
         "p1_runs": len(m_runs_p1),
         "p2_runs": len(m_runs_p2),

@@ -1,12 +1,11 @@
 """
 Phase 2 : Audit Forensique Préalable de Kokoro-82M.
 """
-import os
-import sys
-import json
-import time
 import hashlib
 import importlib.util
+import json
+import sys
+import time
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")

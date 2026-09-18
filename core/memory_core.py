@@ -1,4 +1,5 @@
-from typing import Dict, Any, Optional
+from typing import Any
+
 from core.evidence_store import EvidenceStore
 
 
@@ -8,5 +9,5 @@ class MemoryCore:
     def __init__(self, db_path: str = "runtime/memory/sqlite/ezzio_events.db"):
         self.store = EvidenceStore(db_path)
 
-    async def record_event(self, event_type: str, payload: Dict[str, Any], session_id: Optional[str] = None):
+    async def record_event(self, event_type: str, payload: dict[str, Any], session_id: str | None = None):
         return await self.store.store(provider="memory_core", mode=event_type, query=str(payload))

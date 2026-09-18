@@ -15,6 +15,7 @@ Vérifie rigoureusement les 10 points du cahier des charges :
 import sqlite3
 from pathlib import Path
 from unittest.mock import AsyncMock, patch
+
 import pytest
 
 from core.capabilities.hermes_mcp_gateway import (

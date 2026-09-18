@@ -2,11 +2,11 @@ from fastapi import APIRouter
 from fastapi.responses import HTMLResponse
 
 from core.supervisor import (
-    supervisor_status,
-    write_snapshot,
-    recent_snapshots,
-    watchdog_once,
     mobile_home_html,
+    recent_snapshots,
+    supervisor_status,
+    watchdog_once,
+    write_snapshot,
 )
 
 router = APIRouter(prefix="/supervisor", tags=["supervisor"])

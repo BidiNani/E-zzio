@@ -1,8 +1,7 @@
+import json
 import os
 import time
-import json
 from pathlib import Path
-from typing import Optional
 
 from PIL import Image, ImageFilter, ImageOps
 
@@ -88,7 +87,7 @@ def upscale_image_to_hd(
     width: int = 1920,
     height: int = 1080,
     sharpen: bool = True,
-    output_name: Optional[str] = None,
+    output_name: str | None = None,
 ):
     src = _safe_image_path(source_path)
 

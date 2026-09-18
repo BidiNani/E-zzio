@@ -7,8 +7,9 @@ Certifie la qualification de l'adaptateur multimodal YouTube (yt-dlp) :
 4. Intégration et gouvernance dans CapabilityRegistry
 """
 import pytest
-from core.perception.youtube_adapter import YouTubeAdapter
+
 from core.capabilities.registry import CapabilityRegistry, QualificationStatus
+from core.perception.youtube_adapter import YouTubeAdapter
 
 
 def test_youtube_adapter_ssrf_protection():

@@ -9,16 +9,16 @@ Standard : Fail-Closed / Zéro fuite de credentials / Observabilité / Détermin
 """
 from __future__ import annotations
 
-import os
 import json
-import time
 import logging
-import httpx
-from typing import Any, AsyncIterator, Dict, List, Optional, Tuple
+import os
+import time
+from collections.abc import AsyncIterator
+from typing import Any
 
-from core.secrets import load_secrets, get_api_key
+import httpx
+
 from core.cognition.providers.key_pool import SovereignKeyPool
-from core.providers.iresearch_provider import IResearchProvider
 from core.providers.base_provider import (
     BaseProvider,
     CostClass,
@@ -26,6 +26,8 @@ from core.providers.base_provider import (
     ProviderErrorClass,
     ProviderResponse,
 )
+from core.providers.iresearch_provider import IResearchProvider
+from core.secrets import get_api_key, load_secrets
 
 logger = logging.getLogger("GroqProvider")
 
@@ -36,13 +38,13 @@ class GroqProvider(BaseProvider, IResearchProvider):
     name: str = "groq"
     base_url: str = "https://api.groq.com/openai/v1"
     DEFAULT_MODEL: str = "llama-3.3-70b-versatile"
-    FALLBACK_MODELS: List[str] = ["llama-3.1-8b-instant", "mixtral-8x7b-32768"]
+    FALLBACK_MODELS: list[str] = ["llama-3.1-8b-instant", "mixtral-8x7b-32768"]
 
     def __init__(
         self,
-        api_key: Optional[str] = None,
-        key_pool: Optional[SovereignKeyPool] = None,
-        model: Optional[str] = None,
+        api_key: str | None = None,
+        key_pool: SovereignKeyPool | None = None,
+        model: str | None = None,
         timeout: float = 30.0,
     ) -> None:
         load_secrets()
@@ -55,7 +57,7 @@ class GroqProvider(BaseProvider, IResearchProvider):
             # Autorité credentials : vault, puis secrets_loader (DISCORD_GROQ_API_KEY
             # prioritaire), puis variables indexées. Pool 403 constaté 2026-09-10 :
             # rotation conservée pour le jour de rétablissement.
-            keys: List[str] = []
+            keys: list[str] = []
             try:
                 from core.security.unified_vault import key_vault
                 for vk in key_vault.get_all_keys_for_provider("groq"):
@@ -82,7 +84,7 @@ class GroqProvider(BaseProvider, IResearchProvider):
 
         self._status = ProviderAvailability.AVAILABLE if self.key_pool.slots else ProviderAvailability.NOT_CONFIGURED
 
-    def _get_active_key(self) -> Tuple[Optional[int], Optional[str], Optional[str]]:
+    def _get_active_key(self) -> tuple[int | None, str | None, str | None]:
         return self.key_pool.get_next_key()
 
     def availability(self) -> ProviderAvailability:
@@ -119,13 +121,13 @@ class GroqProvider(BaseProvider, IResearchProvider):
         """Vérifie si au moins une clé est prête pour des requêtes d'inférence."""
         return self.availability() in (ProviderAvailability.AVAILABLE, ProviderAvailability.DEGRADED)
 
-    def cost_class(self, model: Optional[str] = None) -> CostClass:
+    def cost_class(self, model: str | None = None) -> CostClass:
         """Endpoint Cloud Groq gratuit (Free Tier LPUs)."""
         if not self.key_pool.slots:
             return CostClass.UNKNOWN
         return CostClass.FREE_ENDPOINT
 
-    def capabilities(self, model: Optional[str] = None) -> List[str]:
+    def capabilities(self, model: str | None = None) -> list[str]:
         """Retourne les capacités déduites pour le modèle cible."""
         target = (model or self.model).lower()
         caps = ["TEXT", "CODING", "FAST_INFERENCE", "INSTRUCTION_FOLLOWING"]
@@ -133,7 +135,7 @@ class GroqProvider(BaseProvider, IResearchProvider):
             caps.extend(["VISION", "MULTIMODAL"])
         return caps
 
-    def error_mapping(self, status_code: int, error_body: Optional[str] = None) -> ProviderErrorClass:
+    def error_mapping(self, status_code: int, error_body: str | None = None) -> ProviderErrorClass:
         """Mappe les codes HTTP vers la typologie canonique E-ZzIO."""
         if status_code in (401, 403):
             return ProviderErrorClass.UNAUTHORIZED
@@ -151,7 +153,7 @@ class GroqProvider(BaseProvider, IResearchProvider):
             return ProviderErrorClass.BAD_REQUEST
         return ProviderErrorClass.UNKNOWN_ERROR
 
-    async def health(self) -> Dict[str, Any]:
+    async def health(self) -> dict[str, Any]:
         """Vérifie la santé de l'endpoint Groq Cloud via /models."""
         start_time = time.perf_counter()
         idx, raw_key, masked_key = self._get_active_key()
@@ -213,8 +215,8 @@ class GroqProvider(BaseProvider, IResearchProvider):
     async def generate(
         self,
         prompt: str,
-        system_prompt: Optional[str] = None,
-        model: Optional[str] = None,
+        system_prompt: str | None = None,
+        model: str | None = None,
         temperature: float = 0.2,
         max_tokens: int = 512,
         **kwargs: Any,
@@ -224,12 +226,12 @@ class GroqProvider(BaseProvider, IResearchProvider):
         target_model = model or self.model
         url = f"{self.base_url}/chat/completions"
 
-        messages: List[Dict[str, str]] = []
+        messages: list[dict[str, str]] = []
         if system_prompt:
             messages.append({"role": "system", "content": system_prompt})
         messages.append({"role": "user", "content": prompt})
 
-        payload: Dict[str, Any] = {
+        payload: dict[str, Any] = {
             "model": target_model,
             "messages": messages,
             "temperature": temperature,
@@ -352,8 +354,8 @@ class GroqProvider(BaseProvider, IResearchProvider):
     async def stream(
         self,
         prompt: str,
-        system_prompt: Optional[str] = None,
-        model: Optional[str] = None,
+        system_prompt: str | None = None,
+        model: str | None = None,
         temperature: float = 0.2,
         max_tokens: int = 512,
         **kwargs: Any,
@@ -366,12 +368,12 @@ class GroqProvider(BaseProvider, IResearchProvider):
         if raw_key is None:
             return
 
-        messages: List[Dict[str, str]] = []
+        messages: list[dict[str, str]] = []
         if system_prompt:
             messages.append({"role": "system", "content": system_prompt})
         messages.append({"role": "user", "content": prompt})
 
-        payload: Dict[str, Any] = {
+        payload: dict[str, Any] = {
             "model": target_model,
             "messages": messages,
             "temperature": temperature,
@@ -403,7 +405,7 @@ class GroqProvider(BaseProvider, IResearchProvider):
                     except json.JSONDecodeError:
                         continue
 
-    async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
+    async def search(self, query: str, **kwargs: Any) -> dict[str, Any]:
         """Exécute une inférence / recherche compatible DecisionRouter."""
         resp = await self.generate(
             prompt=query,

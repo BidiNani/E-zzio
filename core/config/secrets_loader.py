@@ -4,7 +4,6 @@ from __future__ import annotations
 import logging
 import os
 from pathlib import Path
-from typing import Dict, List, Optional
 
 logger = logging.getLogger("ezzio.secrets")
 
@@ -39,9 +38,9 @@ def is_owner_id(user_id: object, owner_id: object = None) -> bool:
         return False
 
 
-def load(override: bool = True) -> Dict[str, str]:
+def load(override: bool = True) -> dict[str, str]:
     """Charge secrets/.env (chemin absolu), écrase le résiduel système."""
-    loaded: Dict[str, str] = {}
+    loaded: dict[str, str] = {}
     if not ENV_PATH.exists():
         logger.error("[SECRETS] Fichier absent : %s", ENV_PATH)
         return loaded
@@ -90,7 +89,7 @@ def load(override: bool = True) -> Dict[str, str]:
     return loaded
 
 
-def discord_token(env: Optional[Dict[str, str]] = None) -> str:
+def discord_token(env: dict[str, str] | None = None) -> str:
     src = dict(os.environ) if env is None else env
     for key in ("DISCORD_TOKEN", "DISCORD_BOT_TOKEN"):
         val = _clean(src.get(key, ""))
@@ -99,7 +98,7 @@ def discord_token(env: Optional[Dict[str, str]] = None) -> str:
     return ""
 
 
-def discord_owner_id(env: Optional[Dict[str, str]] = None) -> Optional[int]:
+def discord_owner_id(env: dict[str, str] | None = None) -> int | None:
     src = dict(os.environ) if env is None else env
     raw = _clean(src.get("DISCORD_OWNER_ID", ""))
     if not raw:
@@ -112,7 +111,7 @@ def discord_owner_id(env: Optional[Dict[str, str]] = None) -> Optional[int]:
         return None
 
 
-def groq_key(env: Optional[Dict[str, str]] = None) -> str:
+def groq_key(env: dict[str, str] | None = None) -> str:
     src = dict(os.environ) if env is None else env
     for key in ("DISCORD_GROQ_API_KEY", "GROQ_API_KEY", "GROQ_API_KEY_2"):
         val = _clean(src.get(key, ""))
@@ -121,7 +120,7 @@ def groq_key(env: Optional[Dict[str, str]] = None) -> str:
     return ""
 
 
-def gemini_keys(env: Optional[Dict[str, str]] = None) -> List[str]:
+def gemini_keys(env: dict[str, str] | None = None) -> list[str]:
     src = dict(os.environ) if env is None else env
     out = []
     for k in sorted(src.keys()):
@@ -132,7 +131,7 @@ def gemini_keys(env: Optional[Dict[str, str]] = None) -> List[str]:
     return out
 
 
-def log_secrets_diagnostics(env: Optional[Dict[str, str]] = None) -> Dict[str, str]:
+def log_secrets_diagnostics(env: dict[str, str] | None = None) -> dict[str, str]:
     """Bilan masqué : jamais de clé en clair."""
     src = dict(os.environ) if env is None else env
     tok = discord_token(src)

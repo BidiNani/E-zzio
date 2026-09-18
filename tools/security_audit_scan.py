@@ -1,7 +1,7 @@
 import os
 import re
-import zipfile
 import sys
+import zipfile
 from pathlib import Path
 
 ROOT = Path("G:/AI/E-zzio")

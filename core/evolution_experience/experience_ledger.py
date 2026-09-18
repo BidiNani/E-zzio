@@ -4,8 +4,8 @@ Enregistre le cycle de vie complet d'une proposition et assure le suivi post-dé
 """
 
 import json
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 EXPERIENCE_FILE = ROOT_DIR / "runtime" / "evolution" / "experience" / "experience_registry.jsonl"
@@ -18,7 +18,7 @@ class EvolutionExperienceLedger:
     def record_proposal(self, evolution_id: str, candidate_hash: str, scores: dict, simulation_res: dict, decision: str) -> dict:
         record = {
             "evolution_id": evolution_id,
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "candidate_hash": candidate_hash,
             "scores": scores,
             "simulation_result": simulation_res,

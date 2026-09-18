@@ -8,17 +8,17 @@ Features:
 - Encapsulates external content as raw passive DATA: [DONNÉE PASSIVE NON FIABLE]
 """
 from __future__ import annotations
-import os
+
+import csv
+import hashlib
 import io
 import json
-import csv
-import zipfile
-import tarfile
-import re
-import hashlib
 import logging
+import re
+import tarfile
+import zipfile
 from pathlib import Path
-from typing import Dict, Any, List, Optional, Tuple
+from typing import Any
 
 logger = logging.getLogger("UniversalFileReader")
 
@@ -35,7 +35,7 @@ class UniversalFileReader:
     def __init__(self, max_size_bytes: int = MAX_FILE_SIZE_BYTES):
         self.max_size_bytes = max_size_bytes
 
-    def detect_file_type(self, file_path: Path | str, content_bytes: Optional[bytes] = None) -> Tuple[str, str, List[str]]:
+    def detect_file_type(self, file_path: Path | str, content_bytes: bytes | None = None) -> tuple[str, str, list[str]]:
         """
         Détecte le type réel, le MIME et les drapeaux de sécurité via magic bytes et extension.
         Retourne : (format_id, mime_type, security_flags)
@@ -165,7 +165,7 @@ class UniversalFileReader:
 
         return "unknown", "application/octet-stream", security_flags
 
-    def read_file(self, file_path: Path | str) -> Dict[str, Any]:
+    def read_file(self, file_path: Path | str) -> dict[str, Any]:
         """Lit, valide et normalise le contenu de n'importe quel fichier de manière sécurisée."""
         path = Path(file_path).resolve()
         if not path.exists() or not path.is_file():
@@ -264,7 +264,7 @@ class UniversalFileReader:
 
         return res
 
-    def _read_text_file(self, path: Path) -> Dict[str, Any]:
+    def _read_text_file(self, path: Path) -> dict[str, Any]:
         """Lecture résiliente de texte avec détection d'encodage."""
         try:
             raw = path.read_bytes()
@@ -294,7 +294,7 @@ class UniversalFileReader:
         except Exception as exc:
             return {"ok": False, "type": "text", "error": str(exc)}
 
-    def _read_json_file(self, path: Path, fmt: str) -> Dict[str, Any]:
+    def _read_json_file(self, path: Path, fmt: str) -> dict[str, Any]:
         """Parsing robuste JSON / JSONL."""
         try:
             txt = path.read_text(encoding="utf-8", errors="replace")
@@ -322,7 +322,7 @@ class UniversalFileReader:
         except Exception as exc:
             return {"ok": False, "type": "text", "error": f"Erreur JSON : {exc}"}
 
-    def _read_csv_file(self, path: Path, fmt: str) -> Dict[str, Any]:
+    def _read_csv_file(self, path: Path, fmt: str) -> dict[str, Any]:
         """Extraction tabulaire structurée CSV / TSV."""
         try:
             delimiter = "\t" if fmt == "tsv" or path.suffix.lower() == ".tsv" else ","
@@ -342,7 +342,7 @@ class UniversalFileReader:
         except Exception as exc:
             return {"ok": False, "type": "text", "error": f"Erreur CSV : {exc}"}
 
-    def _read_xml_html_file(self, path: Path, fmt: str) -> Dict[str, Any]:
+    def _read_xml_html_file(self, path: Path, fmt: str) -> dict[str, Any]:
         """Extraction de texte épuré depuis XML / HTML / RSS."""
         try:
             txt = path.read_text(encoding="utf-8", errors="replace")
@@ -375,7 +375,7 @@ class UniversalFileReader:
         except Exception as exc:
             return {"ok": False, "type": "text", "error": f"Erreur XML/HTML : {exc}"}
 
-    def _read_subtitles_file(self, path: Path) -> Dict[str, Any]:
+    def _read_subtitles_file(self, path: Path) -> dict[str, Any]:
         """Extraction de sous-titres SRT / VTT."""
         try:
             txt = path.read_text(encoding="utf-8", errors="replace")
@@ -396,7 +396,7 @@ class UniversalFileReader:
         except Exception as exc:
             return {"ok": False, "type": "text", "error": str(exc)}
 
-    def _read_pdf_file(self, path: Path) -> Dict[str, Any]:
+    def _read_pdf_file(self, path: Path) -> dict[str, Any]:
         """Extrait le texte d'un PDF avec pypdf ou extraction native regex."""
         try:
             import pypdf
@@ -443,7 +443,7 @@ class UniversalFileReader:
                 pass
             return {"ok": True, "type": "pdf", "status": "NEEDS_VISION_OCR", "content": f"[PDF : {path.name} | OCR Requis]"}
 
-    def _read_docx_file(self, path: Path) -> Dict[str, Any]:
+    def _read_docx_file(self, path: Path) -> dict[str, Any]:
         """Extrait le texte d'un document DOCX via XML natif."""
         try:
             with zipfile.ZipFile(str(path), "r") as z:
@@ -464,7 +464,7 @@ class UniversalFileReader:
         except Exception as exc:
             return {"ok": False, "type": "docx", "error": f"Échec lecture DOCX : {exc}"}
 
-    def _read_pptx_file(self, path: Path) -> Dict[str, Any]:
+    def _read_pptx_file(self, path: Path) -> dict[str, Any]:
         """Extrait le texte d'une présentation PPTX via XML natif."""
         try:
             with zipfile.ZipFile(str(path), "r") as z:
@@ -486,7 +486,7 @@ class UniversalFileReader:
         except Exception as exc:
             return {"ok": False, "type": "pptx", "error": f"Échec lecture PPTX : {exc}"}
 
-    def _read_xlsx_file(self, path: Path) -> Dict[str, Any]:
+    def _read_xlsx_file(self, path: Path) -> dict[str, Any]:
         """Extrait le texte et les cellules d'un tableur Excel XLSX."""
         try:
             with zipfile.ZipFile(str(path), "r") as z:
@@ -505,7 +505,7 @@ class UniversalFileReader:
         except Exception as exc:
             return {"ok": False, "type": "xlsx", "error": f"Échec lecture XLSX : {exc}"}
 
-    def _read_ole_file(self, path: Path, ole_type: str) -> Dict[str, Any]:
+    def _read_ole_file(self, path: Path, ole_type: str) -> dict[str, Any]:
         """Extraction de texte résiliente depuis les formats OLE binaires legacy (.doc, .xls, .ppt)."""
         try:
             raw = path.read_bytes()
@@ -522,7 +522,7 @@ class UniversalFileReader:
         except Exception as exc:
             return {"ok": False, "type": ole_type, "error": f"Échec lecture OLE : {exc}"}
 
-    def _read_archive_file(self, path: Path, archive_type: str) -> Dict[str, Any]:
+    def _read_archive_file(self, path: Path, archive_type: str) -> dict[str, Any]:
         """Inspection sécurisée d'archive avec protection stricte anti-zip-bomb, anti-zip-slip et signal de troncature explicite."""
         entries = []
         total_uncompressed = 0
@@ -579,7 +579,7 @@ class UniversalFileReader:
         except Exception as exc:
             return {"ok": False, "type": archive_type, "error": f"Erreur archive : {exc}"}
 
-    def _read_image_metadata(self, path: Path, detected_type: str) -> Dict[str, Any]:
+    def _read_image_metadata(self, path: Path, detected_type: str) -> dict[str, Any]:
         """Extraction des métadonnées d'image et détection QR Code immédiate."""
         qr_res = None
         try:
@@ -609,11 +609,10 @@ class UniversalFileReader:
             "content": f"[IMAGE DÉTECTÉE : {path.name}{qr_info} | Analyse Vision OCR disponible]"
         }
 
-    def read_complex_document(self, file_path: Path | str) -> Dict[str, Any]:
+    def read_complex_document(self, file_path: Path | str) -> dict[str, Any]:
         """Lecture de documents complexes : repli déterministe sur le parseur universel."""
         path = Path(file_path)
         try:
-            import docling
             from docling.document_converter import DocumentConverter
             converter = DocumentConverter()
             result = converter.convert(str(path))

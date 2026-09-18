@@ -3,11 +3,12 @@ Construction et compilation du StateGraph LangGraph avec persistance de mémoire
 """
 
 from typing import Literal
-from langgraph.graph import StateGraph, START, END
-from langgraph.checkpoint.memory import MemorySaver
 
+from langgraph.checkpoint.memory import MemorySaver
+from langgraph.graph import END, START, StateGraph
+
+from ezzio.graph.nodes import direct_node, rag_node, router_node, self_repair_node
 from ezzio.schemas import AgentState
-from ezzio.graph.nodes import router_node, rag_node, direct_node, self_repair_node
 
 
 def route_decision(state: AgentState) -> Literal["rag_node", "direct_node", "self_repair_node"]:
@@ -21,13 +22,13 @@ def route_decision(state: AgentState) -> Literal["rag_node", "direct_node", "sel
 
 def build_workflow(checkpointer=None):
     workflow = StateGraph(AgentState)
-    
+
     # Ajout des nœuds
     workflow.add_node("router_node", router_node)
     workflow.add_node("rag_node", rag_node)
     workflow.add_node("direct_node", direct_node)
     workflow.add_node("self_repair_node", self_repair_node)
-    
+
     # Arêtes
     workflow.add_edge(START, "router_node")
     workflow.add_conditional_edges(
@@ -42,10 +43,10 @@ def build_workflow(checkpointer=None):
     workflow.add_edge("rag_node", END)
     workflow.add_edge("direct_node", END)
     workflow.add_edge("self_repair_node", END)
-    
+
     if checkpointer is None:
         checkpointer = MemorySaver()
-        
+
     return workflow.compile(checkpointer=checkpointer)
 
 

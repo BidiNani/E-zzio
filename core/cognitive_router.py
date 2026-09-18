@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import os
 import time
-from typing import Any, Dict, Optional
+from typing import Any
+
 import httpx
 
 
@@ -12,8 +13,8 @@ class ModelRouter:
     def __init__(
         self,
         ollama_url: str = "http://127.0.0.1:11434",
-        gemini_api_key: Optional[str] = None,
-        http_client: Optional[httpx.AsyncClient] = None,
+        gemini_api_key: str | None = None,
+        http_client: httpx.AsyncClient | None = None,
     ) -> None:
         self.ollama_url = ollama_url.rstrip("/")
         if not gemini_api_key:
@@ -29,8 +30,10 @@ class ModelRouter:
         # canonique. Aucun modèle REJECTED/UNKNOWN ne peut jamais être rendu.
         try:
             from core.routing.model_registry import (
-                canonical_model_registry as _reg,
                 ModelQualificationStatus as _S,
+            )
+            from core.routing.model_registry import (
+                canonical_model_registry as _reg,
             )
             self._authorized = {
                 _reg._models[m].raw_model_name
@@ -63,7 +66,7 @@ class ModelRouter:
                 "le registre — aucun fallback autorisé.")
         return primary
 
-    def resolve_route(self, profile: str) -> Dict[str, Any]:
+    def resolve_route(self, profile: str) -> dict[str, Any]:
         has_gemini = bool(self.gemini_api_key)
         local_primary = self._authorized_ollama()
         local_fallback = "phi4-mini:latest"
@@ -132,7 +135,7 @@ class ModelRouter:
                 return parts[0].get("text", "")
         return ""
 
-    async def complete(self, profile: str, prompt: str) -> Dict[str, Any]:
+    async def complete(self, profile: str, prompt: str) -> dict[str, Any]:
         routes = self.resolve_route(profile)
         primary = routes["primary"]
         fallback = routes["fallback"]
@@ -169,7 +172,7 @@ class ModelRouter:
             if close_client:
                 await client.aclose()
 
-    async def probe_ollama(self) -> Dict[str, Any]:
+    async def probe_ollama(self) -> dict[str, Any]:
         """Sonde l'état de santé du serveur Ollama local."""
         client = self._client or httpx.AsyncClient()
         close_client = self._client is None
@@ -188,7 +191,7 @@ class ModelRouter:
             if close_client:
                 await client.aclose()
 
-    async def probe_gemini(self) -> Dict[str, Any]:
+    async def probe_gemini(self) -> dict[str, Any]:
         """Sonde la connectivité au service Gemini Cloud."""
         if not self.gemini_api_key:
             return {"online": False, "latency_ms": 0, "configured": False, "error": "GEMINI_API_KEY non fournie"}
@@ -210,7 +213,7 @@ class ModelRouter:
             if close_client:
                 await client.aclose()
 
-    async def probe_groq(self) -> Dict[str, Any]:
+    async def probe_groq(self) -> dict[str, Any]:
         """Sonde la connectivité au service Groq Cloud."""
         groq_key = os.getenv("GROQ_API_KEY")
         if not groq_key:
@@ -235,7 +238,7 @@ class ModelRouter:
             if close_client:
                 await client.aclose()
 
-    def probe_antigravity(self) -> Dict[str, Any]:
+    def probe_antigravity(self) -> dict[str, Any]:
         """Inspecte le statut du provider Antigravity (fail-closed, blocage quota externe)."""
         return {
             "online": False,
@@ -246,7 +249,7 @@ class ModelRouter:
             "error": "Antigravity = BLOCKED_BY_EXTERNAL_QUOTA",
         }
 
-    async def get_providers_health(self) -> Dict[str, Any]:
+    async def get_providers_health(self) -> dict[str, Any]:
         """Fournit une synthèse complète de la santé de tous les providers configurés en parallèle."""
         import asyncio
         results = await asyncio.gather(

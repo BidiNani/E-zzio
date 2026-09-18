@@ -1,12 +1,13 @@
-import os
-import sqlite3
 import hashlib
-import time
 import json
 import logging
-from logging.handlers import RotatingFileHandler
-from datetime import datetime
+import os
+import sqlite3
 import threading
+import time
+from datetime import datetime
+from logging.handlers import RotatingFileHandler
+
 import psutil
 
 HAS_BLAKE3 = False
@@ -518,7 +519,7 @@ print("[OK] Backend SQLite V5.4 chargé pour Index Engine V5.5")
 
 class WorkspaceIndexerV55:
     def __init__(self, config_path="config/indexer_config.json"):
-        with open(config_path, "r", encoding="utf-8") as f:
+        with open(config_path, encoding="utf-8") as f:
             self.config = json.load(f)
         self.logger = setup_logger(self.config["paths"]["log_path"])
         self.telemetry = TelemetryCollector()

@@ -1,12 +1,14 @@
 """E-ZZIO Unified Memory Gateway — High-Performance WAL, FTS5, Evidence Store & Lifecycle Engine."""
 import asyncio
-import aiosqlite
 import inspect
 import json
 import logging
 import re
-from typing import Any, Dict, List, Optional
-from datetime import datetime, timezone
+from datetime import UTC, datetime
+from typing import Any
+
+import aiosqlite
+
 from core.evidence_store import EvidenceStore
 
 logger = logging.getLogger("ezzio.memory.gateway")
@@ -47,7 +49,7 @@ class UnifiedMemoryGateway:
             if "metadata" not in columns:
                 await db.execute("ALTER TABLE session_messages ADD COLUMN metadata TEXT;")
             if "timestamp" not in columns:
-                now_fallback = datetime.now(timezone.utc).isoformat()
+                now_fallback = datetime.now(UTC).isoformat()
                 await db.execute(f"ALTER TABLE session_messages ADD COLUMN timestamp TEXT DEFAULT '{now_fallback}';")
 
             await db.execute("CREATE INDEX IF NOT EXISTS idx_sess_id ON session_messages(session_id);")
@@ -81,9 +83,9 @@ class UnifiedMemoryGateway:
 
             await db.commit()
 
-    async def record_message(self, session_id: str, role: str, content: str, metadata: Optional[Dict[str, Any]] = None) -> None:
+    async def record_message(self, session_id: str, role: str, content: str, metadata: dict[str, Any] | None = None) -> None:
         """Insertion d'un message avec traçabilité d'erreur."""
-        now = datetime.now(timezone.utc).isoformat()
+        now = datetime.now(UTC).isoformat()
         meta_str = json.dumps(metadata) if metadata else None
 
         try:
@@ -98,7 +100,7 @@ class UnifiedMemoryGateway:
             logger.error("[MEMORY-RECORD-FAIL] Erreur écriture SQLite : %s", exc)
             raise
 
-    async def get_session_history(self, session_id: str, limit: int = 10) -> List[Dict[str, Any]]:
+    async def get_session_history(self, session_id: str, limit: int = 10) -> list[dict[str, Any]]:
         """Récupération chronologique de l'historique récent."""
         async with aiosqlite.connect(self.db_path) as db:
             db.row_factory = aiosqlite.Row
@@ -118,7 +120,7 @@ class UnifiedMemoryGateway:
                 results.append(item)
             return results
 
-    async def search_memory(self, query: str, limit: int = 3) -> Dict[str, List[Dict[str, Any]]]:
+    async def search_memory(self, query: str, limit: int = 3) -> dict[str, list[dict[str, Any]]]:
         """Recherche FTS5 BM25 et recherche croisée dans EvidenceStore via get_by_query."""
         clean_q = re.sub(r"[^\w\s]", " ", query).strip()
         fts_query = " OR ".join([f'"{word}"*' for word in clean_q.split() if len(word) > 1])
@@ -185,7 +187,7 @@ class UnifiedMemoryGateway:
             await db.commit()
             return deleted
 
-    async def purge_by_keyword(self, keyword: str) -> Dict[str, int]:
+    async def purge_by_keyword(self, keyword: str) -> dict[str, int]:
         """Purge sélective par mot-clé."""
         pattern = f"%{keyword}%"
         async with aiosqlite.connect(self.db_path) as db:
@@ -196,11 +198,11 @@ class UnifiedMemoryGateway:
 
     async def list_cells(
         self,
-        tier: Optional[str] = None,
-        scope: Optional[str] = None,
-        scope_id: Optional[str] = None,
+        tier: str | None = None,
+        scope: str | None = None,
+        scope_id: str | None = None,
         limit: int = 500,
-    ) -> List[Dict[str, Any]]:
+    ) -> list[dict[str, Any]]:
         """Liste les cellules de mémoire pour le cycle de vie/maintenance."""
         return []
 

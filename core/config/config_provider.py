@@ -1,7 +1,9 @@
-import aiosqlite
-from typing import Any, Dict, Optional
-from core.config.iconfig_provider import IConfigProvider
 import os
+from typing import Any
+
+import aiosqlite
+
+from core.config.iconfig_provider import IConfigProvider
 
 
 class ConfigProvider(IConfigProvider):
@@ -20,7 +22,7 @@ class ConfigProvider(IConfigProvider):
             """)
             await db.commit()
 
-    async def get_config(self, key: str) -> Optional[Any]:
+    async def get_config(self, key: str) -> Any | None:
         async with aiosqlite.connect(self.db_path) as db:
             cursor = await db.execute("SELECT value FROM config WHERE key = ?", (key,))
             row = await cursor.fetchone()
@@ -31,7 +33,7 @@ class ConfigProvider(IConfigProvider):
             await db.execute("INSERT OR REPLACE INTO config (key, value, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP)", (key, str(value)))
             await db.commit()
 
-    async def list_configs(self, prefix: str = "") -> Dict[str, Any]:
+    async def list_configs(self, prefix: str = "") -> dict[str, Any]:
         async with aiosqlite.connect(self.db_path) as db:
             cursor = await db.execute("SELECT key, value FROM config WHERE key LIKE ?", (f"{prefix}%",))
             rows = await cursor.fetchall()

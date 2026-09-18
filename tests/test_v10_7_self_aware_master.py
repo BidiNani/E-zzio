@@ -5,13 +5,14 @@ la détection de capability gap vs knowledge gap, le portail Free-First d'instal
 et les invariants de sécurité (No Secret Auto-Discovery, HITL sur outils payants).
 """
 import pytest
+
 from core.agent.self_awareness import (
-    SelfKnowledgeEngine,
     CapabilityState,
-    UncertaintyLevel,
     EpistemicAction,
     LicenseType,
+    SelfKnowledgeEngine,
     ToolPromotionStatus,
+    UncertaintyLevel,
 )
 
 

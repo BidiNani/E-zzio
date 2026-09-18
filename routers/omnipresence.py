@@ -2,16 +2,16 @@ from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 
 from core.omnipresence import (
-    status,
-    inbox_add,
-    outbox_add,
-    discord_send_webhook,
     discord_send_bot_channel,
-    messenger_send_text,
-    mobile_push,
-    mobile_pull,
-    verify_mobile_token,
+    discord_send_webhook,
+    inbox_add,
     load_config,
+    messenger_send_text,
+    mobile_pull,
+    mobile_push,
+    outbox_add,
+    status,
+    verify_mobile_token,
 )
 
 router = APIRouter(prefix="/omni", tags=["omnipresence"])

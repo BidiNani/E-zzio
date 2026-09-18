@@ -3,9 +3,9 @@ E-ZZIO V7.26.0 — Persistent Circuit Breaker
 Sauvegarde et restaure l'état des disjoncteurs pour survivre aux reboots.
 """
 
-import time
 import json
 import logging
+import time
 from pathlib import Path
 
 logger = logging.getLogger(__name__)

@@ -1,12 +1,12 @@
+import asyncio
+import logging
 import os
 import time
-import logging
 from datetime import datetime
+
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security.api_key import APIKeyHeader
 from pydantic import BaseModel
-from typing import Dict, Optional
-import asyncio
 
 logger = logging.getLogger("ezzio.routers.stats")
 
@@ -43,10 +43,10 @@ async def init_stats_router():
 # --- Modèles ---
 class StatsResponse(BaseModel):
     total_requests: int
-    avg_latency_ms: Optional[float]
-    top_provider: Optional[str]
-    requests_by_provider: Dict[str, int]
-    last_updated: Optional[str]
+    avg_latency_ms: float | None
+    top_provider: str | None
+    requests_by_provider: dict[str, int]
+    last_updated: str | None
 
 
 class StatsNotify(BaseModel):

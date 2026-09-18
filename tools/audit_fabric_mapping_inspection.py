@@ -1,26 +1,27 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_fabric_internals() -> Dict[str, Any]:
+def inspect_fabric_internals() -> dict[str, Any]:
     fabric_path = PROJECT_ROOT / "core" / "models" / "fabric.py"
     if not fabric_path.exists():
         return {"exists": False}
-    
+
     try:
         content = fabric_path.read_text(encoding="utf-8", errors="replace")
         tree = ast.parse(content, filename=str(fabric_path))
-        
+
         qualify_sources = []
         activate_sources = []
-        
+
         for node in ast.walk(tree):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 if node.name == "qualify_candidates":
@@ -34,7 +35,7 @@ def inspect_fabric_internals() -> Dict[str, Any]:
                         elif isinstance(sub, ast.Constant):
                             if isinstance(sub.value, str):
                                 activate_sources.append(sub.value)
-                                
+
         return {
             "exists": True,
             "qualify_attributes": list(set(qualify_sources)),

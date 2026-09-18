@@ -2,20 +2,14 @@
 E-ZZIO Web API — HITL Approval Router.
 Expose la gestion des approbations humaines sous contrôle strict sans secret.
 """
-from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
+from datetime import UTC, datetime
+
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel, Field
 
 from core.governance.approval import (
-    ApprovalDecision,
     ApprovalExpiredError,
-    ApprovalManager,
-    ApprovalRequest,
-    ApprovalStatus,
     DecisionChoice,
-    DoubleExecutionError,
-    PayloadIntegrityViolation,
     StateTransitionError,
     approval_manager,
 )
@@ -38,14 +32,14 @@ class PendingApprovalItem(BaseModel):
 
 class PendingApprovalsResponse(BaseModel):
     ok: bool = True
-    pending_approvals: List[PendingApprovalItem]
+    pending_approvals: list[PendingApprovalItem]
     total: int
 
 
 class DecideRequest(BaseModel):
     decision: DecisionChoice
     decided_by: str = Field(..., min_length=1)
-    reason: Optional[str] = None
+    reason: str | None = None
 
 
 class DecideResponse(BaseModel):
@@ -54,13 +48,13 @@ class DecideResponse(BaseModel):
     status: str
     decided_by: str
     decided_at: str
-    reason: Optional[str] = None
+    reason: str | None = None
 
 
 def _calculate_remaining_sec(expires_at_str: str) -> int:
     try:
         exp_dt = datetime.fromisoformat(expires_at_str)
-        now_dt = datetime.now(timezone.utc)
+        now_dt = datetime.now(UTC)
         diff = int((exp_dt - now_dt).total_seconds())
         return max(0, diff)
     except Exception:

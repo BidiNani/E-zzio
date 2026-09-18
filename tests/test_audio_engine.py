@@ -2,9 +2,11 @@
 Tests unitaires pour le double moteur audio (Faster-Whisper Batch & Nemotron-3.5-ASR Streaming).
 """
 
-import wave
 import struct
+import wave
+
 import pytest
+
 from core.perception.audio_engine import AudioTranscriptionEngine, NemotronStreamingASR
 
 

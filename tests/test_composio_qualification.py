@@ -6,13 +6,14 @@ Certifie l'intégration sécurisée de Composio sous le Capability Qualification
 - Scopes d'écriture avec obligation d'approbation humaine (REQUIRE_HUMAN)
 - Intégration et dispatch via CapabilityRegistry
 """
-import pytest
-from unittest.mock import patch, MagicMock
-import httpx
+from unittest.mock import MagicMock, patch
 
+import httpx
+import pytest
+
+from core.capabilities.capability_qualification import QualificationStatus
 from core.capabilities.composio_provider import ComposioProvider
 from core.capabilities.registry import capability_registry
-from core.capabilities.capability_qualification import QualificationStatus
 
 
 @pytest.mark.asyncio

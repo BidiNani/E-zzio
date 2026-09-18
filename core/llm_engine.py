@@ -1,9 +1,9 @@
-from core.identity.canonical_identity import CanonicalIdentity
 import os
-import time
-import asyncio
 import re
+import time
 from pathlib import Path
+
+from core.identity.canonical_identity import CanonicalIdentity
 
 PERSONA_PATH = Path("G:/AI/E-zzio/registry/persona.txt")
 

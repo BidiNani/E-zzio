@@ -5,8 +5,8 @@ avec la fenêtre nocturne du 12 août 2026 (00:20:22 -> 03:00:00).
 """
 
 import json
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 START_TIME = datetime.fromisoformat("2026-08-12T00:20:22")
@@ -44,7 +44,7 @@ def run_correlation():
             continue
 
         try:
-            with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+            with open(file_path, encoding="utf-8", errors="ignore") as f:
                 for line_num, line in enumerate(f, 1):
                     line_stripped = line.strip()
                     if not line_stripped:

@@ -1,16 +1,17 @@
-from core.identity.canonical_identity import CanonicalIdentity
 import json
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Any
+
+from core.identity.canonical_identity import CanonicalIdentity
 
 
 class EzzioContextInjector:
-    def __init__(self, root_dir: Optional[Path] = None):
+    def __init__(self, root_dir: Path | None = None):
         self.root_dir = root_dir or Path(r"G:\AI\E-zzio")
         self.health_file = self.root_dir / "runtime" / "state" / "backend" / "health.json"
         self.integrity_file = self.root_dir / "runtime" / "audit" / "integrity" / "sha256_baseline_v1.json"
 
-    def _get_system_state(self) -> Dict[str, Any]:
+    def _get_system_state(self) -> dict[str, Any]:
         state = {"status": "UNKNOWN", "workers": "N/A"}
         if self.health_file.exists():
             try:
@@ -32,7 +33,7 @@ class EzzioContextInjector:
                 pass
         return "Intégrité certifiée SHA256."
 
-    def build_system_prompt(self, base_system_prompt: Optional[str] = None) -> str:
+    def build_system_prompt(self, base_system_prompt: str | None = None) -> str:
         canonical = CanonicalIdentity().build_system_prompt()
         base_system_prompt = base_system_prompt or canonical
         state = self._get_system_state()

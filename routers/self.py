@@ -1,9 +1,9 @@
+import logging
 import os
 import sqlite3
-import logging
+
 from fastapi import APIRouter
 from pydantic import BaseModel
-from typing import Optional
 
 logger = logging.getLogger("ezzio.routers.self")
 
@@ -12,11 +12,11 @@ router = APIRouter()
 
 
 class SelfStatus(BaseModel):
-    model_active: Optional[str]
+    model_active: str | None
     memory_backend: str
     memory_session_events: int
-    memory_last_write: Optional[str]
-    pipeline_running: Optional[str]
+    memory_last_write: str | None
+    pipeline_running: str | None
 
 
 @router.get("/api/v1/self/status", response_model=SelfStatus, tags=["Self"])

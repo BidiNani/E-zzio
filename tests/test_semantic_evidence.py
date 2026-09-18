@@ -1,11 +1,19 @@
 """Red-team sémantique : paraphrases, contradictions, copies, dates, portée.
 Zéro réseau, zéro LLM — tout est déterministe."""
-from core.capabilities.semantic_evidence import (
-    EvidenceNode, SemRelation, build_graph, content_fingerprint,
-    contradiction_stances, evidence_groups, extract_measurements,
-    lexical_overlap, normalize_entity, relate, same_timeframe,
-)
 from core.capabilities.research_fabric import detect_conflict
+from core.capabilities.semantic_evidence import (
+    EvidenceNode,
+    SemRelation,
+    build_graph,
+    content_fingerprint,
+    contradiction_stances,
+    evidence_groups,
+    extract_measurements,
+    lexical_overlap,
+    normalize_entity,
+    relate,
+    same_timeframe,
+)
 
 T0 = 1_700_000_000.0
 DAY = 86400.0

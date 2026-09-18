@@ -15,7 +15,7 @@ import logging
 import time
 import uuid
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any
 
 import aiosqlite
 
@@ -81,14 +81,14 @@ class MissionJournal:
 class UniversalOrchestrator:
     """Soumission complexe : ack immédiat, essaim en fond, journal WAL."""
 
-    def __init__(self, federation=None, journal: Optional[MissionJournal] = None):
+    def __init__(self, federation=None, journal: MissionJournal | None = None):
         self.federation = federation
         self.journal = journal or MissionJournal()
-        self._tasks: Dict[str, asyncio.Task] = {}
+        self._tasks: dict[str, asyncio.Task] = {}
 
     async def submit_complex(self, request: str, skeleton: str = "",
                              channel: str = "web",
-                             session_id: str = "") -> Dict[str, Any]:
+                             session_id: str = "") -> dict[str, Any]:
         """Retourne l'accusé SANS attendre l'essaim (non-interférence)."""
         from core.telemetry.agent_tracer import tracer
         mission_id = f"uma_{uuid.uuid4().hex[:10]}"
@@ -104,9 +104,9 @@ class UniversalOrchestrator:
                 "ack": "Essaim en cours, conversation disponible."}
 
     async def _run_swarm(self, mission_id: str, request: str, skeleton: str,
-                         channel: str, session_id: str) -> Dict[str, Any]:
-        from core.telemetry.agent_tracer import tracer
+                         channel: str, session_id: str) -> dict[str, Any]:
         from core.agents.multi_agent_flow import MultiAgentFlow
+        from core.telemetry.agent_tracer import tracer
         try:
             await self.journal.init()
             await self.journal.record(mission_id, "DEBATE_START", "RUNNING")

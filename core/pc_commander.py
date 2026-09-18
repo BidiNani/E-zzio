@@ -4,7 +4,7 @@ import json
 import os
 import time
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
 STATE_ROOT = PROJECT_ROOT / "state"
@@ -58,7 +58,7 @@ def session_state_path(session: str) -> Path:
     return SESSIONS_ROOT / f"{safe_session_name(session)}.json"
 
 
-def append_journal(event: Dict[str, Any]) -> None:
+def append_journal(event: dict[str, Any]) -> None:
     event.setdefault("created_at", now())
     event.setdefault("version", "v2.22-pc-commander")
     event.setdefault(
@@ -89,7 +89,7 @@ def write_json(path: Path, data: Any) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-def get_session_state(session: str) -> Dict[str, Any]:
+def get_session_state(session: str) -> dict[str, Any]:
     path = session_state_path(session)
     default = {
         "session": safe_session_name(session),
@@ -104,7 +104,7 @@ def get_session_state(session: str) -> Dict[str, Any]:
     return state
 
 
-def set_pending(session: str, proposal: Optional[Dict[str, Any]]) -> Dict[str, Any]:
+def set_pending(session: str, proposal: dict[str, Any] | None) -> dict[str, Any]:
     state = get_session_state(session)
 
     if proposal:
@@ -126,11 +126,11 @@ def normalize(text: str) -> str:
     return (text or "").strip().lower()
 
 
-def contains_any(low: str, words: List[str]) -> bool:
+def contains_any(low: str, words: list[str]) -> bool:
     return any(word in low for word in words)
 
 
-def status() -> Dict[str, Any]:
+def status() -> dict[str, Any]:
     sessions = []
 
     for path in sorted(SESSIONS_ROOT.glob("*.json"), key=lambda p: p.stat().st_mtime, reverse=True):
@@ -175,7 +175,7 @@ def status() -> Dict[str, Any]:
     }
 
 
-def interpret(text: str) -> Dict[str, Any]:
+def interpret(text: str) -> dict[str, Any]:
     low = normalize(text)
 
     if low in ("confirme", "confirmé", "confirmation", "ok confirme", "go confirme"):
@@ -317,7 +317,7 @@ def interpret(text: str) -> Dict[str, Any]:
     }
 
 
-def summarize_result(action: str, result: Dict[str, Any]) -> str:
+def summarize_result(action: str, result: dict[str, Any]) -> str:
     if action == "maintenance_status":
         return f"Maintenance : ok={result.get('ok')}, bad_count={result.get('bad_count')}, dust={result.get('dust_candidate_count')}."
 
@@ -349,7 +349,7 @@ def summarize_result(action: str, result: Dict[str, Any]) -> str:
     return "Action terminée."
 
 
-def command(text: str, session: str = "pc") -> Dict[str, Any]:
+def command(text: str, session: str = "pc") -> dict[str, Any]:
     started = time.time()
     session = safe_session_name(session)
     state = get_session_state(session)

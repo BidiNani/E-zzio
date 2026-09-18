@@ -4,7 +4,7 @@ Décompose une intention complexe en un plan d'action séquentiel.
 """
 
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 
 class TaskEngine:
@@ -26,7 +26,7 @@ class TaskEngine:
             "intent": intent,
             "tasks": tasks,
             "status": "READY",
-            "created_at": datetime.now(timezone.utc).isoformat(),
+            "created_at": datetime.now(UTC).isoformat(),
         }
 
 

@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import logging
 import re
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 logger = logging.getLogger("ezzio.discord.publisher")
 
@@ -15,11 +15,11 @@ DISCORD_LIMIT = 1950
 FENCE = "```"
 
 
-def split_markdown(text: str, limit: int = DISCORD_LIMIT) -> List[str]:
+def split_markdown(text: str, limit: int = DISCORD_LIMIT) -> list[str]:
     """Découpe sans jamais couper un bloc de code ; ferme/rouvre les fences."""
     paras = re.split(r"\n{2,}", text)
-    chunks: List[str] = []
-    cur: List[str] = []
+    chunks: list[str] = []
+    cur: list[str] = []
     cur_len = 0
     in_fence = False
 
@@ -101,8 +101,8 @@ class DiscordPublisher:
         channel: Any,
         title: str,
         content_markdown: str,
-        tags: Optional[List[str]] = None,
-    ) -> Dict[str, Any]:
+        tags: list[str] | None = None,
+    ) -> dict[str, Any]:
         import discord
 
         target = channel

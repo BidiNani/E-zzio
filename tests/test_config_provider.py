@@ -1,5 +1,7 @@
-import pytest
 import os
+
+import pytest
+
 from core.config.config_provider import ConfigProvider
 
 

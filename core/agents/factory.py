@@ -6,9 +6,9 @@ la délégation de capacités, le contrôle de profondeur et le Kill Switch sous
 from __future__ import annotations
 
 import logging
-import uuid
 import time
-from typing import Any, Dict, List, Optional, Set
+import uuid
+from typing import Any
 
 from core.agents.registry import (
     AgentDescriptor,
@@ -42,9 +42,9 @@ class AgentFactory:
     MAX_CHILDREN_PER_AGENT = 5
     MAX_SPAWNS_PER_MINUTE = 20
 
-    def __init__(self, registry: Optional[AgentRegistry] = None):
+    def __init__(self, registry: AgentRegistry | None = None):
         self.registry = registry or agent_registry
-        self._spawn_timestamps: List[float] = []
+        self._spawn_timestamps: list[float] = []
 
     def _check_spawn_rate_limit(self) -> None:
         """Vérifie que la limite de création par minute n'est pas dépassée."""
@@ -74,13 +74,13 @@ class AgentFactory:
         self,
         parent_id: str,
         role: str,
-        name: Optional[str] = None,
-        purpose: Optional[str] = None,
-        capabilities: Optional[List[str]] = None,
-        tools: Optional[List[str]] = None,
+        name: str | None = None,
+        purpose: str | None = None,
+        capabilities: list[str] | None = None,
+        tools: list[str] | None = None,
         budget: float = 20.0,
-        model: Optional[str] = None,
-        provider: Optional[str] = None,
+        model: str | None = None,
+        provider: str | None = None,
         ephemeral: bool = True,
         room: str = "dev_lab",
     ) -> AgentDescriptor:
@@ -171,7 +171,7 @@ class AgentFactory:
         )
         return child_desc
 
-    def terminate_agent(self, agent_id: str, reason: str = "Completed") -> Dict[str, Any]:
+    def terminate_agent(self, agent_id: str, reason: str = "Completed") -> dict[str, Any]:
         """Termine un agent ou sous-agent et libère les ressources."""
         agent = self.registry.get_agent(agent_id)
         if not agent:
@@ -189,7 +189,7 @@ class AgentFactory:
             "reason": reason,
         }
 
-    def cancel_subtree(self, root_agent_id: str, reason: str = "Kill Switch Triggered") -> List[str]:
+    def cancel_subtree(self, root_agent_id: str, reason: str = "Kill Switch Triggered") -> list[str]:
         """
         Kill Switch central : annule immédiatement un agent et toute son arborescence de sous-agents.
         """

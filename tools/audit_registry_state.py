@@ -1,12 +1,12 @@
 from __future__ import annotations
+
 import json
-import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
-def find_registry_files() -> List[Path]:
+def find_registry_files() -> list[Path]:
     candidates = []
     for p in PROJECT_ROOT.glob("**/*registry*.json"):
         if not any(excluded in p.parts for excluded in {".venv", "venv", ".git", "__pycache__", "snapshots", "backup", "backups"}):
@@ -16,7 +16,7 @@ def find_registry_files() -> List[Path]:
             candidates.append(p)
     return candidates
 
-def inspect_registry_payload(path: Path) -> Dict[str, Any]:
+def inspect_registry_payload(path: Path) -> dict[str, Any]:
     try:
         data = json.loads(path.read_text(encoding="utf-8", errors="replace"))
         return {"valid_json": True, "data": data}
@@ -64,13 +64,13 @@ def main():
                 lifecycle = r.get("lifecycle", r.get("state", "UNKNOWN"))
                 score = r.get("qualification_score", r.get("score", "N/A"))
                 latency = r.get("latency_ms", "N/A")
-                
+
                 is_active = str(lifecycle).upper() == "ACTIVE"
                 if is_active:
                     active_count += 1
                 status_icon = "🟢 [ACTIVE]" if is_active else f"⚪ [{lifecycle}]"
                 print(f"    • {status_icon} {provider}/{model_id} | Tier: {tier} | Score: {score} | Latency: {latency}ms")
-        
+
         print(f"  🏆 Modèles ACTIVE dans ce registre : {active_count}")
 
     print("\n" + "=" * 80)

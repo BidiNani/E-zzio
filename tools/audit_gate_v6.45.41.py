@@ -1,9 +1,10 @@
 from __future__ import annotations
+
 import ast
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 EXCLUDED_DIRS = {"audit", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tests"}
@@ -18,7 +19,7 @@ TARGET_FILES = {
 class ValueProvenanceVisitor(ast.NodeVisitor):
     def __init__(self, rel_path: str):
         self.rel_path = rel_path
-        self.traces: List[Dict[str, Any]] = []
+        self.traces: list[dict[str, Any]] = []
 
     def visit_FunctionDef(self, node: ast.FunctionDef):
         self._inspect_func(node)

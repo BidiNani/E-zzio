@@ -1,9 +1,10 @@
 import os
-from urllib.parse import quote
-from dotenv import load_dotenv
 from pathlib import Path
+from urllib.parse import quote
 
-from core.cloud_guard import guarded_request, cloud_status
+from dotenv import load_dotenv
+
+from core.cloud_guard import cloud_status, guarded_request
 from core.token_compressor import compact_api_result
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")

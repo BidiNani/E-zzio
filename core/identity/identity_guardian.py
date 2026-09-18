@@ -5,8 +5,9 @@ Exécute le contrôle anti-dérive continu entre le disque et le contexte de boo
 
 import hashlib
 from pathlib import Path
+
 from core.identity.identity_context import ImmutableIdentityContext
-from core.identity.identity_events import IdentityState, IdentityEventManager
+from core.identity.identity_events import IdentityEventManager, IdentityState
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 CONFIG_DIR = ROOT_DIR / "config"

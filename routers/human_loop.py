@@ -2,13 +2,13 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 
 from core.human_loop import (
-    status,
-    perceive,
-    reflect,
-    tick,
     journal_tail,
     load_memory,
+    perceive,
+    reflect,
     save_memory,
+    status,
+    tick,
 )
 
 router = APIRouter(prefix="/human", tags=["human-loop"])

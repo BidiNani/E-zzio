@@ -5,7 +5,7 @@ Mesure le temps d'exécution et la consommation mémoire (RAM) d'un module ou d'
 
 import time
 import tracemalloc
-from typing import Callable
+from collections.abc import Callable
 
 
 class RuntimeProfiler:

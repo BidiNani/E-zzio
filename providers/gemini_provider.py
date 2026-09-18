@@ -1,14 +1,15 @@
 import asyncio
 import time
 from typing import Any
+
 from google import genai
 from google.genai import types
 
 from providers.base_provider import BaseProvider
-from providers.secrets_loader import get_gemini_keys
-from providers.provider_response import ProviderResponse
 from providers.key_scheduler import KeyScheduler
+from providers.provider_response import ProviderResponse
 from providers.provider_telemetry import provider_telemetry
+from providers.secrets_loader import get_gemini_keys
 
 GEMINI_MODELS = [
     "gemini-3.7-flash",
@@ -83,7 +84,7 @@ class GeminiProvider(BaseProvider):
                     metadata={"key_index": idx},
                 )
 
-            except asyncio.TimeoutError:
+            except TimeoutError:
                 provider_telemetry.record_event("gemini", target_model, capability, False, 12000.0, error_type="timeout", key_index=idx)
                 await asyncio.sleep(0.5)
             except Exception as e:

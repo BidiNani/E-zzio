@@ -4,10 +4,10 @@ Scande les répertoires cibles et classe les fichiers selon leur appartenance
 à la fenêtre temporelle nocturne (21:00 - 03:00) pour reconstituer l'historique de forge.
 """
 
-import json
 import hashlib
-from pathlib import Path
+import json
 from datetime import datetime, time
+from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 TARGET_DIRS = ["core", "runtime", "registry", "state", "bridge", "config"]

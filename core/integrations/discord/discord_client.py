@@ -7,7 +7,7 @@ import asyncio
 import logging
 import pathlib
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 logger = logging.getLogger("ezzio.discord.client")
 
@@ -27,8 +27,9 @@ except Exception:
 _http_client = None
 
 # Exceptions reseau unifiees (httpx + aiohttp)
-import httpx as _httpx_lib
 import aiohttp
+import httpx as _httpx_lib
+
 DISCORD_NET_ERRORS = (aiohttp.ClientError, asyncio.TimeoutError, _httpx_lib.RequestError, _httpx_lib.TimeoutException)
 
 
@@ -46,20 +47,20 @@ def get_http_client():
     return _http_client
 
 
+import aiohttp
 import discord
 from discord.ext import commands, tasks
-import aiohttp
 
 PROJECT_ROOT = pathlib.Path(r"G:\AI\E-zzio")
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
+from core.config import secrets_loader
+from core.integrations.discord.discord_watchdog import discord_watchdog
 from core.integrations.discord.permission_guard import permission_guard
 from core.security.secret_redactor import secret_redactor
-from core.integrations.discord.discord_watchdog import discord_watchdog
 from core.tool_gateway.google_bridge import GoogleIdentityBridge
 from runtime.adapters.config.dotenv_provider import DotEnvConfigProvider
-from core.config import secrets_loader
 
 config = DotEnvConfigProvider(env_path=str(PROJECT_ROOT / "secrets" / ".env"))
 google_bridge = GoogleIdentityBridge(config=config)
@@ -76,7 +77,6 @@ if OWNER_ID_INT is None:
         OWNER_ID_INT = None
 
 from core.integrations.discord.routing_rules import (
-    BIDINANI_BUS_CATEGORY_ID,
     channel_category_id,
     should_respond,
 )
@@ -190,7 +190,7 @@ async def proactive_event_loop():
         if findings and OWNER_ID:
             owner = bot.get_user(int(OWNER_ID)) or await bot.fetch_user(int(OWNER_ID))
             if owner:
-                now_str = datetime.now(timezone.utc).strftime("%H:%M:%S UTC")
+                now_str = datetime.now(UTC).strftime("%H:%M:%S UTC")
                 header = "🧠 **[E-ZZIO Diagnostic — " + str(now_str) + "]**\n"
                 payload = header + "\n".join(findings)
                 sanitized = secret_redactor.sanitize(payload)

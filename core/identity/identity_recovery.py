@@ -3,12 +3,13 @@ E-ZZIO V7.31 — Atomic Transactional Recovery Engine
 Restaure l'identité dans une zone de staging, valide l'intégrité à 100%, puis valide atomiquement.
 """
 
-import os
-import json
-import shutil
 import hashlib
 import hmac
+import json
+import os
+import shutil
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent

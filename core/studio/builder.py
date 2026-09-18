@@ -4,13 +4,14 @@ Executes, compiles and validates generated applications (Python CLI, Pygame, God
 strictly confined inside G:\\AI\\E-zzio\\projects\\<name>\\ with real execution proof.
 """
 from __future__ import annotations
-import os
-import sys
-import subprocess
-import time
+
 import logging
+import os
+import subprocess
+import sys
+import time
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any
 
 logger = logging.getLogger("ProjectBuilder")
 
@@ -26,7 +27,7 @@ class ProjectBuilder:
         self.projects_dir = (self.workspace_root / "projects").resolve()
         self.godot_bin = self._find_godot_binary()
 
-    def _find_godot_binary(self) -> Optional[str]:
+    def _find_godot_binary(self) -> str | None:
         """Localise l'exécutable console Godot disponible sur la machine."""
         candidates = [
             "G:\\Godot\\Godot_v4.7.2-stable_win64_console.exe",
@@ -65,9 +66,9 @@ class ProjectBuilder:
         self,
         project_name: str,
         entrypoint: str = "src/main.py",
-        args: Optional[List[str]] = None,
+        args: list[str] | None = None,
         timeout: int = 15
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Exécute un script/projet Python et capture la sortie réelle."""
         p_dir = self._resolve_project_dir(project_name)
         target_file = (p_dir / entrypoint).resolve()
@@ -113,7 +114,7 @@ class ProjectBuilder:
                 "error": str(exc)
             }
 
-    def run_project_tests(self, project_name: str, test_path: str = "tests", timeout: int = 20) -> Dict[str, Any]:
+    def run_project_tests(self, project_name: str, test_path: str = "tests", timeout: int = 20) -> dict[str, Any]:
         """Lance pytest sur le dossier de tests d'un projet isolé."""
         p_dir = self._resolve_project_dir(project_name)
         py_exec = sys.executable
@@ -137,7 +138,7 @@ class ProjectBuilder:
         except Exception as exc:
             return {"ok": False, "status": "TEST_EXCEPTION", "error": str(exc)}
 
-    def run_godot_headless(self, project_name: str, timeout: int = 15) -> Dict[str, Any]:
+    def run_godot_headless(self, project_name: str, timeout: int = 15) -> dict[str, Any]:
         """Vérifie la compilation GDScript et le chargement de scène Godot en mode headless CPU."""
         p_dir = self._resolve_project_dir(project_name)
         godot_proj = p_dir / "project.godot"

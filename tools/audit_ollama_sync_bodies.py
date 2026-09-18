@@ -1,32 +1,33 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_ollama_sync_bodies() -> Dict[str, Any]:
+def inspect_ollama_sync_bodies() -> dict[str, Any]:
     p = PROJECT_ROOT / "runtime" / "models" / "ollama_sync.py"
     if not p.exists():
         return {"exists": False}
-    
+
     try:
         content = p.read_text(encoding="utf-8", errors="replace")
         tree = ast.parse(content, filename=str(p))
-        
+
         bodies = {}
         lines = content.splitlines()
-        
+
         for node in ast.walk(tree):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 start = node.lineno - 1
                 end = getattr(node, 'end_lineno', start + 40)
                 bodies[node.name] = "\n".join(lines[start:end])
-                
+
         return {
             "exists": True,
             "bodies": bodies

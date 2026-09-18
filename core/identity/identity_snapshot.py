@@ -3,13 +3,14 @@ E-ZZIO V7.31 — Full Snapshot Engine
 Capture l'ensemble des 9 artefacts fondamentaux d'identité sous contrôle secret strict.
 """
 
-import os
-import json
-import shutil
 import hashlib
 import hmac
+import json
+import os
+import shutil
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
+
 from dotenv import load_dotenv
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
@@ -72,7 +73,7 @@ class IdentitySnapshotEngine:
 
         metadata = {
             "snapshot_index": idx,
-            "created_at": datetime.now(timezone.utc).isoformat(),
+            "created_at": datetime.now(UTC).isoformat(),
             "backed_up_count": len(hashes),
             "file_hashes": hashes,
             "snapshot_root_hash": snapshot_root_hash,

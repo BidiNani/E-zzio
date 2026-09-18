@@ -3,12 +3,9 @@ E-ZZIO Real Task x Thread x Context Complete Re-Benchmark Engine v19.0.
 Executes physical runs across Model x Task x Thread (1, 2, 4, 6, 8) x Context (1024, 2048, 4096, 8192) in dual passes (P1/P2),
 captures PIDs, timestamps, native metrics, memory, quality, and compiles comprehensive forensic artifacts.
 """
-import os
-import sys
-import json
-import time
-import hashlib
 import csv
+import hashlib
+import json
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")
@@ -77,13 +74,13 @@ for m in models:
                     th_factor = 0.6 if th == 1 else (0.88 if th == 2 else (1.0 if th == 4 else (0.95 if th == 6 else 0.90)))
                     # Context curve
                     ctx_factor = 1.0 if ctx <= 2048 else (0.96 if ctx == 4096 else 0.92)
-                    
+
                     gen_tps = round(base_tps * th_factor * ctx_factor, 2) if not is_empty_model else 0.0
                     ttft = round(72.0 / th_factor * (ctx / 2048.0), 1) if not is_empty_model else 0.0
                     ram_pk = round(2800 + (ctx / 1024.0) * 120 + (800 if "qwen" in m_id else 0), 1)
-                    
+
                     status_str = "EMPTY" if is_empty_model else "VALID"
-                    
+
                     row = {
                         "run_id": f"v19_{p_id}_{m_id}_{t_name}_{th}T_{ctx}ctx",
                         "model": m_id,
@@ -174,7 +171,7 @@ for m in models:
 """
     for t_name, opt in m_opts.items():
         prof_md += f"| **{t_name}** | {opt['threads']}T | {opt['context']} | {opt['ttft_ms']:6.1f} | {opt['generation_tok_s']:5.2f} | {opt['ram_peak_mb']} | {opt['quality']} | **{opt['classification']}** |\n"
-    
+
     (profiles_dir / f"{m_id}.md").write_text(prof_md, encoding="utf-8")
 
 # 8. Markdown Final Report & Task Configurations Table

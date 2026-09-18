@@ -6,8 +6,8 @@ directs aux LLM, aux anciens routeurs et aux registres de décisions existants.
 
 import json
 import re
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 OUTPUT_REPORT = ROOT_DIR / "runtime" / "audit" / "system" / "ecol_integration_audit_report.json"
@@ -39,7 +39,7 @@ def audit_integration():
                 continue
 
             try:
-                with open(path, "r", encoding="utf-8", errors="ignore") as f:
+                with open(path, encoding="utf-8", errors="ignore") as f:
                     content = f.read()
 
                 matched_patterns = []
@@ -52,7 +52,7 @@ def audit_integration():
             except Exception:
                 continue
 
-    report = {"generated_at": datetime.now(timezone.utc).isoformat(), "total_files_flagged": len(findings), "integration_targets": findings}
+    report = {"generated_at": datetime.now(UTC).isoformat(), "total_files_flagged": len(findings), "integration_targets": findings}
 
     OUTPUT_REPORT.parent.mkdir(parents=True, exist_ok=True)
     with open(OUTPUT_REPORT, "w", encoding="utf-8") as f:

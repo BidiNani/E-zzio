@@ -1,17 +1,18 @@
 """
 Unit & Integration Test Suite for E-ZZIO V10.13 — Adaptive Warm Residency & Dynamic Token Budgeting.
 """
-import pytest
-import time
 import shutil
+import time
 from pathlib import Path
 
+import pytest
+
 from core.operations.adaptive_model_optimizer import (
-    adaptive_model_optimizer,
-    ModelResidencyState,
     MemoryPressureState,
+    ModelResidencyState,
     PrewarmDecision,
     TaskCategory,
+    adaptive_model_optimizer,
 )
 
 

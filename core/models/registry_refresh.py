@@ -24,7 +24,7 @@ import json
 import logging
 import os
 import time
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -56,7 +56,7 @@ def _make_transition_callback(registry):
     QUALIFIED disparus avec un WARNING (aucune transition légale disponible
     depuis lifecycle_manager pour QUALIFIED→SUPERSEDED).
     """
-    from datetime import datetime, timezone
+    from datetime import datetime
 
     def callback(
         *,
@@ -77,7 +77,7 @@ def _make_transition_callback(registry):
             return
 
         old_state = getattr(entry, "lifecycle", "UNKNOWN")
-        now_iso = datetime.now(timezone.utc).isoformat()
+        now_iso = datetime.now(UTC).isoformat()
 
         # Seule transition légale disponible depuis registry_refresh :
         # ACTIVE → QUARANTINED (acteur: lifecycle_manager)
@@ -115,7 +115,7 @@ async def _run_refresh(*, api_key: str | None = None) -> dict[str, Any]:
     lève une exception SANS avoir modifié registry.json.
     """
     from core.models.discovery.gemini import GeminiDiscovery
-    from core.models.lifecycle import ModelLifecycleManager, ModelLifecycle
+    from core.models.lifecycle import ModelLifecycleManager
     from core.models.registry import ModelRegistry
 
     started = time.perf_counter()
@@ -226,7 +226,7 @@ async def _run_refresh(*, api_key: str | None = None) -> dict[str, Any]:
     elapsed = time.perf_counter() - started
 
     result = {
-        "timestamp_iso": datetime.now(timezone.utc).isoformat(),
+        "timestamp_iso": datetime.now(UTC).isoformat(),
         "timestamp_unix": now_ts,
         "source": "https://generativelanguage.googleapis.com/v1beta/models",
         "duration_seconds": round(elapsed, 3),
@@ -256,7 +256,7 @@ def _write_audit(result: dict[str, Any]) -> Path:
     Garantit qu'aucune API key ni secret n'est inclus.
     """
     _AUDIT_DIR.mkdir(parents=True, exist_ok=True)
-    date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    date_str = datetime.now(UTC).strftime("%Y-%m-%d")
     audit_path = _AUDIT_DIR / f"gemini_{date_str}.json"
 
     # Sérialisation défensive — on exclut tout champ contenant "key"/"secret"/"token"

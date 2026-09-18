@@ -1,6 +1,5 @@
 from __future__ import annotations
-import ast
-import json
+
 import sys
 from pathlib import Path
 
@@ -12,7 +11,7 @@ def inspect_file_content(rel_path: str, keywords: set[str]) -> None:
     if not p.exists():
         print(f"❌ Fichier introuvable : {rel_path}")
         return
-    
+
     print(f"\n📁 ANALYSE CIBLÉE : {rel_path}")
     print("-" * 80)
     try:

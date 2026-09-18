@@ -8,11 +8,11 @@ Unifies web capabilities behind CapabilityPolicy:
 Zero vendor lock-in. Self-contained with direct HTTP transport and clean failovers.
 """
 from __future__ import annotations
+
+import logging
 import os
 import re
-import logging
-from typing import Dict, Any, List, Optional
-import httpx
+from typing import Any
 
 from core.capabilities.capability_policy import CapabilityPolicy, PolicyDecision
 from core.utils.http_pool import get_http_client
@@ -21,11 +21,11 @@ logger = logging.getLogger("WebProvider")
 
 
 class WebProvider:
-    def __init__(self, searxng_url: Optional[str] = None):
+    def __init__(self, searxng_url: str | None = None):
         self.policy = CapabilityPolicy()
         self.searxng_url = searxng_url or os.environ.get("SEARXNG_URL")
 
-    async def search(self, query: str, limit: int = 5) -> Dict[str, Any]:
+    async def search(self, query: str, limit: int = 5) -> dict[str, Any]:
         """Recherche web unifiée : SearXNG local (Tier 1) avec repli transparent sur DuckDuckGo (Tier 2)."""
         decision, reason = self.policy.evaluate_scope("web.search", {"query": query, "limit": limit})
         if decision != PolicyDecision.ALLOW:
@@ -66,7 +66,7 @@ class WebProvider:
             "Content-Type": "application/x-www-form-urlencoded"
         }
         data = {"q": query}
-        
+
         try:
             r = await client.post(url, headers=headers, data=data)
             if r.status_code == 200:
@@ -84,7 +84,7 @@ class WebProvider:
             logger.warning("[WEB-SEARCH-WARN] Erreur transport recherche web : %s", exc)
             return {"ok": False, "scope": "web.search", "error": str(exc)}
 
-    def _parse_ddg_html(self, html: str, limit: int = 5) -> List[Dict[str, str]]:
+    def _parse_ddg_html(self, html: str, limit: int = 5) -> list[dict[str, str]]:
         """Extrait les titres, URLs organiques et résumés des résultats HTML de recherche."""
         import urllib.parse
         results = []
@@ -135,7 +135,7 @@ class WebProvider:
 
         return results
 
-    async def crawl(self, target_url: str, max_chars: int = 4000) -> Dict[str, Any]:
+    async def crawl(self, target_url: str, max_chars: int = 4000) -> dict[str, Any]:
         """Extrait le contenu textuel structuré en Markdown depuis une URL (scope: web.crawl)."""
         decision, reason = self.policy.evaluate_scope("web.crawl", {"url": target_url})
         if decision != PolicyDecision.ALLOW:

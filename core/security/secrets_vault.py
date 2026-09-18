@@ -10,20 +10,21 @@ Permet de chiffrer secrets/.env et les identifiants sensibles au repos sur le di
 4. Intégrité vérifiée par tag d'authentification GCM
 """
 from __future__ import annotations
-import os
-import sys
-import json
+
 import base64
 import ctypes
 import hashlib
+import json
 import logging
+import os
+import sys
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Any
 
 try:
+    from cryptography.hazmat.primitives import hashes
     from cryptography.hazmat.primitives.ciphers.aead import AESGCM
     from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-    from cryptography.hazmat.primitives import hashes
     HAS_CRYPTOGRAPHY = True
 except ImportError:
     HAS_CRYPTOGRAPHY = False
@@ -45,7 +46,7 @@ class SecretsVault:
         self.secrets_dir = self.workspace_root / "secrets"
         self.secrets_dir.mkdir(parents=True, exist_ok=True)
 
-    def get_passphrase(self, explicit_passphrase: Optional[str] = None) -> Optional[str]:
+    def get_passphrase(self, explicit_passphrase: str | None = None) -> str | None:
         """
         Récupère la clé maître dans l'ordre de priorité sécurisé :
         1. Paramètre explicite (CLI / Appel direct)
@@ -69,7 +70,7 @@ class SecretsVault:
 
         return None
 
-    def seal_to_dpapi(self, passphrase: str, dest_file: Optional[Path | str] = None) -> bool:
+    def seal_to_dpapi(self, passphrase: str, dest_file: Path | str | None = None) -> bool:
         """Scelle la clé maître avec la DPAPI Windows (clé liée au compte utilisateur Windows)."""
         if sys.platform != "win32":
             return False
@@ -99,7 +100,7 @@ class SecretsVault:
             logger.error("[VAULT-DPAPI-ERROR] Échec de scellement DPAPI : %s", exc)
             return False
 
-    def unseal_from_dpapi(self, src_file: Optional[Path | str] = None) -> Optional[str]:
+    def unseal_from_dpapi(self, src_file: Path | str | None = None) -> str | None:
         """Descellera la clé maître depuis la DPAPI Windows."""
         if sys.platform != "win32":
             return None
@@ -148,8 +149,8 @@ class SecretsVault:
         self,
         source_file: str | Path,
         dest_file: str | Path,
-        passphrase: Optional[str] = None
-    ) -> Dict[str, Any]:
+        passphrase: str | None = None
+    ) -> dict[str, Any]:
         """Chiffre un fichier .env vers un conteneur sécurisé .env.enc."""
         resolved_pass = self.get_passphrase(passphrase)
         if not resolved_pass:
@@ -200,8 +201,8 @@ class SecretsVault:
     def decrypt_to_memory(
         self,
         encrypted_file: str | Path,
-        passphrase: Optional[str] = None
-    ) -> Dict[str, Any]:
+        passphrase: str | None = None
+    ) -> dict[str, Any]:
         """Déchiffre un conteneur directement en mémoire vive sans écriture disque."""
         resolved_pass = self.get_passphrase(passphrase)
         if not resolved_pass:
@@ -237,7 +238,7 @@ class SecretsVault:
                 plain_bytes = bytes(b ^ k for b, k in zip(encrypted_data, keystream[:len(encrypted_data)]))
 
             lines = plain_bytes.decode("utf-8").splitlines()
-            env_vars: Dict[str, str] = {}
+            env_vars: dict[str, str] = {}
             for line in lines:
                 line = line.strip()
                 if line and not line.startswith("#") and "=" in line:

@@ -1,6 +1,7 @@
 """Endpoints admin des modèles LLM : /api/models, /api/tools, etc."""
-from fastapi import APIRouter
 from typing import Any
+
+from fastapi import APIRouter
 
 router = APIRouter(prefix="/api", tags=["models"])
 

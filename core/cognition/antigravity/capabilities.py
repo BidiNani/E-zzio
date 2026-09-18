@@ -8,9 +8,9 @@ from __future__ import annotations
 
 import enum
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 
 class AntigravityExecutionMode(str, enum.Enum):
@@ -40,10 +40,10 @@ class AntigravityAgentRequest:
     mode: AntigravityExecutionMode = AntigravityExecutionMode.READ_ONLY_SANDBOX
     output_format: AntigravityOutputFormat = AntigravityOutputFormat.JSON
     effort: AntigravityEffortLevel = AntigravityEffortLevel.MEDIUM
-    model_override: Optional[str] = None
+    model_override: str | None = None
     timeout_seconds: int = 120
     dangerously_skip_permissions: bool = False
-    context_metadata: Dict[str, Any] = field(default_factory=dict)
+    context_metadata: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -51,11 +51,11 @@ class AntigravityAgentResponse:
     task_id: str
     status: str  # "SUCCESS", "FAILED", "REJECTED_BY_POLICY", "TIMEOUT"
     raw_output: str
-    structured_json: Optional[Dict[str, Any]] = None
+    structured_json: dict[str, Any] | None = None
     execution_time_ms: float = 0.0
     exit_code: int = 0
-    error_message: Optional[str] = None
-    timestamp_utc: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    error_message: str | None = None
+    timestamp_utc: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
 
 
 class AntigravityPolicyViolationError(Exception):

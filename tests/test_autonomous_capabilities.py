@@ -4,13 +4,14 @@ Vérifie la découverte, la qualification, le confinement sandbox,
 l'enregistrement, le rollback et la non-auto-modification du Core.
 """
 
-import pytest
 import json
 from pathlib import Path
 
+import pytest
+
 from core.capabilities.discovery import CapabilityDiscoveryEngine, LicenseClass
 from core.capabilities.factory import CapabilityFactory
-from core.capabilities.registry import capability_registry, QualificationStatus
+from core.capabilities.registry import QualificationStatus, capability_registry
 
 
 @pytest.fixture

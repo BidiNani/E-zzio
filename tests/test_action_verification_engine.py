@@ -1,6 +1,8 @@
-import pytest
 from dataclasses import dataclass
 from typing import Any, Dict
+
+import pytest
+
 
 @dataclass
 class ActionVerification:
@@ -8,7 +10,7 @@ class ActionVerification:
     target: str
     result_data: Any
     verified: bool
-    evidence: Dict[str, Any]
+    evidence: dict[str, Any]
     status: str
 
 def verify_read_action(file_path: str, read_output: str) -> ActionVerification:
@@ -34,7 +36,7 @@ def verify_read_action(file_path: str, read_output: str) -> ActionVerification:
 def test_action_verification_read_nominal(tmp_path):
     test_f = tmp_path / "verified_test.txt"
     test_f.write_text("Données vérifiées E-ZZIO", encoding="utf-8")
-    
+
     verif = verify_read_action(str(test_f), "Données vérifiées E-ZZIO")
     assert verif.verified is True
     assert verif.status == "VERIFIED"

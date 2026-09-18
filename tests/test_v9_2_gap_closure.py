@@ -9,25 +9,26 @@ Validates all runtime capabilities and closed architectural gaps:
 6. Master System Diagnostics API (WAL, SQLite integrity, provider health)
 7. Fail-closed provider posture (Antigravity BLOCKED_BY_EXTERNAL_QUOTA)
 """
-import time
 import sqlite3
-import pytest
+import time
 from pathlib import Path
+
+import pytest
 from starlette.testclient import TestClient
 
-from web_server import app
-from core.orchestration import TaskDAG, DAGNode, DAGExecutionStatus, DAGOrchestrator
 from core.agents.registry import (
-    AgentRegistry,
     AgentDescriptor,
+    AgentRegistry,
     AgentStatus,
     InvalidAgentTransitionError,
     agent_registry,
 )
 from core.artifacts.provenance import ArtifactProvenanceEngine
-from core.governance.diff_viewer import HITLDiffViewer
-from core.security.audit_ledger import AuditLedger
 from core.cognitive_router import ModelRouter
+from core.governance.diff_viewer import HITLDiffViewer
+from core.orchestration import DAGExecutionStatus, DAGNode, DAGOrchestrator, TaskDAG
+from core.security.audit_ledger import AuditLedger
+from web_server import app
 
 
 @pytest.fixture

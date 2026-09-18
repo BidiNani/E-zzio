@@ -4,15 +4,18 @@ Gouverne les écritures en mémoire, les injections de contexte et la persistanc
 des états de l'agent en s'appuyant sur l'intercepteur runtime ECOL V7.67.
 """
 
-import sys
 import logging
+import sys
 from pathlib import Path
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from core.cognition.ecol_runtime_interceptor import EcolRuntimeInterceptor, ExecutionBlockedByEcolError
+from core.cognition.ecol_runtime_interceptor import (
+    EcolRuntimeInterceptor,
+    ExecutionBlockedByEcolError,
+)
 
 logger = logging.getLogger(__name__)
 

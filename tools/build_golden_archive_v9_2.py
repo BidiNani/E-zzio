@@ -1,11 +1,11 @@
 """
 tools/build_golden_archive_v9_2.py - Generation de l'archive Golden Source et du Manifest V9.2.
 """
-import os
-import zipfile
 import hashlib
 import json
+import os
 import subprocess
+import zipfile
 from pathlib import Path
 
 ROOT = Path("G:/AI/E-zzio")

@@ -10,11 +10,9 @@ import hashlib
 import json
 import logging
 import re
-import uuid
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from dataclasses import dataclass
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
 
 from core.cognition.compression.budget_engine import (
     ClassifiedContextSegment,
@@ -56,7 +54,7 @@ class SovereignCompressorFabric:
             payload = {
                 "cache_id": cache_id,
                 "sha256": sha,
-                "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+                "timestamp_utc": datetime.now(UTC).isoformat(),
                 "char_length": len(raw_text),
                 "original_text": raw_text,
             }
@@ -64,7 +62,7 @@ class SovereignCompressorFabric:
 
         return cache_id
 
-    def retrieve_from_ccr_cache(self, cache_id: str) -> Optional[str]:
+    def retrieve_from_ccr_cache(self, cache_id: str) -> str | None:
         """Losslessly retrieves the original uncompressed text from CCR cache."""
         cache_file = self.cache_dir / f"{cache_id}.json"
         if not cache_file.exists():

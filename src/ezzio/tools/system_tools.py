@@ -5,6 +5,7 @@ Outils de diagnostic système et d'exécution de tests pour E-ZzIO.
 import asyncio
 import logging
 from typing import Any
+
 import httpx
 
 from ezzio.config import settings

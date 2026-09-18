@@ -1,12 +1,12 @@
 """Évolution des capacités : qualification externe, composition, bornes skills."""
 import json
 
+from core.capabilities.capability_qualification import QualificationStatus
 from core.capabilities.external_qualification import (
     ExternalCandidate,
     check_composition,
     qualify_external,
 )
-from core.capabilities.capability_qualification import QualificationStatus
 
 
 def test_external_no_source_rejected():
@@ -93,6 +93,7 @@ def _make_skill(tmp_path, name, code):
 
 def test_skill_timeout_bounded(tmp_path):
     import time
+
     from core.agent.tools_registry import ToolRegistry
 
     _make_skill(tmp_path, "slow", "import time\ndef run(args, root):\n    time.sleep(30)\n    return 'trop tard'\n")

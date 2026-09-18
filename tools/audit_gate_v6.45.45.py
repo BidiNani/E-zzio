@@ -1,9 +1,9 @@
 from __future__ import annotations
+
 import ast
 import json
-import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -22,7 +22,7 @@ def safe_unparse(node: ast.AST | None) -> str:
     except Exception:
         return "<unparse_error>"
 
-def inspect_file(rel_path: str) -> Dict[str, Any]:
+def inspect_file(rel_path: str) -> dict[str, Any]:
     target_path = PROJECT_ROOT / rel_path
     if not target_path.exists():
         return {"error": "file_not_found"}
@@ -33,8 +33,8 @@ def inspect_file(rel_path: str) -> Dict[str, Any]:
     except Exception as e:
         return {"error": f"ast_parse_error: {str(e)}"}
 
-    classes_info: List[Dict[str, Any]] = []
-    functions_info: List[Dict[str, Any]] = []
+    classes_info: list[dict[str, Any]] = []
+    functions_info: list[dict[str, Any]] = []
 
     for stmt in tree.body:
         if isinstance(stmt, ast.ClassDef):
@@ -45,7 +45,7 @@ def inspect_file(rel_path: str) -> Dict[str, Any]:
                     for a in item.args.args:
                         ann = f": {safe_unparse(a.annotation)}" if a.annotation else ""
                         args_list.append(f"{a.arg}{ann}")
-                    
+
                     methods.append({
                         "name": item.name,
                         "line": item.lineno,
@@ -85,7 +85,7 @@ def main():
     print("=" * 80)
     print(f"[RACINE] {PROJECT_ROOT}\n")
 
-    report: Dict[str, Any] = {}
+    report: dict[str, Any] = {}
 
     for rel_path in TARGET_FILES:
         data = inspect_file(rel_path)

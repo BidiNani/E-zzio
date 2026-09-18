@@ -2,11 +2,7 @@
 Finalize Context Benchmark Lab v17.0.
 Reads live_runs, completes any missing runs, writes full JSON matrices, and compiles the final forensic context report.
 """
-import os
-import sys
 import json
-import time
-import hashlib
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")
@@ -99,7 +95,7 @@ context_summary = {
 }
 (opt_dir / "context_performance.json").write_text(json.dumps(context_summary, indent=2, ensure_ascii=False), encoding="utf-8")
 
-report_md = f"""# E-ZZIO — Real Context Forensic Benchmark Report v17.0
+report_md = """# E-ZZIO — Real Context Forensic Benchmark Report v17.0
 
 **Machine :** AMD Ryzen 9 5900X (12C / 24T) — 32 Go DDR4 — CPU ONLY (CUDA = OFF / GPU = 0)
 

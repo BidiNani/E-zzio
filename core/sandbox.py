@@ -5,10 +5,8 @@ from __future__ import annotations
 import asyncio
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, Optional, Set, Tuple
 
-
-COMMAND_BLACKLIST: Set[str] = {
+COMMAND_BLACKLIST: set[str] = {
     "rm -rf /",
     "rm -rf /*",
     ":(){ :|:& };:",
@@ -18,7 +16,7 @@ COMMAND_BLACKLIST: Set[str] = {
     "reboot",
 }
 
-SENSITIVE_PREFIXES: Tuple[str, ...] = (
+SENSITIVE_PREFIXES: tuple[str, ...] = (
     "rm ",
     "del ",
     "git push",
@@ -42,7 +40,7 @@ class SecuritySandbox:
     def __init__(self, workspace_root: Path | str = ".") -> None:
         self.workspace_root = Path(workspace_root).resolve()
 
-    def assess_risk(self, command: str) -> Tuple[str, bool]:
+    def assess_risk(self, command: str) -> tuple[str, bool]:
         """Évalue le risque d'une commande shell.
 
         Retourne (niveau_de_risque, necessite_approbation).
@@ -62,7 +60,7 @@ class SecuritySandbox:
     async def execute(
         self,
         command: str,
-        cwd: Optional[Path | str] = None,
+        cwd: Path | str | None = None,
         timeout: float = 30.0,
         is_approved: bool = False,
     ) -> ExecutionResult:
@@ -106,7 +104,7 @@ class SecuritySandbox:
                 risk_level=risk,
                 approved=True,
             )
-        except asyncio.TimeoutError:
+        except TimeoutError:
             try:
                 proc.kill()
             except ProcessLookupError:

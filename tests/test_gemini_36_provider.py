@@ -3,8 +3,8 @@ import collections
 
 import pytest
 
-from core.providers.gemini_provider import GeminiProvider
 from core.providers.base_provider import ProviderResponse
+from core.providers.gemini_provider import GeminiProvider
 
 
 def test_default_model_is_36_flash():
@@ -58,7 +58,7 @@ class _FakeClient:
 
 @pytest.mark.asyncio
 async def test_429_rotates_without_crash():
-    from unittest.mock import patch, MagicMock
+    from unittest.mock import MagicMock, patch
 
     p = GeminiProvider(api_key="K0")
     fake_429 = MagicMock()
@@ -89,7 +89,7 @@ def test_no_chat_session_usage():
 
 @pytest.mark.asyncio
 async def test_sdk_config_always_carries_identity():
-    from unittest.mock import patch, MagicMock
+    from unittest.mock import MagicMock, patch
     fake_json = {
         "candidates": [{"content": {"parts": [{"text": "Je suis E-ZZIO."}]}}]
     }

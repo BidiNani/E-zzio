@@ -1,17 +1,18 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def find_ingest_discovery_callsites() -> List[Dict[str, Any]]:
+def find_ingest_discovery_callsites() -> list[dict[str, Any]]:
     callsites = []
-    
+
     for p in PROJECT_ROOT.glob("**/*.py"):
         if set(p.parts) & EXCLUDED_DIRS:
             continue
@@ -27,7 +28,7 @@ def find_ingest_discovery_callsites() -> List[Dict[str, Any]]:
                             func_name = func.id
                         elif isinstance(func, ast.Attribute):
                             func_name = func.attr
-                            
+
                         if func_name == "ingest_discovery":
                             callsites.append({
                                 "file": str(p.relative_to(PROJECT_ROOT)),
@@ -64,7 +65,7 @@ def main():
         "writes_performed": 0,
         "runtime_mutations": 0
     }
-    
+
     out_file = PROJECT_ROOT / "tools" / "ingest_discovery_callsites_report.json"
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2)

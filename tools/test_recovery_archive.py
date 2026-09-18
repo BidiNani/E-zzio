@@ -7,7 +7,7 @@ archive = ROOT / "dist/releases/E-ZzIO-V9.1-GOLDEN-SOURCE.zip"
 print(f"Testing Archive Recovery: {archive}")
 with zipfile.ZipFile(archive, "r") as z:
     names = set(z.namelist())
-    
+
     # Check essential layers
     checks = [
         ("core/capabilities/capability_policy.py", "Frozen Core Policy"),
@@ -28,7 +28,7 @@ with zipfile.ZipFile(archive, "r") as z:
         ("docs/E-ZZIO_V9.1_GOLDEN_RELEASE_LOCK.md", "Golden Lock Doc"),
         ("docs/GOLDEN_RELEASE_RESTORE.md", "Restore Guide")
     ]
-    
+
     all_ok = True
     for p, desc in checks:
         if p in names:

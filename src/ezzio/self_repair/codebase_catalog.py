@@ -42,15 +42,15 @@ class CodebaseCatalog:
         for path in self.root_dir.rglob("*"):
             if not path.is_file():
                 continue
-            
+
             try:
                 rel_parts = set(path.relative_to(self.root_dir).parts[:-1])
             except ValueError:
                 rel_parts = set()
-                
+
             if rel_parts.intersection(IGNORE_DIRS):
                 continue
-                
+
             try:
                 rel_path = path.relative_to(self.root_dir).as_posix()
             except ValueError:
@@ -58,7 +58,7 @@ class CodebaseCatalog:
 
             file_info = self._analyze_file(path, rel_path)
             catalog["files"][rel_path] = file_info
-            
+
             # Enregistrer les symboles dans l'index inversé
             for sym in file_info.get("symbols", []):
                 catalog["symbol_index"][sym] = rel_path
@@ -67,7 +67,7 @@ class CodebaseCatalog:
         catalog["python_modules_count"] = sum(
             1 for f in catalog["files"].values() if f.get("type") == "python"
         )
-        
+
         self.entries = catalog
         self.save()
         logger.info("Scan terminé : %d fichiers cartographiés.", catalog["files_count"])
@@ -76,7 +76,7 @@ class CodebaseCatalog:
     def _analyze_file(self, path: Path, rel_path: str) -> dict[str, Any]:
         stat = path.stat()
         file_hash = hashlib.sha256(path.read_bytes()).hexdigest()
-        
+
         info: dict[str, Any] = {
             "path": rel_path,
             "extension": path.suffix.lower(),
@@ -97,7 +97,7 @@ class CodebaseCatalog:
                 content = path.read_text(encoding="utf-8", errors="ignore")
                 tree = ast.parse(content)
                 info["docstring"] = ast.get_docstring(tree) or ""
-                
+
                 for node in ast.iter_child_nodes(tree):
                     if isinstance(node, ast.ClassDef):
                         info["classes"].append(node.name)

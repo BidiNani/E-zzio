@@ -3,10 +3,10 @@ E-ZZIO V7.30 — Identity Chain of Trust Engine
 Gère le registre immuable des blocs d'évolution identitaire (Genesis -> Blocks).
 """
 
-import json
 import hashlib
+import json
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 CHAIN_FILE = ROOT_DIR / "runtime" / "identity" / "identity_chain.jsonl"
@@ -39,7 +39,7 @@ class IdentityChainEngine:
 
         block_data = {
             "block_index": block_index,
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "version": version,
             "description": description,
             "identity_root_hash": identity_root_hash,

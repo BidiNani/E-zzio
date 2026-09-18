@@ -1,12 +1,11 @@
 """
 E-ZZIO : Téléchargement, Hachage et Enregistrement des Modèles Candidats Externes.
 """
-import os
-import sys
+import hashlib
 import json
 import time
-import hashlib
 from pathlib import Path
+
 from huggingface_hub import hf_hub_download
 
 root = Path("G:/AI/E-zzio")
@@ -40,7 +39,7 @@ for c in candidates:
     target_dir = ext_models / c["tool_id"]
     target_dir.mkdir(parents=True, exist_ok=True)
     target_file = target_dir / c["filename"]
-    
+
     print(f"=== DOWNLOADING {c['tool_id']} : {c['filename']} ===")
     t0 = time.perf_counter()
     if not target_file.exists() or target_file.stat().st_size == 0:
@@ -51,7 +50,7 @@ for c in candidates:
             local_dir_use_symlinks=False
         )
     lat_s = time.perf_counter() - t0
-    
+
     # Calculate SHA256 in chunks
     sha256 = hashlib.sha256()
     with open(target_file, "rb") as f:
@@ -59,7 +58,7 @@ for c in candidates:
             sha256.update(chunk)
     file_hash = sha256.hexdigest()
     file_size = target_file.stat().st_size
-    
+
     download_records[c["tool_id"]] = {
         "tool_id": c["tool_id"],
         "repo_id": c["repo_id"],

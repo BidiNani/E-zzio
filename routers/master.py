@@ -1,6 +1,8 @@
 from pathlib import Path
+
 from fastapi import APIRouter
 from pydantic import BaseModel
+
 from core.ezzio_master import ezzio_master
 from routers.approval import router as approval_router
 from routers.office import router as office_router
@@ -11,14 +13,14 @@ router.include_router(office_router)
 
 
 
-from typing import Optional
+
 
 class MasterPrompt(BaseModel):
     text: str
     speed: str = "auto"
     force_cloud: bool = True
     mission_profile: str = "STANDARD"
-    model_target: Optional[str] = "auto"
+    model_target: str | None = "auto"
     channel: str = "web"
     session_id: str = ""
 
@@ -68,8 +70,9 @@ async def get_providers_health():
 async def get_system_diagnostics():
     """Fournit un diagnostic holistique de tous les sous-systèmes d'E-ZZIO."""
     import os
-    import sys
     import sqlite3
+    import sys
+
     from core.agents.registry import agent_registry
     from core.security.audit_ledger import audit_ledger
 
@@ -139,6 +142,7 @@ async def get_system_diagnostics():
 async def get_artifact_provenance(artifact_id: str):
     """Retourne la traçabilité cryptographique complète d'un artefact scellé."""
     from fastapi import HTTPException, status
+
     from core.artifacts.provenance import artifact_provenance
     art = artifact_provenance.get_artifact(artifact_id)
     if not art:
@@ -161,6 +165,7 @@ async def list_task_artifacts(task_id: str):
 async def get_dag_status(dag_id: str):
     """Retourne l'état complet du graphe de tâches DAG (nœuds, états, dépendances)."""
     from fastapi import HTTPException, status
+
     from core.orchestration import DAGOrchestrator
     # Recherche dans les instances actives ou état par défaut
     orch = DAGOrchestrator()
@@ -194,6 +199,7 @@ async def cancel_mission_endpoint(mission_id: str):
 async def get_mission_endpoint(mission_id: str):
     """Retourne le détail d'une mission."""
     from fastapi import HTTPException, status
+
     from core.agent.mission_controller import mission_registry
     m = mission_registry.get(mission_id)
     if not m:
@@ -220,9 +226,9 @@ async def resume_mission_endpoint(mission_id: str):
 
 
 class GovernanceSettingsPayload(BaseModel):
-    local_only: Optional[bool] = None
-    cloud_fallback: Optional[bool] = None
-    max_budget_cents: Optional[int] = None
+    local_only: bool | None = None
+    cloud_fallback: bool | None = None
+    max_budget_cents: int | None = None
 
 
 _runtime_governance_settings = {

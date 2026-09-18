@@ -3,8 +3,8 @@ E-ZZIO V7.31 — Identity Chain Validator
 Vérifie la continuité cryptographique, l'absence de rupture et l'intégrité de la chaîne d'identité.
 """
 
-import json
 import hashlib
+import json
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent

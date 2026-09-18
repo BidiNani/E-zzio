@@ -4,6 +4,7 @@ Phase 3 Test Suite — Validation des 6 meilleures pratiques d'agents de codage 
 
 import os
 from pathlib import Path
+
 from core.agent.codebase_indexer import CodebaseIndexer
 from core.agent.patch_engine import PatchEngine
 from core.capabilities.capability_policy import CapabilityPolicy, PolicyDecision
@@ -41,15 +42,15 @@ def test_practice_3_ast_symbol_repo_map():
 def test_practice_5_graduated_approval_modes():
     """Pratique 5 : Modes d'approbation graduée (ALLOW / REQUIRE_HUMAN / DENY)."""
     policy = CapabilityPolicy()
-    
+
     # 1. Lecture de code local -> ALLOW
     dec_read, _ = policy.evaluate_scope("code.read", {"path": "src/ezzio/api.py"})
     assert dec_read == PolicyDecision.ALLOW
-    
+
     # 2. Exécution de test local -> ALLOW
     dec_test, _ = policy.evaluate_scope("code.test", {"test_path": "tests/test_api.py"})
     assert dec_test == PolicyDecision.ALLOW
-    
+
     # 3. Action système destructive -> DENY
     dec_deny, _ = policy.evaluate_scope("system.destructive")
     assert dec_deny == PolicyDecision.DENY

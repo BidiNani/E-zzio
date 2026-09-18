@@ -6,11 +6,10 @@ Defines the polymorphic provider interface uniting Local Ollama, Cloud Gemini, a
 from __future__ import annotations
 
 import enum
-import time
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
+from datetime import UTC, datetime
+from typing import Any
 
 
 class ProviderDomain(str, enum.Enum):
@@ -25,11 +24,11 @@ class FederatedTaskRequest:
     task_id: str
     task_type: str  # "code_refactor", "deep_reasoning", "routine_chat", "vision", "browser_task"
     prompt: str
-    domain_preference: Optional[ProviderDomain] = None
+    domain_preference: ProviderDomain | None = None
     max_tokens: int = 2048
     temperature: float = 0.7
     timeout_seconds: int = 60
-    context_metadata: Dict[str, Any] = field(default_factory=dict)
+    context_metadata: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -39,10 +38,10 @@ class FederatedTaskResult:
     model_name: str
     status: str  # "SUCCESS", "DELEGATED", "FAILED", "REJECTED"
     content: str
-    structured_data: Optional[Dict[str, Any]] = None
+    structured_data: dict[str, Any] | None = None
     execution_duration_ms: float = 0.0
     cost_estimate_usd: float = 0.0
-    timestamp_utc: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    timestamp_utc: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
 
 
 class BaseFederatedProvider(ABC):

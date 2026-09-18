@@ -1,9 +1,10 @@
 from __future__ import annotations
+
 import ast
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 EXCLUDED_DIRS = {"audit", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tests"}
@@ -18,8 +19,8 @@ TARGET_FILES = [
 class FabricContractVisitor(ast.NodeVisitor):
     def __init__(self, rel_path: str):
         self.rel_path = rel_path
-        self.classes: List[Dict[str, Any]] = []
-        self.functions: List[Dict[str, Any]] = []
+        self.classes: list[dict[str, Any]] = []
+        self.functions: list[dict[str, Any]] = []
 
     def visit_ClassDef(self, node: ast.ClassDef):
         methods = []
@@ -61,7 +62,7 @@ def main():
     print("=" * 80)
     print(f"[RACINE] {PROJECT_ROOT}\n")
 
-    report: Dict[str, Any] = {}
+    report: dict[str, Any] = {}
 
     for rel_path in TARGET_FILES:
         target_path = PROJECT_ROOT / rel_path

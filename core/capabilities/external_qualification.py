@@ -10,7 +10,7 @@ métadonnées + inspection locale, jamais sur sa réputation (stars/forks).
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List
+from typing import Any
 
 from core.capabilities.capability_qualification import QualificationStatus
 
@@ -33,8 +33,8 @@ class ExternalCandidate:
     name: str
     source: str  # ex: github:owner/repo
     license: str | None = None
-    permissions: List[str] = field(default_factory=list)
-    dependencies: List[str] = field(default_factory=list)
+    permissions: list[str] = field(default_factory=list)
+    dependencies: list[str] = field(default_factory=list)
     has_tests: bool = False
     sandbox_verified: bool = False
 
@@ -42,14 +42,14 @@ class ExternalCandidate:
 @dataclass(frozen=True)
 class QualificationVerdict:
     status: QualificationStatus
-    reasons: List[str]
+    reasons: list[str]
     escalation_level: int  # 2 = adoptable localement, 4 = revue humaine requise
     source: str = ""  # provenance conservée : quel candidat ce verdict juge
 
 
 def qualify_external(candidate: ExternalCandidate) -> QualificationVerdict:
     """Applique les grilles dans l'ordre, premier refus décisif."""
-    reasons: List[str] = []
+    reasons: list[str] = []
     if not candidate.source:
         return QualificationVerdict(QualificationStatus.REJECTED, ["source inconnue"], 4,
                                         source=candidate.source)
@@ -90,7 +90,7 @@ def qualify_external(candidate: ExternalCandidate) -> QualificationVerdict:
     )
 
 
-def check_composition(chain: List[str], max_depth: int = MAX_CHAIN_DEPTH) -> Dict[str, Any]:
+def check_composition(chain: list[str], max_depth: int = MAX_CHAIN_DEPTH) -> dict[str, Any]:
     """Détecte cycles et dépassements dans une chaîne skill→skill→tool→model."""
     seen: set[str] = set()
     for i, name in enumerate(chain):

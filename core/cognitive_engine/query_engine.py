@@ -4,10 +4,10 @@ Intègre un plancher sémantique pour protéger les souvenirs critiques (Importa
 d'un mauvais score lexical brut.
 """
 
-import sqlite3
 import math
+import sqlite3
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 INDEX_DB = ROOT_DIR / "runtime" / "cognitive" / "index" / "memory_index.sqlite"
@@ -32,7 +32,7 @@ class CognitiveHippocampus:
     def _calculate_temporal_decay(self, last_validated_iso: str) -> float:
         try:
             dt = datetime.fromisoformat(last_validated_iso.replace("Z", "+00:00"))
-            now = datetime.now(timezone.utc)
+            now = datetime.now(UTC)
             days_old = (now - dt).days
             decay = math.exp(-0.693 * (days_old / 180.0))
             return max(0.5, decay)

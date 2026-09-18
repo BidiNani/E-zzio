@@ -1,7 +1,7 @@
 from __future__ import annotations
+
 import ast
 from pathlib import Path
-import sys
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -43,24 +43,24 @@ def analyze_file_chain(path: Path, label: str):
         return
 
     print(f"\n--- [{label.upper()}] {rel} ---")
-    
+
     # Inspection des instanciations et assignations clés
     for node in ast.walk(tree):
         if isinstance(node, ast.Assign):
             target_str = ast.unparse(node.targets[0])
             val_str = ast.unparse(node.value)
-            
+
             # Module-level assignments of critical components
             if any(k in val_str for k in ("CognitiveGateway", "AgentProviderAdapter", "EzzioMaster", "build_fabric", "AutonomousModelFabric")):
                 print(f"  Ligne {node.lineno:3d} | ASSIGNATION : {target_str} = {val_str}")
-                
+
         elif isinstance(node, ast.Call):
             func_name = ""
             if isinstance(node.func, ast.Name):
                 func_name = node.func.id
             elif isinstance(node.func, ast.Attribute):
                 func_name = node.func.attr
-                
+
             if func_name in {"add_cog", "setup_hook", "lifespan", "run", "start"}:
                 print(f"  Ligne {node.lineno:3d} | POINT D'ATTACHE / HOOK : {ast.unparse(node)}")
 

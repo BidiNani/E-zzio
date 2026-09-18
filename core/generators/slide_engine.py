@@ -3,15 +3,15 @@ E-ZZIO Sovereign Generator — PowerPoint Presentation (PPTX) Engine.
 Génère des présentations structurées et professionnelles via python-pptx.
 """
 from __future__ import annotations
-import os
+
 import logging
+import os
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any
 
 from pptx import Presentation
-from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
-from pptx.enum.text import PP_ALIGN
+from pptx.util import Inches, Pt
 
 logger = logging.getLogger("SlideEngine")
 
@@ -28,10 +28,10 @@ class SlideEngine:
         self,
         filename: str,
         title: str,
-        subtitle: Optional[str] = None,
-        slides_data: Optional[List[Dict[str, Any]]] = None,
+        subtitle: str | None = None,
+        slides_data: list[dict[str, Any]] | None = None,
         author: str = "E-ZZIO Autonomous Core"
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Génère une présentation PPTX complète et formatée.
         slides_data: [
@@ -68,7 +68,7 @@ class SlideEngine:
         # Slide 1 : Titre
         title_layout = prs.slide_layouts[0]
         slide1 = prs.slides.add_slide(title_layout)
-        
+
         title_shape = slide1.shapes.title
         subtitle_shape = slide1.placeholders[1] if len(slide1.placeholders) > 1 else None
 
@@ -91,7 +91,7 @@ class SlideEngine:
         bullet_layout = prs.slide_layouts[1]
         for s_idx, s_info in enumerate(slides_data or [], start=2):
             slide = prs.slides.add_slide(bullet_layout)
-            
+
             # Titre de slide
             s_title = slide.shapes.title
             s_title.text = s_info.get("title", f"Section {s_idx-1}")
@@ -122,12 +122,12 @@ class SlideEngine:
                 rows = table_info.get("rows", [])
                 num_rows = len(rows) + (1 if headers else 0)
                 num_cols = max(len(headers), len(rows[0]) if rows else 1)
-                
+
                 left = Inches(1.5)
                 top = Inches(2.2)
                 width = Inches(10.3)
                 height = Inches(0.6 * num_rows)
-                
+
                 tbl_shape = slide.shapes.add_table(num_rows, num_cols, left, top, width, height)
                 table = tbl_shape.table
 

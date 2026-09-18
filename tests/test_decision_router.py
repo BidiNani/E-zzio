@@ -1,7 +1,9 @@
-import pytest
 from typing import Any, Dict
-from core.providers.iresearch_provider import IResearchProvider
+
+import pytest
+
 from core.decision_router import DecisionRouter, SearchMode
+from core.providers.iresearch_provider import IResearchProvider
 
 
 class MockProvider(IResearchProvider):
@@ -9,7 +11,7 @@ class MockProvider(IResearchProvider):
         self.name = name
         self.success = success
 
-    async def search(self, query: str, **kwargs: Any) -> Dict[str, Any]:
+    async def search(self, query: str, **kwargs: Any) -> dict[str, Any]:
         if not self.success:
             raise ConnectionError(f"Mock error on {self.name}")
         return {"provider": self.name, "data": {"result": f"Result from {self.name}"}}

@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import enum
 from dataclasses import dataclass
-from typing import Any, Dict, Optional, Tuple
+from typing import Any
 
 
 class InterruptionIntent(str, enum.Enum):
@@ -46,7 +46,7 @@ def control_for(intent: InterruptionIntent) -> ControlCommand:
         return ControlCommand(intent, task_effect="NONE", response_action="NORMAL", priority=4)
 
 
-def classify_interruption(text: str) -> Tuple[InterruptionIntent, float]:
+def classify_interruption(text: str) -> tuple[InterruptionIntent, float]:
     if not text or not text.strip():
         return InterruptionIntent.ASK, 1.0
 
@@ -82,10 +82,10 @@ def status_view(
     task_id: str,
     status: str,
     title: str,
-    progress: Optional[float] = None,
-    elapsed_s: Optional[float] = None,
-    agent: Optional[str] = None,
-) -> Dict[str, Any]:
+    progress: float | None = None,
+    elapsed_s: float | None = None,
+    agent: str | None = None,
+) -> dict[str, Any]:
     return {
         "task_id": task_id,
         "status": status,

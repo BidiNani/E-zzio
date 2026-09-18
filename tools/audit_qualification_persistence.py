@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import json
 import sys
 from pathlib import Path
@@ -14,7 +15,7 @@ def inspect_qualification_script() -> dict:
             continue
         target_script = p
         break
-    
+
     if not target_script:
         # Recherche alternative d'un script de qualification
         for p in PROJECT_ROOT.glob("**/*qualification*.py"):
@@ -27,13 +28,13 @@ def inspect_qualification_script() -> dict:
         return {"found": False}
 
     content = target_script.read_text(encoding="utf-8", errors="replace")
-    
+
     # Vérification des mots-clés cibles dans le script de qualification
     has_gemini = "gemini" in content.lower()
     has_granite = "granite" in content.lower()
     has_ornith = "ornith" in content.lower()
     has_registry_save = "registry" in content.lower() and ("save" in content.lower() or "upsert" in content.lower())
-    
+
     return {
         "found": True,
         "path": str(target_script.relative_to(PROJECT_ROOT)),
@@ -52,7 +53,7 @@ def main():
     print(f"[RACINE] {PROJECT_ROOT}\n")
 
     qual_info = inspect_qualification_script()
-    
+
     registry_path = PROJECT_ROOT / "data" / "models" / "registry.json"
     models_in_registry = []
     if registry_path.exists():
@@ -62,7 +63,7 @@ def main():
         except Exception:
             pass
 
-    print(f"[1] ANALYSE DU SCRIPT DE QUALIFICATION :")
+    print("[1] ANALYSE DU SCRIPT DE QUALIFICATION :")
     if qual_info["found"]:
         print(f"  • Script canonique : {qual_info['path']}")
         print(f"  • Cible Gemini référencée : {'YES' if qual_info['targets']['gemini'] else 'NO'}")
@@ -72,9 +73,9 @@ def main():
     else:
         print("  ❌ Aucun script de qualification v4.2 n'a pu être localisé dans le workspace actif.")
 
-    print(f"\n[2] ÉTAT ACTUEL DU REGISTRE (data/models/registry.json) :")
+    print("\n[2] ÉTAT ACTUEL DU REGISTRE (data/models/registry.json) :")
     print(f"  • Modèles enregistrés actuellement : {models_in_registry}")
-    
+
     print("\n" + "=" * 80)
     print(" BILAN DE RÉCONCILIATION")
     print("================================================================================")
@@ -89,7 +90,7 @@ def main():
         "writes_performed": 0,
         "runtime_mutations": 0
     }
-    
+
     out_file = PROJECT_ROOT / "tools" / "qualification_persistence_report.json"
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2)

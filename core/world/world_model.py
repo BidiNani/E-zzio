@@ -7,11 +7,11 @@ et s'assure du respect des contrats de sécurité et de dégradation élégante.
 from __future__ import annotations
 
 import logging
-import uuid
 import time
+import uuid
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Dict, List, Optional, Set
+from typing import Any
 
 logger = logging.getLogger("ezzio.world.world_model")
 
@@ -97,11 +97,11 @@ class ScenarioType(str, Enum):
 class WorldEntity:
     identity: str
     type: EntityType
-    state: Dict[str, Any] = field(default_factory=dict)
+    state: dict[str, Any] = field(default_factory=dict)
     timestamp: float = field(default_factory=time.time)
     source: StateSource = StateSource.MEASURED
     confidence: float = 1.0  # 0.0 à 1.0
-    relationships: Dict[str, List[str]] = field(default_factory=dict)
+    relationships: dict[str, list[str]] = field(default_factory=dict)
     freshness: FreshnessStatus = FreshnessStatus.FRESH
 
 
@@ -114,8 +114,8 @@ class WorldRisk:
     impact: float  # 0.0 à 1.0
     confidence: float  # 0.0 à 1.0
     source: str
-    affected_entities: List[str] = field(default_factory=list)
-    predicted_time: Optional[float] = None
+    affected_entities: list[str] = field(default_factory=list)
+    predicted_time: float | None = None
     mitigation: str = ""
     status: str = "ACTIVE"  # ACTIVE, MITIGATED, DISREGARDED
 
@@ -129,7 +129,7 @@ class WorldOpportunity:
     risk: float
     confidence: float
     reversibility: float  # 0.0 à 1.0
-    evidence: List[str] = field(default_factory=list)
+    evidence: list[str] = field(default_factory=list)
     recommended_action: str = ""
 
     @property
@@ -143,12 +143,12 @@ class ProactiveAction:
     action_id: str
     title: str
     classification: ActionClassification
-    target_entity_id: Optional[str] = None
+    target_entity_id: str | None = None
     risk_level: str = "R1"  # R0, R1, R2, R3, R4
     rationale: str = ""
-    causal_trace: Dict[str, Any] = field(default_factory=dict)
+    causal_trace: dict[str, Any] = field(default_factory=dict)
     executed: bool = False
-    execution_result: Optional[Dict[str, Any]] = None
+    execution_result: dict[str, Any] | None = None
     timestamp: float = field(default_factory=time.time)
 
 
@@ -156,12 +156,12 @@ class WorldModelEngine:
     """Moteur central du World Model et du Master Proactif d'E-ZZIO (V10.6)."""
 
     def __init__(self) -> None:
-        self.entities: Dict[str, WorldEntity] = {}
-        self.expected_states: Dict[str, Dict[str, Any]] = {}
-        self.risks: Dict[str, WorldRisk] = {}
-        self.opportunities: Dict[str, WorldOpportunity] = {}
-        self.actions: Dict[str, ProactiveAction] = {}
-        self.active_signatures: Set[str] = set()
+        self.entities: dict[str, WorldEntity] = {}
+        self.expected_states: dict[str, dict[str, Any]] = {}
+        self.risks: dict[str, WorldRisk] = {}
+        self.opportunities: dict[str, WorldOpportunity] = {}
+        self.actions: dict[str, ProactiveAction] = {}
+        self.active_signatures: set[str] = set()
 
         # Protection anti-boucle proactive
         self.proactive_action_count: int = 0
@@ -182,7 +182,7 @@ class WorldModelEngine:
         logger.debug(f"[WORLD-MODEL] Entité enregistrée: {entity.identity} ({entity.type.value})")
         return entity
 
-    def get_entity(self, identity: str) -> Optional[WorldEntity]:
+    def get_entity(self, identity: str) -> WorldEntity | None:
         """Récupère une entité par son identité."""
         entity = self.entities.get(identity)
         if entity:
@@ -192,7 +192,7 @@ class WorldModelEngine:
     def update_entity_state(
         self,
         identity: str,
-        state_update: Dict[str, Any],
+        state_update: dict[str, Any],
         source: StateSource = StateSource.MEASURED,
     ) -> bool:
         """Met à jour l'état partiel ou complet d'une entité."""
@@ -207,7 +207,7 @@ class WorldModelEngine:
         self.last_update = time.time()
         return True
 
-    def set_expected_state(self, identity: str, expected: Dict[str, Any]) -> None:
+    def set_expected_state(self, identity: str, expected: dict[str, Any]) -> None:
         """Définit l'état attendu (EXPECTED_STATE) pour la détection de dérive."""
         self.expected_states[identity] = expected
 
@@ -227,7 +227,7 @@ class WorldModelEngine:
 
         return entity.freshness
 
-    def detect_state_drift(self) -> List[Dict[str, Any]]:
+    def detect_state_drift(self) -> list[dict[str, Any]]:
         """Détecte la dérive entre CURRENT_STATE et EXPECTED_STATE (DETECT -> RECONCILE -> VERIFY -> AUDIT)."""
         drifts = []
         for identity, expected in self.expected_states.items():
@@ -247,7 +247,7 @@ class WorldModelEngine:
                     })
         return drifts
 
-    def reconcile_drift(self, drift_item: Dict[str, Any]) -> bool:
+    def reconcile_drift(self, drift_item: dict[str, Any]) -> bool:
         """Réconcilie la dérive détectée en réalignant le World State avec la réalité mesurée."""
         entity_id = drift_item.get("entity_id")
         key = drift_item.get("key")
@@ -259,7 +259,7 @@ class WorldModelEngine:
             return True
         return False
 
-    def verify_world_consistency(self) -> List[str]:
+    def verify_world_consistency(self) -> list[str]:
         """Vérifie la cohérence interne du World Model (orphans, cycles, invalides)."""
         inconsistencies = []
         for entity_id, entity in self.entities.items():
@@ -276,7 +276,7 @@ class WorldModelEngine:
 
         return inconsistencies
 
-    def compute_health(self, entity_id: str) -> Dict[str, Any]:
+    def compute_health(self, entity_id: str) -> dict[str, Any]:
         """Calcule un score de santé (0.0 à 1.0) explicable pour tout composant."""
         entity = self.entities.get(entity_id)
         if not entity:
@@ -303,7 +303,7 @@ class WorldModelEngine:
             "timestamp": time.time(),
         }
 
-    def assess_risks(self) -> List[WorldRisk]:
+    def assess_risks(self) -> list[WorldRisk]:
         """Analyse proactive des risques globaux et de leur criticité."""
         assessed = []
         for entity_id, entity in self.entities.items():
@@ -327,7 +327,7 @@ class WorldModelEngine:
 
         return assessed
 
-    def identify_opportunities(self) -> List[WorldOpportunity]:
+    def identify_opportunities(self) -> list[WorldOpportunity]:
         """Identifie les opportunités d'optimisation (sous-utilisation, meilleur modèle, parallélisation)."""
         opportunities = []
         for entity_id, entity in self.entities.items():
@@ -348,7 +348,7 @@ class WorldModelEngine:
 
         return opportunities
 
-    def evaluate_proactive_pipeline(self, observation: Dict[str, Any]) -> ProactiveAction:
+    def evaluate_proactive_pipeline(self, observation: dict[str, Any]) -> ProactiveAction:
         """Pipeline complet: OBSERVE -> UNDERSTAND -> FORECAST -> EVALUATE -> POLICY CHECK -> DECIDE -> ACT."""
         action_id = f"act_{uuid.uuid4().hex[:6]}"
         risk_level = observation.get("risk_level", "R1")
@@ -381,7 +381,7 @@ class WorldModelEngine:
         self.actions[action_id] = action
         return action
 
-    def execute_proactive_action(self, action_id: str) -> Dict[str, Any]:
+    def execute_proactive_action(self, action_id: str) -> dict[str, Any]:
         """Exécute les actions autorisées (AUTO_EXECUTE_SAFE) sous contraintes de sécurité et protection anti-boucle."""
         action = self.actions.get(action_id)
         if not action:
@@ -411,7 +411,7 @@ class WorldModelEngine:
         self.active_signatures.add(signature)
         return False
 
-    def evaluate_scenario(self, scenario_type: ScenarioType, hypothetical: Dict[str, Any]) -> Dict[str, Any]:
+    def evaluate_scenario(self, scenario_type: ScenarioType, hypothetical: dict[str, Any]) -> dict[str, Any]:
         """Moteur de scénarios (BASELINE, OPTIMISTIC, EXPECTED, PESSIMISTIC, WHAT_IF) sans effet de bord."""
         delta = hypothetical.get("delta", 0.0)
         multiplier = 1.0
@@ -428,7 +428,7 @@ class WorldModelEngine:
             "timestamp": time.time(),
         }
 
-    def resolve_smart_route(self, task_context: Dict[str, Any]) -> Dict[str, Any]:
+    def resolve_smart_route(self, task_context: dict[str, Any]) -> dict[str, Any]:
         """Order of Priority: POLICY > SECURITY > LOCAL_ONLY > CAPABILITY > RELIABILITY > TASK FIT > LATENCY > COST."""
         is_local = task_context.get("local_only", True)
         preferred_model = task_context.get("model", "gemini-3.6-flash")
@@ -447,7 +447,7 @@ class WorldModelEngine:
         }
         return route
 
-    def explain_decision(self, action_id: str) -> Dict[str, Any]:
+    def explain_decision(self, action_id: str) -> dict[str, Any]:
         """Explique de manière transparente et compréhensible pourquoi une action a été décidée."""
         action = self.actions.get(action_id)
         if not action:
@@ -462,7 +462,7 @@ class WorldModelEngine:
             "executed": action.executed,
         }
 
-    def get_graceful_fallback_state(self) -> Dict[str, Any]:
+    def get_graceful_fallback_state(self) -> dict[str, Any]:
         """Restaure la transmission en direct de l'état si le World Model devenait indisponible."""
         return {
             "status": "FALLBACK_DIRECT_MODE",

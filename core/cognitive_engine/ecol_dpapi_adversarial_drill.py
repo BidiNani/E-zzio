@@ -3,13 +3,13 @@ E-ZZIO Core — DPAPI Adversarial Certification (V7.64.2)
 Correction de l'affectation du secret déchiffré (Test 1) et génération dynamique du Trust Report.
 """
 
-import os
-import json
 import ctypes
+import json
 import logging
+import os
 import shutil
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 logger = logging.getLogger(__name__)
 
@@ -68,7 +68,7 @@ class SandboxDPAPIManager:
         vault = {
             "active_key_id": key_id,
             "protection_mode": "WINDOWS_DPAPI_USER_CURRENT",
-            "keys": {key_id: {"status": "ACTIVE", "created_at": datetime.now(timezone.utc).isoformat()}},
+            "keys": {key_id: {"status": "ACTIVE", "created_at": datetime.now(UTC).isoformat()}},
         }
         self.vault_path.write_text(self._canonical_dump(vault) + "\n", encoding="utf-8")
         return raw_secret
@@ -81,7 +81,7 @@ class SandboxDPAPIManager:
         (self.keys_dir / f"{new_key_id}.dpkey").write_bytes(encrypted)
 
         vault["keys"][old_active]["status"] = "VERIFY_ONLY"
-        vault["keys"][new_key_id] = {"status": "ACTIVE", "created_at": datetime.now(timezone.utc).isoformat()}
+        vault["keys"][new_key_id] = {"status": "ACTIVE", "created_at": datetime.now(UTC).isoformat()}
         vault["active_key_id"] = new_key_id
         self.vault_path.write_text(self._canonical_dump(vault) + "\n", encoding="utf-8")
         return raw_secret
@@ -193,7 +193,7 @@ def run_adversarial_drill():
     report = {
         "target": "E-ZZIO Secret Sovereignty DPAPI Layer",
         "version": "V7.64.2",
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "timestamp": datetime.now(UTC).isoformat(),
         "adversarial_test_results": test_results,
         "os_bound_protection": "Windows DPAPI (User-Context)",
         "overall_status": overall_status,

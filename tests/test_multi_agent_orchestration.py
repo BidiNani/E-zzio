@@ -1,16 +1,19 @@
 """
 tests/test_multi_agent_orchestration.py — Deterministic test for multi-agent delegation & synthesis
 """
-import pytest
 import asyncio
+
+import pytest
+
 from core.ezzio_master import EzzioMaster
+
 
 @pytest.mark.asyncio
 async def test_multi_agent_delegation_flow():
     master = EzzioMaster()
 
     mission_prompt = "Mission d'analyse de sécurité et correctif du module vault"
-    
+
     # 2 sous-tâches explicites avec des rôles distincts (FORENSIC et CODING)
     subtasks = [
         {"task_id": "sub-01", "role": "forensic", "prompt": "Audit des vulnérabilités vault", "complexity": 0.6},

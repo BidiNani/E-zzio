@@ -5,12 +5,11 @@ Impose la classification de sécurité: UNKNOWN = PROTECTED (USER_OWNED).
 """
 from __future__ import annotations
 
-import logging
 import hashlib
-import os
+import logging
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 logger = logging.getLogger("ezzio.authority.user_preservation")
 
@@ -42,14 +41,14 @@ class UserPreservationReport:
     user_artifacts_lost: int = 0
     user_config_overwrites: int = 0
     preexisting_changes_preserved: bool = True
-    details: List[str] = field(default_factory=list)
+    details: list[str] = field(default_factory=list)
 
 
 class UserPreservationGate:
     """Gate souveraine de préservation utilisateur d'E-ZZIO."""
 
     def __init__(self) -> None:
-        self.baselines: Dict[str, FileBaseline] = {}
+        self.baselines: dict[str, FileBaseline] = {}
 
     def compute_hash(self, content: bytes) -> str:
         """Calcule le hash SHA-256 déterministe d'un contenu."""
@@ -73,7 +72,7 @@ class UserPreservationGate:
             # Règle Zéro: Tout fichier non catégorisé est UNKNOWN -> PROTECTED
             return FileOwnership.UNKNOWN
 
-    def capture_baseline(self, paths: List[str], file_contents: Optional[Dict[str, bytes]] = None) -> Dict[str, FileBaseline]:
+    def capture_baseline(self, paths: list[str], file_contents: dict[str, bytes] | None = None) -> dict[str, FileBaseline]:
         """Capture l'état initial des fichiers ciblés sans altération."""
         for path in paths:
             ownership = self.classify_file(path)
@@ -97,7 +96,7 @@ class UserPreservationGate:
             return False
         return True
 
-    def minimal_config_patch(self, user_config: Dict[str, Any], patch: Dict[str, Any]) -> Dict[str, Any]:
+    def minimal_config_patch(self, user_config: dict[str, Any], patch: dict[str, Any]) -> dict[str, Any]:
         """Configuration Gate (Section 11): Applique uniquement les changements ciblés en préservant les clés utilisateur."""
         result = dict(user_config)  # Copie profonde des clés utilisateur
         result.update(patch)
@@ -105,8 +104,8 @@ class UserPreservationGate:
 
     def verify_preservation(
         self,
-        current_files: Dict[str, bytes],
-        deleted_paths: Optional[List[str]] = None,
+        current_files: dict[str, bytes],
+        deleted_paths: list[str] | None = None,
     ) -> UserPreservationReport:
         """Évalue l'intégrité globale et garantit l'absence de perte de données utilisateur."""
         report = UserPreservationReport()

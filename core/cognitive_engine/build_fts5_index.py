@@ -4,12 +4,12 @@ Analyse la provenance des lignes qualifiées, construit l'index SQLite FTS5 de m
 isoler et réversible, et génère un index_build_manifest.json.
 """
 
-import os
-import sys
 import json
+import os
 import sqlite3
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -96,14 +96,14 @@ class CognitiveIndexBuilder:
 
                     # Traitement d'indexation selon le type
                     ext = file_path.suffix.lower()
-                    timestamp = datetime.now(timezone.utc).isoformat()
+                    timestamp = datetime.now(UTC).isoformat()
                     memory_type = validation.get("memory_type", "generic")
                     confidence = validation.get("confidence", 0.5)
                     importance = validation.get("importance", 5)
 
                     try:
                         if ext == ".jsonl":
-                            with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+                            with open(file_path, encoding="utf-8", errors="ignore") as f:
                                 for line in f:
                                     line_clean = line.strip()
                                     if line_clean:
@@ -135,7 +135,7 @@ class CognitiveIndexBuilder:
 
         # Génération du manifest réversible
         manifest_data = {
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "engine": "FTS5_LOCAL",
             "total_records_indexed": self.total_records_indexed,
             "metrics": metrics,
@@ -149,7 +149,7 @@ class CognitiveIndexBuilder:
         # Génération du rapport d'audit de provenance
         with open(REPORT_FILE, "w", encoding="utf-8") as f:
             json.dump(
-                {"timestamp": datetime.now(timezone.utc).isoformat(), "provenance_breakdown": self.provenance_stats, "metrics": metrics},
+                {"timestamp": datetime.now(UTC).isoformat(), "provenance_breakdown": self.provenance_stats, "metrics": metrics},
                 f,
                 ensure_ascii=False,
                 indent=2,

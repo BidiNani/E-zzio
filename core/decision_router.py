@@ -1,5 +1,6 @@
-from typing import Any, Dict, List
 from enum import Enum
+from typing import Any
+
 from core.providers.iresearch_provider import IResearchProvider
 
 
@@ -20,21 +21,21 @@ class DecisionRouter:
         SearchMode.FORENSIC: ["searxng", "jina"],
     }
 
-    def __init__(self, providers: List[IResearchProvider]):
+    def __init__(self, providers: list[IResearchProvider]):
         self.providers = providers
-        self._provider_map: Dict[str, IResearchProvider] = {getattr(p, "name", ""): p for p in providers if hasattr(p, "name")}
+        self._provider_map: dict[str, IResearchProvider] = {getattr(p, "name", ""): p for p in providers if hasattr(p, "name")}
 
-    def _select_providers(self, mode: SearchMode) -> List[IResearchProvider]:
+    def _select_providers(self, mode: SearchMode) -> list[IResearchProvider]:
         priority_names = self.MODE_PRIORITIES.get(mode, [])
         ordered = [self._provider_map[name] for name in priority_names if name in self._provider_map]
         return ordered if ordered else self.providers
 
-    async def search(self, query: str, mode: SearchMode = SearchMode.FAST, **kwargs: Any) -> Dict[str, Any]:
+    async def search(self, query: str, mode: SearchMode = SearchMode.FAST, **kwargs: Any) -> dict[str, Any]:
         if not self.providers:
             raise RuntimeError("Aucun fournisseur de recherche configuré.")
 
         selected = self._select_providers(mode)
-        errors: List[str] = []
+        errors: list[str] = []
 
         for provider in selected:
             provider_name = getattr(provider, "name", "unknown")

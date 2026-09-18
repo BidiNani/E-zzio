@@ -2,11 +2,11 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 
 from core.human_chat import (
-    status,
+    build_brief,
     human_chat,
     list_sessions,
     read_session,
-    build_brief,
+    status,
 )
 
 router = APIRouter(tags=["human-chat"])

@@ -4,14 +4,14 @@ Assure le chiffrement/déchiffrement matériel/OS des clés HMAC via l'API DPAPI
 et génère le rapport d'audit global d'intégrité ECOL_TRUST_REPORT.json.
 """
 
-import os
-import json
 import ctypes
-import hmac
-import logging
 import hashlib
+import hmac
+import json
+import logging
+import os
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 logger = logging.getLogger(__name__)
 
@@ -96,7 +96,7 @@ class DPAPISecretManager:
             vault_data = {
                 "active_key_id": key_id,
                 "protection_mode": "WINDOWS_DPAPI_USER_CURRENT",
-                "keys": {key_id: {"status": "ACTIVE", "created_at": datetime.now(timezone.utc).isoformat()}},
+                "keys": {key_id: {"status": "ACTIVE", "created_at": datetime.now(UTC).isoformat()}},
             }
             self.vault_path.write_text(self._canonical_dump(vault_data) + "\n", encoding="utf-8")
 
@@ -117,7 +117,7 @@ class DPAPISecretManager:
         report = {
             "certification_target": "E-ZZIO Cognitive Governance (ECOL)",
             "version": "V7.64",
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "domains": {
                 "ledger_cryptographic_integrity": "PASS [10/10]",
                 "tamper_resistance": "PASS [10/10]",

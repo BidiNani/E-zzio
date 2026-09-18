@@ -3,12 +3,13 @@ E-ZZIO Core — Observatory Dashboard (V8.10 - Operational Certification Phase)
 Vue synthétique unifiée intégrant le Birth Certificate et le statut de certification.
 """
 
-import sys
-import psutil
 import hashlib
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
+
+import psutil
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -51,13 +52,13 @@ class EzzioObservatory:
         if not ledger_path.exists():
             return 0
         count = 0
-        with open(ledger_path, "r", encoding="utf-8") as f:
+        with open(ledger_path, encoding="utf-8") as f:
             for line in f:
                 if line.strip():
                     count += 1
         return count
 
-    def generate_dashboard_report(self) -> Dict[str, Any]:
+    def generate_dashboard_report(self) -> dict[str, Any]:
         cpu_usage = psutil.cpu_percent(interval=0.5)
         mem = psutil.virtual_memory()
         ram_percent = mem.percent
@@ -88,7 +89,7 @@ class EzzioObservatory:
         existence = self.identity.get_existence_duration()
 
         return {
-            "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+            "timestamp_utc": datetime.now(UTC).isoformat(),
             "existence": existence,
             "health_score": health_score,
             "drift_status": "UNCHANGED",

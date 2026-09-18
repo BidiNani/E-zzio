@@ -1,12 +1,11 @@
 """
 E-ZZIO : Benchmark comparatif des modèles locaux Ollama (≤10B).
 """
-import os
-import sys
 import json
 import time
-import httpx
 from pathlib import Path
+
+import httpx
 
 root = Path("G:/AI/E-zzio")
 ollama_url = "http://127.0.0.1:11434"
@@ -41,7 +40,7 @@ with httpx.Client(timeout=120.0) as client:
     for model_name in models_to_test:
         print(f"=== BENCHMARKING MODEL: {model_name} ===")
         model_scores = {"tests": [], "total_latency_ms": 0, "total_eval_tokens": 0}
-        
+
         for t in test_prompts:
             t0 = time.perf_counter()
             payload = {
@@ -56,14 +55,14 @@ with httpx.Client(timeout=120.0) as client:
             try:
                 r = client.post(f"{ollama_url}/api/generate", json=payload)
                 elapsed_ms = (time.perf_counter() - t0) * 1000
-                
+
                 if r.status_code == 200:
                     data = r.json()
                     response_text = data.get("response", "").strip()
                     eval_count = data.get("eval_count", 0)
                     eval_duration_ns = data.get("eval_duration", 1)
                     tok_per_sec = (eval_count / (eval_duration_ns / 1e9)) if eval_duration_ns > 0 else 0
-                    
+
                     model_scores["tests"].append({
                         "id": t["id"],
                         "latency_ms": round(elapsed_ms, 2),
@@ -83,7 +82,7 @@ with httpx.Client(timeout=120.0) as client:
                     "id": t["id"],
                     "error": str(exc)
                 })
-        
+
         avg_tok_s = sum(x.get("tok_per_sec", 0) for x in model_scores["tests"] if "tok_per_sec" in x) / max(len(model_scores["tests"]), 1)
         model_scores["average_tokens_per_second"] = round(avg_tok_s, 2)
         benchmark_results[model_name] = model_scores

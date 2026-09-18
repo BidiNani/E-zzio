@@ -4,10 +4,10 @@ E-ZZIO Hierarchical Orchestration — Worker Contract Specifications (L0/L1/L2).
 from __future__ import annotations
 
 import enum
-import re
 import uuid
+from collections.abc import Sequence
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Tuple, Sequence
+from typing import Any
 
 SCHEMA_REQUEST = "ezzio.worker_task.v1"
 
@@ -36,7 +36,7 @@ class Budget:
     timeout_sec: int = 600
     max_tokens: int = 100000
 
-    def fits_within(self, parent: Budget) -> Tuple[bool, List[str]]:
+    def fits_within(self, parent: Budget) -> tuple[bool, list[str]]:
         violations = []
         if self.max_tool_calls > parent.max_tool_calls:
             violations.append(f"max_tool_calls ({self.max_tool_calls}) > parent ({parent.max_tool_calls})")
@@ -62,19 +62,19 @@ _FORBIDDEN_PROMPTS = [
 class WorkerTaskRequest:
     request_id: str
     task_id: str
-    parent_task_id: Optional[str] = None
+    parent_task_id: str | None = None
     worker_id: str = "coder_worker"
     worker_type: str = "CODER_WORKER"
     objective: str = ""
-    authorized_tools: Tuple[str, ...] = ("read_file",)
-    authorized_models: Tuple[str, ...] = ("qwen2.5-coder:7b-instruct-q4_K_M",)
+    authorized_tools: tuple[str, ...] = ("read_file",)
+    authorized_models: tuple[str, ...] = ("qwen2.5-coder:7b-instruct-q4_K_M",)
     budget: Budget = field(default_factory=Budget)
     priority: str = "P2"
-    context: Dict[str, Any] = field(default_factory=dict)
+    context: dict[str, Any] = field(default_factory=dict)
     schema_version: str = SCHEMA_REQUEST
     depth: int = 0
     max_children: int = 2
-    context_classes: Tuple[str, ...] = ()
+    context_classes: tuple[str, ...] = ()
 
     def ensure_valid(self) -> None:
         try:
@@ -120,7 +120,7 @@ class WorkerTaskRequest:
         known_workers: Sequence[str],
         known_tools: Sequence[str],
         known_models: Sequence[str],
-    ) -> List[str]:
+    ) -> list[str]:
         errs = []
         if self.worker_type not in known_workers:
             errs.append(f"worker inconnu: {self.worker_type}")
@@ -143,7 +143,7 @@ class WorkerTaskResult:
     worker_id: str
     status: ResultStatus = ResultStatus.COMPLETED
     summary: str = ""
-    errors: Tuple[str, ...] = ()
+    errors: tuple[str, ...] = ()
     result_version: int = 1
 
     def ensure_valid(self) -> None:
@@ -169,7 +169,7 @@ class WorkerTaskResult:
         return WorkerTaskResult(**data)
 
 
-def accept_result(result: WorkerTaskResult, request: WorkerTaskRequest, known_workers: Sequence[str]) -> Tuple[bool, str]:
+def accept_result(result: WorkerTaskResult, request: WorkerTaskRequest, known_workers: Sequence[str]) -> tuple[bool, str]:
     if result.request_id != request.request_id:
         return False, "request_id mismatch"
     if result.worker_id != request.worker_id and result.worker_id not in known_workers:

@@ -1,16 +1,17 @@
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel, Field
-from typing import Any, Dict, Optional
 import logging
 import uuid
+from typing import Any
 
-from core.evidence_store import EvidenceStore
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel, Field
+
 from core.decision_router import DecisionRouter, SearchMode
-from core.providers.searxng_provider import SearxngProvider
-from core.providers.jina_provider import JinaProvider
-from core.providers.tavily_provider import TavilyProvider
+from core.evidence_store import EvidenceStore
 from core.providers.gemini_provider import GeminiProvider
+from core.providers.jina_provider import JinaProvider
 from core.providers.ollama_provider import OllamaProvider
+from core.providers.searxng_provider import SearxngProvider
+from core.providers.tavily_provider import TavilyProvider
 
 logger = logging.getLogger("ezzio.api.research")
 
@@ -29,14 +30,14 @@ async def init_research_router():
 class ResearchRequest(BaseModel):
     query: str = Field(..., description="Requête de recherche ou d'investigation")
     mode: str = Field(default="fast", description="Mode de recherche : fast, deep, google, local")
-    max_tokens: Optional[int] = Field(default=None, description="Limite de tokens")
+    max_tokens: int | None = Field(default=None, description="Limite de tokens")
 
 
 class ResearchResponse(BaseModel):
     task_id: str
     mode: str
     provider: str
-    data: Dict[str, Any] = Field(default_factory=dict)
+    data: dict[str, Any] = Field(default_factory=dict)
 
 
 @router.post("/search", response_model=ResearchResponse)

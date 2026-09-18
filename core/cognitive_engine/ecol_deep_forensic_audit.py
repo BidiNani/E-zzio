@@ -7,8 +7,8 @@ du registre budgétaire en mode lecture seule (Correction syntaxique).
 import ast
 import json
 import re
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 CORE_COG_DIR = ROOT_DIR / "core" / "cognition"
@@ -25,7 +25,7 @@ def audit_syntax_and_imports():
     for path in CORE_COG_DIR.glob("*.py"):
         mod_name = path.name
         try:
-            with open(path, "r", encoding="utf-8") as f:
+            with open(path, encoding="utf-8") as f:
                 code_content = f.read()
 
             ast.parse(code_content, filename=str(path))
@@ -63,7 +63,7 @@ def audit_legacy_bypasses():
                 continue
 
             try:
-                with open(path, "r", encoding="utf-8", errors="ignore") as f:
+                with open(path, encoding="utf-8", errors="ignore") as f:
                     content = f.read()
 
                 for pattern in forbidden_patterns:
@@ -85,7 +85,7 @@ def audit_ledger_integrity():
     records_count = 0
     valid_format = True
     try:
-        with open(ledger_path, "r", encoding="utf-8") as f:
+        with open(ledger_path, encoding="utf-8") as f:
             for line in f:
                 if line.strip():
                     records_count += 1
@@ -102,7 +102,7 @@ def run_forensic_audit():
     ledger_results = audit_ledger_integrity()
 
     report = {
-        "audit_timestamp": datetime.now(timezone.utc).isoformat(),
+        "audit_timestamp": datetime.now(UTC).isoformat(),
         "modules_health": syntax_results,
         "unrouted_legacy_calls": bypass_results,
         "ledger_audit": ledger_results,

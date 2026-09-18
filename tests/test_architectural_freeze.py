@@ -3,7 +3,7 @@
 Toute modification faisant échouer ce fichier est une dérive architecturale :
 STOP, analyser, restaurer ou justifier explicitement avant d'intégrer.
 """
-from core.routing.model_registry import canonical_model_registry, ModelQualificationStatus
+from core.routing.model_registry import ModelQualificationStatus, canonical_model_registry
 
 
 def test_freeze_primary_is_gemini_37_flash():

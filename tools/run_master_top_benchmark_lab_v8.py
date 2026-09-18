@@ -1,15 +1,12 @@
 """
 E-ZZIO : Master Top Benchmark Lab v8.0 (Full Categorical Forensic Suite)
 """
-import os
-import sys
-import json
-import time
 import hashlib
+import json
 import re
-import urllib.request
 import subprocess
-import psutil
+import time
+import urllib.request
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")
@@ -179,12 +176,12 @@ def run_ollama_test(model_name: str, prompt: str, timeout_sec: int = 180):
     with urllib.request.urlopen(req, timeout=timeout_sec) as resp:
         res = json.loads(resp.read().decode("utf-8"))
     lat_ms = (time.perf_counter() - t0) * 1000
-    
+
     eval_count = res.get("eval_count", 1)
     eval_dur = res.get("eval_duration", 1)
     tok_s = round(eval_count / (eval_dur / 1e9), 2) if eval_dur > 0 else 0.0
     first_tok_ms = round(res.get("prompt_eval_duration", 1) / 1e6, 1)
-    
+
     unload_ollama(model_name)
     return {
         "latency_ms": round(lat_ms, 2),
@@ -218,14 +215,14 @@ def run_llama_cpp_test(model_path: Path, prompt: str, timeout_sec: int = 180):
     stdout, stderr = p.communicate(input="/exit\n", timeout=timeout_sec)
     lat_ms = (time.perf_counter() - t0) * 1000
     p.wait()
-    
+
     tok_s = 0.0
     first_tok_ms = 75.0
     m = re.search(r"Prompt:\s*([\d\.]+)\s*t/s\s*\|\s*Generation:\s*([\d\.]+)\s*t/s", stdout)
     if m:
         tok_s = float(m.group(2))
         first_tok_ms = round(1000.0 / max(float(m.group(1)), 1.0), 1)
-        
+
     raw = stdout.split(">")[-1].strip() if ">" in stdout else stdout.strip()
     return {
         "latency_ms": round(lat_ms, 2),
@@ -243,7 +240,7 @@ for m in models_spec:
     m_id = m["id"]
     print(f"\nEvaluating Model: {m['name']} ({m['runtime']})")
     raw_evidence_table[m_id] = {"info": m, "categories": {}}
-    
+
     cat_scores = {
         "REASONING": 0.0,
         "CODING": 0.0,
@@ -256,7 +253,7 @@ for m in models_spec:
         "VISION": 0.0,
         "PERFORMANCE": 0.0
     }
-    
+
     # 1. Reasoning Category (5 items)
     reason_passes = 0
     for t in prompts_v8["A_REASONING"]:
@@ -268,10 +265,10 @@ for m in models_spec:
             (raw_resp_dir / f"{m_id}_{t['id']}.txt").write_text(out["raw_response"], encoding="utf-8")
             if any(exp.lower() in out["raw_response"].lower() for exp in [t["expected"].lower()]):
                 reason_passes += 1
-        except Exception as e:
+        except Exception:
             pass
     cat_scores["REASONING"] = round((reason_passes / 5.0) * 100, 1)
-    
+
     # 2. Coding Category (5 items)
     code_passes = 0
     for t in prompts_v8["B_CODING"]:
@@ -283,10 +280,10 @@ for m in models_spec:
             (raw_resp_dir / f"{m_id}_{t['id']}.txt").write_text(out["raw_response"], encoding="utf-8")
             if t["expected"].lower() in out["raw_response"].lower():
                 code_passes += 1
-        except Exception as e:
+        except Exception:
             pass
     cat_scores["CODING"] = round((code_passes / 5.0) * 100, 1)
-    
+
     # 3. Tool Calling
     try:
         t = prompts_v8["C_TOOL_CALLING"][0]
@@ -298,7 +295,7 @@ for m in models_spec:
         cat_scores["TOOL_CALLING"] = 100.0 if ("read_file" in out["raw_response"] and "README.md" in out["raw_response"]) else 50.0
     except Exception:
         cat_scores["TOOL_CALLING"] = 0.0
-        
+
     # 4. Agent & Instruction
     cat_scores["AGENT"] = 92.0 if m_id in ["hermes3-8b", "qwen3.5-9b", "qwen3.5-9b-mtp"] else 78.0
     cat_scores["INSTRUCTION"] = 100.0 if m_id in ["phi4-mini", "hermes3-8b", "ministral-3-3b-instruct"] else 80.0
@@ -306,11 +303,11 @@ for m in models_spec:
     cat_scores["ANTI_HALLUCINATION"] = 100.0 if m_id in ["qwen3.5-9b", "hermes3-8b", "qwen3.5-9b-mtp"] else 85.0
     cat_scores["ROBUSTNESS"] = 95.0 if m_id in ["phi4-mini", "hermes3-8b", "qwen3.5-9b"] else 80.0
     cat_scores["VISION"] = 90.0 if m_id in ["qwen3.5-9b", "gemma-4-e4b-it"] else 0.0
-    
+
     # 5. Performance Tok/s normalized to 100 (15 tok/s = 100)
     tok_s_base = 12.44 if m_id == "phi4-mini" else (13.40 if m_id == "ministral-3-3b-instruct" else (9.90 if m_id == "gemma-4-e4b-it" else (8.10 if m_id == "hermes3-8b" else 5.71)))
     cat_scores["PERFORMANCE"] = round(min(tok_s_base / 15.0 * 100, 100.0), 1)
-    
+
     # Compute Composite Global Score
     # GLOBAL_SCORE = 0.15*R + 0.15*C + 0.15*TC + 0.10*A + 0.10*I + 0.10*G + 0.10*AH + 0.05*ROB + 0.05*VIS + 0.05*PERF
     comp_score = round(
@@ -326,7 +323,7 @@ for m in models_spec:
         0.05 * cat_scores["PERFORMANCE"],
         2
     )
-    
+
     cat_scores["GLOBAL_SCORE"] = comp_score
     scores_by_model[m_id] = cat_scores
     print(f"  -> Scores: Reasoning={cat_scores['REASONING']}%, Coding={cat_scores['CODING']}%, Global={comp_score}/100")

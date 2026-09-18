@@ -27,7 +27,7 @@ def run_temporal_archaeology():
         for path in dir_path.rglob("*"):
             if path.is_file() and path.suffix.lower() in {".jsonl", ".json", ".txt", ".log"}:
                 try:
-                    with open(path, "r", encoding="utf-8", errors="ignore") as f:
+                    with open(path, encoding="utf-8", errors="ignore") as f:
                         lines = f.readlines()
 
                     for line_num, line in enumerate(lines, 1):

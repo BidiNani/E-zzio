@@ -10,28 +10,28 @@ Fournit l'orchestration de niveau supérieur pour les missions complexes de bout
 6. Scellement des preuves vérifiables (Evidence Logger)
 """
 from __future__ import annotations
-import os
-import sys
+
 import ast
-import time
-import uuid
-import json
 import hashlib
 import logging
+import os
+import sys
+import time
+import uuid
 from dataclasses import dataclass, field
-from typing import Dict, Any, List, Optional, Set, Tuple
+from typing import Any
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
-from core.agent.tools_registry import ToolRegistry
-from core.telemetry.agent_tracer import traced
 from core.agent.agent_guard import AgentPolicyGuard, CodingAgentBudget
-from core.agent.command_executor import GovernedCommandExecutor, redact_secrets
-from core.agent.evidence_logger import EvidenceLogger, CodingTaskEvidence
+from core.agent.command_executor import GovernedCommandExecutor
+from core.agent.evidence_logger import CodingTaskEvidence, EvidenceLogger
 from core.agent.patch_engine import PatchEngine
+from core.agent.tools_registry import ToolRegistry
 from core.routing.circuit_breaker import circuit_breaker
+from core.telemetry.agent_tracer import traced
 
 logger = logging.getLogger("ezzio.agent.orchestrator")
 
@@ -44,10 +44,10 @@ class ValidationState:
 
 @dataclass
 class ImpactAnalysisResult:
-    target_files: List[str]
-    related_tests: List[str] = field(default_factory=list)
-    imported_modules: List[str] = field(default_factory=list)
-    existing_implementations: List[str] = field(default_factory=list)
+    target_files: list[str]
+    related_tests: list[str] = field(default_factory=list)
+    imported_modules: list[str] = field(default_factory=list)
+    existing_implementations: list[str] = field(default_factory=list)
     risk_level: str = "LOW"  # LOW, MEDIUM, HIGH
 
 
@@ -57,7 +57,7 @@ class CodebaseImpactAnalyzer:
     def __init__(self, workspace_root: str):
         self.workspace_root = os.path.abspath(workspace_root)
 
-    def find_related_tests(self, rel_path: str) -> List[str]:
+    def find_related_tests(self, rel_path: str) -> list[str]:
         """Localise les tests associés à un fichier source donné."""
         base_name = os.path.splitext(os.path.basename(rel_path))[0]
         test_candidates = [
@@ -71,14 +71,14 @@ class CodebaseImpactAnalyzer:
                 found.append(tc)
         return found
 
-    def extract_ast_imports(self, rel_path: str) -> List[str]:
+    def extract_ast_imports(self, rel_path: str) -> list[str]:
         """Extrait les modules importés via parsing AST sécurisé."""
         full_p = os.path.join(self.workspace_root, rel_path)
         if not os.path.exists(full_p) or not rel_path.endswith(".py"):
             return []
         imports = []
         try:
-            with open(full_p, "r", encoding="utf-8", errors="ignore") as f:
+            with open(full_p, encoding="utf-8", errors="ignore") as f:
                 tree = ast.parse(f.read())
             for node in ast.walk(tree):
                 if isinstance(node, ast.Import):
@@ -91,11 +91,11 @@ class CodebaseImpactAnalyzer:
             pass
         return imports
 
-    def analyze_impact(self, target_files: List[str], intent: str = "") -> ImpactAnalysisResult:
+    def analyze_impact(self, target_files: list[str], intent: str = "") -> ImpactAnalysisResult:
         """Produit un rapport d'impact complet avant toute modification."""
-        all_tests: Set[str] = set()
-        all_imports: Set[str] = set()
-        existing_matches: List[str] = []
+        all_tests: set[str] = set()
+        all_imports: set[str] = set()
+        existing_matches: list[str] = []
 
         # Recherche de doublons ou implémentations existantes (Section 4)
         if intent:
@@ -135,10 +135,10 @@ class TaskStep:
     step_id: str
     name: str
     role: str  # RESEARCH, PLAN, CODE, TEST, REVIEW, VERIFY
-    dependencies: List[str] = field(default_factory=list)
+    dependencies: list[str] = field(default_factory=list)
     action_type: str = "SAFE"  # SAFE, SENSITIVE, CRITICAL
     status: str = "PENDING"  # PENDING, RUNNING, COMPLETED, FAILED, SKIPPED
-    result: Optional[Dict[str, Any]] = None
+    result: dict[str, Any] | None = None
 
 
 class ComplexTaskEngine:
@@ -155,8 +155,8 @@ class ComplexTaskEngine:
         self.patcher = PatchEngine(workspace_root=self.workspace_root)
 
     def plan_complex_task(
-        self, objective: str, target_files: Optional[List[str]] = None
-    ) -> List[TaskStep]:
+        self, objective: str, target_files: list[str] | None = None
+    ) -> list[TaskStep]:
         """Génère un plan ordonné avec dépendances déterministes."""
         targets = target_files or []
         steps = [
@@ -211,7 +211,7 @@ class ComplexTaskEngine:
         failure_output: str,
         target_file: str,
         max_attempts: int = 10,
-    ) -> Tuple[bool, str]:
+    ) -> tuple[bool, str]:
         """Exécute la boucle d'auto-réparation bornée avec circuit breaker et diagnostic chirurgical."""
         logger.info("[SELF-REPAIR] Démarrage de l'auto-réparation sur %s", target_file)
         cb_key = f"self_repair:{os.path.basename(target_file)}"
@@ -223,7 +223,7 @@ class ComplexTaskEngine:
             ok_cmd, _ = self.budget.record_command()
             if not ok_cmd:
                 circuit_breaker.record_failure(cb_key)
-                return False, f"[BUDGET EXCEEDED] Limite de commandes atteinte lors de l'auto-réparation."
+                return False, "[BUDGET EXCEEDED] Limite de commandes atteinte lors de l'auto-réparation."
 
             # Analyse de la cause racine dans failure_output
             root_cause = "Unknown failure"
@@ -254,11 +254,11 @@ class ComplexTaskEngine:
     def execute_complex_task(
         self,
         objective: str,
-        target_files: Optional[List[str]] = None,
-        patch_actions: Optional[List[Dict[str, str]]] = None,
+        target_files: list[str] | None = None,
+        patch_actions: list[dict[str, str]] | None = None,
         auto_repair: bool = True,
         deterministic: bool = False,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Exécute une mission complexe de bout en bout de manière totalement gouvernée."""
         if deterministic:
             content_sig = f"{objective}:{sorted(target_files or [])}"

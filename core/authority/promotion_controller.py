@@ -5,9 +5,10 @@ Gère la promotion sécurisée des candidats et le rollback vers les snapshots V
 
 import hashlib
 from pathlib import Path
-from core.identity.identity_snapshot import identity_snapshot_engine
-from core.identity.identity_recovery import identity_recovery_engine
+
 from core.authority.evolution_ledger import evolution_ledger
+from core.identity.identity_recovery import identity_recovery_engine
+from core.identity.identity_snapshot import identity_snapshot_engine
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 CANDIDATES_DIR = ROOT_DIR / "runtime" / "evolution" / "candidates"

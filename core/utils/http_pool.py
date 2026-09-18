@@ -6,10 +6,10 @@ Optimise les échanges réseau avec réutilisation des connexions TCP/SSL (Keep-
 - Nettoyage propre au shutdown
 """
 from __future__ import annotations
-import httpx
-from typing import Optional
 
-_global_async_client: Optional[httpx.AsyncClient] = None
+import httpx
+
+_global_async_client: httpx.AsyncClient | None = None
 
 
 def get_http_client(timeout: float = 10.0) -> httpx.AsyncClient:

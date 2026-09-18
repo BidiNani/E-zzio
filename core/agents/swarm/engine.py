@@ -6,17 +6,14 @@ détection de conflits, résolutions basées sur les preuves, consensus et arbit
 from __future__ import annotations
 
 import logging
-import uuid
 import time
+import uuid
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
 from enum import Enum
-from typing import Any, Dict, List, Optional, Set
+from typing import Any
 
 from core.agents.registry import (
-    AgentDescriptor,
     AgentRegistry,
-    AgentStatus,
     agent_registry,
 )
 
@@ -66,8 +63,8 @@ class SwarmMessage:
     message_type: MessageType
     content: str
     timestamp: float = field(default_factory=time.time)
-    parent_message_id: Optional[str] = None
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    parent_message_id: str | None = None
+    metadata: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -75,12 +72,12 @@ class SwarmConflict:
     conflict_id: str
     mission_id: str
     swarm_id: str
-    participants: List[str]
-    claims: Dict[str, str]  # agent_id -> claim
+    participants: list[str]
+    claims: dict[str, str]  # agent_id -> claim
     severity: str = "MEDIUM"  # LOW, MEDIUM, HIGH, CRITICAL
-    evidence: List[str] = field(default_factory=list)
+    evidence: list[str] = field(default_factory=list)
     resolution_state: str = "OPEN"  # OPEN, RESOLVED, ARBITRATED
-    resolution: Optional[str] = None
+    resolution: str | None = None
 
 
 @dataclass
@@ -90,8 +87,8 @@ class SwarmProposal:
     title: str
     description: str
     score: float = 0.0
-    objections: List[str] = field(default_factory=list)
-    evidence: List[str] = field(default_factory=list)
+    objections: list[str] = field(default_factory=list)
+    evidence: list[str] = field(default_factory=list)
     is_minority_report: bool = False
 
 
@@ -100,7 +97,7 @@ class AgentSwarm:
     swarm_id: str
     mission_id: str
     coordinator_id: str
-    participants: Set[str]
+    participants: set[str]
     mode: SwarmMode
     state: SwarmState
     objective: str
@@ -108,11 +105,11 @@ class AgentSwarm:
     budget_used: float = 0.0
     max_rounds: int = 5
     current_round: int = 0
-    messages: List[SwarmMessage] = field(default_factory=list)
-    proposals: List[SwarmProposal] = field(default_factory=list)
-    conflicts: List[SwarmConflict] = field(default_factory=list)
-    minority_reports: List[SwarmProposal] = field(default_factory=list)
-    decision: Optional[Dict[str, Any]] = None
+    messages: list[SwarmMessage] = field(default_factory=list)
+    proposals: list[SwarmProposal] = field(default_factory=list)
+    conflicts: list[SwarmConflict] = field(default_factory=list)
+    minority_reports: list[SwarmProposal] = field(default_factory=list)
+    decision: dict[str, Any] | None = None
 
 
 class SwarmLimitError(Exception):
@@ -125,15 +122,15 @@ class SwarmEngine:
 
     MAX_MESSAGES_PER_SWARM = 100
 
-    def __init__(self, registry: Optional[AgentRegistry] = None):
+    def __init__(self, registry: AgentRegistry | None = None):
         self.registry = registry or agent_registry
-        self._swarms: Dict[str, AgentSwarm] = {}
+        self._swarms: dict[str, AgentSwarm] = {}
 
     def create_swarm(
         self,
         mission_id: str,
         coordinator_id: str = "master_ezzio",
-        participants: Optional[List[str]] = None,
+        participants: list[str] | None = None,
         objective: str = "Collective problem solving",
         mode: SwarmMode = SwarmMode.BRAINSTORM,
         budget: float = 50.0,
@@ -159,7 +156,7 @@ class SwarmEngine:
         logger.info(f"[SWARM-ENGINE] Swarm créé: {swarm_id} ({mode.value}, {len(initial_participants)} participants)")
         return swarm
 
-    def get_swarm(self, swarm_id: str) -> Optional[AgentSwarm]:
+    def get_swarm(self, swarm_id: str) -> AgentSwarm | None:
         return self._swarms.get(swarm_id)
 
     def join_swarm(self, swarm_id: str, agent_id: str) -> bool:
@@ -185,8 +182,8 @@ class SwarmEngine:
         recipient_agent_id: str,
         message_type: MessageType,
         content: str,
-        parent_message_id: Optional[str] = None,
-        metadata: Optional[Dict[str, Any]] = None,
+        parent_message_id: str | None = None,
+        metadata: dict[str, Any] | None = None,
     ) -> SwarmMessage:
         """Envoie un message gouverné au sein du Swarm."""
         swarm = self._swarms.get(swarm_id)
@@ -238,7 +235,7 @@ class SwarmEngine:
         agent_id: str,
         title: str,
         description: str,
-        evidence: Optional[List[str]] = None,
+        evidence: list[str] | None = None,
     ) -> SwarmProposal:
         swarm = self._swarms.get(swarm_id)
         if not swarm:
@@ -288,7 +285,7 @@ class SwarmEngine:
                 return True
         return False
 
-    def synthesize_consensus(self, swarm_id: str) -> Dict[str, Any]:
+    def synthesize_consensus(self, swarm_id: str) -> dict[str, Any]:
         """Fait la synthèse et vérifie si le consensus est atteint."""
         swarm = self._swarms.get(swarm_id)
         if not swarm:
@@ -324,7 +321,7 @@ class SwarmEngine:
 
         return swarm.decision
 
-    def arbitrate_master(self, swarm_id: str, winning_proposal_id: str, reason: str) -> Dict[str, Any]:
+    def arbitrate_master(self, swarm_id: str, winning_proposal_id: str, reason: str) -> dict[str, Any]:
         """Arbitrage souverain du Master E-ZZIO."""
         swarm = self._swarms.get(swarm_id)
         if not swarm:

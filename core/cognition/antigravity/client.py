@@ -5,7 +5,6 @@ Asynchronous client orchestrating the execution of Antigravity CLI in non-intera
 
 from __future__ import annotations
 
-import asyncio
 import json
 import logging
 import os
@@ -13,7 +12,6 @@ import shutil
 import subprocess
 import time
 from pathlib import Path
-from typing import Optional
 
 from core.cognition.antigravity.capabilities import (
     AntigravityAgentRequest,
@@ -22,10 +20,10 @@ from core.cognition.antigravity.capabilities import (
     AntigravityOutputFormat,
     AntigravityPolicyViolationError,
 )
-from core.cognition.antigravity.policy import AntigravityPolicyGovernor
 from core.cognition.antigravity.desktop_bridge import (
     AntigravityDesktopBridge,
 )
+from core.cognition.antigravity.policy import AntigravityPolicyGovernor
 
 logger = logging.getLogger(__name__)
 

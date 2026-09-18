@@ -1,9 +1,10 @@
 from __future__ import annotations
+
 import ast
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 EXCLUDED_DIRS = {"audit", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tests"}
@@ -11,7 +12,7 @@ EXCLUDED_DIRS = {"audit", "snapshot", "snapshots", "backup", "backups", "old", "
 class FullKernelVisitor(ast.NodeVisitor):
     def __init__(self, rel_path: str):
         self.rel_path = rel_path
-        self.full_methods: List[Dict[str, Any]] = []
+        self.full_methods: list[dict[str, Any]] = []
 
     def visit_ClassDef(self, node: ast.ClassDef):
         if node.name == "OrganismKernel":
@@ -52,9 +53,9 @@ def main():
     print(f"[+] Méthodes intégrales extraites de ezzio_kernel.py : {len(all_methods)}\n")
 
     for item in all_methods:
-        print(f"=" * 80)
+        print("=" * 80)
         print(f" MÉTHODE : def {item['method']}() (ligne {item['line']})")
-        print(f"=" * 80)
+        print("=" * 80)
         print(item['code'])
         print("\n")
 

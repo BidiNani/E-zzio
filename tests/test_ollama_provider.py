@@ -1,4 +1,5 @@
 import pytest
+
 from core.providers.ollama_provider import OllamaProvider
 
 

@@ -2,18 +2,18 @@
 E-ZZIO Core V10.6 — World Model & Proactive Master Package.
 """
 from core.world.world_model import (
-    EntityType,
-    StateSource,
-    FreshnessStatus,
-    StateEvaluation,
-    RiskCategory,
     ActionClassification,
-    ScenarioType,
-    WorldEntity,
-    WorldRisk,
-    WorldOpportunity,
+    EntityType,
+    FreshnessStatus,
     ProactiveAction,
+    RiskCategory,
+    ScenarioType,
+    StateEvaluation,
+    StateSource,
+    WorldEntity,
     WorldModelEngine,
+    WorldOpportunity,
+    WorldRisk,
     world_model,
 )
 

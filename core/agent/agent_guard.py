@@ -9,9 +9,10 @@ Version corrigée : deux failles réelles identifiées dans la version d'origine
    protégé contre l'auto-modification. -> ajouté à la zone interdite.
 """
 from __future__ import annotations
+
 import os
 import re
-from typing import Dict, Any, Tuple
+from typing import Any
 
 PROTECTED_RELATIVE_PATHS = [
     os.path.normpath("core/agent/agent_guard.py"),
@@ -72,7 +73,7 @@ class AgentPolicyGuard:
                 return True
         return any(fragment.lower() in norm_abs for fragment in FORBIDDEN_NAME_FRAGMENTS)
 
-    def evaluate_intent(self, tool_name: str, args: Dict[str, Any]) -> Tuple[bool, str]:
+    def evaluate_intent(self, tool_name: str, args: dict[str, Any]) -> tuple[bool, str]:
         """Évalue si l'outil et ses arguments respectent la politique de sécurité du Runtime."""
 
         # 1. Protection du Filesystem / Patches
@@ -104,7 +105,7 @@ class AgentPolicyGuard:
 
         return True, "ALLOW"
 
-    def classify_action(self, tool_name: str, args: Dict[str, Any]) -> Tuple[str, str]:
+    def classify_action(self, tool_name: str, args: dict[str, Any]) -> tuple[str, str]:
         """Classifie une intention en SAFE, SENSITIVE, ou CRITICAL."""
         # 1. Vérification sécurité préalable
         allowed, reason = self.evaluate_intent(tool_name, args)
@@ -132,7 +133,7 @@ class AgentPolicyGuard:
 
         return "SAFE", "Action autorisée par défaut"
 
-    def review_patch(self, rel_path: str, proposed_code: str) -> Tuple[bool, str]:
+    def review_patch(self, rel_path: str, proposed_code: str) -> tuple[bool, str]:
         """Effectue une revue statique automatisée du code avant validation."""
         import ast
         if rel_path.endswith(".py"):
@@ -172,31 +173,31 @@ class CodingAgentBudget:
         self.commands_count = 0
         self.start_time = time.time()
 
-    def record_iteration(self) -> Tuple[bool, str]:
+    def record_iteration(self) -> tuple[bool, str]:
         self.iterations_count += 1
         if self.iterations_count > self.max_iterations:
             return False, f"[BUDGET EXCEEDED] Nombre max d'itérations ({self.max_iterations}) dépassé."
         return True, "OK"
 
-    def record_file(self, rel_path: str) -> Tuple[bool, str]:
+    def record_file(self, rel_path: str) -> tuple[bool, str]:
         self.modified_files.add(rel_path)
         if len(self.modified_files) > self.max_files:
             return False, f"[BUDGET EXCEEDED] Nombre max de fichiers modifiés ({self.max_files}) dépassé."
         return True, "OK"
 
-    def record_diff_lines(self, lines_count: int) -> Tuple[bool, str]:
+    def record_diff_lines(self, lines_count: int) -> tuple[bool, str]:
         self.total_diff_lines += lines_count
         if self.total_diff_lines > self.max_diff_lines:
             return False, f"[BUDGET EXCEEDED] Volume de diff max ({self.max_diff_lines} lignes) dépassé."
         return True, "OK"
 
-    def record_command(self) -> Tuple[bool, str]:
+    def record_command(self) -> tuple[bool, str]:
         self.commands_count += 1
         if self.commands_count > self.max_commands:
             return False, f"[BUDGET EXCEEDED] Nombre max de commandes ({self.max_commands}) dépassé."
         return True, "OK"
 
-    def check_runtime(self) -> Tuple[bool, str]:
+    def check_runtime(self) -> tuple[bool, str]:
         import time
         elapsed = time.time() - self.start_time
         if elapsed > self.max_runtime_sec:

@@ -1,10 +1,13 @@
-import pytest
 import asyncio
+from unittest.mock import AsyncMock, MagicMock, patch
+
 import httpx
-from unittest.mock import AsyncMock, patch, MagicMock
+import pytest
+
 from core.decision_router import DecisionRouter, SearchMode
-from core.providers.ollama_provider import OllamaProvider
 from core.providers.gemini_provider import GeminiProvider
+from core.providers.ollama_provider import OllamaProvider
+
 
 @pytest.mark.asyncio
 async def test_ollama_failure_matrix_connection_error_and_timeout():
@@ -51,14 +54,14 @@ async def test_decision_router_full_matrix_failover():
     # Simulation d'une cascade: Ollama KO -> Gemini KO -> levée d'erreur explicite
     p_ollama = OllamaProvider()
     p_gemini = GeminiProvider(api_key="mock_key")
-    
+
     with patch.object(p_ollama, "search", side_effect=httpx.ConnectError("Ollama down")), \
          patch.object(p_gemini, "search", side_effect=httpx.HTTPStatusError("429 Rate limit", request=MagicMock(), response=MagicMock(status_code=429))):
-        
+
         router = DecisionRouter([p_ollama, p_gemini])
         with pytest.raises(RuntimeError) as exc:
             await router.search("requête", mode=SearchMode.LOCAL)
-        
+
         err_msg = str(exc.value)
         assert "Échec de recherche" in err_msg
         assert "ConnectError" in err_msg

@@ -1,11 +1,9 @@
 """E-ZZIO — Blackboard partagé (SQLite WAL + FTS5)."""
 from __future__ import annotations
 
-import json
 import time
 import uuid
 from pathlib import Path
-from typing import List, Optional
 
 import aiosqlite
 
@@ -83,7 +81,7 @@ class Blackboard:
             await db.commit()
         return cid
 
-    async def get_round_state(self, session_id: str, round_num: int) -> List[AgentContribution]:
+    async def get_round_state(self, session_id: str, round_num: int) -> list[AgentContribution]:
         async with aiosqlite.connect(self.db_path) as db:
             db.row_factory = aiosqlite.Row
             cur = await db.execute(
@@ -106,7 +104,7 @@ class Blackboard:
             await db.commit()
         return adr.adr_id
 
-    async def find_similar_adr(self, query: str, limit: int = 3) -> List[dict]:
+    async def find_similar_adr(self, query: str, limit: int = 3) -> list[dict]:
         """FTS5 : évite de re-délibérer un problème déjà tranché."""
         import re as _re
         safe = " ".join(_re.findall(r"[A-Za-zÀ-ÿ0-9_]+", query or ""))[:200]

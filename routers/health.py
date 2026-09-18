@@ -1,6 +1,7 @@
 """Endpoints santé : /health, /ping, /metrics."""
-from fastapi import APIRouter, Request
 import time
+
+from fastapi import APIRouter
 
 router = APIRouter(tags=["health"])
 

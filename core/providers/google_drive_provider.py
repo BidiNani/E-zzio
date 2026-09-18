@@ -1,7 +1,8 @@
-from typing import Any, Dict
+import os
+from typing import Any
+
 from core.providers.igoogle_provider import IGoogleProvider
 from core.secrets import load_secrets
-import os
 
 
 class GoogleDriveProvider(IGoogleProvider):
@@ -15,7 +16,7 @@ class GoogleDriveProvider(IGoogleProvider):
             _vault_key = None
         self.api_key = api_key or _vault_key or os.getenv("GEMINI_API_KEY")
 
-    async def execute(self, **kwargs: Any) -> Dict[str, Any]:
+    async def execute(self, **kwargs: Any) -> dict[str, Any]:
         # TODO: Implémenter l'appel à l'API Google Drive
         # Pour l'instant, retourne un mock
         return {"provider": "google_drive", "data": {"status": "mock", "message": "GoogleDriveProvider not yet implemented"}}

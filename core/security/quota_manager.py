@@ -1,5 +1,7 @@
-import aiosqlite
 import logging
+from datetime import UTC
+
+import aiosqlite
 
 logger = logging.getLogger("ezzio.security.quota")
 
@@ -41,9 +43,9 @@ class QuotaManager:
             if count >= limit:
                 raise QuotaExceededError(f"Quota horaire dépassé pour {provider} ({count}/{limit})")
 
-            from datetime import datetime, timezone
+            from datetime import datetime
 
-            now = datetime.now(timezone.utc).isoformat()
+            now = datetime.now(UTC).isoformat()
             await db.execute("INSERT INTO api_usage_ledger (user_id, provider, timestamp) VALUES (?, ?, ?);", (user_id, provider, now))
             await db.commit()
             return True

@@ -4,13 +4,13 @@ Gère l'architecture mémorielle à 6 niveaux (L0 à L5), calcule l'importance,
 gère la compression intelligente avec provenance, et s'intègre à la passerelle ECOL.
 """
 
-import sys
-import json
 import hashlib
+import json
 import logging
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 if str(ROOT_DIR) not in sys.path:
@@ -47,7 +47,7 @@ class MultiTierMemoryEngine:
 
     def store_memory(
         self, tier: str, memory_id: str, content: str, source: str, importance: float = 1.0, compression_ratio: float = 1.0
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Stocke une information dans l'une des 6 couches mémorielles après validation ECOL,
         en calculant son empreinte SHA-256 et sa provenance.
@@ -65,7 +65,7 @@ class MultiTierMemoryEngine:
         memory_record = {
             "tier": tier,
             "memory_id": memory_id,
-            "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+            "timestamp_utc": datetime.now(UTC).isoformat(),
             "source": source,
             "importance": importance,
             "compression_ratio": compression_ratio,

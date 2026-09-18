@@ -3,7 +3,7 @@ import logging
 import struct
 import wave
 from enum import Enum
-from typing import Dict, Any, Optional
+from typing import Any
 
 logger = logging.getLogger("ezzio.voice.gateway")
 
@@ -48,11 +48,11 @@ class VoiceGateway:
             logger.debug("[VOICE HARDWARE] Impossible d'énumérer les périphériques audio : %s", e)
             return []
 
-    async def capture_audio(self, device_index: Optional[int] = None, duration_sec: float = 1.0) -> bytes:
+    async def capture_audio(self, device_index: int | None = None, duration_sec: float = 1.0) -> bytes:
         """Capture un flux audio PCM 16-bit mono depuis le périphérique spécifié (fail-closed si indisponible)."""
         if not self._hardware_available:
             raise RuntimeError("VOICE_HARDWARE_ENVIRONMENT_LIMITED: Aucun périphérique audio d'acquisition disponible.")
-        
+
         try:
             import sounddevice as sd
             num_samples = int(self.sample_rate * duration_sec)
@@ -78,7 +78,7 @@ class VoiceGateway:
             logger.debug("[VAD] Erreur calcul énergie : %s", e)
             return False
 
-    async def transcribe(self, audio_data: bytes, language: str = "fr") -> Dict[str, Any]:
+    async def transcribe(self, audio_data: bytes, language: str = "fr") -> dict[str, Any]:
         """Transcription audio vers texte (STT) avec gestion des erreurs et métadonnées."""
         self.state = VoiceState.PROCESSING
         if not audio_data:
@@ -130,7 +130,7 @@ class VoiceGateway:
         core: Any,
         session_id: str = "default_voice_session",
         user_id: str = "voice_user",
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Exécute la chaîne complète STT -> EzzioCore (avec mémoire/sécurité) -> TTS avec classification d'erreur."""
         if not audio_data or len(audio_data) < 2:
             return {
@@ -219,7 +219,7 @@ class VoiceGateway:
             "session_id": session_id,
         }
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_status(self) -> dict[str, Any]:
         """Retourne l'état complet du sous-système audio."""
         return {
             "state": self.state.value,

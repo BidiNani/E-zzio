@@ -1,6 +1,7 @@
 import asyncio
-import time
 import statistics
+import time
+
 from core.providers.ollama_provider import OllamaProvider
 
 

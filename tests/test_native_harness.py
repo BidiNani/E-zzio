@@ -1,9 +1,16 @@
 """Tests déterministes pour E-ZZIO Native Harness (0 appel réseau, 0 mock lourd)."""
-import pytest
 import asyncio
+
+import pytest
+
 from core.kernel.native_harness import (
-    NativeHarness, HarnessState, TaskSession, InvalidTransitionError, TerminationReason
+    HarnessState,
+    InvalidTransitionError,
+    NativeHarness,
+    TaskSession,
+    TerminationReason,
 )
+
 
 @pytest.mark.asyncio
 async def test_harness_initial_state_and_valid_transitions():

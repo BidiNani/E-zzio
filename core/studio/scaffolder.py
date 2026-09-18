@@ -4,11 +4,12 @@ Creates isolated application and game project templates in G:\\AI\\E-zzio\\proje
 with independent local git repositories and zero impact on the core engine.
 """
 from __future__ import annotations
+
+import logging
 import os
 import subprocess
-import logging
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Any
 
 logger = logging.getLogger("ProjectScaffolder")
 
@@ -33,7 +34,7 @@ class ProjectScaffolder:
         clean = "".join(c if c.isalnum() or c in ("-", "_") else "_" for c in name.strip())
         return clean.strip("_") or "untitled_project"
 
-    def scaffold(self, project_name: str, project_type: str = "python_cli", description: str = "") -> Dict[str, Any]:
+    def scaffold(self, project_name: str, project_type: str = "python_cli", description: str = "") -> dict[str, Any]:
         """Crée l'arborescence minimale et initialise le projet dans projects/<nom>."""
         safe_name = self._sanitize_name(project_name)
         target_dir = (self.projects_dir / safe_name).resolve()
@@ -74,7 +75,7 @@ class ProjectScaffolder:
             except Exception:
                 pass
 
-    def _scaffold_python_cli(self, path: Path, name: str, desc: str) -> Dict[str, Any]:
+    def _scaffold_python_cli(self, path: Path, name: str, desc: str) -> dict[str, Any]:
         src_dir = path / "src"
         tests_dir = path / "tests"
         src_dir.mkdir(exist_ok=True)
@@ -111,11 +112,11 @@ class ProjectScaffolder:
             "project_type": "python_cli",
             "path": str(path),
             "entrypoint": "src/main.py",
-            "launch_command": f"python src/main.py",
+            "launch_command": "python src/main.py",
             "test_command": "pytest tests/"
         }
 
-    def _scaffold_pygame(self, path: Path, name: str, desc: str) -> Dict[str, Any]:
+    def _scaffold_pygame(self, path: Path, name: str, desc: str) -> dict[str, Any]:
         src_dir = path / "src"
         assets_dir = path / "assets"
         src_dir.mkdir(exist_ok=True)
@@ -151,7 +152,7 @@ class ProjectScaffolder:
             "test_command": "python -c 'from src.game import init_game; assert init_game()[\"state\"] == \"ready\"'"
         }
 
-    def _scaffold_godot(self, path: Path, name: str, desc: str) -> Dict[str, Any]:
+    def _scaffold_godot(self, path: Path, name: str, desc: str) -> dict[str, Any]:
         scenes_dir = path / "scenes"
         scripts_dir = path / "scripts"
         resources_dir = path / "resources"
@@ -268,7 +269,7 @@ class ProjectScaffolder:
             "test_command": "godot --headless --quit"
         }
 
-    def _scaffold_web_light(self, path: Path, name: str, desc: str) -> Dict[str, Any]:
+    def _scaffold_web_light(self, path: Path, name: str, desc: str) -> dict[str, Any]:
         html_file = path / "index.html"
         if not html_file.exists():
             html_file.write_text(

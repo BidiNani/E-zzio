@@ -1,27 +1,28 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_file_wiring(rel_path: str) -> Dict[str, Any]:
+def inspect_file_wiring(rel_path: str) -> dict[str, Any]:
     p = PROJECT_ROOT / rel_path
     if not p.exists():
         return {"exists": False}
-    
+
     try:
         content = p.read_text(encoding="utf-8", errors="replace")
         tree = ast.parse(content, filename=str(p))
-        
+
         classes = []
         functions = []
         calls = []
-        
+
         for node in ast.walk(tree):
             if isinstance(node, ast.ClassDef):
                 classes.append(node.name)
@@ -32,7 +33,7 @@ def inspect_file_wiring(rel_path: str) -> Dict[str, Any]:
                     calls.append(node.func.id)
                 elif isinstance(node.func, ast.Attribute):
                     calls.append(node.func.attr)
-                    
+
         return {
             "exists": True,
             "classes": classes,
@@ -44,7 +45,7 @@ def inspect_file_wiring(rel_path: str) -> Dict[str, Any]:
     except Exception as e:
         return {"exists": True, "error": str(e)}
 
-def find_callers_of(target_name: str) -> List[str]:
+def find_callers_of(target_name: str) -> list[str]:
     callers = []
     for p in PROJECT_ROOT.glob("**/*.py"):
         if set(p.parts) & EXCLUDED_DIRS:
@@ -102,7 +103,7 @@ def main():
         "writes_performed": 0,
         "runtime_mutations": 0
     }
-    
+
     out_file = PROJECT_ROOT / "tools" / "discovery_wiring_report.json"
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2)

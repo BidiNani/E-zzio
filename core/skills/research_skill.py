@@ -1,4 +1,5 @@
-from typing import Any, Dict
+from typing import Any
+
 from core.decision_router import DecisionRouter, SearchMode
 from core.evidence_store import EvidenceStore
 
@@ -10,7 +11,7 @@ class ResearchSkill:
 
     async def search(
         self, query: str, mode: SearchMode = SearchMode.FAST, task_id: str = None, user_id: str = None, channel_id: str = None
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         # Exécuter la recherche
         result = await self.router.search(query, mode=mode)
 

@@ -9,7 +9,6 @@ import json
 import logging
 from dataclasses import asdict
 from pathlib import Path
-from typing import Dict, List, Optional
 
 from core.cognition.evidence.envelope import EvidenceEnvelope
 
@@ -17,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 class EvidenceStore:
-    def __init__(self, root_dir: Path = Path(r"G:\AI\E-zzio"), hmac_key: Optional[bytes] = None):
+    def __init__(self, root_dir: Path = Path(r"G:\AI\E-zzio"), hmac_key: bytes | None = None):
         self.root_dir = root_dir
         self.store_dir = self.root_dir / "runtime" / "evidence_store"
         self.store_dir.mkdir(parents=True, exist_ok=True)
@@ -34,7 +33,7 @@ class EvidenceStore:
         temp_path.replace(target_path)
         return target_path
 
-    def load_evidence(self, evidence_id: str, verify: bool = True) -> Optional[EvidenceEnvelope]:
+    def load_evidence(self, evidence_id: str, verify: bool = True) -> EvidenceEnvelope | None:
         """Loads and verifies an EvidenceEnvelope by ID."""
         target_path = self.store_dir / f"{evidence_id}.json"
         if not target_path.exists():
@@ -52,6 +51,6 @@ class EvidenceStore:
             logger.error(f"[EVIDENCE STORE] Failed loading envelope {evidence_id}: {e}")
             return None
 
-    def list_all_evidence_ids(self) -> List[str]:
+    def list_all_evidence_ids(self) -> list[str]:
         """Returns all persisted evidence IDs."""
         return [p.stem for p in self.store_dir.glob("*.json")]

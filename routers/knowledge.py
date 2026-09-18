@@ -1,17 +1,18 @@
 from fastapi import APIRouter, HTTPException
-from core.schemas import KnowledgeRequest
+
 from core.knowledge_connectors import (
-    knowledge_status,
-    wikipedia_summary,
-    wikipedia_search,
-    wikidata_search,
-    wikidata_sparql,
-    stackexchange_search,
     arxiv_search,
     crossref_search,
-    openmeteo_forecast,
+    knowledge_status,
     nominatim_search,
+    openmeteo_forecast,
+    stackexchange_search,
+    wikidata_search,
+    wikidata_sparql,
+    wikipedia_search,
+    wikipedia_summary,
 )
+from core.schemas import KnowledgeRequest
 
 router = APIRouter(prefix="/knowledge", tags=["knowledge"])
 

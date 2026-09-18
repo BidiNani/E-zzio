@@ -1,5 +1,5 @@
-import subprocess
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -14,7 +14,7 @@ tamper_detected = False
 try:
     with open(target_file, "a", encoding="utf-8") as f:
         f.write("\n# TAMPER_TEST_STRING\n")
-    
+
     # Run verifier: it should FAIL with exit code != 0
     res_tamper = subprocess.run(
         [pwsh_exe, "-ExecutionPolicy", "Bypass", "-File", str(ROOT / "tools/verify_golden_release.ps1"), "-SkipTests"],

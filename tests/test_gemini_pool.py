@@ -2,16 +2,18 @@
 E-ZZIO Test Suite — Contrat Unique & Paramétré du Pool Gemini (GeminiPool & GeminiProvider).
 Regroupe l'ensemble des scénarios de résilience, classement par capacité, politiques de thinking et rotation multi-projets.
 """
-import pytest
 from unittest.mock import patch
+
 import httpx
+import pytest
+
 from core.models.gemini_pool import (
+    GeminiKeySlot,
     GeminiPoolManager,
     GeminiProjectSlot,
-    GeminiKeySlot,
 )
-from core.routing.model_registry import canonical_model_registry
 from core.providers.gemini_provider import GeminiProvider
+from core.routing.model_registry import canonical_model_registry
 
 
 # -----------------------------------------------------------------------------

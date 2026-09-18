@@ -9,9 +9,10 @@ E — Classification UNKNOWN -> PROTECTED
 F — Blocage Delete Gate sur fichiers utilisateur
 """
 import pytest
+
 from core.authority.user_preservation import (
-    UserPreservationGate,
     FileOwnership,
+    UserPreservationGate,
 )
 
 

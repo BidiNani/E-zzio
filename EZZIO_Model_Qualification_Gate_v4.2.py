@@ -36,7 +36,7 @@ async def run_model(client: httpx.AsyncClient, blind_name: str, real_name: str, 
     tokens_per_s  = round(eval_count / (eval_dur_ns / 1e9), 2) if eval_count else 0.0
     warm_resp = wd.get("response", "").strip()
     speed_pass = r_warm["ok"] and len(warm_resp) > 0
-    
+
     rec.update({"WarmLatencySec": r_warm["dur"], "EvalTokensPerSec": tokens_per_s, "SpeedPass": speed_pass})
     print(f"  [S0] Speed       : {'PASS' if speed_pass else 'FAIL'} ({tokens_per_s} tok/s)")
     if not r_warm["ok"]:
@@ -82,13 +82,13 @@ async def run_model(client: httpx.AsyncClient, blind_name: str, real_name: str, 
         seq = []
         for l in letters:
             if l not in seq: seq.append(l)
-        
+
         if len(seq) == 5:
             pa, pb, pc, pd, pe = [seq.index(x) for x in "ABCDE"]
             logic_pass = (pa < pb < pc < pd) and (pe < pd)
         else:
             logic_pass = False
-            
+
         rec["LogicPass"], rec["LogicStatus"] = logic_pass, "PASS" if logic_pass else "FAIL"
     print(f"  [S3] Logic       : {rec['LogicStatus']}")
 
@@ -114,14 +114,14 @@ async def run_model(client: httpx.AsyncClient, blind_name: str, real_name: str, 
         try:
             pj = json.loads(json_raw)
             expected_keys = {"system", "status", "target_id", "score"}
-            
+
             # VERIFICATION STRICTE: Exact keys, exact values, strict explicit Python typing
             # L'utilisation de `type(x) is` exclut les booléens qui passeraient avec `isinstance(True, int)`
             sys_ok    = type(pj.get("system")) is str and pj["system"] == "E-ZZIO"
             stat_ok   = type(pj.get("status")) is str and pj["status"] == "CERTIFIED"
             target_ok = type(pj.get("target_id")) is int and pj["target_id"] == 42
             score_ok  = type(pj.get("score")) in (int, float) and pj["score"] == 100
-            
+
             if set(pj.keys()) == expected_keys and sys_ok and stat_ok and target_ok and score_ok:
                 json_pass = True
                 parsed_s5 = pj
@@ -163,7 +163,7 @@ async def main():
 
     EMBED_PATTERNS = ["embed", "bge", "bert", "nomic"]
     gen_models = [m for m in all_models if not any(p in m["name"].lower() for p in EMBED_PATTERNS)]
-    
+
     LETTERS = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     blind_map = {}
     for i, m in enumerate(gen_models):
@@ -215,7 +215,7 @@ async def main():
             score = round((passes / 7) * 100, 2)
             r["ContractScore"] = score
             r["PassCount"] = passes
-            
+
             if r.get("EngineHealth") == "UNHEALTHY_CPU": r["ContractStatus"] = "MODEL_TEST_FAIL"
             elif score >= 85.0: r["ContractStatus"] = "QUALIFIED"
             elif score >= 57.0: r["ContractStatus"] = "PARTIALLY_QUALIFIED"
@@ -223,7 +223,7 @@ async def main():
 
         qualified = len([r for r in results if r["ContractStatus"] == "QUALIFIED"])
         partial = len([r for r in results if r["ContractStatus"] == "PARTIALLY_QUALIFIED"])
-        
+
         if qualified == len(results) and len(results) > 0: global_verdict = "ALL_MODELS_QUALIFIED"
         elif qualified or partial: global_verdict = "PARTIAL_MODELS_QUALIFIED"
         else: global_verdict = "NO_MODELS_QUALIFIED"
@@ -262,7 +262,7 @@ async def main():
     for r in results:
         det = 'PASS' if r.get('DeterminismPass') else 'FAIL'
         md_rows.append(f"| `{r['BlindModel']}` | `{r.get('RealModel', 'N/A')}` | {r.get('ParameterSize')} | {r.get('Quantization')} | **{r.get('ContractScore')}/100** | `{r.get('ContractStatus')}` | {r.get('PowerShellStatus')} | {r.get('PythonStatus')} | {r.get('LogicStatus')} | {r.get('ContextStatus')} | {r.get('JsonStatus')} | {det} |")
-    
+
     md_path.write_text(f"# E-ZZIO MQG v{VERSION}\n\n**Verdict Global:** `{global_verdict}`\n\n" + "\n".join(md_rows), encoding="utf-8")
     print(f"\n[OK] Rapports générés dans: {report_dir}")
 

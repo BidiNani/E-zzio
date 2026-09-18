@@ -13,7 +13,7 @@ from __future__ import annotations
 import logging
 import os
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import httpx
 from fastapi import APIRouter, HTTPException
@@ -26,7 +26,7 @@ router = APIRouter(prefix="/api/web-search", tags=["search"])
 _ROOT = Path(__file__).resolve().parents[1]
 
 
-def _read_secret(key: str) -> Optional[str]:
+def _read_secret(key: str) -> str | None:
     """Lit une clé depuis secrets/.env."""
     env_path = _ROOT / "secrets" / ".env"
     if env_path.exists():
@@ -51,7 +51,7 @@ class SearchRequest(BaseModel):
     model: str = "krill"  # pour serpdive: krill | mako | moby
 
 
-async def _search_serpdive(query: str, max_results: int, model: str) -> Dict[str, Any]:
+async def _search_serpdive(query: str, max_results: int, model: str) -> dict[str, Any]:
     """SERPdive — API officielle. Modèle krill = gratuit illimité."""
     api_key = _read_secret("SERPDIVE_API_KEY")
     if not api_key:
@@ -87,7 +87,7 @@ async def _search_serpdive(query: str, max_results: int, model: str) -> Dict[str
     return {"ok": True, "provider": "serpdive", "data": data}
 
 
-async def _search_tavily(query: str, max_results: int) -> Dict[str, Any]:
+async def _search_tavily(query: str, max_results: int) -> dict[str, Any]:
     """Tavily — API officielle."""
     api_key = _read_secret("TAVILY_API_KEY")
     if not api_key:
@@ -113,7 +113,7 @@ async def _search_tavily(query: str, max_results: int) -> Dict[str, Any]:
     return {"ok": True, "provider": "tavily", "data": data}
 
 
-async def _search_ddgs(query: str, max_results: int, backend: str) -> Dict[str, Any]:
+async def _search_ddgs(query: str, max_results: int, backend: str) -> dict[str, Any]:
     """DuckDuckGo / Google / Brave via ddgs (scraping gratuit)."""
     try:
         from ddgs import DDGS
@@ -193,13 +193,13 @@ async def api_search(req: SearchRequest):
 # ============================================================
 # CACHE LRU (5 minutes)
 # ============================================================
+import hashlib as _hashlib
 import time as _time
 from collections import OrderedDict as _OrderedDict
-import hashlib as _hashlib
 
 _CACHE_MAX = 128
 _CACHE_TTL = 300  # secondes
-_cache: "_OrderedDict[str, tuple[float, dict]]" = _OrderedDict()
+_cache: _OrderedDict[str, tuple[float, dict]] = _OrderedDict()
 
 
 def _cache_key(provider: str, query: str, max_results: int, model: str) -> str:

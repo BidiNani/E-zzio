@@ -2,9 +2,9 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 
 from core.pc_model_router import (
+    chat_with_route,
     router_status,
     select_model,
-    chat_with_route,
     write_default_policy,
 )
 

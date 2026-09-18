@@ -6,18 +6,19 @@ and commits arbitrated decisions to the frozen Decision Ledger V10.0 Enterprise.
 
 from __future__ import annotations
 
-import json
 import logging
-import uuid
-from dataclasses import asdict
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
+from core.cognition.decision_ledger import DecisionLedgerEngine
 from core.cognition.evidence.envelope import EvidenceEnvelope
 from core.cognition.evidence.store import EvidenceStore
 from core.cognition.memory.context_fabric import ContextFabric
-from core.cognition.orchestration.arbiter import SovereignArbiter, FederatedProposal, ArbitratedDecision
-from core.cognition.decision_ledger import DecisionLedgerEngine
+from core.cognition.orchestration.arbiter import (
+    ArbitratedDecision,
+    FederatedProposal,
+    SovereignArbiter,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -42,7 +43,7 @@ class FederatedCognitiveOrchestrator:
         local_analysis_output: str,
         gemini_reasoning_output: str,
         antigravity_execution_result: str,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Executes a 3-stage collaborative pipeline:
         Stage 1: Local Analysis -> Evidence Envelope 1
@@ -121,7 +122,7 @@ class FederatedCognitiveOrchestrator:
         self,
         task_id: str,
         task_description: str,
-        proposals: List[FederatedProposal],
+        proposals: list[FederatedProposal],
     ) -> ArbitratedDecision:
         """Runs multi-proposal arbitration and records the winning consensus in the Ledger."""
         decision = self.arbiter.arbitrate(task_id, task_description, proposals)
@@ -165,7 +166,7 @@ class FederatedCognitiveOrchestrator:
         self,
         task_id: str,
         task_description: str,
-        proposals: List[FederatedProposal],
+        proposals: list[FederatedProposal],
     ):
         """Runs truth-weighted epistemic arbitration and commits verdict to Decision Ledger V10.0."""
         from core.cognition.epistemic.epistemic_arbiter import EpistemicArbiter

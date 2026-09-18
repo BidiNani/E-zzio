@@ -8,12 +8,11 @@ from typing import Any
 
 from ezzio.config import settings
 from ezzio.schemas import FilePatchResult
+from ezzio.self_repair.codebase_catalog import get_codebase_catalog
 from ezzio.tools.file_tools import (
     apply_file_patch,
-    read_project_file,
     verify_python_syntax,
 )
-from ezzio.self_repair.codebase_catalog import get_codebase_catalog
 
 logger = logging.getLogger("EzzioAutoHealer")
 
@@ -27,10 +26,10 @@ class AutoHealer:
         """Analyse la santé de l'ensemble des fichiers répertoriés."""
         catalog_data = self.catalog.scan_all()
         files = catalog_data.get("files", {})
-        
+
         syntax_errors = []
         clean_files = []
-        
+
         for rel_path, info in files.items():
             if info.get("type") == "python":
                 if not info.get("syntax_valid", True):
@@ -59,7 +58,7 @@ class AutoHealer:
                 message=f"Correction refusée : code non syntaxiquement valide ({err})",
                 ast_valid=False
             )
-            
+
         target = self.root_dir / rel_path
         if not target.exists():
             return FilePatchResult(
@@ -68,18 +67,18 @@ class AutoHealer:
                 message=f"Fichier {rel_path} introuvable",
                 ast_valid=False
             )
-            
+
         try:
             # Backup
             backup = target.with_suffix(f"{target.suffix}.ezzio_bak")
             backup.write_text(target.read_text(encoding="utf-8", errors="ignore"), encoding="utf-8")
-            
+
             # Écriture
             target.write_text(fixed_code, encoding="utf-8")
-            
+
             # Mettre à jour le catalogue
             self.catalog.scan_all()
-            
+
             return FilePatchResult(
                 file_path=rel_path,
                 success=True,

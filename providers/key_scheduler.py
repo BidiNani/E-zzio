@@ -1,16 +1,16 @@
-import time
 import asyncio
-from typing import Optional, Tuple, List, Dict, Any
+import time
+from typing import Any
 
 
 class KeyScheduler:
-    def __init__(self, keys: List[str]):
+    def __init__(self, keys: list[str]):
         self.keys = keys
-        self.states: List[Dict[str, Any]] = [{"status": "ACTIVE", "blocked_until": 0.0} for _ in keys]
+        self.states: list[dict[str, Any]] = [{"status": "ACTIVE", "blocked_until": 0.0} for _ in keys]
         self.current_index = 0
         self._lock = None
 
-    async def get_next_key(self) -> Tuple[Optional[int], Optional[str]]:
+    async def get_next_key(self) -> tuple[int | None, str | None]:
         if not self.keys:
             return None, None
 
@@ -19,7 +19,7 @@ class KeyScheduler:
 
         try:
             await asyncio.wait_for(self._lock.acquire(), timeout=5.0)
-        except asyncio.TimeoutError:
+        except TimeoutError:
             raise TimeoutError("KEY_POOL_LOCK_TIMEOUT")
 
         try:

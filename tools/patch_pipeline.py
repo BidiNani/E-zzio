@@ -1,8 +1,9 @@
 import os
-import shutil
 import py_compile
+import shutil
 import traceback
-from typing import Dict, Any
+from typing import Any
+
 from tools.guard import is_path_allowed
 
 
@@ -10,7 +11,7 @@ class PatchPipeline:
     """Pipeline industriel pour modifier des fichiers avec validation syntaxique et rollback."""
 
     @classmethod
-    def apply_patch(cls, file_path: str, new_content: str) -> Dict[str, Any]:
+    def apply_patch(cls, file_path: str, new_content: str) -> dict[str, Any]:
         """Remplace atomiquement le contenu d'un fichier avec validation et auto-rollback."""
         target_path = os.path.abspath(file_path)
         filename = os.path.basename(target_path)

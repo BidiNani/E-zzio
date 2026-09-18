@@ -6,11 +6,13 @@ Certifie :
 3. L'enregistrement contractuel de la capacité candidate OpenCode dans CapabilityRegistry
 """
 import time
-import pytest
 from pathlib import Path
-from core.telemetry.tracer import OpenTelemetryBridge, TraceSpan, tracer
-from core.perception.universal_reader import UniversalFileReader, universal_reader
+
+import pytest
+
 from core.capabilities.registry import CapabilityRegistry, QualificationStatus
+from core.perception.universal_reader import UniversalFileReader, universal_reader
+from core.telemetry.tracer import OpenTelemetryBridge, TraceSpan, tracer
 
 
 def test_opentelemetry_tracer_span_lifecycle():

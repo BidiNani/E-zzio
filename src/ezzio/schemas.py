@@ -2,10 +2,11 @@
 Schémas de données et modèles Pydantic v2 pour E-ZzIO
 """
 
-from typing import Any, Literal, Annotated
-from typing_extensions import TypedDict
-from pydantic import BaseModel, Field
 import operator
+from typing import Annotated, Any, Literal
+
+from pydantic import BaseModel, Field
+from typing_extensions import TypedDict
 
 
 class AgentState(TypedDict, total=False):

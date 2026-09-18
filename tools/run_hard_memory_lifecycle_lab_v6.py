@@ -1,16 +1,14 @@
 """
 E-ZZIO : Hard Memory Reset & Model Lifecycle Benchmark Engine (Lab v6.0 / Isolation Absolute)
 """
-import os
-import sys
 import json
-import time
-import hashlib
 import re
-import urllib.request
 import subprocess
-import psutil
+import time
+import urllib.request
 from pathlib import Path
+
+import psutil
 
 root = Path("G:/AI/E-zzio")
 opt_dir = root / "state/audit/optimization"
@@ -122,16 +120,16 @@ def get_ram_mb():
 def run_isolated_benchmark(model_spec, prompt_text="Explique la modularité logicielle en 2 phrases."):
     m_id = model_spec["id"]
     runtime = model_spec["runtime"]
-    
+
     # 1. Baseline Memory
     ram_before = get_ram_mb()
-    
+
     # 2. Execution (Cold Start)
     t0 = time.perf_counter()
     raw_response = ""
     tok_s = 0.0
     first_tok_ms = 0.0
-    
+
     if runtime == "Ollama":
         payload = {
             "model": model_spec["name"],
@@ -156,7 +154,7 @@ def run_isolated_benchmark(model_spec, prompt_text="Explique la modularité logi
             first_tok_ms = round(res_json.get("prompt_eval_duration", 1) / 1e6, 1)
         except Exception as e:
             raw_response = f"ERROR: {e}"
-            
+
         ram_peak = get_ram_mb()
         unload_ollama_model(model_spec["name"])
     else: # llama.cpp
@@ -192,14 +190,14 @@ def run_isolated_benchmark(model_spec, prompt_text="Explique la modularité logi
         except Exception as e:
             raw_response = f"ERROR: {e}"
             ram_peak = get_ram_mb()
-            
+
     lat_total = (time.perf_counter() - t0) * 1000
-    
+
     # 3. Post-Unload Memory
     time.sleep(0.5)
     ram_after = get_ram_mb()
     residual_mb = round(abs(ram_after - ram_before), 1)
-    
+
     return {
         "model_id": m_id,
         "runtime": runtime,

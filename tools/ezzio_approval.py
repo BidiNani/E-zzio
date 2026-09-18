@@ -8,7 +8,7 @@ Commandes :
 """
 import argparse
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 # Assurer l'import de core.*
@@ -27,7 +27,7 @@ from core.governance.approval import (
 def format_time_remaining(expires_at_str: str) -> str:
     try:
         exp_dt = datetime.fromisoformat(expires_at_str)
-        now_dt = datetime.now(timezone.utc)
+        now_dt = datetime.now(UTC)
         diff = int((exp_dt - now_dt).total_seconds())
         if diff <= 0:
             return "EXPIRED"

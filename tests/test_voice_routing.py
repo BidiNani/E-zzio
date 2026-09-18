@@ -1,11 +1,14 @@
 """
 tests/test_voice_routing.py — Deterministic test for voice routing through EzzioMaster & ModelRouter
 """
-import pytest
 import asyncio
+
+import pytest
+
 from core.cognition.model_router import ModelRouter
-from core.voice.voice_gateway import VoiceGateway, VoiceState
 from core.ezzio_master import EzzioMaster
+from core.voice.voice_gateway import VoiceGateway, VoiceState
+
 
 def test_voice_routing_policy_scenarios():
     router = ModelRouter()

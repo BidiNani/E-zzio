@@ -6,7 +6,7 @@ import time
 import urllib.parse
 import urllib.request
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 from core.ezzio_truth_guard import (
     REAL_PC_PROFILE_TEXT,
@@ -70,7 +70,7 @@ def intent_of(text: str, has_image: bool) -> str:
     return "chat"
 
 
-def ollama(prompt: str, model: str | None = None, timeout: int = 240) -> Dict[str, Any]:
+def ollama(prompt: str, model: str | None = None, timeout: int = 240) -> dict[str, Any]:
     payload = {
         "model": model or CHAT_MODEL,
         "prompt": prompt,
@@ -101,7 +101,7 @@ def ollama(prompt: str, model: str | None = None, timeout: int = 240) -> Dict[st
     }
 
 
-def web_research(query: str) -> Dict[str, Any]:
+def web_research(query: str) -> dict[str, Any]:
     q = (query or "").strip()
     if not q:
         return {"ok": False, "reply": "Recherche vide.", "sources": []}
@@ -124,7 +124,7 @@ def web_research(query: str) -> Dict[str, Any]:
         descriptions = data[2] if len(data) > 2 else []
         links = data[3] if len(data) > 3 else []
 
-        sources: List[Dict[str, str]] = []
+        sources: list[dict[str, str]] = []
         for title, desc, link in zip(titles, descriptions, links):
             sources.append({"title": title, "summary": desc, "url": link})
 
@@ -184,7 +184,7 @@ Demande :
         }
 
 
-def chat_answer(text: str, intent: str) -> Dict[str, Any]:
+def chat_answer(text: str, intent: str) -> dict[str, Any]:
     if is_user_correction(text):
         return {
             "ok": True,
@@ -217,7 +217,7 @@ Message utilisateur :
     return ollama(prompt, model, timeout=240)
 
 
-def vision_answer(path: str, text: str) -> Dict[str, Any]:
+def vision_answer(path: str, text: str) -> dict[str, Any]:
     try:
         from core.smart_vision import analyze_path
 
@@ -249,7 +249,7 @@ def save_upload(filename: str, content: bytes) -> Path:
     return target
 
 
-def handle_message(text: str = "", image_path: str | None = None) -> Dict[str, Any]:
+def handle_message(text: str = "", image_path: str | None = None) -> dict[str, Any]:
     started = time.time()
     intent = intent_of(text, bool(image_path))
 

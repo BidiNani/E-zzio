@@ -4,10 +4,9 @@ Affiche explicitement les ID reçus dans la console pour un diagnostic sans fail
 """
 
 import json
-import logging
 import os
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent.parent
 AUDIT_DIR = ROOT_DIR / "runtime" / "audit" / "discord"
@@ -50,7 +49,7 @@ class DiscordPermissionGuard:
         return {"granted": False, "role": "UNAUTHORIZED", "reason": "USER_ID_NOT_RECOGNIZED"}
 
     def evaluate_guild_access(self, guild_id: str | None, user_id: str, username: str = None, is_dm: bool = False) -> dict:
-        timestamp = datetime.now(timezone.utc).isoformat()
+        timestamp = datetime.now(UTC).isoformat()
         policy = self._load_policy()
 
         print(f"[DIAGNOSTIC] Évaluation accès -> DM: {is_dm} | Guild ID: {guild_id} | User ID: {user_id} ({username})")

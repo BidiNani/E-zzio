@@ -9,19 +9,19 @@ import difflib
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 
 @dataclass(frozen=True)
 class DiffInspectionResult:
-    target_path: Optional[str]
+    target_path: str | None
     diff_unified: str
     lines_added: int
     lines_removed: int
     is_identical: bool
     summary: str
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "target_path": self.target_path,
             "diff_unified": self.diff_unified,
@@ -105,14 +105,14 @@ class HITLDiffViewer:
     @staticmethod
     def _is_binary_file(path: Path) -> bool:
         try:
-            with open(path, "tr", encoding="utf-8") as f:
+            with open(path, encoding="utf-8") as f:
                 f.read(1024)
                 return False
         except (UnicodeDecodeError, Exception):
             return True
 
     @classmethod
-    def generate_payload_diff(cls, params_payload: str | Dict[str, Any]) -> str:
+    def generate_payload_diff(cls, params_payload: str | dict[str, Any]) -> str:
         """Génère un affichage lisible et inspectable du payload de la demande d'approbation."""
         if isinstance(params_payload, str):
             try:

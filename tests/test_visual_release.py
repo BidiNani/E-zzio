@@ -3,6 +3,7 @@ E-ZZIO V9.3 Visual Release Verification Suite
 Ensures 100% offline self-containment, UI components, static assets, and visual proof existence.
 """
 from pathlib import Path
+
 import pytest
 from fastapi.testclient import TestClient
 

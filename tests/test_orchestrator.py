@@ -1,8 +1,10 @@
 """tests/test_orchestrator.py - Validation d'intégration de bout en bout de l'orchestrateur."""
 
 from pathlib import Path
+
 import httpx
 import pytest
+
 from core.bus import EventBus
 from core.cognitive_router import ModelRouter
 from core.orchestrator import Orchestrator

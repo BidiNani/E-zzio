@@ -23,6 +23,7 @@ def test_discord_goes_through_governed_endpoints():
 def test_identity_present_on_fast_path():
     import asyncio
     from unittest.mock import AsyncMock, MagicMock
+
     from core.ezzio_master import EzzioMaster
     from core.providers.base_provider import CostClass, ProviderResponse
 
@@ -56,6 +57,7 @@ def test_identity_present_on_fast_path():
 def test_execute_intent_fail_closed_on_empty():
     import asyncio
     from unittest.mock import AsyncMock, MagicMock
+
     from core.ezzio_master import EzzioMaster
     from core.providers.base_provider import CostClass, ProviderResponse
 

@@ -9,9 +9,9 @@ reproductible et le verdict est explicable (liste de raisons jointe).
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Dict, List, Tuple
+from typing import Any
 
 
 class EvidenceClass(str, Enum):
@@ -41,7 +41,7 @@ class OpportunityState(str, Enum):
 
 # Transitions autorisées ; le moteur n'avance jamais au-delà de PROPOSED
 # (l'approbation externe appartient à la gouvernance existante).
-ALLOWED_TRANSITIONS: Dict[OpportunityState, Tuple[OpportunityState, ...]] = {
+ALLOWED_TRANSITIONS: dict[OpportunityState, tuple[OpportunityState, ...]] = {
     OpportunityState.OBSERVED: (OpportunityState.CONFIRMED, OpportunityState.REJECTED),
     OpportunityState.CONFIRMED: (OpportunityState.ROOT_CAUSED, OpportunityState.REJECTED),
     OpportunityState.ROOT_CAUSED: (OpportunityState.QUALIFIED, OpportunityState.DEFERRED,
@@ -85,7 +85,7 @@ class OpportunityDossier:
     next_observation: str = ""  # observation peu coûteuse levant l'incertitude (§14)
 
 
-def score_opportunity(d: OpportunityDossier) -> Tuple[float, List[str]]:
+def score_opportunity(d: OpportunityDossier) -> tuple[float, list[str]]:
     """Score déterministe et explicable. Ne décide jamais seul (cf. decide)."""
     reasons = [
         f"value={d.value}",
@@ -102,7 +102,7 @@ def score_opportunity(d: OpportunityDossier) -> Tuple[float, List[str]]:
     return round(score, 3), reasons
 
 
-def decide(d: OpportunityDossier) -> Tuple[Verdict, List[str]]:
+def decide(d: OpportunityDossier) -> tuple[Verdict, list[str]]:
     """Fail-closed : tout doute → DEFER ; toute violation → REJECT."""
     # Hard gates d'abord (aucun score ne les rachète).
     if d.creates_authority:
@@ -140,7 +140,7 @@ def advance(state: OpportunityState, target: OpportunityState) -> OpportunitySta
 
 
 def to_ledger_payload(d: OpportunityDossier, verdict: Verdict,
-                      reasons: List[str]) -> Dict[str, Any]:
+                      reasons: list[str]) -> dict[str, Any]:
     """Charge minimale pour l'AuditLedger existant (aucune écriture ici)."""
     return {
         "signal": d.signal,

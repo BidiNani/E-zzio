@@ -1,5 +1,4 @@
 from __future__ import annotations
-from core.identity.canonical_identity import CanonicalIdentity
 
 REAL_PC_PROFILE = {
     "cpu": "AMD Ryzen 9 5900X",

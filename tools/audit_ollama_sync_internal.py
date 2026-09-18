@@ -1,27 +1,28 @@
 from __future__ import annotations
-import json
+
 import ast
+import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 EXCLUDED_DIRS = {"audit", "tests", "snapshot", "snapshots", "backup", "backups", "old", "archive", ".venv", "venv", "__pycache__", ".pytest_cache", ".git", "tools"}
 
-def inspect_ollama_sync() -> Dict[str, Any]:
+def inspect_ollama_sync() -> dict[str, Any]:
     p = PROJECT_ROOT / "runtime" / "models" / "ollama_sync.py"
     if not p.exists():
         return {"exists": False}
-    
+
     try:
         content = p.read_text(encoding="utf-8", errors="replace")
         tree = ast.parse(content, filename=str(p))
-        
+
         functions = []
         calls = []
         assigns = []
-        
+
         for node in ast.walk(tree):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 functions.append(node.name)
@@ -34,7 +35,7 @@ def inspect_ollama_sync() -> Dict[str, Any]:
                 for target in node.targets:
                     if isinstance(target, ast.Name):
                         assigns.append(target.id)
-                        
+
         return {
             "exists": True,
             "functions": functions,
@@ -77,7 +78,7 @@ def main():
         "writes_performed": 0,
         "runtime_mutations": 0
     }
-    
+
     out_file = PROJECT_ROOT / "tools" / "ollama_sync_internal_report.json"
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2)

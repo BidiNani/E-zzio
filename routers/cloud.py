@@ -1,11 +1,12 @@
 from fastapi import APIRouter, HTTPException
-from core.schemas import CloudGetRequest
+
 from core.cloud_connectors import (
-    github_get,
-    reddit_get,
     blizzard_get,
     connectors_status,
+    github_get,
+    reddit_get,
 )
+from core.schemas import CloudGetRequest
 
 router = APIRouter(prefix="/cloud", tags=["cloud"])
 

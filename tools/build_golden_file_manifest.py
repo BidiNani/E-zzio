@@ -1,6 +1,6 @@
-import os
-import json
 import hashlib
+import json
+import os
 from pathlib import Path
 
 ROOT = Path("G:/AI/E-zzio")
@@ -39,7 +39,7 @@ for target in TARGET_DIRS:
                 continue
             full_path = Path(dirpath) / fn
             rel_path = full_path.relative_to(ROOT).as_posix()
-            
+
             # Classification
             classification = "other"
             if rel_path.startswith("core/capabilities/capability_policy.py") or \

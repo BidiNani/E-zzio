@@ -1,12 +1,12 @@
-from typing import Any, Dict, Optional
 from abc import ABC, abstractmethod
+from typing import Any
 
 
 class IConfigProvider(ABC):
     """Contrat d'interface pour les providers de configuration."""
 
     @abstractmethod
-    async def get_config(self, key: str) -> Optional[Any]:
+    async def get_config(self, key: str) -> Any | None:
         """Récupère une valeur de configuration par clé."""
         pass
 
@@ -16,6 +16,6 @@ class IConfigProvider(ABC):
         pass
 
     @abstractmethod
-    async def list_configs(self, prefix: str = "") -> Dict[str, Any]:
+    async def list_configs(self, prefix: str = "") -> dict[str, Any]:
         """Liste toutes les configurations avec un préfixe donné."""
         pass

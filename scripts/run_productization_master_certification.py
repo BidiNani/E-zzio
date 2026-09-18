@@ -1,11 +1,9 @@
 import asyncio
-import os
-import sys
-import json
-import time
 import hashlib
-import subprocess
+import os
 import shutil
+import subprocess
+import sys
 import urllib.request
 from pathlib import Path
 
@@ -15,31 +13,28 @@ sys.path.insert(0, str(ROOT))
 CERT_DIR = ROOT / "_forensic" / "final_integration"
 os.makedirs(CERT_DIR, exist_ok=True)
 
-from tools.fs_tools import observe_filesystem, read_file
-from core.memory.unified_gateway import UnifiedMemoryGateway
-from core.evidence_store import EvidenceStore
-from runtime.agent.loop import AgentLoop
-from runtime.tools.tool_registry import ToolRegistry
-from runtime.policy.engine import PolicyEngine, PolicyDecision
-from interfaces.api.server import app
 from fastapi.testclient import TestClient
-from tests.test_phase7_task_persistence_recovery import PersistentTaskManager
+from interfaces.api.server import app
+
 from core.integrations.discord.discord_client import resolve_discord_token
+from runtime.tools.tool_registry import ToolRegistry
+from tools.fs_tools import observe_filesystem
+
 
 async def run_productization_certification():
     print("================================================================================")
     print("E-ZZIO - FINAL PRODUCTIZATION & INTEGRATION CERTIFICATION RUNNER")
     print("================================================================================\n")
-    
+
     results = {}
-    
+
     # 1. BASELINE & SNAPSHOTS
     print("[1/9] Verifying Baseline & Snapshots...")
     kdir = ROOT / "_forensic" / "knowledge"
     mk_sha = hashlib.sha256((kdir / "MASTER_KNOWLEDGE.json").read_bytes()).hexdigest()
     fh_sha = hashlib.sha256((kdir / "FILE_HASHES.json").read_bytes()).hexdigest()
     dd_sha = hashlib.sha256((ROOT / "core" / "knowledge" / "drift_detector.py").read_bytes()).hexdigest()
-    
+
     assert mk_sha == "4749be7e614b4bb8c76c957b3523e6b80b42764eb29616d42229317c98bd2403"
     assert fh_sha == "c68760bae4a279b00c299e0d601075c855bdca0cf4241e33722d2d4e13dca1db"
     assert dd_sha == "cf31ce728e955e35b84e22034b1087e542ca2bc33dcf07cd84e038dcf9275020"
@@ -66,7 +61,7 @@ async def run_productization_certification():
                     owui_live = True
         except Exception:
             owui_live = False
-    
+
     if owui_live:
         print("  -> Open WebUI container active & responding on http://127.0.0.1:3000 (HTTP 200).")
         results["OPEN_WEBUI"] = "REAL_PROVEN"
@@ -103,7 +98,7 @@ async def run_productization_certification():
     print("\n[7/9] Running Real End-to-End Core Pipeline...")
     client = TestClient(app)
     sess_id = "SESS_FINAL_PRODUCT_001"
-    
+
     # Task API
     r_create = client.post("/api/v1/tasks/", json={
         "objective": "Inspecte G:/AI/E-zzio et compte les fichiers Python dans core/",
@@ -113,7 +108,7 @@ async def run_productization_certification():
     r_run = client.post(f"/api/v1/tasks/{t_id}/run")
     t_res = r_run.json()
     assert t_res["status"] == "COMPLETED"
-    
+
     # Filesystem physical computation
     obs = observe_filesystem("core")
     py_files = [f for f in obs["files"].keys() if f.endswith(".py")]
@@ -126,7 +121,7 @@ async def run_productization_certification():
     print("\n[8/9] Auditing Security & Adversarial Fail-Closed Matrix...")
     obs_adv = observe_filesystem("../../../Windows/System32")
     assert obs_adv["status"] == "DENIED"
-    
+
     reg = ToolRegistry()
     assert reg.authorize_tool("unknown_tool") is False
     print("  -> All adversarial attempts rejected fail-closed.")
@@ -135,8 +130,8 @@ async def run_productization_certification():
     # 9. GENERATE FINAL REPORT
     print("\n[9/9] Writing EZZIO_FINAL_PRODUCTIZATION_CERTIFICATION.md...")
     report_file = CERT_DIR / "EZZIO_FINAL_PRODUCTIZATION_CERTIFICATION.md"
-    
-    report_md = f"""# E-ZZIO — FINAL PRODUCTIZATION CERTIFICATION REPORT
+
+    report_md = """# E-ZZIO — FINAL PRODUCTIZATION CERTIFICATION REPORT
 ================================================================================
 VERSION: 10.0.0
 DATE: 2026-08-22
@@ -197,7 +192,7 @@ EZZIO_REAL_PRODUCT_CERTIFIED_WITH_ENVIRONMENT_LIMITATIONS
 """
     report_file.write_text(report_md, encoding="utf-8")
     print(f"  -> Report written to {report_file}")
-    
+
     print("\n================================================================================")
     print("FINAL PRODUCTIZATION VERDICT: EZZIO_REAL_PRODUCT_CERTIFIED_WITH_ENVIRONMENT_LIMITATIONS")
     print("================================================================================\n")

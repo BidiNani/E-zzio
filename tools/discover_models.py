@@ -9,22 +9,23 @@ Scanne les fournisseurs de la fédération E-ZzIO :
 5. Génération du rapport state/audit/model_discovery_report.json
 """
 from __future__ import annotations
+
+import json
 import os
 import sys
-import json
 import time
-import urllib.request
 import urllib.error
-from typing import Dict, Any, List
+import urllib.request
+from typing import Any
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
-from core.routing.model_registry import canonical_model_registry, ModelSource
+from core.routing.model_registry import ModelSource, canonical_model_registry
 
 
-def query_local_ollama_models(timeout_sec: float = 1.5) -> List[str]:
+def query_local_ollama_models(timeout_sec: float = 1.5) -> list[str]:
     """Interroge le daemon Ollama local pour lister les modèles installés."""
     url = "http://localhost:11434/api/tags"
     req = urllib.request.Request(url, headers={"User-Agent": "E-zzio-Model-Discovery/1.0"})
@@ -38,7 +39,7 @@ def query_local_ollama_models(timeout_sec: float = 1.5) -> List[str]:
         return []
 
 
-def discover_all_models() -> Dict[str, Any]:
+def discover_all_models() -> dict[str, Any]:
     """Exécute la découverte multi-fournisseurs et le rapprochement."""
     # 1. Découverte locale
     local_models = query_local_ollama_models()
@@ -51,7 +52,7 @@ def discover_all_models() -> Dict[str, Any]:
     # 3. Récupération des modèles du registre canonique
     registered_models = canonical_model_registry.list_models(qualified_only=False)
 
-    comparison: Dict[str, Any] = {
+    comparison: dict[str, Any] = {
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "providers": {
             "ollama_local": {

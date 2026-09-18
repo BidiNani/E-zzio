@@ -9,9 +9,11 @@ INVARIANTS :
 3. ANTI-DEADLOCK : Protection par timeout et capture complète des exceptions du Leader.
 """
 from __future__ import annotations
+
 import asyncio
 import logging
-from typing import Dict, Any, Callable, Awaitable, Optional
+from collections.abc import Awaitable, Callable
+from typing import Any
 
 logger = logging.getLogger("EzzioSingleflight")
 
@@ -20,7 +22,7 @@ class AsyncSingleflight:
     """Gestionnaire in-process de déduplication des requêtes d'inférence en vol."""
 
     def __init__(self):
-        self._in_flight: Dict[str, asyncio.Future] = {}
+        self._in_flight: dict[str, asyncio.Future] = {}
         self._lock = asyncio.Lock()
         self.leader_count = 0
         self.waiter_count = 0
@@ -28,9 +30,9 @@ class AsyncSingleflight:
     async def do(
         self,
         key: str,
-        coro_fn: Callable[[], Awaitable[Dict[str, Any]]],
+        coro_fn: Callable[[], Awaitable[dict[str, Any]]],
         timeout_s: float = 60.0
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Exécute coro_fn() une seule fois pour une clé donnée si plusieurs tâches concurrentes la sollicitent.
         """
@@ -59,7 +61,7 @@ class AsyncSingleflight:
                 waiter_result = dict(result)
                 waiter_result["singleflight_role"] = "waiter"
                 return waiter_result
-            except asyncio.TimeoutError:
+            except TimeoutError:
                 logger.error("[SINGLEFLIGHT-TIMEOUT] Leader bloqué pour la clé %s... -> Relâchement du Waiter", key[:12])
                 return {
                     "ok": False,
@@ -81,7 +83,7 @@ class AsyncSingleflight:
             result = await coro_fn()
             if not future_to_await.done():
                 future_to_await.set_result(result)
-            
+
             leader_result = dict(result)
             leader_result["singleflight_role"] = "leader"
             return leader_result
@@ -93,7 +95,7 @@ class AsyncSingleflight:
             async with self._lock:
                 self._in_flight.pop(key, None)
 
-    def get_stats(self) -> Dict[str, Any]:
+    def get_stats(self) -> dict[str, Any]:
         """Télémétrie du Singleflight."""
         return {
             "active_in_flight": len(self._in_flight),

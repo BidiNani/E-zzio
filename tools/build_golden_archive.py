@@ -1,7 +1,7 @@
-import os
-import zipfile
 import hashlib
 import json
+import os
+import zipfile
 from pathlib import Path
 
 ROOT = Path("G:/AI/E-zzio")
@@ -49,7 +49,7 @@ with zipfile.ZipFile(ARCHIVE_PATH, "w", compression=zipfile.ZIP_DEFLATED, compre
                 "size_bytes": p.stat().st_size,
                 "sha256": sha256_file(p)
             })
-    
+
     # 2. Subdirectories
     for d in INCLUDED_ROOTS:
         base = ROOT / d

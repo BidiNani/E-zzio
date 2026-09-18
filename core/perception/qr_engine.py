@@ -6,10 +6,11 @@ Features:
 - Passive DATA Treatment: Decoded QR payloads (URLs, text, configs) are strictly non-executable
 """
 from __future__ import annotations
-import os
+
 import logging
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any
+
 import cv2
 import qrcode
 from PIL import Image
@@ -27,7 +28,7 @@ class QREngine:
         self.workspace_root = Path(workspace_root).resolve()
         self.detector = cv2.QRCodeDetector()
 
-    def decode_qrcode(self, image_path: Path | str) -> Dict[str, Any]:
+    def decode_qrcode(self, image_path: Path | str) -> dict[str, Any]:
         """Décode tout QR code présent dans une image via OpenCV de façon déterministe et instantanée."""
         path = Path(image_path).resolve()
         if not path.exists() or not path.is_file():
@@ -82,7 +83,7 @@ class QREngine:
         output_path: Path | str,
         box_size: int = 10,
         border: int = 4
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Génère une image PNG de QR code avec confinement strict (projects/ ou outputs/)."""
         target = Path(output_path).resolve()
         clean_data = str(data).strip()

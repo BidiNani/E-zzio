@@ -7,14 +7,13 @@ résolution itérative avec backtracking, et échecs honnêtes (No Dead-End Rule
 from __future__ import annotations
 
 import logging
-import uuid
 import time
+import uuid
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Dict, List, Optional, Set
+from typing import Any
 
-from core.agent.self_awareness import self_knowledge, CapabilityState
-from core.world.world_model import world_model
+from core.agent.self_awareness import self_knowledge
 
 logger = logging.getLogger("ezzio.agent.nothing_impossible")
 
@@ -50,10 +49,10 @@ class GapType(str, Enum):
 class CapabilityNode:
     node_id: str
     name: str
-    requires: List[str] = field(default_factory=list)
-    provided_by: List[str] = field(default_factory=list)
-    composed_from: List[str] = field(default_factory=list)
-    blocked_by: List[str] = field(default_factory=list)
+    requires: list[str] = field(default_factory=list)
+    provided_by: list[str] = field(default_factory=list)
+    composed_from: list[str] = field(default_factory=list)
+    blocked_by: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -61,7 +60,7 @@ class SolutionAttempt:
     attempt_id: str
     strategy: str
     status: str  # SUCCESS, FAILED, BACKTRACKED
-    error_reason: Optional[str] = None
+    error_reason: str | None = None
     timestamp: float = field(default_factory=time.time)
 
 
@@ -69,8 +68,8 @@ class FeasibilityEngine:
     """Moteur de Faisabilité et de Résolution Universelle d'E-ZZIO V10.8."""
 
     def __init__(self) -> None:
-        self.capability_nodes: Dict[str, CapabilityNode] = {}
-        self.attempts: Dict[str, List[SolutionAttempt]] = {}
+        self.capability_nodes: dict[str, CapabilityNode] = {}
+        self.attempts: dict[str, list[SolutionAttempt]] = {}
         self.MAX_SOLUTION_ATTEMPTS: int = 3
         self.MAX_RECOVERY_ATTEMPTS: int = 2
         self._build_initial_graph()
@@ -93,7 +92,7 @@ class FeasibilityEngine:
             provided_by=["search_web", "read_url_content"],
         )
 
-    def evaluate_feasibility(self, task_description: str) -> Dict[str, Any]:
+    def evaluate_feasibility(self, task_description: str) -> dict[str, Any]:
         """Évalue la faisabilité théorique et pratique d'une tâche."""
         desc_clean = task_description.lower()
 
@@ -135,14 +134,14 @@ class FeasibilityEngine:
                 "action": "ACQUIRE_OR_CREATE_CAPABILITY",
             }
 
-    def compose_capabilities(self, target_capability: str) -> Optional[List[str]]:
+    def compose_capabilities(self, target_capability: str) -> list[str] | None:
         """Cherche si des outils/agents existants peuvent être combinés avant d'acquérir de nouveaux outils."""
         target = target_capability.lower()
         if "report" in target or "summary" in target:
             return ["cap_text_extraction", "cap_web_search"]
         return None
 
-    def create_custom_tool(self, spec: Dict[str, Any]) -> Dict[str, Any]:
+    def create_custom_tool(self, spec: dict[str, Any]) -> dict[str, Any]:
         """Création autonome d'un outil local (SPEC -> DESIGN -> IMPLEMENT -> TEST -> QUALIFY -> REGISTER -> USE)."""
         tool_name = spec.get("name", f"custom_tool_{uuid.uuid4().hex[:6]}")
         capability_name = spec.get("capability_name", "custom_capability")
@@ -168,7 +167,7 @@ class FeasibilityEngine:
             "registration": result,
         }
 
-    def create_custom_adapter(self, source_format: str, target_format: str) -> Dict[str, Any]:
+    def create_custom_adapter(self, source_format: str, target_format: str) -> dict[str, Any]:
         """Création autonome d'un adaptateur de format ou de protocole."""
         adapter_name = f"adapter_{source_format.lower()}_to_{target_format.lower()}"
         return self.create_custom_tool({
@@ -176,7 +175,7 @@ class FeasibilityEngine:
             "capability_name": f"convert_{source_format}_to_{target_format}",
         })
 
-    def format_honest_failure(self, reason: str, missing_capability: str) -> Dict[str, Any]:
+    def format_honest_failure(self, reason: str, missing_capability: str) -> dict[str, Any]:
         """No Dead-End Rule: Fournit une réponse honnête et explicite en cas de blocage externe."""
         return {
             "status": "HONEST_FAILURE",
@@ -186,7 +185,7 @@ class FeasibilityEngine:
             "next_enablement_step": "Provide credential or policy exception to unlock execution.",
         }
 
-    def solve_iteratively(self, request: str) -> Dict[str, Any]:
+    def solve_iteratively(self, request: str) -> dict[str, Any]:
         """Moteur de résolution itérative avec gestion d'arbre de solution, bornage des tentatives et backtracking."""
         feasibility = self.evaluate_feasibility(request)
 
@@ -198,26 +197,26 @@ class FeasibilityEngine:
 
         # Attempt 1: Direct execution / Existing capability
         if feasibility["action"] == "DIRECT_EXECUTION":
-            att1 = SolutionAttempt(attempt_id=f"att_1", strategy="DIRECT_EXECUTION", status="SUCCESS")
+            att1 = SolutionAttempt(attempt_id="att_1", strategy="DIRECT_EXECUTION", status="SUCCESS")
             self.attempts[task_id].append(att1)
             return {"status": "RESOLVED", "path": "DIRECT_EXECUTION", "attempts": 1}
 
         # Attempt 2: Composition
         comp = self.compose_capabilities(request)
         if comp:
-            att2 = SolutionAttempt(attempt_id=f"att_2", strategy="CAPABILITY_COMPOSITION", status="SUCCESS")
+            att2 = SolutionAttempt(attempt_id="att_2", strategy="CAPABILITY_COMPOSITION", status="SUCCESS")
             self.attempts[task_id].append(att2)
             return {"status": "RESOLVED", "path": "CAPABILITY_COMPOSITION", "composed_units": comp, "attempts": 2}
 
         # Attempt 3: Creation / Acquisition
         build_res = self.create_custom_tool({"capability_name": request})
         if build_res["status"] == "SUCCESS":
-            att3 = SolutionAttempt(attempt_id=f"att_3", strategy="AUTONOMOUS_TOOL_CREATION", status="SUCCESS")
+            att3 = SolutionAttempt(attempt_id="att_3", strategy="AUTONOMOUS_TOOL_CREATION", status="SUCCESS")
             self.attempts[task_id].append(att3)
             return {"status": "RESOLVED", "path": "AUTONOMOUS_TOOL_CREATION", "created_tool": build_res["tool_name"], "attempts": 3}
 
         # Failure & Backtrack
-        att_fail = SolutionAttempt(attempt_id=f"att_fail", strategy="AUTONOMOUS_TOOL_CREATION", status="BACKTRACKED", error_reason="Max attempts reached")
+        att_fail = SolutionAttempt(attempt_id="att_fail", strategy="AUTONOMOUS_TOOL_CREATION", status="BACKTRACKED", error_reason="Max attempts reached")
         self.attempts[task_id].append(att_fail)
 
         return self.format_honest_failure("Unable to complete task within autonomous attempt limit.", request)

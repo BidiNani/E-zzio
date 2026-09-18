@@ -3,10 +3,10 @@ E-ZZIO V7.23.0.9 — Granular Health & Performance Telemetry
 Génère des scores de santé détaillés et synchronise provider_performance.json.
 """
 
-import sys
 import json
+import sys
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 if str(ROOT_DIR) not in sys.path:
@@ -62,11 +62,11 @@ class ProviderHealthMonitor:
             "success_rate": success_rate,
             "pool_size": pool_size,
             "last_error": last_err,
-            "checked_at": datetime.now(timezone.utc).isoformat(),
+            "checked_at": datetime.now(UTC).isoformat(),
         }
 
     def run_full_health_check(self) -> dict:
-        report = {"schema_version": "V1.0-GRANULAR-HEALTH", "timestamp": datetime.now(timezone.utc).isoformat(), "providers": {}}
+        report = {"schema_version": "V1.0-GRANULAR-HEALTH", "timestamp": datetime.now(UTC).isoformat(), "providers": {}}
 
         for name in self.providers.keys():
             report["providers"][name] = self.check_provider_health(name)

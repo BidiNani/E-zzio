@@ -1,14 +1,13 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
-from providers.provider_response import ProviderResponse
-from providers.ollama_provider import OllamaProvider
 from core.cognition.model_federation.base_provider import (
     FederatedTaskResult,
     ProviderDomain,
 )
+from providers.ollama_provider import OllamaProvider
+from providers.provider_response import ProviderResponse
 
 
 class FederatedOllamaAdapter:
@@ -18,7 +17,7 @@ class FederatedOllamaAdapter:
         root_dir: Path = Path(r"G:\AI\E-zzio"),
     ) -> None:
         self.root_dir = root_dir
-        self._provider: Optional[OllamaProvider] = None
+        self._provider: OllamaProvider | None = None
 
     def _get_provider(self) -> OllamaProvider:
         if self._provider is None:
@@ -66,8 +65,8 @@ class FederatedOllamaAdapter:
     async def generate(
         self,
         prompt: str,
-        model: Optional[str] = None,
-        image_bytes: Optional[bytes] = None,
+        model: str | None = None,
+        image_bytes: bytes | None = None,
         capability: str = "default",
     ) -> ProviderResponse:
 

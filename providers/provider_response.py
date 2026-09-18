@@ -5,7 +5,7 @@ Objet typé unifié pour toutes les réponses des fournisseurs cloud.
 """
 
 from dataclasses import dataclass, field
-from typing import Optional, Dict, Any, List
+from typing import Any
 
 
 @dataclass
@@ -15,6 +15,6 @@ class ProviderResponse:
     model: str
     content: str = ""
     latency_ms: float = 0.0
-    sources: List[Dict[str, str]] = field(default_factory=list)
-    error: Optional[str] = None
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    sources: list[dict[str, str]] = field(default_factory=list)
+    error: str | None = None
+    metadata: dict[str, Any] = field(default_factory=dict)

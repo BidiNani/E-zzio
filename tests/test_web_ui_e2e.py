@@ -22,6 +22,7 @@ import shutil
 import subprocess
 import time
 import urllib.request
+
 import pytest
 import websockets
 
@@ -148,7 +149,7 @@ class BrowserCDPSession:
                     self.exceptions.append(msg["params"])
                 elif method == "Network.responseReceived":
                     self.network_responses.append(msg["params"]["response"])
-            except asyncio.TimeoutError:
+            except TimeoutError:
                 pass
 
     async def stop(self):

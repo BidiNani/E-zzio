@@ -4,11 +4,10 @@ Définit les structures contractuelles immuables et typées pour l'arbitrage hum
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from enum import Enum
-from typing import Any, Dict, Optional
 import uuid
+from dataclasses import dataclass, field
+from datetime import UTC, datetime
+from enum import Enum
 
 
 class ApprovalStatus(str, Enum):
@@ -32,7 +31,7 @@ class DecisionChoice(str, Enum):
 
 
 def utc_now() -> str:
-    return datetime.now(timezone.utc).isoformat()
+    return datetime.now(UTC).isoformat()
 
 
 @dataclass(frozen=True)
@@ -50,12 +49,12 @@ class ApprovalRequest:
     expires_at: str
     requested_by: str = "system"
     status: ApprovalStatus = ApprovalStatus.PENDING
-    decided_by: Optional[str] = None
-    decided_at: Optional[str] = None
-    decision_reason: Optional[str] = None
+    decided_by: str | None = None
+    decided_at: str | None = None
+    decision_reason: str | None = None
     execution_state: ExecutionState = ExecutionState.NOT_STARTED
-    consumed_at: Optional[str] = None
-    result_cache: Optional[str] = None
+    consumed_at: str | None = None
+    result_cache: str | None = None
 
     @classmethod
     def create(
@@ -70,13 +69,13 @@ class ApprovalRequest:
         params_payload: str,
         ttl_seconds: int = 300,
         requested_by: str = "system",
-        approval_id: Optional[str] = None,
-    ) -> "ApprovalRequest":
+        approval_id: str | None = None,
+    ) -> ApprovalRequest:
         # Bornage du TTL : min 10s, max 1800s, défaut 300s
         clamped_ttl = max(10, min(1800, ttl_seconds))
-        now_dt = datetime.now(timezone.utc)
+        now_dt = datetime.now(UTC)
         req_at = now_dt.isoformat()
-        exp_dt = datetime.fromtimestamp(now_dt.timestamp() + clamped_ttl, timezone.utc)
+        exp_dt = datetime.fromtimestamp(now_dt.timestamp() + clamped_ttl, UTC)
         exp_at = exp_dt.isoformat()
         appr_id = approval_id or f"appr_{uuid.uuid4().hex[:12]}"
 
@@ -104,4 +103,4 @@ class ApprovalDecision:
     decision: DecisionChoice
     decided_by: str
     decided_at: str = field(default_factory=utc_now)
-    reason: Optional[str] = None
+    reason: str | None = None

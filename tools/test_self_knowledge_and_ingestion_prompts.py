@@ -1,11 +1,10 @@
 """
 E-ZZIO : Test des 3 Prompts Constitutionnels d'Auto-Connaissance et d'Ingestion.
 """
-import os
-import sys
-import json
-import time
 import asyncio
+import json
+import sys
+import time
 from pathlib import Path
 
 root = Path("G:/AI/E-zzio")
@@ -13,6 +12,7 @@ if str(root) not in sys.path:
     sys.path.insert(0, str(root))
 
 from core.cognition.cognitive_gateway import CognitiveGateway
+
 
 async def run_prompts():
     cg = CognitiveGateway()

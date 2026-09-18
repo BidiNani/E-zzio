@@ -58,8 +58,9 @@ def test_traced_decorator_sync():
 
 
 def test_tool_choke_emits_without_breaking():
-    from core.agent.tools_registry import ToolRegistry
     import tempfile
+
+    from core.agent.tools_registry import ToolRegistry
     reg = ToolRegistry(workspace_root=tempfile.mkdtemp())
     out = reg.execute("nonexistent_tool_xyz", {})
     assert isinstance(out, str)
@@ -67,6 +68,7 @@ def test_tool_choke_emits_without_breaking():
 
 def test_sse_stream_and_agent_view():
     from fastapi.testclient import TestClient
+
     from web_server import app
     c = TestClient(app)
     r = c.get("/agent-view")
@@ -76,8 +78,8 @@ def test_sse_stream_and_agent_view():
 
 def test_discord_throttle_no_429():
     import time
-    from core.integrations.discord.cogs.agent_view_cog import (
-        AgentViewTracker, render_ascii_tree)
+
+    from core.integrations.discord.cogs.agent_view_cog import AgentViewTracker, render_ascii_tree
 
     sent, edits = [], []
 

@@ -4,8 +4,8 @@ Définition des intentions, contraintes et décisions du routeur hybride.
 """
 
 from dataclasses import dataclass, field
-from typing import Dict, Any
 from enum import Enum
+from typing import Any
 
 
 class Urgency(Enum):
@@ -33,4 +33,4 @@ class ExecutionDecision:
     model: str
     confidence_score: float
     reason: str
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    metadata: dict[str, Any] = field(default_factory=dict)

@@ -2,15 +2,13 @@
 E-ZZIO Ingestion Universelle — Test End-to-End Réel sur les 12 Formats Cibles.
 Exécute chaque cas contre l'endpoint /perception/perceive ou UnifiedPerception.
 """
-import io
-import os
-import zipfile
-import wave
-import struct
 import json
-import time
+import struct
 import sys
+import wave
+import zipfile
 from pathlib import Path
+
 import httpx
 from PIL import Image, ImageDraw
 

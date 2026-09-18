@@ -3,8 +3,8 @@ Circuit Breaker Pattern pour la bascule résiliente Cloud / Local d'E-ZzIO.
 Gère les états CLOSED (nominal), OPEN (panne cloud -> repli local immédiat), HALF_OPEN (sonde de rétablissement).
 """
 
-import time
 import logging
+import time
 from enum import Enum
 
 logger = logging.getLogger("EzzioCircuitBreaker")

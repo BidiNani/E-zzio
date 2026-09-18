@@ -3,17 +3,18 @@ E-ZZIO V7.29.1 — Ledger Engine avec Runtime Identity Enforcement
 Assure l'injection et la vérification obligatoire du sceau d'identité pour chaque transaction.
 """
 
-import os
-import json
 import hashlib
 import hmac
+import json
+import os
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
+
 from dotenv import load_dotenv
 
-from core.security.file_lock import ProcessFileLock
-from core.security.archive_engine import LedgerArchiveEngine
 from core.identity.identity_context import ImmutableIdentityContext
+from core.security.archive_engine import LedgerArchiveEngine
+from core.security.file_lock import ProcessFileLock
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 LEDGER_PATH = ROOT_DIR / "runtime" / "decisions" / "router_decisions.jsonl"
@@ -78,7 +79,7 @@ class LedgerEngine:
 
                 payload = {
                     "sequence": new_seq,
-                    "timestamp": datetime.now(timezone.utc).isoformat(),
+                    "timestamp": datetime.now(UTC).isoformat(),
                     "request_id": request_id,
                     "intent": intent,
                     "candidates": candidates,
@@ -95,7 +96,7 @@ class LedgerEngine:
                 current_hash = hashlib.sha256(raw_string.encode("utf-8")).hexdigest()
                 payload["hash"] = current_hash
 
-                hmac_payload = f"{new_seq}:{last_hash}:{current_hash}".encode("utf-8")
+                hmac_payload = f"{new_seq}:{last_hash}:{current_hash}".encode()
                 signature = hmac.new(self.secret_key, hmac_payload, hashlib.sha256).hexdigest()
                 payload["signature"] = signature
 

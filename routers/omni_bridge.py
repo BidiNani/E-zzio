@@ -2,12 +2,12 @@ from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 
 from core.omni_brain import (
+    available_commands,
     bridge_status,
+    integration_truth,
+    local_brain_reply,
     mobile_config,
     verify_mobile_token,
-    local_brain_reply,
-    available_commands,
-    integration_truth,
 )
 
 router = APIRouter(prefix="/omni-bridge", tags=["omni-bridge"])

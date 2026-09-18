@@ -1,12 +1,11 @@
 from __future__ import annotations
-from core.identity.canonical_identity import CanonicalIdentity
 
 import json
 import os
 import time
 import uuid
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
 STATE_ROOT = PROJECT_ROOT / "state"
@@ -34,7 +33,7 @@ for key, value in CPU_ONLY_ENV.items():
 
 HUMAN_ROOT.mkdir(parents=True, exist_ok=True)
 
-DEFAULT_MEMORY: Dict[str, Any] = {
+DEFAULT_MEMORY: dict[str, Any] = {
     "version": "v2.19-pc-human-loop",
     "identity": {
         "name": "E-ZZIO",
@@ -82,7 +81,7 @@ def safe_write_json(path: Path, data: Any) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-def append_journal(event_type: str, payload: Dict[str, Any]) -> Dict[str, Any]:
+def append_journal(event_type: str, payload: dict[str, Any]) -> dict[str, Any]:
     event = {
         "id": str(uuid.uuid4()),
         "created_at": now(),
@@ -103,7 +102,7 @@ def append_journal(event_type: str, payload: Dict[str, Any]) -> Dict[str, Any]:
     return event
 
 
-def load_memory() -> Dict[str, Any]:
+def load_memory() -> dict[str, Any]:
     memory = safe_read_json(MEMORY_PATH, DEFAULT_MEMORY)
     changed = False
 
@@ -118,13 +117,13 @@ def load_memory() -> Dict[str, Any]:
     return memory
 
 
-def save_memory(memory: Dict[str, Any]) -> Dict[str, Any]:
+def save_memory(memory: dict[str, Any]) -> dict[str, Any]:
     memory["version"] = "v2.19-pc-human-loop"
     safe_write_json(MEMORY_PATH, memory)
     return memory
 
 
-def journal_tail(limit: int = 20) -> Dict[str, Any]:
+def journal_tail(limit: int = 20) -> dict[str, Any]:
     limit = max(1, min(int(limit), 200))
 
     if not JOURNAL_PATH.exists():
@@ -152,8 +151,8 @@ def journal_tail(limit: int = 20) -> Dict[str, Any]:
     }
 
 
-def project_health() -> Dict[str, Any]:
-    result: Dict[str, Any] = {
+def project_health() -> dict[str, Any]:
+    result: dict[str, Any] = {
         "ok": True,
         "maintenance": None,
         "brain": None,
@@ -200,7 +199,7 @@ def project_health() -> Dict[str, Any]:
     return result
 
 
-def perceive(context: str = "") -> Dict[str, Any]:
+def perceive(context: str = "") -> dict[str, Any]:
     memory = load_memory()
     health = project_health()
 
@@ -227,7 +226,7 @@ def perceive(context: str = "") -> Dict[str, Any]:
     return perception
 
 
-def choose_intention(perception: Dict[str, Any], user_goal: str = "") -> Dict[str, Any]:
+def choose_intention(perception: dict[str, Any], user_goal: str = "") -> dict[str, Any]:
     health = perception.get("health", {})
     maintenance = health.get("maintenance") or {}
     signals = perception.get("signals", {})
@@ -239,7 +238,7 @@ def choose_intention(perception: Dict[str, Any], user_goal: str = "") -> Dict[st
     else:
         goal = "rester prêt, propre, rapide et utile sur PC"
 
-    risks: List[str] = []
+    risks: list[str] = []
     if not maintenance.get("ok", False):
         risks.append("maintenance signale encore des éléments à vérifier")
 
@@ -266,12 +265,12 @@ def choose_intention(perception: Dict[str, Any], user_goal: str = "") -> Dict[st
     return intention
 
 
-def build_plan(perception: Dict[str, Any], intention: Dict[str, Any]) -> Dict[str, Any]:
+def build_plan(perception: dict[str, Any], intention: dict[str, Any]) -> dict[str, Any]:
     maintenance = (perception.get("health") or {}).get("maintenance") or {}
     bad_count = int(maintenance.get("bad_count", 0) or 0)
     dust_count = int(maintenance.get("dust_candidate_count", 0) or 0)
 
-    steps: List[Dict[str, Any]] = []
+    steps: list[dict[str, Any]] = []
 
     steps.append(
         {
@@ -344,7 +343,7 @@ def build_plan(perception: Dict[str, Any], intention: Dict[str, Any]) -> Dict[st
     return plan
 
 
-def execute_safe_step(step: Dict[str, Any]) -> Dict[str, Any]:
+def execute_safe_step(step: dict[str, Any]) -> dict[str, Any]:
     step_id = step.get("id")
 
     if step_id == "verify_maintenance":
@@ -440,14 +439,14 @@ def execute_safe_step(step: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
-def tick(user_goal: str = "", context: str = "", execute: bool = True) -> Dict[str, Any]:
+def tick(user_goal: str = "", context: str = "", execute: bool = True) -> dict[str, Any]:
     started = time.time()
 
     perception = perceive(context=context)
     intention = choose_intention(perception, user_goal=user_goal)
     plan = build_plan(perception, intention)
 
-    results: List[Dict[str, Any]] = []
+    results: list[dict[str, Any]] = []
 
     if execute:
         for step in plan.get("steps", []):
@@ -487,7 +486,7 @@ def tick(user_goal: str = "", context: str = "", execute: bool = True) -> Dict[s
     return output
 
 
-def summarize_tick(ok: bool, intention: Dict[str, Any], results: List[Dict[str, Any]]) -> str:
+def summarize_tick(ok: bool, intention: dict[str, Any], results: list[dict[str, Any]]) -> str:
     goal = intention.get("goal", "rester stable")
     if ok:
         return f"E-ZZIO est calme et prêt : {goal}. Les vérifications sûres sont passées."
@@ -495,7 +494,7 @@ def summarize_tick(ok: bool, intention: Dict[str, Any], results: List[Dict[str, 
     return f"E-ZZIO reste prudent : {goal}. {len(failed)} point(s) demandent inspection."
 
 
-def reflect(note: str = "") -> Dict[str, Any]:
+def reflect(note: str = "") -> dict[str, Any]:
     memory = load_memory()
     tail = journal_tail(limit=12)
 
@@ -518,7 +517,7 @@ def reflect(note: str = "") -> Dict[str, Any]:
     return reflection
 
 
-def status() -> Dict[str, Any]:
+def status() -> dict[str, Any]:
     memory = load_memory()
     health = project_health()
     tail = journal_tail(limit=5)

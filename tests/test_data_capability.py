@@ -2,10 +2,15 @@
 tests/test_data_capability.py — Unit tests for Data Capabilities, DataSourceManager, SQL Security & Provenance.
 """
 import pytest
+
 from core.agent.capability_manager import CapabilityManager
 from core.agent.data_source_manager import (
-    DataSourceManager, DataSourceRecord, DataSourceType, data_source_manager
+    DataSourceManager,
+    DataSourceRecord,
+    DataSourceType,
+    data_source_manager,
 )
+
 
 def test_capability_data_permissions():
     mgr = CapabilityManager()

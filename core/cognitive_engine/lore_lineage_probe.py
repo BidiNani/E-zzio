@@ -8,8 +8,8 @@ Analyse chirurgicale de registry/personality/lore.md :
 
 import hashlib
 import json
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 TARGET_FILE = ROOT_DIR / "registry/personality/lore.md"
@@ -38,7 +38,7 @@ def find_references(file_name: str) -> list:
             if path == TARGET_FILE:
                 continue
             try:
-                with open(path, "r", encoding="utf-8", errors="ignore") as f:
+                with open(path, encoding="utf-8", errors="ignore") as f:
                     if file_name.lower() in f.read().lower():
                         refs.append(str(path.relative_to(ROOT_DIR)))
             except Exception:
@@ -56,7 +56,7 @@ def probe_lore():
     stat = TARGET_FILE.stat()
     sha256 = compute_sha256(TARGET_FILE)
 
-    with open(TARGET_FILE, "r", encoding="utf-8", errors="ignore") as f:
+    with open(TARGET_FILE, encoding="utf-8", errors="ignore") as f:
         content = f.read()
         content_lower = content.lower()
 
@@ -97,8 +97,8 @@ def probe_lore():
         "sha256": sha256,
         "size_bytes": stat.st_size,
         "dates": {
-            "created": datetime.fromtimestamp(stat.st_ctime, timezone.utc).isoformat(),
-            "modified": datetime.fromtimestamp(stat.st_mtime, timezone.utc).isoformat(),
+            "created": datetime.fromtimestamp(stat.st_ctime, UTC).isoformat(),
+            "modified": datetime.fromtimestamp(stat.st_mtime, UTC).isoformat(),
         },
         "semantic_analysis": domain_hits,
         "provenance_references": incoming_refs,

@@ -1,10 +1,20 @@
-import pytest
 import asyncio
-from unittest.mock import AsyncMock, patch, MagicMock
-from routers.chat import post_chat, ChatRequest, ChatResponse, init_chat_router, _core, _memory_gateway
-from core.voice.voice_gateway import VoiceGateway
+from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
+
 from core.decision_router import DecisionRouter, SearchMode
 from core.memory.unified_gateway import UnifiedMemoryGateway
+from core.voice.voice_gateway import VoiceGateway
+from routers.chat import (
+    ChatRequest,
+    ChatResponse,
+    _core,
+    _memory_gateway,
+    init_chat_router,
+    post_chat,
+)
+
 
 @pytest.mark.asyncio
 async def test_chat_contract_explicit_types_and_fields():
@@ -14,7 +24,7 @@ async def test_chat_contract_explicit_types_and_fields():
         user_id="contract_user",
         session_id="SESS_CONTRACT_001"
     )
-    
+
     with patch.object(_core.ollama, "search", new_callable=AsyncMock) as mock_s:
         mock_s.return_value = {
             "provider": "ollama",
@@ -22,7 +32,7 @@ async def test_chat_contract_explicit_types_and_fields():
             "data": {"text": "Réponse conforme au contrat."}
         }
         resp = await post_chat(req)
-        
+
         # Validation stricte du contrat ChatResponse
         assert isinstance(resp, ChatResponse)
         assert isinstance(resp.response, str) and len(resp.response) > 0
@@ -37,13 +47,13 @@ async def test_voice_contract_explicit_fields():
     gw = VoiceGateway()
     mock_core = MagicMock(spec=["think"])
     mock_core.think = AsyncMock(return_value={"response": "Réponse vocale", "provider": "ollama"})
-    
+
     res = await gw.process_voice_interaction(
         audio_data=bytes(16000),
         core=mock_core,
         session_id="SESS_VOICE_CONTRACT"
     )
-    
+
     assert "transcription" in res and isinstance(res["transcription"], str)
     assert "response_text" in res and isinstance(res["response_text"], str)
     assert "audio_out" in res and isinstance(res["audio_out"], bytes)
@@ -55,12 +65,12 @@ async def test_failure_recovery_database_and_restoration(tmp_path):
     db_path = str(tmp_path / "recovery_test.db")
     gw = UnifiedMemoryGateway(db_path=db_path)
     await gw.init()
-    
+
     # 1. Écriture nominale
     await gw.record_message("SESS_REC", "user", "Message avant panne")
     h1 = await gw.get_session_history("SESS_REC")
     assert len(h1) == 1
-    
+
     # 2. Simulation de reprise
     await gw.init()
     await gw.record_message("SESS_REC", "assistant", "Message après reprise")

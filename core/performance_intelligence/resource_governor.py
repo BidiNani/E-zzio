@@ -4,9 +4,9 @@ Gouverneur de ressources : lit l'état matériel (CPU/RAM) et adapte dynamiqueme
 la topologie (workers, mode d'exécution, budget mémoire).
 """
 
+import ctypes
 import os
 import platform
-import ctypes
 
 
 class ResourceGovernor:

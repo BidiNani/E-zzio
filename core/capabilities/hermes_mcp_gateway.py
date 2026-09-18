@@ -6,15 +6,13 @@ Garantit qu'aucune mutation externe ou système n'échappe à la CapabilityPolic
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any
+
 from pydantic import BaseModel, Field
 
-from core.capabilities.capability_policy import PolicyDecision
 from core.capabilities.registry import capability_registry
 from core.governance.approval import (
     ApprovalManager,
-    ApprovalRequest,
-    ApprovalStatus,
     approval_manager,
 )
 
@@ -23,24 +21,24 @@ logger = logging.getLogger("HermesMCPGateway")
 
 class MCPToolCallRequest(BaseModel):
     tool_name: str
-    arguments: Dict[str, Any] = Field(default_factory=dict)
+    arguments: dict[str, Any] = Field(default_factory=dict)
     agent_id: str = "Hermes"
     session_id: str = "hermes_default"
-    task_id: Optional[str] = None
+    task_id: str | None = None
 
 
 class MCPToolCallResponse(BaseModel):
     ok: bool
     status: str  # ALLOW, REQUIRE_HUMAN, DENY, ERROR
-    result: Optional[Dict[str, Any]] = None
-    approval_id: Optional[str] = None
-    reason: Optional[str] = None
+    result: dict[str, Any] | None = None
+    approval_id: str | None = None
+    reason: str | None = None
 
 
 class HermesMCPGateway:
     """Passerelle MCP souveraine E-ZZIO pour Hermes."""
 
-    def __init__(self, manager: Optional[ApprovalManager] = None):
+    def __init__(self, manager: ApprovalManager | None = None):
         self.approval_mgr = manager or approval_manager
         self.registry = capability_registry
 
@@ -100,10 +98,10 @@ class HermesMCPGateway:
             reason=res.get("error", "Erreur d'exécution."),
         )
 
-    async def resume_approved_tool_call(self, approval_id: str) -> Dict[str, Any]:
+    async def resume_approved_tool_call(self, approval_id: str) -> dict[str, Any]:
         """Reprend l'exécution de la capacité après approbation humaine formelle."""
         # Reprise sécurisée via approval_manager en appelant la méthode interne dispatchée
-        async def _direct_executor(cap_name: str, params: Dict[str, Any]) -> Dict[str, Any]:
+        async def _direct_executor(cap_name: str, params: dict[str, Any]) -> dict[str, Any]:
             # Exécution bypassant l'interception de pré-vol UNIQUEMENT parce que l'approbation est certifiée et consommée
             # En utilisant le dispatch de registry pour la capacité spécifique
             if cap_name == "web-search-mcp":

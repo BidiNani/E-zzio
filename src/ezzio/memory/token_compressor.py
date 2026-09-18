@@ -3,9 +3,10 @@ Moteur avancé de compression de tokens et d'optimisation de contexte pour E-ZzI
 Utilise tiktoken pour le calcul exact et des algorithmes de compression sémantique sans perte technique.
 """
 
-import re
 import logging
+import re
 from typing import Any
+
 import tiktoken
 
 logger = logging.getLogger("EzzioTokenCompressor")
@@ -46,17 +47,17 @@ class TokenCompressor:
         """
         if not text:
             return ""
-            
+
         # 1. Remplacer les lignes vides multiples par une seule
         text = re.sub(r"\n{3,}", "\n\n", text)
-        
+
         # 2. Supprimer les espaces de fin de ligne
         text = re.sub(r"[ \t]+$", "", text, flags=re.MULTILINE)
-        
+
         # 3. Réduire les séparateurs markdown trop longs (ex: -----------)
         text = re.sub(r"-{5,}", "---", text)
         text = re.sub(r"={5,}", "===", text)
-        
+
         return text.strip()
 
     def compress_code(self, code: str) -> str:
@@ -66,7 +67,7 @@ class TokenCompressor:
         lines = code.splitlines()
         clean_lines = []
         consecutive_blank = 0
-        
+
         for line in lines:
             stripped = line.strip()
             if not stripped:
@@ -76,7 +77,7 @@ class TokenCompressor:
             else:
                 consecutive_blank = 0
                 clean_lines.append(line.rstrip())
-                
+
         return "\n".join(clean_lines)
 
     def prune_messages(
@@ -92,7 +93,7 @@ class TokenCompressor:
         """
         if not messages:
             return [], None
-            
+
         total_tokens = self.count_messages_tokens(messages)
         if total_tokens <= max_tokens and len(messages) <= (keep_last_turns * 2):
             return messages, None
@@ -127,13 +128,13 @@ class TokenCompressor:
         final_msgs = []
         if system_msg:
             final_msgs.append(system_msg)
-            
+
         if summary_text:
             final_msgs.append({
                 "role": "system",
                 "content": f"[Contexte mémoriel condensé] {summary_text}"
             })
-            
+
         final_msgs.extend(kept_tail)
         return final_msgs, summary_text
 

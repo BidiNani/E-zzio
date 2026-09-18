@@ -1,8 +1,8 @@
+import ast
+import datetime
+import json
 import os
 import shutil
-import ast
-import json
-import datetime
 
 AUDIT_LOG_PATH = r"G:\AI\E-zzio\data\fs_audit.log"
 
@@ -57,7 +57,7 @@ def read_file(file_path: str, max_lines: int = 400) -> str:
     if not os.path.exists(file_path):
         return f"❌ Fichier introuvable : {file_path}"
     try:
-        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+        with open(file_path, encoding="utf-8", errors="ignore") as f:
             lines = [f.readline() for _ in range(max_lines)]
         return "".join(lines)
     except Exception as e:
@@ -103,7 +103,7 @@ def replace_in_file(file_path: str, old_text: str, new_text: str, count: int = 1
     if not os.path.exists(file_path):
         return f"❌ Fichier introuvable : {file_path}"
     try:
-        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+        with open(file_path, encoding="utf-8", errors="ignore") as f:
             content = f.read()
 
         if old_text not in content:
@@ -186,7 +186,7 @@ def move_file(src: str, dst: str) -> str:
 def observe_filesystem(directory_path: str, previous_snapshot: dict = None) -> dict:
     """Capacité d'observation structurée et strictement en lecture seule du système de fichiers."""
     normalized_path = os.path.normpath(directory_path)
-    
+
     # 1. Protection contre le Path Traversal et chemins interdits
     if ".." in directory_path or normalized_path.startswith("/etc") or normalized_path.startswith("C:\\Windows"):
         _log_audit("OBSERVE_DENIED", f"Path traversal ou chemin interdit : {directory_path}")

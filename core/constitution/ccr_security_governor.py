@@ -16,14 +16,14 @@ import json
 import logging
 import re
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 ROOT_DIR = Path(r"G:\AI\E-zzio")
 
-from core.cognition.memory.context_fabric import ContextFabric
 from core.cognition.decision_ledger import DecisionLedgerEngine
+from core.cognition.memory.context_fabric import ContextFabric
 
 logger = logging.getLogger(__name__)
 
@@ -33,9 +33,9 @@ class CCRRetrievalVerdict:
     cache_id: str
     is_authorized: bool
     retrieval_status: str  # "AUTHORIZED_SANITIZED", "SECURITY_VETO_UNAUTHORIZED", "INTEGRITY_TAMPER_FAIL"
-    effective_content: Optional[str]
+    effective_content: str | None
     rationale: str
-    timestamp_utc: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    timestamp_utc: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
 
 
 class CCRSecurityGovernor:
@@ -56,7 +56,7 @@ class CCRSecurityGovernor:
         cache_id: str,
         requesting_provider: str,
         requesting_capability: str,
-        authorization_ticket: Optional[Dict[str, Any]] = None,
+        authorization_ticket: dict[str, Any] | None = None,
     ) -> CCRRetrievalVerdict:
         """
         Sovereign authorization gate for CCR raw content retrieval.
@@ -114,7 +114,7 @@ class CCRSecurityGovernor:
 
         # 3. Secret & PII Redaction Pass via ContextFabric Sanitizer
         sanitized_text = self.fabric._sanitize_memory_content(raw_text)
-        
+
         # Redact API keys and raw tokens
         secret_patterns = [
             r"AIzaSy[A-Za-z0-9_-]{10,}",
@@ -139,7 +139,7 @@ class CCRSecurityGovernor:
         cache_id: str,
         authorized: bool,
         status: str,
-        content: Optional[str],
+        content: str | None,
         rationale: str,
     ) -> CCRRetrievalVerdict:
         v = CCRRetrievalVerdict(

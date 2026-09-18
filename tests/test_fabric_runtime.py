@@ -1,4 +1,5 @@
 import pytest
+
 pytestmark = pytest.mark.skip(
     reason="incompatibilite litellm.types.utils.MirroredPricingParams - a corriger separement, cf core/models/router.py"
 )
@@ -9,6 +10,7 @@ import asyncio
 import copy
 import sys
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 PROJECT_ROOT = Path(r"G:\AI\E-zzio").resolve()
@@ -16,6 +18,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from core.models.fabric import build_fabric
+
 try:
     from core.exceptions import ProviderExhaustedError
 except ImportError:
@@ -29,12 +32,12 @@ class StrictScorecard:
     def record(self, tid, status, msg):
         self.results[tid] = {"status": status}
         print(f" [{status:<13}] {tid:<8} : {msg}")
-    
+
     def verify(self):
         failed = sum(1 for v in self.results.values() if v["status"] == "FAIL")
         warned = sum(1 for v in self.results.values() if v["status"] == "WARN")
         skipped = sum(1 for v in self.results.values() if v["status"] == "NOT_EXERCISED")
-        
+
         print("\n" + "=" * 70)
         print("=== SCORECARD STRICTE V6 ===")
         print(f" TOTAL : {len(self.results)}")
@@ -50,7 +53,7 @@ class StrictScorecard:
         if skipped > 0:
             print("\nVERDICT : CERTIFICATION INCOMPLÈTE (Tests non exercés par manque de modèles actifs)")
             sys.exit(2)
-        
+
         print("\nVERDICT : OFFICIALLY CERTIFIED (Machine d'état prouvée hermétique)")
         sys.exit(0)
 

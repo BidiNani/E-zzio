@@ -3,7 +3,9 @@ Phase 2 Autonomy E2E Test Suite — Validation du transfert d'autonomie agentiqu
 """
 
 import os
+
 import pytest
+
 from core.agent.coding_agent_loop import CodingAgentHarness
 from core.agent.patch_engine import PatchEngine
 from core.agent.tools_registry import ToolRegistry

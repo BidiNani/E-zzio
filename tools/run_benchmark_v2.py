@@ -8,8 +8,13 @@ v2 improvements:
   - Resume logic: skips already-checkpointed models
   - httpx timeout raised to 300s
 """
-import sys, os, time, json, pathlib, psutil, httpx, statistics
-from typing import Dict, List, Any
+import json
+import pathlib
+import statistics
+import time
+
+import httpx
+import psutil
 
 OUT_DIR = pathlib.Path(r"G:\AI\E-zzio\state\audit\current\ollama_local_benchmark")
 OUT_DIR.mkdir(parents=True, exist_ok=True)

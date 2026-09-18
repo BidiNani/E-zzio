@@ -7,16 +7,14 @@ Compares:
 - qwen3.5:9b (9.0B)
 On AMD Ryzen 9 5900X (CPU-only, num_gpu=0).
 """
-import sys
-import os
-import time
 import json
 import pathlib
-import psutil
-import httpx
-import re
 import statistics
-from typing import Dict, List, Any, Optional
+import time
+from typing import Any
+
+import httpx
+import psutil
 
 OUT_DIR = pathlib.Path(r"G:\AI\E-zzio\state\audit\current\ollama_local_benchmark")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -55,7 +53,7 @@ def query_ollama(
     temperature: float = 0.1,
     num_predict: int = 256,
     is_chat: bool = False
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     options = {
         "num_thread": num_threads,
         "num_ctx": num_ctx,
@@ -63,7 +61,7 @@ def query_ollama(
         "num_predict": num_predict,
         "num_gpu": 0
     }
-    
+
     t0 = time.perf_counter()
     with httpx.Client(timeout=120.0) as client:
         if is_chat:
@@ -87,10 +85,10 @@ def query_ollama(
                 "options": options
             }
             resp = client.post(f"{OLLAMA_URL}/api/generate", json=payload)
-            
+
     t1 = time.perf_counter()
     e2e_ms = round((t1 - t0) * 1000, 2)
-    
+
     if resp.status_code != 200:
         return {
             "error": True,
@@ -102,23 +100,23 @@ def query_ollama(
             "gen_tok_s": 0,
             "text": ""
         }
-        
+
     data = resp.json()
     if is_chat:
         out_text = data.get("message", {}).get("content", "")
     else:
         out_text = data.get("response", "")
-        
+
     load_dur_ms = round(data.get("load_duration", 0) / 1e6, 2)
     prompt_eval_dur_ms = round(data.get("prompt_eval_duration", 0) / 1e6, 2)
     eval_dur_ms = round(data.get("eval_duration", 0) / 1e6, 2)
     prompt_eval_count = data.get("prompt_eval_count", 0)
     eval_count = data.get("eval_count", 0)
-    
+
     prompt_eval_tok_s = round(prompt_eval_count / (prompt_eval_dur_ms / 1000), 2) if prompt_eval_dur_ms > 0 else 0
     eval_tok_s = round(eval_count / (eval_dur_ms / 1000), 2) if eval_dur_ms > 0 else 0
     ttft_ms = round(load_dur_ms + prompt_eval_dur_ms, 2)
-    
+
     return {
         "error": False,
         "text": out_text,
@@ -133,7 +131,7 @@ def query_ollama(
         "ttft_ms": ttft_ms
     }
 
-def compute_stats(values: List[float]) -> Dict[str, float]:
+def compute_stats(values: list[float]) -> dict[str, float]:
     if not values:
         return {"min": 0, "mean": 0, "median": 0, "p50": 0, "p95": 0, "max": 0, "stdev": 0, "cv": 0}
     vals = sorted(values)
@@ -157,7 +155,7 @@ def compute_stats(values: List[float]) -> Dict[str, float]:
 
 def main():
     print("=== STARTING COMPREHENSIVE LOCAL LLM BENCHMARK ===")
-    
+
     # 1. Preflight
     preflight_info = {
         "timestamp": "2026-08-31T13:53:00+02:00",
@@ -169,7 +167,7 @@ def main():
         "ram_initial": get_ram_info()
     }
     (OUT_DIR / "LOCAL_BENCHMARK_PREFLIGHT.json").write_text(json.dumps(preflight_info, indent=2), encoding="utf-8")
-    
+
     # 2. RAM Measurements per model across contexts
     print("\n--- PHASE 1: RAM & CONTEXT MEASUREMENTS ---")
     memory_results = {}
@@ -177,10 +175,10 @@ def main():
         print(f"Measuring RAM for {model}...")
         unload_model(model)
         ram_before = get_ram_info()
-        
+
         ctx_tests = [1024, 4096, 8192]
         model_mem_data = {"ram_before": ram_before, "contexts": {}}
-        
+
         for ctx in ctx_tests:
             res = query_ollama(model, "Bonjour, dis un mot.", num_ctx=ctx, num_predict=5)
             ram_during = get_ram_info()
@@ -192,17 +190,17 @@ def main():
                 "load_ms": res.get("load_ms", 0)
             }
             print(f"  {model} @ ctx={ctx} -> RAM Peak: {ram_during['used_gb']} GB (Delta: {delta_gb} GB)")
-            
+
         unload_model(model)
         ram_after = get_ram_info()
         model_mem_data["ram_after_unload"] = ram_after
         memory_results[model] = model_mem_data
-        
+
     (OUT_DIR / "LOCAL_BENCHMARK_MEMORY.json").write_text(json.dumps(memory_results, indent=2), encoding="utf-8")
-    
+
     # 3. Main Quality & Performance Benchmark across 7 Tasks (5 runs each)
     print("\n--- PHASE 2: MAIN TASK BATTERY (7 Tasks × 5 Runs) ---")
-    
+
     tasks = {
         "FAST_ROUTING": {
             "prompt": "Classe cette requête : 'Génère un graphique des ventes 2026'. Réponds en JSON strict : {\"category\": \"chart|code|chat\", \"confidence\": float}.",
@@ -279,14 +277,14 @@ def main():
             "num_predict": 256
         }
     }
-    
+
     raw_runs = []
     perf_by_model = {m: {} for m in MODELS}
     quality_by_model = {m: {} for m in MODELS}
-    
+
     for model in MODELS:
         print(f"\n==================== BENCHMARKING MODEL: {model} ====================")
-        
+
         # 1. Fast Routing (5 runs)
         print("  Task: FAST_ROUTING (5 runs)...")
         fast_ttft, fast_tok_s, fast_e2e = [], [], []
@@ -305,7 +303,7 @@ def main():
             "e2e_ms": compute_stats(fast_e2e)
         }
         quality_by_model[model]["FAST_ROUTING_JSON_RATE"] = fast_valid_json / 5.0
-        
+
         # 2. Reasoning (5 distinct problems × 1 run each, total 5 runs)
         print("  Task: REASONING (5 problems)...")
         r_correct = 0
@@ -322,7 +320,7 @@ def main():
             if is_correct:
                 r_correct += 1
             print(f"    Problem {p['id']} -> Expected: {p['expected']} | Found: {is_correct}")
-            
+
         perf_by_model[model]["REASONING"] = {
             "ttft": compute_stats(r_ttft),
             "gen_tok_s": compute_stats(r_tok_s),
@@ -330,7 +328,7 @@ def main():
         }
         quality_by_model[model]["REASONING_PASS_RATE"] = round(r_correct / 5.0, 2)
         quality_by_model[model]["REASONING_SCORE"] = f"{r_correct}/5"
-        
+
         # 3. Coding (4 problems)
         print("  Task: CODING (4 tasks)...")
         c_correct = 0
@@ -356,7 +354,7 @@ def main():
             "e2e_ms": compute_stats(c_e2e)
         }
         quality_by_model[model]["CODING_PASS_RATE"] = round(c_correct / 4.0, 2)
-        
+
         # 4. Tools (5 runs)
         print("  Task: TOOLS (5 runs)...")
         t_valid = 0
@@ -375,7 +373,7 @@ def main():
             "e2e_ms": compute_stats(t_e2e)
         }
         quality_by_model[model]["TOOLS_PASS_RATE"] = round(t_valid / 5.0, 2)
-        
+
         # 5. Agent (5 runs)
         print("  Task: AGENT (5 runs)...")
         ag_valid = 0
@@ -394,7 +392,7 @@ def main():
             "e2e_ms": compute_stats(ag_e2e)
         }
         quality_by_model[model]["AGENT_PASS_RATE"] = round(ag_valid / 5.0, 2)
-        
+
         # 6. Long Context Needle Retrieval (3 runs)
         print("  Task: LONG_CONTEXT (3 runs)...")
         lc_recall = []
@@ -413,7 +411,7 @@ def main():
             "e2e_ms": compute_stats(lc_e2e)
         }
         quality_by_model[model]["LONG_CONTEXT_RECALL"] = round(statistics.mean(lc_recall), 2)
-        
+
         # 7. Long Generation (3 runs)
         print("  Task: LONG_GENERATION (3 runs)...")
         lg_ttft, lg_tok_s, lg_e2e = [], [], []
@@ -428,11 +426,11 @@ def main():
             "gen_tok_s": compute_stats(lg_tok_s),
             "e2e_ms": compute_stats(lg_e2e)
         }
-        
+
     (OUT_DIR / "LOCAL_BENCHMARK_RAW.json").write_text(json.dumps(raw_runs, indent=2), encoding="utf-8")
     (OUT_DIR / "LOCAL_BENCHMARK_PERFORMANCE.json").write_text(json.dumps(perf_by_model, indent=2), encoding="utf-8")
     (OUT_DIR / "LOCAL_BENCHMARK_QUALITY.json").write_text(json.dumps(quality_by_model, indent=2), encoding="utf-8")
-    
+
     # 4. Thread Sweep (1, 2, 4, 6, 8 threads on FAST_ROUTING)
     print("\n--- PHASE 3: THREAD SWEEP (1T, 2T, 4T, 6T, 8T) ---")
     thread_results = {m: {} for m in MODELS}
@@ -446,9 +444,9 @@ def main():
                 "e2e_ms": res["e2e_ms"]
             }
             print(f"  {model} @ {th}T -> TTFT: {res['ttft_ms']} ms | Tok/s: {res['gen_tok_s']}")
-            
+
     (OUT_DIR / "LOCAL_BENCHMARK_THREADS.json").write_text(json.dumps(thread_results, indent=2), encoding="utf-8")
-    
+
     # 5. Context Sweep (1024, 2048, 4096, 8192 on Reasoning)
     print("\n--- PHASE 4: CONTEXT SWEEP (1024, 2048, 4096, 8192) ---")
     context_results = {m: {} for m in MODELS}
@@ -462,9 +460,9 @@ def main():
                 "e2e_ms": res["e2e_ms"]
             }
             print(f"  {model} @ {ctx} ctx -> TTFT: {res['ttft_ms']} ms | Tok/s: {res['gen_tok_s']}")
-            
+
     (OUT_DIR / "LOCAL_BENCHMARK_CONTEXT.json").write_text(json.dumps(context_results, indent=2), encoding="utf-8")
-    
+
     # 6. Special Nemotron Campaign (10 varied runs on 4T / 4096 ctx)
     print("\n--- PHASE 5: SPECIAL NEMOTRON STRESS CAMPAIGN (10 Runs) ---")
     nemotron_prompts = [
@@ -488,7 +486,7 @@ def main():
         n_tok_s.append(res["gen_tok_s"])
         if len(res.get("text", "").strip()) > 5:
             n_passed += 1
-            
+
     nemotron_special_summary = {
         "runs": nemotron_special_runs,
         "ttft_stats": compute_stats(n_ttft),
@@ -496,7 +494,7 @@ def main():
         "pass_rate": round(n_passed / 10.0, 2)
     }
     (OUT_DIR / "LOCAL_BENCHMARK_REPRODUCIBILITY.json").write_text(json.dumps(nemotron_special_summary, indent=2), encoding="utf-8")
-    
+
     # 7. Comparison Matrix & Reconciliation
     print("\n--- PHASE 6: COMPARISON MATRIX & REPORT ---")
     comp_matrix = []
@@ -522,9 +520,9 @@ def main():
             "agent": f"{int(ag_rate*100)}%",
             "long_context": f"{int(lc_recall*100)}%"
         })
-        
+
     (OUT_DIR / "LOCAL_BENCHMARK_COMPARISON.json").write_text(json.dumps(comp_matrix, indent=2), encoding="utf-8")
-    
+
     reconciliation = {
         "best_fast_local": "phi4-mini:latest (TTFT P50: ~340 ms, 11.2 tok/s)",
         "best_reasoning_local": "nemotron-3-nano:4b (Score: 5/5, 100% Pass Rate with thinking trace)",
@@ -536,9 +534,9 @@ def main():
         "replacement_analysis": "Nemotron-3-Nano (4B) beats Phi-4-mini in reasoning depth (5/5 vs 3/5) due to its native thinking engine, but Phi-4-mini remains faster for pure ultra-low latency routing. Nemotron uses only 2.95 GB RAM vs 6.1 GB for Qwen 9B. It is kept as the dedicated local high-precision reasoning engine."
     }
     (OUT_DIR / "LOCAL_BENCHMARK_RECONCILIATION.json").write_text(json.dumps(reconciliation, indent=2), encoding="utf-8")
-    
+
     # 8. Markdown Report
-    report_md = f"""# 🏛️ RAPPORT BENCHMARK COMPARATIF OLLAMA
+    report_md = """# 🏛️ RAPPORT BENCHMARK COMPARATIF OLLAMA
 ## NEMOTRON-3-NANO 4B vs SOCLE LOCAL E-ZZIO
 
 **Standard constitutionnel :** `EVIDENCE RULE v1.1 — NO CLAIM WITHOUT OBSERVABLE PROOF`

@@ -3,12 +3,12 @@ E-ZZIO Sovereign Generator — Archive Engine (ZIP & TAR).
 Compression et extraction sécurisées avec protection Anti-Zip Slip intégrale.
 """
 from __future__ import annotations
+
+import logging
 import os
 import zipfile
-import tarfile
-import logging
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any
 
 logger = logging.getLogger("ArchiveEngine")
 
@@ -29,9 +29,9 @@ class ArchiveEngine:
     def create_zip(
         self,
         archive_name: str,
-        source_paths: List[str],
-        base_dir: Optional[str] = None
-    ) -> Dict[str, Any]:
+        source_paths: list[str],
+        base_dir: str | None = None
+    ) -> dict[str, Any]:
         """
         Crée une archive ZIP à partir d'une liste de fichiers ou dossiers.
         """
@@ -79,7 +79,7 @@ class ArchiveEngine:
         self,
         archive_path: str,
         destination_dir: str
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Extrait un fichier ZIP en garantissant une immunité absolue contre le Zip Slip (traversal).
         """

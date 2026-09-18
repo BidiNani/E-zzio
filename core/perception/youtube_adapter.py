@@ -7,13 +7,11 @@ Permet l'ingestion, l'analyse et la synthèse de contenus vidéo/audio YouTube :
 4. Gouvernance : youtube.inspect (ALLOW), youtube.download (REQUIRE_HUMAN)
 """
 from __future__ import annotations
-import os
-import re
-import json
+
 import logging
 import urllib.parse
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any
 
 try:
     import yt_dlp
@@ -58,8 +56,8 @@ class YouTubeAdapter:
         self,
         video_url: str,
         extract_subtitles: bool = True,
-        preferred_languages: Optional[List[str]] = None
-    ) -> Dict[str, Any]:
+        preferred_languages: list[str] | None = None
+    ) -> dict[str, Any]:
         """
         Extrait les métadonnées et sous-titres d'une vidéo YouTube (scope: youtube.inspect -> ALLOW).
         Ne télécharge aucun fichier binaire sur disque.
@@ -144,7 +142,7 @@ class YouTubeAdapter:
         video_url: str,
         audio_format: str = "mp3",
         require_approval: bool = True
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Télécharge le flux audio de la vidéo YouTube (scope: youtube.download -> REQUIRE_HUMAN).
         """

@@ -7,11 +7,10 @@ Fournit une vérification instantanée des invariants fondamentaux :
 - Web Server Router Mounting
 - Agent Registry Readiness
 """
+import hashlib
+import json
 import os
 import sys
-import json
-import hashlib
-import importlib
 
 # Ensure repo root is on sys.path
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,7 +23,7 @@ def check_frozen_core() -> bool:
     if not os.path.exists(manifest_path):
         print("[FAIL] Frozen core manifest missing")
         return False
-    with open(manifest_path, "r", encoding="utf-8") as f:
+    with open(manifest_path, encoding="utf-8") as f:
         manifest = json.load(f)["components"]
     files = ["core/capabilities/capability_policy.py", "core/capabilities/registry.py", "core/security/audit_ledger.py"]
     for f in files:
@@ -56,7 +55,7 @@ def check_secrets() -> bool:
     ]
     for t in targets:
         if os.path.exists(t):
-            c = open(t, "r", encoding="utf-8", errors="ignore").read()
+            c = open(t, encoding="utf-8", errors="ignore").read()
             for p in patterns:
                 if p.search(c):
                     print(f"[FAIL] Secret pattern found in {t}")
@@ -66,10 +65,10 @@ def check_secrets() -> bool:
 
 def check_providers() -> bool:
     try:
-        from core.providers.ollama_provider import OllamaProvider
         from core.providers.gemini_provider import GeminiProvider
         from core.providers.groq_provider import GroqProvider
         from core.providers.nvidia_nim_provider import NvidiaNimProvider
+        from core.providers.ollama_provider import OllamaProvider
 
         o = OllamaProvider()
         assert o.name == "ollama"
