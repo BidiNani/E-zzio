@@ -57,6 +57,41 @@ import uuid
 from fastapi import Request
 
 
+
+
+# ============================================================
+# AUTH MIDDLEWARE — API key (X-API-Key)
+# ============================================================
+import os as _os
+
+_EZZIO_API_KEY = _os.getenv("EZZIO_API_KEY", "")
+_PROTECTED_PREFIXES = ("/master/", "/api/accounts/", "/api/models/select")
+_PUBLIC_PATHS = {"/health", "/ping", "/metrics", "/api/_routes", "/", "/agent-view"}
+
+
+@app.middleware("http")
+async def api_key_middleware(request: Request, call_next):
+    path = request.url.path
+
+    # Endpoints publics : passent
+    if path in _PUBLIC_PATHS or path.startswith("/perception/"):
+        return await call_next(request)
+
+    # Endpoints protégés : clé requise
+    if any(path.startswith(p) for p in _PROTECTED_PREFIXES):
+        if not _EZZIO_API_KEY:
+            # Clé non configurée → dev local, on laisse passer
+            return await call_next(request)
+        provided = request.headers.get("X-API-Key", "")
+        if provided != _EZZIO_API_KEY:
+            from fastapi.responses import JSONResponse
+            return JSONResponse(
+                status_code=401,
+                content={"detail": "API key required. Set X-API-Key header."},
+            )
+
+    return await call_next(request)
+
 @app.middleware("http")
 async def correlation_id_middleware(request: Request, call_next):
     corr_id = request.headers.get("X-Correlation-ID", f"req_{uuid.uuid4().hex[:12]}")
