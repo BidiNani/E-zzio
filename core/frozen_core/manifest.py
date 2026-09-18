@@ -49,28 +49,51 @@ def compute_hash(filepath: Path) -> str:
 
 
 def load_manifest() -> dict[str, Any]:
-    """Charge le manifest depuis le disque. Retourne {} si absent."""
+    """Charge le manifest. Supporte les formats 'components' et 'files'."""
     if not MANIFEST_PATH.exists():
-        return {"version": 1, "files": {}}
-    return json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+        return {"version": 1, "components": {}}
+    raw = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+
+    # Normalisation interne : toujours exposer 'components' avec {sha256: ...}
+    if "components" in raw:
+        return raw
+    if "files" in raw:
+        # Migrer l'ancien format vers le nouveau
+        return {
+            "version": raw.get("version", 1),
+            "components": {
+                path: {"sha256": h}
+                for path, h in raw["files"].items()
+            },
+        }
+    return {"version": 1, "components": {}}
+
+
+def _get_manifest_hashes(manifest: dict[str, Any]) -> dict[str, str]:
+    """Extrait {path: sha256} du manifest, peu importe le format."""
+    if "components" in manifest:
+        return {path: meta["sha256"] for path, meta in manifest["components"].items()}
+    if "files" in manifest:
+        return dict(manifest["files"])
+    return {}
 
 
 def save_manifest(manifest: dict[str, Any]) -> None:
-    """Écrit le manifest avec tri stable et indentation lisible."""
+    """Écrit le manifest au format 'components' (compatible tests existants)."""
     MANIFEST_PATH.parent.mkdir(parents=True, exist_ok=True)
     payload = json.dumps(manifest, indent=2, sort_keys=True, ensure_ascii=False)
     MANIFEST_PATH.write_text(payload + "\n", encoding="utf-8", newline="\n")
 
 
 def regenerate_manifest() -> dict[str, Any]:
-    """Recalcule tous les hashes et réécrit le manifest. Retourne le nouveau."""
-    files: dict[str, str] = {}
+    """Recalcule tous les hashes et réécrit le manifest au format 'components'."""
+    components: dict[str, dict[str, str]] = {}
     for rel in FROZEN_FILES:
         fp = REPO_ROOT / rel
         if not fp.exists():
             raise FileNotFoundError(f"Frozen Core file introuvable : {rel}")
-        files[rel] = compute_hash(fp)
-    manifest = {"version": 1, "files": files}
+        components[rel] = {"sha256": compute_hash(fp)}
+    manifest = {"version": 1, "components": components}
     save_manifest(manifest)
     return manifest
 
@@ -81,7 +104,7 @@ def verify_integrity() -> None:
     Utilisé par tous les tests Frozen Core (gate unique).
     """
     manifest = load_manifest()
-    expected_files: dict[str, str] = manifest.get("files", {})
+    expected_files: dict[str, str] = _get_manifest_hashes(manifest)
     drifts: dict[str, dict[str, str]] = {}
 
     # 1. Fichiers protégés absents du manifest
