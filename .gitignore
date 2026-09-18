@@ -275,3 +275,6 @@ runtime/obsolete_tests_*/
 
 # Archives de backups (nettoyage 2026-09-18)
 runtime/archive_*/
+
+# Backups locaux
+_backup_refonte_*/
