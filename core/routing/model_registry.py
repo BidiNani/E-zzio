@@ -43,7 +43,8 @@ class CanonicalModelRegistry:
         self._models = [
             CanonicalModelRecord("gemini-3.8-flash", ModelSource.GEMINI, role="MASTER", roles=["MASTER", "MASTER_STRATEGIC"], thinking_level="high"),
             CanonicalModelRecord("gemini-3.7-flash", ModelSource.GEMINI, role="CODING", roles=["CODING"], thinking_level="low"),
-            CanonicalModelRecord("gemini-3.6-flash", ModelSource.GEMINI, role="STANDARD_CHAT", roles=["STANDARD_CHAT", "FORENSIC", "FAST_CHAT", "FAST"], thinking_level="medium"),
+            CanonicalModelRecord("gemini-3.6-flash", ModelSource.GEMINI, role="FORENSIC", roles=["FORENSIC"], thinking_level="medium"),
+            CanonicalModelRecord("gemini-3.5-flash-lite", ModelSource.GEMINI, role="STANDARD_CHAT", roles=["STANDARD_CHAT", "FAST_CHAT", "FAST"], thinking_level="medium"),
             CanonicalModelRecord("gemini-3.5-flash", ModelSource.GEMINI, role="REFACTOR", roles=["REFACTOR"], thinking_level="medium"),
             CanonicalModelRecord("gemini-2.5-flash", ModelSource.GEMINI, role="FALLBACK", roles=["FALLBACK"], thinking_level="off"),
             CanonicalModelRecord("qwen2.5-coder:7b-instruct-q4_K_M", ModelSource.LOCAL, role="LOCAL", roles=["LOCAL", "LOCAL_CODING"]),
@@ -60,7 +61,7 @@ class CanonicalModelRegistry:
         for m in self._models:
             if m.name == name:
                 return m
-        return CanonicalModelRecord(name=name)
+        return None
 
     def get_by_role(self, role: str) -> Optional[CanonicalModelRecord]:
         for m in self._models:

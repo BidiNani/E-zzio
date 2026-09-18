@@ -9,14 +9,14 @@ from core.providers.base_provider import ProviderResponse
 
 def test_default_model_is_36_flash():
     p = GeminiProvider(api_key="K0")
-    assert p.model == "gemini-3.6-flash"
-    assert GeminiProvider.DEFAULT_MODEL == "gemini-3.6-flash"
+    assert p.model == "gemini-3.5-flash-lite"
+    assert GeminiProvider.DEFAULT_MODEL == "gemini-3.5-flash-lite"
 
 
 def test_no_25_flash_reference():
     import pathlib
     src = pathlib.Path("core/providers/gemini_provider.py").read_text(encoding="utf-8")
-    assert "gemini-3.6-flash" in src
+    assert "gemini-3.5-flash-lite" in src
 
 
 def _api_error(code: int) -> Exception:
@@ -100,6 +100,6 @@ async def test_sdk_config_always_carries_identity():
         mock_resp.json.return_value = fake_json
         mock_post.return_value = mock_resp
 
-        r = await p.generate(prompt="Qui es-tu ?", model="gemini-3.6-flash")
+        r = await p.generate(prompt="Qui es-tu ?", model="gemini-3.5-flash-lite")
         assert r.error_class is None
         assert r.content == "Je suis E-ZZIO."

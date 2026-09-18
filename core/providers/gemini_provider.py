@@ -39,8 +39,8 @@ class GeminiProvider(BaseProvider, IResearchProvider):
     base_url: str = "https://generativelanguage.googleapis.com/v1beta/models"
     # Défaut stable du provider ; l'autorité de routage
     # (core/routing/model_registry.py) est la seule source de vérité.
-    DEFAULT_MODEL: str = "gemini-3.8-flash"
-    FALLBACK_MODELS: List[str] = ["gemini-3.7-flash", "gemini-3.5-flash-lite"]
+    DEFAULT_MODEL: str = "gemini-3.5-flash-lite"
+    FALLBACK_MODELS: List[str] = ["gemini-3.6-flash", "gemini-3.8-flash"]
 
     def __init__(
         self,
@@ -60,6 +60,7 @@ class GeminiProvider(BaseProvider, IResearchProvider):
         self.model = model or os.getenv("GEMINI_MODEL") or get_active_gemini_model()  # PATCH: modèle dynamique
         self.fallback_models = list(self.FALLBACK_MODELS)
         self.timeout = timeout  # PATCH 2026-09-17: 120s
+        self._auth_failures = 0
 
         if not self.api_key:
             self._status = ProviderAvailability.NOT_CONFIGURED
@@ -304,6 +305,9 @@ class GeminiProvider(BaseProvider, IResearchProvider):
                             last_err_class = self.error_mapping(res.status_code, res.text)
                             if res.status_code in (400, 401, 403):
                                 logger.warning("[GEMINI-PROVIDER] Clé API rejetée (HTTP %d). Essai de la clé suivante.", res.status_code)
+                                self._auth_failures += 1
+                                if self._auth_failures >= len(self._available_keys or [1]):
+                                    self._status = ProviderAvailability.UNAUTHORIZED
                                 continue
                             elif res.status_code in (404, 429, 500, 503):
                                 logger.warning("[GEMINI-PROVIDER] Modèle %s indisponible (HTTP %d). Essai du modèle fallback.", cur_model, res.status_code)
@@ -467,4 +471,3 @@ class GeminiProvider(BaseProvider, IResearchProvider):
                 "raw": resp.raw or {},
             },
         }
-
