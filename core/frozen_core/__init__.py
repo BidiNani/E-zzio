@@ -10,11 +10,11 @@ Tous les tests DOIVENT consommer ce module. Aucun hash hardcodé.
 """
 from core.frozen_core.manifest import (
     FROZEN_FILES,
+    ManifestDriftError,
+    compute_hash,
     load_manifest,
     save_manifest,
-    compute_hash,
     verify_integrity,
-    ManifestDriftError,
 )
 
 __all__ = [

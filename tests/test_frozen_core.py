@@ -5,7 +5,7 @@ Les autres tests (ex: v9.4) importent core.frozen_core.verify_integrity.
 """
 import pytest
 
-from core.frozen_core import FROZEN_FILES, verify_integrity, ManifestDriftError
+from core.frozen_core import FROZEN_FILES, ManifestDriftError, verify_integrity
 
 
 def test_frozen_core_integrity():
@@ -19,6 +19,7 @@ def test_frozen_core_integrity():
 def test_frozen_core_files_exist():
     """Vérifie que tous les fichiers déclarés existent."""
     from pathlib import Path
+
     from core.frozen_core.manifest import REPO_ROOT
     missing = [rel for rel in FROZEN_FILES if not (REPO_ROOT / rel).exists()]
     assert not missing, f"Fichiers Frozen Core manquants : {missing}"

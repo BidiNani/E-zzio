@@ -1,6 +1,37 @@
-*.py text eol=lf
-*.json text eol=lf
-*.yaml text eol=lf
-*.yml text eol=lf
-*.md text eol=lf
-*.ps1 text eol=crlf
+# Normalisation des fins de ligne
+# Docs : https://git-scm.com/docs/gitattributes
+
+# Par défaut : normaliser en LF dans le repo
+* text=auto eol=lf
+
+# Scripts shell et hooks : LF strict
+*.sh        text eol=lf
+*.githooks/* text eol=lf
+
+# Python : LF strict
+*.py        text eol=lf
+
+# PowerShell : garder LF (compatible pwsh 7 partout)
+*.ps1       text eol=lf
+*.psm1      text eol=lf
+
+# YAML / JSON / Markdown : LF strict
+*.yml       text eol=lf
+*.yaml      text eol=lf
+*.json      text eol=lf
+*.md        text eol=lf
+
+# Binaires : ne pas toucher
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.gif       binary
+*.ico       binary
+*.pdf       binary
+*.zip       binary
+*.exe       binary
+*.dll       binary
+*.pyd       binary
+*.so        binary
+*.mp4       binary
+*.mp3       binary

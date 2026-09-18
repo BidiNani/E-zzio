@@ -21,7 +21,7 @@ EVIDENCE_DIR = ROOT_DIR / "state" / "audit" / "visual" / "v9.4-counter-certifica
 
 # Frozen Core : la vérification est déléguée au gate central
 # (voir tests/test_frozen_core.py et core/frozen_core/manifest.py)
-from core.frozen_core import verify_integrity, ManifestDriftError
+from core.frozen_core import ManifestDriftError, verify_integrity
 
 EXPECTED_PNGS = [
     ("01-command-center.png", 1920, 1080),

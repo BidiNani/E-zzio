@@ -19,6 +19,7 @@ from typing import Any
 import httpx
 
 from core.config.active_model import get_active_gemini_model
+from core.models.gemini_pool import gemini_pool  # noqa: F401
 from core.providers.base_provider import (
     BaseProvider,
     CostClass,
@@ -29,7 +30,6 @@ from core.providers.base_provider import (
 from core.providers.iresearch_provider import IResearchProvider
 from core.secrets import load_secrets
 
-from core.models.gemini_pool import gemini_pool  # noqa: F401
 # ↑ Import explicite : utilisé via globals() dans search(), exposé
 #   pour monkey-patch par les tests. Source : core/models/gemini_pool.py
 
