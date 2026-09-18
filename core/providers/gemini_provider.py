@@ -20,6 +20,7 @@ from typing import Any, AsyncIterator, Dict, List, Optional
 from core.secrets import load_secrets, get_api_key
 from core.models.gemini_pool import gemini_pool
 from core.providers.iresearch_provider import IResearchProvider
+from core.config.active_model import get_active_gemini_model
 from core.providers.base_provider import (
     BaseProvider,
     CostClass,
@@ -39,13 +40,13 @@ class GeminiProvider(BaseProvider, IResearchProvider):
     # Défaut stable du provider ; l'autorité de routage
     # (core/routing/model_registry.py) est la seule source de vérité.
     DEFAULT_MODEL: str = "gemini-3.8-flash"
-    FALLBACK_MODELS: List[str] = ["gemini-3.7-flash", "gemini-2.5-flash"]
+    FALLBACK_MODELS: List[str] = ["gemini-3.7-flash", "gemini-3.5-flash-lite"]
 
     def __init__(
         self,
         api_key: Optional[str] = None,
         model: Optional[str] = None,
-        timeout: float = 45.0,
+        timeout: float = 120.0,
     ) -> None:
         load_secrets()
         from core.config.secrets_loader import gemini_keys
@@ -56,9 +57,9 @@ class GeminiProvider(BaseProvider, IResearchProvider):
 
         self.api_key = resolved_key.strip() if resolved_key else None
         self._available_keys = available_keys
-        self.model = model or os.getenv("GEMINI_MODEL", self.DEFAULT_MODEL)
+        self.model = model or os.getenv("GEMINI_MODEL") or get_active_gemini_model()  # PATCH: modèle dynamique
         self.fallback_models = list(self.FALLBACK_MODELS)
-        self.timeout = timeout
+        self.timeout = timeout  # PATCH 2026-09-17: 120s
 
         if not self.api_key:
             self._status = ProviderAvailability.NOT_CONFIGURED
@@ -250,56 +251,69 @@ class GeminiProvider(BaseProvider, IResearchProvider):
         last_res = None
         last_err_class = ProviderErrorClass.UNAUTHORIZED
 
+        models_to_try = [target_model]
+        for fb in self.fallback_models:
+            if fb not in models_to_try:
+                models_to_try.append(fb)
+
         try:
             async with httpx.AsyncClient(timeout=self.timeout) as client:
-                for current_key in keys_to_try:
-                    url = f"{self.base_url}/{target_model}:generateContent?key={current_key}"
-                    res = await client.post(url, headers=headers, json=payload)
-                    latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
-                    if res.status_code == 200:
-                        self.api_key = current_key
-                        self._status = ProviderAvailability.AVAILABLE
-                        data = res.json()
-                        text_content = ""
-                        finish_reason = "stop"
-                        candidates = data.get("candidates", [])
-                        if candidates:
-                            first = candidates[0]
-                            parts = first.get("content", {}).get("parts", [])
-                            text_content = "".join(p.get("text", "") for p in parts)
-                            finish_reason = first.get("finishReason", "stop")
-
-                        usage_meta = data.get("usageMetadata", {})
-                        usage = {
-                            "prompt_tokens": usage_meta.get("promptTokenCount", 0),
-                            "completion_tokens": usage_meta.get("candidatesTokenCount", 0),
-                            "total_tokens": usage_meta.get("totalTokenCount", 0),
-                        }
-
-                        return ProviderResponse(
-                            content=text_content,
-                            model=target_model,
-                            provider=self.name,
-                            finish_reason=finish_reason,
-                            usage=usage,
-                            latency_ms=latency_ms,
-                            cost_class=CostClass.FREE_ENDPOINT,
-                            error_class=None,
-                            raw=data,
-                        )
-                    else:
-                        last_res = res
-                        last_err_class = self.error_mapping(res.status_code, res.text)
-                        if res.status_code in (400, 401, 403):
-                            logger.warning("[GEMINI-PROVIDER] Clé API rejetée (HTTP %d). Essai de la clé suivante dans le pool.", res.status_code)
+                for cur_model in models_to_try:
+                    for current_key in keys_to_try:
+                        url = f"{self.base_url}/{cur_model}:generateContent?key={current_key}"
+                        try:
+                            res = await client.post(url, headers=headers, json=payload)
+                        except httpx.RequestError as req_err:
+                            logger.warning("[GEMINI-PROVIDER] Erreur réseau avec %s: %s", cur_model, req_err)
                             continue
-                        break
+
+                        latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
+                        if res.status_code == 200:
+                            self.api_key = current_key
+                            self._status = ProviderAvailability.AVAILABLE
+                            data = res.json()
+                            text_content = ""
+                            finish_reason = "stop"
+                            candidates = data.get("candidates", [])
+                            if candidates:
+                                first = candidates[0]
+                                parts = first.get("content", {}).get("parts", [])
+                                text_content = "".join(p.get("text", "") for p in parts)
+                                finish_reason = first.get("finishReason", "stop")
+
+                            usage_meta = data.get("usageMetadata", {})
+                            usage = {
+                                "prompt_tokens": usage_meta.get("promptTokenCount", 0),
+                                "completion_tokens": usage_meta.get("candidatesTokenCount", 0),
+                                "total_tokens": usage_meta.get("totalTokenCount", 0),
+                            }
+
+                            return ProviderResponse(
+                                content=text_content,
+                                model=cur_model,
+                                provider=self.name,
+                                finish_reason=finish_reason,
+                                usage=usage,
+                                latency_ms=latency_ms,
+                                cost_class=CostClass.FREE_ENDPOINT,
+                                error_class=None,
+                                raw=data,
+                            )
+                        else:
+                            last_res = res
+                            last_err_class = self.error_mapping(res.status_code, res.text)
+                            if res.status_code in (400, 401, 403):
+                                logger.warning("[GEMINI-PROVIDER] Clé API rejetée (HTTP %d). Essai de la clé suivante.", res.status_code)
+                                continue
+                            elif res.status_code in (404, 429, 500, 503):
+                                logger.warning("[GEMINI-PROVIDER] Modèle %s indisponible (HTTP %d). Essai du modèle fallback.", cur_model, res.status_code)
+                                break
 
                 return ProviderResponse(
                     content="",
                     model=target_model,
                     provider=self.name,
-                    latency_ms=latency_ms,
+                    latency_ms=latency_ms if 'latency_ms' in locals() else 0,
                     cost_class=CostClass.FREE_ENDPOINT,
                     error_class=last_err_class,
                     raw={"http_status": last_res.status_code, "text": last_res.text} if last_res else {"error": "Aucune clé disponible"},

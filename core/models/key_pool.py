@@ -73,6 +73,8 @@ class KeyPoolManager:
         "gemini": ("GEMINI_API_KEY",),
         "groq": ("GROQ_API_KEY",),
         "openrouter": ("OPENROUTER_API_KEY",),
+        "nvidia_nim": ("NVIDIA_API_KEY",),
+        "cerebras": ("CEREBRAS_API_KEY",),
     }
 
     def __init__(

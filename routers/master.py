@@ -16,7 +16,7 @@ from typing import Optional
 class MasterPrompt(BaseModel):
     text: str
     speed: str = "auto"
-    force_cloud: bool = False
+    force_cloud: bool = True
     mission_profile: str = "STANDARD"
     model_target: Optional[str] = "auto"
     channel: str = "web"
@@ -25,10 +25,15 @@ class MasterPrompt(BaseModel):
 
 @router.post("/chat")
 async def master_chat(prompt: MasterPrompt):
+    # Cloud-First souverain : le Cloud (Gemini) est la priorité absolue,
+    # sauf si le mode local_only est explicitement verrouillé dans la gouvernance.
+    local_only = _runtime_governance_settings.get("local_only", False)
+    effective_force_cloud = prompt.force_cloud and (not local_only)
+
     result = await ezzio_master.execute_intent(
         user_prompt=prompt.text,
         speed=prompt.speed,
-        force_cloud=prompt.force_cloud,
+        force_cloud=effective_force_cloud,
         session_id=prompt.session_id,
         mission_profile=prompt.mission_profile,
         model_target=prompt.model_target,
@@ -38,13 +43,23 @@ async def master_chat(prompt: MasterPrompt):
 
 
 
+_last_health_cache = {"timestamp": 0, "data": None}
+
+
 @router.get("/api/v1/providers/health")
 @router.get("/providers/health")
 async def get_providers_health():
-    """Retourne l'état de santé en temps réel de tous les providers d'inférence cognitifs."""
+    """Retourne l'état de santé en temps réel de tous les providers d'inférence cognitifs avec cache 15s."""
+    import time
+    now = time.time()
+    if _last_health_cache["data"] and (now - _last_health_cache["timestamp"] < 15.0):
+        return {"ok": True, "health": _last_health_cache["data"]}
+
     from core.cognitive_router import ModelRouter
     router_inst = ModelRouter()
     health_data = await router_inst.get_providers_health()
+    _last_health_cache["timestamp"] = now
+    _last_health_cache["data"] = health_data
     return {"ok": True, "health": health_data}
 
 
@@ -213,10 +228,10 @@ class GovernanceSettingsPayload(BaseModel):
 _runtime_governance_settings = {
     "local_only": False,
     "cloud_fallback": True,
-    "max_budget_cents": 1000,
+    "max_budget_cents": 2500,
     "profiles": {
-        "chat": "LOCAL_PREFERRED",
-        "coding": "CODER_FEDERATION",
+        "chat": "CLOUD_PREFERRED",
+        "coding": "GEMINI_CLOUD_FIRST",
         "reasoning": "GEMINI_CLOUD",
     },
 }

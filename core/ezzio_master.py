@@ -105,7 +105,7 @@ class EzzioMaster:
         self,
         user_prompt: str,
         speed: str = "auto",
-        force_cloud: bool = False,
+        force_cloud: bool = True,
         session_id: str = "",
         system_prompt: str = "",
         mission_profile: str = "STANDARD",
@@ -162,7 +162,11 @@ class EzzioMaster:
             chat_system = system_prompt or await self._build_chat_system_prompt(session_id, exclude_prompt=user_prompt)
             
             # Dynamic provider selection (Ollama local vs Gemini API)
-            if routing.get("provider") == "ollama" and not force_cloud:
+            # Cloud-First par défaut : Cloud Gemini en priorité absolue.
+            is_local = (routing.get("provider") == "ollama" and not force_cloud)
+            used_fallback = False
+
+            if is_local:
                 from core.providers.ollama_provider import OllamaProvider
                 ollama_prov = OllamaProvider(model=selected_model)
                 resp: ProviderResponse = await ollama_prov.generate(
@@ -173,14 +177,37 @@ class EzzioMaster:
                     max_tokens=512,
                 )
             else:
-                resp: ProviderResponse = await self.provider.generate(
-                    prompt=user_prompt or "",
-                    system_prompt=chat_system if chat_system else None,
-                    model=selected_model,
-                    temperature=0.2,
-                    max_tokens=512,
-                    thinking_level=thinking_level,
-                )
+                # Cloud-First : Garantit un modèle Gemini valide (jamais de modèle Ollama envoyé au cloud)
+                cloud_model = selected_model
+                if not (cloud_model and cloud_model.startswith("gemini")):
+                    cloud_model = "gemini-3.6-flash"
+
+                try:
+                    resp: ProviderResponse = await self.provider.generate(
+                        prompt=user_prompt or "",
+                        system_prompt=chat_system if chat_system else None,
+                        model=cloud_model,
+                        temperature=0.2,
+                        max_tokens=2048,
+                        thinking_level=thinking_level,
+                    )
+                except Exception as cloud_err:
+                    # Robustesse et résilience : secours Ollama en cas de coupure réseau ou indisponibilité cloud
+                    logger.warning("[EzzioMaster] Échec Cloud (%s), basculement résilient vers secours local...", cloud_err)
+                    try:
+                        from core.providers.ollama_provider import OllamaProvider
+                        ollama_prov = OllamaProvider(model="qwen3.5-mtp:4b")
+                        resp = await ollama_prov.generate(
+                            prompt=user_prompt or "",
+                            system_prompt=chat_system if chat_system else None,
+                            model="qwen3.5-mtp:4b",
+                            temperature=0.2,
+                            max_tokens=512,
+                        )
+                        used_fallback = True
+                    except Exception:
+                        raise cloud_err
+
             elapsed_ms = int((time.perf_counter() - start_time) * 1000)
 
             reply = resp.content or ""
@@ -207,7 +234,7 @@ class EzzioMaster:
                 "channel": channel,
                 "elapsed_ms": elapsed_ms,
                 "ok": True,
-                "used_fallback": False,
+                "used_fallback": used_fallback,
             }
             _audit_command("CONV_MODEL", {
                 "model": model_name, "provider": provider_name,

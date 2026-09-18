@@ -26,7 +26,7 @@ class DomainScopeResolver:
             "core/security/ledger_engine.py",
         ],
         "discord": [
-            "interfaces/discord/bot.py",
+            "core/integrations/discord/discord_client.py",
         ],
     }
 
