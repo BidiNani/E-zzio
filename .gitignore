@@ -219,3 +219,43 @@ dashboard_jarvis.py
 
 
 
+
+# ============================================================
+# B5-CLEANUP — Backups et temporaires (2026-09-18)
+# ============================================================
+*.bak
+*.bak_*
+*.bak2_*
+*.old
+*.orig
+*.rej
+
+# Logs et runtime
+.logs/
+*.log
+runtime/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Git
+.git_backup/
