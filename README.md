@@ -4,36 +4,63 @@ Backend Python (FastAPI) du projet E-ZZIO.
 
 ## Prérequis
 
-- Python 3.12 (via py launcher)
-- PowerShell 7+
-- Venv dans G:\AI\E-zzio\.venv
+- **Python 3.12** (via `py` launcher Windows ou `python.org`)
+- **PowerShell 7+** (pas Windows PowerShell 5.1)
+- Un venv dans `G:\AI\E-zzio\.venv`
 
-## Setup
+## Setup rapide
 
     cd G:\AI\E-zzio
-    pyi                              # helper PowerShell
+    pyi                              # helper PowerShell (affiche .venv)
     pip install -r requirements.txt
     pytest tests/ -q --tb=short
 
 ## Structure
 
-- core/         Code metier (Frozen Core protege)
-- routers/      Routes FastAPI
-- tests/        Suite pytest
-- docs/         Documentation + manifest Frozen Core
-- web_server.py Point d'entree
-- watchdog.ps1  Watchdog PowerShell
+    core/         Code métier (Frozen Core protégé)
+    routers/      Routes FastAPI découpées
+    tests/        Suite pytest (879 tests, 4 skipped)
+    docs/         Documentation + manifest Frozen Core
+    web_server.py Point d'entrée FastAPI (452 lignes)
+    watchdog.ps1  Watchdog PowerShell
+
+## Routes principales
+
+- `/health`, `/ping`     -> `routers/health.py` (source unique)
+- `/metrics`               -> `routers/health.py` (uptime_s, circuit_breaker,
+                               providers_health.ollama_local)
+- `/perception/status`     -> `routers/perception.py`
+- `/master/*`              -> `routers/master.py`
+- `/memory/*`              -> `routers/memory.py`
 
 ## Frozen Core
 
-    python -m core.frozen_core.manifest          # verifier
-    python -m core.frozen_core.manifest regen    # regenerer
+Vérifie l'intégrité cryptographique des fichiers sensibles :
+
+    python -m core.frozen_core.manifest          # vérifier
+    python -m core.frozen_core.manifest regen    # régénérer
+
+Manifest : `docs/FROZEN_CORE_MANIFEST.json`
 
 ## Hooks Git
 
-.githooks/ via core.hooksPath. pre-commit + commit-msg.
+`.githooks/` versionné, activé via `core.hooksPath`.
+- `pre-commit` : lint + tests rapides
+- `commit-msg` : anti-doublon
+
+## Tests
+
+    pytest tests/ -q --tb=short
+    # 879 passed, 4 skipped, 23 warnings
 
 ## Dette technique
 
-- Tests E2E Web UI desactives (Brave 153+ crashe sur Windows)
-- web_server.py a decouper
+- Tests E2E Web UI désactivés (Brave 153+ crashe sur Windows).
+- `test_v94_living_office_evidence` : à investiguer (Frozen Core drift).
+- `web_server.py` (452 lignes) : pourrait descendre sous 200 lignes
+  en découpant d'autres routes inline (/api/models*, /api/tools).
+
+## Tailles actuelles
+
+- web_server.py        : 452 lignes
+- routers/health.py    : 28 lignes
