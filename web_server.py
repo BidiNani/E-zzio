@@ -157,11 +157,13 @@ app.include_router(research_router)
 from routers.accounts import router as accounts_router
 from routers.models_admin import router as models_admin_router
 from routers.search import router as search_router
+from routers.tools import router as tools_router
 
 app.include_router(webhook_router)
 app.include_router(search_router)
 app.include_router(accounts_router)
 app.include_router(models_admin_router)
+app.include_router(tools_router)
 
 
 @app.get("/agent-view", response_class=HTMLResponse, include_in_schema=False)
@@ -317,59 +319,6 @@ async def select_model(payload: dict):
     return {"ok": True, "active": active}
 
 
-@app.get("/api/tools")
-async def list_tools():
-    """
-    Liste tous les outils de recherche disponibles (Tavily, Jina, ...).
-    Affiche leur statut : clé configurée, actif/inactif.
-    """
-    import os
-
-    from core.secrets import load_secrets
-
-    load_secrets()
-
-    def _check_key(key_name: str) -> bool:
-        v = os.getenv(key_name)
-        return bool(v and v.strip())
-
-    tools = [
-        {
-            "id": "tavily",
-            "name": "Tavily",
-            "category": "search",
-            "description": "Recherche web IA optimisée pour les LLM",
-            "key_configured": _check_key("TAVILY_API_KEY"),
-            "enabled": _check_key("TAVILY_API_KEY"),
-            "url": "https://tavily.com",
-        },
-        {
-            "id": "jina",
-            "name": "Jina AI",
-            "category": "search",
-            "description": "Scraping et lecture web structurée",
-            "key_configured": _check_key("JINA_API_KEY"),
-            "enabled": _check_key("JINA_API_KEY"),
-            "url": "https://jina.ai",
-        },
-        {
-            "id": "searxng",
-            "name": "SearxNG",
-            "category": "search",
-            "description": "Méta-moteur privé (self-hosted)",
-            "key_configured": _check_key("SEARXNG_URL"),
-            "enabled": False,
-            "url": "https://searxng.github.io",
-        },
-    ]
-
-    return {
-        "tools": tools,
-        "summary": {
-            "total": len(tools),
-            "enabled": sum(1 for t in tools if t["enabled"]),
-        }
-    }
 
 
 
