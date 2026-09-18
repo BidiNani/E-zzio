@@ -281,3 +281,20 @@ _backup_refonte_*/
 # Backups locaux (script finalize)
 runtime/backend_*.log
 runtime/backend_*.log.err
+
+# ─── Artefacts de build / releases ──────────────────────────────────────
+/dist/
+/releases/
+
+# ─── Logs runtime ───────────────────────────────────────────────────────
+/runtime/*.log
+/runtime/*.log.err
+/runtime/backend_*
+/logs/
+.logs/
+
+# ─── Modèles ML (régénérables) ─────────────────────────────────────────
+/runtime/models/
+
+# ─── Snapshots d'audit volumineux ───────────────────────────────────────
+/state/baselines/*.zip
