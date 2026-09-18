@@ -12,13 +12,13 @@ def test_voice_routing_policy_scenarios():
 
     # Cas 1 : Voice simple -> gemini-3.6-flash (off)
     r1 = router.select_engine(task_type="general", complexity_score=0.2, risk_level="low", channel="voice")
-    assert r1["model"] == "gemini-3.6-flash"
+    assert r1["model"] == "gemini-3.5-flash-lite"
     assert r1["thinking_level"] == "off"
     assert r1["role"] == "FAST_CHAT"
 
     # Cas 2 : Voice raisonnement -> gemini-3.6-flash (medium)
     r2 = router.select_engine(task_type="general", complexity_score=0.5, risk_level="low", channel="voice")
-    assert r2["model"] == "gemini-3.6-flash"
+    assert r2["model"] == "gemini-3.5-flash-lite"
     assert r2["thinking_level"] == "medium"
     assert r2["role"] == "STANDARD_CHAT"
 
