@@ -1020,3 +1020,11 @@ p = GeminiProvider(api_key="K0")
 | litellm | 1.98.0 | 1.101.0 |
 | litellm-enterprise | 0.1.56 | 0.1.68 |
 
+
+
+---
+
+## Note de coherence (20260919_115334)
+
+Les dossiers `core/evolution`, `core/evolution_experience`, `core/evolution_intelligence` et `core/evolution_simulation` ont ete **archives** dans `_archive/core_evolution/` lors du lot 1 (commit `235b251`). Les references a ces dossiers dans ce rapport sont **historiques**.
+
