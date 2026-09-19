@@ -49,4 +49,3 @@ ignore = [
     "E741",    # Variables à lettre unique
     "F811",    # Redéfinitions legacy conservées pour rétrocompatibilité
 ]
-
