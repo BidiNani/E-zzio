@@ -1899,5 +1899,5 @@
       "runtime\\tools\\bootstrap.py"
     ]
   },
-  "_archive_note_evolution": "Note: les dossiers core/evolution* ont ete archives dans _archive/core_evolution/ (lot 1, commit 235b251). Les references ci-dessous sont historiques."
+  "_archive_note_evolution": "Les dossiers core/evolution* ont ete archives dans _archive/core_evolution/ (lot 1, commit 235b251). Les references ci-dessous sont historiques."
 }

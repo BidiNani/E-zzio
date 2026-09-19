@@ -1028,3 +1028,13 @@ p = GeminiProvider(api_key="K0")
 
 Les dossiers `core/evolution`, `core/evolution_experience`, `core/evolution_intelligence` et `core/evolution_simulation` ont ete **archives** dans `_archive/core_evolution/` lors du lot 1 (commit `235b251`). Les references a ces dossiers dans ce rapport sont **historiques**.
 
+
+---
+
+## Note de coherence (20260919_115458)
+
+Les dossiers `core/evolution`, `core/evolution_experience`, `core/evolution_intelligence` et `core/evolution_simulation` ont ete **archives** dans `_archive/core_evolution/` lors du lot 1 (commit `235b251`).
+
+Les references a ces dossiers dans ce rapport sont **historiques**.
+
+Raison : cluster auto-referme ferme, non importe par le code actif dans `core/routers/runtime/scripts`.
