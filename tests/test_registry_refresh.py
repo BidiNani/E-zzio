@@ -104,14 +104,14 @@ async def test_idempotence(tmp_path):
     reg, reg_path = _make_registry(tmp_path)
     items = [_make_discovery_item("gemini-stable-model")]
 
-    patches = dict(
-        target_registry=patch("core.models.registry_refresh._REGISTRY_PATH", reg_path),
-        target_audit=patch("core.models.registry_refresh._AUDIT_DIR", tmp_path / "audit"),
-        target_discover=patch(
+    patches = {
+        "target_registry": patch("core.models.registry_refresh._REGISTRY_PATH", reg_path),
+        "target_audit": patch("core.models.registry_refresh._AUDIT_DIR", tmp_path / "audit"),
+        "target_discover": patch(
             "core.models.discovery.gemini.GeminiDiscovery.discover",
             new=AsyncMock(return_value=items),
         ),
-    )
+    }
     with patches["target_registry"], patches["target_audit"], patches["target_discover"]:
         r1 = await _run_refresh(api_key="FAKE-KEY")
         r2 = await _run_refresh(api_key="FAKE-KEY")
