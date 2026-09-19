@@ -244,7 +244,7 @@ def test_routing_isolation():
         ["git", "diff", "--name-only", "--", "core/models/gemini_pool.py"],
         capture_output=True, text=True, cwd="G:/AI/E-zzio",
     )
-    modified = [l.strip() for l in result.stdout.splitlines() if l.strip()]
+    modified = [line.strip() for line in result.stdout.splitlines() if line.strip()]
     assert modified == [], f"gemini_pool.py modifié : {modified}"
 
     # Nos fichiers doivent exister

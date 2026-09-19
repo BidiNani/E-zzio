@@ -149,7 +149,7 @@ class SovereignCompressorFabric:
         """Compresses code/logs by stripping verbose blank lines and comments while preserving AST tokens."""
         lines = [line.rstrip() for line in raw_code.splitlines() if line.strip()]
         # Filter purely empty comment lines but preserve code docstrings
-        filtered = [l for l in lines if not (l.strip().startswith("#") and len(l.strip()) > 1 and "TODO" not in l and "CRITICAL" not in l)]
+        filtered = [line for line in lines if not (line.strip().startswith("#") and len(line.strip()) > 1 and "TODO" not in line and "CRITICAL" not in line)]
         joined = "\n".join(filtered)
         return f"[CCR-REF:{cache_id}]\n{joined}"
 

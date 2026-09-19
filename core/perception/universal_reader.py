@@ -310,7 +310,7 @@ class UniversalFileReader:
                     "parsed_data": parsed
                 }
             else:
-                lines = [json.loads(l) for l in txt.splitlines() if l.strip()]
+                lines = [json.loads(line) for line in txt.splitlines() if line.strip()]
                 return {
                     "ok": True,
                     "type": "text",

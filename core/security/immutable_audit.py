@@ -17,7 +17,7 @@ class ImmutableAuditLedger:
     def _get_last_hash(self) -> str:
         if not self.log_path.exists():
             return "0" * 64
-        lines = [l.strip() for l in self.log_path.read_text(encoding="utf-8").splitlines() if l.strip()]
+        lines = [line.strip() for line in self.log_path.read_text(encoding="utf-8").splitlines() if line.strip()]
         if not lines:
             return "0" * 64
         try:
@@ -44,7 +44,7 @@ class ImmutableAuditLedger:
     def verify_chain(self) -> bool:
         if not self.log_path.exists():
             return True
-        lines = [l.strip() for l in self.log_path.read_text(encoding="utf-8").splitlines() if l.strip()]
+        lines = [line.strip() for line in self.log_path.read_text(encoding="utf-8").splitlines() if line.strip()]
         expected_prev = "0" * 64
 
         for line in lines:

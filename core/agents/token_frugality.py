@@ -14,7 +14,7 @@ def skeletonize_code(code: str) -> str:
         tree = ast.parse(code)
     except SyntaxError:
         lines = code.splitlines()
-        return "\n".join(l for l in lines if l.strip().startswith(("def ", "class ", "async def ", "@", '"""', "'''")) or not l.strip())[:4000]
+        return "\n".join(line for line in lines if line.strip().startswith(("def ", "class ", "async def ", "@", '"""', "'''")) or not line.strip())[:4000]
 
     out: list[str] = []
 

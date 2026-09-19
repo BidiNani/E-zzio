@@ -61,7 +61,7 @@ class AgentTracer:
         return q
 
     def unsubscribe(self, queue: asyncio.Queue) -> None:
-        self._subs = [(l, q, t) for l, q, t in self._subs if q is not queue]
+        self._subs = [(entry, q, t) for entry, q, t in self._subs if q is not queue]
 
     def history(self, limit: int = 100) -> list:
         """Derniers événements (buffer borné MAX_HISTORY)."""
