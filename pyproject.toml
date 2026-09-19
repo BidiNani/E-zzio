@@ -30,6 +30,7 @@ src = ["core", "runtime/core", "routers", "interfaces", "tests"]
 exclude = [
     ".venv",
     "scripts/_archive_migration",
+    "scripts/_archive_migration/**",
     "runtime/test_isolation",
     "runtime/evidence",
     "runtime/decisions"
