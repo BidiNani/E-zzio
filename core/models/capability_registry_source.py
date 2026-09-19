@@ -339,7 +339,6 @@ class CapabilityRegistrySource:
                 )
 
         return pools
-
         primary = self.model_for("primary")
         fast = self.model_for("fast_cloud")
         ultra = self.model_for("ultra_fast_cloud")
