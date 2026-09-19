@@ -77,7 +77,7 @@ class TaskSession:
 
 class NativeHarness:
     """Task Lifecycle Orchestrator for E-ZZIO.
-    
+
     Sequences, bounds, and terminates task execution using canonical microkernel primitives.
     """
 

@@ -55,7 +55,7 @@ class AuditLedger:
 
                 # Triggers SQLite pour interdire toute altération rétroactive
                 conn.execute("""
-                    CREATE TRIGGER IF NOT EXISTS prevent_audit_update 
+                    CREATE TRIGGER IF NOT EXISTS prevent_audit_update
                     BEFORE UPDATE ON audit_trail
                     BEGIN
                         SELECT RAISE(ABORT, '[IMMUTABLE LEDGER VIOLATION] Modification interdite sur le journal d''audit.');
@@ -63,7 +63,7 @@ class AuditLedger:
                 """)
 
                 conn.execute("""
-                    CREATE TRIGGER IF NOT EXISTS prevent_audit_delete 
+                    CREATE TRIGGER IF NOT EXISTS prevent_audit_delete
                     BEFORE DELETE ON audit_trail
                     BEGIN
                         SELECT RAISE(ABORT, '[IMMUTABLE LEDGER VIOLATION] Suppression interdite sur le journal d''audit.');

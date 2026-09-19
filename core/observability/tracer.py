@@ -46,8 +46,8 @@ class ExecutionTracer:
             now = datetime.now(UTC).isoformat()
             async with aiosqlite.connect(self.db_path) as db:
                 await db.execute(
-                    """INSERT INTO execution_traces 
-                    (timestamp, provider, mode, latency_ms, status, error_message, session_id, request_id, model) 
+                    """INSERT INTO execution_traces
+                    (timestamp, provider, mode, latency_ms, status, error_message, session_id, request_id, model)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);""",
                     (now, provider, mode, latency_ms, status, error_message, session_id, request_id, model),
                 )

@@ -501,8 +501,8 @@ class ForensicDriftDetector:
             written_artifacts.append("DRIFT_REPORT.json")
 
             summary_md = f"""# E-ZZIO OS — Forensic Drift Detection Summary
-**Generated At (UTC)**: {now_utc}  
-**Calculated Verdict**: `{verdict.value}`  
+**Generated At (UTC)**: {now_utc}
+**Calculated Verdict**: `{verdict.value}`
 
 ---
 

@@ -258,7 +258,7 @@ class AdaptiveModelExecutionOptimizer:
         preferred_model: str | None = None,
     ) -> dict[str, Any]:
         """Sélectionne le meilleur modèle de manière prédictive et déterministe avec explication de décision.
-        
+
         Hiérarchie de décision :
         POLICY > SECURITY > LOCAL_ONLY > CAPABILITY > RELIABILITY > TASK_FIT > QUALITY > CONTEXT_FIT > RESIDENCY > LATENCY > COST
         """
