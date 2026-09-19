@@ -10,7 +10,7 @@ from __future__ import annotations
 import hashlib
 import logging
 import re
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
 
 from pydantic import BaseModel
@@ -26,7 +26,7 @@ from core.capabilities.capability_policy import CapabilityPolicy
 logger = logging.getLogger("SocialMediaExtractor")
 
 
-class SocialPlatform(str, Enum):
+class SocialPlatform(StrEnum):
     INSTAGRAM = "instagram"
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
@@ -37,7 +37,7 @@ class SocialPlatform(str, Enum):
     UNKNOWN = "unknown"
 
 
-class IngestionContentStatus(str, Enum):
+class IngestionContentStatus(StrEnum):
     MEDIA_EXTRACTED = "MEDIA_EXTRACTED"
     METADATA_ONLY = "METADATA_ONLY"
     LOGIN_REQUIRED = "LOGIN_REQUIRED"

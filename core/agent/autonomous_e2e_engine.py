@@ -9,7 +9,7 @@ import logging
 import time
 import uuid
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 from core.agent.nothing_impossible import nothing_impossible
@@ -19,7 +19,7 @@ from core.world.world_model import world_model
 logger = logging.getLogger("ezzio.agent.autonomous_e2e_engine")
 
 
-class MissionState(str, Enum):
+class MissionState(StrEnum):
     RECEIVED = "RECEIVED"
     UNDERSTANDING = "UNDERSTANDING"
     PLANNING = "PLANNING"
@@ -35,7 +35,7 @@ class MissionState(str, Enum):
     ROLLED_BACK = "ROLLED_BACK"
 
 
-class FailureCategory(str, Enum):
+class FailureCategory(StrEnum):
     TRANSIENT = "TRANSIENT"
     RESOURCE = "RESOURCE"
     TOOL = "TOOL"

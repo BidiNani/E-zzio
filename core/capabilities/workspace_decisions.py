@@ -9,13 +9,13 @@ agent au-delà de select_worker_for_intent (fleet), policy (policy).
 from __future__ import annotations
 
 from dataclasses import dataclass
-from enum import Enum
+from enum import StrEnum
 
 from core.capabilities.research_fabric import Breadth, SearchIntent
 from core.decision_router import SearchMode
 
 
-class NextAction(str, Enum):
+class NextAction(StrEnum):
     ANSWER = "ANSWER"
     ASK = "ASK"
     SEARCH = "SEARCH"
@@ -26,7 +26,7 @@ class NextAction(str, Enum):
     ESCALATE = "ESCALATE"
 
 
-class StallVerdict(str, Enum):
+class StallVerdict(StrEnum):
     RUNNING = "RUNNING"
     WAITING = "WAITING"
     STALLED = "STALLED"

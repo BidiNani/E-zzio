@@ -9,13 +9,13 @@ from __future__ import annotations
 
 import statistics
 from dataclasses import dataclass
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 MIN_SAMPLES_TREND = 5
 
 
-class Trend(str, Enum):
+class Trend(StrEnum):
     STABLE = "STABLE"
     IMPROVING = "IMPROVING"
     DEGRADING = "DEGRADING"
@@ -25,7 +25,7 @@ class Trend(str, Enum):
     UNKNOWN = "UNKNOWN"
 
 
-class Outcome(str, Enum):
+class Outcome(StrEnum):
     SUCCESS = "SUCCESS"
     PARTIAL = "PARTIAL"
     NO_GAIN = "NO_GAIN"
@@ -84,9 +84,9 @@ def classify_trend(values: list[tuple[float, float]]) -> Trend:
     if last > 3 * max(med_prev, span * 0.1) and last > med_prev:
         return Trend.SPIKING
     # Oscillation : signes alternés majoritaires entre segments consécutifs.
-    diffs = [b - a for a, b in zip(vs, vs[1:])]
+    diffs = [b - a for a, b in zip(vs, vs[1:], strict=False)]
     signs = [1 if d > 0 else (-1 if d < 0 else 0) for d in diffs]
-    flips = sum(1 for a, b in zip(signs, signs[1:]) if a * b < 0)
+    flips = sum(1 for a, b in zip(signs, signs[1:], strict=False) if a * b < 0)
     if flips >= len(diffs) * 0.6 and span > 0:
         return Trend.OSCILLATING
     if rel >= 0.3:
@@ -102,7 +102,7 @@ def detect_recurrence(event_times: list[float], same_fingerprint: bool,
     if not same_fingerprint or len(event_times) < min_occurrences:
         return False, 0.0
     ts = sorted(event_times)
-    gaps = [b - a for a, b in zip(ts, ts[1:])]
+    gaps = [b - a for a, b in zip(ts, ts[1:], strict=False)]
     mean_gap = statistics.fmean(gaps)
     # Confiance : occurrences nombreuses + intervalles du même ordre de grandeur.
     spread = (max(gaps) - min(gaps)) / max(mean_gap, 1e-9)
@@ -146,7 +146,7 @@ def effectiveness(decisions: list[dict[str, Any]]) -> dict[str, Any]:
 
 def calibrate(predicted: list[float], actual_gain: list[bool]) -> dict[str, Any]:
     """Confiance prédite vs bénéfice réel. n<3 = non calibré, pas de conclusion."""
-    pairs = [(p, a) for p, a in zip(predicted, actual_gain)]
+    pairs = [(p, a) for p, a in zip(predicted, actual_gain, strict=False)]
     if len(pairs) < 3:
         return {"calibrated": False, "reason": "INSUFFICIENT_DATA"}
     high_conf = [a for p, a in pairs if p >= 0.8]

@@ -8,7 +8,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 
-class MissionStatus(str, enum.Enum):
+class MissionStatus(enum.StrEnum):
     QUEUED = "QUEUED"
     RUNNING = "RUNNING"
     SUCCEEDED = "SUCCEEDED"
@@ -18,7 +18,7 @@ class MissionStatus(str, enum.Enum):
     UNKNOWN = "UNKNOWN"
 
 
-class TaskStatus(str, enum.Enum):
+class TaskStatus(enum.StrEnum):
     CREATED = "CREATED"
     QUEUED = "QUEUED"
     RUNNING = "RUNNING"
@@ -32,7 +32,7 @@ class TaskStatus(str, enum.Enum):
     UNKNOWN = "UNKNOWN"
 
 
-class WorkerRole(str, enum.Enum):
+class WorkerRole(enum.StrEnum):
     CODER = "CODER"
     RESEARCHER = "RESEARCHER"
     QA = "QA"

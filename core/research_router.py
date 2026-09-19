@@ -189,7 +189,7 @@ def _finish(query: str, intent, breadth, collected, fanout_sources,
         origin=origin_domain(c.sources[0].locator) if c.sources else "",
         published_at=c.sources[0].published_at if c.sources else None,
         measurements=extract_measurements(c.text))
-        for (c, _), cid in zip(claims, claim_ids)]
+        for (c, _), cid in zip(claims, claim_ids, strict=False)]
     _, sem_edges = build_graph(nodes) if len(nodes) >= 2 else (nodes, [])
     sem_conflicts = detect_conflict(contradiction_stances(
         sem_edges, {n.claim_id: n.origin for n in nodes}))
@@ -203,7 +203,7 @@ def _finish(query: str, intent, breadth, collected, fanout_sources,
             continue
     if conflicted_ids:
         claims = [(_replace(c, conflicted=True) if cid in conflicted_ids else c, r)
-                  for (c, r), cid in zip(claims, claim_ids)]
+                  for (c, r), cid in zip(claims, claim_ids, strict=False)]
     sem_groups = evidence_groups(nodes, sem_edges) if sem_edges else []
     sem_checked = len(nodes) >= 2
 
@@ -221,14 +221,14 @@ def _finish(query: str, intent, breadth, collected, fanout_sources,
                  "published_at": c.sources[0].published_at if c.sources else None,
                  "state": act}
                 for (c, _), (_, act, _), cid
-                in zip(claims, decisions, claim_ids)]
+                in zip(claims, decisions, claim_ids, strict=False)]
     _ev_ctx = build_evidence_context(_entries)
-    claim_states = {cid: act for (_, act, _), cid in zip(decisions, claim_ids)}
+    claim_states = {cid: act for (_, act, _), cid in zip(decisions, claim_ids, strict=False)}
     sentence_check = {e["claim_id"]: _vsent(e["text"], _ev_ctx, now)[0]
                       for e in _entries}
 
     by_state: dict[str, list] = {}
-    for (claim, _), (_, action, reason) in zip(claims, decisions):
+    for (claim, _), (_, action, reason) in zip(claims, decisions, strict=False):
         by_state.setdefault(action.value, []).append((claim, reason))
     kept = by_state.get("KEEP", [])
     origins = sorted({origin_domain(c.sources[0].locator)
@@ -245,7 +245,7 @@ def _finish(query: str, intent, breadth, collected, fanout_sources,
              f"{stats['distinct']} documents distincts, "
              f"{stats['independent_origins']} origines indépendantes. "
              f"Confiance : {conf.value}. Grille qualité : {gate}."]
-    cid_of = {id(c): cid for (c, _), cid in zip(claims, claim_ids)}
+    cid_of = {id(c): cid for (c, _), cid in zip(claims, claim_ids, strict=False)}
     if kept:
         lines.append("Faits corroborés :")
         for c, _ in kept[:6]:

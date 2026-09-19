@@ -147,11 +147,6 @@ class OrganismKernel:
         import httpx
 
         # Allowed generative models — strict whitelist
-        ALLOWED_GENERATIVE_MODELS = {
-            "granite4.1:8b",
-            "mrasif/gpt-oss-20b-GGUF:Q4_K_M",
-            "qwen3-coder:30b",
-        }
         # Embedding models are exempt from the single-model constraint
         EMBEDDING_MODELS = {"nomic-embed-text:latest", "bge-m3:latest"}
 

@@ -5,12 +5,12 @@ Gère les états CLOSED (nominal), OPEN (panne cloud -> repli local immédiat), 
 
 import logging
 import time
-from enum import Enum
+from enum import StrEnum
 
 logger = logging.getLogger("EzzioCircuitBreaker")
 
 
-class CircuitState(str, Enum):
+class CircuitState(StrEnum):
     CLOSED = "CLOSED"      # Cloud actif et sain
     OPEN = "OPEN"          # Cloud en panne -> repli local immédiat sans latence
     HALF_OPEN = "HALF_OPEN"# Tentative de reconnexion

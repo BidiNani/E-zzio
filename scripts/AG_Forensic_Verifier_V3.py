@@ -171,10 +171,10 @@ class AGForensicVerifierV3:
 
         tcp_v4_3000 = net_data.get("tcp_layers", {}).get("open_webui_ipv4_3000", False)
         tcp_v6_3000 = net_data.get("tcp_layers", {}).get("open_webui_ipv6_3000", False)
-        http_v4_3000 = net_data.get("http_layers", {}).get("open_webui_ipv4", {}).get("success", False)
+        net_data.get("http_layers", {}).get("open_webui_ipv4", {}).get("success", False)
         http_v6_3000 = net_data.get("http_layers", {}).get("open_webui_ipv6", {}).get("success", False)
         http_loc_3000 = net_data.get("http_layers", {}).get("open_webui_localhost", {}).get("success", False)
-        docker_running = docker_data.get("running", False)
+        docker_data.get("running", False)
         docker_healthy = docker_data.get("health") == "healthy"
 
         # Contradiction resolution:

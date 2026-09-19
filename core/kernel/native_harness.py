@@ -13,7 +13,7 @@ import logging
 import time
 import uuid
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 from core.agent.agent_guard import AgentPolicyGuard
@@ -25,7 +25,7 @@ from core.tools.registry import ToolRegistry
 logger = logging.getLogger("ezzio.harness")
 
 
-class HarnessState(str, Enum):
+class HarnessState(StrEnum):
     INITIALIZING = "INITIALIZING"
     PERCEIVING = "PERCEIVING"
     THINKING = "THINKING"
@@ -36,7 +36,7 @@ class HarnessState(str, Enum):
     TERMINATED = "TERMINATED"
 
 
-class TerminationReason(str, Enum):
+class TerminationReason(StrEnum):
     SUCCESS = "SUCCESS"
     FAILED = "FAILED"
     DENIED = "DENIED"

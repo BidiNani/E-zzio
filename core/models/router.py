@@ -11,7 +11,6 @@ from typing import (
     Any,
     ClassVar,
     Final,
-    Generic,
     Literal,
     Protocol,
     Required,
@@ -908,11 +907,11 @@ _PreRoutingStrategyT_co = TypeVar("_PreRoutingStrategyT_co", covariant=True)
 
 
 @dataclass(frozen=True, slots=True)
-class TaggedPreRoutingStrategy(Generic[_PreRoutingStrategyT_co]):
+class TaggedPreRoutingStrategy[PreRoutingStrategyT_co]:
     """A pre-routing strategy paired with the deployment `tags` it was registered under."""
 
     tags: tuple[str, ...]
-    strategy: _PreRoutingStrategyT_co
+    strategy: PreRoutingStrategyT_co
 
 
 @dataclass(frozen=True, slots=True)
@@ -967,7 +966,7 @@ class RoutingPlugin(Protocol):
     async def run(self, context: RoutingContext) -> RoutingContext: ...
 
 
-class RequestType(str, enum.Enum):
+class RequestType(enum.StrEnum):
     """Fixed v0 taxonomy. User-extensible types come in v1."""
 
     CODE_GENERATION = "code_generation"

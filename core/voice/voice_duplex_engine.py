@@ -14,13 +14,13 @@ import logging
 import struct
 import time
 from collections.abc import AsyncGenerator, Callable
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 logger = logging.getLogger("VoiceDuplexEngine")
 
 
-class DuplexState(str, Enum):
+class DuplexState(StrEnum):
     IDLE = "IDLE"
     LISTENING = "LISTENING"
     PROCESSING = "PROCESSING"

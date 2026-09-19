@@ -11,7 +11,7 @@ import logging
 import time
 import uuid
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 
 from core.agent.autonomous_e2e_engine import MissionState
 from core.operations.multi_mission_arbitrator import (
@@ -25,14 +25,14 @@ from core.world.world_model import world_model
 logger = logging.getLogger("ezzio.operations.continuous_operations_loop")
 
 
-class SystemOperatingMode(str, Enum):
+class SystemOperatingMode(StrEnum):
     NORMAL = "NORMAL"
     THROTTLED = "THROTTLED"
     DEGRADED = "DEGRADED"
     EMERGENCY = "EMERGENCY"
 
 
-class ForecastRiskLevel(str, Enum):
+class ForecastRiskLevel(StrEnum):
     LOW = "LOW"
     MEDIUM = "MEDIUM"
     HIGH = "HIGH"
@@ -75,7 +75,7 @@ class ContinuousOperationsControlLoop:
     def forecast_operational_risks(self) -> OperationalForecast:
         """Effectue une prévision proactive des risques d'exploitation et de saturation."""
         f_id = f"fc_{uuid.uuid4().hex[:6]}"
-        total_missions = len(self.arbitrator.managed_missions)
+        len(self.arbitrator.managed_missions)
         pending = [
             m for m in self.arbitrator.managed_missions.values()
             if m.contract.current_state in (MissionState.RECEIVED, MissionState.PREPARING)

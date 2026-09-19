@@ -1,4 +1,7 @@
-import ast, sys, pathlib
+import ast
+import pathlib
+import sys
+
 bad = 0
 EXCLUDE = ('.venv','.git','__pycache__','.ruff_cache','node_modules','state',
            '_backup_ruff','_archive','archive','dist','build','.mypy_cache',

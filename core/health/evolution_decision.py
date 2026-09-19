@@ -10,11 +10,11 @@ reproductible et le verdict est explicable (liste de raisons jointe).
 from __future__ import annotations
 
 from dataclasses import dataclass
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 
-class EvidenceClass(str, Enum):
+class EvidenceClass(StrEnum):
     PROVEN = "PROVEN"
     MEASURED_NOW = "MEASURED_NOW"
     REUSED_BASELINE = "REUSED_BASELINE"
@@ -23,7 +23,7 @@ class EvidenceClass(str, Enum):
     UNVERIFIED = "UNVERIFIED"
 
 
-class OpportunityState(str, Enum):
+class OpportunityState(StrEnum):
     OBSERVED = "OBSERVED"
     CONFIRMED = "CONFIRMED"
     ROOT_CAUSED = "ROOT_CAUSED"
@@ -52,7 +52,7 @@ ALLOWED_TRANSITIONS: dict[OpportunityState, tuple[OpportunityState, ...]] = {
 }
 
 
-class Verdict(str, Enum):
+class Verdict(StrEnum):
     IMPLEMENT = "IMPLEMENT"  # proposition vers la gouvernance (pas une autorisation)
     DEFER = "DEFER"
     REJECT = "REJECT"
@@ -154,7 +154,7 @@ def to_ledger_payload(d: OpportunityDossier, verdict: Verdict,
     }
 
 
-class BenchmarkOutcome(str, Enum):
+class BenchmarkOutcome(StrEnum):
     MEASURABLE_GAIN = "MEASURABLE_GAIN"
     NO_MEASURABLE_GAIN = "NO_MEASURABLE_GAIN"
     REGRESSION = "REGRESSION"

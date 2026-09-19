@@ -15,7 +15,7 @@ import time
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 from core.agent.autonomous_e2e_engine import (
@@ -26,7 +26,7 @@ from runtime.model_router.providers.ollama import OllamaProvider
 logger = logging.getLogger("ezzio.operations.adaptive_model_optimizer")
 
 
-class ModelResidencyState(str, Enum):
+class ModelResidencyState(StrEnum):
     NOT_LOADED = "NOT_LOADED"
     LOADING = "LOADING"
     RESIDENT = "RESIDENT"
@@ -35,20 +35,20 @@ class ModelResidencyState(str, Enum):
     FAILED = "FAILED"
 
 
-class MemoryPressureState(str, Enum):
+class MemoryPressureState(StrEnum):
     NORMAL = "NORMAL"
     CAUTION = "CAUTION"
     HIGH_PRESSURE = "HIGH_PRESSURE"
     CRITICAL = "CRITICAL"
 
 
-class PrewarmDecision(str, Enum):
+class PrewarmDecision(StrEnum):
     PREWARM = "PREWARM"
     DEFER = "DEFER"
     DO_NOT_PREWARM = "DO_NOT_PREWARM"
 
 
-class TaskCategory(str, Enum):
+class TaskCategory(StrEnum):
     SIMPLE = "SIMPLE"
     STANDARD = "STANDARD"
     COMPLEX = "COMPLEX"
@@ -122,7 +122,7 @@ class AdaptiveModelExecutionOptimizer:
         prof.residency_state = ModelResidencyState.LOADING
 
         t0 = time.perf_counter()
-        res = self.provider.generate(prompt="Ping", model=model_name, num_predict=2, temperature=0.0)
+        self.provider.generate(prompt="Ping", model=model_name, num_predict=2, temperature=0.0)
         t1 = time.perf_counter()
 
         load_ms = round((t1 - t0) * 1000, 3)

@@ -317,7 +317,6 @@ class ComplexTaskEngine:
         step_3 = step_map["step_3_code"]
         step_3.status = "RUNNING"
         applied_patches = []
-        validation_state = ValidationState.CHANGE_APPLIED
 
         if patch_actions:
             actions = patch_actions

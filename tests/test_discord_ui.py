@@ -13,7 +13,7 @@ def test_progressive_plan_first_paint():
     snaps = progressive_plan("x" * 5000)
     assert len(snaps[0]) > 20
     assert snaps[-1] == "x" * 5000
-    assert all(len(b) > len(a) for a, b in zip(snaps, snaps[1:]))
+    assert all(len(b) > len(a) for a, b in zip(snaps, snaps[1:], strict=False))
 
 
 def test_extract_code_blocks():

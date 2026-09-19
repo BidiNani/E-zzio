@@ -80,7 +80,7 @@ async def get_office_state():
             cur = conn.execute("SELECT task_id, title, state, approval_id FROM governed_tasks ORDER BY updated_at DESC LIMIT 10")
             cols = [col[0] for col in cur.description]
             for row in cur.fetchall():
-                active_tasks.append(dict(zip(cols, row)))
+                active_tasks.append(dict(zip(cols, row, strict=False)))
     except Exception:
         pass
 

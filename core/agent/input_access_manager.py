@@ -8,7 +8,7 @@ import logging
 import os
 import zipfile
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
 from typing import Any
 
@@ -20,7 +20,7 @@ MAX_ARCHIVE_EXTRACT_BYTES = 100 * 1024 * 1024  # 100 MB
 MAX_TEXT_EXTRACT_CHARS = 100000  # 100k chars for agent context
 
 
-class InputType(str, Enum):
+class InputType(StrEnum):
     LOCAL_FILE = "LOCAL_FILE"
     LOCAL_DIRECTORY = "LOCAL_DIRECTORY"
     URL = "URL"

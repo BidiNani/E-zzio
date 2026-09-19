@@ -12,7 +12,7 @@ import sys
 import threading
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
 from typing import Any
 
@@ -27,7 +27,7 @@ from core.cognition.decision_ledger import DecisionLedgerEngine
 logger = logging.getLogger(__name__)
 
 
-class ResourceVerdict(str, Enum):
+class ResourceVerdict(StrEnum):
     ALLOW = "ALLOW"
     THROTTLE = "THROTTLE"
     QUEUE = "QUEUE"
@@ -36,7 +36,7 @@ class ResourceVerdict(str, Enum):
     EMERGENCY_DEGRADE = "EMERGENCY_DEGRADE"
 
 
-class SystemPressureLevel(str, Enum):
+class SystemPressureLevel(StrEnum):
     NOMINAL = "NOMINAL"
     PRESSURE = "PRESSURE"
     SATURATION = "SATURATION"

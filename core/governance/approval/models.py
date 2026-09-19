@@ -7,10 +7,10 @@ from __future__ import annotations
 import uuid
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
-from enum import Enum
+from enum import StrEnum
 
 
-class ApprovalStatus(str, Enum):
+class ApprovalStatus(StrEnum):
     PENDING = "PENDING"
     APPROVED = "APPROVED"
     REJECTED = "REJECTED"
@@ -18,14 +18,14 @@ class ApprovalStatus(str, Enum):
     CANCELLED = "CANCELLED"
 
 
-class ExecutionState(str, Enum):
+class ExecutionState(StrEnum):
     NOT_STARTED = "NOT_STARTED"
     RUNNING = "RUNNING"
     CONSUMED = "CONSUMED"
     FAILED_DURING_EXECUTION = "FAILED_DURING_EXECUTION"
 
 
-class DecisionChoice(str, Enum):
+class DecisionChoice(StrEnum):
     APPROVE = "APPROVE"
     REJECT = "REJECT"
 

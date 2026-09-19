@@ -9,13 +9,13 @@ import logging
 import time
 import uuid
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 logger = logging.getLogger("ezzio.agent.strategic_master")
 
 
-class GoalStatus(str, Enum):
+class GoalStatus(StrEnum):
     PLANNED = "PLANNED"
     ACTIVE = "ACTIVE"
     PAUSED = "PAUSED"
@@ -26,7 +26,7 @@ class GoalStatus(str, Enum):
     ARCHIVED = "ARCHIVED"
 
 
-class GoalPriority(str, Enum):
+class GoalPriority(StrEnum):
     CRITICAL = "CRITICAL"
     HIGH = "HIGH"
     NORMAL = "NORMAL"
@@ -34,7 +34,7 @@ class GoalPriority(str, Enum):
     BACKGROUND = "BACKGROUND"
 
 
-class SchedulingMode(str, Enum):
+class SchedulingMode(StrEnum):
     IMMEDIATE = "IMMEDIATE"
     DEFERRED = "DEFERRED"
     SCHEDULED = "SCHEDULED"

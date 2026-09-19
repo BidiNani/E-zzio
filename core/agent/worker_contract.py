@@ -16,14 +16,14 @@ class ContractViolationError(ValueError):
     pass
 
 
-class ResultStatus(str, enum.Enum):
+class ResultStatus(enum.StrEnum):
     COMPLETED = "COMPLETED"
     PARTIAL = "PARTIAL"
     FAILED = "FAILED"
     NEEDS_ESCALATION = "NEEDS_ESCALATION"
 
 
-class ArbitrationVerdict(str, enum.Enum):
+class ArbitrationVerdict(enum.StrEnum):
     COMPATIBLE = "COMPATIBLE"
     COMPLEMENTARY = "COMPLEMENTARY"
     CONFLICTED = "CONFLICTED"

@@ -90,7 +90,7 @@ class SovereignArbiter:
                 status="SOVEREIGN_ABSTAIN",
             )
 
-        constitutional_rules = self._load_constitutional_invariants()
+        self._load_constitutional_invariants()
         scored_candidates = []
 
         for p in proposals:

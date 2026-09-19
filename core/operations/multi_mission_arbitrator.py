@@ -10,7 +10,7 @@ import logging
 import time
 import uuid
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 from core.agent.autonomous_e2e_engine import (
@@ -23,7 +23,7 @@ from core.world.world_model import world_model
 logger = logging.getLogger("ezzio.operations.multi_mission_arbitrator")
 
 
-class MissionPriority(str, Enum):
+class MissionPriority(StrEnum):
     CRITICAL = "CRITICAL"
     HIGH = "HIGH"
     NORMAL = "NORMAL"
@@ -31,7 +31,7 @@ class MissionPriority(str, Enum):
     BACKGROUND = "BACKGROUND"
 
 
-class OperationalHealth(str, Enum):
+class OperationalHealth(StrEnum):
     HEALTHY = "HEALTHY"
     DEGRADED = "DEGRADED"
     STALLED = "STALLED"
@@ -41,7 +41,7 @@ class OperationalHealth(str, Enum):
     COMPLETED = "COMPLETED"
 
 
-class ResourceStatus(str, Enum):
+class ResourceStatus(StrEnum):
     AVAILABLE = "AVAILABLE"
     BUSY = "BUSY"
     RESERVED = "RESERVED"
@@ -50,7 +50,7 @@ class ResourceStatus(str, Enum):
     BLOCKED = "BLOCKED"
 
 
-class DeadlineStatus(str, Enum):
+class DeadlineStatus(StrEnum):
     ON_TRACK = "ON_TRACK"
     AT_RISK = "AT_RISK"
     DEADLINE_CRITICAL = "DEADLINE_CRITICAL"

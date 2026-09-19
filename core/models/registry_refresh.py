@@ -194,7 +194,7 @@ async def _run_refresh(*, api_key: str | None = None) -> dict[str, Any]:
     # ── 5. Ingestion via ModelLifecycleManager ────────────────────────────────
     # Le callback est uniquement déclenché pour les modèles ACTIVE qui
     # disparaissent de l'API — cas rare (aucun modèle Gemini ACTIVE actuellement).
-    transition_cb = _make_transition_callback(registry)
+    _make_transition_callback(registry)
     lifecycle_mgr = ModelLifecycleManager(registry)
 
     # ingest_discovery ajoute les nouveaux (CANDIDATE), met à jour les existants,
@@ -217,7 +217,7 @@ async def _run_refresh(*, api_key: str | None = None) -> dict[str, Any]:
     # ── 7. Compter les modèles par état post-refresh ──────────────────────────
     gemini_after   = [r for r in registry.all() if r.provider.lower() == "gemini"]
     count_after    = len(gemini_after)
-    new_records    = [r for r in gemini_after if r.model_id in new_ids]
+    [r for r in gemini_after if r.model_id in new_ids]
     superseded_ids = [
         r.model_id for r in gemini_after
         if r.model_id in missing_ids and r.lifecycle in {"QUARANTINED", "SUPERSEDED"}

@@ -9,12 +9,12 @@ from __future__ import annotations
 
 import hashlib
 from dataclasses import dataclass
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 from urllib.parse import urlparse
 
 
-class SearchIntent(str, Enum):
+class SearchIntent(StrEnum):
     FACT_LOOKUP = "FACT_LOOKUP"
     NEWS = "NEWS"
     RESEARCH = "RESEARCH"
@@ -23,14 +23,14 @@ class SearchIntent(str, Enum):
     TECHNICAL = "TECHNICAL"
 
 
-class Breadth(str, Enum):
+class Breadth(StrEnum):
     QUICK = "QUICK"
     NORMAL = "NORMAL"
     DEEP = "DEEP"
     MAX = "MAX"
 
 
-class Trust(str, Enum):
+class Trust(StrEnum):
     OFFICIAL = "OFFICIAL"
     PRIMARY = "PRIMARY"
     REPUTABLE_SECONDARY = "REPUTABLE_SECONDARY"
@@ -40,7 +40,7 @@ class Trust(str, Enum):
     UNTRUSTED = "UNTRUSTED"
 
 
-class Freshness(str, Enum):
+class Freshness(StrEnum):
     FRESH = "FRESH"
     RECENT = "RECENT"
     STALE = "STALE"
@@ -48,7 +48,7 @@ class Freshness(str, Enum):
     UNKNOWN = "UNKNOWN"
 
 
-class Confidence(str, Enum):
+class Confidence(StrEnum):
     HIGH = "HIGH"
     MEDIUM = "MEDIUM"
     LOW = "LOW"

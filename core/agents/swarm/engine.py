@@ -9,7 +9,7 @@ import logging
 import time
 import uuid
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 from core.agents.registry import (
@@ -20,7 +20,7 @@ from core.agents.registry import (
 logger = logging.getLogger("ezzio.agents.swarm")
 
 
-class MessageType(str, Enum):
+class MessageType(StrEnum):
     QUESTION = "QUESTION"
     PROPOSAL = "PROPOSAL"
     OBJECTION = "OBJECTION"
@@ -34,14 +34,14 @@ class MessageType(str, Enum):
     FINAL_POSITION = "FINAL_POSITION"
 
 
-class SwarmMode(str, Enum):
+class SwarmMode(StrEnum):
     BRAINSTORM = "BRAINSTORM"
     DEBATE = "DEBATE"
     COLLABORATION = "COLLABORATION"
     CROSS_EXAMINATION = "CROSS_EXAMINATION"
 
 
-class SwarmState(str, Enum):
+class SwarmState(StrEnum):
     CREATED = "CREATED"
     ACTIVE = "ACTIVE"
     BRAINSTORMING = "BRAINSTORMING"

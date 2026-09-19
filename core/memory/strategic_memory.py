@@ -8,13 +8,13 @@ from __future__ import annotations
 import logging
 import time
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 logger = logging.getLogger("ezzio.memory.strategic")
 
 
-class MissionOutcome(str, Enum):
+class MissionOutcome(StrEnum):
     SUCCESS = "SUCCESS"
     PARTIAL_SUCCESS = "PARTIAL_SUCCESS"
     FAILED = "FAILED"
@@ -23,7 +23,7 @@ class MissionOutcome(str, Enum):
     UNKNOWN = "UNKNOWN"
 
 
-class MemoryCategory(str, Enum):
+class MemoryCategory(StrEnum):
     EPISODIC = "EPISODIC"
     SEMANTIC = "SEMANTIC"
     STRATEGIC = "STRATEGIC"

@@ -6,7 +6,7 @@ from __future__ import annotations
 
 import logging
 import re
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 from urllib.parse import urlparse
 
@@ -19,7 +19,7 @@ MAX_WEB_DOWNLOAD_BYTES = 10 * 1024 * 1024  # 10 MB
 WEB_FETCH_TIMEOUT_SEC = 15.0
 
 
-class WebAccessMode(str, Enum):
+class WebAccessMode(StrEnum):
     PUBLIC_HTTP = "PUBLIC_HTTP"
     PUBLIC_API = "PUBLIC_API"
     AUTHORIZED_BROWSER_SESSION = "AUTHORIZED_BROWSER_SESSION"

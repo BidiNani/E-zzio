@@ -61,7 +61,7 @@ class NemotronStreamingASR:
         language: str = "fr"
     ) -> dict[str, Any]:
         """Transcrit un chunk audio (560ms-1120ms) en flux continu avec conservation d'état de cache."""
-        model = self._get_model()
+        self._get_model()
         if not audio_chunk:
             return {"ok": True, "text": "", "is_last": is_last, "session_id": session_id}
 
@@ -77,7 +77,6 @@ class NemotronStreamingASR:
         sess["chunks_processed"] += 1
 
         # Décodage streaming simulé / natif par chunk
-        chunk_len_ms = self.chunk_duration_ms
         chunk_text = ""
 
         # Si le flux contient des octets audios réels non vides

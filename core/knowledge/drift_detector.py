@@ -13,14 +13,14 @@ import os
 import sqlite3
 from dataclasses import dataclass
 from datetime import UTC, datetime
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
 from typing import Any
 
 logger = logging.getLogger("ezzio.drift_detector")
 
 
-class DriftVerdict(str, Enum):
+class DriftVerdict(StrEnum):
     NO_DRIFT = "NO_DRIFT"
     DRIFT_DETECTED = "DRIFT_DETECTED"
     CRITICAL_DRIFT = "CRITICAL_DRIFT"
@@ -28,7 +28,7 @@ class DriftVerdict(str, Enum):
     UNKNOWN = "UNKNOWN"
 
 
-class FileDriftStatus(str, Enum):
+class FileDriftStatus(StrEnum):
     UNCHANGED = "UNCHANGED"
     MODIFIED = "MODIFIED"
     NEW = "NEW"

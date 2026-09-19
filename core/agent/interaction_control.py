@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from typing import Any
 
 
-class InterruptionIntent(str, enum.Enum):
+class InterruptionIntent(enum.StrEnum):
     TASK_CANCEL = "TASK_CANCEL"
     TASK_PAUSE = "TASK_PAUSE"
     TASK_RESUME = "TASK_RESUME"

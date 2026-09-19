@@ -66,7 +66,6 @@ class SovereignKeyPool:
             if not self.slots:
                 return None, None, None
 
-            start_idx = self.current_index
             now = time.time()
 
             for _ in range(len(self.slots)):

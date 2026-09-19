@@ -81,7 +81,7 @@ async def run_benchmarks():
     # 6. Watchdog Check Latency
     wd = EzzioWatchdog()
     t0 = time.perf_counter()
-    chk = wd.run_once()
+    wd.run_once()
     t1 = time.perf_counter()
     metrics["watchdog_check_ms"] = round((t1 - t0) * 1000, 2)
 

@@ -36,13 +36,15 @@ exclude = [
 
 [tool.ruff.lint]
 select = [
-    "W605", # Invalid escape sequence (explicite, ne plus dépendre du seul groupe "W")
-    "E",   # Erreurs standard
-    "F",   # Erreurs logiques Pyflakes
-    "W",   # Warnings
+    "E", "F", "W", "W605",
+    "B",
+    "C4",
+    "UP",
 ]
 ignore = [
-    "E501",    # Longueur de ligne libre (prompts/logs)
+    "E501",
+    "B904",
+    "UP042",
     "E402",    # Imports après sys.path (isolation)
     "E701",    # Multiples déclarations par ligne
     "E722",    # Bare except legacy

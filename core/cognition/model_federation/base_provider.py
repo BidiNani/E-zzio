@@ -12,7 +12,7 @@ from datetime import UTC, datetime
 from typing import Any
 
 
-class ProviderDomain(str, enum.Enum):
+class ProviderDomain(enum.StrEnum):
     LOCAL_OLLAMA = "local_ollama"
     CLOUD_GEMINI = "cloud_gemini"
     CLOUD_GROQ = "cloud_groq"

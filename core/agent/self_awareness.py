@@ -10,13 +10,13 @@ import logging
 import time
 import uuid
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 logger = logging.getLogger("ezzio.agent.self_awareness")
 
 
-class CapabilityState(str, Enum):
+class CapabilityState(StrEnum):
     AVAILABLE = "AVAILABLE"
     PARTIAL = "PARTIAL"
     DEGRADED = "DEGRADED"
@@ -26,7 +26,7 @@ class CapabilityState(str, Enum):
     DEPRECATED = "DEPRECATED"
 
 
-class UncertaintyLevel(str, Enum):
+class UncertaintyLevel(StrEnum):
     KNOWN = "KNOWN"
     LIKELY = "LIKELY"
     UNCERTAIN = "UNCERTAIN"
@@ -34,7 +34,7 @@ class UncertaintyLevel(str, Enum):
     CONFLICTING = "CONFLICTING"
 
 
-class EpistemicAction(str, Enum):
+class EpistemicAction(StrEnum):
     ACT = "ACT"
     RESEARCH = "RESEARCH"
     DELEGATE = "DELEGATE"
@@ -42,14 +42,14 @@ class EpistemicAction(str, Enum):
     BLOCK = "BLOCK"
 
 
-class LicenseType(str, Enum):
+class LicenseType(StrEnum):
     PERMISSIVE = "PERMISSIVE"
     COPYLEFT = "COPYLEFT"
     RESTRICTED = "RESTRICTED"
     UNKNOWN = "UNKNOWN"
 
 
-class ToolPromotionStatus(str, Enum):
+class ToolPromotionStatus(StrEnum):
     DISCOVERED = "DISCOVERED"
     QUALIFIED = "QUALIFIED"
     EXPERIMENTAL = "EXPERIMENTAL"

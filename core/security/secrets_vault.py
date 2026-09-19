@@ -178,7 +178,7 @@ class SecretsVault:
             keystream = hashlib.sha256(key + nonce).digest()
             while len(keystream) < len(raw_bytes):
                 keystream += hashlib.sha256(keystream).digest()
-            encrypted_data = bytes(b ^ k for b, k in zip(raw_bytes, keystream[:len(raw_bytes)]))
+            encrypted_data = bytes(b ^ k for b, k in zip(raw_bytes, keystream[:len(raw_bytes)], strict=False))
             tag = hmac.new(key, nonce + encrypted_data, hashlib.sha256).digest()
             ciphertext = encrypted_data + tag
 
@@ -235,7 +235,7 @@ class SecretsVault:
                 keystream = hashlib.sha256(key + nonce).digest()
                 while len(keystream) < len(encrypted_data):
                     keystream += hashlib.sha256(keystream).digest()
-                plain_bytes = bytes(b ^ k for b, k in zip(encrypted_data, keystream[:len(encrypted_data)]))
+                plain_bytes = bytes(b ^ k for b, k in zip(encrypted_data, keystream[:len(encrypted_data)], strict=False))
 
             lines = plain_bytes.decode("utf-8").splitlines()
             env_vars: dict[str, str] = {}

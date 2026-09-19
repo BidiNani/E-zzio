@@ -10,7 +10,7 @@ import logging
 import time
 import uuid
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 from core.agent.self_awareness import self_knowledge
@@ -18,7 +18,7 @@ from core.agent.self_awareness import self_knowledge
 logger = logging.getLogger("ezzio.agent.nothing_impossible")
 
 
-class FeasibilityState(str, Enum):
+class FeasibilityState(StrEnum):
     POSSIBLE_NOW = "POSSIBLE_NOW"
     POSSIBLE_WITH_EXISTING_CAPABILITIES = "POSSIBLE_WITH_EXISTING_CAPABILITIES"
     POSSIBLE_WITH_NEW_CAPABILITY = "POSSIBLE_WITH_NEW_CAPABILITY"
@@ -29,7 +29,7 @@ class FeasibilityState(str, Enum):
     UNKNOWN_FEASIBILITY = "UNKNOWN_FEASIBILITY"
 
 
-class GapType(str, Enum):
+class GapType(StrEnum):
     KNOWLEDGE_GAP = "KNOWLEDGE_GAP"
     TOOL_GAP = "TOOL_GAP"
     MODEL_GAP = "MODEL_GAP"

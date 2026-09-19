@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import logging
 import unicodedata
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
 from typing import Any
 
@@ -19,7 +19,7 @@ from core.capabilities.trust import CapabilityStatus, HardwareProfile, TrustLeve
 logger = logging.getLogger("CapabilityDiscovery")
 
 
-class SourceTrustLevel(str, Enum):
+class SourceTrustLevel(StrEnum):
     OFFICIAL_PROJECT = "OFFICIAL_PROJECT"
     VERIFIED_ORGANIZATION = "VERIFIED_ORGANIZATION"
     ESTABLISHED_OPEN_SOURCE = "ESTABLISHED_OPEN_SOURCE"
@@ -27,7 +27,7 @@ class SourceTrustLevel(str, Enum):
     UNKNOWN = "UNKNOWN"
 
 
-class LicenseClass(str, Enum):
+class LicenseClass(StrEnum):
     PERMISSIVE = "PERMISSIVE"          # MIT, Apache-2.0, BSD, Unlicense
     COPYLEFT_SAFE = "COPYLEFT_SAFE"    # GPL, LGPL (Externe/Sandbox)
     NON_COMMERCIAL = "NON_COMMERCIAL"  # CC-BY-NC (Rejet souverain)

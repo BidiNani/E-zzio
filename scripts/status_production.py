@@ -44,7 +44,7 @@ def get_production_status() -> dict:
     ts_bin = Path(r"G:/AI/tailscale.exe")
     if ts_bin.exists():
         try:
-            r_ts = subprocess.run([str(ts_bin), "status"], capture_output=True, text=True, timeout=5)
+            subprocess.run([str(ts_bin), "status"], capture_output=True, text=True, timeout=5)
             r_ip = subprocess.run([str(ts_bin), "ip", "-4"], capture_output=True, text=True, timeout=5)
             status["components"]["tailscale"] = {
                 "status": "READY",

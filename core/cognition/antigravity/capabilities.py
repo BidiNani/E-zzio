@@ -13,19 +13,19 @@ from pathlib import Path
 from typing import Any
 
 
-class AntigravityExecutionMode(str, enum.Enum):
+class AntigravityExecutionMode(enum.StrEnum):
     PLAN_ONLY = "plan"
     ACCEPT_EDITS = "accept-edits"
     READ_ONLY_SANDBOX = "read-only-sandbox"
 
 
-class AntigravityOutputFormat(str, enum.Enum):
+class AntigravityOutputFormat(enum.StrEnum):
     TEXT = "text"
     JSON = "json"
     STREAM_JSON = "stream-json"
 
 
-class AntigravityEffortLevel(str, enum.Enum):
+class AntigravityEffortLevel(enum.StrEnum):
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"

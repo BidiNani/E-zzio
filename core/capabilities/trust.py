@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import logging
 import os
-from enum import Enum
+from enum import Enum, StrEnum
 from pathlib import Path
 from typing import Any
 
@@ -25,7 +25,7 @@ class TrustLevel(int, Enum):
     TRUST_4_ACTIVE = 4       # Enregistré et opérationnel sous CapabilityPolicy
 
 
-class CapabilityStatus(str, Enum):
+class CapabilityStatus(StrEnum):
     DISCOVERED = "DISCOVERED"
     CANDIDATE = "CANDIDATE"
     QUALIFYING = "QUALIFYING"

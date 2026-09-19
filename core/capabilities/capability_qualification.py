@@ -2,13 +2,13 @@
 E-ZZIO Core — Capability Qualification Contract & Schema.
 Fournit le schéma de validation strict pour l'enregistrement de toute capacité externe ou plugin.
 """
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 from pydantic import BaseModel, Field
 
 
-class QualificationStatus(str, Enum):
+class QualificationStatus(StrEnum):
     QUALIFIED = "QUALIFIED"
     CANDIDATE = "CANDIDATE"
     QUARANTINED = "QUARANTINED"

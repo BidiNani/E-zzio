@@ -1,5 +1,10 @@
 """fix_all.py - Correction ruff E-ZzIO (Python only, robuste)."""
-import ast, json, re, subprocess, sys, datetime, pathlib
+import ast
+import datetime
+import json
+import pathlib
+import subprocess
+import sys
 
 ROOT = pathlib.Path(r"G:\AI\E-zzio")
 PY   = str(ROOT / ".venv" / "Scripts" / "python.exe")

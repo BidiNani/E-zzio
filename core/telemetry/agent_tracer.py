@@ -111,7 +111,7 @@ class AgentTracer:
                 return _s
 
             def __exit__(_s, *a):
-                for var, tok in zip(_s.vars, _s.toks):
+                for var, tok in zip(_s.vars, _s.toks, strict=False):
                     try:
                         var.reset(tok)
                     except Exception:
@@ -195,8 +195,7 @@ def traced(agent_id: str):
             def _wrap(*a, **k):
                 _emit("START", "RUNNING")
                 try:
-                    for item in fn(*a, **k):
-                        yield item
+                    yield from fn(*a, **k)
                 except Exception as exc:
                     _emit("ERROR", "FAILED", {"error": str(exc)[:500]})
                     raise

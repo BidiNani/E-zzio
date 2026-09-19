@@ -8,13 +8,13 @@ Enforces granular access control per scope:
 from __future__ import annotations
 
 import logging
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 logger = logging.getLogger("CapabilityPolicy")
 
 
-class PolicyDecision(str, Enum):
+class PolicyDecision(StrEnum):
     ALLOW = "ALLOW"
     REQUIRE_HUMAN = "REQUIRE_HUMAN"
     DENY = "DENY"

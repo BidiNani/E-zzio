@@ -15,13 +15,13 @@ from dataclasses import dataclass
 logger = logging.getLogger(__name__)
 
 
-class ContextSensitivityTier(str, enum.Enum):
+class ContextSensitivityTier(enum.StrEnum):
     INVIOLABLE = "INVIOLABLE"      # 0% Loss (Exact preserve)
     SEMANTIC = "SEMANTIC"          # Fact-preserving light compression
     BULK_REDUNDANT = "BULK_REDUNDANT"  # Aggressive compression with CCR cache
 
 
-class ContentCategory(str, enum.Enum):
+class ContentCategory(enum.StrEnum):
     CONSTITUTION = "CONSTITUTION"
     PROSE = "PROSE"
     CODE = "CODE"

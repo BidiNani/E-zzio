@@ -81,7 +81,7 @@ def analyze_kernel():
         }
 
     # Calcul des dépendents (in-degree / reachability)
-    for rel_path, node in nodes.items():
+    for _rel_path, node in nodes.items():
         for dep in node["dependencies"]:
             # Normaliser le chemin du module importé vers le rel_path si possible
             for candidate in nodes.keys():
@@ -93,7 +93,7 @@ def analyze_kernel():
     max_deps = max((len(n["dependencies"]) + len(n["dependents"]) for n in nodes.values()), default=1)
 
     kernel_records = []
-    for rel_path, node in nodes.items():
+    for _rel_path, node in nodes.items():
         total_connections = len(node["dependencies"]) + len(node["dependents"])
         centrality = round(total_connections / max_deps, 3) if max_deps > 0 else 0.0
         descendants_count = len(node["dependents"])

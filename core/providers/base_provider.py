@@ -15,7 +15,7 @@ from datetime import UTC, datetime
 from typing import Any
 
 
-class CostClass(str, enum.Enum):
+class CostClass(enum.StrEnum):
     """Classe de coût canonique du fournisseur ou modèle."""
     LOCAL = "LOCAL"
     FREE_ENDPOINT = "FREE_ENDPOINT"
@@ -24,7 +24,7 @@ class CostClass(str, enum.Enum):
     UNKNOWN = "UNKNOWN"
 
 
-class ProviderAvailability(str, enum.Enum):
+class ProviderAvailability(enum.StrEnum):
     """État de disponibilité opérationnelle du fournisseur."""
     AVAILABLE = "AVAILABLE"
     DEGRADED = "DEGRADED"
@@ -34,7 +34,7 @@ class ProviderAvailability(str, enum.Enum):
     UNAVAILABLE = "UNAVAILABLE"
 
 
-class ProviderErrorClass(str, enum.Enum):
+class ProviderErrorClass(enum.StrEnum):
     """Typologie canonique des erreurs de fournisseur."""
     UNAUTHORIZED = "UNAUTHORIZED"
     MODEL_NOT_FOUND = "MODEL_NOT_FOUND"

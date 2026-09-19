@@ -46,7 +46,8 @@ def test_normalize_tolerant():
 
 
 def test_dedup_honest_counts():
-    mk = lambda loc, c: SourceResult("t", "t", loc, c)
+    def mk(loc, c):
+        return SourceResult("t", "t", loc, c)
     res, stats = deduplicate([
         mk("https://a.com/x?utm_source=1", "same"),
         mk("https://a.com/x", "same"),  # doublon exact

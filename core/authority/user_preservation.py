@@ -8,13 +8,13 @@ from __future__ import annotations
 import hashlib
 import logging
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 logger = logging.getLogger("ezzio.authority.user_preservation")
 
 
-class FileOwnership(str, Enum):
+class FileOwnership(StrEnum):
     USER_OWNED = "USER_OWNED"
     SYSTEM_OWNED = "SYSTEM_OWNED"
     GENERATED = "GENERATED"

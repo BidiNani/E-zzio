@@ -1,5 +1,9 @@
 """fix_all_v2.py - Correction ruff + frozen core manifest regen."""
-import ast, json, subprocess, sys, datetime, pathlib
+import ast
+import datetime
+import pathlib
+import subprocess
+import sys
 
 ROOT = pathlib.Path(r"G:\AI\E-zzio")
 PY   = str(ROOT / ".venv" / "Scripts" / "python.exe")
@@ -53,7 +57,7 @@ rc, out, err = run([PY, "-c",
     "from core.frozen_core.manifest import verify_integrity; "
     "verify_integrity(); print('FROZEN_OK')"])
 frozen_before = "FROZEN_OK" in out
-log(f"Frozen avant : {'OK' if frozen_before else 'DRIFT'}", 
+log(f"Frozen avant : {'OK' if frozen_before else 'DRIFT'}",
     "GREEN" if frozen_before else "YELLOW")
 
 # 2. Elargir select ruff

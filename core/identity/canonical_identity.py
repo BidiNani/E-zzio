@@ -49,7 +49,7 @@ class CanonicalIdentity:
         return hashlib.sha256(path.read_bytes()).hexdigest().lower()
 
     def _verify_integrity(self) -> None:
-        hash_path = self._path("runtime/identity/persona.hash")
+        self._path("runtime/identity/persona.hash")
         persona_json_path = self._path("config/persona.json")
         expected = self._read_required("runtime/identity/persona.hash").strip().lower()
         actual = self._sha256_file(persona_json_path)

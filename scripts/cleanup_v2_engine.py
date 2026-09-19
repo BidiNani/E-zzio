@@ -155,7 +155,7 @@ class EzzioCleanupV2Engine:
                     # 4. DOCUMENTARY ASSETS
                     elif ext in [".md", ".txt", ".pdf", ".rst", ".doc", ".docx"]:
                         lower_name = fname.lower()
-                        is_doc = any(kw in lower_name for kw in doc_keywords)
+                        any(kw in lower_name for kw in doc_keywords)
                         first_line = ""
                         if p.is_file() and stat.st_size < 1024 * 1024:
                             try:
@@ -220,7 +220,7 @@ class EzzioCleanupV2Engine:
             sb = round(self.inventory[rel]["size_bytes"] / 500) * 500
             size_buckets.setdefault(sb, []).append(rel)
 
-        for sb, files in size_buckets.items():
+        for _sb, files in size_buckets.items():
             if len(files) > 1:
                 for i in range(len(files)):
                     for j in range(i + 1, min(len(files), i + 5)):

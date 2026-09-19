@@ -125,7 +125,7 @@ def web_research(query: str) -> dict[str, Any]:
         links = data[3] if len(data) > 3 else []
 
         sources: list[dict[str, str]] = []
-        for title, desc, link in zip(titles, descriptions, links):
+        for title, desc, link in zip(titles, descriptions, links, strict=False):
             sources.append({"title": title, "summary": desc, "url": link})
 
         if not sources:

@@ -9,13 +9,13 @@ import logging
 import time
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 logger = logging.getLogger("AgentRegistry")
 
 
-class AgentStatus(str, Enum):
+class AgentStatus(StrEnum):
     IDLE = "IDLE"
     BUSY = "BUSY"
     WAITING_APPROVAL = "WAITING_APPROVAL"

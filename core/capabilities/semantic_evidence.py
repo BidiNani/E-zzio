@@ -20,10 +20,10 @@ import hashlib
 import re
 import unicodedata
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 
 
-class SemRelation(str, Enum):
+class SemRelation(StrEnum):
     SUPPORTS = "SUPPORTS"
     CONTRADICTS = "CONTRADICTS"
     PARTIAL_SUPPORT = "PARTIAL_SUPPORT"

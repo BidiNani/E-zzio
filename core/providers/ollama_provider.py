@@ -275,7 +275,7 @@ class OllamaProvider(BaseProvider, IResearchProvider):
             from core.providers.base_provider import SYSTEM_IDENTITY as _IDENTITY
             payload["system"] = _IDENTITY
 
-        timeout = httpx.Timeout(connect=5.0, read=self.timeout, write=5.0, pool=5.0)
+        httpx.Timeout(connect=5.0, read=self.timeout, write=5.0, pool=5.0)
         try:
             async with _shared_client().stream("POST", url, json=payload) as response:
                     response.raise_for_status()
@@ -312,7 +312,7 @@ class OllamaProvider(BaseProvider, IResearchProvider):
             },
         }
 
-        timeout = httpx.Timeout(connect=10.0, read=180.0, write=10.0, pool=10.0)
+        httpx.Timeout(connect=10.0, read=180.0, write=10.0, pool=10.0)
         accumulated_text = []
         last_chunk = {}
 

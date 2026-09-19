@@ -8,13 +8,13 @@ import logging
 import os
 import sqlite3
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 logger = logging.getLogger("ezzio.agent.data_source_manager")
 
 
-class DataSourceType(str, Enum):
+class DataSourceType(StrEnum):
     LOCAL_SQLITE = "LOCAL_SQLITE"
     LOCAL_FILE = "LOCAL_FILE"
     OPEN_DATA_API = "OPEN_DATA_API"

@@ -195,6 +195,6 @@ def test_master_chat_schema_contract():
 
     try:
         fetch_url("/master/chat", method="POST", data={"message": "invalid"})
-        assert False, "Should have thrown 422 HTTP error"
+        raise AssertionError("Should have thrown 422 HTTP error")
     except urllib.error.HTTPError as e:
         assert e.code == 422

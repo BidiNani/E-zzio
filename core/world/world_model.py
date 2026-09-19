@@ -10,13 +10,13 @@ import logging
 import time
 import uuid
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 logger = logging.getLogger("ezzio.world.world_model")
 
 
-class EntityType(str, Enum):
+class EntityType(StrEnum):
     SYSTEM = "SYSTEM"
     GOAL = "GOAL"
     PROGRAM = "PROGRAM"
@@ -38,7 +38,7 @@ class EntityType(str, Enum):
     EVENT = "EVENT"
 
 
-class StateSource(str, Enum):
+class StateSource(StrEnum):
     OBSERVED = "OBSERVED"
     MEASURED = "MEASURED"
     DERIVED = "DERIVED"
@@ -48,14 +48,14 @@ class StateSource(str, Enum):
     UNKNOWN = "UNKNOWN"
 
 
-class FreshnessStatus(str, Enum):
+class FreshnessStatus(StrEnum):
     FRESH = "FRESH"      # < 30s
     AGING = "AGING"      # 30s <= age < 120s
     STALE = "STALE"      # >= 120s
     UNKNOWN = "UNKNOWN"
 
 
-class StateEvaluation(str, Enum):
+class StateEvaluation(StrEnum):
     ON_TRACK = "ON_TRACK"
     DEVIATION = "DEVIATION"
     RISK = "RISK"
@@ -63,7 +63,7 @@ class StateEvaluation(str, Enum):
     UNKNOWN = "UNKNOWN"
 
 
-class RiskCategory(str, Enum):
+class RiskCategory(StrEnum):
     MISSION_FAILURE = "MISSION_FAILURE"
     DEADLINE_MISS = "DEADLINE_MISS"
     RESOURCE_SHORTAGE = "RESOURCE_SHORTAGE"
@@ -76,7 +76,7 @@ class RiskCategory(str, Enum):
     RECURRING_FAILURE = "RECURRING_FAILURE"
 
 
-class ActionClassification(str, Enum):
+class ActionClassification(StrEnum):
     OBSERVE_ONLY = "OBSERVE_ONLY"
     INFORM_USER = "INFORM_USER"
     RECOMMEND = "RECOMMEND"
@@ -85,7 +85,7 @@ class ActionClassification(str, Enum):
     BLOCK = "BLOCK"
 
 
-class ScenarioType(str, Enum):
+class ScenarioType(StrEnum):
     BASELINE = "BASELINE"
     OPTIMISTIC = "OPTIMISTIC"
     EXPECTED = "EXPECTED"

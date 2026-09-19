@@ -136,7 +136,6 @@ def main():
 
     all_lineages: list[InstanceLineage] = []
     all_cogs: list[CogRegistration] = []
-    fabric_sites: list[tuple[str, int, str]] = []
 
     fabric_counter = 0
 
