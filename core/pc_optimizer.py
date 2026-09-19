@@ -11,6 +11,7 @@ import ollama
 import psutil
 
 from core.identity.canonical_identity import CanonicalIdentity
+import httpx
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
 STATE_ROOT = PROJECT_ROOT / "state"
@@ -254,7 +255,7 @@ def pc_profile() -> dict[str, Any]:
 
 def ollama_tags() -> dict[str, Any]:
     try:
-        response = requests.get("http://127.0.0.1:11434/api/tags", timeout=5)
+        response = httpx.get("http://127.0.0.1:11434/api/tags", timeout=5)
         data = response.json()
         models = [item.get("name") for item in data.get("models", []) if item.get("name")]
         return {"ok": True, "models": sorted(models)}

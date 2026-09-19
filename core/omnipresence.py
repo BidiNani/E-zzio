@@ -163,7 +163,7 @@ def discord_send_webhook(content: str, username: str = "E-ZZIO", allow_send: boo
             "event": event,
         }
 
-    r = requests.post(
+    r = httpx.post(
         webhook,
         json={"content": content, "username": username},
         timeout=20,

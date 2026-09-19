@@ -11,6 +11,7 @@ import ollama
 
 from core.identity.canonical_identity import CanonicalIdentity
 from core.response_guard import deterministic_reply, sanitize_ezzio_reply
+import httpx
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
 STATE_ROOT = PROJECT_ROOT / "state"
@@ -215,7 +216,7 @@ def has_phrase(low: str, phrases: list[str]) -> bool:
 
 def ollama_models() -> list[str]:
     try:
-        response = requests.get("http://127.0.0.1:11434/api/tags", timeout=5)
+        response = httpx.get("http://127.0.0.1:11434/api/tags", timeout=5)
         data = response.json()
         return sorted([item.get("name") for item in data.get("models", []) if item.get("name")])
     except Exception:
@@ -232,13 +233,13 @@ def is_available() -> dict[str, Any]:
     """
     started = time.time()
     try:
-        response = requests.get("http://127.0.0.1:11434/api/tags", timeout=3)
+        response = httpx.get("http://127.0.0.1:11434/api/tags", timeout=3)
         response.raise_for_status()
         elapsed_ms = int((time.time() - started) * 1000)
         return {"available": True, "elapsed_ms": elapsed_ms, "error": None}
-    except requests.exceptions.ConnectionError:
+    except httpx.ConnectError:
         return {"available": False, "elapsed_ms": int((time.time() - started) * 1000), "error": "connection_refused"}
-    except requests.exceptions.Timeout:
+    except httpx.TimeoutException:
         return {"available": False, "elapsed_ms": int((time.time() - started) * 1000), "error": "timeout"}
     except Exception as exc:
         return {"available": False, "elapsed_ms": int((time.time() - started) * 1000), "error": f"other:{exc}"}
@@ -254,9 +255,9 @@ def classify_error(exc: Exception) -> str:
     name = type(exc).__name__
     text = str(exc).lower()
 
-    if isinstance(exc, requests.exceptions.ConnectionError) or "connection refused" in text or "connection error" in text:
+    if isinstance(exc, httpx.ConnectError) or "connection refused" in text or "connection error" in text:
         return "connection_refused"
-    if isinstance(exc, requests.exceptions.Timeout) or "timeout" in text or "timed out" in text:
+    if isinstance(exc, httpx.TimeoutException) or "timeout" in text or "timed out" in text:
         return "timeout"
     if "model" in text and ("not found" in text or "not exist" in text or "no such" in text):
         return "model_not_found"

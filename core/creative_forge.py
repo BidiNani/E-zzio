@@ -4,6 +4,7 @@ import shutil
 import subprocess
 import time
 from pathlib import Path
+import httpx
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
 FORGE_ROOT = PROJECT_ROOT / "forge"
@@ -48,7 +49,7 @@ def _cpu_env():
 
 def comfy_health():
     try:
-        r = requests.get(f"{COMFY_URL}/system_stats", timeout=3)
+        r = httpx.get(f"{COMFY_URL}/system_stats", timeout=3)
         data = r.json()
         return {
             "ok": r.status_code < 400,
