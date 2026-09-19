@@ -23,40 +23,38 @@ dev = [
 ]
 
 [tool.ruff]
-line-length = 140
-target-version = "py311"
+line-length = 100
+target-version = "py312"
 
-src = ["core", "runtime/core", "routers", "interfaces", "tests"]
-exclude = [
+extend-exclude = [
     ".venv",
     "scripts/_archive_migration",
-    "scripts/_archive_migration/**",
     "runtime/test_isolation",
     "runtime/evidence",
-    "runtime/decisions"
+    "runtime/decisions",
 ]
 
 [tool.ruff.lint]
 select = [
-    "E", "F", "W", "W605",
-    "B",
-    "C4",
-    "UP",
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
 ]
 ignore = [
-    "E501",
-    "B904",
-    "UP042",
-    "E402",    # Imports après sys.path (isolation)
-    "E701",    # Multiples déclarations par ligne
-    "E722",    # Bare except legacy
-    "E741",    # Variables à lettre unique
-    "F811",    # Redéfinitions legacy conservées pour rétrocompatibilité
+    "E501",  # line-too-long
+    "B008",  # function-call-in-default-argument (FastAPI Depends)
+    "E402",  # module-import-not-at-top (lazy imports)
 ]
 
-[tool.pyflakes]
-exclude = ["runtime/temp/", "runtime/temp/**/*.py", "_archive/"]
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["F401", "F841"]  # imports/vars non utilisés dans les tests
 
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q --strict-markers --tb=short -m 'not integration'"
