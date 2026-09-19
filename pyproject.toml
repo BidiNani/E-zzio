@@ -52,3 +52,37 @@ ignore = [
 
 [tool.pyflakes]
 exclude = ["runtime/temp/", "runtime/temp/**/*.py", "_archive/"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers --tb=short"
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "hardware: requires physical hardware",
+    "integration: requires external services",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning:discord.*",
+    "ignore::DeprecationWarning:aiosqlite.*",
+]
+
+[tool.coverage.run]
+source = ["core", "routers", "runtime"]
+omit = [
+    "*/tests/*",
+    "*/_archive/*",
+    "*/runtime/temp/*",
+    "*/__pycache__/*",
+    "*/.venv/*",
+]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+]
+show_missing = true
