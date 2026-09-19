@@ -298,3 +298,7 @@ runtime/backend_*.log.err
 
 # ─── Snapshots d'audit volumineux ───────────────────────────────────────
 /state/baselines/*.zip
+
+# Cleanup 20260919_144507
+ezzio.db
+runtime/temp/pytest*/
