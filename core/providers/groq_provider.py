@@ -135,7 +135,7 @@ class GroqProvider(BaseProvider, IResearchProvider):
             caps.extend(["VISION", "MULTIMODAL"])
         return caps
 
-    def error_mapping(self, status_code: int, error_body: str | None = None) -> ProviderErrorClass:
+    def error_mapping(self, status_code: int, _error_body: str | None = None) -> ProviderErrorClass:
         """Mappe les codes HTTP vers la typologie canonique E-ZzIO."""
         if status_code in (401, 403):
             return ProviderErrorClass.UNAUTHORIZED

@@ -124,7 +124,7 @@ class OpenRouterProvider(BaseProvider):
         except Exception as exc:
             return {"status": "ERROR", "available": False, "error": str(exc)}
 
-    def error_mapping(self, status_code: int, error_body: str | None = None) -> ProviderErrorClass:
+    def error_mapping(self, status_code: int, _error_body: str | None = None) -> ProviderErrorClass:
         """Mappe un code d'erreur HTTP vers la typologie canonique E-ZzIO."""
         if status_code in (401, 403):
             return ProviderErrorClass.UNAUTHORIZED

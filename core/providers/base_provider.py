@@ -128,6 +128,6 @@ class BaseProvider(ABC):
         pass
 
     @abstractmethod
-    def error_mapping(self, status_code: int, error_body: str | None = None) -> ProviderErrorClass:
+    def error_mapping(self, status_code: int, _error_body: str | None = None) -> ProviderErrorClass:
         """Mappe un code d'erreur HTTP vers la typologie canonique E-ZzIO."""
         pass

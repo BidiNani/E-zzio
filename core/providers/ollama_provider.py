@@ -93,7 +93,7 @@ class OllamaProvider(BaseProvider, IResearchProvider):
             caps.append("FAST_INFERENCE")
         return sorted(list(set(caps)))
 
-    def error_mapping(self, status_code: int, error_body: str | None = None) -> ProviderErrorClass:
+    def error_mapping(self, status_code: int, _error_body: str | None = None) -> ProviderErrorClass:
         """Mappe les statuts HTTP du serveur Ollama vers les classes canoniques."""
         if status_code == 404:
             return ProviderErrorClass.MODEL_NOT_FOUND

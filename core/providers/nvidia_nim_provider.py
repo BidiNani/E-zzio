@@ -96,7 +96,7 @@ class NvidiaNimProvider(BaseProvider):
             return ["EMBEDDING"]
         return ["TEXT", "INSTRUCTION_FOLLOWING", "TOOL_USE"]
 
-    def error_mapping(self, status_code: int, error_body: str | None = None) -> ProviderErrorClass:
+    def error_mapping(self, status_code: int, _error_body: str | None = None) -> ProviderErrorClass:
         """Mappe les statuts HTTP de l'API NVIDIA vers les classes d'erreurs canoniques."""
         if status_code in (401, 403):
             return ProviderErrorClass.UNAUTHORIZED

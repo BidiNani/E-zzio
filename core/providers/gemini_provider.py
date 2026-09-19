@@ -97,7 +97,7 @@ class GeminiProvider(BaseProvider, IResearchProvider):
             caps.extend(["REASONING", "CODING", "TOOL_USE"])
         return sorted(list(set(caps)))
 
-    def error_mapping(self, status_code: int, error_body: str | None = None) -> ProviderErrorClass:
+    def error_mapping(self, status_code: int, _error_body: str | None = None) -> ProviderErrorClass:
         """Mappe les statuts HTTP de l'API Google vers les classes canoniques."""
         if status_code in (401, 403):
             return ProviderErrorClass.UNAUTHORIZED
