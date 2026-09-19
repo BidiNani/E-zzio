@@ -44,7 +44,7 @@ def main():
 
     # 1. Traçage des consommateurs d'AgentProviderAdapter
     consumers = find_consumers("AgentProviderAdapter")
-    print(files_info := f"[1] CONSOMMATEURS ACTIFS DE AgentProviderAdapter ({len(consumers)} trouvés) :")
+    print(f"[1] CONSOMMATEURS ACTIFS DE AgentProviderAdapter ({len(consumers)} trouvés) :")
     for c in consumers:
         print(f"  • {c}")
 

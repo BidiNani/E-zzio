@@ -87,7 +87,8 @@ async def exchange_code(provider_id: str, code: str, state: str, base_url: str) 
         cur = profile
         for part in path.split("."):
             if isinstance(cur, dict): cur = cur.get(part)
-            else: return None
+            else:
+                return None
         return str(cur) if cur is not None else None
     saved = store.save_account(
         provider_id, access_token=access_token, refresh_token=refresh_token,

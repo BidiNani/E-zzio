@@ -89,17 +89,22 @@ async def main():
             try:
                 res = await fabric.router.execute(messages=[{"role": "user", "content": "Ping. Réponds OK."}], tier="FAST", temperature=0.0)
                 if "OK" in str(res.get("content", "")).upper(): score.record("TEST_A", "PASS", "Inférence FAST nominale OK.")
-                else: score.record("TEST_A", "WARN", "Contrat FAST violé.")
-            except Exception as e: score.record("TEST_A", "FAIL", str(e))
-        else: score.record("TEST_A", "NOT_EXERCISED", "Aucun FAST disponible.")
+                else:
+                    score.record("TEST_A", "WARN", "Contrat FAST violé.")
+            except Exception as e:
+                score.record("TEST_A", "FAIL", str(e))
+        else:
+            score.record("TEST_A", "NOT_EXERCISED", "Aucun FAST disponible.")
 
         # TEST B : MID
         if mid_models:
             try:
                 await fabric.router.execute(messages=[{"role": "user", "content": "Ping."}], tier="MID", temperature=0.0)
                 score.record("TEST_B", "PASS", "Inférence MID nominale OK.")
-            except Exception as e: score.record("TEST_B", "FAIL", str(e))
-        else: score.record("TEST_B", "NOT_EXERCISED", "Aucun MID disponible.")
+            except Exception as e:
+                score.record("TEST_B", "FAIL", str(e))
+        else:
+            score.record("TEST_B", "NOT_EXERCISED", "Aucun MID disponible.")
 
         target = mid_models[0] if mid_models else (fast_models[0] if fast_models else None)
         if not target:
@@ -117,14 +122,16 @@ async def main():
             entry_c = fabric.registry.find(prov, mid)
             assert getattr(entry_c, "lifecycle", "") == "QUARANTINED"
             score.record("TEST_C", "PASS", "ACTIVE -> QUARANTINED avec incrément ok.")
-        except Exception as e: score.record("TEST_C", "FAIL", str(e))
+        except Exception as e:
+            score.record("TEST_C", "FAIL", str(e))
 
         # TEST D : EXCLUSION
         try:
             actives = [(m.provider, m.model_id) for m in build_fabric(project_root=PROJECT_ROOT).registry.active()]
             assert (prov, mid) not in actives
             score.record("TEST_D", "PASS", "Modèle QUARANTINED exclu du routeur ok.")
-        except Exception as e: score.record("TEST_D", "FAIL", str(e))
+        except Exception as e:
+            score.record("TEST_D", "FAIL", str(e))
 
         # TEST E : REHABILITATION
         try:
@@ -133,31 +140,36 @@ async def main():
             assert getattr(entry_e, "lifecycle", "") == "CANDIDATE"
             assert int(getattr(entry_e, "failure_count", 0)) == 0
             score.record("TEST_E", "PASS", "QUARANTINED -> CANDIDATE avec reset compteurs ok.")
-        except Exception as e: score.record("TEST_E", "FAIL", str(e))
+        except Exception as e:
+            score.record("TEST_E", "FAIL", str(e))
 
         # TEST F : PERSISTANCE
         try:
             entry_f = build_fabric(project_root=PROJECT_ROOT).registry.find(prov, mid)
             assert getattr(entry_f, "lifecycle", "") == "CANDIDATE"
             score.record("TEST_F", "PASS", "Persistance disque confirmée.")
-        except Exception as e: score.record("TEST_F", "FAIL", str(e))
+        except Exception as e:
+            score.record("TEST_F", "FAIL", str(e))
 
         # TEST G : BYPASS
         try:
             blocked = False
             try:
                 fabric.transition(provider=prov, model_id=mid, new_state="ACTIVE", actor="hack", reason="hack")
-            except RuntimeError: blocked = True
+            except RuntimeError:
+                blocked = True
             assert blocked
             score.record("TEST_G", "PASS", "Tentative de Bypass CANDIDATE -> ACTIVE violemment rejetée.")
-        except Exception as e: score.record("TEST_G", "FAIL", str(e))
+        except Exception as e:
+            score.record("TEST_G", "FAIL", str(e))
 
         # TEST H : ECHEC QUALIF
         try:
             fabric.transition(provider=prov, model_id=mid, new_state="QUARANTINED", actor="qualification_gate", reason="fail")
             assert getattr(fabric.registry.find(prov, mid), "lifecycle", "") == "QUARANTINED"
             score.record("TEST_H", "PASS", "Échec qualif renvoie en QUARANTINED.")
-        except Exception as e: score.record("TEST_H", "FAIL", str(e))
+        except Exception as e:
+            score.record("TEST_H", "FAIL", str(e))
 
         # TEST I : SUCCES QUALIF
         try:
@@ -166,7 +178,8 @@ async def main():
             fabric.transition(provider=prov, model_id=mid, new_state="ACTIVE", actor="activate_qualified", reason="ok", new_tier="FAST")
             assert getattr(fabric.registry.find(prov, mid), "lifecycle", "") == "ACTIVE"
             score.record("TEST_I", "PASS", "Cycle complet de requalification validé.")
-        except Exception as e: score.record("TEST_I", "FAIL", str(e))
+        except Exception as e:
+            score.record("TEST_I", "FAIL", str(e))
 
         # TEST J : FAIL CLOSED
         try:
@@ -178,7 +191,8 @@ async def main():
                 score.record("TEST_J", "FAIL", "Routeur a exécuté sans MID actif !")
             except ProviderExhaustedError:
                 score.record("TEST_J", "PASS", "ProviderExhaustedError levée : Fail-Closed routeur validé.")
-        except Exception as e: score.record("TEST_J", "FAIL", str(e))
+        except Exception as e:
+            score.record("TEST_J", "FAIL", str(e))
 
     finally:
         print("\n[NETTOYAGE] Restauration inconditionnelle du registre initial...")

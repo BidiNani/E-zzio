@@ -1,4 +1,5 @@
 """E-ZZIO model qualification package."""
+# ruff: noqa: F401 — re-exports API publique
 from .free_only import (
     FREE_POLICY_NAME,
     FREE_POLICY_VERSION,
