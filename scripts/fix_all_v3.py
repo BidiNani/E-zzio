@@ -1,5 +1,9 @@
 """fix_all_v3.py - Nettoyage final ruff."""
-import re, subprocess, sys, datetime, pathlib
+import datetime
+import pathlib
+import re
+import subprocess
+import sys
 
 ROOT = pathlib.Path(r"G:\AI\E-zzio")
 PY   = str(ROOT / ".venv" / "Scripts" / "python.exe")
@@ -239,6 +243,7 @@ log("  [MANUEL] F811 necessite inspection manuelle", "YELLOW")
 # ------------------------------------------------------------
 log("--- 6. AST check ---", "CYAN")
 import ast
+
 bad = []
 for f in ROOT.rglob("*.py"):
     if any(x in f.parts for x in (".venv",".git","__pycache__",
