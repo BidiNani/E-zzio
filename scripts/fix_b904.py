@@ -1,5 +1,9 @@
 """fix_b904.py - Ajoute `from err` ou `from None` aux raise dans except."""
-import ast, pathlib, subprocess, sys, datetime
+import ast
+import datetime
+import pathlib
+import subprocess
+import sys
 
 ROOT = pathlib.Path(r"G:\AI\E-zzio")
 PY   = str(ROOT / ".venv" / "Scripts" / "python.exe")
@@ -141,7 +145,7 @@ for p in ROOT.rglob("*.py"):
         bad += 1
 
 if bad:
-    log(f"AST CASSE - rollback")
+    log("AST CASSE - rollback")
     subprocess.run(["git", "reset", "--hard", safe_ref], cwd=str(ROOT))
     sys.exit(1)
 log("AST OK")
