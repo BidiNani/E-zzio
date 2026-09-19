@@ -33,7 +33,7 @@ def verify_baseline():
     try:
         manifest_data = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
     except Exception as e:
-        raise BaselineIntegrityError(f"FAIL CLOSED : Corruption du manifeste de baseline : {e}")
+        raise BaselineIntegrityError(f"FAIL CLOSED : Corruption du manifeste de baseline : {e}") from e
 
     print(f"  * Baseline Version : {manifest_data.get('baseline_version')}")
     print(f"  * Horodatage UTC   : {manifest_data.get('sealing_timestamp_utc')}")

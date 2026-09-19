@@ -75,7 +75,7 @@ class EcolUniversalGateway:
                 )
             logger.info("[OK] Intégrité du contrat runtime V7.70 vérifiée (Zero Drift).")
         except Exception as e:
-            raise UniversalEnforcementError(f"FAIL CLOSED : Échec de la vérification du contrat runtime : {e}")
+            raise UniversalEnforcementError(f"FAIL CLOSED : Échec de la vérification du contrat runtime : {e}") from e
 
     def register_gateway_action(self, action_name: str):
         """Enregistre une action comme 'Passerelle Obligatoire' (Anti-Bypass)."""

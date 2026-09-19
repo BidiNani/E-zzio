@@ -55,7 +55,7 @@ class CognitiveGovernor:
             try:
                 return self.key_path.read_bytes()
             except Exception as e:
-                raise LedgerSecurityError(f"Impossible de lire la clé secrète HMAC : {e}")
+                raise LedgerSecurityError(f"Impossible de lire la clé secrète HMAC : {e}") from e
         else:
             # Génération d'une clé secrète robuste de 256 bits
             secret = os.urandom(32)
@@ -89,7 +89,7 @@ class CognitiveGovernor:
                     if "record_hash" in data:
                         last_hash = data["record_hash"]
         except Exception as e:
-            raise LedgerSecurityError(f"Erreur critique de lecture _get_last_hash : {e}")
+            raise LedgerSecurityError(f"Erreur critique de lecture _get_last_hash : {e}") from e
         return last_hash
 
     def verify_ledger_chain(self) -> bool:
@@ -125,7 +125,7 @@ class CognitiveGovernor:
                     try:
                         data = json.loads(stripped)
                     except json.JSONDecodeError as jde:
-                        raise LedgerSecurityError(f"Corruption syntaxique JSON ligne {line_num} : {jde}")
+                        raise LedgerSecurityError(f"Corruption syntaxique JSON ligne {line_num} : {jde}") from jde
 
                     for field in required_fields:
                         if field not in data:
@@ -189,7 +189,7 @@ class CognitiveGovernor:
                 except LedgerSecurityError:
                     raise
                 except Exception as e:
-                    raise LedgerSecurityError(f"Corruption du Manifeste d'intégrité : {e}")
+                    raise LedgerSecurityError(f"Corruption du Manifeste d'intégrité : {e}") from e
 
             return True
 
@@ -207,7 +207,7 @@ class CognitiveGovernor:
                     if data.get("decision") in ["ALLOW", "ALLOW_EXCEED", "EMERGENCY_ALLOW"]:
                         total_tokens += data.get("estimated_cost", 0)
         except Exception as e:
-            raise LedgerSecurityError(f"Échec critique du calcul des dépenses : {e}")
+            raise LedgerSecurityError(f"Échec critique du calcul des dépenses : {e}") from e
         return total_tokens
 
     def _update_manifest(self, total_blocks: int, head_hash: str):
@@ -231,7 +231,7 @@ class CognitiveGovernor:
                 f.flush()
                 os.fsync(f.fileno())
         except Exception as e:
-            raise LedgerSecurityError(f"Échec critique de l'écriture du manifeste d'intégrité : {e}")
+            raise LedgerSecurityError(f"Échec critique de l'écriture du manifeste d'intégrité : {e}") from e
 
     def evaluate_and_record(self, task: str, estimated_tokens: int, priority: str = "normal", risk_level: str = "low") -> dict[str, Any]:
         with CognitiveGovernor._class_lock:
@@ -294,7 +294,7 @@ class CognitiveGovernor:
                     f.flush()
                     os.fsync(f.fileno())
             except Exception as e:
-                raise LedgerSecurityError(f"Échec critique de l'écriture durable (fsync) : {e}")
+                raise LedgerSecurityError(f"Échec critique de l'écriture durable (fsync) : {e}") from e
 
             # Recompte du nombre total de blocs et mise à jour du manifeste signé
             total_blocks = sum(1 for line in open(self.ledger_path, encoding="utf-8") if line.strip())

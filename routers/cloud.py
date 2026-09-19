@@ -30,6 +30,6 @@ async def cloud_get(req: CloudGetRequest):
 
         raise HTTPException(status_code=400, detail="Provider refusé. Utilise github, reddit ou blizzard.")
     except ValueError as exc:
-        raise HTTPException(status_code=403, detail=str(exc))
+        raise HTTPException(status_code=403, detail=str(exc)) from exc
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail=str(exc)) from exc

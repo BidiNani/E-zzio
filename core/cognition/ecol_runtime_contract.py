@@ -117,7 +117,7 @@ class EcolRuntimeContract:
             logger.error(f"FAIL CLOSED ECOL : Interception d'une infraction de sécurité -> {lse}")
             raise
         except Exception as e:
-            raise RuntimeError(f"Erreur critique lors de l'évaluation du contrat runtime : {e}")
+            raise RuntimeError(f"Erreur critique lors de l'évaluation du contrat runtime : {e}") from e
 
 
 def test_runtime_contract():

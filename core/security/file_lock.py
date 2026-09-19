@@ -47,7 +47,7 @@ class ProcessFileLock:
                         os.close(self.fd)
                     except Exception:
                         pass
-                    raise TimeoutError(f"Timeout critique (>{self.timeout}s) : Contention excessive sur le verrou OS natif.")
+                    raise TimeoutError(f"Timeout critique (>{self.timeout}s) : Contention excessive sur le verrou OS natif.") from None
 
                 attempt += 1
                 # Backoff exponentiel + jitter pour lisser l'accès concurrent massif

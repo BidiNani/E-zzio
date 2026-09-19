@@ -160,7 +160,7 @@ class AgentProviderAdapter:
                         raise RouteIntegrityError(f"[FAIL-CLOSED] Route de repli invalide : {fb_exc}") from fb_exc
                     logger.warning("[ROUTER] Échec du repli %s (%s)", fallback_model, fb_exc)
 
-            raise RuntimeError(f"[FAIL-CLOSED] Épuisement de tous les paliers autorisés : {primary_exc}")
+            raise RuntimeError(f"[FAIL-CLOSED] Épuisement de tous les paliers autorisés : {primary_exc}") from primary_exc
 
     def _extract_content(self, response: Any) -> str:
         raw_text = ""

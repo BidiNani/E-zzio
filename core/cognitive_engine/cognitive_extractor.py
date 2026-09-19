@@ -52,7 +52,7 @@ class ExtractorDryRun:
                     count += 1
             self.stats["extraction_potential"]["jsonl_records"] += count
         except Exception as e:
-            raise Exception(f"Erreur JSONL : {e}")
+            raise Exception(f"Erreur JSONL : {e}") from e
 
     def simulate_sqlite(self, file_path: Path):
         count = 0
@@ -70,7 +70,7 @@ class ExtractorDryRun:
                         pass
             self.stats["extraction_potential"]["sqlite_rows"] += count
         except Exception as e:
-            raise Exception(f"Erreur SQLite : {e}")
+            raise Exception(f"Erreur SQLite : {e}") from e
 
     def process_file(self, file_path: Path):
         self.stats["files_scanned"] += 1

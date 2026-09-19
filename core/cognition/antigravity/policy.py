@@ -41,7 +41,7 @@ class AntigravityPolicyGovernor:
                     f"FAIL-CLOSED: Workspace path '{request.workspace_path}' is outside authorized boundaries."
                 )
         except Exception as e:
-            raise AntigravityPolicyViolationError(f"FAIL-CLOSED: Invalid workspace path: {e}")
+            raise AntigravityPolicyViolationError(f"FAIL-CLOSED: Invalid workspace path: {e}") from e
 
         # 2. Strict protection of the frozen Decision Ledger & Constitution
         prompt_low = request.prompt.lower()

@@ -103,7 +103,7 @@ class ArchiveEngine:
                             f"[FAIL-CLOSED] Tentative d'évasion Anti-Zip Slip détectée sur {member.filename}"
                         )
                 except ValueError:
-                    raise ArchiveSecurityError(f"[FAIL-CLOSED] Chemin malveillant : {member.filename}")
+                    raise ArchiveSecurityError(f"[FAIL-CLOSED] Chemin malveillant : {member.filename}") from None
 
                 zf.extract(member, str(dest_p))
                 extracted_files.append(str(target_path.relative_to(dest_p)))

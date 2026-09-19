@@ -136,7 +136,7 @@ async def chat(request: ChatRequest):
         )
     except Exception as exc:
         logger.error("Erreur lors de l'exécution du graphe : %s", exc, exc_info=True)
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
 async def event_generator(query: str, thread_id: str) -> AsyncGenerator[str, None]:

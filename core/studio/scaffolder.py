@@ -44,7 +44,7 @@ class ProjectScaffolder:
             if os.path.commonpath([str(self.projects_dir), str(target_dir)]) != str(self.projects_dir):
                 raise ScaffolderSecurityError(f"Confinement violé : tentative de création hors de {self.projects_dir}")
         except ValueError:
-            raise ScaffolderSecurityError(f"Chemin invalide pour le projet : {target_dir}")
+            raise ScaffolderSecurityError(f"Chemin invalide pour le projet : {target_dir}") from None
 
         if project_type not in self.SUPPORTED_TYPES:
             raise ValueError(f"Type de projet '{project_type}' non supporté. Types valides : {self.SUPPORTED_TYPES}")

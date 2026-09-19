@@ -20,7 +20,7 @@ class KeyScheduler:
         try:
             await asyncio.wait_for(self._lock.acquire(), timeout=5.0)
         except TimeoutError:
-            raise TimeoutError("KEY_POOL_LOCK_TIMEOUT")
+            raise TimeoutError("KEY_POOL_LOCK_TIMEOUT") from None
 
         try:
             start_index = self.current_index

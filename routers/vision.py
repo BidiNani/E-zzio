@@ -16,11 +16,11 @@ async def analyze_path(req: VisionPathRequest):
     try:
         return analyze_image_file(req.path, prompt=req.prompt, mode=req.mode)
     except ValueError as exc:
-        raise HTTPException(status_code=403, detail=str(exc))
+        raise HTTPException(status_code=403, detail=str(exc)) from exc
     except FileNotFoundError as exc:
-        raise HTTPException(status_code=404, detail=str(exc))
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
 @router.post("/analyze")
@@ -34,4 +34,4 @@ async def analyze_upload(
         path = save_upload_bytes(file.filename, content)
         return analyze_image_file(str(path), prompt=prompt, mode=mode)
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail=str(exc)) from exc

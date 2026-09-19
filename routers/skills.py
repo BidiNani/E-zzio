@@ -28,7 +28,7 @@ def deploy_and_load_skill(payload: dict = Body(...)):
     try:
         staging_file.write_text(code, encoding="utf-8")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erreur d'écriture en staging : {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erreur d'écriture en staging : {str(e)}") from e
 
     # 2. Exécution du pipeline (Validation AST -> Promotion -> Hot-Reload)
     result = manager.promote_and_load(filename)

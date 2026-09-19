@@ -32,7 +32,7 @@ def exhaustive_audit():
     try:
         manifest_data = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
     except Exception as e:
-        raise ExhaustiveAuditError(f"FAIL CLOSED : Erreur de lecture du manifeste : {e}")
+        raise ExhaustiveAuditError(f"FAIL CLOSED : Erreur de lecture du manifeste : {e}") from e
 
     manifest_files = {entry["filename"]: entry for entry in manifest_data.get("files", [])}
     manifest_files["ecol_baseline_manifest.json"] = {"filename": "ecol_baseline_manifest.json", "sha256": "MANAGED"}

@@ -74,7 +74,7 @@ class SafeWebFetcher:
                 if safe_ip is None:
                     safe_ip = ip_addr
         except socket.gaierror as exc:
-            raise SSRFSecurityError(f"Échec de résolution DNS pour {hostname} : {exc}")
+            raise SSRFSecurityError(f"Échec de résolution DNS pour {hostname} : {exc}") from exc
 
         if not safe_ip:
             raise SSRFSecurityError(f"Aucune adresse IP valide trouvée pour {hostname}")

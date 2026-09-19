@@ -98,7 +98,7 @@ async def generate_universal(req: UniversalGenerateRequest) -> dict[str, Any]:
     try:
         return await _generation_router.route_and_generate(user_message=req.message)
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
 @router.post("/xlsx")
@@ -110,7 +110,7 @@ def generate_xlsx(req: XLSXGenerateRequest) -> dict[str, Any]:
             title=req.title
         )
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
 @router.post("/docx")
@@ -123,7 +123,7 @@ def generate_docx(req: DOCXGenerateRequest) -> dict[str, Any]:
             author=req.author or "E-ZZIO Autonomous Core"
         )
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
 @router.post("/pptx")
@@ -137,7 +137,7 @@ def generate_pptx(req: PPTXGenerateRequest) -> dict[str, Any]:
             author=req.author or "E-ZZIO Autonomous Core"
         )
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
 @router.post("/pdf")
@@ -150,7 +150,7 @@ def generate_pdf(req: PDFGenerateRequest) -> dict[str, Any]:
             author=req.author or "E-ZZIO Autonomous Core"
         )
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
 class ImageEditRequest(BaseModel):
@@ -173,7 +173,7 @@ def generate_image_banner(req: ImageBannerRequest) -> dict[str, Any]:
             height=req.height
         )
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
 @router.post("/image/edit")
@@ -185,7 +185,7 @@ def edit_image_endpoint(req: ImageEditRequest) -> dict[str, Any]:
             operations=req.operations
         )
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
 @router.post("/zip")
@@ -196,7 +196,7 @@ def generate_zip(req: ZIPGenerateRequest) -> dict[str, Any]:
             files=req.source_paths
         )
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
 @router.post("/audio/tone")
@@ -208,7 +208,7 @@ def generate_audio_tone(req: AudioToneRequest) -> dict[str, Any]:
             duration_sec=req.duration_sec
         )
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
 @router.post("/3d/cube")
@@ -219,4 +219,4 @@ def generate_3d_cube(req: Mesh3DRequest) -> dict[str, Any]:
             size=req.size
         )
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail=str(exc)) from exc

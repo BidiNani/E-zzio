@@ -80,7 +80,7 @@ class WorkerTaskRequest:
         try:
             uuid.UUID(self.request_id)
         except Exception:
-            raise ContractViolationError(f"Invalid request_id UUID: {self.request_id}")
+            raise ContractViolationError(f"Invalid request_id UUID: {self.request_id}") from None
 
         obj = self.objective.strip()
         if not obj:
@@ -150,7 +150,7 @@ class WorkerTaskResult:
         try:
             uuid.UUID(self.request_id)
         except Exception:
-            raise ContractViolationError(f"Invalid request_id UUID: {self.request_id}")
+            raise ContractViolationError(f"Invalid request_id UUID: {self.request_id}") from None
 
         if self.status == ResultStatus.COMPLETED and self.errors:
             raise ContractViolationError("COMPLETED result cannot contain errors.")

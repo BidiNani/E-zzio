@@ -65,4 +65,4 @@ async def search_endpoint(payload: ResearchRequest):
         return ResearchResponse(task_id=task_id, mode=payload.mode, provider=provider_name, data=data_content)
     except Exception as e:
         logger.error(f"[ERREUR] Échec /api/v1/research/search : {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e

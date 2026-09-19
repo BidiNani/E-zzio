@@ -92,7 +92,7 @@ async def n8n_webhook_receiver(request: Request, api_key: str = Depends(api_key_
     try:
         payload: dict[str, Any] = json.loads(body_bytes)
     except Exception:
-        raise HTTPException(status_code=400, detail="Invalid JSON")
+        raise HTTPException(status_code=400, detail="Invalid JSON") from None
 
     context_files: list[dict[str, Any]] = payload.get("context_files", [])
     if len(context_files) > MAX_FILES:
@@ -123,4 +123,4 @@ async def n8n_webhook_receiver(request: Request, api_key: str = Depends(api_key_
         )
     except Exception as e:
         logger.exception("Webhook internal error: %s", e)
-        raise HTTPException(status_code=500, detail="Internal server error")
+        raise HTTPException(status_code=500, detail="Internal server error") from e

@@ -73,7 +73,7 @@ class SecretSovereigntyLayer:
             try:
                 return json.loads(self.vault_path.read_text(encoding="utf-8"))
             except Exception as e:
-                raise SecretSovereigntyError(f"FAIL CLOSED : Corruption structurelle du coffre : {e}")
+                raise SecretSovereigntyError(f"FAIL CLOSED : Corruption structurelle du coffre : {e}") from e
 
     def get_active_key_material(self) -> tuple[str, bytes]:
         with self._lock:

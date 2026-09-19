@@ -55,7 +55,7 @@ class ProjectBuilder:
             if os.path.commonpath([str(self.projects_dir), str(project_dir)]) != str(self.projects_dir):
                 raise BuilderSecurityError(f"Confinement violé : tentative d'accès hors de {self.projects_dir}")
         except ValueError:
-            raise BuilderSecurityError(f"Chemin invalide : {project_dir}")
+            raise BuilderSecurityError(f"Chemin invalide : {project_dir}") from None
 
         if not project_dir.exists() or not project_dir.is_dir():
             raise FileNotFoundError(f"Projet introuvable dans projects/{clean_name}")

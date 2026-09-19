@@ -60,7 +60,7 @@ class VoiceGateway:
             sd.wait()
             return recording.tobytes() if hasattr(recording, "tobytes") else bytes(recording)
         except Exception as e:
-            raise RuntimeError(f"Échec de capture audio matérielle : {e}")
+            raise RuntimeError(f"Échec de capture audio matérielle : {e}") from e
 
     def detect_speech(self, audio_chunk: bytes) -> bool:
         """Détection d'activité vocale (VAD) basée sur l'énergie RMS des échantillons PCM 16-bit."""

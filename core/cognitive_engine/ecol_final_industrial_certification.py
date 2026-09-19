@@ -80,7 +80,7 @@ class FinalCertificationManager:
         try:
             vault = json.loads(self.vault_path.read_text(encoding="utf-8"))
         except Exception as e:
-            raise DPAPIVaultError(f"FAIL CLOSED : Corruption structurelle du coffre : {e}")
+            raise DPAPIVaultError(f"FAIL CLOSED : Corruption structurelle du coffre : {e}") from e
 
         if key_id not in vault.get("keys", {}):
             raise DPAPIVaultError(f"FAIL CLOSED : Tentative d'accès à une clé inconnue ou révoquée '{key_id}'.")

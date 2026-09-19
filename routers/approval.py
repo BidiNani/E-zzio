@@ -116,19 +116,19 @@ async def decide_approval(approval_id: str, body: DecideRequest):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Demande d'approbation inconnue : {approval_id}",
-        )
+        ) from None
     except ApprovalExpiredError as exc:
         raise HTTPException(
             status_code=status.HTTP_410_GONE,
             detail=str(exc),
-        )
+        ) from exc
     except StateTransitionError as exc:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail=str(exc),
-        )
+        ) from exc
     except Exception as exc:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Erreur lors du traitement de l'approbation : {exc}",
-        )
+        ) from exc

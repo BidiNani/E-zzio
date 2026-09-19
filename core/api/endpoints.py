@@ -180,7 +180,7 @@ async def list_files(path: str = ""):
                 "modified": datetime.fromtimestamp(stat.st_mtime).isoformat(),
             })
     except PermissionError:
-        raise HTTPException(403, "Accès refusé")
+        raise HTTPException(403, "Accès refusé") from None
 
     return {"ok": True, "data": items, "path": str(target.relative_to(base)).replace("\\", "/") or "."}
 
@@ -199,7 +199,7 @@ async def get_file_content(path: str):
         content = target.read_text(encoding="utf-8", errors="replace")
         return {"ok": True, "content": content, "path": path}
     except Exception as e:
-        raise HTTPException(500, str(e))
+        raise HTTPException(500, str(e)) from e
 
 
 # ============================================================
@@ -218,7 +218,7 @@ async def search(q: SearchQuery):
             result = await provider.search(q.query)
             return {"ok": True, "data": result}
         except Exception as e:
-            raise HTTPException(500, str(e))
+            raise HTTPException(500, str(e)) from e
     raise HTTPException(400, f"Provider '{q.provider}' non supporté")
 
 
@@ -294,7 +294,7 @@ async def get_memory_content(path: str):
         with open(target, encoding="utf-8") as f:
             return {"ok": True, "data": json.load(f), "path": path}
     except Exception as e:
-        raise HTTPException(500, str(e))
+        raise HTTPException(500, str(e)) from e
 
 
 # ============================================================

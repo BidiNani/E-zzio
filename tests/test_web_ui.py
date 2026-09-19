@@ -45,7 +45,7 @@ def fetch_url(path, method="GET", data=None, headers=None):
             if resp.status_code >= 400:
                 raise urllib.error.HTTPError(
                     url, resp.status_code, getattr(resp, "reason", "Error"), resp.headers, None
-                )
+                ) from None
             return resp.status_code, dict(resp.headers), resp.content
 
 

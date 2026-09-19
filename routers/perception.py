@@ -52,7 +52,7 @@ async def perceive_target(req: PerceptionRequest):
         )
         return res
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
 @router.post("/upload")
@@ -69,4 +69,4 @@ async def upload_and_perceive(
         res = await pipeline.perceive(target_path, user_prompt=prompt)
         return res
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail=str(exc)) from exc

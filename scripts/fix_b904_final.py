@@ -1,6 +1,11 @@
 
 '''fix_b904_final.py - Ajoute from X aux raise B904.'''
-import ast, json, re, subprocess, sys, pathlib
+import ast
+import json
+import pathlib
+import re
+import subprocess
+import sys
 
 ROOT = pathlib.Path(r'G:\AI\E-zzio')
 PY   = str(ROOT / '.venv' / 'Scripts' / 'python.exe')
