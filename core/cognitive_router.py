@@ -9,6 +9,15 @@ from typing import Any
 import httpx
 
 
+class RoutingIntegrityError(RuntimeError):
+    """Erreur d'intégrité du routing (fail-closed).`n
+    Levée quand un modèle PRIMARY/FALLBACK est rejeté par le registre.
+
+    """
+    pass
+
+
+
 class ModelRouter:
     def __init__(
         self,
@@ -278,5 +287,6 @@ class ModelRouter:
                 "antigravity": "UNSUPPORTED",
             }
         }
+
 
 
