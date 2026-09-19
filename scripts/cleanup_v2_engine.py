@@ -98,7 +98,7 @@ class EzzioCleanupV2Engine:
         """Find structural empty directories."""
         self.log("Recherche des répertoires vides structurels...")
         skip_dirs = {".git", ".venv", ".venv_311_archive", ".venv_forensic_17Aug", "ollama_local_archive"}
-        for root_dir, dirnames, filenames in os.walk(self.root, topdown=False):
+        for root_dir, _dirnames, _filenames in os.walk(self.root, topdown=False):
             rel_dir = os.path.relpath(root_dir, self.root).replace("\\", "/")
             if rel_dir == ".":
                 continue

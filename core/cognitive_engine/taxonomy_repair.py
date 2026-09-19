@@ -135,7 +135,7 @@ def audit_taxonomy_repair():
         cursor.execute("SELECT source_path, content, memory_type FROM memory_search;")
         rows = cursor.fetchall()
 
-        for source_path, content, old_type in rows:
+        for source_path, content, _old_type in rows:
             dummy_path = ROOT_DIR / source_path
             evaluation = validator.evaluate_source(dummy_path, content)
 

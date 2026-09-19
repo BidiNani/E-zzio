@@ -38,7 +38,7 @@ def deep_validate():
         rows = cursor.fetchall()
         total_audited = len(rows)
 
-        for source_path, content, old_type in rows:
+        for source_path, content, _old_type in rows:
             dummy_path = ROOT_DIR / source_path
             eval_res = validator.evaluate_source(dummy_path, content)
             m_type = eval_res["memory_type"]

@@ -52,7 +52,7 @@ async def test_observability_no_secret_leakage(tmp_path):
 
     traces = await tracer.get_recent_traces(limit=10)
     for row in traces:
-        for k, v in row.items():
+        for _k, v in row.items():
             if v is not None:
                 # Vérifier qu'aucun token / clé API brute n'apparaît
                 assert not re.search(r"AIzaSy[A-Za-z0-9_-]{33}", str(v)), "Clé Google API trouvée dans la trace !"

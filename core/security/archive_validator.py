@@ -26,7 +26,7 @@ class ArchiveLineageValidator:
 
         expected_prev_root = "0" * 64
 
-        for idx, (meta_path, jsonl_path) in enumerate(zip(metas, jsonls)):
+        for _idx, (meta_path, jsonl_path) in enumerate(zip(metas, jsonls)):
             try:
                 meta = json.loads(meta_path.read_text(encoding="utf-8"))
                 lines = jsonl_path.read_text(encoding="utf-8").strip().splitlines()

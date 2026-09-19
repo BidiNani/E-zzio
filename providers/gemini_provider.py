@@ -46,7 +46,7 @@ class GeminiProvider(BaseProvider):
         max_retries = max(len(self.scheduler.keys), 1)
         loop = asyncio.get_running_loop()
 
-        for attempt in range(max_retries):
+        for _attempt in range(max_retries):
             idx, key = await self.scheduler.get_next_key()
             if key is None:
                 break

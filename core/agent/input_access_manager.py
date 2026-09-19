@@ -157,7 +157,7 @@ class InputAccessManager:
         try:
             path = Path(dir_path).resolve()
             entries = []
-            for root, dirs, files in os.walk(path):
+            for root, _dirs, files in os.walk(path):
                 rel_root = os.path.relpath(root, path)
                 for f in files[:50]:  # Limit top 50 files
                     entries.append(os.path.join(rel_root, f))

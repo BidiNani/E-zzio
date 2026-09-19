@@ -250,7 +250,7 @@ class DecisionLedgerEngine:
             json.dump(sealed_head, f, indent=2, ensure_ascii=False)
 
         # Retry replace for Windows file system stability
-        for attempt in range(50):
+        for _attempt in range(50):
             try:
                 temp_head.replace(self.head_state_path)
                 break
@@ -283,7 +283,7 @@ class DecisionLedgerEngine:
         with open(temp_mono, "w", encoding="utf-8") as f:
             json.dump(sealed_mono, f, indent=2, ensure_ascii=False)
 
-        for attempt in range(50):
+        for _attempt in range(50):
             try:
                 temp_mono.replace(self.monotonic_state_path)
                 break

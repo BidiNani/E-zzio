@@ -126,7 +126,7 @@ class CodebaseMapReader:
         # Déduplication
         seen = set()
         unique_matches = []
-        for p, data, reason in matched_files:
+        for p, data, _reason in matched_files:
             if p not in seen:
                 seen.add(p)
                 unique_matches.append((p, data))

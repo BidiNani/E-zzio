@@ -264,7 +264,7 @@ class WorldModelEngine:
         inconsistencies = []
         for entity_id, entity in self.entities.items():
             # Check invalid relationships
-            for rel_type, targets in entity.relationships.items():
+            for _rel_type, targets in entity.relationships.items():
                 for target_id in targets:
                     if target_id not in self.entities:
                         inconsistencies.append(f"Orphan relationship in {entity_id}: target {target_id} missing")

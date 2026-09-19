@@ -34,7 +34,7 @@ def test_office_map_endpoint_returns_canonical_rooms():
     }
     assert set(data["rooms"].keys()) == expected_rooms
 
-    for key, r in data["rooms"].items():
+    for _key, r in data["rooms"].items():
         assert "door" in r and "desk" in r
         assert r["w"] >= 8 and r["h"] >= 6
         assert r["color"].startswith("#")

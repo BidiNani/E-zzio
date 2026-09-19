@@ -110,7 +110,7 @@ def test_qg_no_unreal_engine_artifacts():
     """Vérifie l'exclusion absolue d'Unreal Engine dans le dépôt."""
     forbidden_tokens = ["unreal", "ue5", "unrealengine", "ue4"]
     # Vérifier qu'aucun package, dossier ou fichier core ne s'appelle ou n'importe Unreal
-    for root, dirs, files in os.walk("core"):
+    for _root, dirs, files in os.walk("core"):
         for d in dirs:
             assert not any(tok in d.lower() for tok in forbidden_tokens), f"Unreal artifact found: {d}"
         for f in files:

@@ -30,7 +30,7 @@ async def run_benchmark():
     print("==================================================================\n")
 
     async with httpx.AsyncClient(timeout=180.0) as client:
-        for idx, item in enumerate(TEST_PROMPTS, 1):
+        for _idx, item in enumerate(TEST_PROMPTS, 1):
             print(f"[*] {item['label']}")
             print(f"    Demande  : '{item['message']}'")
 

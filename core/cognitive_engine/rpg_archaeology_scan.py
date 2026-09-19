@@ -23,7 +23,7 @@ def scan():
     results = []
     print("[*] Scanning memory sources for RPG memory lineage...")
 
-    for root, dirs, files in os.walk(ROOT_DIR):
+    for root, _dirs, files in os.walk(ROOT_DIR):
         # Filtrage manuel des branches
         rel_root = Path(root).relative_to(ROOT_DIR).as_posix()
         if any(ex in rel_root for ex in EXCLUDE_PATTERNS):

@@ -89,7 +89,7 @@ def pricing_is_explicitly_paid(model: dict[str, Any]) -> bool:
 
     pricing = model.get("pricing")
     if isinstance(pricing, dict):
-        for k, v in pricing.items():
+        for _k, v in pricing.items():
             f = _to_float(v)
             if f is not None and f > 0.0:
                 return True

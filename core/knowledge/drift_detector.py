@@ -199,7 +199,7 @@ class ForensicDriftDetector:
         except ValueError:
             drift_rel = "_forensic/drift"
 
-        for root, dirs, files in os.walk(self._root_dir):
+        for root, _dirs, files in os.walk(self._root_dir):
             rel_root = self._normalize_path(os.path.relpath(root, self._root_dir))
             if rel_root == ".":
                 rel_root = ""
@@ -298,10 +298,10 @@ class ForensicDriftDetector:
         for py_rel in affected_py_files:
             py_full = self._root_dir / py_rel.replace("/", os.sep)
             if not py_full.exists():
-                for sym_id, s_data in self._map_symbols.get("classes", {}).items():
+                for sym_id, _s_data in self._map_symbols.get("classes", {}).items():
                     if sym_id.startswith(py_rel + "::"):
                         symbol_changes.append({"symbol_id": sym_id, "kind": "class", "change": "DELETED", "file": py_rel})
-                for sym_id, s_data in self._map_symbols.get("functions", {}).items():
+                for sym_id, _s_data in self._map_symbols.get("functions", {}).items():
                     if sym_id.startswith(py_rel + "::"):
                         symbol_changes.append({"symbol_id": sym_id, "kind": "function", "change": "DELETED", "file": py_rel})
             else:

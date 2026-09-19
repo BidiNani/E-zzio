@@ -202,7 +202,7 @@ def observe_filesystem(directory_path: str, previous_snapshot: dict = None) -> d
     now_ts = datetime.datetime.now().timestamp()
 
     try:
-        for root, dirs, files in os.walk(normalized_path):
+        for root, _dirs, files in os.walk(normalized_path):
             for fname in files:
                 fpath = os.path.join(root, fname)
                 rel_path = os.path.relpath(fpath, normalized_path).replace("\\", "/")

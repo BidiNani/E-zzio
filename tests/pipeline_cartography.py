@@ -17,7 +17,7 @@ if registry_path.exists():
         data = json.loads(registry_path.read_text(encoding="utf-8"))
         models = data.get("models", {})
         distribution = {}
-        for k, v in models.items():
+        for _k, v in models.items():
             state = v.get("lifecycle", "UNKNOWN")
             distribution[state] = distribution.get(state, 0) + 1
         print(f"\n[REGISTRY STATE DISTRIBUTION] Total entrées : {len(models)}")
