@@ -7,6 +7,16 @@ from dotenv import load_dotenv
 
 from core.cloud_guard import cloud_status, guarded_request
 
+def reddit_token():
+    """Récupère le token OAuth Reddit depuis les variables d'environnement."""
+    return (os.getenv("REDDIT_TOKEN") or os.getenv("REDDIT_ACCESS_TOKEN") or "").strip()
+
+
+def blizzard_token():
+    """Récupère le token OAuth Blizzard depuis les variables d'environnement."""
+    return (os.getenv("BLIZZARD_TOKEN") or os.getenv("BLIZZARD_ACCESS_TOKEN") or "").strip()
+
+
 PROJECT_ROOT = Path("G:/AI/E-zzio")
 SECRETS_PATH = PROJECT_ROOT / "secrets" / ".env"
 TOKEN_STATE = PROJECT_ROOT / "registry" / "cloud_tokens_runtime.json"
@@ -110,3 +120,4 @@ def connectors_status():
             "blizzard": bool(os.getenv("BLIZZARD_CLIENT_ID", "").strip() and os.getenv("BLIZZARD_CLIENT_SECRET", "").strip()),
         },
     }
+
