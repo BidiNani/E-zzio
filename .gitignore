@@ -306,3 +306,6 @@ runtime/temp/pytest*/
 # Ruff migration logs
 state/ruff_logs/*.log
 
+
+# Archives de backups (rotation manuelle)
+state/_backups_archives/
