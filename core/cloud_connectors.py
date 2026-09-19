@@ -51,41 +51,6 @@ def github_get(path, params=None):
     )
 
 
-def reddit_token():
-    state = _token_state_load()
-    existing = state.get("reddit", {})
-    if existing.get("access_token") and existing.get("expires_at", 0) > time.time() + 60:
-        return existing["access_token"]
-
-    client_id = os.getenv("REDDIT_CLIENT_ID", "").strip()
-    client_secret = os.getenv("REDDIT_CLIENT_SECRET", "").strip()
-    username = os.getenv("REDDIT_USERNAME", "").strip()
-    password = os.getenv("REDDIT_PASSWORD", "").strip()
-    user_agent = os.getenv("REDDIT_USER_AGENT", "E-ZZIO-local/1.0").strip()
-
-    if not all([client_id, client_secret, username, password]):
-        return None
-
-    auth = requests.auth.HTTPBasicAuth(client_id, client_secret)
-    response = requests.post(
-        "https://www.reddit.com/api/v1/access_token",
-        auth=auth,
-        data={"grant_type": "password", "username": username, "password": password},
-        headers={"User-Agent": user_agent},
-        timeout=25,
-    )
-    response.raise_for_status()
-    data = response.json()
-
-    token = data["access_token"]
-    state["reddit"] = {
-        "access_token": token,
-        "expires_at": time.time() + int(data.get("expires_in", 3600)),
-    }
-    _token_state_save(state)
-    return token
-
-
 def reddit_headers():
     user_agent = os.getenv("REDDIT_USER_AGENT", "E-ZZIO-local/1.0").strip()
     token = reddit_token()
@@ -109,42 +74,6 @@ def reddit_get(path, params=None):
 
 def blizzard_region():
     return os.getenv("BLIZZARD_REGION", "eu").strip().lower() or "eu"
-
-
-def blizzard_token():
-    state = _token_state_load()
-    existing = state.get("blizzard", {})
-    if existing.get("access_token") and existing.get("expires_at", 0) > time.time() + 60:
-        return existing["access_token"]
-
-    client_id = os.getenv("BLIZZARD_CLIENT_ID", "").strip()
-    client_secret = os.getenv("BLIZZARD_CLIENT_SECRET", "").strip()
-
-    if not all([client_id, client_secret]):
-        return None
-
-    blizzard_region()
-    token_url = "https://oauth.battle.net/token"
-
-    auth_raw = f"{client_id}:{client_secret}".encode()
-    auth_b64 = base64.b64encode(auth_raw).decode("ascii")
-
-    response = requests.post(
-        token_url,
-        headers={"Authorization": f"Basic {auth_b64}"},
-        data={"grant_type": "client_credentials"},
-        timeout=25,
-    )
-    response.raise_for_status()
-    data = response.json()
-
-    token = data["access_token"]
-    state["blizzard"] = {
-        "access_token": token,
-        "expires_at": time.time() + int(data.get("expires_in", 3600)),
-    }
-    _token_state_save(state)
-    return token
 
 
 def blizzard_headers():
