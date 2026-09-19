@@ -1,4 +1,5 @@
 """Génération URL authorize + échange code->token."""
+# ruff: noqa: E701
 from __future__ import annotations
 
 import logging

@@ -32,7 +32,7 @@ def test_builder_security_confinement(tmp_path):
     builder = ProjectBuilder(workspace_root=str(tmp_path))
 
     # Tentative d'accès hors de projects/
-    with pytest.raises(Exception):
+    with pytest.raises(Exception):  # noqa: B017 — peut lever FileNotFoundError ou BuilderSecurityError
         builder._resolve_project_dir("../core")
 
 

@@ -377,7 +377,7 @@ class AutonomousModelFabric:
 
 
 
-    def quarantine_runtime_violation(
+    def _quarantine_runtime_violation_v1(
         self,
         *,
         provider: str,
@@ -395,7 +395,7 @@ class AutonomousModelFabric:
             new_tier="UNQUALIFIED",
         )
 
-    def rehabilitate_model(
+    def _rehabilitate_model_v1(
         self,
         *,
         provider: str,

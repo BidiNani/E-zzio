@@ -121,12 +121,12 @@ def expand_scales(text: str) -> str:
     'm' minuscule seul (mètre) jamais expansé."""
     out = text or ""
     for pat, mult in _SCALE_WORDS:
-        def _rep(mm: re.Match[str]) -> str:
+        def _rep(mm: re.Match[str], _mult: float = mult) -> str:
             try:
                 v = float(mm.group("n").replace(",", "."))
             except ValueError:
                 return mm.group(0)
-            return str(int(v * mult)) if (v * mult).is_integer() else str(v * mult)
+            return str(int(v * _mult)) if (v * _mult).is_integer() else str(v * _mult)
         out = re.sub(pat, _rep, out)
     return out
 

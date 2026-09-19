@@ -61,9 +61,9 @@ class GeminiProvider(BaseProvider):
                 response = await asyncio.wait_for(
                     loop.run_in_executor(
                         None,
-                        lambda: client.models.generate_content(
+                        lambda _c=client, _cont=contents: _c.models.generate_content(
                             model=target_model,
-                            contents=contents,
+                            contents=_cont,
                             config=types.GenerateContentConfig(tools=[{"google_search": {}}], temperature=0.8, max_output_tokens=8192),
                         ),
                     ),

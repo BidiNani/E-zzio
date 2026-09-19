@@ -158,7 +158,7 @@ def run_index() -> dict[str, dict[str, Any]]:
     return index
 
 
-def augment_queue_items(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def _augment_queue_items_v1(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     runs_by_proposal = run_index()
     augmented: list[dict[str, Any]] = []
 
@@ -187,7 +187,7 @@ def augment_queue_items(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return augmented
 
 
-def ledger(limit: int = 100) -> dict[str, Any]:
+def _ledger_v1(limit: int = 100) -> dict[str, Any]:
     raw_items = read_jsonl(QUEUE_PATH, limit=limit)
     items = augment_queue_items(raw_items)
 
@@ -215,7 +215,7 @@ def ledger(limit: int = 100) -> dict[str, Any]:
     }
 
 
-def status() -> dict[str, Any]:
+def _status_v1() -> dict[str, Any]:
     data = ledger(limit=5000)
     runs = read_jsonl(RUNS_PATH, limit=50)
 
@@ -382,7 +382,7 @@ def run_action_logic(action: str, params: dict[str, Any] | None = None) -> dict[
     }
 
 
-def run_proposal(proposal_id: str, confirmation: str = "") -> dict[str, Any]:
+def _run_proposal_v1(proposal_id: str, confirmation: str = "") -> dict[str, Any]:
     proposal = find_proposal(proposal_id)
     if not proposal:
         return {

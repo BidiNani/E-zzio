@@ -246,7 +246,7 @@ def security_blocks(events: list[dict[str, Any]]) -> Metric:
                   "Blocks = défenses actives, pas des échecs.")
 
 
-def latency_snapshot() -> dict[str, Metric]:
+def _latency_snapshot_bench() -> dict[str, Metric]:
     """Micro-benchs déterministes (tmp store : 0 pollution prod)."""
     import asyncio as _aio
     import os as _os

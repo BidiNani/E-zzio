@@ -23,7 +23,7 @@ def test_parent_child_serialization():
     assert d["trace_id"] == "t1" and d["status"] == "RUNNING"
     bad = {"trace_id": "t", "agent_id": "a", "event_type": "NOPE",
            "status": "RUNNING"}
-    with pytest.raises(Exception):
+    with pytest.raises(Exception):  # noqa: B017 — ValidationError possible
         TraceEvent(**bad)
 
 

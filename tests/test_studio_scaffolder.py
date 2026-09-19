@@ -38,5 +38,5 @@ def test_scaffolder_security_confinement(tmp_path):
     scaffolder = ProjectScaffolder(workspace_root=str(tmp_path))
 
     # Tentative d'évasion vers le noyau ou la racine
-    with pytest.raises(Exception):
+    with pytest.raises(Exception):  # noqa: B017 — peut lever FileNotFoundError ou ScaffolderSecurityError
         scaffolder.scaffold("../../../core/malicious_payload", project_type="python_cli")

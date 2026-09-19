@@ -142,9 +142,9 @@ async def test_corrupt_db_fails_closed_not_silent(tmp_path):
     with open(db, "w", encoding="utf-8") as f:
         f.write("pas une base sqlite")
     gw = UnifiedMemoryGateway(db_path=db)
-    with pytest.raises(Exception):
+    with pytest.raises(Exception):  # noqa: B017
         await gw.init()
-    with pytest.raises(Exception):
+    with pytest.raises(Exception):  # noqa: B017
         await gw.record_message("s", "user", "x")
     # Le fichier corrompu n'a pas été écrasé silencieusement.
     assert open(db, encoding="utf-8").read() == "pas une base sqlite"

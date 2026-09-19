@@ -1,3 +1,4 @@
+# ruff: noqa: E701
 import pytest
 
 pytestmark = pytest.mark.skip(

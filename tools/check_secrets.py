@@ -1,3 +1,4 @@
+# ruff: noqa: E701
 import os
 import re
 import sys
