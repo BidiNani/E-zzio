@@ -86,7 +86,6 @@ def main() -> int:
         if not engine._interrupt_event.is_set():
             engine.state = engine.state.IDLE
 
-    buf = bytearray()
     try:
         while True:
             # 1. Accumule ~1,2 s de micro avec VAD continu (barge-in si SPEAKING)
@@ -103,7 +102,6 @@ def main() -> int:
                     speech_seen = True
                     if str(engine.state) == "SPEAKING":
                         engine.trigger_barge_in()
-                        buf = bytearray()
                         frames = []
                         t_end = time.time() + 1.2
             if not speech_seen:

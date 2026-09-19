@@ -72,7 +72,6 @@ def main():
 
     # Analyse des composants clés
     core_registry_info = inspect_file_for_patterns("core/models/registry.json" if (PROJECT_ROOT/"core/models/registry.json").exists() else "core/models/registry.py", ["upsert", "save", "write", "active", "tier"])
-    lifecycle_info = inspect_file_for_patterns("core/models/lifecycle.py", ["transition", "state", "lifecycle", "active"])
     fabric_info = inspect_file_for_patterns("core/models/fabric.py", ["resolve", "tier", "model_list", "router"])
     adapter_info = inspect_file_for_patterns("core/agent/agent_provider.py", ["cloud_gemini", "local_primary", "local_fallback"])
 
