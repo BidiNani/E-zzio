@@ -61,16 +61,27 @@ def test_gemini_error_mapping(status_code, expected_class):
     assert provider.error_mapping(status_code) == expected_class
 
 
-@pytest.mark.parametrize("thinking_level,expected_budget", [
-    ("off", 0),
-    ("low", 1024),
-    ("medium", 8192),
-    ("high", 24576),
+@pytest.mark.parametrize("model,thinking_level,expected_config", [
+    # Gemini 2.5 -> thinkingBudget (int)
+    ("gemini-2.5-flash", "off",    {"thinkingBudget": 0}),
+    ("gemini-2.5-flash", "low",    {"thinkingBudget": 1024}),
+    ("gemini-2.5-flash", "medium", {"thinkingBudget": 8192}),
+    ("gemini-2.5-flash", "high",   {"thinkingBudget": 24576}),
+    # Gemini 3.x -> thinkingLevel (str, low/high uniquement)
+    ("gemini-3.7-flash", "low",    {"thinkingLevel": "low"}),
+    ("gemini-3.7-flash", "high",   {"thinkingLevel": "high"}),
+    # Gemini 3.x -> off/medium : thinkingConfig entierement omis
+    ("gemini-3.7-flash", "off",    None),
+    ("gemini-3.7-flash", "medium", None),
 ])
-def test_gemini_thinking_policy(thinking_level, expected_budget):
-    provider = GeminiProvider(api_key="mock_key")
+def test_gemini_thinking_policy(model, thinking_level, expected_config):
+    provider = GeminiProvider(api_key="mock_key", model=model)
     payload = provider._build_generation_payload("Calcul complexe", thinking_level=thinking_level)
-    assert payload["generationConfig"]["thinkingConfig"]["thinkingBudget"] == expected_budget
+    gc = payload["generationConfig"]
+    if expected_config is None:
+        assert "thinkingConfig" not in gc, f"{model}/{thinking_level} : thinkingConfig ne doit pas etre present"
+    else:
+        assert gc.get("thinkingConfig") == expected_config, f"{model}/{thinking_level} : attendu {expected_config}, obtenu {gc.get(chr(39))}"
 
 
 @pytest.mark.asyncio

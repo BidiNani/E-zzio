@@ -11,6 +11,19 @@ from typing import Any
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
+# FALLBACK_MAP
+# Politique de fallback par provider. Si le modele choisi par l'utilisateur
+# echoue (exception ou reponse vide), on bascule sur le modele cible ci-dessous
+# et on signale la substitution via response.fallback_notice.
+FALLBACK_MAP: dict[str, str] = {
+    "groq":       "gemini-3.5-flash",
+    "openrouter": "gemini-3.5-flash",
+    "nvidia":     "gemini-3.5-flash",
+    "ollama":     "gemini-3.5-flash",
+    "gemini":     "gemini-3.5-flash",
+}
+
+
 router = APIRouter(prefix="/api/settings", tags=["settings"])
 
 # ----------------------------------------------------------------------------

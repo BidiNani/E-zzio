@@ -105,7 +105,13 @@ class EzzioMaster:
         m = (model or "").lower()
         if m.startswith("gemini"):
             return "gemini"
-        if "/" in m and not m.startswith("ollama/"):
+        if m.startswith("groq/"):
+            return "groq"
+        if m.startswith("openrouter/"):
+            return "openrouter"
+        if m.startswith("nvidia/"):
+            return "nvidia"
+        if m.endswith(":free"):
             return "openrouter"
         if m.startswith(("llama", "mixtral", "gemma-")):
             return "groq"
@@ -114,6 +120,69 @@ class EzzioMaster:
         if ":" in m or m.endswith(":latest"):
             return "ollama"
         return "gemini"
+
+    async def _try_fallback(
+        self,
+        *,
+        detected_provider: str,
+        original_model: str,
+        reason: str,
+        user_prompt: str | None,
+        chat_system: str | None,
+        thinking_level: str | None,
+    ):
+        """Bascule vers FALLBACK_MAP[provider] en cas de defaillance.
+
+        Retourne (ProviderResponse | None, dict | None).
+        - Succes : (resp, notice)
+        - Echec  : (None, None)
+        """
+        try:
+            from routers.settings import FALLBACK_MAP
+        except Exception:
+            logger.error("[EzzioMaster] FALLBACK_MAP indisponible")
+            return None, None
+
+        fb_model = FALLBACK_MAP.get(detected_provider)
+        if not fb_model or fb_model == original_model:
+            return None, None
+
+        try:
+            from core.providers.gemini_provider import GeminiProvider
+            fb_prov = GeminiProvider()
+            fb_resp = await fb_prov.generate(
+                prompt=user_prompt or "",
+                system_prompt=chat_system if chat_system else None,
+                model=fb_model,
+                temperature=0.2,
+                max_tokens=2048,
+                thinking_level=thinking_level,
+            )
+            if not fb_resp or not (fb_resp.content or "").strip():
+                return None, None
+
+            notice = {
+                "fallback_used": True,
+                "requested_model": original_model,
+                "requested_provider": detected_provider,
+                "actual_model": fb_model,
+                "actual_provider": "gemini",
+                "reason": reason,
+                "message": (
+                    f"Le modele {original_model} ({detected_provider}) est indisponible. "
+                    f"Reponse generee par {fb_model}. "
+                    f"Continuer avec ce modele, ou reessayer {original_model} ?"
+                ),
+            }
+            logger.info(
+                "[EzzioMaster] Fallback OK : %s -> %s (%s)",
+                original_model, fb_model, reason,
+            )
+            return fb_resp, notice
+        except Exception as fb_err:
+            logger.error("[EzzioMaster] Fallback echoue : %s", fb_err)
+            return None, None
+
 
     async def execute_intent(
         self,
@@ -170,6 +239,7 @@ class EzzioMaster:
                 channel=channel,
                 is_mission=is_mission
             )
+            fallback_notice: dict | None = None
             # Priorite au model_target utilisateur, sinon routing automatique
             if model_target and model_target != "auto":
                 selected_model = model_target
@@ -230,21 +300,24 @@ class EzzioMaster:
                         thinking_level=thinking_level,
                     )
                 except Exception as cloud_err:
-                    # Robustesse et résilience : secours Ollama en cas de coupure réseau ou indisponibilité cloud
-                    logger.warning("[EzzioMaster] Échec Cloud (%s), basculement résilient vers secours local...", cloud_err)
-                    try:
-                        from core.providers.ollama_provider import OllamaProvider
-                        ollama_prov = OllamaProvider(model="qwen3.5-mtp:4b")
-                        resp = await ollama_prov.generate(
-                            prompt=user_prompt or "",
-                            system_prompt=chat_system if chat_system else None,
-                            model="qwen3.5-mtp:4b",
-                            temperature=0.2,
-                            max_tokens=512,
-                        )
-                        used_fallback = True
-                    except Exception:
+                    # Fallback intelligent vers le modele cible de FALLBACK_MAP
+                    logger.warning(
+                        "[EzzioMaster] Echec provider %s (%s) -> fallback",
+                        detected_provider, cloud_err,
+                    )
+                    fb_resp, fb_notice = await self._try_fallback(
+                        detected_provider=detected_provider,
+                        original_model=selected_model,
+                        reason=f"exception: {type(cloud_err).__name__}",
+                        user_prompt=user_prompt,
+                        chat_system=chat_system,
+                        thinking_level=thinking_level,
+                    )
+                    if fb_resp is None:
                         raise cloud_err
+                    resp = fb_resp
+                    used_fallback = True
+                    fallback_notice = fb_notice
 
             elapsed_ms = int((time.perf_counter() - start_time) * 1000)
 
@@ -252,38 +325,33 @@ class EzzioMaster:
             model_name = resp.model or selected_model
             provider_name = resp.provider or routing["provider"]
 
+            # Si le provider principal a repondu vide -> fallback intelligent
             if not reply.strip():
-                # Fallback Ollama proactif (Gemini KO, rate limit, payload vide)
-                logger.warning("[EzzioMaster] Reponse Gemini vide, bascule Ollama")
-                try:
-                    from core.providers.ollama_provider import OllamaProvider
-                    ollama_prov = OllamaProvider(model="qwen3.5-mtp:4b")
-                    resp = await ollama_prov.generate(
-                        prompt=user_prompt or "",
-                        system_prompt=chat_system if chat_system else None,
-                        model="qwen3.5-mtp:4b",
-                        temperature=0.2,
-                        max_tokens=512,
-                    )
-                    used_fallback = True
+                logger.warning(
+                    "[EzzioMaster] Reponse vide du provider %s -> fallback",
+                    detected_provider,
+                )
+                fb_resp, fb_notice = await self._try_fallback(
+                    detected_provider=detected_provider,
+                    original_model=selected_model,
+                    reason="empty_response",
+                    user_prompt=user_prompt,
+                    chat_system=chat_system,
+                    thinking_level=thinking_level,
+                )
+                if fb_resp is not None and (fb_resp.content or "").strip():
+                    resp = fb_resp
                     reply = resp.content or ""
-                    model_name = resp.model or "qwen3.5-mtp:4b"
-                    provider_name = "ollama"
-                except Exception as ollama_err:
-                    logger.error("[EzzioMaster] Fallback Ollama echoue : %s", ollama_err)
+                    model_name = resp.model or selected_model
+                    provider_name = resp.provider or "gemini"
+                    used_fallback = True
+                    fallback_notice = fb_notice
+                else:
                     _audit_command("PROVIDER_EMPTY", {
                         "provider": provider_name, "model": model_name,
                         "outcome": "REFUSED"}, "BLOCKED")
                     raise RuntimeError(
-                        "[FAIL-CLOSED] Provider sans réponse exécutable : exécution refusée.")
-
-            # Si Ollama a repondu, verifier a nouveau
-            if not reply.strip():
-                _audit_command("PROVIDER_EMPTY", {
-                    "provider": provider_name, "model": model_name,
-                    "outcome": "REFUSED"}, "BLOCKED")
-                raise RuntimeError(
-                    "[FAIL-CLOSED] Provider sans réponse exécutable : exécution refusée.")
+                        "[FAIL-CLOSED] Provider sans reponse executable : execution refusee.")
 
             res_conv = {
                 "response": reply,
@@ -301,6 +369,7 @@ class EzzioMaster:
                 "used_fallback": used_fallback,
                 "usage": getattr(resp, "usage", {}) or {},
                 "thinking_level": getattr(resp, "thinking_level", None),
+                "fallback_notice": fallback_notice,
             }
             _audit_command("CONV_MODEL", {
                 "model": model_name, "provider": provider_name,

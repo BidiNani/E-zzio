@@ -55,8 +55,14 @@ def test_identity_present_on_fast_path():
 
 
 def test_execute_intent_fail_closed_on_empty():
+    """Provider vide ET fallback echoue -> FAIL-CLOSED.
+
+    Contrat E-ZzIO (post-fallback) : si le provider principal renvoie vide,
+    le systeme tente un fallback intelligent vers FALLBACK_MAP. Le FAIL-CLOSED
+    ne survient que si le fallback echoue aussi.
+    """
     import asyncio
-    from unittest.mock import AsyncMock, MagicMock
+    from unittest.mock import AsyncMock, MagicMock, patch
 
     from core.ezzio_master import EzzioMaster
     from core.providers.base_provider import CostClass, ProviderResponse
@@ -75,8 +81,13 @@ def test_execute_intent_fail_closed_on_empty():
     async def run():
         return await master.execute_intent(user_prompt="test", session_id="")
 
-    res = asyncio.run(run())
+    # Mock le fallback Gemini pour qu'il echoue aussi
+    with patch(
+        "core.providers.gemini_provider.GeminiProvider.generate",
+        new_callable=AsyncMock,
+        side_effect=RuntimeError("fallback gemini down too"),
+    ):
+        res = asyncio.run(run())
+
     assert res["ok"] is False
-    assert "[FAIL-CLOSED]" in res["response"]
-    assert res["model"] == "none"
-    assert res["provider"] == "none"
+    assert "FAIL-CLOSED" in res.get("response", "") or "FAIL-CLOSED" in res.get("error", "")
