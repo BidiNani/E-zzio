@@ -63,3 +63,4 @@ class GeminiProProvider:
             return {
                 "ok": False,
                 "error": r"Client Gemini Pro non initialisé (clé introuvable dans secrets\.env ou variable d'environnement).",
+
