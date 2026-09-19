@@ -92,7 +92,6 @@ async def api_key_middleware(request: Request, call_next):
                 content={"detail": "API key required. Set X-API-Key header."},
             )
 
-    return await call_next(request)
 
 
     # Endpoints protégés : clé requise
