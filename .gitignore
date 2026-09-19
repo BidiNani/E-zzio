@@ -302,3 +302,7 @@ runtime/backend_*.log.err
 # Cleanup 20260919_144507
 ezzio.db
 runtime/temp/pytest*/
+
+# Ruff migration logs
+state/ruff_logs/*.log
+

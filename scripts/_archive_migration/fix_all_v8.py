@@ -1,5 +1,9 @@
 """fix_all_v8.py - Dernier nettoyage : E701, E702."""
-import ast, subprocess, sys, datetime, pathlib
+import ast
+import datetime
+import pathlib
+import subprocess
+import sys
 
 ROOT = pathlib.Path(r"G:\AI\E-zzio")
 PY   = str(ROOT / ".venv" / "Scripts" / "python.exe")
@@ -71,6 +75,7 @@ log("--- 1. Detection E701/E702 ---", "CYAN")
 
 # On utilise --output-format=json pour etre precis
 import json
+
 rc, out, err = run([PY, "-m", "ruff", "check", ".",
                     "--select", "E701,E702", "--output-format=json",
                     "--no-cache"])
