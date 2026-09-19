@@ -1,4 +1,5 @@
 """fix_all_v4.py - Bugs reels F811/B023/B017 + I001/E401."""
+# ruff: noqa: E701
 import ast
 import datetime
 import pathlib

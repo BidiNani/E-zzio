@@ -1,4 +1,5 @@
 """fix_all_v2.py - Correction ruff + frozen core manifest regen."""
+# ruff: noqa: E701
 import ast
 import datetime
 import pathlib

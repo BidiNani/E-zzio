@@ -29,6 +29,7 @@ target-version = "py311"
 src = ["core", "runtime/core", "routers", "interfaces", "tests"]
 exclude = [
     ".venv",
+    "scripts/_archive_migration",
     "runtime/test_isolation",
     "runtime/evidence",
     "runtime/decisions"

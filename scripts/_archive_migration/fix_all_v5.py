@@ -1,5 +1,9 @@
 """fix_all_v5.py - Correction definitive des vrais bugs F811/B023/B017."""
-import ast, re, subprocess, sys, datetime, pathlib
+import ast
+import datetime
+import pathlib
+import subprocess
+import sys
 
 ROOT = pathlib.Path(r"G:\AI\E-zzio")
 PY   = str(ROOT / ".venv" / "Scripts" / "python.exe")
