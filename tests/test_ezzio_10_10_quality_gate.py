@@ -25,8 +25,6 @@ from web_server import app
 
 def test_qg_frozen_core_integrity():
     """Frozen Core SHA256 integrity match."""
-    import hashlib
-    import json
     from pathlib import Path
 
     root = Path(__file__).parent.parent

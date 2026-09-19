@@ -6,6 +6,7 @@ Adapter implementing BaseFederatedProvider using AntigravityClient.
 from __future__ import annotations
 
 import uuid
+from datetime import UTC, datetime
 from pathlib import Path
 
 from core.cognition.antigravity.capabilities import (
@@ -16,16 +17,11 @@ from core.cognition.antigravity.capabilities import (
 )
 from core.cognition.antigravity.client import AntigravityClient
 from core.cognition.model_federation.base_provider import (
-
-
     BaseFederatedProvider,
     FederatedTaskRequest,
     FederatedTaskResult,
     ProviderDomain,
 )
-from datetime import datetime
-from datetime import timezone
-
 
 
 class AntigravityFederatedProvider(BaseFederatedProvider):
@@ -99,7 +95,7 @@ class AntigravityFederatedProvider(BaseFederatedProvider):
                 },
                 execution_duration_ms=0.0,
                 cost_estimate_usd=0.0,
-                timestamp_utc=datetime.now(timezone.utc),
+                timestamp_utc=datetime.now(UTC),
             )
 
         return FederatedTaskResult(

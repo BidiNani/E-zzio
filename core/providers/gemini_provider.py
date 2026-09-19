@@ -135,14 +135,18 @@ class GeminiProvider(BaseProvider, IResearchProvider):
 
         # Configuration Thinking (Gemini 2.5 / 3.x)
         if thinking_level is not None:
-            budget_map = {
-                "off": 0,
-                "low": 1024,
-                "medium": 8192,
-                "high": 24576,
-            }
-            budget = budget_map.get(str(thinking_level).lower(), 0)
-            generation_config["thinkingConfig"] = {"thinkingBudget": budget}
+            lvl = str(thinking_level).lower()
+            # Gemini 3.x : thinkingLevel accepte UNIQUEMENT low/high.
+            # Pour desactiver : OMETTRE thinkingConfig entierement (off -> 400).
+            # Gemini 2.5 : thinkingBudget (0 = off valide sur 2.5).
+            if "3." in (self.model or ""):
+                if lvl in ("low", "high"):
+                    generation_config["thinkingConfig"] = {"thinkingLevel": lvl}
+                # else: on n'ajoute PAS thinkingConfig (equivaut a off)
+            else:
+                budget_map = {"off": 0, "low": 1024, "medium": 8192, "high": 24576}
+                budget = budget_map.get(lvl, 0)
+                generation_config["thinkingConfig"] = {"thinkingBudget": budget}
 
         payload["generationConfig"] = generation_config
 
@@ -291,6 +295,7 @@ class GeminiProvider(BaseProvider, IResearchProvider):
                                 "prompt_tokens": usage_meta.get("promptTokenCount", 0),
                                 "completion_tokens": usage_meta.get("candidatesTokenCount", 0),
                                 "total_tokens": usage_meta.get("totalTokenCount", 0),
+                                "thoughts_tokens": usage_meta.get("thoughtsTokenCount", 0),
                             }
 
                             return ProviderResponse(
@@ -303,6 +308,7 @@ class GeminiProvider(BaseProvider, IResearchProvider):
                                 cost_class=CostClass.FREE_ENDPOINT,
                                 error_class=None,
                                 raw=data,
+                                thinking_level=thinking_level,
                             )
                         else:
                             last_res = res

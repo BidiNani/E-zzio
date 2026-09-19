@@ -2,7 +2,6 @@
 # E-ZZIO — Production Web Server & Unified Governor Lifespan
 # File: G:\AI\E-zzio\web_server.py
 # ==============================================================================
-import os
 import sys
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -155,9 +154,9 @@ app.include_router(capabilities_router)
 app.include_router(research_router)
 from routers.accounts import router as accounts_router
 from routers.models_admin import router as models_admin_router
+from routers.models_registry import router as models_registry_router
 from routers.search import router as search_router
 from routers.tools import router as tools_router
-from routers.models_registry import router as models_registry_router
 
 app.include_router(webhook_router)
 app.include_router(search_router)
@@ -165,6 +164,13 @@ app.include_router(accounts_router)
 app.include_router(models_admin_router)
 app.include_router(tools_router)
 app.include_router(models_registry_router)
+
+# Endpoints modeles + settings (ajout 2026-09)
+from routers import models as models_router
+from routers import settings as settings_router
+
+app.include_router(models_router.router)
+app.include_router(settings_router.router)
 
 
 @app.get("/agent-view", response_class=HTMLResponse, include_in_schema=False)

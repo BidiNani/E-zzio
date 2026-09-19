@@ -10,14 +10,13 @@ from __future__ import annotations
 import ipaddress
 import logging
 import socket
+from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
 import httpx
 
 from core.perception.universal_reader import UniversalFileReader
-
-from pathlib import Path
 
 logger = logging.getLogger("SafeWebFetcher")
 

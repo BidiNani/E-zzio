@@ -9,13 +9,13 @@ Uses local qwen2.5vl:3b (Ollama CPU-only) for:
 from __future__ import annotations
 
 import base64
+import logging
 import os
 from pathlib import Path
 from typing import Any
 
 import httpx
 
-import logging
 logger = logging.getLogger(__name__)
 
 

@@ -99,6 +99,22 @@ class EzzioMaster:
             parts.append("Contexte récent :\n" + "\n".join(ctx_lines))
         return "\n\n".join(parts)
 
+
+    def _detect_provider_from_model(self, model: str) -> str:
+        """Detecte le provider depuis le nom du modele."""
+        m = (model or "").lower()
+        if m.startswith("gemini"):
+            return "gemini"
+        if "/" in m and not m.startswith("ollama/"):
+            return "openrouter"
+        if m.startswith(("llama", "mixtral", "gemma-")):
+            return "groq"
+        if m.startswith(("nvidia/", "nvidia-", "nvapi")):
+            return "nvidia"
+        if ":" in m or m.endswith(":latest"):
+            return "ollama"
+        return "gemini"
+
     async def execute_intent(
         self,
         user_prompt: str,
@@ -154,8 +170,19 @@ class EzzioMaster:
                 channel=channel,
                 is_mission=is_mission
             )
-            selected_model = routing["model"]
+            # Priorite au model_target utilisateur, sinon routing automatique
+            if model_target and model_target != "auto":
+                selected_model = model_target
+            else:
+                selected_model = routing["model"]
             thinking_level = routing.get("thinking_level")
+            # Override depuis settings utilisateur (toggle frontend)
+            try:
+                from routers.settings import _state as _settings_state
+                if _settings_state.get("thinking_enabled"):
+                    thinking_level = _settings_state.get("thinking_level", thinking_level)
+            except Exception:
+                pass
 
             chat_system = system_prompt or await self._build_chat_system_prompt(session_id, exclude_prompt=user_prompt)
 
@@ -175,16 +202,29 @@ class EzzioMaster:
                     max_tokens=512,
                 )
             else:
-                # Cloud-First : Garantit un modèle Gemini valide (jamais de modèle Ollama envoyé au cloud)
-                cloud_model = selected_model
-                if not (cloud_model and cloud_model.startswith("gemini")):
-                    cloud_model = "gemini-3.6-flash"
+                # Routing multi-provider base sur le modele selectionne
+                detected_provider = self._detect_provider_from_model(selected_model)
 
                 try:
-                    resp: ProviderResponse = await self.provider.generate(
+                    if detected_provider == "openrouter":
+                        from core.providers.openrouter_provider import OpenRouterProvider
+                        prov = OpenRouterProvider()
+                    elif detected_provider == "groq":
+                        from core.providers.groq_provider import GroqProvider
+                        prov = GroqProvider()
+                    elif detected_provider == "nvidia":
+                        from core.providers.nvidia_nim_provider import NvidiaNimProvider
+                        prov = NvidiaNimProvider()
+                    elif detected_provider == "ollama":
+                        from core.providers.ollama_provider import OllamaProvider
+                        prov = OllamaProvider()
+                    else:  # gemini
+                        prov = self.provider
+
+                    resp: ProviderResponse = await prov.generate(
                         prompt=user_prompt or "",
                         system_prompt=chat_system if chat_system else None,
-                        model=cloud_model,
+                        model=selected_model,
                         temperature=0.2,
                         max_tokens=2048,
                         thinking_level=thinking_level,
@@ -213,6 +253,32 @@ class EzzioMaster:
             provider_name = resp.provider or routing["provider"]
 
             if not reply.strip():
+                # Fallback Ollama proactif (Gemini KO, rate limit, payload vide)
+                logger.warning("[EzzioMaster] Reponse Gemini vide, bascule Ollama")
+                try:
+                    from core.providers.ollama_provider import OllamaProvider
+                    ollama_prov = OllamaProvider(model="qwen3.5-mtp:4b")
+                    resp = await ollama_prov.generate(
+                        prompt=user_prompt or "",
+                        system_prompt=chat_system if chat_system else None,
+                        model="qwen3.5-mtp:4b",
+                        temperature=0.2,
+                        max_tokens=512,
+                    )
+                    used_fallback = True
+                    reply = resp.content or ""
+                    model_name = resp.model or "qwen3.5-mtp:4b"
+                    provider_name = "ollama"
+                except Exception as ollama_err:
+                    logger.error("[EzzioMaster] Fallback Ollama echoue : %s", ollama_err)
+                    _audit_command("PROVIDER_EMPTY", {
+                        "provider": provider_name, "model": model_name,
+                        "outcome": "REFUSED"}, "BLOCKED")
+                    raise RuntimeError(
+                        "[FAIL-CLOSED] Provider sans réponse exécutable : exécution refusée.")
+
+            # Si Ollama a repondu, verifier a nouveau
+            if not reply.strip():
                 _audit_command("PROVIDER_EMPTY", {
                     "provider": provider_name, "model": model_name,
                     "outcome": "REFUSED"}, "BLOCKED")
@@ -233,6 +299,8 @@ class EzzioMaster:
                 "elapsed_ms": elapsed_ms,
                 "ok": True,
                 "used_fallback": used_fallback,
+                "usage": getattr(resp, "usage", {}) or {},
+                "thinking_level": getattr(resp, "thinking_level", None),
             }
             _audit_command("CONV_MODEL", {
                 "model": model_name, "provider": provider_name,

@@ -7,11 +7,11 @@ import time
 from pathlib import Path
 from typing import Any
 
+import httpx
 import ollama
 import psutil
 
 from core.identity.canonical_identity import CanonicalIdentity
-import httpx
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
 STATE_ROOT = PROJECT_ROOT / "state"

@@ -68,6 +68,7 @@ class ProviderResponse:
     cost_class: CostClass = CostClass.UNKNOWN
     error_class: ProviderErrorClass | None = None
     raw: dict[str, Any] | None = None
+    thinking_level: str | None = None
     timestamp_utc: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
 
 

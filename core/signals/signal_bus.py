@@ -11,8 +11,6 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from typing import Any
 
-from typing import Optional
-
 logger = logging.getLogger("SignalBus")
 
 
@@ -92,7 +90,7 @@ class SignalBus:
         except Exception:
             pass
 
-    def get_event_history(self, signal_name: Optional[str] = None) -> list[dict[str, Any]]:
+    def get_event_history(self, signal_name: str | None = None) -> list[dict[str, Any]]:
         """Retourne l'historique récent des signaux émis."""
         if signal_name:
             return [{"name": e.name, "payload": e.payload} for e in self._history if e.name == signal_name]

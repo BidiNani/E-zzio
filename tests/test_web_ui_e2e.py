@@ -18,7 +18,6 @@ DETTE TECHNIQUE IDENTIFIEE (2026-09-19) :
 
 import pytest
 
-
 pytestmark = pytest.mark.skip(
     reason=(
         "Brave 153+ sur Windows crashe en CDP (rc=0xC0000005). "

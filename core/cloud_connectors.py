@@ -1,11 +1,11 @@
-import base64
+
 import os
-import time
 from pathlib import Path
 
 from dotenv import load_dotenv
 
 from core.cloud_guard import cloud_status, guarded_request
+
 
 def reddit_token():
     """Récupère le token OAuth Reddit depuis les variables d'environnement."""

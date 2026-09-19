@@ -13,8 +13,6 @@ from core.agent.complex_task_orchestrator import ComplexTaskEngine
 from core.agent.evidence_logger import CodingTaskEvidence, EvidenceLogger
 from core.agent.tools_registry import ToolRegistry
 
-from typing import List
-
 
 class CodingAgentHarness:
     def __init__(self, workspace_root: str = "G:\\AI\\E-zzio", backend: str = "cloud_gemini", local_model: str = "ornith-1.5:9b"):
@@ -150,8 +148,8 @@ class CodingAgentHarness:
     def run_complex_mission(
         self,
         objective: str,
-        target_files: List[str] | None = None,
-        patch_actions: List[dict[str, str]] | None = None,
+        target_files: list[str] | None = None,
+        patch_actions: list[dict[str, str]] | None = None,
         auto_repair: bool = True,
     ) -> dict[str, Any]:
         """Exécute une mission complexe de bout en bout avec orchestration complète."""

@@ -7,11 +7,11 @@ import time
 from pathlib import Path
 from typing import Any
 
+import httpx
 import ollama
 
 from core.identity.canonical_identity import CanonicalIdentity
 from core.response_guard import deterministic_reply, sanitize_ezzio_reply
-import httpx
 
 PROJECT_ROOT = Path("G:/AI/E-zzio")
 STATE_ROOT = PROJECT_ROOT / "state"
