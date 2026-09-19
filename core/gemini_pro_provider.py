@@ -63,28 +63,3 @@ class GeminiProProvider:
             return {
                 "ok": False,
                 "error": r"Client Gemini Pro non initialisé (clé introuvable dans secrets\.env ou variable d'environnement).",
-            }
-
-        try:
-            optimization_result = compress_text(prompt, max_chars=16000, mode="extractive")
-
-            config = types.GenerateContentConfig(
-                system_instruction=system_instruction, max_output_tokens=max_output_tokens, temperature=0.7
-            )
-
-            response = self.client.models.generate_content(
-                model="gemini-3.1-pro-preview", contents=optimization_result["compressed"], config=config
-            )
-
-            return {
-                "ok": True,
-                "response_text": response.text,
-                "usage": getattr(response, "usage_metadata", None),
-                "compression_ratio": optimization_result["ratio"],
-            }
-        except Exception as e:
-            return {"ok": False, "error": f"Erreur d'exécution Gemini Pro : {str(e)}"}
-
-
-# Instance prête pour le routage central
-gemini_provider = GeminiProProvider()
