@@ -35,11 +35,6 @@ from core.governance.approval.models import ApprovalRequest
 from web_server import app
 
 
-@pytest.fixture
-def client():
-    return TestClient(app)
-
-
 def test_1_agent_render(client):
     """Vérifie que les 10 agents réels sont rendus avec leurs rôles et avatars."""
     res = client.get("/master/api/v1/office/state")

@@ -13,12 +13,10 @@ from core.governance.approval import approval_manager
 from core.governance.approval.models import ApprovalRequest
 from web_server import app
 
-client = TestClient(app)
-
 ROOT_DIR = Path(__file__).resolve().parent.parent
 
 
-def test_office_map_endpoint_returns_canonical_rooms():
+def test_office_map_endpoint_returns_canonical_rooms(client):
     """Verify GET /master/api/v1/office/map returns 36x24 grid and all 8 rooms plus hub."""
     res = client.get("/master/api/v1/office/map")
     assert res.status_code == 200
@@ -40,7 +38,7 @@ def test_office_map_endpoint_returns_canonical_rooms():
         assert r["color"].startswith("#")
 
 
-def test_agent_visual_states_contain_spatial_coordinates():
+def test_agent_visual_states_contain_spatial_coordinates(client):
     """Verify all 10 agents have valid non-null 2.5D spatial coordinates and animation states."""
     res = client.get("/master/api/v1/office/state")
     assert res.status_code == 200
@@ -55,7 +53,7 @@ def test_agent_visual_states_contain_spatial_coordinates():
         assert a["animation_state"] in {"IDLE", "WALK", "WORK", "WAIT_APPROVAL", "ERROR", "DONE"}
 
 
-def test_task_to_room_routing_contract():
+def test_task_to_room_routing_contract(client):
     """Verify agents are correctly located at their designated specialty rooms."""
     res = client.get("/master/api/v1/office/state")
     agents = {a["agent_id"]: a for a in res.json()["agents"]}
@@ -72,7 +70,7 @@ def test_task_to_room_routing_contract():
     assert agents["antigravity_agent"]["room"] == "dev_lab"
 
 
-def test_hitl_interception_triggers_movement_to_command_center(monkeypatch):
+def test_hitl_interception_triggers_movement_to_command_center(client, monkeypatch):
     """Verify that when a pending approval exists, Aegis Guard routes to Command Center."""
     req = ApprovalRequest.create(
         task_id="task_motion_hitl",
@@ -104,7 +102,7 @@ def test_hitl_interception_triggers_movement_to_command_center(monkeypatch):
     assert master["animation_state"] == "WAIT_APPROVAL"
 
 
-def test_antigravity_quota_standby_remains_stationary():
+def test_antigravity_quota_standby_remains_stationary(client):
     """Verify Antigravity specialist is stationary in standby with ERROR state without fake work."""
     res = client.get("/master/api/v1/office/state")
     agents = {a["agent_id"]: a for a in res.json()["agents"]}
@@ -117,7 +115,7 @@ def test_antigravity_quota_standby_remains_stationary():
     assert agy["target_room"] is None
 
 
-def test_multi_agent_spatial_separation_no_overlap():
+def test_multi_agent_spatial_separation_no_overlap(client):
     """Verify that distinct agents stationed at desks have non-overlapping coordinates (dist >= 1.0)."""
     res = client.get("/master/api/v1/office/state")
     agents = res.json()["agents"]
@@ -130,7 +128,7 @@ def test_multi_agent_spatial_separation_no_overlap():
             assert dist >= 1.0, f"Agents {a1['agent_id']} and {a2['agent_id']} overlap at distance {dist}!"
 
 
-def test_frontend_motion_and_canvas_scripts_served():
+def test_frontend_motion_and_canvas_scripts_served(client):
     """Verify ezzio-office-motion.js and ezzio-office-canvas.js are served over static route."""
     res_motion = client.get("/static/ezzio-office-motion.js")
     assert res_motion.status_code == 200

@@ -15,11 +15,6 @@ from fastapi.testclient import TestClient
 from web_server import app
 
 
-@pytest.fixture
-def client():
-    return TestClient(app)
-
-
 def test_offline_ui_service_worker_contract(client):
     """Vérifie que le Service Worker fournit le cache hors-ligne pour la racine et le manifest."""
     res_sw = client.get("/master/sw.js")

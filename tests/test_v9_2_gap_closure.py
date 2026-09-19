@@ -31,11 +31,6 @@ from core.security.audit_ledger import AuditLedger
 from web_server import app
 
 
-@pytest.fixture
-def client():
-    return TestClient(app)
-
-
 # ---------------------------------------------------------------------------
 # 1. Canonical DAG Orchestration
 # ---------------------------------------------------------------------------

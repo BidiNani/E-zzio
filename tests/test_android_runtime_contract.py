@@ -7,10 +7,6 @@ from fastapi.testclient import TestClient
 from web_server import app
 
 
-@pytest.fixture
-def client():
-    return TestClient(app)
-
 def test_mobile_contract_health(client):
     """Le client Android doit pouvoir pinger le endpoint /health."""
     response = client.get("/health")

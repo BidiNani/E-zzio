@@ -32,62 +32,65 @@ _generation_router = GenerationRouter()
 
 
 class UniversalGenerateRequest(BaseModel):
-    message: str = Field(..., example="génère-moi un tableur de suivi budgétaire")
+    message: str = Field(..., json_schema_extra={"example": "génère-moi un tableur de suivi budgétaire"})
 
 
 class XLSXGenerateRequest(BaseModel):
-    filename: str = Field(..., example="rapport_financier.xlsx")
-    title: str | None = Field(None, example="Bilan Opérationnel Q1 2026")
-    sheets: list[dict[str, Any]] = Field(..., example=[{
-        "sheet_name": "Performance",
-        "headers": ["Indicateur", "Valeur", "Cible"],
-        "rows": [["Latence (ms)", 1095, 1500], ["Tests Verts", 237, 237]]
-    }])
+    filename: str = Field(..., json_schema_extra={"example": "rapport_financier.xlsx"})
+    title: str | None = Field(None, json_schema_extra={"example": "Bilan Opérationnel Q1 2026"})
+    sheets: list[dict[str, Any]] = Field(
+        ...,
+        json_schema_extra={"example": [{
+            "sheet_name": "Performance",
+            "headers": ["Indicateur", "Valeur", "Cible"],
+            "rows": [["Latence (ms)", 1095, 1500], ["Tests Verts", 237, 237]],
+        }]},
+    )
 
 
 class DOCXGenerateRequest(BaseModel):
-    filename: str = Field(..., example="synthese_architecture.docx")
-    title: str = Field(..., example="Spécification Technique E-ZZIO")
+    filename: str = Field(..., json_schema_extra={"example": "synthese_architecture.docx"})
+    title: str = Field(..., json_schema_extra={"example": "Spécification Technique E-ZZIO"})
     sections: list[dict[str, Any]] = Field(...)
     author: str | None = "E-ZZIO Autonomous Core"
 
 
 class PPTXGenerateRequest(BaseModel):
-    filename: str = Field(..., example="presentation_stratégique.pptx")
-    title: str = Field(..., example="E-ZZIO Architecture 2.0")
-    subtitle: str | None = Field(None, example="Plateforme d'IA Souveraine")
+    filename: str = Field(..., json_schema_extra={"example": "presentation_stratégique.pptx"})
+    title: str = Field(..., json_schema_extra={"example": "E-ZZIO Architecture 2.0"})
+    subtitle: str | None = Field(None, json_schema_extra={"example": "Plateforme d'IA Souveraine"})
     slides: list[dict[str, Any]] | None = None
     author: str | None = "E-ZZIO Autonomous Core"
 
 
 class PDFGenerateRequest(BaseModel):
-    filename: str = Field(..., example="rapport_certification.pdf")
-    title: str = Field(..., example="Rapport de Certification")
+    filename: str = Field(..., json_schema_extra={"example": "rapport_certification.pdf"})
+    title: str = Field(..., json_schema_extra={"example": "Rapport de Certification"})
     sections: list[dict[str, Any]] = Field(...)
     author: str | None = "E-ZZIO Autonomous Core"
 
 
 class ImageBannerRequest(BaseModel):
-    filename: str = Field(..., example="banniere_tech.png")
-    title: str = Field(..., example="E-ZZIO SYSTEM")
-    subtitle: str | None = Field(None, example="Passerelle Universelle")
+    filename: str = Field(..., json_schema_extra={"example": "banniere_tech.png"})
+    title: str = Field(..., json_schema_extra={"example": "E-ZZIO SYSTEM"})
+    subtitle: str | None = Field(None, json_schema_extra={"example": "Passerelle Universelle"})
     width: int = 1200
     height: int = 630
 
 
 class ZIPGenerateRequest(BaseModel):
-    archive_name: str = Field(..., example="export_projet.zip")
+    archive_name: str = Field(..., json_schema_extra={"example": "export_projet.zip"})
     source_paths: list[str] = Field(...)
 
 
 class AudioToneRequest(BaseModel):
-    filename: str = Field(..., example="signal_ok.wav")
+    filename: str = Field(..., json_schema_extra={"example": "signal_ok.wav"})
     frequency_hz: float = 440.0
     duration_sec: float = 0.5
 
 
 class Mesh3DRequest(BaseModel):
-    filename: str = Field(..., example="cube_repere.obj")
+    filename: str = Field(..., json_schema_extra={"example": "cube_repere.obj"})
     size: float = 1.0
     color_name: str = "CyberCyan"
 
@@ -154,12 +157,15 @@ def generate_pdf(req: PDFGenerateRequest) -> dict[str, Any]:
 
 
 class ImageEditRequest(BaseModel):
-    input_path: str = Field(..., example="outputs/banniere_tech.png")
-    output_filename: str = Field(..., example="banniere_edited.png")
-    operations: list[dict[str, Any]] = Field(..., example=[
-        {"action": "resize", "width": 800, "height": 400},
-        {"action": "rotate", "angle": 90}
-    ])
+    input_path: str = Field(..., json_schema_extra={"example": "outputs/banniere_tech.png"})
+    output_filename: str = Field(..., json_schema_extra={"example": "banniere_edited.png"})
+    operations: list[dict[str, Any]] = Field(
+        ...,
+        json_schema_extra={"example": [
+            {"action": "resize", "width": 800, "height": 400},
+            {"action": "rotate", "angle": 90},
+        ]},
+    )
 
 
 @router.post("/image/banner")

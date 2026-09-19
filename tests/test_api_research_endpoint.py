@@ -8,11 +8,6 @@ app = FastAPI()
 app.include_router(research_router)
 
 
-@pytest.fixture
-def client():
-    return TestClient(app)
-
-
 def test_research_endpoint_structure(client):
     payload = {"query": "Test unit query", "mode": "fast", "task_id": "task_unit_api_01"}
     response = client.post("/api/v1/research/search", json=payload)

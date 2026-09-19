@@ -20,11 +20,6 @@ from core.governance.approval.models import ApprovalRequest
 from web_server import app
 
 
-@pytest.fixture
-def client():
-    return TestClient(app)
-
-
 def test_office_state_returns_200_and_sovereign_authority(client):
     res = client.get("/master/api/v1/office/state")
     assert res.status_code == 200

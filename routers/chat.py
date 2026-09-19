@@ -123,3 +123,4 @@ async def post_chat(payload: ChatRequest):
     except Exception as e:
         logger.error("Échec /api/v1/chat : %s", e, exc_info=True)
         raise HTTPException(status_code=500, detail=str(e)) from e
+

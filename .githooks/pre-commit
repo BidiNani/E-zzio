@@ -1,16 +1,18 @@
 #!/bin/sh
-# Pre-commit E-ZZIO : ruff + tests rapides (pas toute la suite)
+# E-ZZIO pre-commit - BLOQUANT
 set -e
 
-# Détecter le python du venv
 PY=".venv/Scripts/python.exe"
 [ -f "$PY" ] || PY=".venv/bin/python"
-[ -f "$PY" ] || { echo "⚠️  Venv introuvable, skip pre-commit"; exit 0; }
+[ -f "$PY" ] || { echo "[pre-commit] venv introuvable"; exit 1; }
 
-echo "→ ruff check..."
-"$PY" -m ruff check . --fix --quiet || true
+echo "[pre-commit] ruff check..."
+"$PY" -m ruff check . --no-cache
 
-echo "→ pytest frozen core + gemini pool..."
-"$PY" -m pytest tests/test_frozen_core.py tests/test_gemini_pool.py -q --tb=short
+echo "[pre-commit] pytest unit tests..."
+"$PY" -m pytest tests/ \
+    --ignore=tests/integration \
+    --ignore=tests/test_web_ui_e2e.py \
+    -q -x -m "not slow" --tb=line
 
-echo "✅ Pre-commit OK"
+echo "[pre-commit] OK"

@@ -21,11 +21,6 @@ from fastapi.testclient import TestClient
 from web_server import app
 
 
-@pytest.fixture
-def client():
-    return TestClient(app)
-
-
 def test_product_api_contract_stability(client):
     """Vérifie la conformité et la stabilité des routes API produit."""
     res_state = client.get("/master/api/v1/office/state")

@@ -4,12 +4,16 @@ Validates the served web UI, endpoints, static assets, script integrity,
 DOM contracts, security escaping, and bidirectional backend integration.
 """
 import json
+import os
 import re
 import urllib.error
 import urllib.request
 from pathlib import Path
 
 import pytest
+from dotenv import load_dotenv
+
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
 BASE_URL = "http://127.0.0.1:8001"
 WEB_DIR = Path(r"G:\AI\E-zzio\runtime\web")
@@ -37,8 +41,15 @@ def fetch_url(path, method="GET", data=None, headers=None):
         from starlette.testclient import TestClient
 
         from web_server import app
+
+        # Injection du header d'auth comme le ferait un vrai client
+        api_key = os.getenv("EZZIO_API_KEY", "")
+        fallback_headers = dict(req_headers)
+        if api_key:
+            fallback_headers["X-API-Key"] = api_key
+
         with TestClient(app, raise_server_exceptions=False) as client:
-            kw = {"headers": req_headers}
+            kw = {"headers": fallback_headers}
             if body:
                 kw["content"] = body
             resp = client.request(method, path, **kw)
