@@ -28,6 +28,7 @@ pytestmark = pytest.mark.skip(
 )
 
 
+@pytest.mark.slow
 def test_e2e_disabled_notice():
     """Test placeholder : indique que les E2E sont desactives."""
     pass

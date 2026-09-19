@@ -11,6 +11,7 @@ from core.agent.patch_engine import PatchEngine
 from core.agent.tools_registry import ToolRegistry
 
 
+@pytest.mark.slow
 def test_antigravity_internal_tools_parity(tmp_path):
     """Vérifie la parité exacte des outils d'Antigravity dans le ToolRegistry d'E-ZZIO."""
     registry = ToolRegistry(workspace_root=str(tmp_path))
@@ -31,6 +32,7 @@ def test_antigravity_internal_tools_parity(tmp_path):
         assert tool_name in tools, f"L'outil essentiel '{tool_name}' manque dans le ToolRegistry."
 
 
+@pytest.mark.slow
 def test_autonomous_self_healing_and_patching(tmp_path):
     """Vérifie qu'E-ZZIO sait patcher un bug, sauvegarder un snapshot et valider le test."""
     workspace = tmp_path / "sandbox_dev"
@@ -79,6 +81,7 @@ def test_autonomous_self_healing_and_patching(tmp_path):
     assert "[100%]" in test_res or "passed" in test_res.lower() or "ok" in test_res.lower()
 
 
+@pytest.mark.slow
 def test_autonomous_rollback_on_failed_attempt(tmp_path):
     """Vérifie la restauration atomique (rollback) si un patch aggrave le code."""
     workspace = tmp_path / "rollback_test"

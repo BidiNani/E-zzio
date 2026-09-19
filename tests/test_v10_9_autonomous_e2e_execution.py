@@ -17,6 +17,7 @@ def e2e_engine():
     return AutonomousE2EEngine()
 
 
+@pytest.mark.slow
 def test_01_mission_contract_creation(e2e_engine):
     """Vérifie la création et l'initialisation du contrat de mission autonome."""
     contract = e2e_engine.create_mission_contract(
@@ -31,6 +32,7 @@ def test_01_mission_contract_creation(e2e_engine):
     assert contract.approval_requirements is False
 
 
+@pytest.mark.slow
 def test_02_dag_plan_validation_and_cycle_detection(e2e_engine):
     """Vérifie la validation du plan DAG et la détection autonome de cycle."""
     contract = e2e_engine.create_mission_contract("DAG Validation", "Testing DAG")
@@ -58,6 +60,7 @@ def test_02_dag_plan_validation_and_cycle_detection(e2e_engine):
     assert cycle_contract.completion_state == "DAG_CYCLE_DETECTED"
 
 
+@pytest.mark.slow
 def test_03_checkpoint_and_resume_lifecycle(e2e_engine):
     """Vérifie la sauvegarde de points de restauration (Checkpoints) et la reprise après interruption."""
     contract = e2e_engine.create_mission_contract("Checkpoint Test", "Testing Checkpoints")
@@ -72,6 +75,7 @@ def test_03_checkpoint_and_resume_lifecycle(e2e_engine):
     assert contract.current_state == MissionState.EXECUTING
 
 
+@pytest.mark.slow
 def test_04_result_verification_layer():
     """Vérifie la couche déterministe de vérification de résultat selon le type de tâche."""
     verifier = ResultVerificationEngine()
@@ -92,6 +96,7 @@ def test_04_result_verification_layer():
     assert err_file is False
 
 
+@pytest.mark.slow
 def test_05_approval_gate_blocking_high_risk(e2e_engine):
     """Vérifie que les missions à haut risque (R3/R4) requièrent l'accord utilisateur (HITL)."""
     contract = e2e_engine.create_mission_contract(
@@ -107,6 +112,7 @@ def test_05_approval_gate_blocking_high_risk(e2e_engine):
     assert contract.current_state == MissionState.BLOCKED
 
 
+@pytest.mark.slow
 def test_06_realistic_end_to_end_integration_scenario(e2e_engine):
     """
     SCÉNARIO COMPLET E2E DE CERTIFICATION (Section 21) :
