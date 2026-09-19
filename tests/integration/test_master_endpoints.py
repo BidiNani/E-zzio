@@ -12,6 +12,8 @@ os.environ["EZZIO_DISABLE_AUTH"] = "1"
 
 import httpx
 
+pytestmark = pytest.mark.integration
+
 BASE = "http://127.0.0.1:8001"
 TIMEOUT = 5.0
 

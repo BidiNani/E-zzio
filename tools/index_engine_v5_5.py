@@ -316,9 +316,9 @@ class FileScanner:
                                             self.job_queue.put_batch(batch)
                                             self.telemetry.inc_scanned(len(batch))
                                             batch.clear()
-                            except:
+                            except Exception:
                                 pass
-                except:
+                except Exception:
                     pass
         if batch:
             self.job_queue.put_batch(batch)
@@ -350,7 +350,7 @@ class HasherWorker(threading.Thread):
                     while chunk := f.read(65536):
                         h.update(chunk)
                 return h.digest()
-        except:
+        except Exception:
             return None
 
     def run(self):

@@ -93,7 +93,7 @@ def write_file(file_path: str, content: str, make_backup: bool = True, validate:
         if os.path.exists(file_path + ".tmp"):
             try:
                 os.remove(file_path + ".tmp")
-            except:
+            except OSError:
                 pass
         return f"❌ Erreur lors de l'écriture : {e}"
 

@@ -55,9 +55,13 @@ exclude = ["runtime/temp/", "runtime/temp/**/*.py", "_archive/"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-q --strict-markers --tb=short"
+addopts = "-q --strict-markers --tb=short -m 'not integration'"
+asyncio_mode = "strict"
+asyncio_default_fixture_loop_scope = "function"
+asyncio_default_test_loop_scope = "function"
 markers = [
-    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "e2e: End-to-end tests (necessitent serveur web + browser Chromium)",
+    "slow: tests lents (>10s)",
     "hardware: requires physical hardware",
     "integration: requires external services",
 ]

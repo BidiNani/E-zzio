@@ -66,7 +66,7 @@ class ExtractorDryRun:
                     try:
                         cursor.execute(f"SELECT COUNT(*) FROM [{table}]")
                         count += cursor.fetchone()[0]
-                    except:
+                    except Exception:
                         pass
             self.stats["extraction_potential"]["sqlite_rows"] += count
         except Exception as e:
