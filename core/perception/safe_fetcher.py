@@ -17,6 +17,8 @@ import httpx
 
 from core.perception.universal_reader import UniversalFileReader
 
+from pathlib import Path
+
 logger = logging.getLogger("SafeWebFetcher")
 
 MAX_RESPONSE_SIZE_BYTES = 10 * 1024 * 1024  # 10 Mo

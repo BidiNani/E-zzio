@@ -15,6 +15,9 @@ from typing import Any
 
 import httpx
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 def normalize_ollama_url(url_or_host: str | None) -> str:
     """Normalise proprement l'URL d'Ollama, qu'elle commence par http:// ou soit un host:port brut."""

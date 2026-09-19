@@ -13,6 +13,8 @@ from core.agent.complex_task_orchestrator import ComplexTaskEngine
 from core.agent.evidence_logger import CodingTaskEvidence, EvidenceLogger
 from core.agent.tools_registry import ToolRegistry
 
+from typing import List
+
 
 class CodingAgentHarness:
     def __init__(self, workspace_root: str = "G:\\AI\\E-zzio", backend: str = "cloud_gemini", local_model: str = "ornith-1.5:9b"):
