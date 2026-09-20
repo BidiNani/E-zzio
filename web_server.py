@@ -155,6 +155,7 @@ app.include_router(research_router)
 from routers.accounts import router as accounts_router
 from routers.models_admin import router as models_admin_router
 from routers.models_registry import router as models_registry_router
+from routers.models_status import router as models_status_router
 from routers.search import router as search_router
 from routers.tools import router as tools_router
 
@@ -164,6 +165,7 @@ app.include_router(accounts_router)
 app.include_router(models_admin_router)
 app.include_router(tools_router)
 app.include_router(models_registry_router)
+app.include_router(models_status_router)
 
 # Endpoints modeles + settings (ajout 2026-09)
 from routers import models as models_router
