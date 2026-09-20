@@ -4,6 +4,8 @@ core/routing/model_registry.py — Compatibility re-exports for canonical model 
 from dataclasses import dataclass, field
 from enum import Enum, auto
 
+from core.routing.local_registry import LOCAL_MODELS as _LOCAL_MODELS
+
 
 class ModelSource(Enum):
     LOCAL = auto()
@@ -67,5 +69,15 @@ class CanonicalModelRegistry:
             if role in m.roles or m.role == role:
                 return m
         return None
+
+
+    def _check_local_sync(self) -> list[str]:
+        """Détecte les modèles locaux déclarés mais absents du registre."""
+        local_declared = {m.id for m in _LOCAL_MODELS}
+        registry_locals = {
+            r.model_id for r in self._records
+            if hasattr(r, "source") and str(r.source).endswith("LOCAL")
+        }
+        return list(local_declared - registry_locals)
 
 canonical_model_registry = CanonicalModelRegistry()
