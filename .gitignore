@@ -313,3 +313,9 @@ state/_backups_archives/
 # Logs serveur dev
 web_server_restart.log
 web_server_restart.log.err
+
+# Coverage Python
+.coverage
+htmlcov/
+.coverage.json
+.coverage.*

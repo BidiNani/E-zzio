@@ -17,5 +17,10 @@ class GoogleCalendarProvider(IGoogleProvider):
         self.api_key = api_key or _vault_key or os.getenv("GEMINI_API_KEY")
 
     async def execute(self, **kwargs: Any) -> dict[str, Any]:
-        # TODO: Implémenter l'appel à l'API Google Calendar
+        # [NOT_IMPLEMENTED] Ce provider est un stub.
+        # Voir : https://github.com/BidiNani/E-zzio/issues
+        raise NotImplementedError(
+            "Ce provider n'est pas encore implémenté. "
+            "Ouvrir une issue pour prioriser."
+        )
         return {"provider": "google_calendar", "data": {"status": "mock", "message": "GoogleCalendarProvider not yet implemented"}}

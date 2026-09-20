@@ -17,6 +17,11 @@ class GoogleDriveProvider(IGoogleProvider):
         self.api_key = api_key or _vault_key or os.getenv("GEMINI_API_KEY")
 
     async def execute(self, **kwargs: Any) -> dict[str, Any]:
-        # TODO: Implémenter l'appel à l'API Google Drive
+        # [NOT_IMPLEMENTED] Ce provider est un stub.
+        # Voir : https://github.com/BidiNani/E-zzio/issues
+        raise NotImplementedError(
+            "Ce provider n'est pas encore implémenté. "
+            "Ouvrir une issue pour prioriser."
+        )
         # Pour l'instant, retourne un mock
         return {"provider": "google_drive", "data": {"status": "mock", "message": "GoogleDriveProvider not yet implemented"}}
