@@ -6,11 +6,12 @@ Usage :
     python scripts/sync_local_models.py           # affiche les diffs
     python scripts/sync_local_models.py --check   # exit 1 si désync
 """
-from __future__ import annotations
-
+import json
+import os
 import re
 import subprocess
 import sys
+import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -20,28 +21,47 @@ from core.routing.local_registry import LOCAL_MODELS  # noqa: E402
 
 
 def get_ollama_models() -> set[str]:
-    """Récupère les IDs des modèles installés via `ollama list`."""
+    """Récupère les IDs des modèles installés.
+
+    Essaie dans l'ordre :
+      1. CLI `ollama list` (rapide)
+      2. API HTTP (fallback si CLI KO)
+    Respecte OLLAMA_HOST si défini.
+    """
+    # Tentative 1 : CLI
     try:
         result = subprocess.run(
             ["ollama", "list"],
             capture_output=True, text=True, timeout=10, check=False,
         )
+        if result.returncode == 0 and result.stdout.strip():
+            lines = result.stdout.strip().splitlines()[1:]
+            ids = set()
+            for line in lines:
+                if not line.strip():
+                    continue
+                parts = re.split(r"\s{2,}", line.strip())
+                if parts:
+                    ids.add(parts[0])
+            if ids:
+                return ids
     except (FileNotFoundError, subprocess.TimeoutExpired):
-        return set()
+        pass
 
-    if result.returncode != 0:
+    # Tentative 2 : API HTTP
+    try:
+        host = os.environ.get("OLLAMA_HOST", "").strip()
+        # 0.0.0.0 est un BIND, pas une adresse de connexion
+        if not host or host.startswith(("0.0.0.0", "::")):
+            host = "http://localhost:11434"
+        elif not host.startswith("http"):
+            host = f"http://{host}"
+        url = f"{host}/api/tags"
+        with urllib.request.urlopen(url, timeout=5) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            return {m["name"] for m in data.get("models", [])}
+    except Exception:
         return set()
-
-    lines = result.stdout.strip().splitlines()[1:]  # skip header
-    ids = set()
-    for line in lines:
-        if not line.strip():
-            continue
-        # Format : NAME  ID  SIZE  MODIFIED
-        parts = re.split(r"\s{2,}", line.strip())
-        if parts:
-            ids.add(parts[0])
-    return ids
 
 
 def main() -> int:
