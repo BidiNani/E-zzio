@@ -1,17 +1,47 @@
 """
-core/routing/model_registry.py — Compatibility re-exports for canonical model registry
+core/routing/model_registry.py
+
+Hub d'API pour les rôles métier des modèles.
+
+ARCHITECTURE :
+  - registry.py       : SOURCE UNIQUE des modèles (cloud + local)
+  - model_registry.py : HUB API (rôles + compatibilité)
+  - provider_specs.py : HTTP fetch + pricing
+
+API PUBLIQUE (13 consommateurs) :
+  - canonical_model_registry (SINGLETON)
+  - CanonicalModelRegistry (classe)
+  - CanonicalModelRecord (structure, champ `name` + alias `model_id`)
+  - ModelSource, LatencyTier, ModelQualificationStatus
+
+Pour ajouter un rôle : modifier ROLE_MAP ci-dessous.
+Pour ajouter un modèle : modifier registry.py.
 """
+from __future__ import annotations
+
 from dataclasses import dataclass, field
 from enum import Enum, auto
 
-from core.routing.local_registry import LOCAL_MODELS as _LOCAL_MODELS
+from core.routing.registry import (
+    LOCAL_MODELS as _LOCAL_MODELS,
+)
+from core.routing.registry import (
+    all_models as _all_cloud_models,
+)
 
+# ============================================================
+# ENUMS (API PUBLIQUE)
+# ============================================================
 
 class ModelSource(Enum):
     LOCAL = auto()
     GEMINI = auto()
     GROQ = auto()
     NVIDIA = auto()
+    ANTHROPIC = auto()
+    OPENAI = auto()
+    MISTRAL = auto()
+
 
 class LatencyTier(Enum):
     ULTRA_FAST = auto()
@@ -19,14 +49,25 @@ class LatencyTier(Enum):
     MEDIUM = auto()
     SLOW = auto()
 
+
 class ModelQualificationStatus(Enum):
     QUALIFIED = auto()
     DISQUALIFIED = auto()
     DISABLED = auto()
     EXPERIMENTAL = auto()
 
+
+# ============================================================
+# STRUCTURE (API PUBLIQUE — champ `name` conservé)
+# ============================================================
+
 @dataclass
 class CanonicalModelRecord:
+    """Structure d'un modèle avec rôles.
+
+    Le champ `name` est l'API historique (utilisé par 3 consommateurs).
+    Le champ `model_id` est un alias en lecture seule.
+    """
     name: str
     source: ModelSource = ModelSource.GEMINI
     latency_tier: LatencyTier = LatencyTier.FAST
@@ -36,33 +77,109 @@ class CanonicalModelRecord:
     roles: list[str] = field(default_factory=list)
     thinking_level: str = "off"
 
+    @property
+    def model_id(self) -> str:
+        """Alias historique pour `name`."""
+        return self.name
+
     def __post_init__(self):
         if self.role and self.role not in self.roles:
             self.roles.append(self.role)
 
-class CanonicalModelRegistry:
-    def __init__(self):
-        self._models = [
-            CanonicalModelRecord("gemini-3.8-flash", ModelSource.GEMINI, role="MASTER", roles=["MASTER", "MASTER_STRATEGIC"], thinking_level="high"),
-            CanonicalModelRecord("gemini-3.7-flash", ModelSource.GEMINI, role="CODING", roles=["CODING"], thinking_level="low"),
-            CanonicalModelRecord("gemini-3.6-flash", ModelSource.GEMINI, role="FORENSIC", roles=["FORENSIC"], thinking_level="medium"),
-            CanonicalModelRecord("gemini-3.5-flash-lite", ModelSource.GEMINI, role="STANDARD_CHAT", roles=["STANDARD_CHAT", "FAST_CHAT", "FAST", "FALLBACK"], thinking_level="medium"),
-            CanonicalModelRecord("gemini-3.5-flash", ModelSource.GEMINI, role="REFACTOR", roles=["REFACTOR"], thinking_level="medium"),
-            CanonicalModelRecord("qwen2.5-coder:7b-instruct-q4_K_M", ModelSource.LOCAL, role="LOCAL", roles=["LOCAL", "LOCAL_CODING"]),
-            CanonicalModelRecord("qwen3.5-mtp:4b", ModelSource.LOCAL, role="FAST_LOCAL", roles=["FAST_LOCAL"]),
-            CanonicalModelRecord("phi4-mini:latest", ModelSource.LOCAL, role="LOCAL_MINI", roles=["LOCAL_MINI"]),
-            CanonicalModelRecord("nemotron-3-nano:4b", ModelSource.LOCAL, role="LOCAL_THINKING", roles=["LOCAL_THINKING"], thinking_level="low"),
-            CanonicalModelRecord("hermes3:8b", ModelSource.LOCAL, role="LOCAL_AGENT", roles=["LOCAL_AGENT"]),
-        ]
 
-    def list_models(self, qualified_only: bool = True, include_disabled: bool = False):
-        return self._models
+# ============================================================
+# RÔLES MÉTIER (seule info "locale" à ce fichier)
+# ============================================================
+# Format : model_id -> (role_principal, [roles_additionnels])
+
+ROLE_MAP: dict[str, tuple[str, list[str]]] = {
+    # --- Gemini cloud ---
+    "gemini-3.8-flash": ("MASTER", ["MASTER", "MASTER_STRATEGIC"]),
+    "gemini-3.7-flash": ("CODING", ["CODING"]),
+    "gemini-3.6-flash": ("FORENSIC", ["FORENSIC"]),
+    "gemini-3.5-flash-lite": ("STANDARD_CHAT", ["STANDARD_CHAT", "FAST_CHAT", "FAST", "FALLBACK"]),
+    "gemini-3.5-flash": ("REFACTOR", ["REFACTOR"]),
+
+    # --- Local Ollama ---
+    "qwen2.5-coder:7b-instruct-q4_K_M": ("LOCAL", ["LOCAL", "LOCAL_CODING"]),
+    "qwen3.5-mtp:4b": ("FAST_LOCAL", ["FAST_LOCAL"]),
+    "phi4-mini:latest": ("LOCAL_MINI", ["LOCAL_MINI"]),
+    "hermes3:8b": ("LOCAL_AGENT", ["LOCAL_AGENT"]),
+    "qwen3.5:9b": ("GENERALIST", ["GENERALIST", "THINKING"]),
+    "deepseek-r1:7b": ("REASONING", ["REASONING", "THINKING"]),
+}
+
+
+_PROVIDER_TO_SOURCE: dict[str, ModelSource] = {
+    "gemini": ModelSource.GEMINI,
+    "groq": ModelSource.GROQ,
+    "anthropic": ModelSource.ANTHROPIC,
+    "openai": ModelSource.OPENAI,
+    "mistral": ModelSource.MISTRAL,
+}
+
+
+# ============================================================
+# REGISTRE (assemble registry.py + ROLE_MAP)
+# ============================================================
+
+class CanonicalModelRegistry:
+    """Registre qui assemble registry.py + ROLE_MAP."""
+
+    def __init__(self):
+        self._models: list[CanonicalModelRecord] = []
+        self._by_name: dict[str, CanonicalModelRecord] = {}
+        self._build()
+
+    def _build(self) -> None:
+        # 1. Modèles cloud (via registry.py)
+        for model in _all_cloud_models():
+            if model.id not in ROLE_MAP:
+                continue
+            role, extra_roles = ROLE_MAP[model.id]
+            source = _PROVIDER_TO_SOURCE.get(model.provider, ModelSource.GEMINI)
+            thinking = (
+                model.thinking_levels[0] if model.thinking_levels else "off"
+            )
+            self._add(CanonicalModelRecord(
+                name=model.id,
+                source=source,
+                role=role,
+                roles=list(extra_roles),
+                thinking_level=thinking,
+            ))
+
+        # 2. Modèles locaux (via registry.py)
+        for model in _LOCAL_MODELS:
+            if model.id not in ROLE_MAP:
+                continue
+            role, extra_roles = ROLE_MAP[model.id]
+            thinking = "low" if model.thinking else "off"
+            self._add(CanonicalModelRecord(
+                name=model.id,
+                source=ModelSource.LOCAL,
+                role=role,
+                roles=list(extra_roles),
+                thinking_level=thinking,
+            ))
+
+    def _add(self, record: CanonicalModelRecord) -> None:
+        if record.name in self._by_name:
+            return
+        self._models.append(record)
+        self._by_name[record.name] = record
+
+    # ---------- API PUBLIQUE ----------
+
+    def list_models(
+        self,
+        qualified_only: bool = True,
+        include_disabled: bool = False,
+    ) -> list[CanonicalModelRecord]:
+        return list(self._models)
 
     def get(self, name: str) -> CanonicalModelRecord | None:
-        for m in self._models:
-            if m.name == name:
-                return m
-        return None
+        return self._by_name.get(name)
 
     def get_by_role(self, role: str) -> CanonicalModelRecord | None:
         for m in self._models:
@@ -70,14 +187,16 @@ class CanonicalModelRegistry:
                 return m
         return None
 
+    def get_all_by_role(self, role: str) -> list[CanonicalModelRecord]:
+        return [m for m in self._models if role in m.roles or m.role == role]
 
-    def _check_local_sync(self) -> list[str]:
-        """Détecte les modèles locaux déclarés mais absents du registre."""
-        local_declared = {m.id for m in _LOCAL_MODELS}
-        registry_locals = {
-            r.model_id for r in self._records
-            if hasattr(r, "source") and str(r.source).endswith("LOCAL")
-        }
-        return list(local_declared - registry_locals)
+
+# ============================================================
+# SINGLETON (API PUBLIQUE — CRITIQUE)
+# ============================================================
 
 canonical_model_registry = CanonicalModelRegistry()
+
+
+def get_registry() -> CanonicalModelRegistry:
+    return canonical_model_registry
