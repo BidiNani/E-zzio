@@ -23,12 +23,31 @@ _status_cache: dict[str, Any] = {"data": None, "ts": 0.0, "ttl": 60.0}
 
 
 async def _check_gemini(api_key: str, model_id: str) -> dict:
+    """Test chat : POST generateContent avec un prompt minimal."""
     try:
-        async with httpx.AsyncClient(timeout=5.0) as c:
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_id}"
-            r = await c.get(url, headers={"x-goog-api-key": api_key})
+        async with httpx.AsyncClient(timeout=8.0) as c:
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_id}:generateContent"
+            body = {
+                "contents": [{"parts": [{"text": "hi"}]}],
+                "generationConfig": {"maxOutputTokens": 1},
+            }
+            r = await c.post(url, headers={"x-goog-api-key": api_key, "Content-Type": "application/json"}, json=body)
             if r.status_code == 200:
-                return {"status": "available", "error": None}
+                # Verifier que la reponse contient du TEXTE (pas audio/image)
+                data = r.json()
+                candidates = data.get("candidates", [])
+                if candidates:
+                    parts = candidates[0].get("content", {}).get("parts", [])
+                    for part in parts:
+                        if "text" in part:
+                            return {"status": "available", "error": None}
+                return {"status": "unavailable", "error": "non_chat_model"}
+            if r.status_code == 404:
+                return {"status": "unavailable", "error": "model_not_found"}
+            if r.status_code == 429:
+                return {"status": "unavailable", "error": "rate_limit"}
+            if r.status_code == 400:
+                return {"status": "unavailable", "error": "bad_request"}
             return {"status": "unavailable", "error": f"HTTP {r.status_code}"}
     except httpx.TimeoutException:
         return {"status": "unknown", "error": "timeout"}
@@ -50,7 +69,11 @@ async def _check_openrouter(api_key: str, model_id: str) -> dict:
                 json=body,
             )
             if r.status_code == 200:
-                return {"status": "available", "error": None}
+                data = r.json()
+                choices = data.get("choices", [])
+                if choices and choices[0].get("message", {}).get("content"):
+                    return {"status": "available", "error": None}
+                return {"status": "unavailable", "error": "empty_response"}
             if r.status_code == 429:
                 return {"status": "unavailable", "error": "rate_limit"}
             if r.status_code == 402:
@@ -104,6 +127,7 @@ async def _check_ollama(model_id: str) -> dict:
 
 
 async def _check_nvidia(api_key: str, model_id: str) -> dict:
+    """Test chat : POST chat/completions."""
     try:
         async with httpx.AsyncClient(timeout=8.0) as c:
             body = {
@@ -117,7 +141,13 @@ async def _check_nvidia(api_key: str, model_id: str) -> dict:
                 json=body,
             )
             if r.status_code == 200:
-                return {"status": "available", "error": None}
+                data = r.json()
+                choices = data.get("choices", [])
+                if choices and choices[0].get("message", {}).get("content"):
+                    return {"status": "available", "error": None}
+                return {"status": "unavailable", "error": "empty_response"}
+            if r.status_code == 404:
+                return {"status": "unavailable", "error": "model_not_found"}
             if r.status_code == 429:
                 return {"status": "unavailable", "error": "rate_limit"}
             return {"status": "unavailable", "error": f"HTTP {r.status_code}"}
