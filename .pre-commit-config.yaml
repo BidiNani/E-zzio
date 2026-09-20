@@ -16,3 +16,12 @@ repos:
         language: system
         types: [yaml]
         pass_filenames: true
+
+  - repo: local
+    hooks:
+      - id: build-registry
+        name: "[registry] vérifie que registry.json est à jour"
+        entry: python scripts/build_registry.py --check
+        language: system
+        pass_filenames: false
+        always_run: true
