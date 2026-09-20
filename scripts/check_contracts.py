@@ -41,12 +41,15 @@ def find_obsolete_references() -> list[tuple[Path, int, str]]:
     ]
     exclude_dirs = {"__pycache__", ".venv", "_archive", "tests", "state"}
     exclude_files = {"providers_registry.py", "check_contracts.py"}
+    exclude_files = {"providers_registry.py", "check_contracts.py"}
 
     for base in patterns:
         if not base.exists():
             continue
         for py in base.rglob("*.py"):
             if any(ex in py.parts for ex in exclude_dirs):
+                continue
+            if py.name in exclude_files:
                 continue
             if py.name in exclude_files:
                 continue
