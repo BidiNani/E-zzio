@@ -12,9 +12,9 @@ from __future__ import annotations
 import time
 from typing import Any
 
+from core.providers.base_provider import CostClass
 from core.routing.model_registry import (
     CanonicalModelRecord,
-    CostClass,
     LatencyTier,
     ModelQualificationStatus,
     ModelSource,
