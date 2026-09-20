@@ -32,12 +32,10 @@ THINKING_CAPABLE = {
     if m.thinking_method != "none"
 }
 
-# Modèles locaux (Ollama) — non couverts par providers_registry
-THINKING_CAPABLE.update({
-    "qwen3.5": {"method": "reasoning", "levels": ["off", "on"]},
-    "deepseek-r1": {"method": "reasoning", "levels": ["off", "on"]},
-    "nemotron-3-nano": {"method": "reasoning", "levels": ["off", "on"]},
-})
+# Modèles locaux (Ollama) — source unique : core/routing/local_registry.py
+from core.routing.local_registry import thinking_capable as _local_thinking
+
+THINKING_CAPABLE.update(_local_thinking())
 
 
 @router.get("/thinking-support")
