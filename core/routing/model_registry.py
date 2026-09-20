@@ -6,7 +6,7 @@ Hub d'API pour les rôles métier des modèles.
 ARCHITECTURE :
   - registry.py       : SOURCE UNIQUE des modèles (cloud + local)
   - model_registry.py : HUB API (rôles + compatibilité)
-  - provider_specs.py : HTTP fetch + pricing
+  - provider_http.py : HTTP fetch + pricing
 
 API PUBLIQUE (13 consommateurs) :
   - canonical_model_registry (SINGLETON)

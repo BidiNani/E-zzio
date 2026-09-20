@@ -14,7 +14,7 @@ from typing import Any
 import httpx
 from fastapi import APIRouter
 
-from core.models.provider_specs import PROVIDERS, get_api_key
+from core.models.provider_http import PROVIDERS, get_api_key
 
 logger = logging.getLogger("EzzioModelsStatus")
 

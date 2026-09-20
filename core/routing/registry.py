@@ -4,7 +4,7 @@ Registre canonique unifié des modèles.
 ARCHITECTURE :
   - registry.py       : SOURCE UNIQUE (cloud + local) ← CE FICHIER
   - model_registry.py : hub d'API (rôles métier + compatibilité)
-  - provider_specs.py : HTTP fetch + pricing
+  - provider_http.py : HTTP fetch + pricing
 
 Ce fichier contient :
   - ModelSpec (cloud) + LocalModelSpec (local)
@@ -140,6 +140,22 @@ MISTRAL_MODELS = (
     ModelSpec("mistral/mistral-large", "mistral", "mistral-large",
               thinking_method="none"),
 )
+
+
+
+# ============================================================
+# NOTE : providers hors registry
+# ============================================================
+# Certains providers (nvidia, openrouter) sont utilisés pour le
+# FETCHING HTTP (voir core/models/provider_http.py) mais n'ont pas
+# encore de modèles déclarés ici. Pour les ajouter :
+#   1. Ajouter un ProviderSpec ci-dessus
+#   2. Ajouter un ModelSpec par modèle
+#   3. (Optionnel) Ajouter le rôle dans model_registry.py
+#
+# Tant qu'ils ne sont pas déclarés ici, ils ne seront PAS dans
+# model_registry ni dans data/models/registry.json, mais leurs
+# APIs resteront accessibles via provider_http.PROVIDERS.
 
 
 PROVIDERS: dict[ProviderName, ProviderSpec] = {

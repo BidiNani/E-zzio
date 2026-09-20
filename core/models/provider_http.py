@@ -1,5 +1,9 @@
 """
-E-ZZIO - Registre universel des providers.
+E-ZZIO — Fetch HTTP des providers cloud.
+
+RÔLE : fonctions techniques (fetch, is_free, check) pour interroger
+les APIs HTTP des providers. Le CATALOGUE des modèles est dans
+core/routing/registry.py — ce fichier ne fait que le fetching.
 
 Ajouter un NOUVEAU provider :
   1. Definir _xxx_is_free, _xxx_fetch, _xxx_check
