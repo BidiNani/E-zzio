@@ -28,7 +28,6 @@ THINKING_CAPABLE = {
     "gemini-3.6-flash": {"method": "thinkingLevel", "levels": ["low", "high"]},
     "gemini-3.7-flash": {"method": "thinkingLevel", "levels": ["low", "high"]},
     "gemini-3.8-flash": {"method": "thinkingLevel", "levels": ["low", "high"]},
-    "gemini-2.5-flash": {"method": "thinkingBudget", "levels": ["off", "low", "medium", "high"]},
     "anthropic/claude-3.7": {"method": "budget_tokens", "levels": ["low", "medium", "high"]},
     "anthropic/claude-sonnet-4": {"method": "budget_tokens", "levels": ["low", "medium", "high"]},
     "qwen3.5": {"method": "reasoning", "levels": ["off", "on"]},

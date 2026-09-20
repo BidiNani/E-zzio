@@ -46,7 +46,7 @@ class CanonicalModelRegistry:
             CanonicalModelRecord("gemini-3.6-flash", ModelSource.GEMINI, role="FORENSIC", roles=["FORENSIC"], thinking_level="medium"),
             CanonicalModelRecord("gemini-3.5-flash-lite", ModelSource.GEMINI, role="STANDARD_CHAT", roles=["STANDARD_CHAT", "FAST_CHAT", "FAST"], thinking_level="medium"),
             CanonicalModelRecord("gemini-3.5-flash", ModelSource.GEMINI, role="REFACTOR", roles=["REFACTOR"], thinking_level="medium"),
-            CanonicalModelRecord("gemini-2.5-flash", ModelSource.GEMINI, role="FALLBACK", roles=["FALLBACK"], thinking_level="off"),
+            CanonicalModelRecord("gemini-3.5-flash-lite", ModelSource.GEMINI, role="FALLBACK", roles=["FALLBACK"], thinking_level="off"),
             CanonicalModelRecord("qwen2.5-coder:7b-instruct-q4_K_M", ModelSource.LOCAL, role="LOCAL", roles=["LOCAL", "LOCAL_CODING"]),
             CanonicalModelRecord("qwen3.5-mtp:4b", ModelSource.LOCAL, role="FAST_LOCAL", roles=["FAST_LOCAL"]),
             CanonicalModelRecord("phi4-mini:latest", ModelSource.LOCAL, role="LOCAL_MINI", roles=["LOCAL_MINI"]),

@@ -24,7 +24,7 @@ from core.routing.model_registry import canonical_model_registry
     "gemini-3.7-flash",
     "gemini-3.6-flash",
     "gemini-3.5-flash",
-    "gemini-2.5-flash",
+    "gemini-3.5-flash-lite",
 ])
 def test_contract_registered_models(expected_model):
     registered_models = [m.name for m in canonical_model_registry.list_models() if m.source.name == "GEMINI"]
@@ -53,11 +53,7 @@ def test_contract_capability_ranking(capability, expected_top_model):
 # -----------------------------------------------------------------------------
 @pytest.mark.parametrize("model,thinking_level,expected_config", [
     # Gemini 2.5 -> thinkingBudget (int, 0 = off)
-    ("gemini-2.5-flash", "off",    {"thinkingBudget": 0}),
-    ("gemini-2.5-flash", "low",    {"thinkingBudget": 1024}),
-    ("gemini-2.5-flash", "medium", {"thinkingBudget": 8192}),
-    ("gemini-2.5-flash", "high",   {"thinkingBudget": 24576}),
-    # Gemini 3.x -> thinkingLevel (str, low/high uniquement)
+    ("gemini-3.5-flash-lite", "off",    None),    ("gemini-3.5-flash-lite", "low",    {"thinkingLevel": "low"}),    ("gemini-3.5-flash-lite", "medium", None),    ("gemini-3.5-flash-lite", "high",   {"thinkingLevel": "high"}),    # Gemini 3.x -> thinkingLevel (str, low/high uniquement)
     ("gemini-3.7-flash", "low",    {"thinkingLevel": "low"}),
     ("gemini-3.7-flash", "high",   {"thinkingLevel": "high"}),
     # Gemini 3.x -> off/medium : thinkingConfig entierement omis

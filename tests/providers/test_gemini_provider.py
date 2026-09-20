@@ -63,11 +63,7 @@ def test_gemini_error_mapping(status_code, expected_class):
 
 @pytest.mark.parametrize("model,thinking_level,expected_config", [
     # Gemini 2.5 -> thinkingBudget (int)
-    ("gemini-2.5-flash", "off",    {"thinkingBudget": 0}),
-    ("gemini-2.5-flash", "low",    {"thinkingBudget": 1024}),
-    ("gemini-2.5-flash", "medium", {"thinkingBudget": 8192}),
-    ("gemini-2.5-flash", "high",   {"thinkingBudget": 24576}),
-    # Gemini 3.x -> thinkingLevel (str, low/high uniquement)
+    ("gemini-3.5-flash-lite", "off",    None),    ("gemini-3.5-flash-lite", "low",    {"thinkingLevel": "low"}),    ("gemini-3.5-flash-lite", "medium", None),    ("gemini-3.5-flash-lite", "high",   {"thinkingLevel": "high"}),    # Gemini 3.x -> thinkingLevel (str, low/high uniquement)
     ("gemini-3.7-flash", "low",    {"thinkingLevel": "low"}),
     ("gemini-3.7-flash", "high",   {"thinkingLevel": "high"}),
     # Gemini 3.x -> off/medium : thinkingConfig entierement omis

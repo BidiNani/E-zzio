@@ -72,7 +72,7 @@ def _make_discovery_item(model_id: str = "gemini-new-model") -> dict:
 async def test_new_model_becomes_candidate(tmp_path):
     """Un nouveau modèle découvert doit avoir lifecycle=CANDIDATE, jamais ACTIVE."""
     reg, reg_path = _make_registry(tmp_path)
-    new_item = _make_discovery_item("gemini-2.5-flash-test")
+    new_item = _make_discovery_item("gemini-3.5-flash-lite-test")
 
     with (
         patch("core.models.registry_refresh._REGISTRY_PATH", reg_path),
@@ -86,13 +86,13 @@ async def test_new_model_becomes_candidate(tmp_path):
 
     # Recharger le registre depuis disque
     reg2 = ModelRegistry(reg_path)
-    record = reg2.get("gemini", "gemini-2.5-flash-test")
+    record = reg2.get("gemini", "gemini-3.5-flash-lite-test")
 
     assert record is not None, "Le nouveau modèle doit être présent dans le registre"
     assert record.lifecycle == ModelLifecycle.CANDIDATE.value, (
         f"Lifecycle attendu CANDIDATE, obtenu {record.lifecycle}"
     )
-    assert "gemini-2.5-flash-test" in result["new_models"]
+    assert "gemini-3.5-flash-lite-test" in result["new_models"]
     assert result["registry_count_after"] == 1
 
 
@@ -233,7 +233,7 @@ def test_audit_contains_no_secrets(tmp_path):
         "valid_count": 1,
         "registry_count_before": 0,
         "registry_count_after": 1,
-        "new_models": ["gemini-2.5-flash"],
+        "new_models": ["gemini-3.5-flash-lite"],
         "existing_models": [],
         "missing_from_api": [],
         "superseded_models": [],

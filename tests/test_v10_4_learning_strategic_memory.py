@@ -113,7 +113,7 @@ def test_04_scenario_d_low_confidence_fallback():
         duration=0.5,
         cost=0.01,
         agents_used=["image_agent"],
-        model_used="gemini-2.5-flash",
+        model_used="gemini-3.5-flash-lite",
         provider_used="cloud_gemini",
     )
 

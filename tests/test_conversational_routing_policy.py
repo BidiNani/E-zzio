@@ -52,10 +52,10 @@ def test_conversational_routing_policy_scenarios():
     assert r7["thinking_level"] == "off"
     assert r7["role"] == "FAST"
 
-    # 8. Fallback GA -> gemini-2.5-flash
+    # 8. Fallback GA -> gemini-3.5-flash-lite
     rec = canonical_model_registry.get_by_role("FALLBACK")
     assert rec is not None
-    assert rec.name == "gemini-2.5-flash"
+    assert rec.name == "gemini-3.5-flash-lite"
 
 if __name__ == "__main__":
     test_conversational_routing_policy_scenarios()

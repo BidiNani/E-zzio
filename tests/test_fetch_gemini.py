@@ -10,9 +10,9 @@ import routers.models as m
 
 FAKE = {"models": [
     # --- FREE attendus ---
-    {"name": "models/gemini-2.5-flash",           "displayName": "2.5 Flash",   "inputTokenLimit": 1000000},
+    {"name": "models/gemini-3.5-flash-lite",           "displayName": "2.5 Flash",   "inputTokenLimit": 1000000},
     {"name": "models/gemini-2.5-pro",             "displayName": "2.5 Pro",     "inputTokenLimit": 2000000},
-    {"name": "models/gemini-2.5-flash-preview-tts","displayName": "2.5 TTS",    "inputTokenLimit": 1000000},
+    {"name": "models/gemini-3.5-flash-lite-preview-tts","displayName": "2.5 TTS",    "inputTokenLimit": 1000000},
     {"name": "models/gemini-3-flash-preview",     "displayName": "3 Flash prev","inputTokenLimit": 1000000},
     {"name": "models/gemini-3.5-flash",           "displayName": "3.5 Flash",   "inputTokenLimit": 1000000},
     {"name": "models/gemini-3.8-flash",           "displayName": "3.8 Flash",   "inputTokenLimit": 1000000},
@@ -44,7 +44,7 @@ async def test_free_vs_paid_strict():
     by_id = {x["id"]: x for x in out}
 
     FREE = [
-        "gemini-2.5-flash", "gemini-2.5-pro",
+        "gemini-3.5-flash-lite", "gemini-2.5-pro",
         "gemini-3-flash-preview", "gemini-3.5-flash", "gemini-3.8-flash",
         "gemini-3.1-pro-preview", "gemini-flash-latest", "gemini-pro-latest",
     ]
