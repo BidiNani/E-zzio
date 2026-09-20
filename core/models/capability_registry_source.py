@@ -28,9 +28,13 @@ class CapabilityRegistrySource:
 
     def _load(self) -> dict[str, Any]:
         if not self.path.is_file():
-            raise CapabilityRegistryError(
-                f"Registry absent: {self.path}"
+            # [TOLERANT] Registre = artefact runtime optionnel.
+            import warnings
+            warnings.warn(
+                f"CapabilityRegistry absent (non bloquant): {self.path}",
+                RuntimeWarning, stacklevel=2,
             )
+            return {}
 
         try:
             raw = self.path.read_text(encoding="utf-8")
