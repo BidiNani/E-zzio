@@ -12,6 +12,8 @@ from typing import Any
 import httpx
 from fastapi import APIRouter
 
+from core.models.provider_specs import PROVIDERS, get_api_key
+
 router = APIRouter(prefix="/api/models", tags=["models"])
 
 _cache: dict[str, Any] = {"data": None, "ts": 0.0, "ttl": 3600.0}
@@ -269,6 +271,11 @@ async def _fetch_ollama() -> list[dict]:
 # ----------------------------------------------------------------------------
 @router.get("/all")
 async def all_models(force_refresh: bool = False) -> dict[str, Any]:
+    """Liste unifiee des modeles, construite depuis le registre PROVIDERS.
+
+    Ajoute automatiquement tout nouveau provider enregistre dans
+    core.models.provider_specs.PROVIDERS.
+    """
     now = time.time()
     if not force_refresh and _cache["data"] and now - _cache["ts"] < _cache["ttl"]:
         cached = dict(_cache["data"])
@@ -278,58 +285,24 @@ async def all_models(force_refresh: bool = False) -> dict[str, Any]:
 
     result: dict[str, Any] = {"cached": False, "ts": now}
 
-    try:
-        from core.config.secrets_loader import gemini_keys
-        keys = gemini_keys()
-        result["gemini"] = await _fetch_gemini(keys[0]) if keys else []
-    except Exception as e:
-        result["gemini"] = {"error": str(e)[:200]}
-
-    try:
-        key = os.getenv("GROQ_API_KEY", "")
-        result["groq"] = await _fetch_groq(key) if key else []
-    except Exception as e:
-        result["groq"] = {"error": str(e)[:200]}
-
-    try:
-        key = os.getenv("OPENROUTER_API_KEY", "")
-        result["openrouter"] = await _fetch_openrouter(key) if key else []
-    except Exception as e:
-        result["openrouter"] = {"error": str(e)[:200]}
-
-    try:
-        key = os.getenv("NVIDIA_API_KEY", "")
-        result["nvidia"] = await _fetch_nvidia(key) if key else []
-    except Exception as e:
-        result["nvidia"] = {"error": str(e)[:200]}
-
-    try:
-        result["ollama"] = await _fetch_ollama()
-    except Exception as e:
-        result["ollama"] = {"error": str(e)[:200]}
-
-    # Renvoie TOUS les modeles avec marquage free/paid
-    # Le frontend peut filtrer selon ses besoins
-    for provider_name in ["gemini", "groq", "openrouter", "nvidia", "ollama"]:
-        models_list = result.get(provider_name)
-        if isinstance(models_list, list):
-            # Marquer chaque modele comme free ou paid
-            for m in models_list:
-                m["free"] = _is_model_free(m)
-                if m["free"]:
-                    m["free_type"] = "free"
-                else:
-                    m["free_type"] = "paid"
-
-            free_count = sum(1 for m in models_list if m["free"])
-            total = len(models_list)
-            result[provider_name] = models_list  # TOUS les modeles
-            result[f"{provider_name}_meta"] = {
+    for name, spec in PROVIDERS.items():
+        if not spec.enabled:
+            continue
+        try:
+            key = get_api_key(name)
+            models = await spec.fetch(key)
+            result[name] = models
+            free_count = sum(1 for m in models if m.get("free"))
+            total = len(models)
+            result[f"{name}_meta"] = {
                 "total": total,
                 "free": free_count,
                 "paid": total - free_count,
             }
-            print(f"[MODELS] {provider_name}: {free_count} gratuits / {total} total (tous affiches)")
+            print(f"[MODELS] {name}: {free_count} gratuits / {total} total")
+        except Exception as e:
+            result[name] = {"error": str(e)[:200]}
+            print(f"[MODELS] {name}: ERREUR {e}")
 
     _cache["data"] = result
     _cache["ts"] = now
