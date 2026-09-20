@@ -14,6 +14,8 @@ from typing import Any
 import httpx
 from fastapi import APIRouter
 
+from core.models.provider_specs import PROVIDERS, get_api_key
+
 logger = logging.getLogger("EzzioModelsStatus")
 
 router = APIRouter(prefix="/api/models", tags=["models-status"])
@@ -173,7 +175,16 @@ async def _check_one(provider: str, model_id: str, keys: dict) -> dict:
 
 @router.get("/status")
 async def models_status(force_refresh: bool = False) -> dict[str, Any]:
-    """Retourne le statut live de chaque modele (cache 60s)."""
+    """Statut live des modeles (health-check rapide).
+
+    Strategie :
+      - 3 modeles par provider (au lieu de 15)
+      - Parallelisme 15 (au lieu de 3)
+      - Timeout court
+      - Seuls les providers rapides (gemini/groq/openrouter) sont testes
+        automatiquement. Ollama et NVIDIA sont marques "untested" par defaut
+        (ils peuvent etre testes plus tard via un endpoint dedie).
+    """
     now = time.time()
     if not force_refresh and _status_cache["data"] and now - _status_cache["ts"] < _status_cache["ttl"]:
         cached = dict(_status_cache["data"])
@@ -181,40 +192,45 @@ async def models_status(force_refresh: bool = False) -> dict[str, Any]:
         cached["age_sec"] = round(now - _status_cache["ts"], 1)
         return cached
 
-    try:
-        from core.config.secrets_loader import gemini_keys
-        gemini_k = gemini_keys()
-        gemini_key = gemini_k[0] if gemini_k else ""
-    except Exception:
-        gemini_key = ""
-
-    keys = {
-        "gemini": gemini_key,
-        "openrouter": os.getenv("OPENROUTER_API_KEY", ""),
-        "groq": os.getenv("GROQ_API_KEY", ""),
-        "nvidia": os.getenv("NVIDIA_API_KEY", ""),
-    }
+    # Providers rapides uniquement (eviter les timeouts longs)
+    FAST_PROVIDERS = ["gemini", "groq", "openrouter"]
 
     from routers.models import all_models as get_all_models
     models_data = await get_all_models(force_refresh=False)
 
     result: dict[str, Any] = {"cached": False, "ts": now}
 
-    for provider in ["gemini", "groq", "openrouter", "ollama", "nvidia"]:
+    # Marquer les providers lents comme "untested" (pas de health-check)
+    for slow in ["ollama", "nvidia"]:
+        result[slow] = {"__info__": {"status": "unknown", "error": "not_checked"}}
+
+    for provider in FAST_PROVIDERS:
         models = models_data.get(provider, [])
         if not isinstance(models, list) or not models:
             result[provider] = {}
             continue
 
+        # Prendre 3 modeles gratuits + 1 payant (max 4)
         free = [m for m in models if m.get("free")]
         paid = [m for m in models if not m.get("free")]
-        to_test = (free[:10] + paid[:5])[:15]
+        to_test = (free[:3] + paid[:1])[:4]
 
-        sem = asyncio.Semaphore(3)
+        # Parallelisme fort
+        sem = asyncio.Semaphore(15)
 
-        async def test_with_sem(m, _sem=sem, _provider=provider, _keys=keys):
+        async def test_with_sem(m, _sem=sem, _provider=provider):
             async with _sem:
-                return await _check_one(_provider, m["id"], _keys)
+                spec = PROVIDERS.get(_provider)
+                if not spec:
+                    return {"status": "unknown", "error": "no_provider"}
+                api_key = get_api_key(_provider)
+                try:
+                    return await asyncio.wait_for(
+                        spec.check(api_key, m["id"]),
+                        timeout=5.0,
+                    )
+                except TimeoutError:
+                    return {"status": "unknown", "error": "timeout"}
 
         tasks = [test_with_sem(m) for m in to_test]
         statuses = await asyncio.gather(*tasks, return_exceptions=True)
