@@ -13,6 +13,7 @@ import httpx
 from fastapi import APIRouter
 
 from core.models.provider_specs import PROVIDERS, get_api_key
+from core.routing.providers_registry import all_models as _all_models
 
 router = APIRouter(prefix="/api/models", tags=["models"])
 
@@ -22,18 +23,21 @@ _cache: dict[str, Any] = {"data": None, "ts": 0.0, "ttl": 3600.0}
 # ----------------------------------------------------------------------------
 # Support thinking
 # ----------------------------------------------------------------------------
+# THINKING_CAPABLE : construit dynamiquement depuis le registre canonique.
+# Les modèles cloud viennent de providers_registry (source unique de vérité).
+# Les modèles locaux (Ollama) sont ajoutés manuellement car hors scope cloud.
 THINKING_CAPABLE = {
-    "gemini-3.5-flash": {"method": "thinkingLevel", "levels": ["low", "high"]},
-    "gemini-3.5-flash-lite": {"method": "thinkingLevel", "levels": ["low", "high"]},
-    "gemini-3.6-flash": {"method": "thinkingLevel", "levels": ["low", "high"]},
-    "gemini-3.7-flash": {"method": "thinkingLevel", "levels": ["low", "high"]},
-    "gemini-3.8-flash": {"method": "thinkingLevel", "levels": ["low", "high"]},
-    "anthropic/claude-3.7": {"method": "budget_tokens", "levels": ["low", "medium", "high"]},
-    "anthropic/claude-sonnet-4": {"method": "budget_tokens", "levels": ["low", "medium", "high"]},
+    m.id: {"method": m.thinking_method, "levels": list(m.thinking_levels)}
+    for m in _all_models()
+    if m.thinking_method != "none"
+}
+
+# Modèles locaux (Ollama) — non couverts par providers_registry
+THINKING_CAPABLE.update({
     "qwen3.5": {"method": "reasoning", "levels": ["off", "on"]},
     "deepseek-r1": {"method": "reasoning", "levels": ["off", "on"]},
     "nemotron-3-nano": {"method": "reasoning", "levels": ["off", "on"]},
-}
+})
 
 
 @router.get("/thinking-support")
