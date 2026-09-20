@@ -1,3 +1,7 @@
+import pytest
+
+pytestmark = pytest.mark.hardware
+
 """
 Tests de conformité et de validation de l'APK compilé et rejet des faux APKs.
 """

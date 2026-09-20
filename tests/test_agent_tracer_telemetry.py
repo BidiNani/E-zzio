@@ -1,3 +1,7 @@
+import pytest
+
+pytestmark = pytest.mark.hardware
+
 """Télémétrie agents : arbre parent/enfant, SSE, throttle Discord."""
 import asyncio
 import json

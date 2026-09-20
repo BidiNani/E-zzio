@@ -1,3 +1,7 @@
+import pytest
+
+pytestmark = pytest.mark.integration
+
 """
 E-ZZIO V9.4 Living AI Office Visual Counter-Certification Automated Verification Suite
 Ensures fail-closed visual evidence contract:

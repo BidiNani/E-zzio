@@ -57,7 +57,20 @@ class TaskManager:
         }
 
         with storage.get_connection(DB_PATH) as conn:
-            columns = {row[1] for row in conn.execute("PRAGMA table_info(governed_tasks)")}
+            conn.execute('''CREATE TABLE IF NOT EXISTS governed_tasks (
+                task_id TEXT PRIMARY KEY,
+                title TEXT NOT NULL,
+                workspace TEXT NOT NULL,
+                state TEXT NOT NULL,
+                scope_json TEXT NOT NULL,
+                plan_json TEXT NOT NULL,
+                approval_id TEXT,
+                error_message TEXT,
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL
+            )''')
+            conn.commit()
+            columns = {row[1] for row in conn.execute('PRAGMA table_info(governed_tasks)')}
 
         missing = required - columns
         if missing:

@@ -1,3 +1,7 @@
+import pytest
+
+pytestmark = pytest.mark.integration
+
 """
 E-ZZIO V9.4 — Web UI Automated Forensic Test Suite
 Validates the served web UI, endpoints, static assets, script integrity,

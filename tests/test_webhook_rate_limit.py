@@ -1,3 +1,7 @@
+import pytest
+
+pytestmark = pytest.mark.integration
+
 """
 Test unitaire direct du rate limiter, sans HTTP ni appel LLM.
 Objectif : verifier check_rate_limit() en quelques millisecondes,
