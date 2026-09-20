@@ -119,6 +119,21 @@ class EzzioMaster:
             return "nvidia"
         if ":" in m or m.endswith(":latest"):
             return "ollama"
+
+        # FIX 2026-09-20 : detection OpenRouter par prefixe
+        # Modeles OpenRouter utilisent le format "provider/model"
+        openrouter_prefixes = {
+            "qwen", "meta-llama", "openai", "mistralai",
+            "google", "anthropic", "deepseek", "z-ai", "stepfun",
+            "arcee-ai", "minimax", "liquid", "cognitivecomputations",
+            "dots-studio", "thinkingmachines", "poolside", "cohere",
+            "sao10k", "gryphe", "undi95", "neversleep",
+        }
+        if "/" in m:
+            prefix = m.split("/")[0]
+            if prefix in openrouter_prefixes:
+                return "openrouter"
+
         return "gemini"
 
     async def _try_fallback(
