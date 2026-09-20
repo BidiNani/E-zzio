@@ -87,11 +87,6 @@ LOCAL_MODELS: tuple[LocalModelSpec, ...] = (
         "deepseek-r1:7b", role="REASONING", size_gb=4.7,
         family="deepseek-r1", thinking=True,
     ),
-    LocalModelSpec(
-        "nemotron-3-nano:4b", role="LOCAL_THINKING", size_gb=0.0,
-        family="nemotron", thinking=True,
-        notes="Déclaré mais pas dans ollama list actuel",
-    ),
 
     # --- Agent ---
     LocalModelSpec(
