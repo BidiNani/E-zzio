@@ -20,7 +20,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from core.routing.providers_registry import (  # noqa: E402
+from core.routing.registry import (  # noqa: E402
     PROVIDERS,
     all_deprecated,
     all_models,
@@ -40,8 +40,8 @@ def find_obsolete_references() -> list[tuple[Path, int, str]]:
         ROOT / "agents",
     ]
     exclude_dirs = {"__pycache__", ".venv", "_archive", "tests", "state"}
-    exclude_files = {"providers_registry.py", "check_contracts.py"}
-    exclude_files = {"providers_registry.py", "check_contracts.py"}
+    exclude_files = {"registry.py", "check_contracts.py"}
+    exclude_files = {"registry.py", "check_contracts.py"}
 
     for base in patterns:
         if not base.exists():

@@ -293,3 +293,11 @@ def default_local() -> str:
     if not fast:
         raise RuntimeError("Aucun modèle FAST_LOCAL déclaré")
     return fast[0].id
+
+# ============================================================
+# ALIAS RÉTROCOMPATIBLES
+# ============================================================
+# Ces alias garantissent la compatibilité avec l'ancienne API
+# (local_registry.py exposait `thinking_capable`).
+
+thinking_capable = local_thinking_capable

@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import pytest
 
-from core.routing.providers_registry import (
+from core.routing.registry import (
     PROVIDERS,
     all_deprecated,
     all_models,

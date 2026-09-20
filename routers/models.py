@@ -13,7 +13,7 @@ import httpx
 from fastapi import APIRouter
 
 from core.models.provider_specs import PROVIDERS, get_api_key
-from core.routing.providers_registry import all_models as _all_models
+from core.routing.registry import all_models as _all_models
 
 router = APIRouter(prefix="/api/models", tags=["models"])
 
@@ -33,7 +33,7 @@ THINKING_CAPABLE = {
 }
 
 # Modèles locaux (Ollama) — source unique : core/routing/local_registry.py
-from core.routing.local_registry import thinking_capable as _local_thinking
+from core.routing.registry import thinking_capable as _local_thinking
 
 THINKING_CAPABLE.update(_local_thinking())
 

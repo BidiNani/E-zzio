@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from core.routing.local_registry import LOCAL_MODELS  # noqa: E402
+from core.routing.registry import LOCAL_MODELS  # noqa: E402
 
 
 def get_ollama_models() -> set[str]:
