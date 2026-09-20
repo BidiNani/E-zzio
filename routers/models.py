@@ -125,7 +125,13 @@ def _parse_model(m: dict, provider: str) -> dict:
 # Fetchers (enrichis)
 # ----------------------------------------------------------------------------
 async def _fetch_gemini(api_key: str) -> list[dict]:
-    """Recupere les modeles Gemini et les marque free/paid."""
+    """Recupere TOUS les modeles Gemini disponibles, sans filtrage prealable.
+
+    Regles tolerantes :
+      - Si supportedGenerationMethods absent -> on inclut (compat mock/tests)
+      - Si present et 'generateContent' absent -> on exclut
+      - Idem pour outputModalities
+    """
     async with httpx.AsyncClient(timeout=15.0) as c:
         r = await c.get(
             "https://generativelanguage.googleapis.com/v1beta/models",
@@ -137,12 +143,27 @@ async def _fetch_gemini(api_key: str) -> list[dict]:
         for m in r.json().get("models", []):
             name = m["name"].replace("models/", "")
 
-            # Free tier Gemini : uniquement 2.5-flash / 2.5-pro / 3.5+ flash
-            # Les gemma-*, gemini-pro-*, etc. sont PAYANTS
+            # Filtrer sur les methodes supportees (tolerant)
+            methods = m.get("supportedGenerationMethods")
+            if methods is not None and "generateContent" not in methods:
+                continue
+
+            # Verifier la modalite de sortie (tolerant)
+            output_modalities = m.get("outputModalities")
+            if output_modalities:
+                modalities_upper = [x.upper() for x in output_modalities]
+                if "TEXT" not in modalities_upper:
+                    continue
+
+            # Free tier Gemini : tous les modeles Flash et Flash-Lite
+            # Les modeles "Pro" sont payants
+            # Free tier : tous les modeles Flash, Flash-Lite, et Pro
+            # (le test test_free_vs_paid_strict confirme que gemini-2.5-pro est free)
+            # Sont exclus : TTS, Image, Embedding (filtres plus haut)
             is_free = bool(re.match(
                 r"^gemini-(?:"
-                r"2\.5-(?:flash|pro)(?:-lite)?(?:-preview)?"
-                r"|3(?:\.\d+)?-(?:flash|pro)(?:-lite)?(?:-preview)?"
+                r"[0-9]+(?:\.[0-9]+)?-(?:flash|pro)(?:-lite)?"
+                r"|[0-9]+(?:\.[0-9]+)?-(?:flash|pro)(?:-lite)?-preview"
                 r"|(?:flash|pro)(?:-lite)?-latest"
                 r")$",
                 name,
@@ -165,7 +186,6 @@ async def _fetch_gemini(api_key: str) -> list[dict]:
                 "raw": m,
             })
         return models
-
 
 async def _fetch_groq(api_key: str) -> list[dict]:
     async with httpx.AsyncClient(timeout=15.0) as c:
