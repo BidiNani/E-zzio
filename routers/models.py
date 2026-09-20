@@ -288,16 +288,28 @@ async def all_models(force_refresh: bool = False) -> dict[str, Any]:
     except Exception as e:
         result["ollama"] = {"error": str(e)[:200]}
 
-    # Filtrer les modeles payants (ne garder que les gratuits)
+    # Renvoie TOUS les modeles avec marquage free/paid
+    # Le frontend peut filtrer selon ses besoins
     for provider_name in ["gemini", "groq", "openrouter", "nvidia", "ollama"]:
         models_list = result.get(provider_name)
         if isinstance(models_list, list):
-            free_models = [m for m in models_list if _is_model_free(m)]
+            # Marquer chaque modele comme free ou paid
+            for m in models_list:
+                m["free"] = _is_model_free(m)
+                if m["free"]:
+                    m["free_type"] = "free"
+                else:
+                    m["free_type"] = "paid"
+
+            free_count = sum(1 for m in models_list if m["free"])
             total = len(models_list)
-            filtered = total - len(free_models)
-            result[provider_name] = free_models
-            if filtered > 0:
-                print(f"[MODELS] {provider_name}: {len(free_models)}/{total} affiches ({filtered} payants filtres)")
+            result[provider_name] = models_list  # TOUS les modeles
+            result[f"{provider_name}_meta"] = {
+                "total": total,
+                "free": free_count,
+                "paid": total - free_count,
+            }
+            print(f"[MODELS] {provider_name}: {free_count} gratuits / {total} total (tous affiches)")
 
     _cache["data"] = result
     _cache["ts"] = now
