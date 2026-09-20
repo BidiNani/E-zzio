@@ -25,3 +25,12 @@ repos:
         language: system
         pass_filenames: false
         always_run: true
+
+  - repo: local
+    hooks:
+      - id: coverage-check
+        name: "[coverage] vérifie couverture minimale (core+models)"
+        entry: python -m pytest tests/ --cov=core/routing --cov=core/models --cov-fail-under=30 -q --no-header --no-summary -p no:cacheprovider
+        language: system
+        pass_filenames: false
+        always_run: true
