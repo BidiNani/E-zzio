@@ -309,3 +309,7 @@ state/ruff_logs/*.log
 
 # Archives de backups (rotation manuelle)
 state/_backups_archives/
+
+# Logs serveur dev
+web_server_restart.log
+web_server_restart.log.err
