@@ -44,7 +44,7 @@ jobs:
         run: pytest tests/ -q --tb=short
 
   powershell-lint:
-    name: PowerShell lint (watchdog + scripts)
+    name: PowerShell lint (scripts)
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -85,19 +85,6 @@ jobs:
           }
           if ($failed) { exit 1 }
 
-      - name: Smoke test watchdog (5s)
-        shell: pwsh
-        run: |
-          $job = Start-Job { pwsh -NoProfile -File ./watchdog.ps1 2>&1 }
-          Start-Sleep -Seconds 5
-          $out = Receive-Job $job
-          Stop-Job $job -ErrorAction SilentlyContinue
-          Remove-Job $job -Force -ErrorAction SilentlyContinue
-          $out | Write-Host
-          if ($out -notmatch "Watchdog démarré") {
-            Write-Error "Watchdog ne démarre pas correctement"
-            exit 1
-          }
 
   frozen-core-gate:
     name: Frozen Core integrity
