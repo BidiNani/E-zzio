@@ -1,6 +1,5 @@
 import pytest
 
-
 pytestmark = pytest.mark.skip(
     reason="Dependances locales (SQLite, fichiers) absentes en CI",
 )

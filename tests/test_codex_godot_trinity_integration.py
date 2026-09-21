@@ -1,6 +1,5 @@
 import pytest
 
-
 pytestmark = pytest.mark.skip(
     reason="Fichiers AGENTS.md ou registry_refresh_service.py supprimes (DEAD cleanup)",
 )
