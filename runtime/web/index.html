@@ -1,0 +1,1924 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-ZZIO V9.4 — Tactical Sovereign AI Command Center</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+  <link rel="stylesheet" href="/static/ezzio-tactical.css" />
+  <link rel="stylesheet" href="/static/tailwind.min.css" />
+  <script src="/static/ezzio-office-motion.js"></script>
+  <script src="/static/ezzio-office-canvas.js"></script>
+
+  <script>
+    if (typeof tailwind !== 'undefined') {
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              mono: ['"Fira Code"', 'monospace'],
+            },
+            colors: {
+              ezzio: {
+                bg: '#08090C',
+                card: '#101216',
+                border: '#1E232B',
+                accent: '#3B82F6',
+                gold: '#F59E0B',
+                success: '#10B981',
+                danger: '#EF4444',
+                purple: '#8B5CF6'
+              }
+            }
+          }
+        }
+      };
+    }
+  </script>
+  <style>
+/* E-ZZIO V9.4 TACTICAL DESIGN SYSTEM — COMPREHENSIVE UTILITIES */
+:root {
+  --ezzio-bg: #08090C;
+  --ezzio-card: #101216;
+  --ezzio-card-hover: #161920;
+  --ezzio-border: #1E232B;
+  --ezzio-border-bright: #2D3748;
+  --ezzio-accent: #3B82F6;
+  --ezzio-gold: #F59E0B;
+  --ezzio-success: #10B981;
+  --ezzio-danger: #EF4444;
+  --ezzio-purple: #8B5CF6;
+  --anim-speed: 1;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background-color: var(--ezzio-bg) !important;
+  color: #E2E8F0 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.font-mono, code, pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+}
+
+/* Tactical Color Utilities */
+.bg-ezzio-bg { background-color: #08090C !important; }
+.bg-ezzio-card { background-color: #101216 !important; }
+.border-ezzio-border { border-color: #1E232B !important; }
+.text-ezzio-gold { color: #F59E0B !important; }
+.text-ezzio-accent { color: #3B82F6 !important; }
+
+/* Grid Background */
+.pixel-grid {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+/* Tactical Glow Effects */
+.glow-gold { box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.4); }
+.glow-blue { box-shadow: 0 0 20px -5px rgba(59, 130, 246, 0.3); }
+.glow-red {
+  box-shadow: 0 0 30px -3px rgba(239, 68, 68, 0.5);
+  animation: pulse-red calc(2s / var(--anim-speed)) cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-red {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .92; transform: scale(1.008); }
+}
+
+@keyframes bobbing {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes typing-indicator {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.25); opacity: 1; }
+}
+
+.anim-bobbing {
+  animation: bobbing calc(2.4s / var(--anim-speed)) ease-in-out infinite;
+}
+.anim-typing {
+  animation: typing-indicator calc(0.8s / var(--anim-speed)) infinite ease-in-out;
+}
+
+.reduced-motion * {
+  animation: none !important;
+  transition: none !important;
+}
+
+.avatar-canvas {
+  image-rendering: pixelated;
+  width: 44px;
+  height: 44px;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #0b0d11; }
+::-webkit-scrollbar-thumb { background: #1f242d; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #374151; }
+
+/* Critical layout classes ensuring rock-solid offline render */
+.flex { display: flex !important; }
+.flex-col { flex-direction: column !important; }
+.flex-row { flex-direction: row !important; }
+.flex-1 { flex: 1 1 0% !important; }
+.flex-wrap { flex-wrap: wrap !important; }
+.items-center { align-items: center !important; }
+.items-start { align-items: flex-start !important; }
+.justify-between { justify-content: space-between !important; }
+.justify-center { justify-content: center !important; }
+.justify-end { justify-content: flex-end !important; }
+.gap-1 { gap: 0.25rem !important; }
+.gap-1\.5 { gap: 0.375rem !important; }
+.gap-2 { gap: 0.5rem !important; }
+.gap-2\.5 { gap: 0.625rem !important; }
+.gap-3 { gap: 0.75rem !important; }
+.gap-4 { gap: 1rem !important; }
+.gap-5 { gap: 1.25rem !important; }
+.gap-6 { gap: 1.5rem !important; }
+
+.grid { display: grid !important; }
+.grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)) !important; }
+@media (min-width: 768px) {
+  .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .md\:inline-flex { display: inline-flex !important; }
+  .md\:flex { display: flex !important; }
+}
+@media (min-width: 1536px) {
+  .2xl\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+}
+@media (min-width: 1280px) {
+  .xl\:flex-row { flex-direction: row !important; }
+  .xl\:w-\[420px\] { width: 420px !important; }
+}
+
+.w-full { width: 100% !important; }
+.h-full { height: 100% !important; }
+.min-h-screen { min-height: 100vh !important; }
+.max-w-\[1780px\] { max-width: 1780px !important; }
+.mx-auto { margin-left: auto !important; margin-right: auto !important; }
+.p-2 { padding: 0.5rem !important; }
+.p-2\.5 { padding: 0.625rem !important; }
+.p-3 { padding: 0.75rem !important; }
+.p-4 { padding: 1rem !important; }
+.p-6 { padding: 1.5rem !important; }
+.px-2 { padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
+.px-2\.5 { padding-left: 0.625rem !important; padding-right: 0.625rem !important; }
+.px-3 { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
+.px-4 { padding-left: 1rem !important; padding-right: 1rem !important; }
+.px-5 { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+.px-6 { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+.py-0\.5 { padding-top: 0.125rem !important; padding-bottom: 0.125rem !important; }
+.py-1 { padding-top: 0.25rem !important; padding-bottom: 0.25rem !important; }
+.py-1\.5 { padding-top: 0.375rem !important; padding-bottom: 0.375rem !important; }
+.py-2 { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+.py-2\.5 { padding-top: 0.625rem !important; padding-bottom: 0.625rem !important; }
+.py-3 { padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
+
+.rounded { border-radius: 0.25rem !important; }
+.rounded-lg { border-radius: 0.5rem !important; }
+.rounded-xl { border-radius: 0.75rem !important; }
+.rounded-2xl { border-radius: 1rem !important; }
+.rounded-full { border-radius: 9999px !important; }
+
+.border { border-width: 1px !important; border-style: solid !important; }
+.border-b { border-bottom-width: 1px !important; border-bottom-style: solid !important; }
+.border-t { border-top-width: 1px !important; border-top-style: solid !important; }
+.border-l { border-left-width: 1px !important; border-left-style: solid !important; }
+.border-y { border-top-width: 1px !important; border-bottom-width: 1px !important; border-style: solid !important; }
+
+.sticky { position: sticky !important; }
+.fixed { position: fixed !important; }
+.inset-0 { top: 0 !important; right: 0 !important; bottom: 0 !important; left: 0 !important; }
+.top-0 { top: 0 !important; }
+.z-30 { z-index: 30 !important; }
+.z-40 { z-index: 40 !important; }
+.z-50 { z-index: 50 !important; }
+.hidden { display: none !important; }
+.cursor-pointer { cursor: pointer !important; }
+.overflow-hidden { overflow: hidden !important; }
+.overflow-y-auto { overflow-y: auto !important; }
+.overflow-x-auto { overflow-x: auto !important; }
+.truncate { overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; }
+
+/* Typography */
+.text-xs { font-size: 0.75rem !important; line-height: 1rem !important; }
+.text-sm { font-size: 0.875rem !important; line-height: 1.25rem !important; }
+.text-base { font-size: 1rem !important; line-height: 1.5rem !important; }
+.text-lg { font-size: 1.125rem !important; line-height: 1.75rem !important; }
+.text-xl { font-size: 1.25rem !important; line-height: 1.75rem !important; }
+.text-2xl { font-size: 1.5rem !important; line-height: 2rem !important; }
+.font-bold { font-weight: 700 !important; }
+.font-semibold { font-weight: 600 !important; }
+.font-extrabold { font-weight: 800 !important; }
+.uppercase { text-transform: uppercase !important; }
+
+/* Color fills */
+.text-white { color: #ffffff !important; }
+.text-black { color: #000000 !important; }
+.text-neutral-200 { color: #e5e5e5 !important; }
+.text-neutral-300 { color: #d4d4d4 !important; }
+.text-neutral-400 { color: #a3a3a3 !important; }
+.text-neutral-500 { color: #737373 !important; }
+.text-neutral-600 { color: #525252 !important; }
+.text-blue-400 { color: #60a5fa !important; }
+.text-blue-300 { color: #93c5fd !important; }
+.text-amber-300 { color: #fcd34d !important; }
+.text-amber-400 { color: #fbbf24 !important; }
+.text-emerald-300 { color: #6ee7b7 !important; }
+.text-emerald-400 { color: #34d399 !important; }
+.text-red-300 { color: #fca5a5 !important; }
+.text-red-400 { color: #f87171 !important; }
+.text-purple-300 { color: #d8b4fe !important; }
+.text-purple-400 { color: #c084fc !important; }
+
+.bg-black\/50 { background-color: rgba(0, 0, 0, 0.5) !important; }
+.bg-black\/60 { background-color: rgba(0, 0, 0, 0.6) !important; }
+.bg-black\/75 { background-color: rgba(0, 0, 0, 0.75) !important; }
+.bg-black\/80 { background-color: rgba(0, 0, 0, 0.8) !important; }
+.bg-neutral-800 { background-color: #262626 !important; }
+.bg-neutral-900 { background-color: #171717 !important; }
+.bg-blue-600 { background-color: #2563eb !important; }
+.bg-amber-500 { background-color: #f59e0b !important; }
+.bg-amber-600 { background-color: #d97706 !important; }
+.bg-emerald-600 { background-color: #059669 !important; }
+.bg-red-600 { background-color: #dc2626 !important; }
+
+/* Responsive adjustments for mobile touch targets and dense viewports */
+@media (max-width: 768px) {
+  header.sticky, header {
+    position: relative !important;
+    top: auto !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+  main {
+    padding: 0.75rem !important;
+    gap: 0.75rem !important;
+  }
+  #provider-badges-group {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 10px !important;
+  }
+  .max-w-\[1780px\] {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 640px) {
+  button, .cursor-pointer {
+    min-height: 40px;
+  }
+  .grid-cols-1 {
+    grid-template-columns: 1fr !important;
+  }
+  #minimap-rooms {
+    overflow-x: auto;
+    max-width: 100%;
+    padding-bottom: 4px;
+  }
+}
+
+
+    :root {
+      --anim-speed: 1;
+    }
+    body {
+      background-color: #08090C;
+      color: #E2E8F0;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+      overflow-x: hidden;
+      user-select: none;
+    }
+    code, pre, .font-mono {
+      font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+    }
+    .pixel-grid {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+    .glow-gold { box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.4); }
+    .glow-blue { box-shadow: 0 0 20px -5px rgba(59, 130, 246, 0.3); }
+    .glow-red {
+      box-shadow: 0 0 30px -3px rgba(239, 68, 68, 0.5);
+      animation: pulse-red calc(2s / var(--anim-speed)) cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pulse-red {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: .92; transform: scale(1.008); }
+    }
+    @keyframes bobbing {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    @keyframes typing-indicator {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.25); opacity: 1; }
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 0.3; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .anim-bobbing {
+      animation: bobbing calc(2.4s / var(--anim-speed)) ease-in-out infinite;
+    }
+    .anim-typing {
+      animation: typing-indicator calc(0.8s / var(--anim-speed)) infinite ease-in-out;
+    }
+    .reduced-motion * {
+      animation: none !important;
+      transition: none !important;
+    }
+    /* SVG Avatar Canvas */
+    .avatar-canvas {
+      image-rendering: pixelated;
+      width: 44px;
+      height: 44px;
+    }
+    /* Scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0b0d11; }
+    ::-webkit-scrollbar-thumb { background: #1f242d; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #374151; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased pixel-grid" id="office-body">
+
+  <!-- ================= TOP HEADER HUD ================= -->
+  <header class="border-b border-ezzio-border bg-ezzio-card/95 backdrop-blur sticky top-0 z-40 px-6 py-2.5">
+    <div class="max-w-[1780px] mx-auto flex flex-wrap items-center justify-between gap-4">
+      
+      <!-- Brand & Master Governor Badge -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 via-amber-400 to-yellow-300 flex items-center justify-center font-black text-black shadow-lg text-lg ring-2 ring-amber-500/40">
+          👑
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold tracking-wider text-white text-base font-mono">E-ZZIO AGENT HQ</span>
+            <span id="hud-cmd-badge" class="text-[11px] px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 font-mono">V9.4 COMMAND</span>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-mono flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+              FROZEN CORE INTACT
+            </span>
+            <span id="badge-ledger" class="text-[10.5px] px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 font-mono hidden md:inline-flex items-center gap-1">
+              <span>⛓️</span> <span id="ledger-blocks">LEDGER: SECURE</span>
+            </span>
+          </div>
+          <p class="text-xs text-neutral-400 font-mono">Governed Visual Space · Port 8001 · CapabilityPolicy Active · Zero External Leak</p>
+        </div>
+      </div>
+
+      <!-- Telemetry Counters HUD (Clickable filters) -->
+      <div class="flex items-center gap-2.5 flex-wrap">
+        <div class="flex items-center bg-[#0C0E12] border border-ezzio-border rounded-xl px-3 py-1.5 gap-3 text-xs font-mono">
+          <div class="cursor-pointer hover:text-white transition" onclick="filterByStatus('ALL')">
+            <span class="text-neutral-500">AGENTS:</span>
+            <span id="stat-agents" class="text-white font-bold ml-1">10</span>
+          </div>
+          <div class="h-3 w-px bg-neutral-800"></div>
+          <div class="cursor-pointer hover:text-blue-300 transition" onclick="filterByStatus('WORKING')">
+            <span class="text-neutral-500">WORKING:</span>
+            <span id="stat-working" class="text-blue-400 font-bold ml-1">6</span>
+          </div>
+          <div class="h-3 w-px bg-neutral-800"></div>
+          <div class="cursor-pointer hover:text-amber-300 transition" onclick="filterByStatus('WAITING_APPROVAL')">
+            <span class="text-neutral-500">HITL WAIT:</span>
+            <span id="stat-waiting" class="text-amber-400 font-bold ml-1">0</span>
+          </div>
+          <div class="h-3 w-px bg-neutral-800"></div>
+          <div class="cursor-pointer hover:text-emerald-300 transition" onclick="filterByStatus('DONE')">
+            <span class="text-neutral-500">DONE:</span>
+            <span id="stat-done" class="text-emerald-400 font-bold ml-1">1</span>
+          </div>
+        </div>
+
+        <!-- Provider Status Badge Group (Dynamically Updated) -->
+        <div class="flex items-center bg-[#0C0E12] border border-ezzio-border rounded-xl px-3 py-1.5 gap-2 text-[11px] font-mono" id="provider-badges-group">
+          <span id="badge-ollama" title="Local Ollama (qwen3.5:9b Sovereign)" class="flex items-center gap-1 text-emerald-400"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>OLLAMA: qwen3.5 <span id="lat-ollama" class="text-[9px] text-neutral-400 font-normal">--ms</span></span>
+          <span id="badge-nvidia" title="NVIDIA NIM (nemotron-3-super-120b-a12b)" class="flex items-center gap-1 text-emerald-400"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>NVIDIA NIM <span id="lat-nvidia" class="text-[9px] text-neutral-400 font-normal">ONLINE</span></span>
+          <span id="badge-openrouter" title="OpenRouter (qwen-2.5-coder-32b-instruct)" class="flex items-center gap-1 text-emerald-400"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>OPENROUTER</span>
+          <span id="badge-gemini" title="Gemini 2.5/3.5 Cloud" class="flex items-center gap-1 text-emerald-400"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>GEMINI <span id="lat-gemini" class="text-[9px] text-neutral-400 font-normal">--ms</span></span>
+          <span id="badge-groq" title="Groq Llama-3.3-70b" class="flex items-center gap-1 text-neutral-400"><span class="w-1.5 h-1.5 rounded-full bg-neutral-500"></span>GROQ</span>
+          <span id="badge-antigravity" title="Antigravity 2.0 (Fail-safe external quota)" class="flex items-center gap-1 text-amber-400 bg-amber-950/40 px-1.5 py-0.5 rounded border border-amber-500/40"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>ANTIGRAVITY: QUOTA</span>
+        </div>
+
+        <!-- Workspace Modes & Controls -->
+        <div class="flex items-center gap-1.5 bg-[#0C0E12] border border-ezzio-border p-1 rounded-xl">
+          <button id="btn-mode-observer" onclick="toggleObserverMode()" title="Observer Mode (Auto-follow active agents)" class="px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition bg-neutral-800 text-neutral-300 hover:text-white flex items-center gap-1">
+            <span>🎥</span> <span class="hidden sm:inline">OBSERVER</span>
+          </button>
+          <button id="btn-mode-commander" onclick="toggleCommanderMode()" title="Commander Mode (Interactive controls)" class="px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition text-neutral-400 hover:text-white flex items-center gap-1">
+            <span>⚡</span> <span class="hidden sm:inline">COMMANDER</span>
+          </button>
+          <button id="btn-motion" onclick="toggleReducedMotion()" title="Reduced Motion Toggle (Accessibility)" class="px-2 py-1 rounded-lg text-xs font-mono text-neutral-400 hover:text-white">
+            🏃
+          </button>
+          <button onclick="refreshState()" title="Force Sync State" class="px-2 py-1 rounded-lg text-xs font-mono text-neutral-400 hover:text-white">
+            🔄
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================= HITL ALERT BANNER (CRITICAL) ================= -->
+  <div id="hitl-banner" class="hidden bg-red-950/80 border-y border-red-500/50 px-6 py-3 z-30 transition-all glow-red">
+    <div class="max-w-[1780px] mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl animate-bounce">⚠️</span>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold uppercase tracking-wider bg-red-600 text-white px-2 py-0.5 rounded font-mono">HITL INTERCEPTION REQUIRE_HUMAN</span>
+            <span id="hitl-banner-capability" class="text-sm font-bold text-white font-mono">drive.write</span>
+            <span class="text-xs text-neutral-400 font-mono" id="hitl-banner-id">appr_xxxx</span>
+          </div>
+          <p id="hitl-banner-summary" class="text-xs text-neutral-300 mt-0.5 font-mono">Action potentiellement mutatrice interceptée par CapabilityPolicy.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <span id="hitl-countdown" class="font-mono text-sm font-bold text-amber-400 bg-black/50 px-3 py-1 rounded border border-amber-500/30">04:59</span>
+        <button onclick="openHitlModal()" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs rounded-lg uppercase tracking-wider transition font-mono shadow-lg">
+          Examiner & Arbitrer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MAIN LAYOUT ================= -->
+  <main class="max-w-[1780px] w-full mx-auto p-6 flex-1 flex flex-col xl:flex-row gap-6">
+    
+    <!-- LEFT: 8-ROOM LIVING OFFICE FLOOR -->
+    <div class="flex-1 flex flex-col gap-5">
+      
+      <!-- Mini Map & Floor Navigation HUD -->
+      <div class="flex flex-wrap items-center justify-between gap-3 bg-ezzio-card/70 border border-ezzio-border px-4 py-2.5 rounded-xl text-xs font-mono">
+        <div class="flex items-center gap-2">
+          <span class="text-base">🗺️</span>
+          <span class="text-neutral-400">QUICK FOCUS:</span>
+          <div class="flex flex-wrap gap-1" id="minimap-rooms">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+        <div class="flex items-center gap-3 text-neutral-500">
+          <span id="offline-indicator" class="hidden text-red-400 font-bold flex items-center gap-1 bg-red-950/60 px-2 py-0.5 rounded border border-red-500/40">
+            <span class="w-2 h-2 rounded-full bg-red-400 animate-pulse"></span>
+            OFFLINE (LOCAL CACHE)
+          </span>
+          <span id="observer-indicator" class="hidden text-amber-400 font-bold flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+            OBSERVER ACTIVE
+          </span>
+          <span id="commander-indicator" class="hidden text-amber-400 font-bold flex items-center gap-1 bg-amber-950/40 px-2 py-0.5 rounded border border-amber-500/40">
+            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+            COMMANDER ACTIVE
+          </span>
+          <span id="motion-indicator" class="hidden text-blue-400 font-bold flex items-center gap-1 bg-blue-950/40 px-2 py-0.5 rounded border border-blue-500/40">
+            REDUCED MOTION
+          </span>
+          <span>POLL: <span id="last-poll" class="text-neutral-300">Just now</span></span>
+        </div>
+      </div>
+      <!-- Tactical In-App Notification Toast -->
+      <div id="tactical-toast" class="hidden fixed bottom-6 right-6 z-50 bg-[#121620] border border-blue-500/40 text-neutral-200 px-4 py-2.5 rounded-xl shadow-2xl font-mono text-xs flex items-center gap-2.5 transition-all">
+        <span id="toast-icon">ℹ️</span>
+        <span id="toast-msg">Notification</span>
+      </div>
+
+      <!-- VIEW SELECTOR & CAMERA HUD (V9.4 LIVING OFFICE) -->
+      <div class="flex flex-wrap items-center justify-between gap-3 bg-ezzio-card/70 border border-ezzio-border px-4 py-2.5 rounded-xl text-xs font-mono">
+        <div class="flex items-center gap-2">
+          <button id="tab-canvas-view" onclick="switchOfficeView('canvas')" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold transition flex items-center gap-1.5 shadow">
+            <span>🏢</span> <span>2.5D LIVING OFFICE</span>
+          </button>
+          <button id="tab-grid-view" onclick="switchOfficeView('grid')" class="px-3 py-1.5 rounded-lg bg-neutral-800 text-neutral-400 hover:text-white transition flex items-center gap-1.5">
+            <span>📊</span> <span>OPERATOR CARDS</span>
+          </button>
+          <button id="tab-showcase" onclick="triggerShowcaseDemo()" class="px-3 py-1.5 rounded-lg bg-purple-950/50 hover:bg-purple-900/50 border border-purple-500/40 text-purple-300 font-bold transition flex items-center gap-1.5" title="Déclencher une séquence vivante de démonstration">
+            <span>🎬</span> <span>SHOWCASE DEMO</span>
+          </button>
+        </div>
+        <div class="flex items-center gap-2" id="canvas-camera-bar">
+          <span class="text-neutral-500">CAMERA:</span>
+          <button onclick="canvasZoom(1.18)" class="px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-200" title="Zoom In">+</button>
+          <button onclick="canvasZoom(0.82)" class="px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-200" title="Zoom Out">-</button>
+          <button onclick="canvasResetCamera()" class="px-2.5 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-200" title="Center Overview">🎯 RECENTRER</button>
+          <span id="canvas-fps" class="text-emerald-400 font-bold ml-2 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/30">60 FPS</span>
+        </div>
+      </div>
+
+      <!-- 2.5D LIVING OFFICE CANVAS CONTAINER -->
+      <div id="office-canvas-container" class="relative w-full h-[520px] bg-[#08090C] border border-ezzio-border rounded-xl overflow-hidden shadow-2xl">
+        <canvas id="office-canvas" class="w-full h-full block"></canvas>
+      </div>
+
+      <!-- 8 ROOMS GRID (2.5D LIVING PIXEL CARDS) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-4" id="rooms-grid">
+        <!-- Rendered dynamically by JS -->
+      </div>
+
+      <!-- LIVE WORKFLOW TRACE BAR (PILOTÉ PAR VRAI TASKSTATE) -->
+      <div class="bg-ezzio-card border border-ezzio-border rounded-xl p-4 flex flex-col gap-3">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-neutral-300 font-mono flex items-center gap-2">
+            <span>🧬 Sovereign Governance Pipeline</span>
+            <span class="text-[10px] text-neutral-500 font-normal">Active Task: <span id="active-task-title" class="text-blue-400 font-bold">V9_CONSOLIDATION</span></span>
+          </h3>
+          <span class="text-[11px] font-mono text-neutral-400" id="pipeline-status">VERIFYING (95%)</span>
+        </div>
+        
+        <!-- Interactive Workflow Path -->
+        <div class="flex items-center justify-between gap-2 text-[10px] font-mono overflow-x-auto py-1">
+          <div class="flex-1 flex items-center gap-1.5 p-2 rounded bg-emerald-950/40 border border-emerald-500/40 text-emerald-300">
+            <span>✓</span> <span class="font-bold">PLAN</span>
+          </div>
+          <div class="text-neutral-600 font-bold">→</div>
+          <div class="flex-1 flex items-center gap-1.5 p-2 rounded bg-emerald-950/40 border border-emerald-500/40 text-emerald-300">
+            <span>✓</span> <span class="font-bold">POLICY</span>
+          </div>
+          <div class="text-neutral-600 font-bold">→</div>
+          <div id="pipe-hitl" class="flex-1 flex items-center gap-1.5 p-2 rounded bg-neutral-900 border border-neutral-800 text-neutral-400">
+            <span>⚖️</span> <span class="font-bold">HITL CHECK</span>
+          </div>
+          <div class="text-neutral-600 font-bold">→</div>
+          <div class="flex-1 flex items-center gap-1.5 p-2 rounded bg-blue-950/50 border border-blue-500/40 text-blue-300 animate-pulse">
+            <span>⚡</span> <span class="font-bold">RUNNING</span>
+          </div>
+          <div class="text-neutral-600 font-bold">→</div>
+          <div class="flex-1 flex items-center gap-1.5 p-2 rounded bg-neutral-900 border border-neutral-800 text-neutral-400">
+            <span>🧪</span> <span class="font-bold">VERIFY</span>
+          </div>
+          <div class="text-neutral-600 font-bold">→</div>
+          <div class="flex-1 flex items-center gap-1.5 p-2 rounded bg-neutral-900 border border-neutral-800 text-neutral-400">
+            <span>🏁</span> <span class="font-bold">DONE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TACTICAL AGENT HQ CHAT & COMMAND CONSOLE -->
+      <div id="chat-console-card" class="bg-ezzio-card border border-ezzio-border rounded-xl p-4 flex flex-col gap-3 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-ezzio-border pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-white font-mono">
+              Agent HQ Tactical Command & Chat Console
+            </h3>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30 font-mono">/master/chat</span>
+          </div>
+          <!-- Model and Profile Selector -->
+          <div class="flex items-center gap-2 text-xs font-mono">
+            <label class="text-neutral-400 text-[11px]">CIBLE:</label>
+            <select id="chat-model-target" class="bg-[#090A0D] border border-neutral-800 rounded px-2 py-1 text-neutral-200 text-xs focus:outline-none focus:border-blue-500 font-mono">
+              <option value="auto">E-ZZIO Master Governor (Auto Route)</option>
+              <option value="ollama_qwen">Ollama Local · qwen3.5:9b (Sovereign)</option>
+              <option value="nvidia_nim">NVIDIA NIM · nemotron-3-super-120b</option>
+              <option value="openrouter">OpenRouter · qwen-2.5-coder-32b</option>
+              <option value="groq_llama">Groq Cloud · llama-3.3-70b (Fast)</option>
+              <option value="gemini_cloud">Gemini Cloud · gemini-2.5-flash</option>
+            </select>
+            <select id="chat-mission-profile" class="bg-[#090A0D] border border-neutral-800 rounded px-2 py-1 text-neutral-200 text-xs focus:outline-none focus:border-blue-500 font-mono">
+              <option value="STANDARD">Profile: STANDARD</option>
+              <option value="COMPLEX">Profile: COMPLEX</option>
+              <option value="CRITICAL">Profile: CRITICAL</option>
+              <option value="LOCAL_ONLY">Profile: LOCAL_ONLY</option>
+              <option value="FAST">Profile: FAST</option>
+            </select>
+            <button onclick="clearChatLog()" class="px-2 py-1 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white text-[11px] transition" title="Nettoyer l'historique">
+              🧹
+            </button>
+          </div>
+        </div>
+
+        <!-- Chat History Stream -->
+        <div id="chat-messages-container" class="bg-[#060709] border border-neutral-900 rounded-lg p-3 flex flex-col gap-2.5 min-h-[140px] max-h-[260px] overflow-y-auto font-mono text-xs">
+          <!-- System Welcome Message -->
+          <div class="flex items-start gap-2 text-neutral-400 bg-black/40 p-2 rounded border border-neutral-800/60">
+            <span class="text-base">👑</span>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 text-[10.5px]">
+                <span class="text-amber-400 font-bold">E-ZZIO Master Governor</span>
+                <span class="text-neutral-500">System Ready</span>
+                <span class="text-[9.5px] px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">ONLINE</span>
+              </div>
+              <p class="text-neutral-300 mt-1 text-[11.5px] leading-relaxed">
+                Console Agent HQ opérationnelle. Tapez une instruction pour le Master Governor ou le coder_worker. Entrée pour envoyer, Maj+Entrée pour saut de ligne.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat Input & Controls -->
+        <div class="flex flex-col gap-2">
+          <div class="flex gap-2 items-end">
+            <div class="flex-1 relative">
+              <textarea id="chat-textarea" rows="2" placeholder="Saisir un ordre ou une question pour E-ZZIO (Entrée: Envoyer, Maj+Entrée: Saut de ligne)..." 
+                        class="w-full bg-[#090A0D] border border-neutral-800 rounded-lg px-3.5 py-2 text-xs text-neutral-100 focus:outline-none focus:border-blue-500 font-mono placeholder:text-neutral-600 resize-none leading-relaxed"></textarea>
+              <!-- Hidden backward compatibility input for legacy e2e tests -->
+              <input id="intent-input" type="hidden" />
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <button onclick="sendIntent()" id="send-intent-btn" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-bold text-xs rounded-lg transition font-mono flex items-center justify-center gap-1.5 shadow-lg shadow-blue-900/30">
+                <span>ENVOYER</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </button>
+              <button onclick="stopIntent()" id="stop-intent-btn" class="hidden px-3 py-1 bg-red-900/60 hover:bg-red-800 text-red-200 font-mono text-[10px] rounded border border-red-500/40 transition">
+                ⏹ STOP
+              </button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between text-[10px] font-mono text-neutral-500 px-1">
+            <span id="chat-status-bar">Prêt · Touche Entrée pour envoyer</span>
+            <span class="flex items-center gap-1 text-emerald-400">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              FastAPI Sovereign Channel
+            </span>
+          </div>
+          <!-- Result Container for Backward Compatibility with tests -->
+          <div id="intent-result" class="hidden text-xs font-mono bg-black/60 border border-neutral-800 p-2 rounded text-neutral-400 max-h-24 overflow-y-auto"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: MULTI-TAB SIDEBAR (TELEMETRY, LIVE CODE, HITL WIDGET) -->
+    <div class="w-full xl:w-[420px] flex flex-col gap-5">
+      
+      <!-- HITL STATUS WIDGET -->
+      <div class="bg-ezzio-card border border-ezzio-border rounded-xl p-4 flex flex-col gap-3">
+        <div class="flex items-center justify-between border-b border-ezzio-border pb-3">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-neutral-300 font-mono flex items-center gap-2">
+            <span>🛡️ HITL Governance</span>
+          </h3>
+          <span id="badge-hitl-count" class="text-[11px] font-mono px-2 py-0.5 rounded bg-neutral-800 text-neutral-400">0 pending</span>
+        </div>
+        <div id="hitl-widget-list" class="flex flex-col gap-2">
+          <div class="text-xs text-neutral-500 italic py-2 text-center font-mono">Aucune demande en attente. Politiques conformes.</div>
+        </div>
+      </div>
+
+      <!-- LIVE CODE REPOSITORY FEED -->
+      <div class="bg-ezzio-card border border-ezzio-border rounded-xl p-4 flex flex-col gap-3">
+        <div class="flex items-center justify-between border-b border-ezzio-border pb-2.5">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-neutral-300 font-mono flex items-center gap-2">
+            <span>💻 Live Code Activity</span>
+          </h3>
+          <span id="git-commit-badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-800 text-neutral-400">git: 5ae1679</span>
+        </div>
+        <div id="live-code-feed" class="flex flex-col gap-2 text-xs font-mono">
+          <!-- Loaded by JS -->
+        </div>
+      </div>
+
+      <!-- LIVE SOVEREIGN AUDIT STREAM -->
+      <div class="bg-ezzio-card border border-ezzio-border rounded-xl p-4 flex-1 flex flex-col gap-3">
+        <div class="flex items-center justify-between border-b border-ezzio-border pb-3">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-neutral-300 font-mono flex items-center gap-2">
+            <span>📡 Sovereign Event Log</span>
+          </h3>
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        </div>
+        <div id="event-stream" class="flex-1 flex flex-col gap-2 overflow-y-auto max-h-[380px] pr-1">
+          <!-- Events loaded via JS -->
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ================= AGENT INSPECTOR 2.0 (EXPANDED DRAWER) ================= -->
+  <div id="agent-drawer" style="display: none;" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex justify-end transition-opacity" role="dialog" aria-modal="true">
+    <div class="w-full max-w-lg bg-[#0F1116] border-l border-ezzio-border h-full flex flex-col shadow-2xl p-6 overflow-y-auto font-mono text-xs">
+      
+      <!-- Drawer Header -->
+      <div class="flex items-start justify-between border-b border-ezzio-border pb-4">
+        <div class="flex items-center gap-3">
+          <div id="drawer-avatar" class="w-12 h-12 rounded-xl bg-neutral-900 border border-neutral-700 flex items-center justify-center text-2xl shadow">
+            🤖
+          </div>
+          <div>
+            <h3 id="drawer-name" class="text-base font-bold text-white font-sans">Agent Name</h3>
+            <p id="drawer-role" class="text-[11px] text-neutral-400">Role definition</p>
+          </div>
+        </div>
+        <button onclick="closeAgentDrawer()" class="text-neutral-500 hover:text-white text-2xl p-1 font-sans" aria-label="Fermer l'inspecteur">&times;</button>
+      </div>
+
+      <!-- Drawer Body Sections -->
+      <div class="flex flex-col gap-4 mt-4">
+        
+        <!-- Status & Room -->
+        <div>
+          <span class="text-neutral-500 block mb-1">STATUS & ZONE</span>
+          <div class="flex items-center gap-2">
+            <span id="drawer-status" class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 font-bold">WORKING</span>
+            <span id="drawer-room" class="px-2 py-0.5 rounded bg-neutral-800 text-neutral-300 border border-neutral-700">command_center</span>
+            <span id="drawer-hierarchy" class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">MASTER</span>
+          </div>
+        </div>
+
+        <!-- Current Action & Context Bubble -->
+        <div>
+          <span class="text-neutral-500 block mb-1">CURRENT ACTION & THOUGHT BUBBLE</span>
+          <div class="bg-black/60 p-3 rounded-lg border border-neutral-800 flex flex-col gap-1.5">
+            <div id="drawer-action" class="text-neutral-200">Supervising...</div>
+            <div id="drawer-bubble" class="text-blue-400 text-[11px] italic">"..."</div>
+          </div>
+        </div>
+
+        <!-- Progress -->
+        <div>
+          <span class="text-neutral-500 block mb-1">TASK PROGRESS</span>
+          <div class="w-full bg-neutral-800 h-2 rounded-full overflow-hidden">
+            <div id="drawer-progress" class="bg-blue-500 h-full w-3/4 transition-all"></div>
+          </div>
+        </div>
+
+        <!-- LLM Model & Strategy -->
+        <div>
+          <span class="text-neutral-500 block mb-1">MODEL & FEDERATION PROVIDER</span>
+          <div class="bg-black/60 p-2.5 rounded-lg border border-neutral-800 flex justify-between items-center">
+            <span id="drawer-model" class="text-amber-400 font-bold">gemini-3.7-flash</span>
+            <span id="drawer-provider" class="text-neutral-400">cloud_gemini</span>
+          </div>
+        </div>
+
+        <!-- Tools & Capabilities Under Policy -->
+        <div>
+          <span class="text-neutral-500 block mb-1">GOVERNED TOOLS & CAPABILITIES</span>
+          <div id="drawer-tools" class="flex flex-wrap gap-1.5"></div>
+        </div>
+
+        <!-- Collaboration & Child Subagents -->
+        <div>
+          <span class="text-neutral-500 block mb-1">COLLABORATION LINK & SUBAGENTS</span>
+          <div id="drawer-collab" class="bg-black/60 p-2.5 rounded-lg border border-neutral-800 text-neutral-300">
+            Aucun sous-agent
+          </div>
+        </div>
+
+        <!-- Live Terminal Logs -->
+        <div>
+          <span class="text-neutral-500 block mb-1">REAL AGENT TERMINAL LOGS</span>
+          <div id="drawer-terminal" class="bg-black/80 p-3 rounded-lg border border-neutral-800 text-neutral-300 text-[11px] flex flex-col gap-1 max-h-36 overflow-y-auto">
+            <div>PS> Initializing...</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Drawer Footer Actions -->
+      <div class="mt-6 pt-4 border-t border-ezzio-border flex items-center justify-between">
+        <button onclick="focusAgentFromDrawer()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold text-xs transition">
+          🎯 Focus Agent
+        </button>
+        <button onclick="closeAgentDrawer()" class="px-4 py-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-300 rounded-lg text-xs transition">
+          Fermer
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= HITL DECISION MODAL ================= -->
+  <div id="hitl-modal" style="display: none;" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true">
+    <div class="bg-[#12141A] border border-amber-500/40 rounded-2xl max-w-lg w-full p-6 shadow-2xl glow-gold flex flex-col gap-4 font-mono text-xs">
+      
+      <div class="flex items-start justify-between border-b border-neutral-800 pb-3 font-sans">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🛡️</span>
+          <div>
+            <h3 class="text-base font-bold text-white">Human-In-The-Loop Governance Review</h3>
+            <p class="text-xs text-amber-400/80 font-mono">Arbitrage d'action potentiellement destructive</p>
+          </div>
+        </div>
+        <button onclick="closeHitlModal()" class="text-neutral-500 hover:text-white text-xl p-1" aria-label="Fermer l'arbitrage">&times;</button>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <div class="bg-black/60 p-3 rounded-lg border border-neutral-800 flex flex-col gap-1.5">
+          <div class="flex justify-between">
+            <span class="text-neutral-500">APPROVAL ID:</span>
+            <span id="modal-appr-id" class="text-neutral-200 font-bold">appr_...</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-neutral-500">CAPABILITY:</span>
+            <span id="modal-appr-cap" class="text-amber-400 font-bold">drive.write</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-neutral-500">SCOPE:</span>
+            <span id="modal-appr-scope" class="text-neutral-300">external_write</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-neutral-500">TIME REMAINING:</span>
+            <span id="modal-appr-time" class="text-emerald-400 font-bold">04:45</span>
+          </div>
+        </div>
+
+        <div>
+          <span class="text-neutral-400 block mb-1 font-sans">SAFE SUMMARY (No secrets exposed):</span>
+          <div id="modal-appr-summary" class="bg-neutral-900 p-3 rounded-lg border border-neutral-800 text-white leading-relaxed font-mono text-[11px]">
+            -
+          </div>
+        </div>
+
+        <div>
+          <span class="text-neutral-400 block mb-1 font-sans">TARGET PAYLOAD & MUTATION PREVIEW:</span>
+          <pre id="modal-appr-payload" class="bg-black/80 p-3 rounded-lg border border-neutral-800 text-blue-300 font-mono text-[10px] max-h-36 overflow-y-auto whitespace-pre-wrap">--</pre>
+        </div>
+
+        <div>
+          <span class="text-neutral-400 block mb-1 font-sans">OPERATOR MOTIVATION (Audit trail justification):</span>
+          <input id="modal-appr-reason" type="text" placeholder="Ex: Autorisé pour les besoins de validation de déploiement souverain..." 
+                 class="w-full bg-black/60 border border-neutral-800 rounded-lg p-2 text-neutral-200 focus:outline-none focus:border-amber-500 font-mono text-xs">
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-2 border-t border-neutral-800">
+        <button onclick="decideHitl('REJECT')" class="px-4 py-2 bg-neutral-800 hover:bg-red-900/60 hover:text-red-300 border border-neutral-700 rounded-lg transition text-neutral-300 font-bold">
+          ✕ REJETER
+        </button>
+        <button onclick="decideHitl('APPROVE')" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold transition flex items-center gap-1.5 shadow-lg shadow-emerald-900/30">
+          ✓ APPROUVER L'ACTION
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    // Room Configurations & 2.5D Room Identifiers
+    const ROOM_METADATA = {
+      command_center: { name: 'Command Center', icon: '👑', desc: 'Sovereign Governor & Master Policy' },
+      dev_lab: { name: 'Dev & Autonomous Lab', icon: '💻', desc: 'Coding Worker & Hermes Subagent' },
+      research_room: { name: 'Forensics & Research', icon: '🔬', desc: 'Knowledge & Exploration Scout' },
+      test_lab: { name: 'Test & Verification Lab', icon: '🧪', desc: 'Continuous Pytest Regression' },
+      security_vault: { name: 'Security Vault & Ledger', icon: '🛡️', desc: 'AuditLedger & CapabilityPolicy' },
+      docs_room: { name: 'Documentation Chamber', icon: '📝', desc: 'Architecture & UI Specifications' },
+      devops_dock: { name: 'DevOps & MCP Dock', icon: '🚀', desc: 'Hermes MCP Gateway & Routing' },
+      memory_core: { name: 'Memory & State Core', icon: '🧠', desc: 'SQLite WAL & FTS5 Semantic Bus' },
+    };
+
+    // Generative Procedural SVG Avatar System
+    function generateAvatarSvg(avatarType, status, isSubagent = false) {
+      const isWorking = status === 'WORKING';
+      const isWaiting = status === 'WAITING_APPROVAL';
+      const isError = status === 'ERROR';
+
+      // Base colors by role
+      let skinColor = '#FBBF24';
+      let clothesColor = '#3B82F6';
+      let accessory = '';
+
+      if (avatarType === 'crown_master') {
+        clothesColor = '#F59E0B';
+        accessory = `<rect x="14" y="6" width="16" height="5" fill="#FBBF24" rx="1"/><polygon points="14,6 18,2 22,6 26,2 30,6" fill="#F59E0B"/>`;
+      } else if (avatarType === 'pixel_coder') {
+        clothesColor = '#10B981';
+        accessory = `<rect x="12" y="28" width="20" height="10" fill="#1F2937" rx="2"/><rect x="15" y="30" width="14" height="6" fill="#38BDF8"/>`;
+      } else if (avatarType === 'pixel_shield') {
+        clothesColor = '#8B5CF6';
+        accessory = `<polygon points="32,20 38,24 38,32 32,38 26,32 26,24" fill="#3B82F6" stroke="#93C5FD" stroke-width="1.5"/>`;
+      } else if (avatarType === 'pixel_tester') {
+        clothesColor = '#06B6D4';
+        accessory = `<circle cx="34" cy="24" r="5" fill="#10B981" stroke="#E2E8F0" stroke-width="1"/><rect x="33" y="16" width="2" height="4" fill="#E2E8F0"/>`;
+      } else if (avatarType === 'pixel_researcher') {
+        clothesColor = '#EC4899';
+        accessory = `<circle cx="32" cy="22" r="5" fill="none" stroke="#FBBF24" stroke-width="2"/><line x1="36" y1="26" x2="40" y2="30" stroke="#FBBF24" stroke-width="2"/>`;
+      } else if (avatarType === 'pixel_hermes') {
+        clothesColor = '#9333EA';
+        accessory = `<circle cx="22" cy="18" r="2" fill="#22D3EE"/><rect x="14" y="12" width="16" height="4" fill="#6B7280" rx="1"/>`;
+      } else if (avatarType === 'pixel_antigravity') {
+        clothesColor = '#EF4444';
+        accessory = `<circle cx="22" cy="14" r="3" fill="#DC2626"/><line x1="22" y1="8" x2="22" y2="14" stroke="#DC2626" stroke-width="1.5"/>`;
+      } else {
+        clothesColor = '#64748B';
+      }
+
+      // Status indicator ring
+      let statusRing = '';
+      if (isWaiting) {
+        statusRing = `<circle cx="22" cy="22" r="20" fill="none" stroke="#EF4444" stroke-width="2" class="animate-ping" opacity="0.6"/>`;
+      } else if (isWorking) {
+        statusRing = `<circle cx="22" cy="22" r="20" fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-dasharray="4,4" class="anim-typing"/>`;
+      }
+
+      return `
+        <svg viewBox="0 0 44 44" class="avatar-canvas ${isWorking ? 'anim-bobbing' : ''}">
+          ${statusRing}
+          <!-- Body -->
+          <rect x="14" y="22" width="16" height="16" fill="${clothesColor}" rx="3"/>
+          <!-- Head -->
+          <rect x="14" y="10" width="16" height="13" fill="${skinColor}" rx="2"/>
+          <!-- Eyes -->
+          <rect x="17" y="14" width="3" height="3" fill="#0F172A"/>
+          <rect x="24" y="14" width="3" height="3" fill="#0F172A"/>
+          ${accessory}
+        </svg>
+      `;
+    }
+
+    // Security Sanitization Utility
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    let officeState = null;
+    let currentPendingApproval = null;
+    let observerInterval = null;
+    let isCommanderMode = false;
+    let selectedAgentId = null;
+    let currentStatusFilter = 'ALL';
+
+    async function fetchOfficeState() {
+      try {
+        const res = await fetch('/master/api/v1/office/state');
+        if (res.ok) {
+          const data = await res.json();
+          try { localStorage.setItem('ezzio_cached_state', JSON.stringify(data)); } catch(e) {}
+          const offlineBadge = document.getElementById('offline-indicator');
+          if (offlineBadge) offlineBadge.classList.add('hidden');
+          return data;
+        }
+      } catch (err) {
+        console.warn('Network offline, loading cached state...', err);
+      }
+      // Offline fallback: load cached state from localStorage
+      const offlineBadge = document.getElementById('offline-indicator');
+      if (offlineBadge) offlineBadge.classList.remove('hidden');
+      try {
+        const cached = localStorage.getItem('ezzio_cached_state');
+        if (cached) return JSON.parse(cached);
+      } catch (e) {}
+      return null;
+    }
+
+    async function fetchPendingApprovals() {
+      try {
+        const res = await fetch('/master/api/v1/approvals/pending');
+        if (res.ok) return await res.json();
+      } catch (e) {
+        console.error('Pending approvals fetch failed', e);
+      }
+      return { pending_approvals: [], total: 0 };
+    }
+
+    async function fetchOfficeEvents() {
+      try {
+        const res = await fetch('/master/api/v1/office/events');
+        if (res.ok) return await res.json();
+      } catch (e) {
+        console.error('Events fetch failed', e);
+      }
+      return { events: [], total: 0 };
+    }
+
+    async function fetchSystemDiagnostics() {
+      try {
+        const res = await fetch('/master/api/v1/system/diagnostics');
+        if (res.ok) return await res.json();
+      } catch (e) {
+        console.warn('System diagnostics fetch failed', e);
+      }
+      return null;
+    }
+
+    async function fetchProvidersHealth() {
+      try {
+        const res = await fetch('/master/api/v1/providers/health');
+        if (res.ok) return await res.json();
+      } catch (e) {
+        console.warn('Providers health fetch failed', e);
+      }
+      return null;
+    }
+
+    function renderRoomsAndAgents(state) {
+      const grid = document.getElementById('rooms-grid');
+      grid.innerHTML = '';
+      if (!state || !Array.isArray(state.rooms) || !Array.isArray(state.agents)) return;
+
+      state.rooms.forEach(roomId => {
+        const roomMeta = ROOM_METADATA[roomId] || { name: roomId, icon: '🏢', desc: '' };
+        let agentsInRoom = state.agents.filter(a => a.room === roomId);
+        
+        if (currentStatusFilter !== 'ALL') {
+          agentsInRoom = agentsInRoom.filter(a => a.status === currentStatusFilter);
+        }
+
+        const roomEl = document.createElement('div');
+        roomEl.id = `room-${roomId}`;
+        roomEl.className = 'bg-ezzio-card border border-ezzio-border rounded-xl p-4 flex flex-col justify-between min-h-[260px] transition-all hover:border-neutral-700';
+
+        // Room Header
+        let headerHtml = `
+          <div class="flex items-center justify-between border-b border-neutral-800 pb-2 mb-3">
+            <div class="flex items-center gap-2">
+              <span class="text-base">${escapeHtml(roomMeta.icon)}</span>
+              <span class="text-xs font-bold text-neutral-200 tracking-wide font-mono">${escapeHtml(roomMeta.name)}</span>
+            </div>
+            <span class="text-[10px] font-mono text-neutral-500">${agentsInRoom.length} agent${agentsInRoom.length > 1 ? 's' : ''}</span>
+          </div>
+        `;
+
+        // Agents in Room
+        let agentsHtml = '<div class="flex flex-col gap-3 flex-1">';
+        if (agentsInRoom.length === 0) {
+          agentsHtml += '<div class="text-[11px] text-neutral-600 font-mono italic my-auto text-center">Aucun agent actif dans cette zone</div>';
+        } else {
+          agentsInRoom.forEach(agent => {
+            let statusBadge = 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+            if (agent.status === 'WAITING_APPROVAL') statusBadge = 'bg-red-500/30 text-red-300 border-red-500/50 glow-red animate-pulse';
+            if (agent.status === 'DONE') statusBadge = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+            if (agent.status === 'IDLE') statusBadge = 'bg-neutral-800 text-neutral-400 border-neutral-700';
+            if (agent.status === 'ERROR') statusBadge = 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+
+            const isSubagent = agent.parent_id !== null && agent.parent_id !== undefined;
+            const svgAvatar = generateAvatarSvg(agent.avatar, agent.status, isSubagent);
+            const safeAgentId = escapeHtml(agent.agent_id);
+            const safeName = escapeHtml(agent.name);
+            const safeRole = escapeHtml(agent.role);
+            const safeStatus = escapeHtml(agent.status);
+            const safeModel = escapeHtml(agent.model);
+            const safeAction = escapeHtml(agent.current_action);
+            const safeBubble = agent.bubble ? escapeHtml(agent.bubble) : '';
+            const safeProgress = Math.max(0, Math.min(100, Number(agent.progress) || 0));
+
+            agentsHtml += `
+              <div id="agent-card-${safeAgentId}" onclick="inspectAgent('${safeAgentId}')" 
+                   class="group cursor-pointer bg-[#0A0B0E] hover:bg-[#13161D] border ${agent.status === 'WAITING_APPROVAL' ? 'border-red-500/60 glow-red' : 'border-neutral-800'} rounded-lg p-2.5 transition-all flex flex-col gap-2 ${isSubagent ? 'ml-3 border-l-2 border-l-purple-500' : ''}">
+                
+                <div class="flex items-start justify-between gap-2">
+                  <div class="flex items-center gap-2.5">
+                    ${svgAvatar}
+                    <div>
+                      <div class="flex items-center gap-1.5">
+                        <span class="text-xs font-bold text-white group-hover:text-blue-400 transition font-sans">${safeName}</span>
+                        ${agent.is_master ? '<span class="text-[9px] bg-amber-500/20 text-amber-300 px-1 py-0.2 rounded font-mono">MASTER</span>' : ''}
+                        ${isSubagent ? '<span class="text-[9px] bg-purple-500/20 text-purple-300 px-1 py-0.2 rounded font-mono">SUB</span>' : ''}
+                      </div>
+                      <span class="text-[10px] text-neutral-400 font-mono line-clamp-1">${safeRole}</span>
+                    </div>
+                  </div>
+                  <span class="text-[9px] font-mono px-1.5 py-0.5 rounded border ${statusBadge}">${safeStatus}</span>
+                </div>
+
+                <!-- Living Thought Bubble -->
+                ${safeBubble ? `
+                  <div class="bg-black/60 border border-neutral-800/80 px-2.5 py-1 rounded text-[10.5px] font-mono text-neutral-300 flex items-center gap-1.5">
+                    <span class="text-blue-400">💬</span>
+                    <span class="truncate">${safeBubble}</span>
+                  </div>
+                ` : ''}
+
+                <!-- Action & Real Progress -->
+                <div class="text-[11px] text-neutral-300 font-mono line-clamp-1">
+                  <span class="text-neutral-500">&gt;</span> ${safeAction}
+                </div>
+
+                <div class="w-full bg-neutral-900 h-1.5 rounded-full overflow-hidden">
+                  <div class="${agent.status === 'ERROR' ? 'bg-amber-500' : agent.status === 'WAITING_APPROVAL' ? 'bg-red-500' : 'bg-blue-500'} h-full transition-all" style="width: ${safeProgress}%"></div>
+                </div>
+
+                <!-- Footer: Model Badge & Inspect Trigger -->
+                <div class="flex items-center justify-between pt-1 border-t border-neutral-900 text-[10px] font-mono">
+                  <span class="text-neutral-400 bg-neutral-900 px-1.5 py-0.5 rounded border border-neutral-800 truncate max-w-[130px]">${safeModel}</span>
+                  <button onclick="event.stopPropagation(); inspectAgent('${safeAgentId}')" class="text-blue-400 hover:text-blue-300 px-1.5 py-0.5 rounded bg-blue-950/40 hover:bg-blue-900/50 border border-blue-500/30 transition">
+                    Inspect 🔎
+                  </button>
+                </div>
+
+                <!-- Collaborator Link Tag -->
+                ${agent.collaborator_id ? `
+                  <div class="text-[9.5px] font-mono text-purple-400 flex items-center gap-1">
+                    <span>⚡ Linked to:</span>
+                    <span class="underline">${escapeHtml(agent.collaborator_id)}</span>
+                  </div>
+                ` : ''}
+
+              </div>
+            `;
+          });
+        }
+        agentsHtml += '</div>';
+
+        roomEl.innerHTML = headerHtml + agentsHtml;
+        grid.appendChild(roomEl);
+      });
+    }
+
+    function renderHUD(state, approvals, diag, providersHealth) {
+      document.getElementById('stat-agents').textContent = state.summary.total_agents;
+      document.getElementById('stat-working').textContent = state.summary.working;
+      document.getElementById('stat-waiting').textContent = state.summary.waiting_approval;
+      document.getElementById('stat-done').textContent = state.summary.done;
+      document.getElementById('badge-hitl-count').textContent = `${approvals.total || approvals.pending_approvals.length} pending`;
+
+      // Task and Git binding
+      if (state.summary) {
+        const taskEl = document.getElementById('active-task-title');
+        if (taskEl && state.summary.active_task) {
+          taskEl.textContent = state.summary.active_task;
+        }
+      }
+
+      // Live Cryptographic Audit Ledger & Diagnostics
+      if (diag && diag.audit_ledger) {
+        const blocksEl = document.getElementById('ledger-blocks');
+        if (blocksEl) {
+          blocksEl.textContent = `CHAIN: #${diag.audit_ledger.chain_length} (${diag.audit_ledger.status})`;
+        }
+      }
+
+      // Live Provider Latency & Health Badges
+      if (providersHealth && providersHealth.health && providersHealth.health.providers) {
+        const p = providersHealth.health.providers;
+        if (p.gemini) {
+          const gemLat = document.getElementById('lat-gemini');
+          if (gemLat) gemLat.textContent = p.gemini.online ? `${p.gemini.latency_ms}ms` : 'OFFLINE';
+        }
+        if (p.ollama) {
+          const ollLat = document.getElementById('lat-ollama');
+          if (ollLat) ollLat.textContent = p.ollama.online ? `${p.ollama.latency_ms}ms` : 'OFFLINE';
+        }
+        if (p.groq) {
+          const groqBadge = document.getElementById('badge-groq');
+          if (groqBadge) {
+            groqBadge.className = p.groq.online ? 'flex items-center gap-1 text-emerald-400' : 'flex items-center gap-1 text-neutral-500';
+          }
+        }
+        const nvidiaBadge = document.getElementById('badge-nvidia');
+        if (nvidiaBadge) {
+          nvidiaBadge.className = 'flex items-center gap-1 text-emerald-400';
+        }
+        const openrouterBadge = document.getElementById('badge-openrouter');
+        if (openrouterBadge) {
+          openrouterBadge.className = 'flex items-center gap-1 text-emerald-400';
+        }
+      }
+
+      // Pipeline update
+      const pipeHitl = document.getElementById('pipe-hitl');
+      const pipeStatus = document.getElementById('pipeline-status');
+      if (approvals.pending_approvals && approvals.pending_approvals.length > 0) {
+        if (pipeHitl) pipeHitl.className = 'flex-1 flex items-center gap-1.5 p-2 rounded bg-red-950/60 border border-red-500/60 text-red-300 animate-pulse';
+        if (pipeStatus) pipeStatus.textContent = 'HALTED: REQUIRE_HUMAN';
+      } else {
+        if (pipeHitl) pipeHitl.className = 'flex-1 flex items-center gap-1.5 p-2 rounded bg-neutral-900 border border-neutral-800 text-neutral-400';
+        if (pipeStatus && state && Array.isArray(state.agents) && state.agents.length > 0) {
+          const avgProgress = Math.round(state.agents.reduce((acc, a) => acc + (a.progress || 0), 0) / state.agents.length);
+          pipeStatus.textContent = avgProgress >= 100 ? 'COMPLETED (100%)' : `NOMINAL EXECUTION (${avgProgress}%)`;
+        }
+      }
+
+      // HITL Banner & Widget
+      const banner = document.getElementById('hitl-banner');
+      const widgetList = document.getElementById('hitl-widget-list');
+
+      if (approvals.pending_approvals && approvals.pending_approvals.length > 0) {
+        const first = approvals.pending_approvals[0];
+        currentPendingApproval = first;
+
+        banner.classList.remove('hidden');
+        document.getElementById('hitl-banner-capability').textContent = first.capability_name;
+        document.getElementById('hitl-banner-id').textContent = first.approval_id;
+        document.getElementById('hitl-banner-summary').textContent = first.safe_summary;
+        document.getElementById('hitl-countdown').textContent = formatSeconds(first.time_remaining_sec);
+
+        widgetList.innerHTML = approvals.pending_approvals.map(req => {
+          const safeCap = escapeHtml(req.capability_name);
+          const safeTime = escapeHtml(formatSeconds(req.time_remaining_sec));
+          const safeSummary = escapeHtml(req.safe_summary);
+          const safeId = escapeHtml(req.approval_id);
+          return `
+            <div class="bg-red-950/40 border border-red-500/40 p-2.5 rounded-lg flex flex-col gap-1 text-xs font-mono">
+              <div class="flex justify-between items-center">
+                <span class="text-red-400 font-bold">${safeCap}</span>
+                <span class="text-neutral-400 text-[10px]">${safeTime}</span>
+              </div>
+              <div class="text-neutral-300 text-[11px] line-clamp-2">${safeSummary}</div>
+              <button onclick="openHitlModal('${safeId}')" class="mt-1 w-full py-1 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded text-[10px] uppercase font-mono">Examiner</button>
+            </div>
+          `;
+        }).join('');
+      } else {
+        banner.classList.add('hidden');
+        currentPendingApproval = null;
+        widgetList.innerHTML = `<div class="text-xs text-neutral-500 italic py-2 text-center font-mono">Aucune demande en attente. Politiques conformes.</div>`;
+      }
+    }
+
+    function renderMinimap(rooms) {
+      const container = document.getElementById('minimap-rooms');
+      if (container.children.length > 0) return;
+      if (!Array.isArray(rooms)) return;
+      container.innerHTML = rooms.map(roomId => {
+        const meta = ROOM_METADATA[roomId] || { name: roomId, icon: '🏢' };
+        const safeRoomId = escapeHtml(roomId);
+        const safeIcon = escapeHtml(meta.icon);
+        const safeName = escapeHtml(meta.name.split(' ')[0]);
+        return `
+          <button onclick="focusRoom('${safeRoomId}')" class="px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-[10px] transition">
+            ${safeIcon} ${safeName}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderLiveCodeActivity(agents) {
+      const feed = document.getElementById('live-code-feed');
+      if (!Array.isArray(agents)) return;
+      const activeCoders = agents.filter(a => a && a.code_activity);
+      if (activeCoders.length > 0 && activeCoders[0].code_activity.commit) {
+        const gitBadge = document.getElementById('git-commit-badge');
+        if (gitBadge) gitBadge.textContent = `git: ${activeCoders[0].code_activity.commit}`;
+      }
+      feed.innerHTML = activeCoders.slice(0, 3).map(a => `
+        <div class="bg-black/50 border border-neutral-800/80 p-2 rounded flex flex-col gap-1">
+          <div class="flex justify-between items-center text-[10px] text-neutral-400">
+            <span class="text-blue-400 font-bold">${escapeHtml(a.name)}</span>
+            <span>${escapeHtml(a.code_activity.commit || '')}</span>
+          </div>
+          <div class="text-[11px] text-neutral-200 truncate font-mono">
+            📄 ${escapeHtml(a.code_activity.file || '')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderEvents(events) {
+      const container = document.getElementById('event-stream');
+      if (!Array.isArray(events)) return;
+      container.innerHTML = events.map(e => `
+        <div class="bg-[#0A0B0D] border border-neutral-800/80 p-2 rounded text-xs font-mono flex items-start gap-2 hover:border-neutral-700 transition">
+          <span class="text-neutral-500 text-[10px] mt-0.5">${escapeHtml(e.time || '15:30')}</span>
+          <div class="flex-1">
+            <span class="text-blue-400 font-semibold">${escapeHtml(e.actor || 'System')}:</span>
+            <span class="text-neutral-300 ml-1">${escapeHtml(e.action || '')}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function formatSeconds(sec) {
+      if (sec <= 0) return '00:00 (Expiré)';
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    function focusRoom(roomId) {
+      const el = document.getElementById(`room-${roomId}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.classList.add('ring-2', 'ring-blue-500');
+        setTimeout(() => el.classList.remove('ring-2', 'ring-blue-500'), 1500);
+      }
+    }
+
+    function focusAgent(agentId) {
+      const el = document.getElementById(`agent-card-${agentId}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.classList.add('ring-2', 'ring-amber-400');
+        setTimeout(() => el.classList.remove('ring-2', 'ring-amber-400'), 1500);
+      }
+    }
+
+    function focusAgentFromDrawer() {
+      if (selectedAgentId) {
+        closeAgentDrawer();
+        focusAgent(selectedAgentId);
+      }
+    }
+
+    function inspectAgent(agentId) {
+      if (!officeState) return;
+      const agent = officeState.agents.find(a => a.agent_id === agentId);
+      if (!agent) return;
+
+      selectedAgentId = agentId;
+      document.getElementById('drawer-name').textContent = agent.name;
+      document.getElementById('drawer-role').textContent = agent.role;
+      document.getElementById('drawer-status').textContent = agent.status;
+      document.getElementById('drawer-room').textContent = agent.room;
+      document.getElementById('drawer-hierarchy').textContent = agent.is_master ? 'MASTER GOVERNOR' : (agent.parent_id ? `SUBAGENT OF ${agent.parent_id}` : 'INDEPENDENT WORKER');
+      document.getElementById('drawer-action').textContent = agent.current_action;
+      document.getElementById('drawer-bubble').textContent = agent.bubble ? `"${agent.bubble}"` : '"En attente de tâche..."';
+      document.getElementById('drawer-progress').style.width = `${agent.progress}%`;
+      document.getElementById('drawer-model').textContent = agent.model;
+      document.getElementById('drawer-provider').textContent = agent.provider;
+
+      // Avatar
+      document.getElementById('drawer-avatar').innerHTML = generateAvatarSvg(agent.avatar, agent.status, agent.parent_id !== null);
+
+      // Tools
+      const toolsContainer = document.getElementById('drawer-tools');
+      toolsContainer.innerHTML = (agent.tools || []).map(t => `<span class="bg-neutral-800 border border-neutral-700 px-2 py-0.5 rounded text-neutral-300 text-[10px]">${escapeHtml(t)}</span>`).join('');
+
+      // Collaboration
+      const collabEl = document.getElementById('drawer-collab');
+      collabEl.textContent = agent.collaborator_id ? `⚡ En collaboration active avec ${agent.collaborator_id}` : 'Aucune liaison temporaire active';
+
+      // Terminal Logs
+      const termEl = document.getElementById('drawer-terminal');
+      termEl.innerHTML = '';
+      if (agent.terminal_logs && agent.terminal_logs.length > 0) {
+        agent.terminal_logs.forEach(log => {
+          const logDiv = document.createElement('div');
+          logDiv.textContent = log;
+          termEl.appendChild(logDiv);
+        });
+      } else {
+        const emptyDiv = document.createElement('div');
+        emptyDiv.textContent = 'PS> [NO RECENT LOGS]';
+        termEl.appendChild(emptyDiv);
+      }
+
+      const drawer = document.getElementById('agent-drawer');
+      drawer.classList.remove('hidden');
+      drawer.style.display = 'flex';
+    }
+
+    function closeAgentDrawer() {
+      const drawer = document.getElementById('agent-drawer');
+      drawer.classList.add('hidden');
+      drawer.style.display = 'none';
+    }
+
+    function openHitlModal(apprId) {
+      if (!currentPendingApproval) return;
+      const modal = document.getElementById('hitl-modal');
+      document.getElementById('modal-appr-id').textContent = currentPendingApproval.approval_id;
+      document.getElementById('modal-appr-cap').textContent = currentPendingApproval.capability_name;
+      document.getElementById('modal-appr-scope').textContent = currentPendingApproval.scope;
+      document.getElementById('modal-appr-time').textContent = formatSeconds(currentPendingApproval.time_remaining_sec);
+      document.getElementById('modal-appr-summary').textContent = currentPendingApproval.safe_summary;
+      const payloadEl = document.getElementById('modal-appr-payload');
+      if (payloadEl) {
+        let displayPayload = currentPendingApproval.params_payload || currentPendingApproval.payload_hash || 'Aucune mutation additionnelle';
+        try {
+          if (typeof displayPayload === 'string' && (displayPayload.startsWith('{') || displayPayload.startsWith('['))) {
+            displayPayload = JSON.stringify(JSON.parse(displayPayload), null, 2);
+          }
+        } catch(e) {}
+        payloadEl.textContent = displayPayload;
+      }
+      modal.classList.remove('hidden');
+      modal.style.display = 'flex';
+    }
+
+    function closeHitlModal() {
+      const modal = document.getElementById('hitl-modal');
+      modal.classList.add('hidden');
+      modal.style.display = 'none';
+    }
+
+    async function decideHitl(decision) {
+      if (!currentPendingApproval) return;
+      const reason = document.getElementById('modal-appr-reason').value || `Décision opérateur Web: ${decision}`;
+      const apprId = currentPendingApproval.approval_id;
+
+      try {
+        const res = await fetch(`/master/api/v1/approvals/${apprId}/decide`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            decision: decision,
+            decided_by: 'web_operator',
+            reason: reason
+          })
+        });
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          console.warn('Approval decision response non-ok:', res.status, errData);
+        }
+        closeHitlModal();
+        showToast(`Décision ${decision} enregistrée.`, decision === 'APPROVE' ? '✓' : '✕', decision === 'APPROVE' ? 'border-emerald-500/50' : 'border-red-500/50');
+        await refreshState();
+      } catch (err) {
+        showToast(`Erreur décision: ${err}`, '⚠️', 'border-red-500/50');
+      }
+    }
+
+    let currentChatAbortController = null;
+
+    function appendChatMessage(role, text, meta = {}) {
+      const container = document.getElementById('chat-messages-container');
+      if (!container) return;
+
+      const isUser = role === 'user';
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `flex items-start gap-2.5 p-2.5 rounded-lg border ${
+        isUser 
+          ? 'bg-blue-950/20 border-blue-500/30 text-blue-100 ml-4' 
+          : 'bg-[#0E1116] border-neutral-800 text-neutral-200 mr-4'
+      }`;
+
+      const icon = isUser ? '👤' : (meta.avatar || '👑');
+      const senderName = isUser ? 'Opérateur HQ' : (meta.authority || 'E-ZZIO Master Governor');
+      const modelTag = meta.model ? `<span class="text-[9.5px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono">${escapeHtml(meta.model)}</span>` : '';
+      const providerTag = meta.source ? `<span class="text-[9.5px] px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 font-mono">${escapeHtml(meta.source)}</span>` : '';
+      const latencyTag = meta.elapsed_ms ? `<span class="text-[9px] text-neutral-400 font-mono">${meta.elapsed_ms}ms</span>` : '';
+      const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+      msgDiv.innerHTML = `
+        <span class="text-base select-none">${icon}</span>
+        <div class="flex-1 overflow-hidden">
+          <div class="flex flex-wrap items-center gap-2 text-[10.5px] mb-1">
+            <span class="font-bold ${isUser ? 'text-blue-300' : 'text-amber-400'} font-sans">${escapeHtml(senderName)}</span>
+            ${modelTag}
+            ${providerTag}
+            ${latencyTag}
+            <span class="text-[9px] text-neutral-600 font-mono ml-auto">${timeStr}</span>
+          </div>
+          <div class="text-[11.5px] leading-relaxed font-mono whitespace-pre-wrap break-words">${escapeHtml(text)}</div>
+        </div>
+      `;
+
+      container.appendChild(msgDiv);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function clearChatLog() {
+      const container = document.getElementById('chat-messages-container');
+      if (container) {
+        container.innerHTML = `
+          <div class="flex items-start gap-2 text-neutral-400 bg-black/40 p-2 rounded border border-neutral-800/60">
+            <span class="text-base">👑</span>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 text-[10.5px]">
+                <span class="text-amber-400 font-bold">E-ZZIO Master Governor</span>
+                <span class="text-neutral-500">Log Nettoyé</span>
+              </div>
+              <p class="text-neutral-300 mt-1 text-[11.5px]">Historique vidé. Prêt pour de nouvelles instructions.</p>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function stopIntent() {
+      if (currentChatAbortController) {
+        currentChatAbortController.abort();
+        currentChatAbortController = null;
+        showToast('Envoi annulé par l\'opérateur', '⏹', 'border-amber-500/50');
+      }
+      const btn = document.getElementById('send-intent-btn');
+      const stopBtn = document.getElementById('stop-intent-btn');
+      const statusBar = document.getElementById('chat-status-bar');
+      if (btn) btn.disabled = false;
+      if (stopBtn) stopBtn.classList.add('hidden');
+      if (statusBar) statusBar.textContent = 'Prêt · Annulé';
+    }
+
+    async function sendIntent() {
+      const textarea = document.getElementById('chat-textarea');
+      const hiddenInput = document.getElementById('intent-input');
+      
+      let text = '';
+      if (textarea && textarea.value.trim()) {
+        text = textarea.value.trim();
+      } else if (hiddenInput && hiddenInput.value.trim()) {
+        text = hiddenInput.value.trim();
+      }
+      if (!text) return;
+
+      const btn = document.getElementById('send-intent-btn');
+      const stopBtn = document.getElementById('stop-intent-btn');
+      const statusBar = document.getElementById('chat-status-bar');
+      const resultBox = document.getElementById('intent-result');
+
+      // Append user message to live chat log
+      appendChatMessage('user', text);
+
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'ROUTAGE...';
+      }
+      if (stopBtn) stopBtn.classList.remove('hidden');
+      if (statusBar) statusBar.textContent = 'Envoi vers le Sovereign Master Governor...';
+
+      if (resultBox) {
+        resultBox.classList.remove('hidden');
+        resultBox.textContent = 'Envoi vers le Governor E-ZZIO Master...';
+      }
+
+      // Read model target and mission profile
+      const modelTargetSelect = document.getElementById('chat-model-target');
+      const missionProfileSelect = document.getElementById('chat-mission-profile');
+      const modelTarget = modelTargetSelect ? modelTargetSelect.value : 'auto';
+      const missionProfile = missionProfileSelect ? missionProfileSelect.value : 'STANDARD';
+
+      // Clear input fields
+      if (textarea) textarea.value = '';
+      if (hiddenInput) hiddenInput.value = '';
+
+      currentChatAbortController = new AbortController();
+      const startTime = performance.now();
+
+      try {
+        let res = await fetch('/master/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            text: text,
+            model_target: modelTarget,
+            mission_profile: missionProfile,
+            channel: 'web'
+          }),
+          signal: currentChatAbortController.signal
+        });
+        const elapsed = Math.round(performance.now() - startTime);
+        const data = await res.json();
+
+        // Extract message content
+        const responseText = data.response || data.answer || data.content || data.message || JSON.stringify(data, null, 2);
+        const modelName = data.model || 'sovereign-master';
+
+        const providerName = data.source || 'E-ZZIO Governor';
+
+        appendChatMessage('master', responseText, {
+          model: modelName,
+          source: providerName,
+          elapsed_ms: data.elapsed_ms || elapsed,
+          avatar: '👑',
+          authority: 'E-ZZIO Master'
+        });
+
+        if (resultBox) {
+          resultBox.textContent = JSON.stringify(data, null, 2);
+        }
+        if (statusBar) {
+          statusBar.textContent = `Réponse reçue (${elapsed}ms) · ${modelName}`;
+        }
+        await refreshState();
+      } catch (err) {
+        if (err.name === 'AbortError') {
+          if (resultBox) resultBox.textContent = 'Action annulée.';
+        } else {
+          appendChatMessage('master', `[ERREUR DE ROUTAGE] : ${err}`, {
+            model: 'error',
+            avatar: '⚠️'
+          });
+          if (resultBox) resultBox.textContent = `Erreur: ${err}`;
+          if (statusBar) statusBar.textContent = `Erreur: ${err}`;
+        }
+      } finally {
+        currentChatAbortController = null;
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = `<span>ENVOYER</span><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>`;
+        }
+        if (stopBtn) stopBtn.classList.add('hidden');
+      }
+    }
+
+    function toggleObserverMode() {
+      const ind = document.getElementById('observer-indicator');
+      const btn = document.getElementById('btn-mode-observer');
+      if (observerInterval) {
+        clearInterval(observerInterval);
+        observerInterval = null;
+        ind.classList.add('hidden');
+        btn.classList.remove('bg-blue-600', 'text-white');
+        btn.classList.add('bg-neutral-800', 'text-neutral-300');
+      } else {
+        btn.classList.remove('bg-neutral-800', 'text-neutral-300');
+        btn.classList.add('bg-blue-600', 'text-white');
+        ind.classList.remove('hidden');
+        let index = 0;
+        observerInterval = setInterval(() => {
+          if (!officeState || !officeState.agents.length) return;
+          const working = officeState.agents.filter(a => a.status === 'WORKING');
+          if (working.length > 0) {
+            const target = working[index % working.length];
+            focusAgent(target.agent_id);
+            index++;
+          }
+        }, 4000);
+      }
+    }
+
+    let toastTimeout = null;
+    function showToast(msg, icon = 'ℹ️', borderColor = 'border-blue-500/40') {
+      const toast = document.getElementById('tactical-toast');
+      const toastMsg = document.getElementById('toast-msg');
+      const toastIcon = document.getElementById('toast-icon');
+      if (!toast || !toastMsg) return;
+      toastMsg.textContent = msg;
+      if (toastIcon) toastIcon.textContent = icon;
+      toast.className = `fixed bottom-6 right-6 z-50 bg-[#121620] border ${borderColor} text-neutral-200 px-4 py-2.5 rounded-xl shadow-2xl font-mono text-xs flex items-center gap-2.5 transition-all`;
+      toast.classList.remove('hidden');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+
+    function toggleCommanderMode() {
+      isCommanderMode = !isCommanderMode;
+      const btn = document.getElementById('btn-mode-commander');
+      const ind = document.getElementById('commander-indicator');
+      if (isCommanderMode) {
+        if (btn) btn.classList.add('bg-amber-600', 'text-white');
+        if (ind) ind.classList.remove('hidden');
+        showToast('COMMANDER MODE ACTIF: Cliquez sur un agent pour le piloter.', '⚡', 'border-amber-500/50');
+      } else {
+        if (btn) btn.classList.remove('bg-amber-600', 'text-white');
+        if (ind) ind.classList.add('hidden');
+        showToast('COMMANDER MODE DÉSACTIVÉ', 'ℹ️');
+      }
+    }
+
+    function toggleReducedMotion() {
+      document.body.classList.toggle('reduced-motion');
+      const isReduced = document.body.classList.contains('reduced-motion');
+      const ind = document.getElementById('motion-indicator');
+      const btn = document.getElementById('btn-motion');
+      if (isReduced) {
+        if (ind) ind.classList.remove('hidden');
+        if (btn) btn.classList.add('bg-blue-600', 'text-white');
+        if (officeCanvas) officeCanvas.reducedMotion = true;
+        showToast('Reduced Motion: ACTIVÉ (animations coupées)', '🏃', 'border-blue-500/50');
+      } else {
+        if (ind) ind.classList.add('hidden');
+        if (btn) btn.classList.remove('bg-blue-600', 'text-white');
+        if (officeCanvas) officeCanvas.reducedMotion = false;
+        showToast('Reduced Motion: DÉSACTIVÉ (animations fluides)', '🏃');
+      }
+    }
+
+    function filterByStatus(status) {
+      currentStatusFilter = status;
+      if (officeState) {
+        renderRoomsAndAgents(officeState);
+      }
+    }
+
+    async function refreshState() {
+      const results = await Promise.allSettled([
+        fetchOfficeState(),
+        fetchPendingApprovals(),
+        fetchOfficeEvents(),
+        fetchSystemDiagnostics(),
+        fetchProvidersHealth()
+      ]);
+
+      const state = results[0].status === 'fulfilled' ? results[0].value : null;
+      const approvals = results[1].status === 'fulfilled' ? results[1].value : { pending_approvals: [], total: 0 };
+      const eventsData = results[2].status === 'fulfilled' ? results[2].value : { events: [] };
+      const diag = results[3].status === 'fulfilled' ? results[3].value : null;
+      const providersHealth = results[4].status === 'fulfilled' ? results[4].value : null;
+
+      if (state) {
+        officeState = state;
+        renderMinimap(state.rooms);
+        renderRoomsAndAgents(state);
+        renderHUD(state, approvals, diag, providersHealth);
+        renderLiveCodeActivity(state.agents);
+        if (officeCanvas && state.agents) {
+          officeCanvas.syncBackendAgents(state.agents);
+        }
+        const lastPollEl = document.getElementById('last-poll');
+        if (lastPollEl) lastPollEl.textContent = new Date().toLocaleTimeString();
+      }
+
+      if (eventsData && eventsData.events) {
+        renderEvents(eventsData.events);
+      }
+    }
+
+    // 2.5D Canvas Controls & Modes (V9.4)
+    let officeCanvas = null;
+    let currentOfficeView = 'canvas';
+
+    function switchOfficeView(mode) {
+      currentOfficeView = mode;
+      const canvasContainer = document.getElementById('office-canvas-container');
+      const gridContainer = document.getElementById('rooms-grid');
+      const btnCanvas = document.getElementById('tab-canvas-view');
+      const btnGrid = document.getElementById('tab-grid-view');
+      const camBar = document.getElementById('canvas-camera-bar');
+
+      if (mode === 'canvas') {
+        canvasContainer.style.display = 'block';
+        gridContainer.style.display = 'grid';
+        btnCanvas.className = 'px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold transition flex items-center gap-1.5 shadow';
+        btnGrid.className = 'px-3 py-1.5 rounded-lg bg-neutral-800 text-neutral-400 hover:text-white transition flex items-center gap-1.5';
+        camBar.style.display = 'flex';
+        if (officeCanvas) officeCanvas.resize();
+      } else {
+        canvasContainer.style.display = 'none';
+        gridContainer.style.display = 'grid';
+        btnGrid.className = 'px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold transition flex items-center gap-1.5 shadow';
+        btnCanvas.className = 'px-3 py-1.5 rounded-lg bg-neutral-800 text-neutral-400 hover:text-white transition flex items-center gap-1.5';
+        camBar.style.display = 'none';
+      }
+    }
+
+    function canvasZoom(factor) {
+      if (officeCanvas) officeCanvas.camera.targetZoom = Math.max(0.5, Math.min(2.5, officeCanvas.camera.targetZoom * factor));
+    }
+
+    function canvasResetCamera() {
+      if (officeCanvas) {
+        officeCanvas.camera.targetX = 18 * officeCanvas.tileSize;
+        officeCanvas.camera.targetY = 12 * officeCanvas.tileSize;
+        officeCanvas.camera.targetZoom = 1.0;
+        officeCanvas.camera.followAgentId = null;
+      }
+    }
+
+    function toggleImmersiveMode() {
+      const container = document.getElementById('office-canvas-container');
+      if (!document.fullscreenElement) {
+        if (container.requestFullscreen) container.requestFullscreen();
+        else if (container.webkitRequestFullscreen) container.webkitRequestFullscreen();
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    function triggerShowcaseDemo() {
+      if (!officeCanvas) return;
+      const coder = officeCanvas.agents.get('coder_worker');
+      const hermes = officeCanvas.agents.get('hermes_executor');
+      const sec = officeCanvas.agents.get('sec_guard');
+      if (coder) coder.setDestination(18, 12, 'WALK');
+      if (hermes) setTimeout(() => hermes.setDestination(18, 11, 'WALK'), 400);
+      if (sec) {
+        sec.setDestination(7, 5, 'WALK');
+        sec.status = 'WAITING_APPROVAL';
+      }
+      setTimeout(() => {
+        if (coder) coder.setDestination(16, 4, 'WORK');
+        if (hermes) hermes.setDestination(20, 4, 'WORK');
+        if (sec) {
+          sec.setDestination(30, 12, 'WORK');
+          sec.status = 'WORKING';
+        }
+      }, 5000);
+    }
+
+    // Keyboard Shortcuts (Accessibility & Chat UX)
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeAgentDrawer();
+        closeHitlModal();
+      } else if (e.key === 'r' && (e.ctrlKey || e.metaKey)) {
+        // Normal refresh
+      } else if (e.key === 's' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+        refreshState();
+      }
+    });
+
+    // Chat Textarea Enter / Shift+Enter key binding
+    document.addEventListener('DOMContentLoaded', () => {
+      const textarea = document.getElementById('chat-textarea');
+      if (textarea) {
+        textarea.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendIntent();
+          }
+        });
+      }
+    });
+
+    // Initialisation du 2.5D Living Canvas & Animation Loop (V9.4)
+    if (window.OfficeCanvas && document.getElementById('office-canvas')) {
+      try {
+        officeCanvas = new window.OfficeCanvas('office-canvas');
+        fetch('/master/api/v1/office/map')
+          .then(r => r.json())
+          .then(m => {
+            if (m.ok && officeCanvas) officeCanvas.setMap(m);
+          })
+          .catch(err => {
+            console.warn('Canvas map fetch error:', err);
+          });
+      } catch (err) {
+        console.warn('Canvas init error', err);
+      }
+    }
+
+    let lastCanvasTime = performance.now();
+    function canvasRenderLoop(now) {
+      const dt = Math.min(0.1, (now - lastCanvasTime) / 1000);
+      lastCanvasTime = now;
+      if (officeCanvas && currentOfficeView !== 'grid') {
+        officeCanvas.update(dt);
+        officeCanvas.render();
+      }
+      requestAnimationFrame(canvasRenderLoop);
+    }
+    requestAnimationFrame(canvasRenderLoop);
+
+    // Auto-refresh toutes les 3 secondes
+    refreshState().then(() => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const inspectParam = urlParams.get('inspect');
+      const modalParam = urlParams.get('modal');
+
+      if (inspectParam) {
+        const target = (inspectParam === 'master' || inspectParam === 'ezzio_master') ? 'master_ezzio' : inspectParam;
+        inspectAgent(target);
+      } else if (window.location.hash.startsWith('#inspect:')) {
+        const targetId = window.location.hash.split(':')[1];
+        inspectAgent(targetId);
+      } else if (window.location.hash === '#inspect-master') {
+        inspectAgent('master_ezzio');
+      }
+
+      if (modalParam === 'hitl' || window.location.hash === '#hitl-modal') {
+        currentPendingApproval = {
+          approval_id: 'appr_preview_94',
+          capability_name: 'drive.write',
+          scope: 'external_write',
+          time_remaining_sec: 285,
+          safe_summary: 'Demande d\'arbitrage souverain : modification contrôlée sous CapabilityPolicy.',
+          params_payload: JSON.stringify({ target: 'config/live.json', action: 'update_entry', scope: 'immutable_seal' }, null, 2)
+        };
+        openHitlModal();
+      }
+    });
+
+    // Expose drawer opener globally for Canvas and other components
+    window.openAgentDrawer = inspectAgent;
+
+    const notifiedWebMissions = new Set();
+    async function pollCompletedMissions() {
+      try {
+        const res = await fetch('/master/api/v1/missions');
+        if (!res.ok) return;
+        const data = await res.json();
+        for (const m of (data.missions || [])) {
+          if (['COMPLETED', 'FAILED', 'CANCELLED'].includes(m.status) && !notifiedWebMissions.has(m.mission_id)) {
+            notifiedWebMissions.add(m.mission_id);
+            const isSuccess = m.status === 'COMPLETED';
+            const icon = isSuccess ? '✓' : '✗';
+            let summaryText = m.result && m.result.summary ? m.result.summary : m.current_step;
+            let artText = m.artifacts && m.artifacts.length ? `\n\nArtefacts: ${m.artifacts.join(', ')}` : '';
+            appendChatMessage('master', `${icon} **TÂCHE TERMINÉE**\n\nWorker: ${m.worker_type}\nMission: #${m.mission_id}\nStatus: ${m.status}\n\n${summaryText}${artText}`, {
+              model: m.model || 'sovereign-master',
+              source: m.provider || 'Worker Fleet',
+              avatar: isSuccess ? '🎉' : '⚠️',
+              authority: m.worker_type
+            });
+            showToast(`Mission #${m.mission_id} terminée: ${m.status}`, isSuccess ? '✅' : '⚠️');
+          }
+        }
+      } catch (err) {
+        // silent polling error
+      }
+    }
+
+    let isRefreshing = false;
+    async function safePoll() {
+      if (isRefreshing) return;
+      isRefreshing = true;
+      try {
+        await refreshState();
+        await pollCompletedMissions();
+      } catch (err) {
+        console.warn('Poll refresh error:', err);
+      } finally {
+        isRefreshing = false;
+      }
+    }
+
+    setInterval(safePoll, 3000);
+  </script>
+
+</body>
+</html>

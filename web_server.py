@@ -32,9 +32,6 @@ from routers.research import router as research_router
 from routers.telemetry import AGENT_VIEW_HTML
 from routers.telemetry import router as telemetry_router
 from routers.webhook import router as webhook_router
-from runtime.execution.worker_bootstrap import worker_manager
-from runtime.routers.llm import router as llm_router
-from runtime.routers.mobile import router as mobile_router
 
 
 # 3. Cycle de vie et Gouvernance
@@ -44,9 +41,7 @@ async def lifespan(app: FastAPI):
     from core.memory.instance import memory_gateway
     await memory_gateway.init()
     await init_research_router()
-    worker_manager.initialize_pool()
     yield
-    worker_manager.shutdown()
 
 
 # 4. Initialisation de l'API
@@ -142,8 +137,6 @@ async def get_perception_status():
 
 
 # 5. Injection des routeurs (sans doubler le préfixe pour le master)
-app.include_router(llm_router)
-app.include_router(mobile_router)
 app.include_router(master_router)
 app.include_router(health_router)
 app.include_router(telemetry_router)
