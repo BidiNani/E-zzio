@@ -26,8 +26,10 @@ async def get_self_status():
     Retourne l'état VÉRIFIÉ en direct, pas ce que la documentation prétend.
     """
 
-    # 1. Modèle actif (à lire depuis le client genai réel, pas une constante)
-    # TODO: exposer cette info depuis le router chat
+    # 1. Modele actif
+    # NOTE: lu depuis EZZIO_ACTIVE_MODEL (variable d'environnement).
+    # Cette valeur peut diverger du modele reellement selectionne dans le routeur chat.
+    # Pour l'etat exact, interroger /master/chat/status (endpoint a exposer si necessaire).
     model_active = os.getenv("EZZIO_ACTIVE_MODEL", "gemini-3.7-flash")
 
     # 2. Backend mémoire
