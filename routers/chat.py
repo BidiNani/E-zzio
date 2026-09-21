@@ -7,14 +7,14 @@ from pydantic import BaseModel, Field
 from core.memory.unified_gateway import UnifiedMemoryGateway
 from core.system_cleanup import SystemCleanupService
 from core.url_reader import UrlReader
-from runtime.core.ezzio_core import EzzioCore
+from core.ezzio_master import EzzioMaster
 
 logger = logging.getLogger("ezzio.api.chat")
 
 router = APIRouter(prefix="/api/v1/chat", tags=["Chat"])
 
 _memory_gateway = UnifiedMemoryGateway("runtime/evidence/evidence.db")
-_core = EzzioCore(memory_gateway=_memory_gateway)
+_core = EzzioMaster(memory_gateway=_memory_gateway)
 _cleanup_service = SystemCleanupService()
 
 
@@ -111,7 +111,7 @@ async def post_chat(payload: ChatRequest):
 
     # 4. Pipeline Cognitif Normal
     try:
-        result = await _core.think(user_id=payload.user_id, message=enriched_message, session_id=payload.session_id)
+        result = await _core.process_user_message(user_id=payload.user_id, message=enriched_message, session_id=payload.session_id)
         return ChatResponse(
             response=result.get("response", ""),
             intent=result.get("intent", "local_chat"),
