@@ -319,3 +319,6 @@ web_server_restart.log.err
 htmlcov/
 .coverage.json
 .coverage.*
+
+# Coverage Python
+\.coverage\.\*

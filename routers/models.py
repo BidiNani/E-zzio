@@ -161,7 +161,7 @@ async def _fetch_gemini(api_key: str) -> list[dict]:
             # Free tier Gemini : tous les modeles Flash et Flash-Lite
             # Les modeles "Pro" sont payants
             # Free tier : tous les modeles Flash, Flash-Lite, et Pro
-            # (le test test_free_vs_paid_strict confirme que gemini-2.5-pro est free)
+            # (le test test_free_vs_paid_strict confirme que gemini-3.5-flash-lite est free)
             # Sont exclus : TTS, Image, Embedding (filtres plus haut)
             is_free = bool(re.match(
                 r"^gemini-(?:"

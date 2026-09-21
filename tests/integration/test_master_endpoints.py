@@ -11,11 +11,26 @@ def _server_up() -> bool:
         return False
 
 
+pytestmark = [
+    pytest.mark.skipif(
+        not _server_up(),
+        reason="Serveur E-ZZIO non disponible sur 127.0.0.1:8001",
+    ),
+    pytest.mark.integration,
+]
+
+
+def _server_up() -> bool:
+    try:
+        with socket.create_connection(("127.0.0.1", 8001), timeout=1.0):
+            return True
+    except (OSError, ConnectionRefusedError):
+        return False
+
 pytestmark = pytest.mark.skipif(
     not _server_up(),
     reason="Serveur E-ZZIO non disponible sur 127.0.0.1:8001",
 )
-
 
 """Tests d'intégration API pour les endpoints /master/*.
 
@@ -36,18 +51,15 @@ pytestmark = pytest.mark.integration
 BASE = "http://127.0.0.1:8001"
 TIMEOUT = 5.0
 
-
 @pytest.fixture(scope="module")
 def client():
     with httpx.Client(base_url=BASE, timeout=TIMEOUT) as c:
         yield c
 
-
 def _assert_ok(resp, allow_empty=True):
     assert resp.status_code in (200, 204), f"{resp.status_code} {resp.text[:200]}"
     if not allow_empty:
         assert resp.json(), "Réponse vide"
-
 
 class TestMasterEndpoints:
     def test_health(self, client):
@@ -88,7 +100,6 @@ class TestMasterEndpoints:
         assert r.status_code == 200
         data = r.json()
         assert data["count"] > 0
-
 
 class TestRateLimit:
     """Vérifie que le rate limit n'est pas déclenché sur du polling normal."""
