@@ -322,3 +322,8 @@ htmlcov/
 
 # Coverage Python
 \.coverage\.\*
+
+# ===== Auto-quality 2026-09-21 =====
+.tox/
+build/
+_audit.json
