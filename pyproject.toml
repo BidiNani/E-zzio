@@ -57,7 +57,7 @@ quote-style = "double"
 indent-style = "space"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-q --strict-markers --tb=short -m 'not integration'"
+addopts = "-q --strict-markers --tb=short -m 'not visual and not hardware'"
 asyncio_mode = "strict"
 asyncio_default_fixture_loop_scope = "function"
 asyncio_default_test_loop_scope = "function"
@@ -66,6 +66,7 @@ markers = [
     "slow: tests lents (>10s)",
     "hardware: requires physical hardware",
     "integration: requires external services",
+    "visual: tests de certification visuelle (PNG/video)",
 ]
 filterwarnings = [
     "ignore::DeprecationWarning:discord.*",
