@@ -1,5 +1,6 @@
 """Tests déterministes pour E-ZZIO Native Harness (0 appel réseau, 0 mock lourd)."""
 import asyncio
+import sys
 
 import pytest
 
@@ -61,6 +62,10 @@ async def test_harness_execute_task_success():
     assert "correlation_id" in res
 
 
+@pytest.mark.skipif(
+    sys.platform != "win32",
+    reason="Test Windows-only : le PolicyGuard reconnait les chemins systeme Windows (C:\\Windows\\System32). Sur Linux, le chemin est relatif et n'est pas bloque.",
+)
 @pytest.mark.asyncio
 async def test_harness_policy_guard_denial():
     harness = NativeHarness()
