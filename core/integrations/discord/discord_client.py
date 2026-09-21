@@ -30,8 +30,12 @@ _http_client = None
 import aiohttp
 import httpx as _httpx_lib
 
-DISCORD_NET_ERRORS = (aiohttp.ClientError, asyncio.TimeoutError, _httpx_lib.RequestError, _httpx_lib.TimeoutException)
-
+DISCORD_NET_ERRORS = (
+    aiohttp.ClientError,
+    asyncio.TimeoutError,
+    _httpx_lib.RequestError,
+    _httpx_lib.TimeoutException,
+)
 
 
 def get_http_client():
@@ -55,12 +59,13 @@ PROJECT_ROOT = pathlib.Path(r"G:\AI\E-zzio")
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
+from runtime.adapters.config.dotenv_provider import DotEnvConfigProvider
+
 from core.config import secrets_loader
 from core.integrations.discord.discord_watchdog import discord_watchdog
 from core.integrations.discord.permission_guard import permission_guard
 from core.security.secret_redactor import secret_redactor
 from core.tool_gateway.google_bridge import GoogleIdentityBridge
-from runtime.adapters.config.dotenv_provider import DotEnvConfigProvider
 
 config = DotEnvConfigProvider(env_path=str(PROJECT_ROOT / "secrets" / ".env"))
 google_bridge = GoogleIdentityBridge(config=config)
@@ -103,7 +108,9 @@ LOCAL_API_URL = config.get("EZZIO_LOCAL_API_URL", "http://127.0.0.1:8001/master/
 # /v1/chat/completions (compatibilité OpenAI, même gouvernance).
 COMPLETIONS_URL = config.get("EZZIO_COMPLETIONS_URL", "http://127.0.0.1:8001/v1/chat/completions")
 
-PROACTIVE_POLL_URL = config.get("EZZIO_PROACTIVE_API_URL", "http://127.0.0.1:8001/system/proactive/poll")
+PROACTIVE_POLL_URL = config.get(
+    "EZZIO_PROACTIVE_API_URL", "http://127.0.0.1:8001/system/proactive/poll"
+)
 
 secrets_loader.log_secrets_diagnostics(_LOADED_SECRETS)
 
@@ -115,11 +122,14 @@ bot = commands.Bot(command_prefix="!e ", intents=intents)
 # TÂCHES ASYNCHRONES : PRÉSENCE DYNAMIQUE & DIAGNOSTIC PROACTIF
 # ==============================================================================
 
+
 @tasks.loop(minutes=10)
 async def update_dynamic_presence():
     """Met à jour périodiquement le statut du bot pour refléter la santé de l'infrastructure."""
     try:
-        activity = discord.Activity(type=discord.ActivityType.watching, name="🧠 E-ZZIO | Kernel ONLINE | 🔐 Vault OK")
+        activity = discord.Activity(
+            type=discord.ActivityType.watching, name="🧠 E-ZZIO | Kernel ONLINE | 🔐 Vault OK"
+        )
         await bot.change_presence(status=discord.Status.online, activity=activity)
     except Exception as exc:
         logger.warning("[DISCORD] Echec mise à jour présence : %s", exc)
@@ -148,18 +158,23 @@ async def run_autonomous_diagnostic() -> list[str]:
         if "backend_health" not in _reported_anomalies:
             findings.append(
                 "⚠️ **Alerte Santé API** : Le backend local (`8001/health`) ne répond pas.\n> Détail : `"
-                + str(health_detail) + "`"
+                + str(health_detail)
+                + "`"
             )
             _reported_anomalies.add("backend_health")
     else:
         if "backend_health" in _reported_anomalies:
-            findings.append("✅ **Rétablissement** : L'API backend locale (`8001/health`) est de nouveau opérationnelle.")
+            findings.append(
+                "✅ **Rétablissement** : L'API backend locale (`8001/health`) est de nouveau opérationnelle."
+            )
             _reported_anomalies.discard("backend_health")
 
     # 2. Sonde de détection des doublons de processus (web_server.py)
     try:
         proc = await asyncio.create_subprocess_exec(
-            "powershell", "-NoProfile", "-Command",
+            "powershell",
+            "-NoProfile",
+            "-Command",
             "(Get-CimInstance Win32_Process -ErrorAction SilentlyContinue | Where-Object { $_.CommandLine -like '*web_server.py*' }).Count",
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
@@ -170,11 +185,17 @@ async def run_autonomous_diagnostic() -> list[str]:
 
         if dup_count > 1:
             if "duplicate_web" not in _reported_anomalies:
-                findings.append("⚠️ **Anomalie Processus** : " + str(dup_count) + " instances de `web_server.py` tournent simultanément.")
+                findings.append(
+                    "⚠️ **Anomalie Processus** : "
+                    + str(dup_count)
+                    + " instances de `web_server.py` tournent simultanément."
+                )
                 _reported_anomalies.add("duplicate_web")
         else:
             if "duplicate_web" in _reported_anomalies:
-                findings.append("✅ **Rétablissement** : Les instances de `web_server.py` sont normalisées.")
+                findings.append(
+                    "✅ **Rétablissement** : Les instances de `web_server.py` sont normalisées."
+                )
                 _reported_anomalies.discard("duplicate_web")
     except Exception as exc:
         logger.debug("[DISCORD] Sonde doublons web_server ignorée : %s", exc)
@@ -242,7 +263,9 @@ async def mission_notifier_loop():
                             if res.get("summary"):
                                 banner += f"\n**Résultat** :\n{res.get('summary')}\n"
                             if m.get("artifacts"):
-                                banner += "\n**Artifacts** :\n" + "\n".join(f"- `{a}`" for a in m.get("artifacts"))
+                                banner += "\n**Artifacts** :\n" + "\n".join(
+                                    f"- `{a}`" for a in m.get("artifacts")
+                                )
                             banner += "\n━━━━━━━━━━━━━━━━━━\n"
                             await owner.send(banner)
     except Exception as exc:
@@ -289,7 +312,9 @@ async def _handle_message(message):
     guild_id = str(message.guild.id) if message.guild else None
 
     owner_bypass = is_private and secrets_loader.is_owner_id(message.author.id)
-    auth_check = permission_guard.evaluate_guild_access(guild_id, str(message.author.id), username, is_private)
+    auth_check = permission_guard.evaluate_guild_access(
+        guild_id, str(message.author.id), username, is_private
+    )
     if not auth_check["granted"] and not owner_bypass:
         if is_private:
             logger.warning(
@@ -319,16 +344,17 @@ async def _handle_message(message):
     clean_prompt = raw_prompt
 
     import re
-    profile_match = re.search(r'--(?:profile|p)=([A-Za-z0-9_]+)', clean_prompt)
+
+    profile_match = re.search(r"--(?:profile|p)=([A-Za-z0-9_]+)", clean_prompt)
     if profile_match:
         mission_profile = profile_match.group(1).upper()
-        clean_prompt = clean_prompt[:profile_match.start()] + clean_prompt[profile_match.end():]
+        clean_prompt = clean_prompt[: profile_match.start()] + clean_prompt[profile_match.end() :]
         clean_prompt = clean_prompt.strip()
 
-    target_match = re.search(r'--(?:target|model)=([A-Za-z0-9_]+)', clean_prompt)
+    target_match = re.search(r"--(?:target|model)=([A-Za-z0-9_]+)", clean_prompt)
     if target_match:
         model_target = target_match.group(1).lower()
-        clean_prompt = clean_prompt[:target_match.start()] + clean_prompt[target_match.end():]
+        clean_prompt = clean_prompt[: target_match.start()] + clean_prompt[target_match.end() :]
         clean_prompt = clean_prompt.strip()
 
     discord_watchdog.record_activity()
@@ -338,19 +364,26 @@ async def _handle_message(message):
     if lowered.startswith("guide ") or lowered == "guide":
         from core.integrations.discord.publisher import DiscordPublisher, split_markdown
         from core.integrations.discord.ui_components import build_guide_view
+
         publisher = DiscordPublisher(bot)
         topic = clean_prompt[5:].strip() or "E-ZZIO"
         async with message.channel.typing():
             try:
                 target, thread_id = await publisher.ensure_thread(message.channel, topic)
-                thread_session = f"{session_scope}:thread_{thread_id}" if thread_id else session_scope
-                resp = await get_http_client().post(LOCAL_API_URL, json={
-                    "text": f"Rédige un guide Markdown complet et structuré sur : {topic}",
-                    "session_id": thread_session,
-                    "mission_profile": "COMPLEX",
-                    "model_target": "gemini",
-                    "channel": "discord",
-                }, timeout=120.0)
+                thread_session = (
+                    f"{session_scope}:thread_{thread_id}" if thread_id else session_scope
+                )
+                resp = await get_http_client().post(
+                    LOCAL_API_URL,
+                    json={
+                        "text": f"Rédige un guide Markdown complet et structuré sur : {topic}",
+                        "session_id": thread_session,
+                        "mission_profile": "COMPLEX",
+                        "model_target": "gemini",
+                        "channel": "discord",
+                    },
+                    timeout=120.0,
+                )
                 guide = resp.json().get("response", "") if resp.status_code == 200 else ""
                 if not guide.strip():
                     guide = "Guide indisponible (noyau injoignable)."
@@ -365,6 +398,7 @@ async def _handle_message(message):
         return
     if lowered in ("join", "leave") or lowered.startswith("speak "):
         from core.integrations.discord import voice_adapter
+
         async with message.channel.typing():
             if lowered == "join":
                 ok, info = await voice_adapter.join_author_channel(message)
@@ -395,11 +429,16 @@ async def _handle_message(message):
                         break
                 for attachment in message.attachments:
                     fname = (attachment.filename or "").lower()
-                    if any(fname.endswith(ext) for ext in [".log", ".py", ".gd", ".lua", ".txt", ".json", ".md"]):
+                    if any(
+                        fname.endswith(ext)
+                        for ext in [".log", ".py", ".gd", ".lua", ".txt", ".json", ".md"]
+                    ):
                         try:
                             raw = await attachment.read()
                             if len(raw) > 1_000_000:
-                                clean_prompt += f"\n\n[FICHIER {attachment.filename} trop volumineux, ignoré]"
+                                clean_prompt += (
+                                    f"\n\n[FICHIER {attachment.filename} trop volumineux, ignoré]"
+                                )
                             else:
                                 txt = raw.decode("utf-8", errors="ignore")[:6000]
                                 clean_prompt = (
@@ -407,7 +446,9 @@ async def _handle_message(message):
                                     f"[/CONTEXTE]\n\n{clean_prompt}"
                                 )
                         except Exception as att_exc:
-                            logger.warning("[DISCORD] PJ illisible %s : %s", attachment.filename, att_exc)
+                            logger.warning(
+                                "[DISCORD] PJ illisible %s : %s", attachment.filename, att_exc
+                            )
                         break
                 payload["text"] = clean_prompt
 
@@ -417,11 +458,18 @@ async def _handle_message(message):
                 if isinstance(data, dict):
                     raw_res = data.get("response", "")
                     if isinstance(raw_res, dict):
-                        body_text = raw_res.get("response") or raw_res.get("answer") or raw_res.get("content") or str(raw_res)
+                        body_text = (
+                            raw_res.get("response")
+                            or raw_res.get("answer")
+                            or raw_res.get("content")
+                            or str(raw_res)
+                        )
                     elif isinstance(raw_res, str):
                         body_text = raw_res if raw_res.strip() else "Réponse vide du noyau."
                     else:
-                        body_text = str(raw_res) if raw_res is not None else "Réponse vide du noyau."
+                        body_text = (
+                            str(raw_res) if raw_res is not None else "Réponse vide du noyau."
+                        )
 
                     # Extraire les métadonnées de fédération pour la bannière
                     prov = data.get("provider") or "Unknown"

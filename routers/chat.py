@@ -4,10 +4,10 @@ from typing import Any
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
+from core.ezzio_master import EzzioMaster
 from core.memory.unified_gateway import UnifiedMemoryGateway
 from core.system_cleanup import SystemCleanupService
 from core.url_reader import UrlReader
-from core.ezzio_master import EzzioMaster
 
 logger = logging.getLogger("ezzio.api.chat")
 
@@ -26,7 +26,9 @@ async def init_chat_router():
 class ChatRequest(BaseModel):
     message: str = Field(..., description="Message de l'utilisateur")
     user_id: str = Field(default="user_default", description="Identifiant unique utilisateur")
-    session_id: str | None = Field(default=None, description="Identifiant de session de conversation")
+    session_id: str | None = Field(
+        default=None, description="Identifiant de session de conversation"
+    )
 
 
 class ChatResponse(BaseModel):
@@ -44,9 +46,13 @@ async def post_chat(payload: ChatRequest):
     resolved_session = payload.session_id or f"sess_{payload.user_id}"
 
     # 1. Détection Plan de Nettoyage (Dry Run)
-    if "nettoie" in msg_lower and any(kw in msg_lower for kw in ["bruit", "dossier", "nettoyage", "scratch"]):
+    if "nettoie" in msg_lower and any(
+        kw in msg_lower for kw in ["bruit", "dossier", "nettoyage", "scratch"]
+    ):
         try:
-            data = _cleanup_service.run_cleanup(dry_run=True, remove_logs=True, remove_temp=True, remove_archives=True)
+            data = _cleanup_service.run_cleanup(
+                dry_run=True, remove_logs=True, remove_temp=True, remove_archives=True
+            )
             folders = data.get("folders_removed", [])
             files = data.get("files_removed", [])
             mb_freed = data.get("space_freed_bytes", 0) / (1024 * 1024)
@@ -62,20 +68,32 @@ async def post_chat(payload: ChatRequest):
                     plan_lines.append(f"- *...et {len(files) - 10} autres fichiers.*")
 
             plan_lines.append(f"\n**Espace estimé à libérer :** `{mb_freed:.2f} MB`")
-            plan_lines.append("\nPour confirmer et exécuter la purge réelle, réponds : **'exécute le nettoyage'**.")
+            plan_lines.append(
+                "\nPour confirmer et exécuter la purge réelle, réponds : **'exécute le nettoyage'**."
+            )
 
             return ChatResponse(
-                response="\n".join(plan_lines), intent="system_cleanup_plan", provider="system", mode="command", session_id=resolved_session
+                response="\n".join(plan_lines),
+                intent="system_cleanup_plan",
+                provider="system",
+                mode="command",
+                session_id=resolved_session,
             )
         except Exception as e:
             return ChatResponse(
-                response=f"Erreur d'analyse : {e}", intent="error", provider="system", mode="command", session_id=resolved_session
+                response=f"Erreur d'analyse : {e}",
+                intent="error",
+                provider="system",
+                mode="command",
+                session_id=resolved_session,
             )
 
     # 2. Détection Exécution Réelle du Nettoyage
     if "exécute" in msg_lower and "nettoyage" in msg_lower:
         try:
-            data = _cleanup_service.run_cleanup(dry_run=False, remove_logs=True, remove_temp=True, remove_archives=True)
+            data = _cleanup_service.run_cleanup(
+                dry_run=False, remove_logs=True, remove_temp=True, remove_archives=True
+            )
             folders_count = len(data.get("folders_removed", []))
             files_count = len(data.get("files_removed", []))
             mb_freed = data.get("space_freed_bytes", 0) / (1024 * 1024)
@@ -89,7 +107,11 @@ async def post_chat(payload: ChatRequest):
             )
         except Exception as e:
             return ChatResponse(
-                response=f"Erreur de suppression : {e}", intent="error", provider="system", mode="command", session_id=resolved_session
+                response=f"Erreur de suppression : {e}",
+                intent="error",
+                provider="system",
+                mode="command",
+                session_id=resolved_session,
             )
 
     # 3. Ingestion automatique de liens Internet (URL Reader)
@@ -111,7 +133,9 @@ async def post_chat(payload: ChatRequest):
 
     # 4. Pipeline Cognitif Normal
     try:
-        result = await _core.process_user_message(user_id=payload.user_id, message=enriched_message, session_id=payload.session_id)
+        result = await _core.process_user_message(
+            user_id=payload.user_id, message=enriched_message, session_id=payload.session_id
+        )
         return ChatResponse(
             response=result.get("response", ""),
             intent=result.get("intent", "local_chat"),
@@ -123,4 +147,3 @@ async def post_chat(payload: ChatRequest):
     except Exception as e:
         logger.error("Échec /api/v1/chat : %s", e, exc_info=True)
         raise HTTPException(status_code=500, detail=str(e)) from e
-
