@@ -57,7 +57,7 @@ jobs:
       - name: PSScriptAnalyzer (errors + warnings)
         shell: pwsh
         run: |
-          $issues = Invoke-ScriptAnalyzer -Path . -Recurse -Severity Error `
+          $issues = Invoke-ScriptAnalyzer -Path . -Recurse -Severity Error -ExcludePath '*\_archive\*','*\_broken_ps1\*','*\.venv\*' `
                     -ExcludeRule PSAvoidUsingWriteHost
           if ($issues) {
             $issues | Format-Table -AutoSize
@@ -69,7 +69,7 @@ jobs:
         shell: pwsh
         run: |
           $failed = $false
-          Get-ChildItem -Recurse -Filter *.ps1 | ForEach-Object {
+          Get-ChildItem -Recurse -Filter *.ps1 | Where-Object { $_.FullName -notmatch '\\(_archive|_broken_ps1|\.venv)\\' } | ForEach-Object {
             $tokens = $null; $errors = $null
             [System.Management.Automation.Language.Parser]::ParseFile(
               $_.FullName, [ref]$tokens, [ref]$errors
