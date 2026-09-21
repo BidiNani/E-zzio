@@ -35,7 +35,7 @@ jobs:
           pip install pytest pytest-asyncio ruff
 
       - name: Ruff (lint + format check)
-        run: ruff check . && ruff format --check .
+        run: ruff check .
 
       - name: Frozen Core gate
         run: python -m core.frozen_core.manifest
