@@ -1,3 +1,14 @@
+import sys
+
+import pytest
+
+
+pytestmark = pytest.mark.skipif(
+    sys.platform != "win32",
+    reason="Test Windows-only (powershell.exe requis)",
+)
+
+
 """
 E-ZZIO Autonomous Coding Agent — Validation & Self-Repair Test Suite.
 

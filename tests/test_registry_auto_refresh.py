@@ -19,6 +19,14 @@ On ne lance PAS le vrai web_server ni le vrai refresh Gemini.
 """
 from __future__ import annotations
 
+import pytest
+
+
+pytestmark = pytest.mark.skip(
+    reason="Fichiers AGENTS.md ou registry_refresh_service.py supprimes (DEAD cleanup)",
+)
+
+
 import asyncio
 from typing import Any
 from unittest.mock import AsyncMock, patch

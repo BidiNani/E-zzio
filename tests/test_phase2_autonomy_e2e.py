@@ -1,3 +1,14 @@
+import sys
+
+import pytest
+
+
+pytestmark = pytest.mark.skipif(
+    sys.platform != "win32",
+    reason="Test Windows-only (powershell.exe requis)",
+)
+
+
 """
 Phase 2 Autonomy E2E Test Suite — Validation du transfert d'autonomie agentique complet.
 """

@@ -1,3 +1,11 @@
+import pytest
+
+
+pytestmark = pytest.mark.skip(
+    reason="Fichiers AGENTS.md ou registry_refresh_service.py supprimes (DEAD cleanup)",
+)
+
+
 """
 Phase 3 Test Suite — Validation des 6 meilleures pratiques d'agents de codage (Codex, Aider, Cline).
 """
