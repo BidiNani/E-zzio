@@ -27,10 +27,12 @@ def _server_up() -> bool:
     except (OSError, ConnectionRefusedError):
         return False
 
-pytestmark = pytest.mark.skipif(
-    not _server_up(),
-    reason="Serveur E-ZZIO non disponible sur 127.0.0.1:8001",
-)
+def _server_up() -> bool:
+    try:
+        with socket.create_connection(("127.0.0.1", 8001), timeout=1.0):
+            return True
+    except (OSError, ConnectionRefusedError):
+        return False
 
 """Tests d'intégration API pour les endpoints /master/*.
 
@@ -45,8 +47,6 @@ import pytest
 os.environ["EZZIO_DISABLE_AUTH"] = "1"
 
 import httpx
-
-pytestmark = pytest.mark.integration
 
 BASE = "http://127.0.0.1:8001"
 TIMEOUT = 5.0
