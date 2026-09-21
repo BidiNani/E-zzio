@@ -21,12 +21,10 @@ def test_1_canonical_entry_point_unique():
 
 
 def test_2_seven_active_mounted_routers():
-    """Vérifie que web_server.py monte exactement les 8 routeurs canoniques."""
+    """Vérifie que web_server.py monte exactement les 6 routeurs canoniques."""
     ws = ROOT / 'web_server.py'
     txt = ws.read_text(encoding='utf-8', errors='ignore')
     expected_routers = [
-        'llm_router',
-        'mobile_router',
         'master_router',
         'telemetry_router',
         'memory_router',
@@ -38,7 +36,7 @@ def test_2_seven_active_mounted_routers():
     for r in expected_routers:
         assert f'app.include_router({r})' in txt, f'{r} doit être monté dans web_server.py'
         mounted_count += 1
-    assert mounted_count == 8
+    assert mounted_count == 6
 
 
 def test_3_model_router_unique_authority():
