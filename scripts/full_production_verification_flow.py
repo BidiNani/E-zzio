@@ -1,3 +1,8 @@
+"""
+[DEPRECATED] Ce fichier importe un module runtime.* supprime (archive 2026-09-18).
+A migrer ou supprimer. Ne pas utiliser en production.
+"""
+
 import asyncio
 import hashlib
 import os

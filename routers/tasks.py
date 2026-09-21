@@ -83,11 +83,11 @@ async def run_task(task_id: str):
     task["progress"] = 0.5
 
     try:
-        from runtime.agent.loop import AgentLoop
+        from core.agent.coding_agent_loop import CodingAgentHarness
         from tools.fs_tools import observe_filesystem
 
-        loop = AgentLoop()
-        agent_res = loop.run(task["objective"])
+        loop = CodingAgentHarness()
+        agent_res = loop.run_trajectory(task["objective"])
 
         # Exécution réelle d'observation si demandée
         obs_data = None

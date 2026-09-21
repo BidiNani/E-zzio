@@ -110,10 +110,10 @@ async def query_model_async(
     « system_note » sont conservés pour les appelants existants ; seuls les
     paramètres consommés par le routeur sont transmis.
     """
-    from runtime.model_router.router import EzzioModelRouter
+    from core.ezzio_master import EzzioMaster
 
     started = time.perf_counter()
-    router = EzzioModelRouter()
+    router = EzzioMaster()
     request = {
         "prompt": prompt,
         "task": "general",

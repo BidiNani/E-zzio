@@ -1,6 +1,6 @@
 import pytest
 
-pytestmark = pytest.mark.integration
+pytestmark = pytest.mark.visual
 
 """
 E-ZZIO V9.4 Living AI Office Visual Counter-Certification Automated Verification Suite
