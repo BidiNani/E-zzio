@@ -1,66 +1,33 @@
-# Chantiers E-ZZIO
+# TODO - Etat verifie au 2026-09-21
 
-> Source de verite des chantiers restants.
+## Traite
 
-## Traite recemment (2026-09-21)
+- [x] TODO -> NOTE explicite : `routers/self.py:30` (commit `291592f`)
+- [x] Stubs orphelins supprimes (3) : commit `cb93558`
+- [x] Fichiers vides supprimes (2) : commit `205dc84`
+- [x] `.gitignore` complete (`.tox/`, `build/`, `_audit.json`) : commit `922c17d`
+- [x] CI : `permissions: contents: read` : commit `f13e9e0`
+- [x] CI : `actions/checkout@v5` + `actions/setup-python@v6` : commit `5c24c8e`
+- [x] Incident wildcard PowerShell (`81798d8`, 35 `__init__.py` supprimes) : annule via `git reset --hard` + `push --force-with-lease`
+- [x] 43 branches obsoletes supprimees, `master` -> `main` sur les 2 repos
 
-| Chantier | Commit | Statut |
-|---|---|---|
-| TODO `routers/self.py:30` -> NOTE | `291592f` | Verifie |
-| Fichiers vides supprimes (2) | `205dc84` | Verifie |
-| Stubs orphelins supprimes (3) | `cb93558` | Verifie |
-| `.gitignore` complete | `922c17d` | Verifie |
-| `permissions: contents: read` CI | `f13e9e0` | Verifie |
-| `actions/checkout@v5` + `setup-python@v6` | `5c24c8e` | Verifie |
+## A decider
 
-## A traiter
+- [ ] Dualite `web_server.py` (452 lignes, point d'entree FastAPI reel confirme) vs `src/ezzio/api.py` (existe, LangGraph/graph/workflow.py, pas branche en primaire) - decision architecturale a trancher, pas un patch
+- [ ] Bug garde-fou PowerShell : `return` dans un `if` dans un pipe ne stoppe pas le script entier - correction generique : sortir la logique du pipe (boucle `foreach` classique + `return` au niveau script), ou `throw` capte par un `try/catch` au niveau superieur qui fait `exit 1`
 
-### 1. Dualite web_server.py / src/ezzio/api.py
+## Fichiers >500 lignes (7, verifies ligne par ligne)
 
-**Statut** : incertitude non resolue.
-
-**Contexte** :
-- `web_server.py` (452 lignes) : point d'entree confirme
-- `src/ezzio/api.py` : branchement inconnu
-
-**Decision** : consolider ou documenter.
-
-**Verifiable par** : `grep -r "from src.ezzio.api" --include="*.py"`.
-
-### 2. Sept fichiers >500 lignes
-
-| Lignes | Fichier |
+| Fichier | Lignes |
 |---|---|
-| 810 | `core/models/router.py` |
-| 643 | `core/observability/metrics.py` |
-| 634 | `core/safe_actions.py` |
-| 607 | `routers/office.py` |
-| 566 | `core/perception/universal_reader.py` |
-| 533 | `core/omni_brain.py` |
-| 502 | `core/ezzio_master.py` |
+| core/models/router.py | 810 |
+| core/observability/metrics.py | 643 |
+| core/safe_actions.py | 634 |
+| routers/office.py | 607 |
+| core/perception/universal_reader.py | 566 |
+| core/omni_brain.py | 533 |
+| core/ezzio_master.py | 502 |
 
-**Statut** : non traite.
+## Non bloquant, intentionnel
 
-**Decision** : splitter un par un, ou accepter.
-
-**Verifiable par** : `wc -l` sur chaque fichier.
-
-### 3. Warning pytest non bloquant
-
-**Statut** : intentionnel.
-
-**Fichier** : `core/models/capability_registry_source.py:27`
-
-**Verifiable par** : `pytest tests/ -W error 2>&1 | grep -i capability`.
-
-## Regles de traitement
-
-Chaque chantier selon `docs/METHOD.md` :
-
-1. Lire avant d'ecrire
-2. Un fichier par commit
-3. Garde-fous obligatoires
-4. Rapport honnete
-5. Rollback disponible
-
-Pas de bloc "maitre". Pas de wildcard. Pas de `git add -A`.
+- Warning pytest : `CapabilityRegistry` absent dans `capability_registry_source.py:27` (message confirme "non bloquant")
