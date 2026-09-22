@@ -54,3 +54,73 @@ puis abandonnee apres inventaire — les fichiers avaient deja ete archives
 (commit `27294d6`) ou supprimes (commit `628d390`) dans des sessions
 anterieures. Le chiffre "16" n'etait verifie par aucune source.
 
+
+
+
+## Hooks, pytest et surcharges (regles apprises 2026-09-22)
+
+### A. `pytest -m` en ligne de commande ecrase `addopts`
+
+Dans `pyproject.toml` :
+```
+addopts = "-q --strict-markers --tb=short -m 'not visual and not hardware'"
+```
+
+Un appel `pytest -m "not slow"` remplace entierement le `-m`
+d'`addopts`. Le filtre `not visual and not hardware` est alors
+silencieusement desactive : les tests marques `hardware` sont collectes
+et executes, ce qui casse la suite si le materiel est absent.
+
+**Regle** : quand un hook ou un script passe `-m`, il doit inclure
+**tous** les filtres necessaires :
+
+```
+pytest -m "not slow and not visual and not hardware"
+```
+
+**Contrepartie verifiable** : `git commit` doit afficher
+`[pre-commit] OK` (derniere ligne du hook) et non s'arreter sur un
+test `hardware`.
+
+### B. Verifier `core.hooksPath` avant de diagnostiquer un hook
+
+Le dossier `.git/hooks/` peut etre vide et le hook actif se trouver
+ailleurs si `core.hooksPath` est configure :
+
+```
+git config --get core.hooksPath
+# .githooks   (au lieu du defaut .git/hooks)
+```
+
+**Regle** : avant tout diagnostic de hook, faire :
+
+```
+git config --get core.hooksPath
+git ls-files ".githooks/"
+```
+
+Ne pas supposer `.git/hooks/pre-commit` ni `.pre-commit-config.yaml`
+comme source unique. Un `.githooks/` versionne est une source legitime.
+
+**Contrepartie verifiable** : `git ls-files ".githooks/"` retourne
+les scripts reellement actifs.
+
+### C. Verifier que `git`, `pytest`, `ruff` sont des executables
+
+Une fonction PowerShell du profil peut surcharger `git commit` et
+lancer des commandes avant `git.exe`. Le symptome : un message
+`[pre-commit]` qui n'apparait ni dans `.git/hooks/` ni dans
+`.githooks/` ni dans `.pre-commit-config.yaml`.
+
+**Regle** : avant tout diagnostic de hook, faire :
+
+```
+Get-Command git, pytest, ruff | Select Name, CommandType, Source
+```
+
+Tous doivent etre `Application` (ou `ExternalScript`). Si l'un est
+`Function`, c'est une surcharge PowerShell.
+
+**Contrepartie verifiable** : `(Get-Command git).CommandType -eq
+"Application"` est `True`.
+
