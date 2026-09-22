@@ -270,3 +270,96 @@ DOIT être décoré avec @pytest.mark.skipif.
 
 **Toujours ajouter aising=False** dans monkeypatch.setattr pour les
 attributs qui peuvent ne pas exister sur la plateforme de CI.
+
+
+---
+
+## Règle — `git check-ignore` et exceptions `!`
+
+**Contexte** : découvert en session V6-fix (commit `13a18ee`). Le test
+`if (git check-ignore ...) { fail }` produit un **faux positif** quand la
+dernière règle qui matche est une **exception `!`**.
+
+**Comportement Git** : `git check-ignore -v <path>` retourne exit code **0**
+même quand la dernière règle est une exception `!`, MAIS la sortie commence
+par `.gitignore:<N>:!` au lieu de `.gitignore:<N>:`.
+
+**Preuve** :
+    $ git check-ignore -v "_archive/README.md"
+    .gitignore:110:!_archive/README.md  _archive/README.md  (exit=0)
+    $ echo $?
+    0
+
+Alors que le fichier **n'est pas ignoré** (il peut être `git add`).
+
+**Règle** : ne JAMAIS utiliser `git check-ignore` **seul** (avec exit code)
+pour détecter si un fichier est ignoré. **Toujours vérifier** :
+
+1. Le **code de sortie** (0 = match, 1 = pas de match)
+2. **ET** le **contenu** de la ligne (commence par `!` = exception = NON ignoré)
+
+**Utiliser** :
+    $out = git check-ignore -v "chemin" 2>&1
+    $exitCode = $LASTEXITCODE
+    $isIgnored = ($exitCode -eq 0) -and (-not ($out -match ':\s*!'))
+
+    if ($isIgnored) {
+        Write-Host "IGNORÉ : $out"
+    } else {
+        Write-Host "NON IGNORÉ"
+    }
+
+**Ne pas utiliser** :
+    if (git check-ignore -v "chemin") { ... }  # faux positif si exception !
+
+**Alternative robuste** : utiliser `git ls-files --error-unmatch <path>` :
+- exit 0 = fichier suivi
+- exit 1 = fichier non suivi (donc ajoutable)
+
+
+---
+
+## Règle — Un commit = une intention
+
+**Contexte** : découvert en session V6-fix (commit `13a18ee`). Un commit
+intitulé `test(secrets_vault): +6 tests` a inclus **11 renommages**
+`docs/ → _archive/` parce qu'ils étaient **déjà dans l'index** (staged par
+`git mv`).
+
+**Cause** : `git mv` met les fichiers en **stage automatiquement**. Un
+`git commit` ultérieur (même avec un message ciblé) committe **tout** ce qui
+est staged.
+
+**Preuve** :
+    [main 13a18ee] test(secrets_vault): +6 tests fallback crypto
+     rename {docs => _archive/docs_certified_20260922_112042}/V9.4_SHOWCASE.md (100%)
+     ... (11 renommages non mentionnés dans le message)
+
+**Règle** : AVANT tout `git commit`, **toujours vérifier** ce qui est staged :
+
+    git diff --cached --stat
+    git status --short
+
+**Utiliser** :
+    # 1. Vérifier ce qui est staged
+    git status --short
+    # 2. Si trop de choses : unstage ce qu'on ne veut pas
+    git reset HEAD -- <fichiers à ne pas committer>
+    # 3. Committer
+    git commit -m "message ciblé"
+
+**OU** (pour des cas simples) : `git commit -m "..." -- <fichier1> <fichier2>`
+mais ce n'est **pas recommandé** pour les renommages (`git mv`).
+
+**Ne pas utiliser** :
+    git mv doc1.md archive/
+    git mv doc2.md archive/
+    git add test.py
+    git commit -m "test: ajout tests"  # inclut les 2 renommages !
+
+**Si un commit contient déjà 2 intentions** : ne **pas** réécrire l'historique
+(risqué sur branche poussée). Documenter dans le prochain commit ou dans
+`TODO.md`.
+
+**Règle METHOD.md associée** : vérifier `git diff --cached --stat` avant
+chaque `git commit`. Si plus d'une intention → séparer en commits distincts.

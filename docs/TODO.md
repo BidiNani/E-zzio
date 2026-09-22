@@ -64,3 +64,31 @@ techniques, pas par manque de tests :
 
 **Ces plafonds sont acceptables.** Les fichiers critiques
 (security, signals, telemetry) sont à 85%+.
+
+---
+
+## Bilan session V6-fix (2026-09-22)
+
+**Commits poussés** : `13a18ee`, `dbbf020`, `f308cee`
+
+**Réalisations** :
+- [x] 6 tests ajoutés à `test_secrets_vault.py` (`TestFallbackCryptoCoverage`)
+- [x] Couverture `secrets_vault.py` : 68% → 71%
+- [x] `_archive/README.md` créé (index complet des 11 sous-dossiers)
+- [x] 11 rapports auto-certifiés déplacés `docs/ → _archive/docs_certified_*/`
+- [x] `.gitignore` corrigé (`!_archive/*.md` retiré — annulait l'exception)
+- [x] `TODO.md` corrigé (splice par index, items complets)
+- [x] 2 nouvelles règles METHOD.md (#12 `git check-ignore`, #13 commit unique)
+
+**Dettes techniques identifiées** :
+- [ ] Commit `13a18ee` mélange 2 intentions (tests + renommages).
+  Ne pas réécrire l'historique — documenter suffit (voir règle #13).
+- [ ] `git check-ignore` retourne exit 0 sur exception `!` → faux positifs.
+  Toujours vérifier le contenu de la ligne (voir règle #12).
+
+**Fichiers à couverture plafonnée (rappel)** :
+- `core/security/secrets_vault.py` : 71% (DPAPI Windows-only)
+- `core/system/cpu_tuning.py` : 71% (`ctypes.windll` Windows-only)
+- `core/human_loop.py` : 70% (imports conditionnels)
+
+**CI** : à vérifier sur https://github.com/BidiNani/E-zzio/actions
