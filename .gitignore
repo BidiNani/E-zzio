@@ -102,7 +102,9 @@ _snapshots/
 *.jks
 release.keystore
 
-_archive/
+# Ignore tout dans _archive SAUF docs_certified_*/ (archive documentaire)
+_archive/*
+!_archive/docs_certified_*/
 _archive_memoire_morte/
 _a_verifier/
 _backups_auto/
@@ -112,7 +114,6 @@ quarantine/
 runtime/guardian/
 
 # Ignorer les trous noirs et les sauvegardes lourdes
-_archive/
 _archive_memoire_morte/
 _a_verifier/
 _backups_auto/
