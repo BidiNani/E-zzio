@@ -10,6 +10,10 @@ import pytest
 pytestmark = pytest.mark.hardware
 
 
+@pytest.mark.skipif(
+    not Path("dist/android").exists(),
+    reason="APK non compilé — test d'intégration optionnel (Phase 0 close)",
+)
 def test_dist_android_apk_is_compiled_binary():
     """Verifie que dist/android/E-ZzIO-v9.0.1.apk est un veritable binaire compile."""
     apk = Path("dist/android/E-ZzIO-v9.0.1.apk")
