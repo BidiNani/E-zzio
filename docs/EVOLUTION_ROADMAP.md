@@ -96,6 +96,8 @@ projet. Migrer vers un outil abandonne ou en alpha serait une regression.
 
 ## Phase 2 — Autonomie de developpement (coder_worker)
 
+> **Plan détaillé** : voir `docs/PHASE_2_PLAN.md` (créé 2026-09-22).
+
 Objectif : ne plus dependre d'Antigravity (quota epuise, fiabilite douteuse).
 Rendre `coder_worker/Alpha Coder` capable de porter le developpement.
 
