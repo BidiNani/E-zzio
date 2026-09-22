@@ -373,22 +373,24 @@ class AgentRegistry:
                 bubble="FTS5 indices synchronized and quiescent.",
                 parent_id="master_ezzio",
             ),
-            AgentDescriptor(
-                agent_id="antigravity_agent",
-                name="Antigravity Specialist",
-                role="External Autonomous Deep Refactor Specialist",
-                room="dev_lab",
-                avatar="pixel_antigravity",
-                model="antigravity-2.0",
-                provider="agent_antigravity",
-                tools=["agy_cli"],
-                capabilities=["DEEP_REFACTOR"],
-                risk_level="HIGH",
-                status=AgentStatus.ERROR,
-                current_action="Standing by: BLOCKED_BY_EXTERNAL_QUOTA",
-                bubble="Quota limit reached: standby fail-safe mode.",
-                parent_id="master_ezzio",
-            ),
+            # DEPRECATED_ANTIGRAVITY 2026-09-22 : agent désactivé.
+            # Voir docs/PHASE_2_PLAN.md — transfert vers coder_worker.
+            # AgentDescriptor(
+            #     agent_id="antigravity_agent",
+            #     name="Antigravity Specialist",
+            #     role="External Autonomous Deep Refactor Specialist",
+            #     room="dev_lab",
+            #     avatar="pixel_antigravity",
+            #     model="antigravity-2.0",
+            #     provider="agent_antigravity",
+            #     tools=["agy_cli"],
+            #     capabilities=["DEEP_REFACTOR"],
+            #     risk_level="HIGH",
+            #     status=AgentStatus.ERROR,
+            #     current_action="Standing by: BLOCKED_BY_EXTERNAL_QUOTA",
+            #     bubble="Quota limit reached: standby fail-safe mode.",
+            #     parent_id="master_ezzio",
+            # ),
         ]
         for desc in defaults:
             self._agents[desc.agent_id] = desc

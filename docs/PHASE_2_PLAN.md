@@ -182,3 +182,32 @@ La boucle doit être **construite en interne**.
 - **2026-09-22** : création initiale (plan générique)
 - **2026-09-22** : révision après découverte `antigravity` = bridge externe
 
+
+
+---
+
+## DÉCOMMISSIONNEMENT ANTIGRAVITY — Réalisé 2026-09-22
+
+**Statut** : ✅ **DÉCOMMISSIONNÉ**
+
+### Actions réalisées
+
+- [x] **Archivé** ``core/cognition/antigravity/`` → ``_archive/antigravity_deprecated_20260922_HHMMSS/``
+- [x] **Désactivé** ``antigravity_agent`` dans ``core/agents/registry.py`` (commenté)
+- [x] **Renommé** ``antigravity_provider.py`` → ``antigravity_provider.py.deprecated``
+- [x] **Supprimé** la dépendance ``antigravity-client`` du projet
+- [x] **README** de décommissionnement dans l'archive
+
+### Conséquences
+
+- ❌ Plus de dépendance externe à Google Antigravity
+- ❌ Plus de bridge Node.js vers Antigravity Desktop
+- ✅ ``coder_worker`` reste l'agent de développement interne
+- ✅ La fédération de modèles (ST.2) devient la source de remplacement
+
+### Prochaines étapes
+
+1. **P2.2** — Implémenter la fédération de modèles (ST.2)
+2. **P2.3** — Tracer dans Audit Ledger (ST.3)
+3. **P2.4** — Boucle ``plan → build → verify`` (ST.1)
+4. **P2.6** — Premier cas d'usage réel
