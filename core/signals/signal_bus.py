@@ -94,11 +94,10 @@ class SignalBus:
                 logger.error("[SIGNAL-ERROR] Erreur listener synchrone '%s': %s", signal_name, exc)
 
         try:
-            loop = asyncio.get_event_loop()
-            if loop.is_running():
-                for async_cb in self._async_listeners.get(signal_name, []):
-                    asyncio.create_task(async_cb(data))
-        except Exception:
+            loop = asyncio.get_running_loop()
+            for async_cb in self._async_listeners.get(signal_name, []):
+                loop.create_task(async_cb(data))
+        except RuntimeError:
             pass
 
     def get_event_history(self, signal_name: str | None = None) -> list[dict[str, Any]]:
