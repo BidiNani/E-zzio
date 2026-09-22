@@ -14,11 +14,22 @@ from typing import Any
 logger = logging.getLogger("SignalBus")
 
 
+
+def _now_timestamp() -> float:
+    """Retourne le timestamp de la loop courante ou 0.0 si aucune loop active.
+
+    Utilise get_running_loop() qui est safe (lève RuntimeError au lieu de
+    créer implicitement une loop avec DeprecationWarning).
+    """
+    try:
+        return asyncio.get_running_loop().time()
+    except RuntimeError:
+        return 0.0
 @dataclass
 class SignalEvent:
     name: str
     payload: dict[str, Any] = field(default_factory=dict)
-    timestamp: float = field(default_factory=lambda: asyncio.get_event_loop().time() if asyncio.get_event_loop().is_running() else 0.0)
+    timestamp: float = field(default_factory=_now_timestamp)
 
 
 class SignalBus:
