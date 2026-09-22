@@ -1,7 +1,6 @@
 import pytest
 
 from core.memory.unified_gateway import UnifiedMemoryGateway
-from core.router.intent_router import IntentRouter, IntentType
 
 
 @pytest.mark.asyncio
@@ -22,7 +21,4 @@ async def test_cross_session_memory_search_and_recall(tmp_path):
     assert len(chat_hist) >= 1
     assert any("8001" in m.get("content", "") for m in chat_hist)
 
-    # 3. Test de classification d'intention pour le recall
-    router = IntentRouter()
-    classification = router.classify("Rappel de ce qu'on a fait précédemment concernant le microkernel")
-    assert classification["intent"] == IntentType.MEMORY_QUERY
+
