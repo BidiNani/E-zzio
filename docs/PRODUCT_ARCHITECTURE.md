@@ -42,3 +42,29 @@ E-ZZIO V9.0 n'est plus une collection de scripts disparates mais un **logiciel c
 1. **Isolation des Clés d'API** : L'APK et le bundle web ne contiennent aucune clé d'API (zéro token Gemini, Groq, Discord ou mot de passe).
 2. **Autorité Unique** : Toute action mutatrice (ex: `drive.write`, `github.push`) passe impérativement par `CapabilityPolicy.evaluate_scope(...)` et exige l'approbation humaine `REQUIRE_HUMAN`.
 3. **Consistance Multi-Client** : Lorsqu'une demande HITL est générée, elle est immédiatement synchronisée sur Desktop et Android avec le même `approval_id`. L'approbation effectuée depuis l'Android met instantanément à jour le Desktop.
+
+
+---
+
+## 4. DEUX POINTS D'ENTREE (etat 2026-09-22)
+
+Le repo contient deux points d'entree coexistants, avec des roles distincts :
+
+| Point d'entree | Lignes | Role | Statut |
+| :--- | :--- | :--- | :--- |
+| ``web_server.py`` | 256 | Serveur HTTP principal (production) | **Actif** — importe par ``routers/models_admin.py``, ``tests/conftest.py``, ``tools/self_check.py`` |
+| ``main.py`` (racine) | 190 | CLI + serveur alternative pour ``src/ezzio/`` | **Actif** — executable direct |
+| ``src/ezzio/api.py`` | 186 | API FastAPI du sous-projet LangGraph | **Actif via ``main.py``** |
+
+### Precision importante
+
+``web_server.py`` et ``src/ezzio/`` ne sont **pas en conflit** :
+
+- ``web_server.py`` sert la production (routes ``/master/*``, ``/api/*``, ``/perception/*``).
+- ``src/ezzio/`` est un sous-projet LangGraph (RAG + self-repair + UI HTML 21 Ko) expose par ``main.py``.
+- Aucun import croise : ``git grep "from src.ezzio.api"`` retourne vide.
+
+### Regle d'orientation
+
+Tout developpement touchant les routes HTTP de production (``/master/*``, ``/api/*``) va dans ``web_server.py``.
+Tout developpement LangGraph / RAG / self-repair va dans ``src/ezzio/`` via ``main.py``.

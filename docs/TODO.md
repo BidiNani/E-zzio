@@ -13,7 +13,7 @@
 
 ## A decider
 
-- [ ] Dualite `web_server.py` (452 lignes, point d'entree FastAPI reel confirme) vs `src/ezzio/api.py` (existe, LangGraph/graph/workflow.py, pas branche en primaire) - decision architecturale a trancher, pas un patch
+- [x] **Dualite ``web_server.py`` vs ``src/ezzio/api.py`` — CLOS 2026-09-22** : ce ne sont pas deux API concurrentes, mais deux points d'entree distincts. ``web_server.py`` (256 lignes) = serveur HTTP production. ``src/ezzio/`` (25 fichiers) + ``main.py`` (190 lignes) = sous-projet LangGraph separe. Voir ``docs/PRODUCT_ARCHITECTURE.md`` section "Deux points d'entree".
 - [ ] Bug garde-fou PowerShell : `return` dans un `if` dans un pipe ne stoppe pas le script entier - correction generique : sortir la logique du pipe (boucle `foreach` classique + `return` au niveau script), ou `throw` capte par un `try/catch` au niveau superieur qui fait `exit 1`
 
 - [ ] **Bug garde-fou PowerShell/Python (precise 2026-09-22)** : un script Python qui utilise `subprocess.run(["ruff", "check", ...])` echoue sous Windows avec `FileNotFoundError: [WinError 2]` - `ruff` est dans le `.venv` mais pas dans le PATH du `subprocess`. **Correction** : utiliser `subprocess.run([sys.executable, "-m", "ruff", "check", ...])` pour garantir l'utilisation du `ruff` du meme interpreteur Python. **Impact observe** : le script s'arrete avant le commit ; le fichier modifie reste dans le working tree (inspectable, non committe). **Instance rencontree** : session 2026-09-22, fix `test_capability_policy.py` (commit `88df2e4`).
@@ -34,12 +34,10 @@
 
 - Warning pytest : `CapabilityRegistry` absent dans `capability_registry_source.py:27` (message confirme "non bloquant")
 
-## Bug pre-commit : test_android_artifact bloque les commits doc en local
+## Bug pre-commit : CLOS 2026-09-22
 
-- Fichier : `tests/test_android_artifact.py`
-- Test : `test_dist_android_apk_is_compiled_binary`
-- Cause : `dist/android/E-ZzIO-v9.0.1.apk` absent en local (artefact de build CI uniquement)
-- Impact : bloque tout commit doc en local → force `--no-verify`, ce qui use la discipline
-- Fix propose : `@pytest.mark.skipif(not Path("dist/android").exists(), reason="build CI uniquement")`
-- Statut : ouvert
+- **Cause reelle** : le hook `.githooks/pre-commit` passait `-m "not slow"` a pytest, ce qui ecrasait silencieusement `addopts` (`-m 'not visual and not hardware'`) de `pyproject.toml`. Le test `test_android_artifact` n'etait donc plus exclu.
+- **Fix** : commit `29ef117` (`-m "not slow and not visual and not hardware"`)
+- **Regles capitalisees** : commit `42a7f86` (`docs/METHOD.md` section "Hooks, pytest et surcharges")
+- **Statut** : resolu
 
