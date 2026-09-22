@@ -123,3 +123,100 @@ class TestWindowsDpapiMocked:
         monkeypatch.setattr(sys, "platform", "win32")
         result = vault.unseal_from_dpapi(vault.secrets_dir / "nonexistent.bin")
         assert result is None
+
+
+# ============================================================
+# 3. Fallback crypto — couverture branches (session 2026-09-22)
+# ============================================================
+
+class TestFallbackCryptoCoverage:
+    """Tests pour les branches du fallback PBKDF2-XOR-HMAC.
+
+    Objectif : couvrir les lignes testables sans dépendance OS.
+    """
+
+    def test_encrypt_env_source_not_found(self, vault, tmp_path, monkeypatch):
+        """Fichier source introuvable -> erreur propre."""
+        monkeypatch.setattr(secrets_vault, "HAS_CRYPTOGRAPHY", False)
+        missing = tmp_path / "does_not_exist.env"
+        dest = tmp_path / "out.enc"
+        result = vault.encrypt_env(missing, dest, passphrase="key")
+        assert result["ok"] is False
+        assert "introuvable" in result["error"].lower()
+
+    def test_decrypt_env_container_not_found(self, vault, tmp_path, monkeypatch):
+        """Conteneur chiffré introuvable -> erreur propre."""
+        monkeypatch.setattr(secrets_vault, "HAS_CRYPTOGRAPHY", False)
+        missing = tmp_path / "does_not_exist.enc"
+        result = vault.decrypt_to_memory(missing, passphrase="key")
+        assert result["ok"] is False
+        assert "introuvable" in result["error"].lower()
+
+    def test_decrypt_env_corrupted_base64(self, vault, env_file, tmp_path, monkeypatch):
+        """Base64 invalide -> exception capturée."""
+        monkeypatch.setattr(secrets_vault, "HAS_CRYPTOGRAPHY", False)
+        dest = tmp_path / "out.enc"
+        vault.encrypt_env(env_file, dest, passphrase="key")
+
+        envelope = json.loads(dest.read_text(encoding="utf-8"))
+        # Trouver la clé contenant les données chiffrées
+        for k in list(envelope.keys()):
+            if k.endswith("_b64") and k != "":
+                envelope[k] = "!!!not-base64!!!"
+                break
+        dest.write_text(json.dumps(envelope), encoding="utf-8")
+
+        result = vault.decrypt_to_memory(dest, passphrase="key")
+        assert result["ok"] is False
+
+    def test_decrypt_env_wrong_hmac(self, vault, env_file, tmp_path, monkeypatch):
+        """HMAC/tag corrompu -> échec d'intégrité."""
+        monkeypatch.setattr(secrets_vault, "HAS_CRYPTOGRAPHY", False)
+        dest = tmp_path / "out.enc"
+        vault.encrypt_env(env_file, dest, passphrase="key")
+
+        envelope = json.loads(dest.read_text(encoding="utf-8"))
+        # Pas de clé HMAC identifiée — corrompre toutes les clés *b64
+        for k in list(envelope.keys()):
+            if k.endswith("_b64"):
+                envelope[k] = base64.b64encode(b"\x00" * 32).decode("ascii")
+                break
+        dest.write_text(json.dumps(envelope), encoding="utf-8")
+
+        result = vault.decrypt_to_memory(dest, passphrase="key")
+        assert result["ok"] is False
+
+    def test_decrypt_env_skips_comments_and_blanks(self, vault, tmp_path, monkeypatch):
+        """Lignes vides et commentaires ignorés au déchiffrement."""
+        monkeypatch.setattr(secrets_vault, "HAS_CRYPTOGRAPHY", False)
+        env_file = tmp_path / "with_comments.env"
+        env_file.write_text(
+            "# commentaire\n"
+            "\n"
+            "KEY1=value1\n"
+            "\n"
+            "# autre commentaire\n"
+            "KEY2=value2\n",
+            encoding="utf-8",
+        )
+        dest = tmp_path / "out.enc"
+        enc = vault.encrypt_env(env_file, dest, passphrase="key")
+        assert enc["ok"] is True
+
+        dec = vault.decrypt_to_memory(dest, passphrase="key")
+        assert dec["ok"] is True
+
+    def test_encrypt_env_fallback_round_trip_multiline(self, vault, tmp_path, monkeypatch):
+        """Round-trip complet du fallback avec plusieurs lignes."""
+        monkeypatch.setattr(secrets_vault, "HAS_CRYPTOGRAPHY", False)
+        env_file = tmp_path / "multi.env"
+        env_file.write_text("A=1\nB=2\nC=3\nD=4\nE=5\n", encoding="utf-8")
+        dest = tmp_path / "out.enc"
+        enc = vault.encrypt_env(env_file, dest, passphrase="roundtrip")
+        assert enc["ok"] is True
+
+        envelope = json.loads(dest.read_text(encoding="utf-8"))
+        assert envelope["algorithm"] == "PBKDF2-XOR-HMAC"
+
+        dec = vault.decrypt_to_memory(dest, passphrase="roundtrip")
+        assert dec["ok"] is True
