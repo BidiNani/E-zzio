@@ -151,3 +151,42 @@ pas via la console PowerShell qui peut afficher en CP1252.
 **Note console** : `git diff` et la console PowerShell peuvent afficher du
 "mojibake" (`Ô£à`, `ÔØî`) alors que le fichier est correct en UTF-8. Toujours
 vérifier avec `[System.IO.File]::ReadAllText(..., UTF8)` avant de corriger.
+
+## Règle — Vérification avant d'écrire un test
+
+**Contexte** : observé 2 fois dans la session V4 (core/telemetry et tests unit).
+
+**Règle 1 — Vérifier le conflit module/package**
+
+Avant d'écrire un test pour core/X.py, vérifier qu'il n'existe pas un
+package core/X/ qui masquerait le fichier :
+
+    Test-Path "core\X.py"              # -> fichier
+    Test-Path "core\X\__init__.py"     # -> package
+
+Si les deux existent, Python charge le package (le dossier gagne).
+Dans ce cas, soit renommer le fichier (X_events.py), soit tester le
+package, soit supprimer le code mort.
+
+**Règle 2 — Jamais 'l' comme variable de comprehension**
+
+Ruff E741 interdit 'l' (ambigu avec 1). Utiliser 'line', 'item', 'entry'.
+
+    # Interdit
+    lines = [l for l in content.split("\n") if l]
+
+    # Correct
+    lines = [line for line in content.split("\n") if line]
+
+**Règle 3 — Lire le code avant d'écrire un test**
+
+Les tests V3-b2 (human_loop) et V3-b3 (omni_brain) ont échoué sur des
+suppositions : event_type/data au lieu de type/payload, write_json_event
+supposé créer le dossier (il ne le crée pas). Toujours lire 100-200 lignes
+de la fonction cible avant d'écrire un test qui asserte sur sa structure.
+
+**Règle 4 — Exclure les fonctions fail-closed des tests unitaires**
+
+Les fonctions qui appellent un mécanisme de sécurité en cascade
+(CanonicalIdentity, runtime/identity/persona.hash) sont des tests
+d'intégration, pas unitaires. Les mettre en TODO, pas en test.
