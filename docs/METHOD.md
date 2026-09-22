@@ -26,3 +26,15 @@ Toute affirmation de statut (CERTIFIED, PASS, RESOLU) doit etre verifiable indep
 
 - 2026-09-21 : creation initiale (commits `64417d3` et `5e91e47`).
 - 2026-09-21 : reformulation de la regle 2 apres retour de Claude : la regle "1 fichier = 1 commit" etait trop stricte et aurait bloque la purge legitime `2b2f308` (35 fichiers).
+
+## Semantique .gitignore (regle apprise 2026-09-22)
+
+- `dossier/` -> ignore le dossier ET empeche Git de descendre.
+  Les regles suivantes ne s'appliquent PAS a l'interieur.
+- `dossier/*` -> ignore le contenu MAIS Git descend pour evaluer
+  les sous-regles. Permet les exceptions `!dossier/sous-dossier/`.
+- Un doublon de regle en fin de fichier peut annuler une exception
+  placee au debut. Toujours verifier l'unicite.
+- Verification obligatoire : `git check-ignore -v <chemin>`
+  (pas seulement `git status --porcelain`).
+
