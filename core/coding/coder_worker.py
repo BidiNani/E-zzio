@@ -64,7 +64,7 @@ INSTRUCTIONS :
 Contraintes :
 - Chemins relatifs au projet, pas de sortie du workspace.
 - Contenu complet du fichier (pas de patch partiel).
-- Si tu n'es pas sûr, laisse "files" vide et explique dans "plan".
+- Tu DOIS fournir au moins un fichier dans "files". Propose la meilleure version possible.
 """
 
 
