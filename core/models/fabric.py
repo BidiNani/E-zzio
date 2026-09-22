@@ -13,12 +13,12 @@ from .discovery.gemini import GeminiDiscovery
 from .discovery.groq import GroqDiscovery
 from .discovery.litellm import LiteLLMDiscovery
 from .discovery.openrouter import OpenRouterDiscovery
+from .ezzio_router import EzzioRouter
 from .key_pool import KeyPoolManager
 from .lifecycle import ModelLifecycleManager
 from .qualification.free_only import filter_free_only
 from .qualification.gate import QualificationGate
 from .registry import ModelLifecycle, ModelRegistry
-from .ezzio_router import EzzioRouter
 from .telemetry import SafeTelemetry
 
 
