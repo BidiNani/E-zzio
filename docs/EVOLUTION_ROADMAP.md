@@ -34,8 +34,9 @@ encore ete confirmees** par un inventaire factuel :
 
 | # | Affirmation | A verifier par | Statut |
 |---|---|---|---|
-| P1 | GSD existe, est activement maintenu (1800+ commits annonces), licence compatible | `npx get-shit-done-cc@latest` + inspection repo upstream | Non verifie |
-| P2 | Ralph Loop existe, actif, compatible avec E-zzio | recherche + inspection | Non verifie |
+| P1 | GSD existe | `npx get-shit-done-cc@latest --help` (fait 2026-09-22) | ✅ EXISTE (v1.42.3) |
+| P1b | GSD est activement maintenu | inspection npm + repo upstream | ❌ ABANDONNE (npm deprecated) |
+| P2 | Ralph Loop existe en version stable | `npm search ralph-loop` (fait 2026-09-22) | ⚠️ MULTIPLE (alpha/RC, aucun stable) |
 | P3 | Interface ezzio-desktop a 60% (Chat/Pairing/Reglages en placeholder) | inspection `ezzio-desktop/` (comptage routes + composants) | Non verifie |
 | P4 | `core/models/router.py` fait 810 lignes | `(Get-Content).Count` | Non verifie |
 | P5 | `registry/personality/` n'est pas charge au runtime | `grep -r "registry/personality" --include="*.py"` | Non verifie |
@@ -74,23 +75,22 @@ les fichiers etaient deja archives (commit `27294d6`) ou supprimes
 
 ---
 
-## Phase 1 — Evaluer le remplacement de la mecanique manuelle
+## Phase 1 — CLOSE 2026-09-22 (decision : ne pas migrer)
 
-La session precedente a montre la limite : scripts PowerShell/Python
-jetables, plusieurs tentatives echouees avant de trouver la bonne syntaxe
-`.gitignore`, `--no-verify` repete.
+**P1 verifiee** : GSD existe (v1.42.3) mais est **abandonne** (npm deprecated,
+*« Package no longer supported »*). Node requis >=22 (local : 20.20.2).
 
-**Etape prealable obligatoire : verifier P1 et P2** avant toute decision.
+**P2 verifiee** : plusieurs ``ralph-loop`` existent sur npm, tous en
+version alpha (``ralph-loop@0.0.1-alpha.0``) ou RC
+(``@deepseek-ai/dsh-tool-ralph@0.0.1-rc.1``). Aucune version stable.
 
-- **GSD** (`npx get-shit-done-cc@latest`) : si P1 est confirmee, evaluer
-  la migration de `docs/METHOD.md` / `docs/TODO.md` vers une config GSD.
-  Les 5 regles de `docs/METHOD.md` deviendraient la `CONSTITUTION.md` GSD.
-- **Ralph Loop** : si P2 est confirmee, evaluer le remplacement des scripts
-  `_docs_setup.py` / `_fix_github_test.py` par une boucle autonome
-  plan + build + backpressure (tests + ruff).
+**Decision** : **ne pas migrer** vers GSD ni Ralph Loop.
 
-**Decision** : migrer ou non — documentee dans un commit dedie, avec
-resultat de P1/P2 en preambule.
+**Justification** : la methode ``docs/METHOD.md`` (8 regles capitalisees)
+est stable et fonctionne — 5 sessions de nettoyage menees sans casser le
+projet. Migrer vers un outil abandonne ou en alpha serait une regression.
+
+**Conserve** : ``docs/METHOD.md`` reste l'autorite de gouvernance.
 
 ---
 
