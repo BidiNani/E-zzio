@@ -124,3 +124,30 @@ Tous doivent etre `Application` (ou `ExternalScript`). Si l'un est
 **Contrepartie verifiable** : `(Get-Command git).CommandType -eq
 "Application"` est `True`.
 
+
+## Règle — Édition de fichiers Markdown contenant de l'Unicode
+
+**Contexte** : observé 2 fois dans les sessions de nettoyage E-zzio.
+Utiliser `String.Replace` avec des chaînes littérales longues sur des
+fichiers Markdown contenant des emojis (`✅`, `❌`, `⚠`) provoque du
+mojibake ou échoue silencieusement.
+
+**Règle** : pour les fichiers Markdown contenant de l'Unicode, utiliser :
+
+1. **Splice par index** (recommandé) : lire le fichier ligne par ligne,
+   remplacer les lignes par index (`$before + $new + $after`), réécrire.
+   Robuste à tout caractère Unicode.
+
+2. **OU** `-replace` avec regex explicitement Unicode.
+
+**Ne jamais** utiliser `String.Replace` avec une chaîne littérale longue
+sur un fichier Markdown.
+
+**Vérification** : après édition, lire le fichier en UTF-8 strict
+(`[System.IO.File]::ReadAllText($path, [System.Text.Encoding]::UTF8)`)
+et vérifier la présence des codepoints attendus (U+2705, U+274C, U+26A0),
+pas via la console PowerShell qui peut afficher en CP1252.
+
+**Note console** : `git diff` et la console PowerShell peuvent afficher du
+"mojibake" (`Ô£à`, `ÔØî`) alors que le fichier est correct en UTF-8. Toujours
+vérifier avec `[System.IO.File]::ReadAllText(..., UTF8)` avant de corriger.
