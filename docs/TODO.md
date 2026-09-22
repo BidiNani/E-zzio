@@ -16,6 +16,8 @@
 - [ ] Dualite `web_server.py` (452 lignes, point d'entree FastAPI reel confirme) vs `src/ezzio/api.py` (existe, LangGraph/graph/workflow.py, pas branche en primaire) - decision architecturale a trancher, pas un patch
 - [ ] Bug garde-fou PowerShell : `return` dans un `if` dans un pipe ne stoppe pas le script entier - correction generique : sortir la logique du pipe (boucle `foreach` classique + `return` au niveau script), ou `throw` capte par un `try/catch` au niveau superieur qui fait `exit 1`
 
+- [ ] **Bug garde-fou PowerShell/Python (precise 2026-09-22)** : un script Python qui utilise `subprocess.run(["ruff", "check", ...])` echoue sous Windows avec `FileNotFoundError: [WinError 2]` - `ruff` est dans le `.venv` mais pas dans le PATH du `subprocess`. **Correction** : utiliser `subprocess.run([sys.executable, "-m", "ruff", "check", ...])` pour garantir l'utilisation du `ruff` du meme interpreteur Python. **Impact observe** : le script s'arrete avant le commit ; le fichier modifie reste dans le working tree (inspectable, non committe). **Instance rencontree** : session 2026-09-22, fix `test_capability_policy.py` (commit `88df2e4`).
+
 ## Fichiers >500 lignes (7, verifies ligne par ligne)
 
 | Fichier | Lignes |
