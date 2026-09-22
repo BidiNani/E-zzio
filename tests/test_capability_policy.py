@@ -2,6 +2,8 @@
 Tests unitaires pour la Capability Policy et les connecteurs Google Workspace, GitHub & Web.
 """
 
+from unittest.mock import AsyncMock, Mock, patch
+
 import pytest
 
 from core.capabilities.capability_policy import CapabilityPolicy, PolicyDecision
@@ -75,12 +77,35 @@ async def test_github_provider_read_and_mutation_guard():
     workspace = "G:\\AI\\E-zzio"
     gh = GitHubProvider(workspace_root=workspace)
 
-    # 1. Test lecture de métadonnées de repo public (scope: github.read)
-    res_info = await gh.get_repo_info("torvalds", "linux")
-    assert "ok" in res_info
-    assert res_info["scope"] == "github.read"
+    # Mock du client HTTP : evite tout appel reseau reel (CI sans GITHUB_TOKEN)
+    mock_response = Mock()
+    mock_response.status_code = 200
+    mock_response.json.return_value = {
+        "full_name": "torvalds/linux",
+        "description": "Linux kernel source tree",
+        "stargazers_count": 185000,
+        "default_branch": "master",
+        "open_issues_count": 0,
+    }
+    mock_response.text = ""
+
+    mock_client = AsyncMock()
+    mock_client.get.return_value = mock_response
+
+    with patch(
+        "core.capabilities.github_provider.get_http_client",
+        return_value=mock_client,
+    ):
+        # 1. Test lecture de métadonnées de repo public (scope: github.read)
+        res_info = await gh.get_repo_info("torvalds", "linux")
+        assert "ok" in res_info
+        assert res_info["ok"] is True
+        assert res_info["scope"] == "github.read"
+        assert res_info["data"]["name"] == "torvalds/linux"
+        assert res_info["data"]["stars"] == 185000
 
     # 2. Test tentative de création de PR -> Interception REQUIRE_HUMAN
+    #    (pas d'appel HTTP : la policy intercepte avant)
     res_pr = await gh.create_pull_request(
         owner="BidiNani",
         repo="E-zzio",
