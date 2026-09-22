@@ -16,7 +16,7 @@ class ProviderDomain(enum.StrEnum):
     LOCAL_OLLAMA = "local_ollama"
     CLOUD_GEMINI = "cloud_gemini"
     CLOUD_GROQ = "cloud_groq"
-    AGENT_ANTIGRAVITY = "agent_antigravity"
+    CLOUD_OPENROUTER = "cloud_openrouter"
 
 
 @dataclass
