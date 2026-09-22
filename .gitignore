@@ -107,6 +107,7 @@ release.keystore
 
 # Ignore tout dans _archive SAUF docs_certified_*/ (archive documentaire)
 _archive/*
+!_archive/README.md
 !_archive/docs_certified_*/
 _archive_memoire_morte/
 _a_verifier/
