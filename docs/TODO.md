@@ -16,7 +16,7 @@
 - [x] **Dualite ``web_server.py`` vs ``src/ezzio/api.py`` — CLOS 2026-09-22** : ce ne sont pas deux API concurrentes, mais deux points d'entree distincts. ``web_server.py`` (256 lignes) = serveur HTTP production. ``src/ezzio/`` (25 fichiers) + ``main.py`` (190 lignes) = sous-projet LangGraph separe. Voir ``docs/PRODUCT_ARCHITECTURE.md`` section "Deux points d'entree".
 - [ ] Bug garde-fou PowerShell : `return` dans un `if` dans un pipe ne stoppe pas le script entier - correction generique : sortir la logique du pipe (boucle `foreach` classique + `return` au niveau script), ou `throw` capte par un `try/catch` au niveau superieur qui fait `exit 1`
 
-- [ ] **Bug garde-fou PowerShell/Python (precise 2026-09-22)** : un script Python qui utilise `subprocess.run(["ruff", "check", ...])` echoue sous Windows avec `FileNotFoundError: [WinError 2]` - `ruff` est dans le `.venv` mais pas dans le PATH du `subprocess`. **Correction** : utiliser `subprocess.run([sys.executable, "-m", "ruff", "check", ...])` pour garantir l'utilisation du `ruff` du meme interpreteur Python. **Impact observe** : le script s'arrete avant le commit ; le fichier modifie reste dans le working tree (inspectable, non committe). **Instance rencontree** : session 2026-09-22, fix `test_capability_policy.py` (commit `88df2e4`).
+- [x] **Bug garde-fou PowerShell/Python (resolu 2026-09-22)** : un script Python qui utilise `subprocess.run(["ruff", "check", ...])` echoue sous Windows avec `FileNotFoundError: [WinError 2]` - `ruff` est dans le `.venv` mais pas dans le PATH du `subprocess`. **Correction** : utiliser `subprocess.run([sys.executable, "-m", "ruff", "check", ...])` pour garantir l'utilisation du `ruff` du meme interpreteur Python. **Impact observe** : le script s'arrete avant le commit ; le fichier modifie reste dans le working tree (inspectable, non committe). **Instance rencontree** : session 2026-09-22, fix `test_capability_policy.py` (commit `88df2e4`).
 
 ## Fichiers >500 lignes (7, verifies ligne par ligne)
 
@@ -81,9 +81,9 @@ techniques, pas par manque de tests :
 - [x] 2 nouvelles règles METHOD.md (#12 `git check-ignore`, #13 commit unique)
 
 **Dettes techniques identifiées** :
-- [ ] Commit `13a18ee` mélange 2 intentions (tests + renommages).
+- [x] Commit `13a18ee` mélange 2 intentions (tests + renommages). **Documenté dans METHOD.md règle #13.** Ne pas réécrire l'historique.
   Ne pas réécrire l'historique — documenter suffit (voir règle #13).
-- [ ] `git check-ignore` retourne exit 0 sur exception `!` → faux positifs.
+- [x] `git check-ignore` retourne exit 0 sur exception `!`. **Documenté dans METHOD.md règle #12.**
   Toujours vérifier le contenu de la ligne (voir règle #12).
 
 **Fichiers à couverture plafonnée (rappel)** :

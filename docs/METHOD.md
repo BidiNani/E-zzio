@@ -363,3 +363,29 @@ mais ce n'est **pas recommandé** pour les renommages (`git mv`).
 
 **Règle METHOD.md associée** : vérifier `git diff --cached --stat` avant
 chaque `git commit`. Si plus d'une intention → séparer en commits distincts.
+
+---
+
+## Règle — Tester la CI avant de clore une phase
+
+**Contexte** : découvert en session V6-fix (Phase 0 close). Le roadmap dit
+« Rien de nouveau ne doit demarrer tant que ceci traine ». Fermer une
+phase sans verifier la CI revient a cocher une case sans preuve.
+
+**Regle** : avant de marquer une phase du roadmap comme **close** :
+
+1. **Working tree PROPRE** (`git status --porcelain` vide)
+2. **Commits pousses** (`git rev-parse HEAD` == `git rev-parse origin/main`)
+3. **CI verte sur les 3 derniers runs** (`gh run list --limit 3`)
+4. **Aucune branche snapshot residuelle** (`git branch` = `main` uniquement)
+5. **Documentation a jour** (METHOD.md + TODO.md)
+
+**Sans ces 5 preuves, la phase n'est PAS close.** Cocher une case sans
+preuve est exactement le travers que le projet combat (KNOWN_FALSE_CLAIMS.md).
+
+**Preuve a consigner** : le commit qui ferme la phase doit contenir dans son
+message la **reference aux runs CI verts** (SHA + date).
+
+**Exemple** :
+    docs(roadmap): close Phase 0 — CI verte (c5f54bf, f308cee, c1444af)
+
