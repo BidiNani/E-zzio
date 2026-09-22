@@ -13,6 +13,6 @@ echo "[pre-commit] pytest unit tests..."
 "$PY" -m pytest tests/ \
     --ignore=tests/integration \
     --ignore=tests/test_web_ui_e2e.py \
-    -q -x -m "not slow" --tb=line
+    -q -x -m "not slow and not visual and not hardware" --tb=line
 
 echo "[pre-commit] OK"

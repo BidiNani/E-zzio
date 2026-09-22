@@ -47,7 +47,10 @@ __pycache__/
 # LOCAL AI DATA
 # ================================
 
-data/
+# Ignore tout dans data/ SAUF models/registry.json (artefact deterministe versionne)
+data/*
+!data/models/
+!data/models/registry.json
 _harvested_
 
 

@@ -1,0 +1,180 @@
+{
+  "version": 1,
+  "generated_from": "core/routing/registry.py + model_registry.py",
+  "providers": {
+    "gemini": {
+      "base_url": "https://generativelanguage.googleapis.com/v1beta/models",
+      "default_model": "gemini-3.5-flash-lite",
+      "fallback_models": [
+        "gemini-3.6-flash",
+        "gemini-3.8-flash"
+      ],
+      "api_key_env": [
+        "GEMINI_API_KEY",
+        "GOOGLE_API_KEY"
+      ],
+      "models_count": 5
+    },
+    "groq": {
+      "base_url": "https://api.groq.com/openai/v1",
+      "default_model": "groq/compound",
+      "fallback_models": [],
+      "api_key_env": [
+        "GROQ_API_KEY"
+      ],
+      "models_count": 2
+    },
+    "anthropic": {
+      "base_url": "https://api.anthropic.com/v1",
+      "default_model": "anthropic/claude-sonnet-4",
+      "fallback_models": [],
+      "api_key_env": [
+        "ANTHROPIC_API_KEY"
+      ],
+      "models_count": 2
+    },
+    "openai": {
+      "base_url": "https://api.openai.com/v1",
+      "default_model": "openai/gpt-4o-mini",
+      "fallback_models": [],
+      "api_key_env": [
+        "OPENAI_API_KEY"
+      ],
+      "models_count": 2
+    },
+    "mistral": {
+      "base_url": "https://api.mistral.ai/v1",
+      "default_model": "mistral/mistral-large",
+      "fallback_models": [],
+      "api_key_env": [
+        "MISTRAL_API_KEY"
+      ],
+      "models_count": 1
+    }
+  },
+  "models": {
+    "gemini-3.8-flash": {
+      "name": "gemini-3.8-flash",
+      "source": "GEMINI",
+      "role": "MASTER",
+      "roles": [
+        "MASTER",
+        "MASTER_STRATEGIC"
+      ],
+      "thinking_level": "low",
+      "enabled": true
+    },
+    "gemini-3.7-flash": {
+      "name": "gemini-3.7-flash",
+      "source": "GEMINI",
+      "role": "CODING",
+      "roles": [
+        "CODING"
+      ],
+      "thinking_level": "low",
+      "enabled": true
+    },
+    "gemini-3.6-flash": {
+      "name": "gemini-3.6-flash",
+      "source": "GEMINI",
+      "role": "FORENSIC",
+      "roles": [
+        "FORENSIC"
+      ],
+      "thinking_level": "low",
+      "enabled": true
+    },
+    "gemini-3.5-flash": {
+      "name": "gemini-3.5-flash",
+      "source": "GEMINI",
+      "role": "REFACTOR",
+      "roles": [
+        "REFACTOR"
+      ],
+      "thinking_level": "low",
+      "enabled": true
+    },
+    "gemini-3.5-flash-lite": {
+      "name": "gemini-3.5-flash-lite",
+      "source": "GEMINI",
+      "role": "STANDARD_CHAT",
+      "roles": [
+        "STANDARD_CHAT",
+        "FAST_CHAT",
+        "FAST",
+        "FALLBACK"
+      ],
+      "thinking_level": "low",
+      "enabled": true
+    },
+    "qwen3.5-mtp:4b": {
+      "name": "qwen3.5-mtp:4b",
+      "source": "LOCAL",
+      "role": "FAST_LOCAL",
+      "roles": [
+        "FAST_LOCAL"
+      ],
+      "thinking_level": "off",
+      "enabled": true
+    },
+    "phi4-mini:latest": {
+      "name": "phi4-mini:latest",
+      "source": "LOCAL",
+      "role": "LOCAL_MINI",
+      "roles": [
+        "LOCAL_MINI"
+      ],
+      "thinking_level": "off",
+      "enabled": true
+    },
+    "qwen3.5:9b": {
+      "name": "qwen3.5:9b",
+      "source": "LOCAL",
+      "role": "GENERALIST",
+      "roles": [
+        "GENERALIST",
+        "THINKING"
+      ],
+      "thinking_level": "low",
+      "enabled": true
+    },
+    "qwen2.5-coder:7b-instruct-q4_K_M": {
+      "name": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "source": "LOCAL",
+      "role": "LOCAL",
+      "roles": [
+        "LOCAL",
+        "LOCAL_CODING"
+      ],
+      "thinking_level": "off",
+      "enabled": true
+    },
+    "deepseek-r1:7b": {
+      "name": "deepseek-r1:7b",
+      "source": "LOCAL",
+      "role": "REASONING",
+      "roles": [
+        "REASONING",
+        "THINKING"
+      ],
+      "thinking_level": "low",
+      "enabled": true
+    },
+    "hermes3:8b": {
+      "name": "hermes3:8b",
+      "source": "LOCAL",
+      "role": "LOCAL_AGENT",
+      "roles": [
+        "LOCAL_AGENT"
+      ],
+      "thinking_level": "off",
+      "enabled": true
+    }
+  },
+  "counts": {
+    "cloud_active": 12,
+    "local_active": 13,
+    "with_roles": 11,
+    "providers": 5
+  }
+}
