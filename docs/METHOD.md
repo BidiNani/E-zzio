@@ -190,3 +190,39 @@ de la fonction cible avant d'écrire un test qui asserte sur sa structure.
 Les fonctions qui appellent un mécanisme de sécurité en cascade
 (CanonicalIdentity, runtime/identity/persona.hash) sont des tests
 d'intégration, pas unitaires. Les mettre en TODO, pas en test.
+
+## Règle — asyncio : utiliser get_running_loop(), pas get_event_loop()
+
+**Contexte** : découvert dans signal_bus.py (session V5-d).
+
+syncio.get_event_loop() est **deprecated depuis Python 3.12** et
+**crashe** (RuntimeError) en dehors d'un contexte async quand aucune
+loop n'est enregistrée. Il émet aussi un DeprecationWarning.
+
+**Règle** : ne jamais utiliser syncio.get_event_loop().
+
+**Utiliser** :
+
+    # Pour récupérer la loop courante (obligatoirement active)
+    try:
+        loop = asyncio.get_running_loop()
+        # ...
+    except RuntimeError:
+        # pas de loop active -> fallback
+        pass
+
+    # Pour un timestamp safe depuis un dataclass
+    def _now_timestamp() -> float:
+        try:
+            return asyncio.get_running_loop().time()
+        except RuntimeError:
+            return 0.0
+
+**Ne pas utiliser** :
+
+    # Deprecated et dangereux hors contexte async
+    loop = asyncio.get_event_loop()
+
+**Contexte** : get_running_loop() lève RuntimeError si pas de loop,
+c'est explicite. get_event_loop() crée implicitement une loop ou
+warning.
