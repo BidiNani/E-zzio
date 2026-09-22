@@ -33,3 +33,13 @@
 ## Non bloquant, intentionnel
 
 - Warning pytest : `CapabilityRegistry` absent dans `capability_registry_source.py:27` (message confirme "non bloquant")
+
+## Bug pre-commit : test_android_artifact bloque les commits doc en local
+
+- Fichier : `tests/test_android_artifact.py`
+- Test : `test_dist_android_apk_is_compiled_binary`
+- Cause : `dist/android/E-ZzIO-v9.0.1.apk` absent en local (artefact de build CI uniquement)
+- Impact : bloque tout commit doc en local → force `--no-verify`, ce qui use la discipline
+- Fix propose : `@pytest.mark.skipif(not Path("dist/android").exists(), reason="build CI uniquement")`
+- Statut : ouvert
+
