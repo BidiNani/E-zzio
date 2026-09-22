@@ -9,7 +9,7 @@ import urllib.error
 import urllib.request
 from typing import Any
 
-from core.models.router import EzzioRouter
+from core.models.ezzio_router import EzzioRouter
 from core.security.unified_vault import key_vault
 
 os.environ["LITELLM_LOG"] = "ERROR"

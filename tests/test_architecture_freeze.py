@@ -183,7 +183,7 @@ def test_19_no_unauthorized_experimental_framework_in_core():
 
 def test_20_litellm_role_matches_documented_role():
     """Vérifie que LiteLLM est utilisé conformément à son rôle documenté (Bridge types / Schemas)."""
-    router_file = ROOT / 'core' / 'models' / 'router.py'
+    router_file = ROOT / 'core' / 'models' / '_dormant_litellm_types.py'
     assert router_file.exists()
     txt = router_file.read_text(encoding='utf-8', errors='ignore')
     assert 'litellm' in txt.lower()

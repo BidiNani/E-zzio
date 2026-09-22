@@ -18,7 +18,7 @@ from .lifecycle import ModelLifecycleManager
 from .qualification.free_only import filter_free_only
 from .qualification.gate import QualificationGate
 from .registry import ModelLifecycle, ModelRegistry
-from .router import EzzioRouter
+from .ezzio_router import EzzioRouter
 from .telemetry import SafeTelemetry
 
 
