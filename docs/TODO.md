@@ -41,3 +41,23 @@
 - **Regles capitalisees** : commit `42a7f86` (`docs/METHOD.md` section "Hooks, pytest et surcharges")
 - **Statut** : resolu
 
+
+
+## Fichiers à couverture plafonnée (naturellement)
+
+Session V5-fix (2026-09-22). Ces fichiers plafonnent pour des raisons
+techniques, pas par manque de tests :
+
+- [ ] **core/security/secrets_vault.py** (68%) — Branches DPAPI Windows
+  uniquement + fallback crypto. Pour monter : nécessite un runner CI Windows
+  avec droits élevés (chantier infrastructure).
+
+- [ ] **core/system/cpu_tuning.py** (71%) — Branches ctypes.windll
+  Windows only + détection Ollama actif. Pour monter : idem, runner Windows.
+
+- [ ] **core/human_loop.py** (70%) — Imports conditionnels
+  project_janitor, pc_model_router. Pour monter : nécessite un
+  environnement runtime complet (chantier intégration).
+
+**Ces plafonds sont acceptables.** Les fichiers critiques
+(security, signals, telemetry) sont à 85%+.
