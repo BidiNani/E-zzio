@@ -226,3 +226,47 @@ loop n'est enregistrée. Il émet aussi un DeprecationWarning.
 **Contexte** : get_running_loop() lève RuntimeError si pas de loop,
 c'est explicite. get_event_loop() crée implicitement une loop ou
 warning.
+
+
+## Règle — skipif pour les tests OS-specific
+
+**Contexte** : découvert en session V5-fix (commit 1d76c10). Un test qui mock
+ctypes.windll a cassé la CI Linux car ctypes.windll n'existe pas sur Linux.
+
+monkeypatch.setattr(ctypes, "windll", mock) lance AttributeError sur Linux
+car l'attribut n'existe pas.
+
+**Règle** : tout test qui dépend d'une API OS-specific (Windows, macOS, Linux)
+DOIT être décoré avec @pytest.mark.skipif.
+
+**Utiliser** :
+
+    import ctypes
+
+    @pytest.mark.skipif(
+        not hasattr(ctypes, "windll"),
+        reason="DPAPI Windows only — ctypes.windll absent sur cette plateforme",
+    )
+    def test_dpapi_windows_only():
+        monkeypatch.setattr(ctypes, "windll", mock, raising=False)
+        ...
+
+**Ne pas utiliser** :
+
+    # Casse sur Linux/macOS
+    def test_dpapi():
+        monkeypatch.setattr(ctypes, "windll", mock)  # AttributeError sur Linux
+
+**Patterns courants** :
+
+    # Windows-only
+    @pytest.mark.skipif(sys.platform != "win32", reason="Windows only")
+
+    # Linux-only
+    @pytest.mark.skipif(sys.platform != "linux", reason="Linux only")
+
+    # Attribut OS-specific
+    @pytest.mark.skipif(not hasattr(ctypes, "windll"), reason="Windows only")
+
+**Toujours ajouter aising=False** dans monkeypatch.setattr pour les
+attributs qui peuvent ne pas exister sur la plateforme de CI.
