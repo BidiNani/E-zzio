@@ -1,78 +1,145 @@
-"""Tests pour core/tasks/store.py.
+"""Tests réels pour core/tasks/store.py.
 
-Store de tâches (persistence JSON probable).
-Utilise tmp_path pour isoler.
+SqliteTaskStore : persistance SQLite des tâches gouvernées.
+TaskState adapté aux vrais noms trouvés : DRAFT SCOPED PLANNED AWAITING_APPROVAL EXECUTING VERIFYING COMPLETED FAILED CANCELLED
 """
 from __future__ import annotations
 
-import json
 from pathlib import Path
-from unittest.mock import patch
 
 import pytest
 
-from core.tasks import store
+from core.tasks.models import Task, TaskState
+from core.tasks.store import SqliteTaskStore
+
+STATE_A = TaskState.DRAFT
+STATE_B = TaskState.SCOPED
 
 
-class TestSmoke:
-    def test_module_imports(self):
-        assert store is not None
-
-    def test_public_symbols(self):
-        publics = [n for n in dir(store) if not n.startswith("_")]
-        assert len(publics) > 0
-
-    def test_module_file(self):
-        assert Path(store.__file__).exists()
+@pytest.fixture
+def store(tmp_path):
+    db_path = tmp_path / "tasks.db"
+    return SqliteTaskStore(db_path=db_path)
 
 
-class TestAPI:
-    def test_public_functions_list(self):
-        """Liste les fonctions publiques."""
-        import inspect
-        funcs = [n for n, o in inspect.getmembers(store, inspect.isfunction)
-                 if not n.startswith("_")]
-        assert isinstance(funcs, list)
+@pytest.fixture
+def sample_task():
+    return Task(
+        task_id="task-001",
+        title="Test task",
+        workspace="/tmp/ws",
+        state=STATE_A,
+        scope={"files": ["a.py"]},
+        plan={"steps": [1, 2]},
+        approval_id=None,
+        error_message=None,
+        created_at="2026-09-22T12:00:00",
+        updated_at="2026-09-22T12:00:00",
+    )
 
-    def test_public_classes_list(self):
-        import inspect
-        classes = [n for n, o in inspect.getmembers(store, inspect.isclass)
-                   if not n.startswith("_")]
-        assert isinstance(classes, list)
+
+class TestInit:
+    def test_creates_db_file(self, tmp_path):
+        db_path = tmp_path / "test.db"
+        SqliteTaskStore(db_path=db_path)
+        assert db_path.exists()
+
+    def test_creates_parent_dir(self, tmp_path):
+        db_path = tmp_path / "sub" / "tasks.db"
+        SqliteTaskStore(db_path=db_path)
+        assert db_path.parent.exists()
+
+    def test_idempotent_init(self, tmp_path):
+        db_path = tmp_path / "tasks.db"
+        SqliteTaskStore(db_path=db_path)
+        SqliteTaskStore(db_path=db_path)
 
 
-class TestPersistenceIfPresent:
-    def test_load_missing_file(self, tmp_path):
-        """Charger un fichier inexistant ne crashe pas."""
-        for name in ["load", "load_tasks", "read", "read_tasks"]:
-            if hasattr(store, name):
-                try:
-                    result = getattr(store, name)(str(tmp_path / "nope.json"))
-                    assert result is not None or result is None
-                except TypeError:
-                    pytest.skip(f"{name} signature différente")
+class TestSaveAndGet:
+    def test_save_and_get(self, store, sample_task):
+        store.save(sample_task)
+        result = store.get_by_id("task-001")
+        assert result is not None
+        assert result.task_id == "task-001"
+        assert result.title == "Test task"
+        assert result.workspace == "/tmp/ws"
+        assert result.state == STATE_A
 
-    def test_save_and_load_roundtrip(self, tmp_path):
-        """Si save/load existent, test round-trip."""
-        save_fn = None
-        load_fn = None
-        for n in ["save", "write", "save_tasks"]:
-            if hasattr(store, n):
-                save_fn = getattr(store, n)
-                break
-        for n in ["load", "read", "load_tasks"]:
-            if hasattr(store, n):
-                load_fn = getattr(store, n)
-                break
+    def test_get_unknown_id(self, store):
+        assert store.get_by_id("no-such-id") is None
 
-        if save_fn is None or load_fn is None:
-            pytest.skip("save/load introuvables")
+    def test_save_updates_state_only(self, store, sample_task):
+        """UPSERT met à jour state mais garde title/workspace (design)."""
+        store.save(sample_task)
+        sample_task.state = STATE_B
+        store.save(sample_task)
+        result = store.get_by_id("task-001")
+        # title reste immuable
+        assert result.title == "Test task"
+        # state est bien mis à jour
+        assert result.state == STATE_B
 
-        target = tmp_path / "data.json"
-        try:
-            save_fn(str(target), {"tasks": []})
-            if target.exists():
-                result = load_fn(str(target))
-                assert result is not None
-        except (TypeError, AttributeError):
-            pytest.skip("signatures incompatibles")
+    def test_save_scope_and_plan_json(self, store, sample_task):
+        store.save(sample_task)
+        result = store.get_by_id("task-001")
+        assert result.scope == {"files": ["a.py"]}
+        assert result.plan == {"steps": [1, 2]}
+
+    def test_save_with_approval_and_error(self, store, sample_task):
+        sample_task.approval_id = "appr-123"
+        sample_task.error_message = "something wrong"
+        store.save(sample_task)
+        result = store.get_by_id("task-001")
+        assert result.approval_id == "appr-123"
+        assert result.error_message == "something wrong"
+
+
+class TestListByState:
+    def test_list_empty(self, store):
+        assert store.list_by_state(STATE_A) == []
+
+    def test_list_filters_by_state(self, store):
+        for i, state in enumerate([STATE_A, STATE_A, STATE_B]):
+            task = Task(
+                task_id=f"t{i}",
+                title=f"Task {i}",
+                workspace="/ws",
+                state=state,
+                scope={}, plan={},
+                approval_id=None, error_message=None,
+                created_at="2026-01-01T00:00:00",
+                updated_at="2026-01-01T00:00:00",
+            )
+            store.save(task)
+
+        a_tasks = store.list_by_state(STATE_A)
+        b_tasks = store.list_by_state(STATE_B)
+        assert len(a_tasks) == 2
+        assert len(b_tasks) == 1
+
+    def test_list_returns_all_matching(self, store):
+        for i in range(5):
+            task = Task(
+                task_id=f"x{i}",
+                title="x",
+                workspace="/ws",
+                state=STATE_A,
+                scope={}, plan={},
+                approval_id=None, error_message=None,
+                created_at="2026-01-01T00:00:00",
+                updated_at="2026-01-01T00:00:00",
+            )
+            store.save(task)
+        assert len(store.list_by_state(STATE_A)) == 5
+
+
+class TestPersistence:
+    def test_data_survives_new_instance(self, tmp_path, sample_task):
+        db_path = tmp_path / "tasks.db"
+        store1 = SqliteTaskStore(db_path=db_path)
+        store1.save(sample_task)
+
+        store2 = SqliteTaskStore(db_path=db_path)
+        result = store2.get_by_id("task-001")
+        assert result is not None
+        assert result.title == "Test task"
