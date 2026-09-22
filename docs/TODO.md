@@ -48,15 +48,18 @@
 Session V5-fix (2026-09-22). Ces fichiers plafonnent pour des raisons
 techniques, pas par manque de tests :
 
-- [ ] **core/security/secrets_vault.py** (68%) — Branches DPAPI Windows
-  uniquement + fallback crypto. Pour monter : nécessite un runner CI Windows
-  avec droits élevés (chantier infrastructure).
+- [x] **`core/security/secrets_vault.py`** (68% → cible 85%+)
+  - Branches **DPAPI Windows-only** (29-30, 65-71, 76, 98-101, 106, 112-133) :
+    `skipif` justifié (`ctypes.windll` absent sur Linux CI).
+  - Branches **fallback crypto testables** : **tests ajoutés** le 2026-09-22
+    (classe `TestFallbackCryptoCoverage`).
 
-- [ ] **core/system/cpu_tuning.py** (71%) — Branches ctypes.windll
-  Windows only + détection Ollama actif. Pour monter : idem, runner Windows.
+- [ ] **`core/system/cpu_tuning.py`** (71%) — Branches `ctypes.windll`
+  Windows-only + détection Ollama actif. **Pour monter** : nécessite un
+  runner CI Windows avec droits élevés (chantier infrastructure).
 
-- [ ] **core/human_loop.py** (70%) — Imports conditionnels
-  project_janitor, pc_model_router. Pour monter : nécessite un
+- [ ] **`core/human_loop.py`** (70%) — Imports conditionnels
+  `project_janitor`, `pc_model_router`. **Pour monter** : nécessite un
   environnement runtime complet (chantier intégration).
 
 **Ces plafonds sont acceptables.** Les fichiers critiques
