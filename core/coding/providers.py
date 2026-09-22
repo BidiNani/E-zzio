@@ -236,9 +236,16 @@ def get_provider(name: str) -> BaseProvider | None:
 
 
 def get_all_available() -> list[BaseProvider]:
-    """Retourne tous les providers disponibles (clé API présente)."""
+    """Retourne tous les providers disponibles, dans l'ordre de priorité.
+
+    Ordre optimisé pour le free tier :
+    1. Groq — rapide (< 1s), quotas généreux
+    2. Gemini — qualité mais quota limité (429 fréquents)
+    3. OpenRouter — fallback diversifié
+    4. NVIDIA — fallback final
+    """
     result = []
-    for name in ["gemini", "groq", "openrouter", "nvidia"]:
+    for name in ["groq", "gemini", "openrouter", "nvidia"]:
         p = get_provider(name)
         if p and p.is_available():
             result.append(p)

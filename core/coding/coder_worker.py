@@ -34,6 +34,7 @@ from core.coding.policy import CodingPolicy
 from core.coding.protocol import (
     CodingRequest,
     CodingResponse,
+    ExecutionMode,
 )
 
 logger = logging.getLogger(__name__)
@@ -91,20 +92,44 @@ class CoderWorker:
         root_dir: Path | str = ".",
         max_iterations: int = MAX_ITERATIONS,
         dry_run: bool = False,
+        allowed_modes: frozenset[ExecutionMode] | None = None,
     ) -> None:
         self.root_dir = Path(root_dir).resolve()
         self.max_iterations = max_iterations
         self.dry_run = dry_run
 
         self.bridge = InternalToolBridge(root_dir=self.root_dir, dry_run=dry_run)
-        self.policy = CodingPolicy(root_dir=self.root_dir)
+        # Policy : accepter des modes explicites (défaut = dry_run + read_only)
+        self.policy = CodingPolicy(
+            root_dir=self.root_dir,
+            allowed_modes=allowed_modes,
+        )
+        # Cooldown des providers ayant renvoyé 429 (nom -> timestamp)
+        self._cooldowns: dict[str, float] = {}
+
+    def _is_in_cooldown(self, provider_name: str, cooldown_seconds: int = 120) -> bool:
+        """Vérifie si un provider est en cooldown (429 récent)."""
+        import time
+        ts = self._cooldowns.get(provider_name)
+        if ts is None:
+            return False
+        return (time.time() - ts) < cooldown_seconds
+
+    def _mark_cooldown(self, provider_name: str) -> None:
+        """Marque un provider en cooldown (suite à 429)."""
+        import time
+        self._cooldowns[provider_name] = time.time()
 
     # --------------------------------------------------------
     # LLM
     # --------------------------------------------------------
 
     def _call_llm(self, prompt: str) -> str:
-        """Appelle le meilleur provider disponible."""
+        """Appelle le meilleur provider disponible.
+
+        Fallback automatique : si un provider échoue (ex. 429), on passe au
+        suivant. Les providers en cooldown (429 récent) sont ignorés.
+        """
         from core.coding.providers import get_all_available
 
         providers = get_all_available()
@@ -113,13 +138,24 @@ class CoderWorker:
 
         last_error = ""
         for provider in providers:
+            # Ignorer les providers en cooldown
+            if self._is_in_cooldown(provider.name):
+                logger.info("Provider %s en cooldown, skip", provider.name)
+                continue
+
             logger.info("Tentative provider : %s", provider.name)
             resp = provider.call(prompt)
             if resp.success:
                 logger.info("Provider %s OK (model=%s)", provider.name, resp.model_used)
                 return resp.content
+
             last_error = resp.error
             logger.warning("Provider %s échec : %s", provider.name, resp.error)
+
+            # Si 429, marquer en cooldown
+            if "429" in resp.error or "Too Many Requests" in resp.error:
+                self._mark_cooldown(provider.name)
+                logger.info("Provider %s marqué en cooldown (429)", provider.name)
 
         raise RuntimeError(f"Tous les providers ont échoué. Dernier : {last_error}")
 
