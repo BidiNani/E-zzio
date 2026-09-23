@@ -458,3 +458,113 @@ class TestDiscordApprovalController:
         )
         assert result["ok"] is True
         assert "APPROVED" in result["message"]
+
+# ============================================================
+# 5. Tests complementaires pour 100% reel
+# ============================================================
+
+class TestSlideEngineEdgeCases:
+    """Branches non couvertes : subtitle absent, table sans headers, col debordement."""
+
+    def test_generate_presentation_slide_without_subtitle_placeholder(self, tmp_path):
+        """L82->91 : si subtitle_shape est None, on skip le bloc."""
+        from core.generators.slide_engine import SlideEngine
+        engine = SlideEngine(workspace_root=str(tmp_path))
+        # On utilise un slides_data avec bullets (pour ne pas planter)
+        result = engine.generate_presentation(
+            filename="no_sub.pptx",
+            title="Sans subtitle",
+            slides_data=[{"title": "S1"}],  # pas de bullets ni table
+        )
+        assert result["ok"] is True
+
+    def test_generate_presentation_table_no_headers(self, tmp_path):
+        """L135->144 : table sans headers -> num_rows = len(rows)."""
+        from core.generators.slide_engine import SlideEngine
+        engine = SlideEngine(workspace_root=str(tmp_path))
+        result = engine.generate_presentation(
+            filename="no_headers.pptx",
+            title="Test",
+            slides_data=[
+                {
+                    "title": "T",
+                    "table": {
+                        # Pas de headers
+                        "rows": [["a", "b"], ["c", "d"]],
+                    }
+                }
+            ],
+        )
+        assert result["ok"] is True
+        assert result["slides_count"] == 2
+
+    def test_generate_presentation_table_row_shorter_than_headers(self, tmp_path):
+        """L146->145 : row plus courte que headers -> skip les colonnes manquantes."""
+        from core.generators.slide_engine import SlideEngine
+        engine = SlideEngine(workspace_root=str(tmp_path))
+        result = engine.generate_presentation(
+            filename="short_rows.pptx",
+            title="Test",
+            slides_data=[
+                {
+                    "title": "T",
+                    "table": {
+                        "headers": ["A", "B", "C"],
+                        "rows": [["1"], ["x", "y"]],  # rows plus courtes
+                    }
+                }
+            ],
+        )
+        assert result["ok"] is True
+
+
+class TestSqliteTaskStoreFullLifecycle:
+    """Couvre L81 (return _row_to_task) et les branches Protocol."""
+
+    def test_save_then_get_by_id_returns_task(self, tmp_path):
+        """L81 : get_by_id trouve un task -> _row_to_task."""
+        from core.tasks.models import Task, TaskState
+        from core.tasks.store import SqliteTaskStore
+        store = SqliteTaskStore(tmp_path / "tasks.db")
+
+        task = Task(title="test", workspace="ws")
+        store.save(task)
+
+        retrieved = store.get_by_id(task.task_id)
+        assert retrieved is not None
+        assert retrieved.task_id == task.task_id
+        assert retrieved.title == "test"
+        assert retrieved.workspace == "ws"
+        assert retrieved.state == TaskState.DRAFT
+
+    def test_save_then_get_preserves_full_state(self, tmp_path):
+        """Test que tous les champs sont bien persistes/restitues."""
+        from core.tasks.models import Task, TaskState
+        from core.tasks.store import SqliteTaskStore
+        store = SqliteTaskStore(tmp_path / "tasks.db")
+
+        task = Task(title="full", workspace="ws", scope={"key": "value"}, plan=[{"step": 1}])
+        task.transition_to(TaskState.SCOPED)
+        store.save(task)
+
+        retrieved = store.get_by_id(task.task_id)
+        assert retrieved.scope == {"key": "value"}
+        assert retrieved.plan == [{"step": 1}]
+        assert retrieved.state == TaskState.SCOPED
+
+    def test_save_overwrites_existing(self, tmp_path):
+        """ON CONFLICT : save du meme task_id met a jour."""
+        from core.tasks.models import Task, TaskState
+        from core.tasks.store import SqliteTaskStore
+        store = SqliteTaskStore(tmp_path / "tasks.db")
+
+        task = Task(title="v1", workspace="ws")
+        store.save(task)
+
+        task.state = TaskState.SCOPED
+        task.scope = {"updated": True}
+        store.save(task)
+
+        retrieved = store.get_by_id(task.task_id)
+        assert retrieved.state == TaskState.SCOPED
+        assert retrieved.scope == {"updated": True}
