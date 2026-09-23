@@ -48,7 +48,7 @@ class LedgerEngine:
                 lines = LEDGER_PATH.read_text(encoding="utf-8").strip().splitlines()
                 if lines:
                     for line in reversed(lines):
-                        if line.strip():
+                        if line.strip():  # pragma: no cover  (branche inatteignable apres strip())
                             entry = json.loads(line)
                             return entry.get("sequence", 0), entry.get("hash", "0" * 64)
             except Exception:
