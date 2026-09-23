@@ -8,7 +8,7 @@
 
 ## 1. Chemin d'execution reel
 
-### 1.1 Pipeline actuel
+### 1.1 Pipeline actuel (mis a jour 23/09/2026 - FSM gouvernee)
 
 ```
 EzzioMaster.execute_intent()
@@ -81,18 +81,19 @@ epuree du Master ("plus de federation/missions/workers").
 2. Connecter le harness avec les vraies dependances (router, policy_guard, audit_ledger)
 3. Documenter comme "reserve pour coder worker / missions"
 
-**Decision (23/09/2026, commit fix-authority)** :
+**Connexion realisee (23/09/2026, commits fix-authority + connexion)** :
 
-1. `execution_authority` corrige : pointe desormais vers `core/kernel/native_harness.py`
-   (au lieu de `core/agent/coder_federation.py` qui est un gateway de compatibilite).
-2. `NativeHarness` est valide comme **autorite d'execution constitutionnelle**.
-3. Tests ajoutes dans `tests/unit/test_native_harness.py` (transitions FSM, sanitization, execution).
-4. **Connexion au Master** : a faire dans un prochain commit (chantier de refactoring
-   pour separer gouvernance et generation dans `execute_intent()`).
+1. `execution_authority` pointe vers `core/kernel/native_harness.py`.
+2. `NativeHarness` est l autorite d execution constitutionnelle.
+3. 11 tests FSM dans `tests/unit/test_native_harness.py`.
+4. `EzzioMaster.execute_intent()` passe par `self.harness.execute_task(executor=self._generate_response)`.
+5. Generation LLM extraite dans `_generate_response()` (separation gouvernance / generation).
+6. Chaque requete tracee par la FSM (6 transitions) + audit + memoire.
 
-**Nouvelle tension a surveiller** : `NativeHarness` est declare comme autorite mais
-n'est pas encore connecte au Master. La constitution est en avance sur le code.
-C'est un etat transitoire assume, documente ici pour eviter les confusions futures.
+**Fallback** : `_try_fallback` declenche apres echec simule. Comportement `FAIL-CLOSED` observe.
+Test complet (reponse valide apres fallback) a refaire avec la bonne signature `ProviderResponse`.
+
+**Metriques** : voir section 1.5.
 
 ---
 
@@ -268,3 +269,25 @@ Ce document a ete genere apres :
 ---
 
 *Derniere mise a jour : 23/09/2026*
+
+
+### 1.5 Metriques de production (23/09/2026)
+
+**Latence** (5 appels consecutifs, prompt court) :
+
+| Metrique | Valeur |
+|---|---|
+| Min | 802ms |
+| Max | 4090ms (1er appel, chargement modules) |
+| Mediane | 885ms |
+| Overhead harness | **5ms** |
+
+**Multi-session** : 3 sessions paralleles -> 3 `harness_session_id` distincts (PROVEN).
+
+**Fallback** : `_try_fallback` declenche (PROVEN). Test complet a refaire.
+
+**Conclusion** : la gouvernance FSM + audit + policy ajoute ~5ms.
+Le cout est negligeable devant la latence LLM (800-900ms).
+
+---
+
