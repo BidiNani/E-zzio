@@ -1,7 +1,7 @@
 class SecurityViolationError(ValueError):
     """Exception de sécurité levée lors d'une tentative d'injection de prompt."""
 
-    pass
+    """A implementer par les sous-classes."""
 
 
 class PromptGuard:
