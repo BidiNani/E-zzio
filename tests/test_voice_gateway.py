@@ -330,3 +330,23 @@ class TestVoiceGatewayFinalCoverage:
             res = await gw.process_voice_interaction(sample_audio, mock_core)
             assert res["status"] == "empty_input"
             assert res["transcription"] == ""
+
+
+class TestVoiceGatewayCoverageL54:
+    """Test specifique pour la ligne L54 (except Exception dans capture_audio)."""
+
+    @pytest.mark.asyncio
+    async def test_capture_audio_sd_wait_raises_after_rec(self):
+        # L54 : la capture reussit (sd.rec) MAIS sd.wait leve
+        # -> entre dans le try, puis except -> RuntimeError
+        mock_sd = MagicMock()
+        mock_recording = MagicMock()
+        mock_recording.tobytes = MagicMock(return_value=b"\x00" * 32000)
+        mock_sd.rec = MagicMock(return_value=mock_recording)
+        mock_sd.wait = MagicMock(side_effect=RuntimeError("wait failed"))
+
+        with patch.dict(sys.modules, {"sounddevice": mock_sd}):
+            gw = VoiceGateway()
+            gw._hardware_available = True
+            with pytest.raises(RuntimeError, match="chec de capture audio"):
+                await gw.capture_audio(duration_sec=1.0)
