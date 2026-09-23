@@ -1,6 +1,7 @@
 import io
 import struct
 import wave
+from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
@@ -130,3 +131,63 @@ async def test_voice_core_error_handling(voice_gateway):
     assert res["audio_out"] == b""
 
 
+
+
+class TestVoiceGatewayExtended:
+    """Tests etendus pour couvrir les branches non testees."""
+
+    @patch("core.voice.voice_gateway.VoiceGateway._check_hardware")
+    def test_detect_speech_empty_or_short(self, mock_check):
+        gw = VoiceGateway()
+        assert gw.detect_speech(b"") is False
+        assert gw.detect_speech(b"\x00") is False
+
+    @patch("core.voice.voice_gateway.VoiceGateway._check_hardware")
+    def test_detect_speech_exception(self, mock_check):
+        gw = VoiceGateway()
+        assert gw.detect_speech(b"\x00\x01\x02") is False
+
+    @pytest.mark.asyncio
+    @patch("core.voice.voice_gateway.VoiceGateway._check_hardware")
+    async def test_synthesize_empty_text(self, mock_check):
+        gw = VoiceGateway()
+        result = await gw.synthesize("")
+        assert result == b""
+        assert gw.state == VoiceState.IDLE
+
+    @pytest.mark.asyncio
+    @patch("core.voice.voice_gateway.VoiceGateway._check_hardware")
+    async def test_synthesize_whitespace_only(self, mock_check):
+        gw = VoiceGateway()
+        result = await gw.synthesize("   ")
+        assert result == b""
+
+    @pytest.mark.asyncio
+    @patch("core.voice.voice_gateway.VoiceGateway._check_hardware")
+    async def test_process_voice_interaction_execute_intent(self, mock_check):
+        gw = VoiceGateway()
+        mock_core = MagicMock(spec=["execute_intent"])
+        mock_core.execute_intent = AsyncMock(return_value={"response": "Reponse via execute_intent"})
+
+        sample_audio = b"\x00" * 16000
+        res = await gw.process_voice_interaction(
+            audio_data=sample_audio,
+            core=mock_core,
+            session_id="sess_intent",
+            user_id="user_intent",
+        )
+        assert res["status"] == "success"
+        assert res["response_text"] == "Reponse via execute_intent"
+        mock_core.execute_intent.assert_awaited_once()
+
+    @pytest.mark.asyncio
+    @patch("core.voice.voice_gateway.VoiceGateway._check_hardware")
+    async def test_process_voice_interaction_core_none_fallback(self, mock_check):
+        gw = VoiceGateway()
+        mock_master = MagicMock()
+        mock_master.execute_intent = AsyncMock(return_value={"response": "Fallback master"})
+
+        with patch("core.ezzio_master.ezzio_master", mock_master):
+            sample_audio = b"\x00" * 16000
+            res = await gw.process_voice_interaction(audio_data=sample_audio, core=None)
+            assert res["status"] in ("success", "core_error")
