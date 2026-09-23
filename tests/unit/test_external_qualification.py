@@ -61,6 +61,15 @@ class TestQualifyExternal:
         v = qualify_external(c)
         assert v.status == QualificationStatus.QUALIFIED
 
+    def test_without_tests_qualified_with_warning(self):
+        c = ExternalCandidate(
+            name="x", source="github:o/r", license="MIT",
+            has_tests=False, sandbox_verified=True,
+        )
+        v = qualify_external(c)
+        assert v.status == QualificationStatus.QUALIFIED
+        assert any("sans tests" in r for r in v.reasons)
+
 
 class TestCheckComposition:
     def test_simple_chain_ok(self):
