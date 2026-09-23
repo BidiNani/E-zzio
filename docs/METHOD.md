@@ -484,3 +484,86 @@ venir apres.
 import sys juste apres. Si pas de from __future__, inserer apres
 le docstring.
 
+
+
+---
+
+## Règle 13 — `return` ne fonctionne pas en PowerShell interactif
+
+En mode console interactive, `return` termine uniquement la fonction en cours.
+Si aucune fonction n'est active, `return` ne fait RIEN et le script continue.
+
+**Mauvais :**
+```powershell
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "[STOP] Échec" -ForegroundColor Red
+    return   # ne bloque rien en interactif
+}
+Write-Host "[OK] Succès"   # s'exécute quand même
+```
+
+**Bon :**
+```powershell
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "[STOP] Échec" -ForegroundColor Red
+    throw "Échec"   # bloque toujours
+}
+Write-Host "[OK] Succès"
+```
+
+Utiliser `throw` (ou `exit 1`) pour bloquer, jamais `return`.
+
+---
+
+## Règle 14 — Jamais de Base64 ou d'échappement pour du code multi-lignes
+
+Le Base64 casse silencieusement avec les caractères `=` et `+`.
+Les séquences backslash-quote ne fonctionnent pas dans les strings simple-quoted PowerShell.
+
+**Mauvais :**
+```powershell
+$b64 = @"
+ZnJvbSBwYXRobGliIGltcG9ydCBQYXRo...=
+"@
+```
+
+**Bon (tableau de strings sans caractères spéciaux) :**
+```powershell
+$L = @(
+    'from pathlib import Path'
+    'Q = chr(34)  # quote character'
+    'TARGET = Path(r"G:\AI\E-zzio\file.py")'
+)
+[System.IO.File]::WriteAllLines($patchScript, $L, [System.Text.UTF8Encoding]::new($false))
+```
+
+**Bon (here-string pour du texte long) :**
+```powershell
+$BLOCK = @'  # debut here-string
+Texte avec apostrophes d'accord, guillemets "ok", etc.
+fin here-string
+```
+
+**Pour du Markdown long : éditer directement dans VS Code.**
+
+---
+
+## Règle 15 — Tester un patch avant de commit
+
+Un patch peut avoir l'air de réussir (exit 0, message `[OK]`) et produire du code faux.
+Toujours vérifier AVANT `git add` :
+
+1. **Taille du diff** : `len(new) - len(old)` doit correspondre à l'attendu
+2. **Contenu** : afficher les lignes modifiées avec `Get-Content | Select-Object`
+3. **Tests** : `python -m pytest <fichier>` doit passer
+4. **Rollback** : `git checkout -- <fichier>` si échec
+
+**Pattern de sécurité :**
+```powershell
+python $patchScript
+if ($LASTEXITCODE -ne 0) { git checkout -- $file; throw "Patch échoué" }
+python -m pytest $testFile -q
+if ($LASTEXITCODE -ne 0) { git checkout -- $file; throw "Tests échoués" }
+git add $file
+```
+
