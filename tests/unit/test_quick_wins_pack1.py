@@ -115,20 +115,31 @@ class TestSecrets:
         assert path.name == ".env"
         assert path.parent.name == "secrets"
 
-    def test_load_secrets_returns_bool(self):
-        """load_secrets retourne bool(loader.load(...))."""
+    def test_load_secrets_returns_bool_true(self):
+        """load_secrets retourne True quand loader.load retourne truthy."""
+        import core.config.secrets_loader as loader_mod
         from core import secrets as sec_mod
-        # Patcher l'attribut load_secrets pour eviter l'import local
-        # En realite, on teste juste que la fonction convertit en bool
-        with patch.object(sec_mod, "load_secrets", wraps=lambda override=True: bool(1)):
+        with patch.object(loader_mod, "load", return_value=True) as mock_load:
             result = sec_mod.load_secrets()
         assert result is True
+        mock_load.assert_called_once_with(override=True)
 
-    def test_load_secrets_returns_false_when_loader_empty(self):
+    def test_load_secrets_returns_bool_false(self):
+        """load_secrets retourne False quand loader.load retourne falsy."""
+        import core.config.secrets_loader as loader_mod
         from core import secrets as sec_mod
-        with patch.object(sec_mod, "load_secrets", wraps=lambda override=True: bool(0)):
+        with patch.object(loader_mod, "load", return_value=False) as mock_load:
             result = sec_mod.load_secrets()
         assert result is False
+        mock_load.assert_called_once_with(override=True)
+
+    def test_load_secrets_override_false(self):
+        """override=False passe bien a loader.load."""
+        import core.config.secrets_loader as loader_mod
+        from core import secrets as sec_mod
+        with patch.object(loader_mod, "load", return_value=True) as mock_load:
+            sec_mod.load_secrets(override=False)
+        mock_load.assert_called_once_with(override=False)
 
     def test_get_api_key_reads_env(self):
         from core import secrets as sec_mod
