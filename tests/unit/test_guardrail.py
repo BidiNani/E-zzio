@@ -62,3 +62,7 @@ class TestPromptGuardValidate:
         assert is_valid is False
         assert "injection" in reason.lower() or "bloquee" in reason.lower() or "bloquée" in reason.lower()
 
+
+# ============================================================
+# Tests supplementaires : validate() retourne un tuple
+# ============================================================
