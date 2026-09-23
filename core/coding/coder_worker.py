@@ -163,10 +163,35 @@ class CoderWorker:
     # PLAN
     # --------------------------------------------------------
 
+    def _build_files_context(self, request: CodingRequest, max_chars: int = 3000) -> str:
+        """Lit le contenu des fichiers de files_context et le formate."""
+        if not request.files_context:
+            return ""
+        parts = ["\nFICHIERS FOURNIS EN CONTEXTE :"]
+        for path_str in request.files_context:
+            file_path = self.root_dir / path_str
+            if not file_path.exists():
+                parts.append(f"\n--- {path_str} (ABSENT) ---")
+                continue
+            try:
+                content = file_path.read_text(encoding="utf-8")
+            except (OSError, UnicodeDecodeError) as exc:
+                parts.append(f"\n--- {path_str} (ERREUR: {exc}) ---")
+                continue
+            if len(content) > max_chars:
+                content = content[:max_chars] + f"\n... (tronque a {max_chars} chars)"
+            parts.append(f"\n--- {path_str} ---\n{content}")
+        return "\n".join(parts)
+
     def _plan(self, request: CodingRequest, iteration: int, feedback: str = "") -> list[FileEdit]:
         """Génère un plan (fichiers à écrire)."""
         context = self.bridge.get_context()
         context_str = f"Git status : {context['git_status']}\n"
+
+        files_ctx = self._build_files_context(request)
+        if files_ctx:
+            context_str += files_ctx + "\n"
+
         if feedback:
             context_str += f"\nFeedback de l'itération précédente :\n{feedback}"
 
