@@ -8,14 +8,14 @@ class IConfigProvider(ABC):
     @abstractmethod
     async def get_config(self, key: str) -> Any | None:
         """Récupère une valeur de configuration par clé."""
-        pass
+        pass  # pragma: no cover
 
     @abstractmethod
     async def set_config(self, key: str, value: Any) -> None:
         """Définit une valeur de configuration."""
-        pass
+        pass  # pragma: no cover
 
     @abstractmethod
     async def list_configs(self, prefix: str = "") -> dict[str, Any]:
         """Liste toutes les configurations avec un préfixe donné."""
-        pass
+        pass  # pragma: no cover
