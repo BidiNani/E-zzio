@@ -273,3 +273,60 @@ class TestVoiceGatewayFullCoverage:
             gw._hardware_available = True
             with pytest.raises(RuntimeError, match="chec de capture audio"):
                 await gw.capture_audio(duration_sec=1.0)
+
+
+class TestVoiceGatewayFinalCoverage:
+    """Tests finaux pour atteindre 100% sur voice_gateway."""
+
+    def test_check_hardware_exception_sets_false(self):
+        # Couvre L35-36 : except Exception -> _hardware_available = False
+        mock_sd = MagicMock()
+        mock_sd.query_devices = MagicMock(side_effect=RuntimeError("driver fail"))
+        with patch.dict(sys.modules, {"sounddevice": mock_sd}):
+            gw = VoiceGateway()
+            assert gw._hardware_available is False
+
+    def test_is_hardware_available_property(self):
+        # Couvre L40 : property is_hardware_available (retour True)
+        mock_sd = MagicMock()
+        mock_sd.query_devices = MagicMock(return_value=[{"name": "test"}])
+        with patch.dict(sys.modules, {"sounddevice": mock_sd}):
+            gw = VoiceGateway()
+            # _hardware_available = True apres _check_hardware
+            assert gw.is_hardware_available is True
+
+    def test_enumerate_devices_exception_returns_empty(self):
+        # Couvre L47-49 : except Exception -> logger.debug + return []
+        mock_sd = MagicMock()
+        mock_sd.query_devices = MagicMock(side_effect=RuntimeError("enum fail"))
+        with patch.dict(sys.modules, {"sounddevice": mock_sd}):
+            gw = VoiceGateway()
+            # Patch APRES construction pour eviter _check_hardware
+            with patch.dict(sys.modules, {"sounddevice": mock_sd}):
+                devices = gw.enumerate_devices()
+                assert devices == []
+
+    @pytest.mark.asyncio
+    async def test_capture_audio_hardware_exception_during_rec(self):
+        # Couvre L54 : except Exception -> RuntimeError "Echec de capture audio materielle"
+        mock_sd = MagicMock()
+        mock_sd.rec = MagicMock(side_effect=OSError("device busy"))
+        mock_sd.wait = MagicMock()
+
+        with patch.dict(sys.modules, {"sounddevice": mock_sd}):
+            gw = VoiceGateway()
+            gw._hardware_available = True
+            with pytest.raises(RuntimeError, match="chec de capture audio"):
+                await gw.capture_audio(duration_sec=1.0)
+
+    @pytest.mark.asyncio
+    async def test_process_voice_interaction_empty_transcription(self):
+        # Couvre L159 : user_prompt vide -> status "empty_input"
+        gw = VoiceGateway()
+        mock_core = MagicMock()
+
+        with patch.object(gw, "transcribe", return_value={"text": "", "status": "success"}):
+            sample_audio = b"\x00" * 16000
+            res = await gw.process_voice_interaction(sample_audio, mock_core)
+            assert res["status"] == "empty_input"
+            assert res["transcription"] == ""

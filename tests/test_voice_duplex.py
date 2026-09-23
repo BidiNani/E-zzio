@@ -216,3 +216,25 @@ class TestDuplexFullCoverage:
         async for r in engine.process_incoming_audio_stream(two_chunks()):
             results.append(r)
         assert results == []
+
+
+class TestDuplexFinalCoverage:
+    """Test final pour la branche 127->129."""
+
+    @pytest.mark.asyncio
+    async def test_process_incoming_stream_speech_while_speaking_no_callback(self):
+        # Couvre L126-129 : barge-in SANS callback on_speech_start
+        # (branche 127->129 : on_speech_start est None)
+        engine = VoiceDuplexEngine(energy_threshold=400)
+        loud_chunk = struct.pack("<" + "h" * 1600, *([2500] * 1600))
+
+        async def one_chunk_stream():
+            engine.state = DuplexState.SPEAKING
+            yield loud_chunk
+
+        results = []
+        async for r in engine.process_incoming_audio_stream(one_chunk_stream(), on_speech_start=None):
+            results.append(r)
+
+        assert len(results) == 1
+        assert results[0]["status"] == "INTERRUPTED"
