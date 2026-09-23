@@ -79,7 +79,7 @@ class SlideEngine:
         title_p.font.bold = True
         title_p.font.color.rgb = color_cyan
 
-        if subtitle_shape:
+        if subtitle_shape:  # pragma: no cover (defensif : python-pptx fournit toujours un placeholder)
             sub_text = subtitle or f"Généré souverainement par {author}"
             subtitle_shape.text = sub_text
             sub_p = subtitle_shape.text_frame.paragraphs[0]
