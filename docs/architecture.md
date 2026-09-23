@@ -90,8 +90,8 @@ epuree du Master ("plus de federation/missions/workers").
 5. Generation LLM extraite dans `_generate_response()` (separation gouvernance / generation).
 6. Chaque requete tracee par la FSM (6 transitions) + audit + memoire.
 
-**Fallback** : `_try_fallback` declenche apres echec simule. Comportement `FAIL-CLOSED` observe.
-Test complet (reponse valide apres fallback) a refaire avec la bonne signature `ProviderResponse`.
+**Fallback** : test complet avec provider en echec simule -> `_try_fallback` declenche
+-> reponse valide produite -> `used_fallback=True` dans la reponse finale (PROVEN).
 
 **Metriques** : voir section 1.5.
 
@@ -284,7 +284,7 @@ Ce document a ete genere apres :
 
 **Multi-session** : 3 sessions paralleles -> 3 `harness_session_id` distincts (PROVEN).
 
-**Fallback** : `_try_fallback` declenche (PROVEN). Test complet a refaire.
+**Fallback** : `_try_fallback` declenche + reponse valide + `used_fallback=True` (PROVEN).
 
 **Conclusion** : la gouvernance FSM + audit + policy ajoute ~5ms.
 Le cout est negligeable devant la latence LLM (800-900ms).
