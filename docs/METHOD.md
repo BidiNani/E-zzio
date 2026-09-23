@@ -567,3 +567,22 @@ if ($LASTEXITCODE -ne 0) { git checkout -- $file; throw "Tests échoués" }
 git add $file
 ```
 
+
+---
+
+## Règle 17 — Choisir le meilleur outil selon la tâche
+
+Pour chaque modification, choisir l'outil optimal :
+
+| Tâche | Outil optimal |
+|---|---|
+| Patches Python < 5 Ko | Base64 |
+| Patches Python 5-50 lignes | Tableau PowerShell `@(...)` de strings simple-quoted |
+| Fichiers Python neufs > 50 lignes | Here-string PowerShell `@'...'@` si pas de `@'` interne |
+| Markdown/texte long | `Add-Content` + tableau de strings |
+| Tests / verifications | `ruff` + `pytest` avant `git add` |
+| Garde-fous | `git branch <snap>` + `throw` |
+
+**Contrainte absolue** : tout doit etre collable dans PowerShell en **un seul bloc**.
+
+**Erreur a eviter** : ne jamais coller un bloc > 100 lignes contenant un tableau `@(...)` de plus de 50 strings dans une console interactive. PowerShell reste en mode continuation.
