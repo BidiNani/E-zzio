@@ -25,7 +25,7 @@ class CanonicalIdentity:
                 # L'identité décrit QUI est E-ZZIO, jamais CE QU'il peut faire.
                 # L'autorité d'exécution (local vs cloud, profils, budgets) est
                 # exclusivement : core/agent/coder_federation.py (+ registre).
-                "execution_authority": "core/agent/coder_federation.py",
+                "execution_authority": "core/kernel/native_harness.py",
                 "fail_closed_on_integrity_error": True,
                 "forensic_logging": True,
             },

@@ -81,8 +81,18 @@ epuree du Master ("plus de federation/missions/workers").
 2. Connecter le harness avec les vraies dependances (router, policy_guard, audit_ledger)
 3. Documenter comme "reserve pour coder worker / missions"
 
-**Decision actuelle** : documenter, ne pas modifier le code (le composant peut etre
-reutilise ulterieurement pour le coder worker ou les missions multi-agent).
+**Decision (23/09/2026, commit fix-authority)** :
+
+1. `execution_authority` corrige : pointe desormais vers `core/kernel/native_harness.py`
+   (au lieu de `core/agent/coder_federation.py` qui est un gateway de compatibilite).
+2. `NativeHarness` est valide comme **autorite d'execution constitutionnelle**.
+3. Tests ajoutes dans `tests/unit/test_native_harness.py` (transitions FSM, sanitization, execution).
+4. **Connexion au Master** : a faire dans un prochain commit (chantier de refactoring
+   pour separer gouvernance et generation dans `execute_intent()`).
+
+**Nouvelle tension a surveiller** : `NativeHarness` est declare comme autorite mais
+n'est pas encore connecte au Master. La constitution est en avance sur le code.
+C'est un etat transitoire assume, documente ici pour eviter les confusions futures.
 
 ---
 
