@@ -9,4 +9,4 @@ class BaseTool(ABC):
 
     @abstractmethod
     async def execute(self, **kwargs: Any) -> Any:
-        pass
+        """À implémenter par les sous-classes."""
