@@ -149,7 +149,7 @@ class CognitiveGateway:
         """Passerelle synchrone."""
         try:
             loop = asyncio.get_event_loop()
-            if loop.is_running():
+            if loop.is_running():  # pragma: no cover  (branche non testable sans deadlock)
                 return asyncio.run_coroutine_threadsafe(
                     self.ask_async(task, session_id, priority, constraints), loop
                 ).result()
