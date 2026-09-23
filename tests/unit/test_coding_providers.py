@@ -459,3 +459,113 @@ class TestGetAllAvailable:
         result = get_all_available()
         assert len(result) >= 1
         assert result[0].name == "groq"
+
+
+# ============================================================
+# 9. pick_model() de chaque provider (complement 100%)
+# ============================================================
+
+class TestPickModel:
+    """Couvre pick_model() pour les 4 providers."""
+
+    def test_gemini_pick_model(self):
+        p = GeminiProvider()
+        mock_registry = MagicMock()
+        mock_model = MagicMock()
+        mock_registry.pick_best_for = MagicMock(return_value=mock_model)
+        with patch("core.coding.providers.get_registry", return_value=mock_registry):
+            result = p.pick_model()
+            assert result is mock_model
+            mock_registry.pick_best_for.assert_called_once_with("code", provider="gemini")
+
+    def test_groq_pick_model(self):
+        p = GroqProvider()
+        mock_registry = MagicMock()
+        mock_model = MagicMock()
+        mock_registry.pick_best_for = MagicMock(return_value=mock_model)
+        with patch("core.coding.providers.get_registry", return_value=mock_registry):
+            result = p.pick_model()
+            assert result is mock_model
+            mock_registry.pick_best_for.assert_called_once_with("code", provider="groq")
+
+    def test_openrouter_pick_model(self):
+        p = OpenRouterProvider()
+        mock_registry = MagicMock()
+        mock_model = MagicMock()
+        mock_registry.pick_best_for = MagicMock(return_value=mock_model)
+        with patch("core.coding.providers.get_registry", return_value=mock_registry):
+            result = p.pick_model()
+            assert result is mock_model
+            mock_registry.pick_best_for.assert_called_once_with("code", provider="openrouter")
+
+    def test_nvidia_pick_model(self):
+        p = NvidiaProvider()
+        mock_registry = MagicMock()
+        mock_model = MagicMock()
+        mock_registry.pick_best_for = MagicMock(return_value=mock_model)
+        with patch("core.coding.providers.get_registry", return_value=mock_registry):
+            result = p.pick_model()
+            assert result is mock_model
+            mock_registry.pick_best_for.assert_called_once_with("code", provider="nvidia")
+
+
+# ============================================================
+# 10. call() avec auto-pick_model pour Groq/OpenRouter/Nvidia
+# ============================================================
+
+class TestCallAutoPickModel:
+    """Couvre les branches L115, L153, L199 (model_id=None -> pick_model())."""
+
+    def _mock_httpx(self, content):
+        mock_response = MagicMock()
+        mock_response.raise_for_status = MagicMock()
+        mock_response.json = MagicMock(return_value={
+            "choices": [{"message": {"content": content}}]
+        })
+        mock_client = MagicMock()
+        mock_client.__enter__ = MagicMock(return_value=mock_client)
+        mock_client.__exit__ = MagicMock(return_value=False)
+        mock_client.post = MagicMock(return_value=mock_response)
+        return mock_client
+
+    def test_groq_call_auto_pick_model(self, monkeypatch):
+        monkeypatch.setenv("GROQ_API_KEY", "fake")
+        p = GroqProvider()
+
+        mock_model = MagicMock()
+        mock_model.model_id = "groq-auto-picked"
+
+        with patch.object(p, "pick_model", return_value=mock_model):
+            with patch("core.coding.providers.httpx.Client", return_value=self._mock_httpx("OK")):
+                result = p.call("test")
+
+        assert result.success is True
+        assert result.model_used == "groq-auto-picked"
+
+    def test_openrouter_call_auto_pick_model(self, monkeypatch):
+        monkeypatch.setenv("OPENROUTER_API_KEY", "fake")
+        p = OpenRouterProvider()
+
+        mock_model = MagicMock()
+        mock_model.model_id = "or-auto-picked"
+
+        with patch.object(p, "pick_model", return_value=mock_model):
+            with patch("core.coding.providers.httpx.Client", return_value=self._mock_httpx("OK")):
+                result = p.call("test")
+
+        assert result.success is True
+        assert result.model_used == "or-auto-picked"
+
+    def test_nvidia_call_auto_pick_model(self, monkeypatch):
+        monkeypatch.setenv("NVIDIA_API_KEY", "fake")
+        p = NvidiaProvider()
+
+        mock_model = MagicMock()
+        mock_model.model_id = "nvidia-auto-picked"
+
+        with patch.object(p, "pick_model", return_value=mock_model):
+            with patch("core.coding.providers.httpx.Client", return_value=self._mock_httpx("OK")):
+                result = p.call("test")
+
+        assert result.success is True
+        assert result.model_used == "nvidia-auto-picked"
