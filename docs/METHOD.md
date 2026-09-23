@@ -389,3 +389,98 @@ message la **reference aux runs CI verts** (SHA + date).
 **Exemple** :
     docs(roadmap): close Phase 0 — CI verte (c5f54bf, f308cee, c1444af)
 
+
+---
+
+## Regle 8 - Ne jamais utiliser $matches comme variable PowerShell
+
+**Contexte** : modification de coder_worker.py (session 2026-09-22).
+
+**Erreur** : $matches = @() puis $matches += [PSCustomObject]@{...}.
+PowerShell traite $matches comme une Hashtable automatique (resultat de
+-match), pas comme un Array. L operation += echoue silencieusement
+(InvalidOperation) et la variable reste vide.
+
+**Consequence** : la boucle n accumule rien, l index cible devient $null,
+le remplacement echoue.
+
+**Regle** : ne jamais nommer une variable $matches. Utiliser $hits,
+$found, $results, $rules, etc.
+
+---
+
+## Regle 9 - Ne jamais mettre le triple-quote dans un -match PowerShell
+
+**Contexte** : detection du pattern triple-quote dans un fichier Python.
+
+**Erreur** : un -match avec le triple-quote echappe.
+PowerShell n accepte pas le backslash-echappement dans une chaine
+double-quoted avec -match (ParserError: Jeton inattendu).
+
+**Regle** : pour chercher un pattern contenant des guillemets triples, utiliser :
+- l operateur -like avec wildcards
+- OU une chaine simple-quoted
+- OU [regex]::Escape() sur les parties riskees
+
+Ne jamais echapper les guillemets dans une chaine -match double-quoted.
+
+---
+
+## Regle 10 - Modifier UNE ligne de code Python : procedure canonique
+
+**Contexte** : 5 echecs successifs sur coder_worker.py et bridge.py
+(import casse, ligne non remplacee, CRLF introduits).
+
+**Procedure validee** :
+1. **Lire** avec [System.IO.File]::ReadAllLines (UTF-8 strict)
+2. **Trouver l index** avec -like (pas -match + tableau)
+3. **Verifier** que l index est unique (if ($targetIdx -eq -1) return)
+4. **Remplacer UNE ligne** : $lines[$targetIdx] = $newLine
+5. **Ecrire** avec [System.IO.File]::WriteAllLines (UTF-8 strict)
+6. **Verifier** par python -c "import ..." puis ruff check
+
+**Interdits** :
+- String.Replace sur du code Python multi-ligne
+- Regex non ancre sur du code (from ... import (...))
+- Splice quand un simple remplacement d index suffit
+- Scripts de plus de 30 lignes pour modifier 1 ligne
+
+**Regle** : si la modification fait moins de 5 lignes, le script doit faire
+moins de 30 lignes. Sinon, decouper en lecture / ecriture / verification.
+
+---
+
+## Regle 11 - Path.write_text n accepte pas newline=
+
+**Contexte** : ecriture de bridge.py avec un script Python.
+
+**Erreur** : TARGET.write_text(src, encoding="utf-8", newline="\\n").
+ValueError: illegal newline value. Path.write_text accepte
+encoding et errors, pas newline. newline est un parametre
+de open(), pas de write_text.
+
+**Regle** : pour forcer les fins de ligne Unix, utiliser :
+
+    with open(TARGET, "w", encoding="utf-8", newline="\\n") as f:
+        f.write(src)
+
+**Alternative** : ne pas forcer newline. Git gere les fins de ligne via
+.gitattributes.
+
+---
+
+## Regle 12 - import sys doit etre APRES from __future__
+
+**Contexte** : ajout automatique de import sys dans bridge.py.
+
+**Erreur** : insertion de import sys avant from __future__ import annotations.
+SyntaxError: from __future__ imports must occur at the beginning of the file.
+
+**Regle** : from __future__ doit rester la premiere ligne executable
+apres le docstring. Tout autre import (y compris import sys) doit
+venir apres.
+
+**Procedure** : chercher la ligne from __future__ import et inserer
+import sys juste apres. Si pas de from __future__, inserer apres
+le docstring.
+
