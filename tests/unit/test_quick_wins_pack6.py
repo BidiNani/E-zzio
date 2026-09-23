@@ -620,3 +620,45 @@ class TestSecuritySandbox:
                    new=AsyncMock(return_value=mock_proc)):
             result = await sb.execute("sleep 100")
         assert result.exit_code == -1
+
+# ============================================================
+# 7. Tests complementaires pour 100% reel
+# ============================================================
+
+class TestModelRouterElseBranch:
+    """L53-54 : branche else du select_engine."""
+
+    def test_select_engine_else_branch_mission(self):
+        """complexity_score dans [0.7, 0.85) + is_mission=True -> else."""
+        from core.cognition.model_router import ModelRouter
+        r = ModelRouter()
+        with patch("core.cognition.model_router.canonical_model_registry") as reg:
+            reg.get_by_role = MagicMock(return_value=_make_model_record("else-llm"))
+            # complexity 0.75 (< 0.85 mais >= 0.7 et is_mission=True)
+            # ne matche pas STANDARD_CHAT (is_mission=True + score>=0.7)
+            # ne matche pas MASTER_STRATEGIC (score < 0.85)
+            result = r.select_engine(
+                task_type="general",
+                complexity_score=0.75,
+                is_mission=True,
+            )
+        assert result["role"] == "MASTER_STRATEGIC"
+        assert result["thinking_level"] == "medium"
+
+
+class TestMediaEngineExistingExtension:
+    """L37->40 et L74->77 : extension deja presente."""
+
+    def test_generate_tone_wav_with_existing_wav_extension(self, tmp_path):
+        """Nom deja termine par .wav -> pas de double extension."""
+        from core.generators.media_engine import MediaEngine
+        engine = MediaEngine(workspace_root=str(tmp_path))
+        result = engine.generate_tone_wav("already.wav", duration_sec=0.01)
+        assert result["filename"] == "already.wav"  # pas "already.wav.wav"
+
+    def test_generate_3d_cube_obj_with_existing_obj_extension(self, tmp_path):
+        """Nom deja termine par .obj -> pas de double extension."""
+        from core.generators.media_engine import MediaEngine
+        engine = MediaEngine(workspace_root=str(tmp_path))
+        result = engine.generate_3d_cube_obj("already.obj")
+        assert result["filename"] == "already.obj"  # pas "already.obj.obj"
