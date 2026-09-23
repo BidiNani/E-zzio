@@ -145,3 +145,74 @@ class TestDuplexExtended:
         assert result == "a b c"
         assert engine.state == DuplexState.IDLE
         assert len(engine._conversation_history) == 1
+
+
+class TestDuplexFullCoverage:
+    """Tests pour atteindre 100% de couverture sur voice_duplex_engine."""
+
+    def test_detect_voice_activity_exception_returns_false(self):
+        # Couvre L59-60 : except Exception dans detect_voice_activity
+        engine = VoiceDuplexEngine()
+        with patch("core.voice.voice_duplex_engine.struct.unpack", side_effect=RuntimeError("boom")):
+            assert engine.detect_voice_activity(b"\x01\x02") is False
+
+    def test_barge_in_stream_without_abort_nor_stop(self):
+        # Couvre L76->78 : ni abort ni stop -> stop reste None
+        # mais stream_cut_ms EST calcule (le try est entre)
+        engine = VoiceDuplexEngine()
+
+        class EmptyStream:
+            pass
+
+        engine.attach_output_stream(EmptyStream())
+        result = engine.trigger_barge_in()
+        # stream_cut_ms est calcule (le try est entre)
+        assert result["stream_cut_ms"] is not None
+        assert result["stream_cut_ms"] >= 0.0
+
+    @pytest.mark.asyncio
+    async def test_barge_in_cancels_active_tts_task(self):
+        # Couvre L87 : _active_tts_task.cancel()
+        engine = VoiceDuplexEngine()
+        engine._active_tts_task = MagicMock()
+        engine._active_tts_task.done = MagicMock(return_value=False)
+        engine._active_tts_task.cancel = MagicMock()
+        engine.trigger_barge_in()
+        assert engine._active_tts_task.cancel.called
+
+    @pytest.mark.asyncio
+    async def test_process_incoming_stream_triggers_barge_in_while_speaking(self):
+        # Couvre L124-129 : branche barge-in quand state == SPEAKING
+        engine = VoiceDuplexEngine(energy_threshold=400)
+        loud_chunk = struct.pack("<" + "h" * 1600, *([2500] * 1600))
+
+        async def one_chunk_stream():
+            engine.state = DuplexState.SPEAKING
+            yield loud_chunk
+
+        called = []
+        def on_speech_start():
+            called.append(True)
+
+        results = []
+        async for r in engine.process_incoming_audio_stream(one_chunk_stream(), on_speech_start=on_speech_start):
+            results.append(r)
+
+        assert len(results) == 1
+        assert results[0]["status"] == "INTERRUPTED"
+        assert called == [True]
+
+    @pytest.mark.asyncio
+    async def test_process_incoming_stream_silence_chunk(self):
+        # Couvre L131->121 : boucle sans speech
+        engine = VoiceDuplexEngine(energy_threshold=400)
+        silent_chunk = struct.pack("<" + "h" * 1600, *([0] * 1600))
+
+        async def two_chunks():
+            yield silent_chunk
+            yield silent_chunk
+
+        results = []
+        async for r in engine.process_incoming_audio_stream(two_chunks()):
+            results.append(r)
+        assert results == []

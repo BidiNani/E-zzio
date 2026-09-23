@@ -1,5 +1,6 @@
 import io
 import struct
+import sys
 import wave
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -191,3 +192,84 @@ class TestVoiceGatewayExtended:
             sample_audio = b"\x00" * 16000
             res = await gw.process_voice_interaction(audio_data=sample_audio, core=None)
             assert res["status"] in ("success", "core_error")
+
+
+class TestVoiceGatewayFullCoverage:
+    """Tests pour atteindre 100% de couverture sur voice_gateway."""
+
+    @patch("core.voice.voice_gateway.VoiceGateway._check_hardware")
+    def test_detect_speech_exception_returns_false(self, mock_check):
+        gw = VoiceGateway()
+        with patch("core.voice.voice_gateway.struct.unpack", side_effect=RuntimeError("boom")):
+            assert gw.detect_speech(b"\x01\x02") is False
+
+    def test_check_hardware_with_mock_sounddevice(self):
+        mock_sd = MagicMock()
+        mock_sd.query_devices = MagicMock(return_value=[{"name": "test"}])
+        with patch.dict(sys.modules, {"sounddevice": mock_sd}):
+            gw = VoiceGateway()
+            assert gw._hardware_available is True
+
+    def test_enumerate_devices_with_mock(self):
+        mock_sd = MagicMock()
+        mock_sd.query_devices = MagicMock(return_value=[{"name": "dev1"}, {"name": "dev2"}])
+        with patch.dict(sys.modules, {"sounddevice": mock_sd}):
+            gw = VoiceGateway()
+            devices = gw.enumerate_devices()
+            assert len(devices) == 2
+
+    @pytest.mark.asyncio
+    async def test_transcribe_with_stt_exception(self):
+        gw = VoiceGateway()
+        mock_core = MagicMock()
+
+        with patch.object(gw, "transcribe", side_effect=RuntimeError("STT fail")):
+            sample_audio = b"\x00" * 16000
+            res = await gw.process_voice_interaction(sample_audio, mock_core)
+            assert res["status"] == "stt_error"
+            assert "STT fail" in res["error"]
+
+    @pytest.mark.asyncio
+    async def test_transcribe_empty_audio_returns_empty_status(self):
+        gw = VoiceGateway()
+        res = await gw.transcribe(b"")
+        assert res["status"] == "empty"
+        assert res["text"] == ""
+        assert res["confidence"] == 0.0
+
+    @pytest.mark.asyncio
+    async def test_synthesize_with_wave_error(self):
+        gw = VoiceGateway()
+        mock_core = MagicMock(spec=["think"])
+        mock_core.think = AsyncMock(return_value={"response": "Test response"})
+
+        with patch.object(gw, "synthesize", side_effect=RuntimeError("TTS fail")):
+            sample_audio = b"\x00" * 16000
+            res = await gw.process_voice_interaction(sample_audio, mock_core)
+            assert res["status"] == "tts_error"
+            assert "TTS fail" in res["error"]
+
+    @pytest.mark.asyncio
+    async def test_capture_audio_with_mock_sounddevice(self):
+        mock_sd = MagicMock()
+        mock_recording = MagicMock()
+        mock_recording.tobytes = MagicMock(return_value=b"\x00" * 32000)
+        mock_sd.rec = MagicMock(return_value=mock_recording)
+        mock_sd.wait = MagicMock()
+
+        with patch.dict(sys.modules, {"sounddevice": mock_sd}):
+            gw = VoiceGateway()
+            gw._hardware_available = True
+            audio = await gw.capture_audio(duration_sec=1.0)
+            assert len(audio) == 32000
+
+    @pytest.mark.asyncio
+    async def test_capture_audio_exception(self):
+        mock_sd = MagicMock()
+        mock_sd.rec = MagicMock(side_effect=RuntimeError("hardware fail"))
+
+        with patch.dict(sys.modules, {"sounddevice": mock_sd}):
+            gw = VoiceGateway()
+            gw._hardware_available = True
+            with pytest.raises(RuntimeError, match="chec de capture audio"):
+                await gw.capture_audio(duration_sec=1.0)
