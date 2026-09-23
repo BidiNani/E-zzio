@@ -566,3 +566,39 @@ class TestGetRegistry:
         r1 = get_registry()
         r2 = get_registry()
         assert r1 is r2
+
+
+# ============================================================
+# 17. list_models dispatch vers _fetch_* (complement 100%)
+# ============================================================
+
+class TestListModelsDispatch:
+    """Couvre le dispatch de list_models vers chaque _fetch_*."""
+
+    def test_list_models_groq_dispatches(self):
+        r = ModelRegistry()
+        mock_model = ModelInfo(provider="groq", model_id="qwen/qwen3.8-27b")
+        with patch.object(r, "_fetch_groq", return_value=[mock_model]):
+            result = r.list_models("groq")
+            assert result == [mock_model]
+
+    def test_list_models_openrouter_dispatches(self):
+        r = ModelRegistry()
+        mock_model = ModelInfo(provider="openrouter", model_id="z-ai/glm-5.2:free")
+        with patch.object(r, "_fetch_openrouter", return_value=[mock_model]):
+            result = r.list_models("openrouter")
+            assert result == [mock_model]
+
+    def test_list_models_nvidia_dispatches(self):
+        r = ModelRegistry()
+        mock_model = ModelInfo(provider="nvidia", model_id="nemotron-3-ultra")
+        with patch.object(r, "_fetch_nvidia", return_value=[mock_model]):
+            result = r.list_models("nvidia")
+            assert result == [mock_model]
+
+    def test_list_models_ollama_dispatches(self):
+        r = ModelRegistry()
+        mock_model = ModelInfo(provider="ollama", model_id="llama3:8b")
+        with patch.object(r, "_fetch_ollama", return_value=[mock_model]):
+            result = r.list_models("ollama")
+            assert result == [mock_model]
