@@ -69,23 +69,23 @@ a un bypass fonctionnel.
 `core/ezzio_master.py` contient :
 
 ```python
-force_cloud: bool = True
-# Cloud-First par defaut : Cloud Gemini en priorite absolue.
+force_cloud: bool = False  # hybride : cloud-first + fallback local
+# Hybride : cloud-first avec fallback local automatique si pas d'Internet.
 ```
 
-**Le comportement par defaut est cloud-first, pas local-first.**
+**Le comportement par defaut est hybride : cloud-first avec fallback local automatique.**
 
 ### 2.2 Tableau des occurrences
 
 | Fichier | Ligne | Valeur par defaut |
 |---|---|---|
-| `core/ezzio_master.py` | 198 | `True` |
-| `core/sdk.py` | 44 | `True` |
+| `core/ezzio_master.py` | 198 | `False` (hybride) |
+| `core/sdk.py` | 44 | `False` (hybride) |
 | `core/agent/agent_provider.py` | 109 | `False` |
 | `core/cognition/cognitive_gateway.py` | 122 | `False` (depuis constraints) |
-| `core/integrations/discord/discord_client.py` | 417 | `True` (hardcode) |
+| `core/integrations/discord/discord_client.py` | 417 | `False` (hybride) |
 
-**Le chemin principal (Master, SDK, Discord) est cloud-first.**
+**Le chemin principal (Master, SDK, Discord) est hybride : cloud-first avec fallback local automatique.**
 
 ---
 
