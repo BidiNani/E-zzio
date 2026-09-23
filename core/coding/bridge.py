@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import logging
 import subprocess
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -230,11 +231,11 @@ class InternalToolBridge:
         args.append("-q")
         if extra_args:
             args.extend(extra_args)
-        return self.run_command("python", args)
+        return self.run_command(sys.executable, args)
 
     def run_ruff(self, path: str = ".") -> ToolResult:
         """Exécute ruff check sur un chemin."""
-        return self.run_command("ruff", ["check", path])
+        return self.run_command(sys.executable, ["-m", "ruff", "check", path])
 
     # --------------------------------------------------------
     # FICHIER DE STATUT
