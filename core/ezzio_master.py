@@ -5,7 +5,6 @@ Version épurée : GeminiProvider direct, plus de fédération/missions/workers.
 from __future__ import annotations
 
 import logging
-import re
 import time
 from typing import Any
 
@@ -120,6 +119,170 @@ class EzzioMaster:
         return "\n\n".join(parts)
 
 
+    async def _generate_response(
+        self,
+        user_prompt: str,
+        routing: dict[str, Any],
+        kwargs: dict[str, Any],
+    ) -> dict[str, Any]:
+        """Genere une reponse LLM en utilisant le routing decide par le harness.
+
+        Appele par NativeHarness dans l'etat EXECUTING.
+
+        Args:
+            user_prompt: Le prompt utilisateur.
+            routing: Le routing retourne par le harness (model, provider, thinking_level).
+            kwargs: Parametres additionnels (chat_system, force_cloud, session_id, channel, etc.)
+
+        Returns:
+            dict avec "response", "model", "provider", etc.
+        """
+
+        chat_system = kwargs.get("chat_system")
+        force_cloud = kwargs.get("force_cloud", False)
+        session_id = kwargs.get("session_id", "")
+        channel = kwargs.get("channel", "web")
+        logger.debug("[EzzioMaster] Generation (session=%s, channel=%s)", session_id, channel)
+        model_target = kwargs.get("model_target", "auto")
+        thinking_level = routing.get("thinking_level")
+
+        # Override depuis settings utilisateur (toggle frontend)
+        try:
+            from routers.settings import _state as _settings_state
+            if _settings_state.get("thinking_enabled"):
+                thinking_level = _settings_state.get("thinking_level", thinking_level)
+        except Exception:
+            pass
+
+        # Selection dynamique du provider : cloud-first ou local si pas d'Internet
+        _has_net = _has_internet()
+        _force_local = (model_target or "").lower() in ("local", "ollama")
+        _force_cloud_explicit = (model_target or "").lower() == "cloud"
+
+        if _force_local:
+            is_local = True
+            logger.info("[EzzioMaster] Mode local explicite (model_target=%s)", model_target)
+        elif _force_cloud_explicit:
+            is_local = False
+            logger.info("[EzzioMaster] Mode cloud explicite (model_target=%s)", model_target)
+        elif not _has_net:
+            is_local = True
+            logger.info("[EzzioMaster] Pas d'Internet -> basculement local (Ollama)")
+        else:
+            is_local = (routing.get("provider") == "ollama" and not force_cloud)
+
+        selected_model = routing.get("model", "gemini-3.5-flash-lite")
+
+        # Utiliser le model_target si specifie
+        if model_target and model_target not in ("auto", "local", "cloud"):
+            selected_model = model_target
+
+        resp: ProviderResponse
+        used_fallback = False
+        fallback_notice: dict | None = None
+        detected_provider = self._detect_provider_from_model(selected_model)
+
+        if is_local:
+            from core.providers.ollama_provider import OllamaProvider
+            ollama_prov = OllamaProvider(model=selected_model)
+            resp = await ollama_prov.generate(
+                prompt=user_prompt,
+                system_prompt=chat_system if chat_system else None,
+                model=selected_model,
+                temperature=0.2,
+                max_tokens=512,
+            )
+        else:
+            try:
+                if detected_provider == "openrouter":
+                    from core.providers.openrouter_provider import OpenRouterProvider
+                    prov = OpenRouterProvider()
+                elif detected_provider == "groq":
+                    from core.providers.groq_provider import GroqProvider
+                    prov = GroqProvider()
+                elif detected_provider == "nvidia":
+                    from core.providers.nvidia_nim_provider import NvidiaNimProvider
+                    prov = NvidiaNimProvider()
+                elif detected_provider == "ollama":
+                    from core.providers.ollama_provider import OllamaProvider
+                    prov = OllamaProvider()
+                else:
+                    prov = self.provider
+
+                resp = await prov.generate(
+                    prompt=user_prompt,
+                    system_prompt=chat_system if chat_system else None,
+                    model=selected_model,
+                    temperature=0.2,
+                    max_tokens=2048,
+                    thinking_level=thinking_level,
+                )
+            except Exception as cloud_err:
+                logger.warning(
+                    "[EzzioMaster] Echec provider %s (%s) -> fallback",
+                    detected_provider, cloud_err,
+                )
+                fb_resp, fb_notice = await self._try_fallback(
+                    detected_provider=detected_provider,
+                    original_model=selected_model,
+                    reason=f"exception: {type(cloud_err).__name__}",
+                    user_prompt=user_prompt,
+                    chat_system=chat_system,
+                    thinking_level=thinking_level,
+                )
+                if fb_resp is None:
+                    raise
+                resp = fb_resp
+                used_fallback = True
+                fallback_notice = fb_notice
+
+        reply = resp.content or ""
+        model_name = resp.model or selected_model
+        provider_name = resp.provider or routing.get("provider", "gemini")
+
+        # Si reponse vide -> fallback
+        if not reply.strip():
+            logger.warning(
+                "[EzzioMaster] Reponse vide du provider %s -> fallback",
+                detected_provider,
+            )
+            fb_resp, fb_notice = await self._try_fallback(
+                detected_provider=detected_provider,
+                original_model=selected_model,
+                reason="empty_response",
+                user_prompt=user_prompt,
+                chat_system=chat_system,
+                thinking_level=thinking_level,
+            )
+            if fb_resp is not None and (fb_resp.content or "").strip():
+                resp = fb_resp
+                reply = resp.content or ""
+                model_name = resp.model or selected_model
+                provider_name = resp.provider or "gemini"
+                used_fallback = True
+                fallback_notice = fb_notice
+            else:
+                _audit_command("PROVIDER_EMPTY", {
+                    "provider": provider_name, "model": model_name,
+                    "outcome": "REFUSED"}, "BLOCKED")
+                raise RuntimeError(
+                    "[FAIL-CLOSED] Provider sans reponse executable : execution refusee.")
+
+        return {
+            "response": reply,
+            "answer": reply,
+            "content": reply,
+            "message": reply,
+            "source": f"{provider_name} ({model_name})",
+            "authority": "CanonicalIdentity",
+            "model": model_name,
+            "provider": provider_name,
+            "used_fallback": used_fallback,
+            "usage": getattr(resp, "usage", {}) or {},
+            "thinking_level": getattr(resp, "thinking_level", None),
+            "fallback_notice": fallback_notice,
+        }
+
     def _detect_provider_from_model(self, model: str) -> str:
         """Detecte le provider depuis le nom du modele."""
         m = (model or "").lower()
@@ -224,218 +387,57 @@ class EzzioMaster:
         user_id: str = "operator",
         **kwargs: Any
     ) -> dict[str, Any]:
-        """Exécute la requête utilisateur via GeminiProvider direct."""
+        """Exécute la requête utilisateur gouvernée par NativeHarness FSM.
+
+        Le cycle de vie est :
+        INITIALIZING -> PERCEIVING -> THINKING -> VALIDATING -> EXECUTING -> TERMINATED
+        """
         start_time = time.perf_counter()
 
-        if session_id:
-            try:
-                if not self._memory_initialized:
-                    await self.memory.init()
-                    self._memory_initialized = True
-                await self.memory.record_message(
-                    session_id=session_id,
-                    role="user",
-                    content=user_prompt,
-                    metadata={"channel": channel, "user_id": user_id}
-                )
-            except Exception as exc:
-                logger.warning("[EzzioMaster] Memory record user prompt failed: %s", exc)
+        # 0. Synchroniser la memoire : le harness doit utiliser la MEME que le master
+        # (important pour les tests et l'injection de memoire custom)
+        self.harness.memory = self.memory
 
+        # 1. Preparer le system prompt AVANT le harness (qui enregistre en memoire)
+        chat_system = system_prompt or await self._build_chat_system_prompt(
+            session_id, exclude_prompt=user_prompt
+        )
+
+        # 2. Executer la generation via le harness gouverne
+        # Le harness va :
+        #  - transitionner INITIALIZING -> PERCEIVING (record memoire)
+        #  - transitionner PERCEIVING -> THINKING (selection routing)
+        #  - transitionner THINKING -> VALIDATING (evaluation policy)
+        #  - transitionner VALIDATING -> EXECUTING
+        #  - appeler _generate_response() (notre executor)
+        #  - transitionner EXECUTING -> TERMINATED
         try:
-            from core.cognition.model_router import ModelRouter
-            router = ModelRouter()
-
-            is_mission = bool(mission_profile and mission_profile.upper() not in ["STANDARD", "CHAT", "LOW"])
-            comp_score = 0.85 if is_mission else (0.4 if channel in ["discord", "chat", "integration_test"] else 0.6)
-            prompt_lower = (user_prompt or "").lower().strip()
-
-            # Simple short greetings or ultra-fast path optimization
-            if not is_mission and (len(prompt_lower.split()) <= 3 or prompt_lower in ["salut", "bonjour", "hello", "ping"]):
-                comp_score = 0.1
-
-            is_coding = bool(re.search(r"\b(code|coder|coding|python|javascript|typescript|c\+\+|rust|html|css|sql|script|scripts|fonction|classes?|def\s|class\s|bug|refactor|debug|git)\b", prompt_lower))
-            if is_coding or "architecture" in prompt_lower or "securite" in prompt_lower or "vault" in prompt_lower:
-                comp_score = max(comp_score, 0.75)
-
-            task_t = "coding" if is_coding else "general"
-
-            routing = router.select_engine(
-                task_type=task_t,
-                complexity_score=comp_score,
-                risk_level="low",
+            harness_result = await self.harness.execute_task(
+                task_prompt=user_prompt,
+                session_id=session_id,
+                user_id=user_id,
                 channel=channel,
-                is_mission=is_mission
+                executor=self._generate_response,
+                # Passage a _generate_response
+                chat_system=chat_system,
+                force_cloud=force_cloud,
+                model_target=model_target,
+                # Passage au harness pour la selection du modele
+                mission_profile=mission_profile,
             )
-            fallback_notice: dict | None = None
-            # Priorite au model_target utilisateur, sinon routing automatique
-            if model_target and model_target != "auto":
-                selected_model = model_target
-            else:
-                selected_model = routing["model"]
-            thinking_level = routing.get("thinking_level")
-            # Override depuis settings utilisateur (toggle frontend)
-            try:
-                from routers.settings import _state as _settings_state
-                if _settings_state.get("thinking_enabled"):
-                    thinking_level = _settings_state.get("thinking_level", thinking_level)
-            except Exception:
-                pass
-
-            chat_system = system_prompt or await self._build_chat_system_prompt(session_id, exclude_prompt=user_prompt)
-
-            # Strategie hybride : cloud-first + fallback local automatique
-            # - Si pas d'Internet -> basculement local (Ollama)
-            # - Si model_target == "local" -> local explicite
-            # - Si model_target == "cloud" -> cloud explicite
-            # - Sinon -> cloud-first (Gemini prioritaire)
-            _has_net = _has_internet()
-            _force_local = (model_target or "").lower() in ("local", "ollama")
-            _force_cloud_explicit = (model_target or "").lower() == "cloud"
-
-            if _force_local:
-                is_local = True
-                logger.info("[EzzioMaster] Mode local explicite (model_target=%s)", model_target)
-            elif _force_cloud_explicit:
-                is_local = False
-                logger.info("[EzzioMaster] Mode cloud explicite (model_target=%s)", model_target)
-            elif not _has_net:
-                is_local = True
-                logger.info("[EzzioMaster] Pas d'Internet -> basculement local (Ollama)")
-            else:
-                # Internet OK -> cloud-first (avec respect de force_cloud si True)
-                is_local = (routing.get("provider") == "ollama" and not force_cloud)
-            used_fallback = False
-
-            if is_local:
-                from core.providers.ollama_provider import OllamaProvider
-                ollama_prov = OllamaProvider(model=selected_model)
-                resp: ProviderResponse = await ollama_prov.generate(
-                    prompt=user_prompt or "",
-                    system_prompt=chat_system if chat_system else None,
-                    model=selected_model,
-                    temperature=0.2,
-                    max_tokens=512,
-                )
-            else:
-                # Routing multi-provider base sur le modele selectionne
-                detected_provider = self._detect_provider_from_model(selected_model)
-
-                try:
-                    if detected_provider == "openrouter":
-                        from core.providers.openrouter_provider import OpenRouterProvider
-                        prov = OpenRouterProvider()
-                    elif detected_provider == "groq":
-                        from core.providers.groq_provider import GroqProvider
-                        prov = GroqProvider()
-                    elif detected_provider == "nvidia":
-                        from core.providers.nvidia_nim_provider import NvidiaNimProvider
-                        prov = NvidiaNimProvider()
-                    elif detected_provider == "ollama":
-                        from core.providers.ollama_provider import OllamaProvider
-                        prov = OllamaProvider()
-                    else:  # gemini
-                        prov = self.provider
-
-                    resp: ProviderResponse = await prov.generate(
-                        prompt=user_prompt or "",
-                        system_prompt=chat_system if chat_system else None,
-                        model=selected_model,
-                        temperature=0.2,
-                        max_tokens=2048,
-                        thinking_level=thinking_level,
-                    )
-                except Exception as cloud_err:
-                    # Fallback intelligent vers le modele cible de FALLBACK_MAP
-                    logger.warning(
-                        "[EzzioMaster] Echec provider %s (%s) -> fallback",
-                        detected_provider, cloud_err,
-                    )
-                    fb_resp, fb_notice = await self._try_fallback(
-                        detected_provider=detected_provider,
-                        original_model=selected_model,
-                        reason=f"exception: {type(cloud_err).__name__}",
-                        user_prompt=user_prompt,
-                        chat_system=chat_system,
-                        thinking_level=thinking_level,
-                    )
-                    if fb_resp is None:
-                        raise cloud_err
-                    resp = fb_resp
-                    used_fallback = True
-                    fallback_notice = fb_notice
-
+        except Exception as harness_err:
+            logger.error("[EzzioMaster] Harness a echoue : %s", harness_err)
             elapsed_ms = int((time.perf_counter() - start_time) * 1000)
-
-            reply = resp.content or ""
-            model_name = resp.model or selected_model
-            provider_name = resp.provider or routing["provider"]
-
-            # Si le provider principal a repondu vide -> fallback intelligent
-            if not reply.strip():
-                logger.warning(
-                    "[EzzioMaster] Reponse vide du provider %s -> fallback",
-                    detected_provider,
-                )
-                fb_resp, fb_notice = await self._try_fallback(
-                    detected_provider=detected_provider,
-                    original_model=selected_model,
-                    reason="empty_response",
-                    user_prompt=user_prompt,
-                    chat_system=chat_system,
-                    thinking_level=thinking_level,
-                )
-                if fb_resp is not None and (fb_resp.content or "").strip():
-                    resp = fb_resp
-                    reply = resp.content or ""
-                    model_name = resp.model or selected_model
-                    provider_name = resp.provider or "gemini"
-                    used_fallback = True
-                    fallback_notice = fb_notice
-                else:
-                    _audit_command("PROVIDER_EMPTY", {
-                        "provider": provider_name, "model": model_name,
-                        "outcome": "REFUSED"}, "BLOCKED")
-                    raise RuntimeError(
-                        "[FAIL-CLOSED] Provider sans reponse executable : execution refusee.")
-
-            res_conv = {
-                "response": reply,
-                "answer": reply,
-                "content": reply,
-                "message": reply,
-                "source": f"{provider_name} ({model_name})",
-                "authority": "CanonicalIdentity",
-                "model": model_name,
-                "provider": provider_name,
-                "mission": mission_profile or "STANDARD",
-                "channel": channel,
-                "elapsed_ms": elapsed_ms,
-                "ok": True,
-                "used_fallback": used_fallback,
-                "usage": getattr(resp, "usage", {}) or {},
-                "thinking_level": getattr(resp, "thinking_level", None),
-                "fallback_notice": fallback_notice,
-            }
-            _audit_command("CONV_MODEL", {
-                "model": model_name, "provider": provider_name,
-                "outcome": "RESPONDED",
-                "session_id": session_id or ""})
-            return await self._record_assistant_memory(res_conv, session_id, channel)
-
-        except Exception as exc:
-            elapsed_ms = int((time.perf_counter() - start_time) * 1000)
-            logger.error("[EzzioMaster] Exception during execution: %s", exc)
-
-            _audit_command("PROVIDER_EXCEPTION", {
-                "error": str(exc)[:300],
+            fail_msg = f"[FAIL-CLOSED] Harness E-ZZIO indisponible : {harness_err}"
+            _audit_command("HARNESS_EXCEPTION", {
+                "error": str(harness_err)[:300],
                 "outcome": "REFUSED"}, "BLOCKED")
-            fail_msg = f"[FAIL-CLOSED] Provider E-ZZIO indisponible : {exc}"
             res_fail = {
                 "response": fail_msg,
                 "answer": fail_msg,
                 "content": fail_msg,
                 "message": fail_msg,
-                "source": "Provider Fail-Closed",
+                "source": "Harness Fail-Closed",
                 "authority": "CanonicalIdentity",
                 "model": "none",
                 "provider": "none",
@@ -443,10 +445,77 @@ class EzzioMaster:
                 "channel": channel,
                 "elapsed_ms": elapsed_ms,
                 "ok": False,
-                "error": str(exc),
+                "error": str(harness_err),
                 "used_fallback": False,
             }
             return await self._record_assistant_memory(res_fail, session_id, channel)
+
+        # 3. Extraire la reponse du resultat harness
+        if harness_result.get("status") != "SUCCESS":
+            elapsed_ms = int((time.perf_counter() - start_time) * 1000)
+            error_info = harness_result.get("error", {})
+            error_msg = error_info.get("safe_message", "Harness execution failed")
+            fail_msg = f"[FAIL-CLOSED] {error_msg}"
+            _audit_command("HARNESS_FAILED", {
+                "status": harness_result.get("status"),
+                "error": error_msg[:300],
+                "outcome": "REFUSED"}, "BLOCKED")
+            res_fail = {
+                "response": fail_msg,
+                "answer": fail_msg,
+                "content": fail_msg,
+                "message": fail_msg,
+                "source": "Harness Fail-Closed",
+                "authority": "CanonicalIdentity",
+                "model": "none",
+                "provider": "none",
+                "mission": mission_profile or "STANDARD",
+                "channel": channel,
+                "elapsed_ms": elapsed_ms,
+                "ok": False,
+                "error": error_msg,
+                "used_fallback": False,
+                "harness_session_id": harness_result.get("session_id"),
+                "harness_correlation_id": harness_result.get("correlation_id"),
+            }
+            return await self._record_assistant_memory(res_fail, session_id, channel)
+
+        # Extraire la reponse generee
+        inner = harness_result.get("result", {})
+        if not isinstance(inner, dict):
+            inner = {"response": str(inner), "model": "unknown", "provider": "unknown"}
+
+        elapsed_ms = int((time.perf_counter() - start_time) * 1000)
+
+        res_conv = {
+            "response": inner.get("response", ""),
+            "answer": inner.get("answer", inner.get("response", "")),
+            "content": inner.get("content", inner.get("response", "")),
+            "message": inner.get("message", inner.get("response", "")),
+            "source": inner.get("source", "Unknown"),
+            "authority": "CanonicalIdentity",
+            "model": inner.get("model", harness_result.get("model", "unknown")),
+            "provider": inner.get("provider", "unknown"),
+            "mission": mission_profile or "STANDARD",
+            "channel": channel,
+            "elapsed_ms": elapsed_ms,
+            "ok": True,
+            "used_fallback": inner.get("used_fallback", False),
+            "usage": inner.get("usage", {}),
+            "thinking_level": inner.get("thinking_level"),
+            "fallback_notice": inner.get("fallback_notice"),
+            "harness_session_id": harness_result.get("session_id"),
+            "harness_correlation_id": harness_result.get("correlation_id"),
+            "harness_turn": harness_result.get("turn"),
+        }
+
+        _audit_command("CONV_MODEL", {
+            "model": res_conv["model"], "provider": res_conv["provider"],
+            "outcome": "RESPONDED",
+            "session_id": session_id or "",
+            "harness_session_id": harness_result.get("session_id"),
+        })
+        return await self._record_assistant_memory(res_conv, session_id, channel)
 
     async def process_chat(
         self,

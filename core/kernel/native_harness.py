@@ -12,6 +12,7 @@ from __future__ import annotations
 import logging
 import time
 import uuid
+from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
 from enum import StrEnum
 from typing import Any
@@ -167,9 +168,16 @@ class NativeHarness:
         channel: str = "task",
         max_turns: int = 10,
         max_heal_attempts: int = 3,
+        executor: Callable[[str, dict[str, Any], dict[str, Any]], Awaitable[dict[str, Any]]] | None = None,
         **kwargs: Any
     ) -> dict[str, Any]:
-        """Exécute le cycle de vie d'une tâche via la FSM Native Harness."""
+        """Exécute le cycle de vie d'une tâche via la FSM Native Harness.
+
+        Args:
+            executor: Fonction async optionnelle appelee dans l'etat EXECUTING.
+                     Signature : (task_prompt, routing, kwargs) -> dict[str, Any]
+                     Si None, un resultat par defaut est retourne.
+        """
         if not session_id:
             session_id = f"task-session-{uuid.uuid4().hex[:8]}"
 
@@ -247,8 +255,30 @@ class NativeHarness:
             self.transition_to(session, HarnessState.EXECUTING)
             session.current_turn += 1
 
-            # Tool execution or Provider generation via Master/Provider delegate
-            exec_result = kwargs.get("exec_result", f"Task '{task_prompt[:50]}' executed successfully under model {routing['model']}.")
+            # Tool execution : via executor custom ou resultat par defaut
+            if executor is not None:
+                try:
+                    exec_result = await executor(task_prompt, routing, kwargs)
+                except Exception as exec_err:
+                    logger.error("[HARNESS EXECUTOR FAIL] %s", exec_err)
+                    session.termination_reason = TerminationReason.FAILED
+                    try:
+                        self.transition_to(session, HarnessState.TERMINATED,
+                                           metadata={"executor_error": str(exec_err)[:200]})
+                    except Exception:
+                        session.current_state = HarnessState.TERMINATED
+                    return {
+                        "status": "FAILED",
+                        "session_id": session.session_id,
+                        "correlation_id": session.correlation_id,
+                        "turn": session.current_turn,
+                        "error": self.sanitize_error(exec_err, session.correlation_id),
+                    }
+            else:
+                exec_result = kwargs.get(
+                    "exec_result",
+                    f"Task '{task_prompt[:50]}' executed successfully under model {routing['model']}."
+                )
 
             # 6. EXECUTING -> TERMINATED (SUCCESS)
             session.termination_reason = TerminationReason.SUCCESS
