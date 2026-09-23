@@ -41,7 +41,7 @@ class EzzioSDK:
         self,
         text: str,
         speed: str = "fast",
-        force_cloud: bool = True,
+        force_cloud: bool = False,
         session_id: str = "default"
     ) -> dict[str, Any]:
         """Échange cognitif avec E-ZZIO (CognitiveGateway + Mémoire + Identité)."""

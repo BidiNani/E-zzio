@@ -414,7 +414,7 @@ async def _handle_message(message):
             payload = {
                 "text": clean_prompt,
                 "session_id": session_scope,
-                "force_cloud": True,
+                "force_cloud": False,
                 "speed": "fast",
                 "mission_profile": mission_profile,
                 "model_target": model_target,

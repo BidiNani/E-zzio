@@ -16,6 +16,26 @@ from core.providers.gemini_provider import GeminiProvider
 
 logger = logging.getLogger("EzzioMaster")
 
+
+def _has_internet(timeout_seconds: float = 1.0) -> bool:
+    """Verifie rapidement la connectivite Internet.
+
+    Strategie hybride : si pas d'Internet, on bascule sur le provider local
+    (Ollama) au lieu d'echouer sur les providers cloud.
+
+    Args:
+        timeout_seconds: Timeout de la tentative de connexion.
+
+    Returns:
+        True si Internet est accessible, False sinon.
+    """
+    import socket
+    try:
+        socket.create_connection(("8.8.8.8", 53), timeout=timeout_seconds).close()
+        return True
+    except OSError:
+        return False
+
 _command_ledger = None
 
 
@@ -195,7 +215,7 @@ class EzzioMaster:
         self,
         user_prompt: str,
         speed: str = "auto",
-        force_cloud: bool = True,
+        force_cloud: bool = False,
         session_id: str = "",
         system_prompt: str = "",
         mission_profile: str = "STANDARD",
@@ -263,9 +283,27 @@ class EzzioMaster:
 
             chat_system = system_prompt or await self._build_chat_system_prompt(session_id, exclude_prompt=user_prompt)
 
-            # Dynamic provider selection (Ollama local vs Gemini API)
-            # Cloud-First par défaut : Cloud Gemini en priorité absolue.
-            is_local = (routing.get("provider") == "ollama" and not force_cloud)
+            # Strategie hybride : cloud-first + fallback local automatique
+            # - Si pas d'Internet -> basculement local (Ollama)
+            # - Si model_target == "local" -> local explicite
+            # - Si model_target == "cloud" -> cloud explicite
+            # - Sinon -> cloud-first (Gemini prioritaire)
+            _has_net = _has_internet()
+            _force_local = (model_target or "").lower() in ("local", "ollama")
+            _force_cloud_explicit = (model_target or "").lower() == "cloud"
+
+            if _force_local:
+                is_local = True
+                logger.info("[EzzioMaster] Mode local explicite (model_target=%s)", model_target)
+            elif _force_cloud_explicit:
+                is_local = False
+                logger.info("[EzzioMaster] Mode cloud explicite (model_target=%s)", model_target)
+            elif not _has_net:
+                is_local = True
+                logger.info("[EzzioMaster] Pas d'Internet -> basculement local (Ollama)")
+            else:
+                # Internet OK -> cloud-first (avec respect de force_cloud si True)
+                is_local = (routing.get("provider") == "ollama" and not force_cloud)
             used_fallback = False
 
             if is_local:
