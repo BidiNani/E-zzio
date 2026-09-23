@@ -1,8 +1,4 @@
-"""Tests pour core/tools/base.py + core/tools/registry.py.
-
-BaseTool : classe abstraite pour les outils.
-ToolRegistry : registre centralisant les outils enregistrés.
-"""
+"""Tests pour core/tools/base.py + core/tools/registry.py."""
 from __future__ import annotations
 
 from typing import Any
@@ -12,9 +8,6 @@ import pytest
 from core.tools.base import BaseTool
 from core.tools.registry import ToolRegistry
 
-# ============================================================
-# Fixtures
-# ============================================================
 
 class DummyTool(BaseTool):
     """Implémentation concrète pour tester."""
@@ -37,13 +30,8 @@ def registry():
     return ToolRegistry()
 
 
-# ============================================================
-# 1. BaseTool
-# ============================================================
-
 class TestBaseTool:
     def test_cannot_instantiate_abstract(self):
-        """BaseTool ne peut pas être instancié directement."""
         with pytest.raises(TypeError):
             BaseTool(name="x", description="y")
 
@@ -69,10 +57,6 @@ class TestBaseTool:
         assert result["ok"] is True
         assert result["kwargs"] == {}
 
-
-# ============================================================
-# 2. ToolRegistry
-# ============================================================
 
 class TestToolRegistry:
     def test_init_empty(self, registry):
@@ -104,7 +88,6 @@ class TestToolRegistry:
         assert set(listed.keys()) == {"t1", "t2", "t3"}
 
     def test_register_overrides_existing(self, registry):
-        """Ré-enregistrer un nom écrase l'ancien."""
         t1 = DummyTool(name="same", description="First")
         t2 = DummyTool(name="same", description="Second")
         registry.register(t1)
@@ -119,3 +102,4 @@ class TestToolRegistry:
         for name, description in listed.items():
             assert isinstance(name, str)
             assert isinstance(description, str)
+
