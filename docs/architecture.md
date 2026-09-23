@@ -60,6 +60,30 @@ l'autorite d'execution active.
 de `NativeHarness`, `ModelRouter`, `coder_federation` et les routes avant de conclure
 a un bypass fonctionnel.
 
+
+### 1.4 Audit NativeHarness (23/09/2026)
+
+**Constat apres audit complet** :
+
+- `NativeHarness` est importe dans `core/ezzio_master.py` (L12)
+- Il est instancie dans `EzzioMaster.__init__()` (L47) avec `router=None, policy_guard=None, audit_ledger=None`
+- **Il n'est jamais appele** dans `execute_intent()` ni dans aucune autre methode du Master
+- Aucun autre fichier du repo ne l'instancie ou ne l'utilise
+
+**Statut** : `[OBSERVED]` composant dormant / heritage architectural.
+
+**Interpretation** : `NativeHarness` etait probablement destine a orchestrer l'execution
+gouvernee (router + policy_guard + audit_ledger) mais n'a pas ete connecte dans la version
+epuree du Master ("plus de federation/missions/workers").
+
+**Actions possibles** :
+1. Supprimer l'instanciation (nettoyage)
+2. Connecter le harness avec les vraies dependances (router, policy_guard, audit_ledger)
+3. Documenter comme "reserve pour coder worker / missions"
+
+**Decision actuelle** : documenter, ne pas modifier le code (le composant peut etre
+reutilise ulterieurement pour le coder worker ou les missions multi-agent).
+
 ---
 
 ## 2. Mode cloud-first vs local-first
