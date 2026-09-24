@@ -232,6 +232,8 @@ class TestVoiceGatewayDetectSpeech:
 
 
 class TestVoiceGatewayCaptureAudio:
+    @pytest.mark.hardware
+
     def test_capture_without_hardware_returns_bytes(self):
         """Si pas de hardware, capture_audio doit retourner bytes (vide ou fallback)."""
         from core.voice.voice_gateway import VoiceGateway
