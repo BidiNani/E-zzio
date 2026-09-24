@@ -96,17 +96,28 @@ _DEFAULT_MODELS_FALLBACK: dict[str, str] = {
 
 
 def _build_default_models() -> dict[str, str]:
-    """Derive le mapping provider -> modele depuis CanonicalModelRegistry.
+    """Dérive le mapping provider -> modèle par défaut depuis la sémantique du CanonicalModelRegistry.
 
-    Phase 2.3A Etape 3A : le mapping canonique vit dans le registre,
-    pas dans ce fichier. Fallback sur hardcoded si indisponible.
+    Phase 2.3A Étape 3A : sémantique basée sur les rôles du registre.
+    Ne boucle plus en écrasant 'le dernier modèle rencontré'.
+    Fallback de compatibilité si le registre est indisponible.
     """
     try:
         from core.routing.model_registry import canonical_model_registry
         result = dict(_DEFAULT_MODELS_FALLBACK)
-        for rec in canonical_model_registry.list_models():
-            if rec.provider and rec.provider in result:
-                result[rec.provider] = rec.name
+
+        gemini_rec = canonical_model_registry.get_by_role("STANDARD_CHAT") or canonical_model_registry.get_by_role("FAST_CHAT")
+        if gemini_rec and gemini_rec.name:
+            result["gemini"] = gemini_rec.name
+
+        ollama_rec = canonical_model_registry.get_by_role("LOCAL_CODING") or canonical_model_registry.get_by_role("LOCAL")
+        if ollama_rec and ollama_rec.name:
+            result["ollama"] = ollama_rec.name
+
+        groq_recs = [m for m in canonical_model_registry.list_models() if m.provider == "groq"]
+        if groq_recs:
+            result["groq"] = groq_recs[0].name
+
         return result
     except Exception:
         return dict(_DEFAULT_MODELS_FALLBACK)
@@ -130,28 +141,42 @@ class CoderModelFederationRouter:
         self.max_cloud_budget_cents = max_cloud_budget_cents
 
     def resolve_candidates(self, profile: TaskProfile) -> RoutingPlan:
-        """Phase 2.3A Etape 3A : derive du registre canonique.
+        """Résout le candidat principal et la chaîne de fallback via CanonicalModelRegistry.
 
-        Le mapping provider -> modele vit dans CanonicalModelRegistry.
-        Ce fichier ne hardcode plus de modele (fallback si registre vide).
+        Utilise TaskProfile (task_type, privacy) et la gouvernance par rôles du registre.
         """
         try:
             from core.routing.model_registry import canonical_model_registry
-            records = canonical_model_registry.list_models()
-            if records:
-                rec = records[0]
+            prefer_local = profile.privacy in (PrivacyRequirement.LOCAL_ONLY, PrivacyRequirement.PREFER_LOCAL)
+            must_local = profile.privacy == PrivacyRequirement.LOCAL_ONLY
+
+            target_role = "STANDARD_CHAT"
+            if profile.task_type == TaskType.CODING:
+                target_role = "LOCAL_CODING" if prefer_local else "CODING"
+            elif profile.task_type == TaskType.REASONING:
+                target_role = "REASONING"
+
+            rec = canonical_model_registry.get_by_role(target_role)
+
+            if (must_local and rec and rec.provider != "ollama") or not rec:
+                local_recs = [m for m in canonical_model_registry.list_models() if m.provider == "ollama"]
+                if local_recs:
+                    rec = local_recs[0]
+
+            if rec:
+                is_local = (rec.provider == "ollama")
                 primary = ProviderCandidate(
-                    provider_name=rec.provider or "gemini",
+                    provider_name=rec.provider or ("ollama" if is_local else "gemini"),
                     model_name=rec.name,
-                    cost_class=CostClass.LOCAL if rec.provider == "ollama" else CostClass.CLOUD,
-                    capabilities=["CODING", "GENERAL"],
-                    is_local=(rec.provider == "ollama"),
+                    cost_class=CostClass.LOCAL if is_local else CostClass.CLOUD,
+                    capabilities=list(rec.roles) if rec.roles else [rec.role],
+                    is_local=is_local,
                 )
                 return RoutingPlan(primary=primary, fallback_chain=[])
         except Exception:
             pass
 
-        # Fallback hardcoded (registre indisponible)
+        # Fallback de compatibilité (registre indisponible)
         primary = ProviderCandidate(
             provider_name="gemini",
             model_name="gemini-3.5-flash-lite",

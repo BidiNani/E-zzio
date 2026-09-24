@@ -1,19 +1,15 @@
-"""E-ZZIO Autonomous Agent — Unified Router Bridge with Strict Fail-Closed Boundaries."""
+"""E-ZZIO Autonomous Agent — Compatibility Facade for Canonical Model Router & Provider Factory."""
 from __future__ import annotations
 
-import json
+import asyncio
+import concurrent.futures
 import logging
-import os
 import re
-import urllib.error
-import urllib.request
 from typing import Any
 
-from core.models.ezzio_router import EzzioRouter
-from core.security.unified_vault import key_vault
-
-os.environ["LITELLM_LOG"] = "ERROR"
-logging.getLogger("LiteLLM").setLevel(logging.ERROR)
+from core.cognition.model_router import ModelRouter
+from core.providers.base_provider import ProviderResponse
+from core.providers.registry import ProviderFactory
 
 logger = logging.getLogger(__name__)
 
@@ -23,157 +19,114 @@ class RouteIntegrityError(RuntimeError):
     pass
 
 
+def _run_async(coro: Any) -> Any:
+    """Exécute une coroutine de manière synchrone, compatible avec ou sans event loop actif."""
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        loop = None
+
+    if loop and loop.is_running():
+        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+            return pool.submit(asyncio.run, coro).result()
+    else:
+        return asyncio.run(coro)
+
+
 class AgentProviderAdapter:
+    """Façade de compatibilité déléguant la décision et l'instanciation
+
+    à la chaîne canonique : ModelRouter -> CanonicalModelRegistry -> ProviderFactory -> Provider.
+
+    Phase 3B.1 : Zéro autorité autonome de routage (EzzioRouter / LiteLLM supprimés de ce composant).
+    """
+
     AUTHORIZED_MODELS = {"cloud_gemini", "cloud_groq"}
 
     def __init__(self, backend: str = "cloud_gemini", local_model: str | None = None):
         self.backend = backend
         self.local_model = local_model
-        self.router = self._build_canonical_router()
+        self.router = ModelRouter()
 
-    def _build_canonical_router(self) -> EzzioRouter:
-        gemini_key = key_vault.get_provider_key("gemini")
-        if not gemini_key:
-            logger.error("[VAULT-CRITICAL] Aucune clé Gemini trouvée dans le coffre-fort !")
+    async def chat_completion_async(
+        self,
+        messages: list[dict[str, str]],
+        force_cloud: bool = False,
+        speed: str = "fast",
+    ) -> str:
+        """Version asynchrone déléguant à la chaîne canonique."""
+        system_prompt = ""
+        user_prompt = ""
+        for m in messages:
+            role = m.get("role", "")
+            content = m.get("content", "")
+            if role == "system":
+                system_prompt = (system_prompt + "\n" + content).strip() if system_prompt else content
+            elif role == "user":
+                user_prompt = content
 
-        groq_key = key_vault.get_provider_key("groq")
-        if not groq_key:
-            logger.warning("[VAULT] Aucune clé Groq disponible pour le fallback cloud.")
+        if not user_prompt and messages:
+            user_prompt = messages[-1].get("content", "")
 
-        model_list = [
-            {
-                "model_name": "cloud_gemini",
-                "litellm_params": {
-                    "model": "gemini/gemini-3.7-flash",
-                    "api_key": gemini_key,
-                },
-            },
-            {
-                "model_name": "cloud_groq",
-                "litellm_params": {
-                    "model": "groq/llama-3.3-70b-versatile",
-                    "api_key": groq_key,
-                },
-            },
-        ]
-        return EzzioRouter(model_list=model_list)
+        task_type = "coding" if speed == "coding" else "general"
+        routing = self.router.select_engine(
+            task_type=task_type,
+            complexity_score=0.5 if speed == "fast" else 0.8,
+            risk_level="low",
+        )
 
-    def _ensure_single_resident_model(self, target_ollama_model: str) -> None:
-        """Décharge tout modèle Ollama actif qui n'est pas la cible sans masquer les pannes."""
+        provider_name = routing.get("provider", "gemini")
+        selected_model = routing.get("model", "gemini-3.7-flash")
+        thinking_level = routing.get("thinking_level", "off")
+
+        if force_cloud and provider_name == "ollama":
+            provider_name = "gemini"
+            selected_model = "gemini-3.7-flash"
+
         try:
-            req_ps = urllib.request.Request("http://127.0.0.1:11434/api/ps", method="GET")
-            with urllib.request.urlopen(req_ps, timeout=2.0) as resp:
-                data = json.loads(resp.read().decode("utf-8"))
-                running_models = data.get("models", [])
-
-            for item in running_models:
-                m_name = item.get("name", "")
-                if m_name and not target_ollama_model.startswith(m_name.split(":")[0]):
-                    logger.info("[OLLAMA-AUTO-PURGE] Déchargement de la mémoire : %s", m_name)
-                    unload_payload = json.dumps({"model": m_name, "keep_alive": 0}).encode("utf-8")
-                    req_unload = urllib.request.Request(
-                        "http://127.0.0.1:11434/api/generate",
-                        data=unload_payload,
-                        headers={"Content-Type": "application/json"},
-                        method="POST",
-                    )
-                    with urllib.request.urlopen(req_unload, timeout=3.0):
-                        pass
+            prov = ProviderFactory.create(provider_name)
+            resp: ProviderResponse = await prov.generate(
+                prompt=user_prompt,
+                system_prompt=system_prompt if system_prompt else None,
+                model=selected_model,
+                thinking_level=thinking_level,
+            )
+            return self._extract_content(resp.content or "")
         except Exception as exc:
-            logger.error("[OLLAMA-AUTO-PURGE-FAIL] Démon Ollama injoignable pour la purge : %s", exc)
-            raise ConnectionError(f"Démon Ollama injoignable pour l'isolation mémoire : {exc}") from exc
-
-    def _prepare_backend_memory(self, model_name: str) -> None:
-        if model_name == "local_primary":
-            self._ensure_single_resident_model("ezzio-granite")
-        elif model_name == "local_fallback":
-            self._ensure_single_resident_model("ornith-ezzio")
-
-    def _is_terminal_route_error(self, error: Exception) -> bool:
-        """Détecte si l'erreur provient d'une route ou d'un modèle invalide (Fail-Closed)."""
-        msg = str(error).lower()
-        terminal_patterns = [
-            "badrequesterror",
-            "not found",
-            "no healthy deployments",
-            "model_not_found",
-            "does not exist",
-            "invalid model",
-            "unknown model",
-        ]
-        return any(pat in msg for pat in terminal_patterns)
+            logger.warning("[AgentProviderAdapter] Échec du provider %s -> fallback canonique : %s", provider_name, exc)
+            try:
+                fb_prov = ProviderFactory.create("gemini")
+                resp = await fb_prov.generate(
+                    prompt=user_prompt,
+                    system_prompt=system_prompt if system_prompt else None,
+                    model="gemini-3.5-flash-lite",
+                )
+                return self._extract_content(resp.content or "")
+            except Exception as fb_exc:
+                raise RuntimeError(f"[FAIL-CLOSED] Épuisement du fallback canonique : {fb_exc}") from fb_exc
 
     def chat_completion(
         self,
         messages: list[dict[str, str]],
         force_cloud: bool = False,
-        speed: str = "fast"
+        speed: str = "fast",
     ) -> str:
-        target_model = "cloud_gemini"
+        """API publique synchrone de compatibilité pour CognitiveGateway / CodingAgentLoop."""
+        return _run_async(self.chat_completion_async(messages, force_cloud=force_cloud, speed=speed))
 
-        if target_model not in self.AUTHORIZED_MODELS:
-            raise RouteIntegrityError(
-                f"[FAIL-CLOSED] Route ou modèle non autorisé : '{target_model}'. "
-                f"Modèles autorisés : {self.AUTHORIZED_MODELS}"
-            )
-
-        # Master Chat est cloud-only ; aucune préparation Ollama.
-
-        call_kwargs: dict[str, Any] = {
-            "model": target_model,
-            "messages": messages,
-            "temperature": 0.3,
-        }
-        if target_model.startswith("local_"):
-            call_kwargs["think"] = False
-
-        try:
-            response = self.router.completion(**call_kwargs)
-            return self._extract_content(response)
-        except Exception as primary_exc:
-            if self._is_terminal_route_error(primary_exc):
-                logger.error("[ROUTER-SECURITY] Erreur de route terminale sur %s : %s", target_model, primary_exc)
-                raise RouteIntegrityError(
-                    f"[FAIL-CLOSED] Rejet strict sur route invalide '{target_model}' : {primary_exc}"
-                ) from primary_exc
-
-            logger.warning("[ROUTER] Indisponibilité transitoire de %s (%s). Repli autorisé...", target_model, primary_exc)
-
-            fallback_order = [m for m in ["cloud_groq"] if m != target_model]
-
-            for fallback_model in fallback_order:
-                # Fallback cloud : aucune préparation Ollama.
-                fb_kwargs: dict[str, Any] = {
-                    "model": fallback_model,
-                    "messages": messages,
-                    "temperature": 0.3,
-                }
-                if fallback_model.startswith("local_"):
-                    fb_kwargs["think"] = False
-
-                try:
-                    logger.info("[ROUTER] Repli vers %s...", fallback_model)
-                    response = self.router.completion(**fb_kwargs)
-                    return self._extract_content(response)
-                except Exception as fb_exc:
-                    if self._is_terminal_route_error(fb_exc):
-                        raise RouteIntegrityError(f"[FAIL-CLOSED] Route de repli invalide : {fb_exc}") from fb_exc
-                    logger.warning("[ROUTER] Échec du repli %s (%s)", fallback_model, fb_exc)
-
-            raise RuntimeError(f"[FAIL-CLOSED] Épuisement de tous les paliers autorisés : {primary_exc}") from primary_exc
+    def chat(self, text: str = "", system_prompt: str = "", **kwargs: Any) -> dict[str, Any]:
+        """API publique synchrone de compatibilité pour CodingAgentLoop."""
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        if text:
+            messages.append({"role": "user", "content": text})
+        res_text = self.chat_completion(messages=messages)
+        return {"response": res_text, "content": res_text, "ok": True}
 
     def _extract_content(self, response: Any) -> str:
-        raw_text = ""
-        if hasattr(response, "choices") and response.choices:
-            choice = response.choices[0]
-            if hasattr(choice, "message") and hasattr(choice.message, "content"):
-                raw_text = choice.message.content or ""
-        else:
-            raw_text = str(response)
-
+        raw_text = str(response) if not isinstance(response, str) else response
         cleaned = re.sub(r"<think>.*?</think>", "", raw_text, flags=re.DOTALL).strip()
         if "</think>" in cleaned:
             cleaned = cleaned.split("</think>")[-1].strip()
-
         return cleaned if cleaned else raw_text
-

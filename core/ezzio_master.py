@@ -10,8 +10,7 @@ from typing import Any
 
 from core.kernel.native_harness import NativeHarness
 from core.memory.instance import memory_gateway
-from core.providers.base_provider import ProviderResponse
-from core.providers.gemini_provider import GeminiProvider
+from core.providers.base_provider import BaseProvider, ProviderResponse
 
 logger = logging.getLogger("EzzioMaster")
 
@@ -38,10 +37,10 @@ def _audit_command(action: str, payload: dict[str, Any],
 
 
 class EzzioMaster:
-    """Orchestrateur central E-ZZIO : conversation via GeminiProvider direct."""
+    """Orchestrateur central E-ZZIO : conversation via ProviderFactory canonique."""
 
-    def __init__(self, provider: GeminiProvider | None = None, **kwargs: Any) -> None:
-        self.provider = provider or GeminiProvider()
+    def __init__(self, provider: BaseProvider | None = None, **kwargs: Any) -> None:
+        self.provider = provider
         self._injected_provider = provider  # None si pas injecte (utilise ProviderFactory)
         self.memory = memory_gateway
         self._memory_initialized = False
@@ -266,8 +265,17 @@ class EzzioMaster:
             return None, None
 
         try:
-            from core.providers.gemini_provider import GeminiProvider
-            fb_prov = GeminiProvider()
+            from core.providers.registry import ProviderFactory
+            fb_provider_name = "gemini"
+            try:
+                from core.routing.model_registry import canonical_model_registry
+                rec = canonical_model_registry.get(fb_model)
+                if rec and rec.provider:
+                    fb_provider_name = rec.provider
+            except Exception:
+                pass
+
+            fb_prov = ProviderFactory.create(fb_provider_name)
             fb_resp = await fb_prov.generate(
                 prompt=user_prompt or "",
                 system_prompt=chat_system if chat_system else None,
