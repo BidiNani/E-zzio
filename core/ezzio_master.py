@@ -292,7 +292,7 @@ class EzzioMaster:
                 "requested_model": original_model,
                 "requested_provider": detected_provider,
                 "actual_model": fb_model,
-                "actual_provider": "gemini",
+                "actual_provider": getattr(fb_resp, "provider", "") or fb_provider_name,
                 "reason": reason,
                 "message": (
                     f"Le modele {original_model} ({detected_provider}) est indisponible. "
