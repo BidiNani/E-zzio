@@ -15,8 +15,8 @@ try:
     from docx.enum.text import WD_ALIGN_PARAGRAPH
     from docx.shared import Pt, RGBColor
     DOCX_AVAILABLE = True
-except ImportError:
-    DOCX_AVAILABLE = False
+except ImportError:  # pragma: no cover  (atteignable seulement si python-docx absent)
+    DOCX_AVAILABLE = False  # pragma: no cover
 
 logger = logging.getLogger("DocEngine")
 
