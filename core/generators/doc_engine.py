@@ -46,7 +46,7 @@ class DocEngine:
         ]
         """
         if not DOCX_AVAILABLE:
-            return {"ok": False, "error": "python-docx n'est pas disponible dans l'environnement."}
+            return {"ok": False, "error": "python-docx n'est pas disponible dans l'environnement."}  # pragma: no cover  (python-docx present dans l env)
 
         clean_name = os.path.basename(filename.strip())
         if not clean_name.endswith(".docx"):
