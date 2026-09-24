@@ -117,7 +117,7 @@ async def test_fail_closed_when_fallback_also_fails():
     primary = _make_provider(RuntimeError("primary down"))
     master = _make_master(primary)
 
-    with patch.object(master, "_detect_provider_from_model", return_value="gemini"):
+    with patch.object(master, "_try_fallback", return_value=(None, None)):
         with patch(
             "core.providers.gemini_provider.GeminiProvider.generate",
             new_callable=AsyncMock,
@@ -148,7 +148,7 @@ async def test_no_fallback_when_primary_succeeds():
     ))
     master = _make_master(primary)
 
-    with patch.object(master, "_detect_provider_from_model", return_value="gemini"):
+    with patch.object(master, "_try_fallback", return_value=(None, None)):
         res = await master.execute_intent(
             user_prompt="test",
             session_id="",

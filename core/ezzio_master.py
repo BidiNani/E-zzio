@@ -16,25 +16,6 @@ from core.providers.gemini_provider import GeminiProvider
 logger = logging.getLogger("EzzioMaster")
 
 
-def _has_internet(timeout_seconds: float = 1.0) -> bool:
-    """Verifie rapidement la connectivite Internet.
-
-    Strategie hybride : si pas d'Internet, on bascule sur le provider local
-    (Ollama) au lieu d'echouer sur les providers cloud.
-
-    Args:
-        timeout_seconds: Timeout de la tentative de connexion.
-
-    Returns:
-        True si Internet est accessible, False sinon.
-    """
-    import socket
-    try:
-        socket.create_connection(("8.8.8.8", 53), timeout=timeout_seconds).close()
-        return True
-    except OSError:
-        return False
-
 _command_ledger = None
 
 
@@ -61,6 +42,7 @@ class EzzioMaster:
 
     def __init__(self, provider: GeminiProvider | None = None, **kwargs: Any) -> None:
         self.provider = provider or GeminiProvider()
+        self._injected_provider = provider  # None si pas injecte (utilise ProviderFactory)
         self.memory = memory_gateway
         self._memory_initialized = False
         self.harness = NativeHarness(router=None, policy_guard=None, audit_ledger=None, workspace_root=r"G:\AI\E-zzio")
@@ -139,7 +121,6 @@ class EzzioMaster:
         """
 
         chat_system = kwargs.get("chat_system")
-        force_cloud = kwargs.get("force_cloud", False)
         session_id = kwargs.get("session_id", "")
         channel = kwargs.get("channel", "web")
         logger.debug("[EzzioMaster] Generation (session=%s, channel=%s)", session_id, channel)
@@ -154,87 +135,62 @@ class EzzioMaster:
         except Exception:
             pass
 
-        # Selection dynamique du provider : cloud-first ou local si pas d'Internet
-        _has_net = _has_internet()
-        _force_local = (model_target or "").lower() in ("local", "ollama")
-        _force_cloud_explicit = (model_target or "").lower() == "cloud"
-
-        if _force_local:
-            is_local = True
-            logger.info("[EzzioMaster] Mode local explicite (model_target=%s)", model_target)
-        elif _force_cloud_explicit:
-            is_local = False
-            logger.info("[EzzioMaster] Mode cloud explicite (model_target=%s)", model_target)
-        elif not _has_net:
-            is_local = True
-            logger.info("[EzzioMaster] Pas d'Internet -> basculement local (Ollama)")
-        else:
-            is_local = (routing.get("provider") == "ollama" and not force_cloud)
+        # Phase 2.3A Etape 2 : le provider vient du ModelRouter (autorite unique)
+        from core.providers.registry import ProviderFactory
 
         selected_model = routing.get("model", "gemini-3.5-flash-lite")
+        provider_name = routing.get("provider", "gemini")
 
-        # Utiliser le model_target si specifie
+        # Override model_target si specifie
         if model_target and model_target not in ("auto", "local", "cloud"):
             selected_model = model_target
+
+        # Override provider si model_target force local/cloud
+        _mt = (model_target or "").lower()
+        if _mt in ("local", "ollama"):
+            provider_name = "ollama"
+            logger.info("[EzzioMaster] Mode local explicite (model_target=%s)", model_target)
+        elif _mt == "cloud":
+            logger.info("[EzzioMaster] Mode cloud explicite (model_target=%s)", model_target)
 
         resp: ProviderResponse
         used_fallback = False
         fallback_notice: dict | None = None
-        detected_provider = self._detect_provider_from_model(selected_model)
+        detected_provider = provider_name  # alias pour _try_fallback
 
-        if is_local:
-            from core.providers.ollama_provider import OllamaProvider
-            ollama_prov = OllamaProvider(model=selected_model)
-            resp = await ollama_prov.generate(
+        try:
+            # Backward compat : si un provider a ete injecte (tests), l'utiliser
+            if self._injected_provider is not None:
+                prov = self.provider
+                logger.debug("[EzzioMaster] Provider injecte utilise : %s", type(prov).__name__)
+            else:
+                prov = ProviderFactory.create(provider_name)
+            resp = await prov.generate(
                 prompt=user_prompt,
                 system_prompt=chat_system if chat_system else None,
                 model=selected_model,
                 temperature=0.2,
-                max_tokens=512,
+                max_tokens=512 if provider_name == "ollama" else 2048,
+                thinking_level=thinking_level,
             )
-        else:
-            try:
-                if detected_provider == "openrouter":
-                    from core.providers.openrouter_provider import OpenRouterProvider
-                    prov = OpenRouterProvider()
-                elif detected_provider == "groq":
-                    from core.providers.groq_provider import GroqProvider
-                    prov = GroqProvider()
-                elif detected_provider == "nvidia":
-                    from core.providers.nvidia_nim_provider import NvidiaNimProvider
-                    prov = NvidiaNimProvider()
-                elif detected_provider == "ollama":
-                    from core.providers.ollama_provider import OllamaProvider
-                    prov = OllamaProvider()
-                else:
-                    prov = self.provider
-
-                resp = await prov.generate(
-                    prompt=user_prompt,
-                    system_prompt=chat_system if chat_system else None,
-                    model=selected_model,
-                    temperature=0.2,
-                    max_tokens=2048,
-                    thinking_level=thinking_level,
-                )
-            except Exception as cloud_err:
-                logger.warning(
-                    "[EzzioMaster] Echec provider %s (%s) -> fallback",
-                    detected_provider, cloud_err,
-                )
-                fb_resp, fb_notice = await self._try_fallback(
-                    detected_provider=detected_provider,
-                    original_model=selected_model,
-                    reason=f"exception: {type(cloud_err).__name__}",
-                    user_prompt=user_prompt,
-                    chat_system=chat_system,
-                    thinking_level=thinking_level,
-                )
-                if fb_resp is None:
-                    raise
-                resp = fb_resp
-                used_fallback = True
-                fallback_notice = fb_notice
+        except Exception as cloud_err:
+            logger.warning(
+                "[EzzioMaster] Echec provider %s (%s) -> fallback",
+                provider_name, cloud_err,
+            )
+            fb_resp, fb_notice = await self._try_fallback(
+                detected_provider=provider_name,
+                original_model=selected_model,
+                reason=f"exception: {type(cloud_err).__name__}",
+                user_prompt=user_prompt,
+                chat_system=chat_system,
+                thinking_level=thinking_level,
+            )
+            if fb_resp is None:
+                raise
+            resp = fb_resp
+            used_fallback = True
+            fallback_notice = fb_notice
 
         reply = resp.content or ""
         model_name = resp.model or selected_model
@@ -282,34 +238,6 @@ class EzzioMaster:
             "thinking_level": getattr(resp, "thinking_level", None),
             "fallback_notice": fallback_notice,
         }
-
-    def _detect_provider_from_model(self, model: str) -> str:
-        """Detecte le provider depuis le nom du modele."""
-        m = (model or "").lower()
-        if m.startswith("gemini"):
-            return "gemini"
-        if m.startswith("groq/"):
-            return "groq"
-        if m.startswith("openrouter/"):
-            return "openrouter"
-        if m.startswith("nvidia/"):
-            return "nvidia"
-        if m.endswith(":free"):
-            return "openrouter"
-        if m.startswith(("llama", "mixtral", "gemma-")):
-            return "groq"
-        if m.startswith(("nvidia/", "nvidia-", "nvapi")):
-            return "nvidia"
-        if ":" in m or m.endswith(":latest"):
-            return "ollama"
-
-        # REGLE GENERALE : tout modele avec "/" est OpenRouter
-        # OpenRouter est le seul provider a utiliser le format "provider/model"
-        if "/" in m:
-            return "openrouter"
-
-        # Fallback final : nom simple sans "/" = Gemini
-        return "gemini"
 
     async def _try_fallback(
         self,
@@ -596,8 +524,10 @@ class EzzioMaster:
                 channel=channel
             )
 
-            # Subtask execution via Provider with router-selected model & thinking level
-            resp: ProviderResponse = await self.provider.generate(
+            # Subtask execution via ProviderFactory (autorite unique)
+            from core.providers.registry import ProviderFactory
+            sub_provider = ProviderFactory.create(routing.get("provider", "gemini"))
+            resp: ProviderResponse = await sub_provider.generate(
                 prompt=spec.get("prompt", mission_prompt),
                 model=routing["model"],
                 thinking_level=routing.get("thinking_level", "off"),
@@ -631,7 +561,9 @@ class EzzioMaster:
             [f"- [{r['role'].upper()} / {r['model']}] : {r['output'][:200]}" for r in results]
         )
 
-        final_resp: ProviderResponse = await self.provider.generate(
+        from core.providers.registry import ProviderFactory
+        master_provider = ProviderFactory.create(master_routing.get("provider", "gemini"))
+        final_resp: ProviderResponse = await master_provider.generate(
             prompt=synthesis_prompt,
             model=master_routing["model"],
             thinking_level=master_routing.get("thinking_level", "high"),
