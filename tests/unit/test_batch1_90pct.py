@@ -481,3 +481,63 @@ class TestSheetEngineBranchesExtra:
             }],
         )
         assert result.get("ok") is True or "filename" in result
+
+# ============================================================
+# 7. Tests finaux — dernier correctif
+# ============================================================
+
+class TestEventBusLastQueue:
+    def test_unsubscribe_last_queue_deletes_key(self, tmp_path):
+        """L108->exit : unsubscribe la derniere queue -> del _subscribers[run_id]."""
+        from core.bus import EventBus
+
+        bus = EventBus(db_path=tmp_path / "bus.db")
+        q = bus.subscribe("run1")
+        # Une seule queue -> unsubscribe doit supprimer la cle
+        bus.unsubscribe("run1", q)
+        assert "run1" not in bus._subscribers
+
+
+class TestSheetEngineBranchesLast:
+    def test_generate_with_empty_row_in_middle(self, tmp_path):
+        """L98->109 : rows avec une row vide -> continue."""
+        from core.generators.sheet_engine import SheetEngine
+
+        engine = SheetEngine(workspace_root=str(tmp_path))
+        if not engine.is_available():
+            pytest.skip("openpyxl absent")
+
+        result = engine.generate_spreadsheet(
+            filename="empty_row.xlsx",
+            sheets_data=[{
+                "sheet_name": "S1",
+                "headers": ["A", "B"],
+                "rows": [
+                    ["1", "2"],
+                    [],              # row vide
+                    ["3", "4"],
+                ],
+            }],
+        )
+        assert result.get("ok") is True or "filename" in result
+
+    def test_generate_returns_full_result(self, tmp_path):
+        """L116 : generate retourne dict avec ok + filename + path."""
+        from core.generators.sheet_engine import SheetEngine
+
+        engine = SheetEngine(workspace_root=str(tmp_path))
+        if not engine.is_available():
+            pytest.skip("openpyxl absent")
+
+        result = engine.generate_spreadsheet(
+            filename="full_result.xlsx",
+            sheets_data=[{
+                "sheet_name": "S1",
+                "headers": ["A"],
+                "rows": [["1"]],
+            }],
+        )
+        assert "ok" in result
+        assert result["ok"] is True
+        assert "filename" in result
+        assert result["filename"].endswith(".xlsx")
