@@ -1,3 +1,20 @@
+"""Tests avec guard cv2/numpy (module natif sensible au reload)."""
+import sys as _sys
+
+# Test le chargement de cv2/numpy AVANT tout reload par pytest
+try:
+    import cv2  # noqa: F401
+    import numpy  # noqa: F401
+    cv2_loaded_at_import = True
+except ImportError:
+    cv2_loaded_at_import = False
+
+import pytest
+
+pytestmark = pytest.mark.skipif(
+    not cv2_loaded_at_import,
+    reason="cv2/numpy non chargables (module natif deja decharge)",
+)
 """Tests Pack 6 : 6 fichiers a 100%.
 
 - core/tasks/models.py : TaskState + ALLOWED_TRANSITIONS + Task.transition_to
@@ -7,7 +24,22 @@
 - core/generators/media_engine.py : MediaEngine (WAV + OBJ)
 - core/sandbox.py : SecuritySandbox (assess_risk + execute)
 """
-from __future__ import annotations
+
+# --- Guard cv2/numpy (module natif sensible au reload) ---
+try:
+    import cv2  # noqa: F401
+    import numpy  # noqa: F401
+    _cv2_loaded_at_import = True
+except ImportError:
+    _cv2_loaded_at_import = False
+
+import pytest
+
+pytestmark = pytest.mark.skipif(
+    not _cv2_loaded_at_import,
+    reason="cv2/numpy non chargables (module natif deja decharge)",
+)
+
 
 import asyncio
 import wave

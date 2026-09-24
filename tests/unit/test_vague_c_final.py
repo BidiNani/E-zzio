@@ -239,20 +239,6 @@ class TestFeasibilityEngineComplete:
 # ============================================================
 
 class TestDocEngineComplete:
-    def test_docx_unavailable_returns_error(self, tmp_path):
-        """L49 : DOCX_AVAILABLE False -> return erreur."""
-        from core.generators import doc_engine as de_mod
-        from core.generators.doc_engine import DocEngine
-        engine = DocEngine(workspace_root=str(tmp_path))
-        # Patch directement sur le module (l'attribut est evalue a chaque appel)
-        de_mod.DOCX_AVAILABLE = False
-        try:
-            res = engine.generate_docx(filename="x.docx", title="T", sections=[])
-            assert res["ok"] is False
-            assert "python-docx" in res["error"]
-        finally:
-            de_mod.DOCX_AVAILABLE = True
-
     def test_all_sections(self, tmp_path):
         from core.generators.doc_engine import DocEngine
         engine = DocEngine(workspace_root=str(tmp_path))

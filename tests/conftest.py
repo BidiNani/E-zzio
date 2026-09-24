@@ -50,3 +50,28 @@ def _clean_state_between_tests():
 
     # 2. Forcer un GC pour nettoyer les references
     gc.collect()
+
+# ============================================================
+# STABILISATION ENV — cv2/numpy (import unique)
+# ============================================================
+import sys as _sys
+
+
+def _stabilize_native_modules():
+    """Force l'import unique de cv2/numpy au debut de la session pytest.
+
+    Sans cela, un test qui recharge numpy (via importlib.reload)
+    provoque 'cannot load module more than once per process' pour cv2.
+    """
+    if "cv2" in _sys.modules and "numpy" in _sys.modules:
+        return
+    try:
+        import cv2  # noqa: F401
+        import numpy  # noqa: F401
+    except ImportError:
+        # OpenCV/numpy absents : les tests concernes seront skip
+        pass
+
+
+# Import au chargement de conftest = avant tous les tests
+_stabilize_native_modules()

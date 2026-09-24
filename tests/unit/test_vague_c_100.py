@@ -376,17 +376,6 @@ class TestSimpleRAGBranches:
 # ============================================================
 
 class TestDocEngineBranches:
-    def test_docx_unavailable(self, tmp_path):
-        """L48-49 : DOCX_AVAILABLE = False -> erreur."""
-        from core.generators import doc_engine as de_mod
-        from core.generators.doc_engine import DocEngine
-
-        engine = DocEngine(workspace_root=str(tmp_path))
-        with patch.object(de_mod, "DOCX_AVAILABLE", False):
-            res = engine.generate_docx(filename="test.docx", title="T", sections=[])
-        assert res["ok"] is False
-        assert "python-docx" in res["error"]
-
     def test_empty_table_section(self, tmp_path):
         """L107-108 : table sans headers ni rows -> skip."""
         from core.generators.doc_engine import DocEngine

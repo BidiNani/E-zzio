@@ -150,3 +150,107 @@ class TestSimpleRAGFinal:
 
         # Le fallback LIKE doit avoir ete utilise -> liste retournee
         assert isinstance(results, list)
+
+# ============================================================
+# 5. Branches manquantes finales
+# ============================================================
+
+class TestDocEngineBranchesFinal:
+    def test_multiple_sections_with_different_types(self, tmp_path):
+        """L104->85 : boucle for avec sections de types differents."""
+        from core.generators.doc_engine import DocEngine
+
+        engine = DocEngine(workspace_root=str(tmp_path))
+        res = engine.generate_docx(
+            filename="multi_types.docx",
+            title="Multi Types",
+            sections=[
+                {"type": "heading", "level": 1, "text": "H1"},
+                {"type": "paragraph", "text": "P1"},
+                {"type": "bullet", "items": ["A", "B"]},
+                {"type": "table", "headers": ["X"], "rows": [["1"], ["2"]]},
+                {"type": "paragraph", "text": "P2"},
+            ],
+        )
+        assert "ok" in res
+
+    def test_table_row_shorter_than_headers(self, tmp_path):
+        """L124->123 : row plus courte que headers -> skip branches manquantes."""
+        from core.generators.doc_engine import DocEngine
+
+        engine = DocEngine(workspace_root=str(tmp_path))
+        res = engine.generate_docx(
+            filename="short_row.docx",
+            title="T",
+            sections=[
+                {
+                    "type": "table",
+                    "headers": ["A", "B", "C"],
+                    "rows": [
+                        ["1"],           # row plus courte que headers
+                        ["x", "y", "z"], # row complete
+                    ],
+                }
+            ],
+        )
+        assert "ok" in res
+
+
+class TestPdfEngineBranchesFinal:
+    def test_multiple_sections_with_different_types(self, tmp_path):
+        """L139->125 : boucle for avec sections de types differents."""
+        from core.generators.pdf_engine import PdfEngine
+
+        engine = PdfEngine(workspace_root=str(tmp_path))
+        res = engine.generate_pdf(
+            filename="multi_types.pdf",
+            title="Multi Types",
+            sections=[
+                {"type": "heading", "text": "H1"},
+                {"type": "paragraph", "text": "P1"},
+                {"type": "bullet", "items": ["A", "B"]},
+                {"type": "table", "headers": ["X"], "rows": [["1"], ["2"]]},
+                {"type": "paragraph", "text": "P2"},
+            ],
+        )
+        assert res["ok"] is True
+
+
+class TestSimpleRAGMigration:
+    def test_migration_adds_tag_column(self, tmp_path):
+        """L42 : migration douce ajoute la colonne tag si absente."""
+        import asyncio
+
+        import aiosqlite
+
+        from core.rag.simple_rag import SimpleRAG
+
+        db_path = str(tmp_path / "old_rag.db")
+
+        # 1. Creer DB SANS colonne tag
+        async def setup_old_db():
+            async with aiosqlite.connect(db_path) as db:
+                await db.execute("""
+                    CREATE TABLE documents (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        content TEXT NOT NULL,
+                        metadata TEXT,
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    )
+                """)
+                await db.commit()
+
+        asyncio.run(setup_old_db())
+
+        # 2. SimpleRAG.init() doit faire la migration (ajouter tag)
+        rag = SimpleRAG(db_path=db_path)
+        asyncio.run(rag.init())
+
+        # 3. Verifier que tag existe
+        async def check_tag():
+            async with aiosqlite.connect(db_path) as db:
+                cursor = await db.execute("PRAGMA table_info(documents)")
+                cols = [row[1] for row in await cursor.fetchall()]
+                return "tag" in cols
+
+        assert asyncio.run(check_tag()) is True
