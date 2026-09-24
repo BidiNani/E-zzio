@@ -162,7 +162,39 @@ class TestPersistExchange:
 
 
 # ============================================================
-# 4. ask_async — cas nominal
+# 4. lifecycle — shutdown()
+# ============================================================
+
+class TestLifecycle:
+    @pytest.mark.asyncio
+    async def test_shutdown_drains_background_tasks(self, gateway, fake_memory_gateway):
+        """shutdown() attend la fin des écritures persistantes en arrière-plan."""
+        release = asyncio.Event()
+        calls = 0
+
+        async def delayed_record_message(*args, **kwargs):
+            nonlocal calls
+            await release.wait()
+            calls += 1
+
+        fake_memory_gateway.record_message = AsyncMock(
+            side_effect=delayed_record_message
+        )
+
+        gateway._persist_exchange("sess1", "user", "assistant")
+
+        await asyncio.sleep(0)
+        assert len(gateway._background_tasks) == 1
+
+        release.set()
+        await gateway.shutdown()
+
+        assert calls == 2
+        assert len(gateway._background_tasks) == 0
+
+
+# ============================================================
+# 5. ask_async — cas nominal
 # ============================================================
 
 class TestAskAsyncNominal:

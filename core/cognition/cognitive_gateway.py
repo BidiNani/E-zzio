@@ -55,6 +55,12 @@ class CognitiveGateway:
         self._background_tasks.add(task)
         task.add_done_callback(self._background_tasks.discard)
 
+    async def shutdown(self) -> None:
+        """Attend proprement la terminaison des tâches de fond en attente."""
+        while self._background_tasks:
+            tasks = tuple(self._background_tasks)
+            await asyncio.gather(*tasks, return_exceptions=True)
+
     async def ask_async(
         self,
         task: str,
@@ -146,17 +152,24 @@ class CognitiveGateway:
         priority: str = "normal",
         constraints: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
-        """Passerelle synchrone."""
+        """Passerelle synchrone avec drainage du cycle de vie des tâches de fond."""
+
+        async def _run_and_drain() -> dict[str, Any]:
+            result = await self.ask_async(task, session_id, priority, constraints)
+            await self.shutdown()
+            return result
+
         try:
             loop = asyncio.get_event_loop()
-            if loop.is_running():  # pragma: no cover  (branche non testable sans deadlock)
-                return asyncio.run_coroutine_threadsafe(
-                    self.ask_async(task, session_id, priority, constraints), loop
-                ).result()
-            return loop.run_until_complete(
-                self.ask_async(task, session_id, priority, constraints)
-            )
         except RuntimeError:
-            return asyncio.run(
-                self.ask_async(task, session_id, priority, constraints)
-            )
+            return asyncio.run(_run_and_drain())
+
+        if loop.is_closed():
+            return asyncio.run(_run_and_drain())
+
+        if loop.is_running():  # pragma: no cover (appel depuis un autre thread)
+            return asyncio.run_coroutine_threadsafe(
+                _run_and_drain(), loop
+            ).result()
+
+        return loop.run_until_complete(_run_and_drain())
