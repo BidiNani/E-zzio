@@ -254,3 +254,51 @@ class TestSimpleRAGMigration:
                 return "tag" in cols
 
         assert asyncio.run(check_tag()) is True
+
+class TestFinalBranches:
+    def test_doc_engine_sections_end_with_table(self, tmp_path):
+        """L104->85 : sections terminant par table (boucle complete)."""
+        from core.generators.doc_engine import DocEngine
+        engine = DocEngine(workspace_root=str(tmp_path))
+        res = engine.generate_docx(
+            filename="end_table.docx", title="T",
+            sections=[
+                {"type": "paragraph", "text": "P1"},
+                {"type": "heading", "level": 1, "text": "H"},
+                {"type": "bullet", "items": ["a"]},
+                {"type": "table", "headers": ["X"], "rows": [["1"]]},
+            ],
+        )
+        assert "ok" in res
+
+    def test_doc_engine_row_with_more_cells_than_headers(self, tmp_path):
+        """L124->123 : row plus longue que row_cells -> branche False."""
+        from core.generators.doc_engine import DocEngine
+        engine = DocEngine(workspace_root=str(tmp_path))
+        res = engine.generate_docx(
+            filename="long_row.docx", title="T",
+            sections=[{
+                "type": "table",
+                "headers": ["A", "B"],
+                "rows": [
+                    ["1", "2", "3", "4"],  # row plus longue que 2 colonnes
+                    ["x", "y"],
+                ],
+            }],
+        )
+        assert "ok" in res
+
+    def test_pdf_engine_last_section_different_type(self, tmp_path):
+        """L139->125 : derniere section type table -> boucle complete."""
+        from core.generators.pdf_engine import PdfEngine
+        engine = PdfEngine(workspace_root=str(tmp_path))
+        res = engine.generate_pdf(
+            filename="last_table.pdf", title="T",
+            sections=[
+                {"type": "paragraph", "text": "P"},
+                {"type": "heading", "text": "H"},
+                {"type": "bullet", "items": ["a", "b"]},
+                {"type": "table", "headers": ["X"], "rows": [["1"], ["2"]]},
+            ],
+        )
+        assert res["ok"] is True

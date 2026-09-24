@@ -15,6 +15,20 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
+# --- Guard cv2/numpy ---
+try:
+    import cv2  # noqa: F401
+    import numpy  # noqa: F401
+    _cv2_loaded_at_import = True
+except ImportError:
+    _cv2_loaded_at_import = False
+
+
+pytestmark = pytest.mark.skipif(
+    not _cv2_loaded_at_import,
+    reason="cv2/numpy non chargables",
+)
+
 # ============================================================
 # 1. core/security/immutable_audit.py
 # ============================================================
@@ -568,3 +582,4 @@ class TestSqliteTaskStoreFullLifecycle:
         retrieved = store.get_by_id(task.task_id)
         assert retrieved.state == TaskState.SCOPED
         assert retrieved.scope == {"updated": True}
+
