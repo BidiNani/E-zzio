@@ -330,12 +330,23 @@ class TestDecisionRouter:
 # 4. core/cognition/model_router.py
 # ============================================================
 
-def _make_model_record(name="gpt-4", source_name="API"):
-    rec = MagicMock()
-    rec.name = name
-    rec.source = MagicMock()
-    rec.source.name = source_name
-    return rec
+def _make_model_record(name="gpt-4", source_name="API", provider=""):
+    """Cree un VRAI CanonicalModelRecord (Phase 2.3A)."""
+    from core.routing.model_registry import CanonicalModelRecord, ModelSource
+    if source_name == "LOCAL":
+        source = ModelSource.LOCAL
+        prov = provider or "ollama"
+        role = "LOCAL"
+    else:
+        source = ModelSource.GEMINI
+        prov = provider or "gemini"
+        role = "MASTER"
+    return CanonicalModelRecord(
+        name=name,
+        source=source,
+        provider=prov,
+        role=role,
+    )
 
 
 class TestModelRouter:
@@ -428,7 +439,7 @@ class TestModelRouter:
             reg.get_by_role = MagicMock(return_value=None)
             result = r.select_engine(task_type="general")
         assert result["model"] == "gemini-3.8-flash"
-        assert result["provider"] == "api"
+        assert result["provider"] == "gemini"
 
     def test_select_engine_local_provider(self):
         from core.cognition.model_router import ModelRouter

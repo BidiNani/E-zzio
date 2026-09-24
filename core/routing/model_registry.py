@@ -70,6 +70,7 @@ class CanonicalModelRecord:
     """
     name: str
     source: ModelSource = ModelSource.GEMINI
+    provider: str = ""  # Phase 2.3A : provider canonique (gemini, groq, ollama, ...)
     latency_tier: LatencyTier = LatencyTier.FAST
     qualification_status: ModelQualificationStatus = ModelQualificationStatus.QUALIFIED
     enabled: bool = True
@@ -144,6 +145,7 @@ class CanonicalModelRegistry:
             self._add(CanonicalModelRecord(
                 name=model.id,
                 source=source,
+                provider=model.provider,  # Phase 2.3A
                 role=role,
                 roles=list(extra_roles),
                 thinking_level=thinking,
@@ -158,6 +160,7 @@ class CanonicalModelRegistry:
             self._add(CanonicalModelRecord(
                 name=model.id,
                 source=ModelSource.LOCAL,
+                provider="ollama",  # Phase 2.3A
                 role=role,
                 roles=list(extra_roles),
                 thinking_level=thinking,

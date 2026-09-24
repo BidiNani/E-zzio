@@ -61,7 +61,13 @@ class ModelRouter:
             record = canonical_model_registry.get_by_role("MASTER_STRATEGIC") or canonical_model_registry.get_by_role("MASTER")
 
         engine = record.name if record else "gemini-3.8-flash"
-        provider = "ollama" if record and record.source.name == "LOCAL" else "api"
+        # Phase 2.3A : provider canonique explicite
+        if record and getattr(record, "provider", ""):
+            provider = record.provider
+        elif record and record.source.name == "LOCAL":
+            provider = "ollama"
+        else:
+            provider = "gemini"
 
         logger.info(
             f"Routage cognitif -> Canal: {channel} | Rôle: {role} | Moteur: {engine} | Thinking: {thinking} | Provider: {provider}"
