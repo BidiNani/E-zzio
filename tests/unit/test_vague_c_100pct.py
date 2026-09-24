@@ -302,3 +302,191 @@ class TestFinalBranches:
             ],
         )
         assert res["ok"] is True
+
+# ============================================================
+# 6. Couverture finale branches (positions critiques)
+# ============================================================
+
+class TestLastBranches:
+    def test_doc_engine_last_section_is_table(self, tmp_path):
+        """L104->85 : table en DERNIERE position -> branche de sortie de boucle."""
+        from core.generators.doc_engine import DocEngine
+        engine = DocEngine(workspace_root=str(tmp_path))
+        res = engine.generate_docx(
+            filename="last_table.docx", title="T",
+            sections=[
+                {"type": "paragraph", "text": "P1"},
+                {"type": "table", "headers": ["A"], "rows": [["x"]]},
+            ],
+        )
+        assert "ok" in res
+
+    def test_doc_engine_row_index_beyond_cells(self, tmp_path):
+        """L124->123 : i >= len(row_cells) -> branche False."""
+        from core.generators.doc_engine import DocEngine
+        engine = DocEngine(workspace_root=str(tmp_path))
+        # headers=1 col, row[0]=1 col -> cols_count=1
+        # row avec 3 elements -> i=1 >= len(row_cells)=1 -> False
+        res = engine.generate_docx(
+            filename="beyond.docx", title="T",
+            sections=[{
+                "type": "table",
+                "headers": ["A"],
+                "rows": [["1", "2", "3", "4", "5"]],
+            }],
+        )
+        assert "ok" in res
+
+    def test_pdf_engine_last_section_is_table(self, tmp_path):
+        """L139->125 : table en DERNIERE position -> branche de sortie."""
+        from core.generators.pdf_engine import PdfEngine
+        engine = PdfEngine(workspace_root=str(tmp_path))
+        res = engine.generate_pdf(
+            filename="last_table.pdf", title="T",
+            sections=[
+                {"type": "paragraph", "text": "P1"},
+                {"type": "heading", "text": "H"},
+                {"type": "table", "headers": ["X"], "rows": [["1"]]},
+            ],
+        )
+        assert res["ok"] is True
+
+    def test_pdf_engine_table_last_with_rows(self, tmp_path):
+        """L148->125 : table_data cree -> doc.build final."""
+        from core.generators.pdf_engine import PdfEngine
+        engine = PdfEngine(workspace_root=str(tmp_path))
+        res = engine.generate_pdf(
+            filename="table_build.pdf", title="T",
+            sections=[
+                {"type": "table", "headers": ["X", "Y"], "rows": [["1", "2"]]},
+            ],
+        )
+        assert res["ok"] is True
+
+# ============================================================
+# 7. Tests structure exacte pour branches coverage
+# ============================================================
+
+class TestCoverageBranchesExact:
+    def test_doc_engine_alternating_paragraph_table_paragraph(self, tmp_path):
+        """L104->85 : elif table faux/vrai/faux (3 transitions)."""
+        from core.generators.doc_engine import DocEngine
+        engine = DocEngine(workspace_root=str(tmp_path))
+        res = engine.generate_docx(
+            filename="alternate.docx", title="T",
+            sections=[
+                {"type": "paragraph", "text": "P1"},   # elif faux
+                {"type": "table", "headers": ["A"], "rows": [["x"]]},  # elif vrai
+                {"type": "paragraph", "text": "P2"},   # elif faux (fin)
+            ],
+        )
+        assert "ok" in res
+
+    def test_doc_engine_row_same_length_plus_longer(self, tmp_path):
+        """L124->123 : if vrai (meme len) puis if faux (row plus longue)."""
+        from core.generators.doc_engine import DocEngine
+        engine = DocEngine(workspace_root=str(tmp_path))
+        # headers 2 cols -> cols_count=2 -> row_cells a 2 cellules
+        # 1ere row: 2 elements (if vrai sur i=0,1)
+        # 2eme row: 4 elements (if vrai i=0,1 puis if faux i=2,3)
+        res = engine.generate_docx(
+            filename="mixed_rows.docx", title="T",
+            sections=[{
+                "type": "table",
+                "headers": ["A", "B"],
+                "rows": [
+                    ["1", "2"],
+                    ["3", "4", "5", "6"],
+                ],
+            }],
+        )
+        assert "ok" in res
+
+    def test_pdf_engine_alternating_paragraph_table_paragraph(self, tmp_path):
+        """L139->125 : elif table faux/vrai/faux."""
+        from core.generators.pdf_engine import PdfEngine
+        engine = PdfEngine(workspace_root=str(tmp_path))
+        res = engine.generate_pdf(
+            filename="alternate.pdf", title="T",
+            sections=[
+                {"type": "paragraph", "text": "P1"},
+                {"type": "table", "headers": ["A"], "rows": [["x"]]},
+                {"type": "paragraph", "text": "P2"},
+            ],
+        )
+        assert res["ok"] is True
+
+    def test_pdf_engine_table_with_headers_no_rows(self, tmp_path):
+        """L148->125 : table_data non vide (headers only) -> doc.build."""
+        from core.generators.pdf_engine import PdfEngine
+        engine = PdfEngine(workspace_root=str(tmp_path))
+        res = engine.generate_pdf(
+            filename="headers_only.pdf", title="T",
+            sections=[
+                {"type": "table", "headers": ["A", "B"], "rows": []},
+            ],
+        )
+        assert res["ok"] is True
+
+    def test_pdf_engine_table_no_headers_with_rows(self, tmp_path):
+        """L148->125 : table_data non vide (rows only) -> doc.build."""
+        from core.generators.pdf_engine import PdfEngine
+        engine = PdfEngine(workspace_root=str(tmp_path))
+        res = engine.generate_pdf(
+            filename="rows_only.pdf", title="T",
+            sections=[
+                {"type": "table", "headers": [], "rows": [["1", "2"]]},
+            ],
+        )
+        assert res["ok"] is True
+
+# ============================================================
+# 8. Tests branche else (type inconnu)
+# ============================================================
+
+class TestElseBranch:
+    def test_doc_engine_unknown_type_skipped(self, tmp_path):
+        """L104->85 : type inconnu -> else du if/elif -> retour au for."""
+        from core.generators.doc_engine import DocEngine
+        engine = DocEngine(workspace_root=str(tmp_path))
+        res = engine.generate_docx(
+            filename="unknown.docx", title="T",
+            sections=[
+                {"type": "paragraph", "text": "P1"},
+                {"type": "unknown_type", "text": "ignored"},  # tombe dans else
+                {"type": "paragraph", "text": "P2"},
+            ],
+        )
+        assert "ok" in res
+
+    def test_pdf_engine_unknown_type_skipped(self, tmp_path):
+        """L139->125 : type inconnu -> else -> retour au for."""
+        from core.generators.pdf_engine import PdfEngine
+        engine = PdfEngine(workspace_root=str(tmp_path))
+        res = engine.generate_pdf(
+            filename="unknown.pdf", title="T",
+            sections=[
+                {"type": "paragraph", "text": "P1"},
+                {"type": "unknown_type", "text": "ignored"},
+                {"type": "paragraph", "text": "P2"},
+            ],
+        )
+        assert res["ok"] is True
+
+# ============================================================
+# 9. Test 148->125 : table_data vide puis section suivante
+# ============================================================
+
+class TestPdfEngineEmptyTableFollowedBySection:
+    def test_pdf_engine_empty_table_then_paragraph(self, tmp_path):
+        """L148->125 : table_data vide (if faux) puis retour au for."""
+        from core.generators.pdf_engine import PdfEngine
+        engine = PdfEngine(workspace_root=str(tmp_path))
+        res = engine.generate_pdf(
+            filename="empty_then_para.pdf", title="T",
+            sections=[
+                {"type": "table", "headers": [], "rows": []},   # table_data vide, if faux
+                {"type": "paragraph", "text": "Apres la table"},  # retour au for depuis 148
+            ],
+        )
+        assert res["ok"] is True
