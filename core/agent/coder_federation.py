@@ -87,14 +87,35 @@ def _normalize_model_name(name: str) -> str:
     return name
 
 
+# Fallback hardcoded (utilise si le registre canonique est indisponible)
+_DEFAULT_MODELS_FALLBACK: dict[str, str] = {
+    "gemini": "gemini-3.5-flash-lite",
+    "ollama": "qwen2.5-coder:7b",
+    "groq": "llama-3.3-70b-versatile",
+}
+
+
+def _build_default_models() -> dict[str, str]:
+    """Derive le mapping provider -> modele depuis CanonicalModelRegistry.
+
+    Phase 2.3A Etape 3A : le mapping canonique vit dans le registre,
+    pas dans ce fichier. Fallback sur hardcoded si indisponible.
+    """
+    try:
+        from core.routing.model_registry import canonical_model_registry
+        result = dict(_DEFAULT_MODELS_FALLBACK)
+        for rec in canonical_model_registry.list_models():
+            if rec.provider and rec.provider in result:
+                result[rec.provider] = rec.name
+        return result
+    except Exception:
+        return dict(_DEFAULT_MODELS_FALLBACK)
+
+
 class CoderModelFederationRouter:
     """Passerelle de fédération canonique déléguant vers EzzioMaster."""
 
-    DEFAULT_MODELS = {
-        "gemini": "gemini-3.5-flash-lite",
-        "ollama": "qwen2.5-coder:7b",
-        "groq": "llama-3.3-70b-versatile",
-    }
+    DEFAULT_MODELS = _build_default_models()
 
     def __init__(
         self,
@@ -109,6 +130,28 @@ class CoderModelFederationRouter:
         self.max_cloud_budget_cents = max_cloud_budget_cents
 
     def resolve_candidates(self, profile: TaskProfile) -> RoutingPlan:
+        """Phase 2.3A Etape 3A : derive du registre canonique.
+
+        Le mapping provider -> modele vit dans CanonicalModelRegistry.
+        Ce fichier ne hardcode plus de modele (fallback si registre vide).
+        """
+        try:
+            from core.routing.model_registry import canonical_model_registry
+            records = canonical_model_registry.list_models()
+            if records:
+                rec = records[0]
+                primary = ProviderCandidate(
+                    provider_name=rec.provider or "gemini",
+                    model_name=rec.name,
+                    cost_class=CostClass.LOCAL if rec.provider == "ollama" else CostClass.CLOUD,
+                    capabilities=["CODING", "GENERAL"],
+                    is_local=(rec.provider == "ollama"),
+                )
+                return RoutingPlan(primary=primary, fallback_chain=[])
+        except Exception:
+            pass
+
+        # Fallback hardcoded (registre indisponible)
         primary = ProviderCandidate(
             provider_name="gemini",
             model_name="gemini-3.5-flash-lite",
