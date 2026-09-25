@@ -6,13 +6,32 @@ import asyncio
 import pytest
 
 from core.ezzio_master import EzzioMaster
+from core.providers.base_provider import CostClass, ProviderResponse
+
+
+class FakeDelegationProvider:
+    """Provider fake déterministe pour test d'orchestration multi-agents sans réseau."""
+
+    async def generate(self, prompt: str = "", model: str = "gemini-3.8-flash", **kwargs) -> ProviderResponse:
+        if "Synthèse Master" in prompt:
+            content = f"[Synthèse E-ZZIO Master {model}] Mission orchestrée avec succès."
+        else:
+            content = f"[Résultat {model}] Audit/Code validé avec succès."
+        return ProviderResponse(
+            content=content,
+            model=model,
+            provider="fake_provider",
+            cost_class=CostClass.LOCAL,
+        )
 
 
 @pytest.mark.asyncio
 async def test_multi_agent_delegation_flow():
-    master = EzzioMaster()
+    fake_prov = FakeDelegationProvider()
+    master = EzzioMaster(provider=fake_prov)
 
     mission_prompt = "Mission d'analyse de sécurité et correctif du module vault"
+
 
     # 2 sous-tâches explicites avec des rôles distincts (FORENSIC et CODING)
     subtasks = [

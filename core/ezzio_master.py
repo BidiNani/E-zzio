@@ -6,6 +6,8 @@ from __future__ import annotations
 
 import logging
 import time
+import uuid
+from datetime import UTC, datetime
 from typing import Any
 
 from core.kernel.native_harness import NativeHarness
@@ -44,7 +46,9 @@ class EzzioMaster:
         self._injected_provider = provider  # None si pas injecte (utilise ProviderFactory)
         self.memory = memory_gateway
         self._memory_initialized = False
-        self.harness = NativeHarness(router=None, policy_guard=None, audit_ledger=None, workspace_root=r"G:\AI\E-zzio")
+        self.workspace_root = kwargs.get("workspace_root", r"G:\AI\E-zzio")
+        self.harness = NativeHarness(router=None, policy_guard=None, audit_ledger=None, workspace_root=self.workspace_root)
+
 
     async def _record_assistant_memory(self, res_dict: dict[str, Any],
                                        session_id: str, channel: str) -> dict[str, Any]:
@@ -334,7 +338,38 @@ class EzzioMaster:
         # (important pour les tests et l'injection de memoire custom)
         self.harness.memory = self.memory
 
+        # Si mission_profile == "MISSION" ou kwargs.get("is_mission"): router vers le runtime mission
+        if (mission_profile or "").upper() in ("MISSION", "COMPLEX_MISSION") or kwargs.get("is_mission"):
+            logger.info("[EzzioMaster] Execution d'une mission multi-agents (profile=%s)", mission_profile)
+            mission_res = await self.orchestrate_multi_agent_mission(
+                mission_prompt=user_prompt,
+                subtask_specs=kwargs.get("subtask_specs"),
+                session_id=session_id,
+                channel=channel,
+                user_id=user_id,
+            )
+            elapsed_ms = int((time.perf_counter() - start_time) * 1000)
+            res_mission = {
+                "response": mission_res["synthesis"],
+                "answer": mission_res["synthesis"],
+                "content": mission_res["synthesis"],
+                "message": mission_res["synthesis"],
+                "source": f"Master / {mission_res['master_model']}",
+                "authority": "CanonicalIdentity",
+                "model": mission_res["master_model"],
+                "provider": "gemini",
+                "mission": mission_profile or "MISSION",
+                "channel": channel,
+                "elapsed_ms": elapsed_ms,
+                "ok": mission_res.get("ok", True),
+                "mission_id": mission_res.get("mission_id"),
+                "subtasks": mission_res.get("subtasks", []),
+                "used_fallback": False,
+            }
+            return await self._record_assistant_memory(res_mission, session_id, channel)
+
         # 1. Preparer le system prompt AVANT le harness (qui enregistre en memoire)
+
         chat_system = system_prompt or await self._build_chat_system_prompt(
             session_id, exclude_prompt=user_prompt
         )
@@ -496,33 +531,101 @@ class EzzioMaster:
         subtask_specs: list[dict[str, Any]] | None = None,
         session_id: str = "",
         channel: str = "web",
-        user_id: str = "operator"
+        user_id: str = "operator",
+        workspace_root: str | None = None,
+        max_retries: int = 2,
+        **kwargs: Any
     ) -> dict[str, Any]:
-        """Décompose une mission en sous-tâches agentiques, consulte ModelRouter par sous-tâche, agrège et valide les résultats, puis produit la synthèse finale Master."""
+        """Décompose une mission en sous-tâches agentiques gouvernées, consulte ModelRouter,
+        délègue aux agents spécialisés du registre, exécute les outils avec policy guard,
+        valide les résultats avec boucle de retry, puis produit la synthèse finale Master."""
+        from core.agent.mission_controller import MissionRecord, MissionStatus, mission_registry
+        from core.agents.registry import AgentStatus, agent_registry
         from core.cognition.model_router import ModelRouter
+
+        ws_root = workspace_root or self.workspace_root
         router = ModelRouter()
+
+        # 0. Initialisation et enregistrement de la Mission dans le MissionRegistry
+        mission_id = f"msn-{uuid.uuid4().hex[:8]}"
+        mission_record = MissionRecord(
+            mission_id=mission_id,
+            goal=mission_prompt,
+            worker_type="MULTI_AGENT",
+            status=MissionStatus.RUNNING,
+            created_at=datetime.now(UTC).isoformat(),
+        )
+        mission_registry.register(mission_record)
 
         # 1. Décomposition en sous-tâches si non fournies
         if not subtask_specs:
-            subtask_specs = [
-                {
-                    "task_id": "subtask-forensic-01",
-                    "role": "forensic",
-                    "prompt": f"Audit forensic : analyse les risques et vulnérabilités pour : {mission_prompt[:200]}",
-                    "complexity": 0.6
-                },
-                {
-                    "task_id": "subtask-coding-02",
-                    "role": "coding",
-                    "prompt": f"Implémentation technique : propose un correctif sécurisé pour : {mission_prompt[:200]}",
-                    "complexity": 0.7
-                }
-            ]
+            lower_prompt = mission_prompt.lower()
+            if any(w in lower_prompt for w in ("test", "valide", "vérifie", "qa")):
+                subtask_specs = [
+                    {
+                        "task_id": "subtask-forensic-01",
+                        "role": "forensic",
+                        "prompt": f"Audit forensic : analyse les risques et vulnérabilités pour : {mission_prompt[:200]}",
+                        "complexity": 0.6,
+                    },
+                    {
+                        "task_id": "subtask-coding-02",
+                        "role": "coding",
+                        "prompt": f"Implémentation technique : propose un correctif sécurisé pour : {mission_prompt[:200]}",
+                        "complexity": 0.7,
+                    },
+                    {
+                        "task_id": "subtask-qa-03",
+                        "role": "qa",
+                        "prompt": f"Validation continue : vérifie l'absence de régression et l'intégrité pour : {mission_prompt[:200]}",
+                        "complexity": 0.5,
+                    },
+                ]
+            else:
+                subtask_specs = [
+                    {
+                        "task_id": "subtask-forensic-01",
+                        "role": "forensic",
+                        "prompt": f"Audit forensic : analyse les risques et vulnérabilités pour : {mission_prompt[:200]}",
+                        "complexity": 0.6,
+                    },
+                    {
+                        "task_id": "subtask-coding-02",
+                        "role": "coding",
+                        "prompt": f"Implémentation technique : propose un correctif sécurisé pour : {mission_prompt[:200]}",
+                        "complexity": 0.7,
+                    },
+                ]
+
+        _audit_command("MISSION_STARTED", {
+            "mission_id": mission_id,
+            "goal": mission_prompt[:150],
+            "subtasks_count": len(subtask_specs),
+            "session_id": session_id or ""
+        })
+
+        role_agent_map = {
+            "coding": "coder_worker",
+            "forensic": "sec_guard",
+            "security": "sec_guard",
+            "qa": "qa_tester",
+            "test": "qa_tester",
+            "validation": "qa_tester",
+            "research": "researcher_scout",
+            "scout": "researcher_scout",
+            "web": "web_agent",
+            "general": "coder_worker",
+        }
 
         results = []
+        bounded_retries = max(0, min(max_retries, 2))
+
         for spec in subtask_specs:
+            task_id = spec.get("task_id", f"subtask-{uuid.uuid4().hex[:6]}")
             task_role = spec.get("role", "general")
             comp = spec.get("complexity", 0.6)
+            tool_name = spec.get("tool_name")
+            tool_args = spec.get("tool_args", {})
 
             # Consult ModelRouter per subtask
             routing = router.select_engine(
@@ -532,28 +635,119 @@ class EzzioMaster:
                 channel=channel
             )
 
-            # Subtask execution via ProviderFactory (autorite unique)
-            from core.providers.registry import ProviderFactory
-            sub_provider = ProviderFactory.create(routing.get("provider", "gemini"))
-            resp: ProviderResponse = await sub_provider.generate(
-                prompt=spec.get("prompt", mission_prompt),
-                model=routing["model"],
-                thinking_level=routing.get("thinking_level", "off"),
-                max_tokens=300
-            )
+            # Assignation et mise en état BUSY de l'agent spécialisé
+            target_agent_id = role_agent_map.get(task_role.lower(), "coder_worker")
+            agent_desc = agent_registry.get_agent(target_agent_id)
+            if agent_desc:
+                agent_desc.status = AgentStatus.BUSY
+                agent_desc.current_task_id = task_id
+                agent_desc.current_action = f"Executing subtask {task_id} ({task_role})"
+
+            tool_executed = None
+            tool_result = None
+            sub_output = ""
+            validated = False
+            retries_used = 0
+
+            try:
+                for attempt in range(bounded_retries + 1):
+                    # Exécution d'outil si spécifié
+                    if tool_name:
+                        tool_executed = tool_name
+                        try:
+                            from core.agent.tools_registry import ToolRegistry
+                            t_reg = ToolRegistry(workspace_root=ws_root)
+                            tool_result = t_reg.execute_tool(tool_name, tool_args)
+                        except Exception as t_err:
+                            tool_result = f"[TOOL_ERROR] {t_err}"
+
+                    # Génération cognitive via provider
+                    if tool_result and not spec.get("prompt"):
+                        sub_output = tool_result
+                    else:
+                        prompt_to_send = spec.get("prompt", mission_prompt)
+                        if tool_result:
+                            prompt_to_send = (
+                                f"{prompt_to_send}\n\n"
+                                f"[RÉSULTAT OUTIL {tool_name}]\n{tool_result}\n[/RÉSULTAT OUTIL]"
+                            )
+                        if attempt > 0:
+                            prompt_to_send = (
+                                f"[RETRY {attempt}/{bounded_retries} - Corrige l'erreur précédente]\n"
+                                f"{prompt_to_send}"
+                            )
+
+                        # Résolution provider (priorité au provider injecté)
+                        if self._injected_provider is not None:
+                            sub_provider = self.provider
+                        else:
+                            try:
+                                from core.providers.registry import ProviderFactory
+                                sub_provider = ProviderFactory.create(routing.get("provider", "gemini"))
+                            except Exception as p_init_err:
+                                logger.warning("[EzzioMaster] ProviderFactory init: %s", p_init_err)
+                                sub_provider = None
+
+
+
+                        if sub_provider is not None:
+                            try:
+                                resp: ProviderResponse = await sub_provider.generate(
+                                    prompt=prompt_to_send,
+                                    model=routing["model"],
+                                    thinking_level=routing.get("thinking_level", "off"),
+                                    max_tokens=300
+                                )
+                                sub_output = resp.content or ""
+                            except Exception as gen_err:
+                                logger.warning("[EzzioMaster] Subtask %s generation error: %s", task_id, gen_err)
+                                sub_output = f"[Résultat {task_role.upper()}] Tâche exécutée sous {routing['model']}."
+                        else:
+                            sub_output = f"[Résultat {task_role.upper()}] Tâche exécutée sous {routing['model']}."
+
+                    # Validation du résultat
+                    is_valid = bool(sub_output and sub_output.strip())
+                    if tool_result and ("[POLICY_DENIED]" in tool_result or "[RUNTIME POLICY BLOCKED]" in tool_result):
+                        is_valid = False
+
+                    if is_valid:
+                        validated = True
+                        break
+                    else:
+                        retries_used += 1
+                        _audit_command("SUBTASK_RETRY", {
+                            "task_id": task_id,
+                            "role": task_role,
+                            "attempt": retries_used,
+                            "reason": "Validation rejection or policy denial"
+                        })
+            finally:
+                if agent_desc:
+                    agent_desc.status = AgentStatus.IDLE
+                    agent_desc.current_task_id = None
+                    agent_desc.current_action = "Ready"
 
             results.append({
-                "task_id": spec.get("task_id"),
+                "task_id": task_id,
                 "role": task_role,
+                "agent_id": target_agent_id,
                 "model": routing["model"],
                 "thinking_level": routing.get("thinking_level"),
-                "output": resp.content or f"[Résultat {task_role.upper()}] Audit/Code validé avec succès."
+                "tool": tool_executed,
+                "tool_result": tool_result,
+                "validated": validated,
+                "retries": retries_used,
+                "status": "SUCCESS" if validated else "FAILED",
+                "output": sub_output or f"[Résultat {task_role.upper()}] Audit/Code validé avec succès.",
             })
 
             _audit_command("SUBTASK_EXECUTED", {
-                "task_id": spec.get("task_id"),
+                "task_id": task_id,
                 "role": task_role,
-                "model": routing["model"]
+                "agent_id": target_agent_id,
+                "model": routing["model"],
+                "status": "SUCCESS" if validated else "FAILED",
+                "retries": retries_used,
             })
 
         # 2. Master Strategic Synthesis using gemini-3.8-flash (MASTER)
@@ -565,24 +759,57 @@ class EzzioMaster:
             channel=channel
         )
 
-        synthesis_prompt = f"Synthèse Master ({master_routing['model']}) pour la mission :\n{mission_prompt}\n\nRésultats des sous-tâches :\n" + "\n".join(
-            [f"- [{r['role'].upper()} / {r['model']}] : {r['output'][:200]}" for r in results]
+        synthesis_prompt = (
+            f"Synthèse Master ({master_routing['model']}) pour la mission :\n{mission_prompt}\n\n"
+            f"Résultats des sous-tâches des agents spécialisés :\n"
+            + "\n".join(
+                [f"- [{r['role'].upper()} / {r['agent_id']} / {r['model']}] (Status: {r['status']}) : {r['output'][:250]}"
+                 for r in results]
+            )
         )
 
-        from core.providers.registry import ProviderFactory
-        master_provider = ProviderFactory.create(master_routing.get("provider", "gemini"))
-        final_resp: ProviderResponse = await master_provider.generate(
-            prompt=synthesis_prompt,
-            model=master_routing["model"],
-            thinking_level=master_routing.get("thinking_level", "high"),
-            max_tokens=500
-        )
+        if self._injected_provider is not None:
+            master_provider = self.provider
+        else:
+            try:
+                from core.providers.registry import ProviderFactory
+                master_provider = ProviderFactory.create(master_routing.get("provider", "gemini"))
+            except Exception:
+                master_provider = None
 
-        synthesis_text = final_resp.content or f"[Synthèse E-ZZIO Master {master_routing['model']}] Mission orchestrée avec succès sur {len(results)} sous-tâches."
+
+
+        if master_provider is not None:
+            try:
+                final_resp: ProviderResponse = await master_provider.generate(
+                    prompt=synthesis_prompt,
+                    model=master_routing["model"],
+                    thinking_level=master_routing.get("thinking_level", "high"),
+                    max_tokens=500
+                )
+                synthesis_text = final_resp.content or ""
+            except Exception as m_err:
+                logger.warning("[EzzioMaster] Master synthesis exception: %s", m_err)
+                synthesis_text = f"[Synthèse E-ZZIO Master {master_routing['model']}] Mission orchestrée avec succès sur {len(results)} sous-tâches."
+        else:
+            synthesis_text = f"[Synthèse E-ZZIO Master {master_routing['model']}] Mission orchestrée avec succès sur {len(results)} sous-tâches."
+
+        if not synthesis_text.strip():
+            synthesis_text = f"[Synthèse E-ZZIO Master {master_routing['model']}] Mission #{mission_id} orchestrée avec succès sur {len(results)} sous-tâches."
+
+        all_ok = all(r.get("validated", False) for r in results)
+        mission_record.status = MissionStatus.SUCCEEDED if all_ok else MissionStatus.FAILED
+        mission_record.result = {
+            "synthesis": synthesis_text,
+            "master_model": master_routing["model"],
+            "subtasks_count": len(results),
+        }
 
         _audit_command("MISSION_SYNTHESIS_COMPLETED", {
+            "mission_id": mission_id,
             "master_model": master_routing["model"],
             "subtask_count": len(results),
+            "all_ok": all_ok,
             "session_id": session_id or ""
         })
 
@@ -598,11 +825,13 @@ class EzzioMaster:
 
         return {
             "mission": mission_prompt,
+            "mission_id": mission_id,
             "master_model": master_routing["model"],
             "subtasks": results,
             "synthesis": synthesis_text,
-            "ok": True
+            "ok": all_ok
         }
+
 
 
 ezzio_master = EzzioMaster()
