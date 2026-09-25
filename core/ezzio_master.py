@@ -48,6 +48,10 @@ class EzzioMaster:
         self._memory_initialized = False
         self.workspace_root = kwargs.get("workspace_root", r"G:\AI\E-zzio")
         self.harness = NativeHarness(router=None, policy_guard=None, audit_ledger=None, workspace_root=self.workspace_root)
+        self.hermes_adapter = kwargs.get("hermes_adapter")
+        if self.hermes_adapter is None:
+            from core.agent.hermes_worker_adapter import HermesWorkerAdapter
+            self.hermes_adapter = HermesWorkerAdapter(workspace_root=self.workspace_root)
 
 
     async def _record_assistant_memory(self, res_dict: dict[str, Any],
@@ -648,6 +652,9 @@ class EzzioMaster:
             sub_output = ""
             validated = False
             retries_used = 0
+            worker_type = spec.get("worker", "internal")
+            worker_pid = None
+            worker_status = "SUCCESS"
 
             try:
                 for attempt in range(bounded_retries + 1):
@@ -661,22 +668,33 @@ class EzzioMaster:
                         except Exception as t_err:
                             tool_result = f"[TOOL_ERROR] {t_err}"
 
-                    # Génération cognitive via provider
-                    if tool_result and not spec.get("prompt"):
+                    prompt_to_send = spec.get("prompt", mission_prompt)
+                    if tool_result:
+                        prompt_to_send = (
+                            f"{prompt_to_send}\n\n"
+                            f"[RÉSULTAT OUTIL {tool_name}]\n{tool_result}\n[/RÉSULTAT OUTIL]"
+                        )
+                    if attempt > 0:
+                        prompt_to_send = (
+                            f"[RETRY {attempt}/{bounded_retries} - Corrige l'erreur précédente]\n"
+                            f"{prompt_to_send}"
+                        )
+
+                    # Exécution selon le worker : Hermes external worker OU provider standard
+                    if worker_type == "hermes":
+                        hermes_res = await self.hermes_adapter.submit(
+                            task_id=task_id,
+                            prompt=prompt_to_send,
+                            model=routing.get("model"),
+                            provider=routing.get("provider"),
+                            timeout=spec.get("timeout", 60),
+                        )
+                        sub_output = hermes_res.output or hermes_res.stdout
+                        worker_pid = hermes_res.pid
+                        worker_status = hermes_res.status
+                    elif tool_result and not spec.get("prompt"):
                         sub_output = tool_result
                     else:
-                        prompt_to_send = spec.get("prompt", mission_prompt)
-                        if tool_result:
-                            prompt_to_send = (
-                                f"{prompt_to_send}\n\n"
-                                f"[RÉSULTAT OUTIL {tool_name}]\n{tool_result}\n[/RÉSULTAT OUTIL]"
-                            )
-                        if attempt > 0:
-                            prompt_to_send = (
-                                f"[RETRY {attempt}/{bounded_retries} - Corrige l'erreur précédente]\n"
-                                f"{prompt_to_send}"
-                            )
-
                         # Résolution provider (priorité au provider injecté)
                         if self._injected_provider is not None:
                             sub_provider = self.provider
@@ -687,8 +705,6 @@ class EzzioMaster:
                             except Exception as p_init_err:
                                 logger.warning("[EzzioMaster] ProviderFactory init: %s", p_init_err)
                                 sub_provider = None
-
-
 
                         if sub_provider is not None:
                             try:
@@ -709,6 +725,8 @@ class EzzioMaster:
                     is_valid = bool(sub_output and sub_output.strip())
                     if tool_result and ("[POLICY_DENIED]" in tool_result or "[RUNTIME POLICY BLOCKED]" in tool_result):
                         is_valid = False
+                    if worker_type == "hermes" and worker_status not in ("SUCCESS", "COMPLETED"):
+                        is_valid = False
 
                     if is_valid:
                         validated = True
@@ -718,6 +736,7 @@ class EzzioMaster:
                         _audit_command("SUBTASK_RETRY", {
                             "task_id": task_id,
                             "role": task_role,
+                            "worker": worker_type,
                             "attempt": retries_used,
                             "reason": "Validation rejection or policy denial"
                         })
@@ -731,6 +750,8 @@ class EzzioMaster:
                 "task_id": task_id,
                 "role": task_role,
                 "agent_id": target_agent_id,
+                "worker": worker_type,
+                "pid": worker_pid,
                 "model": routing["model"],
                 "thinking_level": routing.get("thinking_level"),
                 "tool": tool_executed,
@@ -745,6 +766,8 @@ class EzzioMaster:
                 "task_id": task_id,
                 "role": task_role,
                 "agent_id": target_agent_id,
+                "worker": worker_type,
+                "pid": worker_pid,
                 "model": routing["model"],
                 "status": "SUCCESS" if validated else "FAILED",
                 "retries": retries_used,
