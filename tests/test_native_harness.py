@@ -102,3 +102,38 @@ async def test_harness_secret_safety_in_error_sanitization():
     assert "[REDACTED SECURITY EXCEPTION]" in sanitized["safe_message"]
     assert sanitized["error_type"] == "Exception"
     assert sanitized["correlation_id"] == "corr-123"
+
+
+@pytest.mark.asyncio
+async def test_harness_mission_profile_propagation(monkeypatch):
+    """Vérifie que mission_profile est converti en minuscules et transmis comme task_type à ModelRouter."""
+    harness = NativeHarness()
+    recorded_calls = []
+
+    def mock_select_engine(task_type, complexity_score, risk_level, channel, **kwargs):
+        recorded_calls.append({
+            "task_type": task_type,
+            "complexity_score": complexity_score,
+            "risk_level": risk_level,
+            "channel": channel,
+        })
+        return {"provider": "gemini", "model": "gemini-3.7-flash", "thinking_level": "low", "role": "CODING"}
+
+    monkeypatch.setattr(harness.router, "select_engine", mock_select_engine)
+
+    # 1. Avec mission_profile="CODING"
+    await harness.execute_task(
+        task_prompt="Refactor database schema",
+        session_id="test-session-profile-1",
+        mission_profile="CODING"
+    )
+    assert len(recorded_calls) == 1
+    assert recorded_calls[0]["task_type"] == "coding"
+
+    # 2. Sans mission_profile -> fallback "general"
+    await harness.execute_task(
+        task_prompt="Simple question",
+        session_id="test-session-profile-2"
+    )
+    assert len(recorded_calls) == 2
+    assert recorded_calls[1]["task_type"] == "general"

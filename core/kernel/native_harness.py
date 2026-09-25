@@ -206,9 +206,12 @@ class NativeHarness:
             # 2. PERCEIVING -> THINKING
             self.transition_to(session, HarnessState.THINKING)
 
-            # Select engine via canonical ModelRouter
+            # Select engine via canonical ModelRouter (S13: mission_profile.lower() -> task_type)
+            mission_profile = kwargs.get("mission_profile")
+            task_type = mission_profile.lower() if isinstance(mission_profile, str) and mission_profile else "general"
+
             routing = self.router.select_engine(
-                task_type="general",
+                task_type=task_type,
                 complexity_score=0.5,
                 risk_level="low",
                 channel=channel
