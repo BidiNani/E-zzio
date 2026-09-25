@@ -105,11 +105,23 @@ class AgentProviderAdapter:
         except Exception as exc:
             logger.warning("[AgentProviderAdapter] Échec du provider %s -> fallback canonique : %s", provider_name, exc)
             try:
-                fb_prov = ProviderFactory.create("gemini")
+                fb_model = "gemini-3.5-flash"
+                fb_provider_name = "gemini"
+                try:
+                    from routers.settings import FALLBACK_MAP
+                    fb_model = FALLBACK_MAP.get(provider_name, "gemini-3.5-flash")
+                    rec = canonical_model_registry.get(fb_model)
+                    if rec and rec.provider:
+                        fb_provider_name = rec.provider
+                except Exception:
+                    pass
+
+
+                fb_prov = ProviderFactory.create(fb_provider_name)
                 resp = await fb_prov.generate(
                     prompt=user_prompt,
                     system_prompt=system_prompt if system_prompt else None,
-                    model="gemini-3.5-flash-lite",
+                    model=fb_model,
                 )
                 return self._extract_content(resp.content or "")
             except Exception as fb_exc:
