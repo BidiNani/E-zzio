@@ -339,7 +339,7 @@ async def _handle_message(message):
         return
 
     # Parse profile flag: e.g. !e --profile=COMPLEX <prompt> or -p COMPLEX <prompt>
-    mission_profile = "STANDARD"
+    mission_profile = "MISSION"
     model_target = "auto"
     clean_prompt = raw_prompt
 

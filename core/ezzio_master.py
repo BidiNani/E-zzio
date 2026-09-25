@@ -342,9 +342,9 @@ class EzzioMaster:
         # (important pour les tests et l'injection de memoire custom)
         self.harness.memory = self.memory
 
-        # Si mission_profile == "MISSION" ou kwargs.get("is_mission"): router vers le runtime mission
-        if (mission_profile or "").upper() in ("MISSION", "COMPLEX_MISSION") or kwargs.get("is_mission"):
-            logger.info("[EzzioMaster] Execution d'une mission multi-agents (profile=%s)", mission_profile)
+        # Router vers le runtime mission uniquement si mission_profile est MISSION/COMPLEX
+        if (mission_profile or "").upper() in ("MISSION", "COMPLEX_MISSION", "COMPLEX") or kwargs.get("is_mission"):
+            logger.info("[EzzioMaster] Execution d'une mission multi-agents (profile=%s, channel=%s)", mission_profile, channel)
             mission_res = await self.orchestrate_multi_agent_mission(
                 mission_prompt=user_prompt,
                 subtask_specs=kwargs.get("subtask_specs"),
@@ -367,6 +367,7 @@ class EzzioMaster:
                 "elapsed_ms": elapsed_ms,
                 "ok": mission_res.get("ok", True),
                 "mission_id": mission_res.get("mission_id"),
+                "dag_id": mission_res.get("dag_id"),
                 "subtasks": mission_res.get("subtasks", []),
                 "used_fallback": False,
             }
@@ -540,12 +541,14 @@ class EzzioMaster:
         max_retries: int = 2,
         **kwargs: Any
     ) -> dict[str, Any]:
-        """Décompose une mission en sous-tâches agentiques gouvernées, consulte ModelRouter,
-        délègue aux agents spécialisés du registre, exécute les outils avec policy guard,
-        valide les résultats avec boucle de retry, puis produit la synthèse finale Master."""
+        """Décompose une mission en sous-tâches agentiques gouvernées sous forme d'un TaskDAG
+        exécuté par le DAGOrchestrator. Les résultats des sous-tâches amont sont transmis
+        aux dépendances aval, avant la synthèse finale Master."""
         from core.agent.mission_controller import MissionRecord, MissionStatus, mission_registry
         from core.agents.registry import AgentStatus, agent_registry
         from core.cognition.model_router import ModelRouter
+        from core.orchestration.dag import DAGExecutionStatus, DAGNode, TaskDAG
+        from core.orchestration.engine import dag_orchestrator
 
         ws_root = workspace_root or self.workspace_root
         router = ModelRouter()
@@ -561,7 +564,7 @@ class EzzioMaster:
         )
         mission_registry.register(mission_record)
 
-        # 1. Décomposition en sous-tâches si non fournies
+        # 1. Décomposition en sous-tâches si non fournies (avec dépendances réelles)
         if not subtask_specs:
             lower_prompt = mission_prompt.lower()
             if any(w in lower_prompt for w in ("test", "valide", "vérifie", "qa")):
@@ -571,18 +574,21 @@ class EzzioMaster:
                         "role": "forensic",
                         "prompt": f"Audit forensic : analyse les risques et vulnérabilités pour : {mission_prompt[:200]}",
                         "complexity": 0.6,
+                        "dependencies": [],
                     },
                     {
                         "task_id": "subtask-coding-02",
                         "role": "coding",
                         "prompt": f"Implémentation technique : propose un correctif sécurisé pour : {mission_prompt[:200]}",
                         "complexity": 0.7,
+                        "dependencies": ["subtask-forensic-01"],
                     },
                     {
                         "task_id": "subtask-qa-03",
                         "role": "qa",
                         "prompt": f"Validation continue : vérifie l'absence de régression et l'intégrité pour : {mission_prompt[:200]}",
                         "complexity": 0.5,
+                        "dependencies": ["subtask-coding-02"],
                     },
                 ]
             else:
@@ -592,12 +598,14 @@ class EzzioMaster:
                         "role": "forensic",
                         "prompt": f"Audit forensic : analyse les risques et vulnérabilités pour : {mission_prompt[:200]}",
                         "complexity": 0.6,
+                        "dependencies": [],
                     },
                     {
                         "task_id": "subtask-coding-02",
                         "role": "coding",
                         "prompt": f"Implémentation technique : propose un correctif sécurisé pour : {mission_prompt[:200]}",
                         "complexity": 0.7,
+                        "dependencies": ["subtask-forensic-01"],
                     },
                 ]
 
@@ -621,26 +629,43 @@ class EzzioMaster:
             "general": "coder_worker",
         }
 
-        results = []
         bounded_retries = max(0, min(max_retries, 2))
 
+        # 2. Construction du TaskDAG
+        dag = TaskDAG(dag_id=f"dag-{mission_id}", name=f"mission_{mission_id}")
         for spec in subtask_specs:
-            task_id = spec.get("task_id", f"subtask-{uuid.uuid4().hex[:6]}")
-            task_role = spec.get("role", "general")
+            t_id = spec.get("task_id", f"subtask-{uuid.uuid4().hex[:6]}")
+            t_role = spec.get("role", "general")
+            t_deps = list(spec.get("dependencies") or [])
+            dag.add_node(
+                task_id=t_id,
+                title=f"{t_role.upper()} - {t_id}",
+                action_type=t_role,
+                payload=dict(spec),
+                dependencies=t_deps,
+                max_retries=bounded_retries,
+            )
+
+        # 3. Handler local d'exécution pour les nœuds du DAG
+        async def dag_handler(node: DAGNode) -> dict[str, Any]:
+            spec = node.payload
+            task_id = node.task_id
+            task_role = node.action_type
             comp = spec.get("complexity", 0.6)
             tool_name = spec.get("tool_name")
             tool_args = spec.get("tool_args", {})
+            worker_type = spec.get("worker", "internal")
 
-            # Consult ModelRouter per subtask
             routing = router.select_engine(
                 task_type=task_role,
                 complexity_score=comp,
                 risk_level="low",
                 channel=channel
             )
+            node.agent_id = role_agent_map.get(task_role.lower(), "coder_worker")
+            node.provider = routing.get("provider", "gemini")
 
-            # Assignation et mise en état BUSY de l'agent spécialisé
-            target_agent_id = role_agent_map.get(task_role.lower(), "coder_worker")
+            target_agent_id = node.agent_id
             agent_desc = agent_registry.get_agent(target_agent_id)
             if agent_desc:
                 agent_desc.status = AgentStatus.BUSY
@@ -650,169 +675,202 @@ class EzzioMaster:
             tool_executed = None
             tool_result = None
             sub_output = ""
-            validated = False
-            retries_used = 0
-            worker_type = spec.get("worker", "internal")
             worker_pid = None
             worker_status = "SUCCESS"
 
             try:
-                for attempt in range(bounded_retries + 1):
-                    # Exécution d'outil si spécifié
-                    if tool_name:
-                        tool_executed = tool_name
+                if tool_name:
+                    tool_executed = tool_name
+                    try:
+                        from core.agent.tools_registry import ToolRegistry
+                        t_reg = ToolRegistry(workspace_root=ws_root)
+                        tool_result = t_reg.execute_tool(tool_name, tool_args)
+                    except Exception as t_err:
+                        tool_result = f"[TOOL_ERROR] {t_err}"
+
+                # Propagation des résultats des dépendances amont
+                dependency_results = {}
+                for dep_id in node.dependencies:
+                    dep_node = dag.nodes.get(dep_id)
+                    if dep_node and dep_node.result and "output" in dep_node.result:
+                        dependency_results[dep_id] = dep_node.result.get("output", "")
+
+                prompt_to_send = spec.get("prompt", mission_prompt)
+                if dependency_results:
+                    dep_text = "\n".join(
+                        f"- [{dep_id}] : {out[:300]}" for dep_id, out in dependency_results.items()
+                    )
+                    prompt_to_send = (
+                        f"{prompt_to_send}\n\n"
+                        f"[RÉSULTATS DÉPENDANCES EN AMONT]\n{dep_text}\n[/RÉSULTATS DÉPENDANCES]"
+                    )
+
+                if tool_result:
+                    prompt_to_send = (
+                        f"{prompt_to_send}\n\n"
+                        f"[RÉSULTAT OUTIL {tool_name}]\n{tool_result}\n[/RÉSULTAT OUTIL]"
+                    )
+
+                if node.retry_count > 0:
+                    prompt_to_send = (
+                        f"[RETRY {node.retry_count}/{node.max_retries} - Corrige l'erreur précédente]\n"
+                        f"{prompt_to_send}"
+                    )
+
+                if worker_type == "hermes":
+                    from core.agent.hermes_worker_profiles import (
+                        build_context_pack,
+                        render_context_prompt,
+                        resolve_profile,
+                    )
+                    requested_profile = spec.get("profile") or task_role
+                    try:
+                        worker_profile = resolve_profile(requested_profile)
+                    except ValueError:
+                        worker_profile = resolve_profile("context_reader")
+
+                    spec_files = spec.get("files") or spec.get("context_files")
+                    if spec_files and worker_profile.name in ("context_reader", "reader", "context_auditor", "auditor"):
                         try:
-                            from core.agent.tools_registry import ToolRegistry
-                            t_reg = ToolRegistry(workspace_root=ws_root)
-                            tool_result = t_reg.execute_tool(tool_name, tool_args)
-                        except Exception as t_err:
-                            tool_result = f"[TOOL_ERROR] {t_err}"
-
-                    prompt_to_send = spec.get("prompt", mission_prompt)
-                    if tool_result:
-                        prompt_to_send = (
-                            f"{prompt_to_send}\n\n"
-                            f"[RÉSULTAT OUTIL {tool_name}]\n{tool_result}\n[/RÉSULTAT OUTIL]"
-                        )
-                    if attempt > 0:
-                        prompt_to_send = (
-                            f"[RETRY {attempt}/{bounded_retries} - Corrige l'erreur précédente]\n"
-                            f"{prompt_to_send}"
-                        )
-
-                    # Exécution selon le worker : Hermes external worker OU provider standard
-                    if worker_type == "hermes":
-                        from core.agent.hermes_worker_profiles import (
-                            build_context_pack,
-                            render_context_prompt,
-                            resolve_profile,
-                        )
-                        requested_profile = spec.get("profile") or task_role
-                        try:
-                            worker_profile = resolve_profile(requested_profile)
-                        except ValueError:
-                            worker_profile = resolve_profile("context_reader")
-
-                        spec_files = spec.get("files") or spec.get("context_files")
-                        if spec_files and worker_profile.name in ("context_reader", "reader", "context_auditor", "auditor"):
-                            try:
-                                pack = build_context_pack(
-                                    task_id=task_id,
-                                    objective=prompt_to_send,
-                                    file_paths=spec_files,
-                                    workspace_root=self.workspace_root,
-                                    audit_ledger=getattr(self.hermes_adapter, "audit_ledger", None),
-                                )
-                                prompt_to_send = render_context_prompt(pack, worker_profile)
-                            except Exception as pack_err:
-                                sub_output = f"[POLICY_DENIED] Context pack creation failed: {pack_err}"
-                                worker_status = "POLICY_DENIED"
-                                is_valid = False
-                                break
-
-                        if worker_status != "POLICY_DENIED":
-                            hermes_res = await self.hermes_adapter.submit(
+                            pack = build_context_pack(
                                 task_id=task_id,
-                                prompt=prompt_to_send,
-                                model=routing.get("model"),
-                                provider=routing.get("provider"),
-                                timeout=spec.get("timeout", worker_profile.default_timeout_sec),
-                                profile=worker_profile,
-                                workspace_root=spec.get("workspace_root") or ws_root,
+                                objective=prompt_to_send,
+                                file_paths=spec_files,
+                                workspace_root=self.workspace_root,
+                                audit_ledger=getattr(self.hermes_adapter, "audit_ledger", None),
                             )
-                            sub_output = hermes_res.output or hermes_res.stdout
-                            worker_pid = hermes_res.pid
-                            worker_status = hermes_res.status
-                    elif tool_result and not spec.get("prompt"):
-                        sub_output = tool_result
-                    else:
-                        # Résolution provider (priorité au provider injecté)
-                        if self._injected_provider is not None:
-                            sub_provider = self.provider
-                        else:
-                            try:
-                                from core.providers.registry import ProviderFactory
-                                sub_provider = ProviderFactory.create(routing.get("provider", "gemini"))
-                            except Exception as p_init_err:
-                                logger.warning("[EzzioMaster] ProviderFactory init: %s", p_init_err)
-                                sub_provider = None
+                            prompt_to_send = render_context_prompt(pack, worker_profile)
+                        except Exception as pack_err:
+                            sub_output = f"[POLICY_DENIED] Context pack creation failed: {pack_err}"
+                            worker_status = "POLICY_DENIED"
 
-                        if sub_provider is not None:
-                            try:
-                                resp: ProviderResponse = await sub_provider.generate(
-                                    prompt=prompt_to_send,
-                                    model=routing["model"],
-                                    thinking_level=routing.get("thinking_level", "off"),
-                                    max_tokens=300
-                                )
-                                sub_output = resp.content or ""
-                            except Exception as gen_err:
-                                logger.warning("[EzzioMaster] Subtask %s generation error: %s", task_id, gen_err)
-                                sub_output = f"[Résultat {task_role.upper()}] Tâche exécutée sous {routing['model']}."
-                        else:
+                    if worker_status != "POLICY_DENIED":
+                        hermes_res = await self.hermes_adapter.submit(
+                            task_id=task_id,
+                            prompt=prompt_to_send,
+                            model=routing.get("model"),
+                            provider=routing.get("provider"),
+                            timeout=spec.get("timeout", worker_profile.default_timeout_sec),
+                            profile=worker_profile,
+                            workspace_root=spec.get("workspace_root") or ws_root,
+                        )
+                        sub_output = hermes_res.output or hermes_res.stdout
+                        worker_pid = hermes_res.pid
+                        worker_status = hermes_res.status
+                elif tool_result and not spec.get("prompt"):
+                    sub_output = tool_result
+                else:
+                    if self._injected_provider is not None:
+                        sub_provider = self.provider
+                    else:
+                        try:
+                            from core.providers.registry import ProviderFactory
+                            sub_provider = ProviderFactory.create(routing.get("provider", "gemini"))
+                        except Exception as p_init_err:
+                            logger.warning("[EzzioMaster] ProviderFactory init: %s", p_init_err)
+                            sub_provider = None
+
+                    if sub_provider is not None:
+                        try:
+                            resp: ProviderResponse = await sub_provider.generate(
+                                prompt=prompt_to_send,
+                                model=routing["model"],
+                                thinking_level=routing.get("thinking_level", "off"),
+                                max_tokens=300
+                            )
+                            sub_output = resp.content or ""
+                        except Exception as gen_err:
+                            logger.warning("[EzzioMaster] Subtask %s generation error: %s", task_id, gen_err)
                             sub_output = f"[Résultat {task_role.upper()}] Tâche exécutée sous {routing['model']}."
-
-                    # Validation du résultat
-                    is_valid = bool(sub_output and sub_output.strip())
-                    if tool_result and ("[POLICY_DENIED]" in tool_result or "[RUNTIME POLICY BLOCKED]" in tool_result):
-                        is_valid = False
-                    if worker_type == "hermes" and worker_status not in ("SUCCESS", "COMPLETED"):
-                        is_valid = False
-
-                    _audit_command("VALIDATION_RESULT", {
-                        "task_id": task_id,
-                        "worker": worker_type,
-                        "role": task_role,
-                        "is_valid": is_valid,
-                        "status": worker_status,
-                    })
-
-                    if is_valid:
-                        validated = True
-                        break
                     else:
-                        retries_used += 1
-                        _audit_command("SUBTASK_RETRY", {
-                            "task_id": task_id,
-                            "role": task_role,
-                            "worker": worker_type,
-                            "attempt": retries_used,
-                            "reason": "Validation rejection or policy denial"
-                        })
+                        sub_output = f"[Résultat {task_role.upper()}] Tâche exécutée sous {routing['model']}."
+
+                is_valid = bool(sub_output and sub_output.strip())
+                if tool_result and ("[POLICY_DENIED]" in tool_result or "[RUNTIME POLICY BLOCKED]" in tool_result):
+                    is_valid = False
+                if worker_type == "hermes" and worker_status not in ("SUCCESS", "COMPLETED"):
+                    is_valid = False
+
+                _audit_command("VALIDATION_RESULT", {
+                    "task_id": task_id,
+                    "worker": worker_type,
+                    "role": task_role,
+                    "is_valid": is_valid,
+                    "status": worker_status,
+                })
+
+                if not is_valid:
+                    raise RuntimeError(f"Validation failed for node {task_id}: {worker_status or 'Empty output'}")
+
+                return {
+                    "task_id": task_id,
+                    "role": task_role,
+                    "agent_id": target_agent_id,
+                    "worker": worker_type,
+                    "pid": worker_pid,
+                    "model": routing["model"],
+                    "thinking_level": routing.get("thinking_level"),
+                    "tool": tool_executed,
+                    "tool_result": tool_result,
+                    "validated": True,
+                    "retries": node.retry_count,
+                    "status": "SUCCESS",
+                    "output": sub_output or f"[Résultat {task_role.upper()}] Audit/Code validé avec succès.",
+                    "dependency_results": dependency_results,
+                }
             finally:
                 if agent_desc:
                     agent_desc.status = AgentStatus.IDLE
                     agent_desc.current_task_id = None
                     agent_desc.current_action = "Ready"
 
-            results.append({
-                "task_id": task_id,
-                "role": task_role,
-                "agent_id": target_agent_id,
-                "worker": worker_type,
-                "pid": worker_pid,
-                "model": routing["model"],
-                "thinking_level": routing.get("thinking_level"),
-                "tool": tool_executed,
-                "tool_result": tool_result,
-                "validated": validated,
-                "retries": retries_used,
-                "status": "SUCCESS" if validated else "FAILED",
-                "output": sub_output or f"[Résultat {task_role.upper()}] Audit/Code validé avec succès.",
-            })
+        # 4. Exécution du DAG via le DAGOrchestrator
+        await dag_orchestrator.execute_dag(dag, default_handler=dag_handler)
 
-            _audit_command("SUBTASK_EXECUTED", {
-                "task_id": task_id,
-                "role": task_role,
-                "agent_id": target_agent_id,
-                "worker": worker_type,
-                "pid": worker_pid,
-                "model": routing["model"],
-                "status": "SUCCESS" if validated else "FAILED",
-                "retries": retries_used,
-            })
+        # 5. Extraction des résultats pour la synthèse
+        results = []
+        for node in dag.nodes.values():
+            if node.status == DAGExecutionStatus.COMPLETED and node.result:
+                results.append(node.result)
+                _audit_command("SUBTASK_EXECUTED", {
+                    "task_id": node.task_id,
+                    "role": node.action_type,
+                    "agent_id": node.result.get("agent_id", node.agent_id),
+                    "worker": node.result.get("worker", "internal"),
+                    "pid": node.result.get("pid"),
+                    "model": node.result.get("model", node.provider),
+                    "status": "SUCCESS",
+                    "retries": node.retry_count,
+                })
+            else:
+                res_dict = {
+                    "task_id": node.task_id,
+                    "role": node.action_type,
+                    "agent_id": node.agent_id,
+                    "worker": node.payload.get("worker", "internal"),
+                    "pid": None,
+                    "model": node.provider,
+                    "thinking_level": None,
+                    "tool": node.payload.get("tool_name"),
+                    "tool_result": None,
+                    "validated": False,
+                    "retries": node.retry_count,
+                    "status": node.status.value,
+                    "output": node.error or f"Node status: {node.status.value}",
+                }
+                results.append(res_dict)
+                _audit_command("SUBTASK_EXECUTED", {
+                    "task_id": node.task_id,
+                    "role": node.action_type,
+                    "agent_id": node.agent_id,
+                    "worker": node.payload.get("worker", "internal"),
+                    "pid": None,
+                    "model": node.provider,
+                    "status": node.status.value,
+                    "retries": node.retry_count,
+                })
 
-        # 2. Master Strategic Synthesis using gemini-3.8-flash (MASTER)
+        # 6. Synthèse stratégique Master
         master_routing = router.select_engine(
             task_type="general",
             complexity_score=0.9,
@@ -839,8 +897,6 @@ class EzzioMaster:
             except Exception:
                 master_provider = None
 
-
-
         if master_provider is not None:
             try:
                 final_resp: ProviderResponse = await master_provider.generate(
@@ -859,16 +915,18 @@ class EzzioMaster:
         if not synthesis_text.strip():
             synthesis_text = f"[Synthèse E-ZZIO Master {master_routing['model']}] Mission #{mission_id} orchestrée avec succès sur {len(results)} sous-tâches."
 
-        all_ok = all(r.get("validated", False) for r in results)
+        all_ok = dag.is_completed()
         mission_record.status = MissionStatus.SUCCEEDED if all_ok else MissionStatus.FAILED
         mission_record.result = {
             "synthesis": synthesis_text,
             "master_model": master_routing["model"],
             "subtasks_count": len(results),
+            "dag_id": dag.dag_id,
         }
 
         _audit_command("MISSION_SYNTHESIS_COMPLETED", {
             "mission_id": mission_id,
+            "dag_id": dag.dag_id,
             "master_model": master_routing["model"],
             "subtask_count": len(results),
             "all_ok": all_ok,
@@ -888,6 +946,7 @@ class EzzioMaster:
         return {
             "mission": mission_prompt,
             "mission_id": mission_id,
+            "dag_id": dag.dag_id,
             "master_model": master_routing["model"],
             "subtasks": results,
             "synthesis": synthesis_text,
