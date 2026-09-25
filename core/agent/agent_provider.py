@@ -10,6 +10,7 @@ from typing import Any
 from core.cognition.model_router import ModelRouter
 from core.providers.base_provider import ProviderResponse
 from core.providers.registry import ProviderFactory
+from core.routing.model_registry import canonical_model_registry
 
 logger = logging.getLogger(__name__)
 
@@ -78,10 +79,19 @@ class AgentProviderAdapter:
         provider_name = routing.get("provider", "gemini")
         selected_model = routing.get("model", "gemini-3.7-flash")
         thinking_level = routing.get("thinking_level", "off")
+        original_role = routing.get("role", "")
 
         if force_cloud and provider_name == "ollama":
-            provider_name = "gemini"
-            selected_model = "gemini-3.7-flash"
+            # ADR-force_cloud R2/R3: résolution canonique par rôle original — pas de hardcode
+            cloud_rec = canonical_model_registry.resolve_cloud_role(original_role)
+            if cloud_rec is None or not cloud_rec.provider or cloud_rec.provider == "ollama":
+                raise RouteIntegrityError(
+                    f"[FAIL-CLOSED] force_cloud requested but no canonical cloud route exists "
+                    f"for role={original_role!r} "
+                    f"(nominal provider={provider_name!r}, model={selected_model!r})"
+                )
+            provider_name = cloud_rec.provider
+            selected_model = cloud_rec.name
 
         try:
             prov = ProviderFactory.create(provider_name)

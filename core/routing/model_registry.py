@@ -193,6 +193,28 @@ class CanonicalModelRegistry:
     def get_all_by_role(self, role: str) -> list[CanonicalModelRecord]:
         return [m for m in self._models if role in m.roles or m.role == role]
 
+    def resolve_cloud_role(self, role: str) -> CanonicalModelRecord | None:
+        """Résolution canonique d'une cible cloud pour un rôle donné (force_cloud).
+
+        Procédure obligatoire :
+          1. Recherche tous les records associés au rôle via get_all_by_role().
+          2. Filtre les modèles non-Ollama (provider != 'ollama' et source != ModelSource.LOCAL).
+          3. S'il y a 0 candidat cloud -> FAIL-CLOSED (None).
+          4. S'il y a 1 candidat cloud -> cible canonique valide.
+          5. S'il y a >1 candidats cloud -> ambiguïté architecturale -> FAIL-CLOSED (None).
+        """
+        all_records = self.get_all_by_role(role)
+        cloud_records = [
+            m for m in all_records
+            if m.provider != "ollama" and m.source != ModelSource.LOCAL
+        ]
+
+        if len(cloud_records) == 1:
+            return cloud_records[0]
+        # 0 candidats ou >1 candidats (ambiguïté architecturale) -> FAIL-CLOSED
+        return None
+
+
 
 # ============================================================
 # SINGLETON (API PUBLIQUE — CRITIQUE)
