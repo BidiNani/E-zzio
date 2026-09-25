@@ -19,6 +19,7 @@ dependencies = [
 dev = [
     "pytest>=8.0.0",
     "pytest-asyncio>=0.23.0",
+    "pytest-xdist>=3.5.0",
     "ruff>=0.5.0",
 ]
 
@@ -62,12 +63,14 @@ asyncio_mode = "strict"
 asyncio_default_fixture_loop_scope = "function"
 asyncio_default_test_loop_scope = "function"
 markers = [
+    "unit: Isolated unit tests",
     "e2e: End-to-end tests (necessitent serveur web + browser Chromium)",
     "slow: tests lents (>10s)",
     "hardware: requires physical hardware",
     "integration: requires external services",
     "visual: tests de certification visuelle (PNG/video)",
 ]
+
 filterwarnings = [
     "ignore::DeprecationWarning:discord.*",
     "ignore::DeprecationWarning:aiosqlite.*",
