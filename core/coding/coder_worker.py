@@ -10,8 +10,8 @@
 
 **Garde-fous** :
 - Max ``MAX_ITERATIONS`` (par défaut 3)
-- Snapshot avant chaque modification (via git branch)
-- Rollback automatique si Verify échoue après épuisement des itérations
+- Snapshot du contenu original de chaque fichier avant sa première édition dans la session
+- Rollback automatique (restauration du contenu original / suppression des fichiers créés) si Verify échoue après épuisement des itérations
 - Validation par ``CodingPolicy`` avant exécution
 - Toutes les actions tracées (log)
 
@@ -106,6 +106,9 @@ class CoderWorker:
         )
         # Cooldown des providers ayant renvoyé 429 (nom -> timestamp)
         self._cooldowns: dict[str, float] = {}
+        # Etat original des fichiers touches dans la session en cours
+        # (path -> contenu original, ou None si le fichier n'existait pas)
+        self._original_state: dict[str, str | None] = {}
 
     def _is_in_cooldown(self, provider_name: str, cooldown_seconds: int = 120) -> bool:
         """Vérifie si un provider est en cooldown (429 récent)."""
@@ -231,12 +234,46 @@ class CoderWorker:
         """Applique les éditions via le bridge."""
         results = []
         for edit in edits:
+            # Capturer l'etat original avant la PREMIERE edition de ce fichier
+            # dans la session (les editions suivantes du meme fichier dans
+            # la meme session ne doivent pas ecraser ce snapshot).
+            if edit.path not in self._original_state:
+                existing = self.bridge.read_file(edit.path)
+                self._original_state[edit.path] = existing.stdout if existing.success else None
+
             logger.info("Écriture : %s", edit.path)
             result = self.bridge.write_file(edit.path, edit.content)
             results.append(result)
             if not result.success:
                 logger.error("Échec écriture %s : %s", edit.path, result.error)
         return results
+
+    def _rollback(self) -> None:
+        """Restaure l'etat original de tous les fichiers touches dans la session.
+
+        Fichiers qui existaient avant : contenu original restaure.
+        Fichiers crees pendant la session (n'existaient pas avant) : supprimes.
+        """
+        if self.dry_run:
+            logger.info("[DRY-RUN] Rollback simule (%d fichiers)", len(self._original_state))
+            return
+
+        for path, original_content in self._original_state.items():
+            if original_content is not None:
+                result = self.bridge.write_file(path, original_content)
+                if result.success:
+                    logger.info("Rollback : %s restaure a son contenu original", path)
+                else:
+                    logger.error("Rollback ECHEC sur %s : %s", path, result.error)
+            else:
+                # Le fichier n'existait pas avant -> le supprimer
+                try:
+                    full_path = self.bridge._resolve_path(path)
+                    if full_path.exists():
+                        full_path.unlink()
+                        logger.info("Rollback : %s supprime (cree pendant la session)", path)
+                except Exception as exc:
+                    logger.error("Rollback ECHEC suppression %s : %s", path, exc)
 
     # --------------------------------------------------------
     # VERIFY
@@ -278,6 +315,9 @@ class CoderWorker:
             )
 
         logger.info("CoderWorker : tâche = %s", request.task_description)
+
+        # Nouvelle session : on repart d'un etat original vierge
+        self._original_state = {}
 
         feedback = ""
         last_edits: list[FileEdit] = []
@@ -328,14 +368,16 @@ class CoderWorker:
             last_edits = edits
             logger.warning("Vérification échouée, itération suivante...")
 
-        # Échec après max_iterations
+        # Échec après max_iterations : rollback de tous les fichiers touches
+        self._rollback()
         return CodingResponse(
             success=False,
-            error=f"Échec après {self.max_iterations} itérations",
+            error=f"Échec après {self.max_iterations} itérations (rollback effectué)",
             iterations=self.max_iterations,
             result={
                 "last_edits": [e.path for e in last_edits],
                 "feedback": feedback,
+                "rolled_back_files": list(self._original_state.keys()),
             },
         )
 
