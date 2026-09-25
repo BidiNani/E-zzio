@@ -5,6 +5,7 @@ E-ZZIO Master (exclusive cognitive authority) and Hermes Agent (external worker)
 Features:
 - Ephemeral, per-task HERMES_HOME isolation with automatic cleanup.
 - Strict process tree termination on Windows and POSIX.
+- Governed capability enforcement: Tools, Skills, Plugins, MCP, Network, Memory, Delegation.
 - ModelRouter fidelity: verifies Hermes system event model and provider.
 - Fail-closed security via AgentPolicyGuard and AuditLedger logging.
 """
@@ -14,6 +15,7 @@ import asyncio
 import json
 import logging
 import os
+import re
 import shutil
 import sys
 import tempfile
@@ -22,17 +24,20 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from core.agent.agent_guard import AgentPolicyGuard
+from core.agent.hermes_worker_profiles import (
+    WorkerProfile,
+    parse_structured_result,
+    resolve_profile,
+)
 from core.security.audit_ledger import AuditLedger
 
 logger = logging.getLogger("HermesWorkerAdapter")
 
-DEFAULT_WORKER_TOOLSETS: tuple[str, ...] = ("file",)
+DEFAULT_WORKER_TOOLSETS: tuple[str, ...] = ()
 
-FORBIDDEN_WORKER_TOOLSETS: frozenset[str] = frozenset({
-    "terminal",
+# Toolsets unconditionally forbidden to all external workers
+GLOBAL_FORBIDDEN_TOOLSETS: frozenset[str] = frozenset({
     "code_execution",
-    "process",
-    "execute_code",
     "delegation",
     "memory",
     "session_search",
@@ -40,10 +45,20 @@ FORBIDDEN_WORKER_TOOLSETS: frozenset[str] = frozenset({
     "messaging",
     "discord",
     "discord_admin",
-    "browser",
-    "browser-cdp",
-    "browser-use",
     "computer_use",
+})
+
+# Backward compatibility alias
+FORBIDDEN_WORKER_TOOLSETS: frozenset[str] = frozenset({
+    "file",
+    "terminal",
+    "code_execution",
+    "process",
+    "execute_code",
+    "delegation",
+    "memory",
+    "session_search",
+    "browser",
 })
 
 
@@ -67,6 +82,8 @@ class HermesWorkerResult:
     hermes_version: str | None = None
     hermes_home: str | None = None
     command: list[str] = field(default_factory=list)
+    structured_analysis: dict[str, Any] = field(default_factory=dict)
+    resolved_capabilities: dict[str, Any] = field(default_factory=dict)
 
 
 class HermesWorkerAdapter:
@@ -92,7 +109,6 @@ class HermesWorkerAdapter:
         if explicit_bin and os.path.exists(explicit_bin):
             return explicit_bin
 
-        # Default paths on Windows / POSIX
         candidates = [
             r"G:\Hermes\bin\hermes.exe",
             r"G:\Hermes\bin\hermes.cmd",
@@ -136,6 +152,8 @@ class HermesWorkerAdapter:
         workspace_root: str | None = None,
         safe_mode: bool = True,
         toolsets: list[str] | None = None,
+        skills: list[str] | None = None,
+        max_turns: int | None = None,
     ) -> list[str]:
         """Constructs the bounded, headless CLI command for Hermes Agent."""
         cmd = [
@@ -169,6 +187,12 @@ class HermesWorkerAdapter:
         if active_toolsets:
             cmd.extend(["--toolsets", ",".join(active_toolsets)])
 
+        if skills:
+            cmd.extend(["--skills", ",".join(skills)])
+
+        if max_turns:
+            cmd.extend(["--max-turns", str(max_turns)])
+
         return cmd
 
     def parse_stream_json(
@@ -193,7 +217,6 @@ class HermesWorkerAdapter:
         for line in raw_stdout.splitlines():
             line_str = line.strip()
             if not line_str or not line_str.startswith("{"):
-                # Non-JSON banner or line
                 if "session_id:" in line_str and not session_id:
                     session_id = line_str.split(":", 1)[1].strip()
                 continue
@@ -224,9 +247,7 @@ class HermesWorkerAdapter:
                 if not actual_model and data.get("model"):
                     actual_model = data.get("model")
 
-        # Fallback if no result event found but text present
         if not final_text and not error_msg:
-            # Check if there is clean text
             non_json_lines = [
                 line_item for line_item in raw_stdout.splitlines()
                 if not line_item.strip().startswith("{")
@@ -260,26 +281,64 @@ class HermesWorkerAdapter:
         provider: str | None = None,
         timeout: int | None = None,
         toolsets: list[str] | None = None,
-        safe_mode: bool = True,
+        safe_mode: bool | None = None,
         env_overrides: dict[str, str] | None = None,
         isolate_home: bool = True,
+        profile: WorkerProfile | str | None = None,
+        workspace_root: str | None = None,
         **kwargs: Any,
     ) -> HermesWorkerResult:
-        """Submits a bounded execution subtask to the Hermes external worker."""
+        """Submits a bounded execution subtask to the Hermes external worker under profile governance."""
         start_time = time.time()
-        timeout_sec = timeout if timeout is not None else self.default_timeout_sec
         hermes_ver = self.get_hermes_version()
 
-        # 1. Policy Gate Evaluation (Fail-Closed)
-        for forbidden in ["rmdir /s", "del /s", "rm -rf", "git reset --hard", "format "]:
-            if forbidden in prompt.lower():
-                reason = f"Forbidden destructive shell command in prompt: {forbidden}"
+        # 1. Deterministic Profile Resolution & Capability Snapshot
+        try:
+            resolved_profile = resolve_profile(profile or "context_reader")
+        except ValueError as val_err:
+            reason = str(val_err)
+            logger.warning("[HermesWorkerAdapter POLICY DENIED] %s", reason)
+            return HermesWorkerResult(
+                task_id=task_id,
+                status="POLICY_DENIED",
+                stdout="",
+                stderr=f"[POLICY_DENIED] {reason}",
+                exit_code=-2,
+                duration_ms=0,
+                output="",
+                error=reason,
+                model=model,
+                hermes_version=hermes_ver,
+            )
+
+        target_workspace = workspace_root or kwargs.get("workspace") or self.workspace_root
+        caps = resolved_profile.resolve_capabilities(workspace_root=target_workspace)
+
+        # Audit Capability Resolution Snapshot
+        self._record_audit(
+            task_id=task_id,
+            action="WORKER_CAPABILITY_RESOLVED",
+            status="RESOLVED",
+            payload={
+                "profile": str(resolved_profile.name),
+                "capabilities": caps.to_dict(),
+                "model": model,
+                "provider": provider,
+            },
+        )
+
+        # 2. Operator Workspace Confinement Guard
+        if not resolved_profile.read_only:
+            norm_ws = os.path.normcase(os.path.abspath(target_workspace))
+            norm_core = os.path.normcase(os.path.abspath(r"G:\AI\E-zzio"))
+            if norm_ws == norm_core:
+                reason = "Operator profile is prohibited from targeting protected repository root directly"
                 logger.warning("[HermesWorkerAdapter POLICY DENIED] %s", reason)
                 self._record_audit(
                     task_id=task_id,
-                    action="WORKER_POLICY_DENIED",
+                    action="WORKER_WORKSPACE_POLICY_DENIED",
                     status="DENIED",
-                    payload={"reason": reason, "prompt_preview": prompt[:150]},
+                    payload={"reason": reason, "target_workspace": target_workspace},
                 )
                 return HermesWorkerResult(
                     task_id=task_id,
@@ -292,11 +351,153 @@ class HermesWorkerAdapter:
                     error=reason,
                     model=model,
                     hermes_version=hermes_ver,
+                    resolved_capabilities=caps.to_dict(),
                 )
 
-        # Toolsets policy check (Fail-Closed)
-        active_toolsets = list(toolsets) if toolsets is not None else list(DEFAULT_WORKER_TOOLSETS)
-        forbidden_requested = [ts for ts in active_toolsets if ts in FORBIDDEN_WORKER_TOOLSETS]
+        # 3. Read-Only Policy & Escalation Guard
+        if resolved_profile.read_only:
+            # If zero-tool profile receives explicit toolsets
+            if not resolved_profile.hermes_toolsets and toolsets:
+                reason = f"Worker profile '{resolved_profile.name}' enforces zero tools; explicit toolsets rejected"
+                logger.warning("[HermesWorkerAdapter POLICY DENIED] %s", reason)
+                self._record_audit(
+                    task_id=task_id,
+                    action="WORKER_TOOL_POLICY_DENIED",
+                    status="DENIED",
+                    payload={"reason": reason, "requested_toolsets": toolsets},
+                )
+                return HermesWorkerResult(
+                    task_id=task_id,
+                    status="POLICY_DENIED",
+                    stdout="",
+                    stderr=f"[POLICY_DENIED] {reason}",
+                    exit_code=-2,
+                    duration_ms=0,
+                    output="",
+                    error=reason,
+                    model=model,
+                    hermes_version=hermes_ver,
+                    resolved_capabilities=caps.to_dict(),
+                )
+            # If read-only profile attempts mutation or terminal tools
+            if toolsets:
+                for ts in toolsets:
+                    if ts in ("terminal", "file") or ts not in resolved_profile.hermes_toolsets:
+                        reason = f"Worker profile '{resolved_profile.name}' is read-only; prohibited toolset '{ts}' rejected"
+                        logger.warning("[HermesWorkerAdapter POLICY DENIED] %s", reason)
+                        self._record_audit(
+                            task_id=task_id,
+                            action="WORKER_TOOL_POLICY_DENIED",
+                            status="DENIED",
+                            payload={"reason": reason, "requested_toolsets": toolsets},
+                        )
+                        return HermesWorkerResult(
+                            task_id=task_id,
+                            status="POLICY_DENIED",
+                            stdout="",
+                            stderr=f"[POLICY_DENIED] {reason}",
+                            exit_code=-2,
+                            duration_ms=0,
+                            output="",
+                            error=reason,
+                            model=model,
+                            hermes_version=hermes_ver,
+                            resolved_capabilities=caps.to_dict(),
+                        )
+
+        # 4. Prohibited Plugins and Arbitrary MCP Manipulation Guard
+        lower_prompt = prompt.lower()
+        forbidden_plugin_keywords = [
+            "plugin install", "plugins install", "install plugin", "plugin add",
+            "plugins add", "mcp connect", "mcp install", "mcp add", "mcp discover",
+        ]
+        for fkw in forbidden_plugin_keywords:
+            if fkw in lower_prompt:
+                reason = f"Prohibited plugin/MCP dynamic modification attempt in prompt: '{fkw}'"
+                logger.warning("[HermesWorkerAdapter POLICY DENIED] %s", reason)
+                self._record_audit(
+                    task_id=task_id,
+                    action="WORKER_POLICY_DENIED",
+                    status="DENIED",
+                    payload={"reason": reason, "keyword": fkw},
+                )
+                return HermesWorkerResult(
+                    task_id=task_id,
+                    status="POLICY_DENIED",
+                    stdout="",
+                    stderr=f"[POLICY_DENIED] {reason}",
+                    exit_code=-2,
+                    duration_ms=0,
+                    output="",
+                    error=reason,
+                    model=model,
+                    hermes_version=hermes_ver,
+                    resolved_capabilities=caps.to_dict(),
+                )
+
+        # 5. Shell Command Safety Guard (Fail-Closed)
+        forbidden_substrings = ["rmdir /s", "del /s", "rm -rf", "git reset --hard"]
+        matched_forbidden = next((f for f in forbidden_substrings if f in lower_prompt), None)
+        if not matched_forbidden and re.search(r"\bformat\s+[a-zA-Z]:", prompt, re.IGNORECASE):
+            matched_forbidden = "format <drive>:"
+
+        if matched_forbidden:
+            reason = f"Forbidden destructive shell command in prompt: {matched_forbidden}"
+            logger.warning("[HermesWorkerAdapter POLICY DENIED] %s", reason)
+            self._record_audit(
+                task_id=task_id,
+                action="WORKER_POLICY_DENIED",
+                status="DENIED",
+                payload={"reason": reason, "prompt_preview": prompt[:150]},
+            )
+            return HermesWorkerResult(
+                task_id=task_id,
+                status="POLICY_DENIED",
+                stdout="",
+                stderr=f"[POLICY_DENIED] {reason}",
+                exit_code=-2,
+                duration_ms=0,
+                output="",
+                error=reason,
+                model=model,
+                hermes_version=hermes_ver,
+                resolved_capabilities=caps.to_dict(),
+            )
+
+        # 6. Active Toolsets and Settings from Profile
+        active_toolsets = list(toolsets) if toolsets is not None else list(resolved_profile.hermes_toolsets)
+        active_skills = list(resolved_profile.skills)
+        effective_safe_mode = safe_mode if safe_mode is not None else resolved_profile.safe_mode
+        timeout_sec = timeout if timeout is not None else resolved_profile.default_timeout_sec
+        max_turns = resolved_profile.max_turns
+
+        # Disallow globally forbidden toolsets (memory, delegation, code_execution)
+        unconditional_forbidden = [ts for ts in active_toolsets if ts in GLOBAL_FORBIDDEN_TOOLSETS]
+        if unconditional_forbidden:
+            reason = f"Forbidden toolsets requested for bounded worker: {', '.join(unconditional_forbidden)}"
+            logger.warning("[HermesWorkerAdapter POLICY DENIED] %s", reason)
+            self._record_audit(
+                task_id=task_id,
+                action="WORKER_TOOL_POLICY_DENIED",
+                status="DENIED",
+                payload={"reason": reason, "forbidden_toolsets": unconditional_forbidden},
+            )
+            return HermesWorkerResult(
+                task_id=task_id,
+                status="POLICY_DENIED",
+                stdout="",
+                stderr=f"[POLICY_DENIED] {reason}",
+                exit_code=-2,
+                duration_ms=0,
+                output="",
+                error=reason,
+                model=model,
+                hermes_version=hermes_ver,
+                resolved_capabilities=caps.to_dict(),
+            )
+
+        # Disallow toolsets not allowed for this profile
+        forbidden_requested = [ts for ts in active_toolsets if ts not in resolved_profile.hermes_toolsets]
         if forbidden_requested:
             reason = f"Forbidden toolsets requested for bounded worker: {', '.join(forbidden_requested)}"
             logger.warning("[HermesWorkerAdapter POLICY DENIED] %s", reason)
@@ -317,16 +518,19 @@ class HermesWorkerAdapter:
                 error=reason,
                 model=model,
                 hermes_version=hermes_ver,
+                resolved_capabilities=caps.to_dict(),
             )
 
-        # 2. Build CLI Command
+        # 7. Build CLI Command
         cmd = self.build_cli_command(
             prompt=prompt,
             model=model,
             provider=provider,
-            workspace_root=self.workspace_root,
-            safe_mode=safe_mode,
+            workspace_root=target_workspace,
+            safe_mode=effective_safe_mode,
             toolsets=active_toolsets,
+            skills=active_skills,
+            max_turns=max_turns,
         )
 
         exec_env = os.environ.copy()
@@ -335,7 +539,6 @@ class HermesWorkerAdapter:
             temp_home = tempfile.mkdtemp(prefix="ezzio_hermes_home_")
             exec_env["HERMES_HOME"] = temp_home
 
-        # If Ollama local provider is requested, ensure local base_url is set
         if provider == "ollama":
             exec_env.setdefault("OPENAI_BASE_URL", "http://127.0.0.1:11434/v1")
             exec_env.setdefault("OPENAI_API_KEY", "ollama")
@@ -345,7 +548,7 @@ class HermesWorkerAdapter:
 
         self._record_audit(
             task_id=task_id,
-            action="WORKER_SUBTASK_SUBMITTED",
+            action="WORKER_SUBMITTED",
             status="SUBMITTED",
             payload={
                 "cmd": cmd[:4],
@@ -353,17 +556,20 @@ class HermesWorkerAdapter:
                 "provider": provider,
                 "timeout": timeout_sec,
                 "hermes_home": temp_home,
+                "profile": str(resolved_profile.name),
+                "toolsets": active_toolsets,
+                "skills": active_skills,
             },
         )
 
-        # 3. Subprocess Execution with Timeout and Cancellation
+        # 8. Subprocess Execution with Timeout and Cancellation
         process: asyncio.subprocess.Process | None = None
         try:
             process = await asyncio.create_subprocess_exec(
                 *cmd,
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
-                cwd=self.workspace_root,
+                cwd=target_workspace,
                 env=exec_env,
             )
             self._active_processes[task_id] = process
@@ -377,7 +583,7 @@ class HermesWorkerAdapter:
             exit_code = process.returncode if process.returncode is not None else 0
             duration_ms = int((time.time() - start_time) * 1000)
 
-            # 4. Parse Structured JSONL Output
+            # 9. Parse Output
             (
                 final_text,
                 tool_events,
@@ -390,6 +596,8 @@ class HermesWorkerAdapter:
             effective_exit = parsed_exit if parsed_exit is not None else exit_code
 
             status = "SUCCESS" if effective_exit == 0 and not error_msg else "FAILED"
+            structured = parse_structured_result(final_text or raw_stdout)
+
             result = HermesWorkerResult(
                 task_id=task_id,
                 status=status,
@@ -408,11 +616,14 @@ class HermesWorkerAdapter:
                 hermes_version=hermes_ver,
                 hermes_home=temp_home,
                 command=cmd,
+                structured_analysis=structured,
+                resolved_capabilities=caps.to_dict(),
             )
 
+            audit_action = "WORKER_COMPLETED" if status == "SUCCESS" else "WORKER_FAILED"
             self._record_audit(
                 task_id=task_id,
-                action="WORKER_SUBTASK_COMPLETED",
+                action=audit_action,
                 status=status,
                 payload={
                     "exit_code": effective_exit,
@@ -454,6 +665,7 @@ class HermesWorkerAdapter:
                 hermes_version=hermes_ver,
                 hermes_home=temp_home,
                 command=cmd,
+                resolved_capabilities=caps.to_dict(),
             )
 
         except Exception as exc:
@@ -484,6 +696,7 @@ class HermesWorkerAdapter:
                 hermes_version=hermes_ver,
                 hermes_home=temp_home,
                 command=cmd,
+                resolved_capabilities=caps.to_dict(),
             )
 
         finally:

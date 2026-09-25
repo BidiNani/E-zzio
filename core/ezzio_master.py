@@ -682,16 +682,47 @@ class EzzioMaster:
 
                     # Exécution selon le worker : Hermes external worker OU provider standard
                     if worker_type == "hermes":
-                        hermes_res = await self.hermes_adapter.submit(
-                            task_id=task_id,
-                            prompt=prompt_to_send,
-                            model=routing.get("model"),
-                            provider=routing.get("provider"),
-                            timeout=spec.get("timeout", 60),
+                        from core.agent.hermes_worker_profiles import (
+                            build_context_pack,
+                            render_context_prompt,
+                            resolve_profile,
                         )
-                        sub_output = hermes_res.output or hermes_res.stdout
-                        worker_pid = hermes_res.pid
-                        worker_status = hermes_res.status
+                        requested_profile = spec.get("profile") or task_role
+                        try:
+                            worker_profile = resolve_profile(requested_profile)
+                        except ValueError:
+                            worker_profile = resolve_profile("context_reader")
+
+                        spec_files = spec.get("files") or spec.get("context_files")
+                        if spec_files and worker_profile.name in ("context_reader", "reader", "context_auditor", "auditor"):
+                            try:
+                                pack = build_context_pack(
+                                    task_id=task_id,
+                                    objective=prompt_to_send,
+                                    file_paths=spec_files,
+                                    workspace_root=self.workspace_root,
+                                    audit_ledger=getattr(self.hermes_adapter, "audit_ledger", None),
+                                )
+                                prompt_to_send = render_context_prompt(pack, worker_profile)
+                            except Exception as pack_err:
+                                sub_output = f"[POLICY_DENIED] Context pack creation failed: {pack_err}"
+                                worker_status = "POLICY_DENIED"
+                                is_valid = False
+                                break
+
+                        if worker_status != "POLICY_DENIED":
+                            hermes_res = await self.hermes_adapter.submit(
+                                task_id=task_id,
+                                prompt=prompt_to_send,
+                                model=routing.get("model"),
+                                provider=routing.get("provider"),
+                                timeout=spec.get("timeout", worker_profile.default_timeout_sec),
+                                profile=worker_profile,
+                                workspace_root=spec.get("workspace_root") or ws_root,
+                            )
+                            sub_output = hermes_res.output or hermes_res.stdout
+                            worker_pid = hermes_res.pid
+                            worker_status = hermes_res.status
                     elif tool_result and not spec.get("prompt"):
                         sub_output = tool_result
                     else:
@@ -727,6 +758,14 @@ class EzzioMaster:
                         is_valid = False
                     if worker_type == "hermes" and worker_status not in ("SUCCESS", "COMPLETED"):
                         is_valid = False
+
+                    _audit_command("VALIDATION_RESULT", {
+                        "task_id": task_id,
+                        "worker": worker_type,
+                        "role": task_role,
+                        "is_valid": is_valid,
+                        "status": worker_status,
+                    })
 
                     if is_valid:
                         validated = True
