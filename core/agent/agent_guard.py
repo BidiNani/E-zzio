@@ -77,9 +77,9 @@ class AgentPolicyGuard:
         """Évalue si l'outil et ses arguments respectent la politique de sécurité du Runtime."""
 
         # 1. Protection du Filesystem / Patches / Test Files
-        if tool_name in ["read_file", "apply_patch", "write_file", "read_file_slice", "run_test_file"]:
-            path = args.get("path", "") or args.get("test_path", "")
-            if not path and tool_name != "run_test_file":
+        if tool_name in ["read_file", "apply_patch", "write_file", "read_file_slice", "run_test_file", "get_symbol_map"]:
+            path = args.get("path", "") or args.get("test_path", "") or args.get("path_filter", "")
+            if not path and tool_name not in ["run_test_file", "get_symbol_map"]:
                 return False, "Chemin de fichier manquant pour l'opération."
 
             if path:
@@ -114,7 +114,7 @@ class AgentPolicyGuard:
             return "CRITICAL", reason
 
         # 2. Outils de lecture / inspection -> SAFE
-        if tool_name in ["read_file", "read_file_slice", "grep_codebase", "find_files", "get_codebase_map"]:
+        if tool_name in ["read_file", "read_file_slice", "grep_codebase", "find_files", "get_codebase_map", "get_symbol_map"]:
             return "SAFE", "Opération de lecture ou recherche"
 
         # 3. Tests unitaires -> SAFE

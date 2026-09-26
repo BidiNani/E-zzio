@@ -38,17 +38,20 @@ class CodebaseIndexer:
         lines = self.get_file_tree(max_depth=2)
         return "\n".join(lines)
 
-    def get_repo_map(self, max_files: int = 10) -> str:
+    def get_repo_map(self, max_files: int = 10, path_filter: str | None = None) -> str:
         """Cartographie compacte des symboles AST du dépôt."""
         import ast
         symbols = []
         count = 0
+        norm_filter = os.path.normpath(path_filter).lower() if path_filter else None
         for root, dirs, files in os.walk(self.workspace_root):
             dirs[:] = [d for d in dirs if d not in self.ignored_dirs]
             for file in files:
                 if file.endswith(".py"):
                     full_path = os.path.join(root, file)
                     rel_path = os.path.relpath(full_path, self.workspace_root)
+                    if norm_filter and norm_filter not in os.path.normpath(rel_path).lower():
+                        continue
                     try:
                         with open(full_path, encoding="utf-8", errors="ignore") as f:
                             tree = ast.parse(f.read(), filename=file)

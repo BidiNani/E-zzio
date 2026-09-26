@@ -55,6 +55,11 @@ class ToolRegistry:
                 "parameters": {}
             },
             {
+                "name": "get_symbol_map",
+                "description": "Fournit la cartographie des symboles AST (classes et fonctions) du dépôt.",
+                "parameters": {"max_files": "nombre max de fichiers", "path_filter": "filtre optionnel de chemin"}
+            },
+            {
                 "name": "grep_codebase",
                 "description": "Recherche une chaîne de caractères dans les fichiers du workspace.",
                 "parameters": {"query": "terme à chercher"}
@@ -200,6 +205,11 @@ class ToolRegistry:
         try:
             if tool_name == "get_codebase_map":
                 out = self.indexer.get_compact_map()
+
+            elif tool_name == "get_symbol_map":
+                max_f = int(args.get("max_files", 10))
+                p_filter = args.get("path_filter")
+                out = self.indexer.get_repo_map(max_files=max_f, path_filter=p_filter)
 
             elif tool_name == "grep_codebase":
                 query = args.get("query", "").lower()
