@@ -42,9 +42,12 @@ def _clean_state_between_tests():
     yield
     # 1. Fermer les event loops orphelines
     try:
-        loop = asyncio.get_event_loop_policy().get_event_loop()
-        if loop and not loop.is_closed() and not loop.is_running():
-            loop.close()
+        import warnings
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", DeprecationWarning)
+            loop = asyncio.get_event_loop_policy().get_event_loop()
+            if loop and not loop.is_closed() and not loop.is_running():
+                loop.close()
     except Exception:
         pass
 
