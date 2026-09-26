@@ -109,10 +109,15 @@ ALLOWED_DEPENDENCY_WHITELIST: set[str] = {
 }
 
 
-def register_allowed_dependency(package_name: str) -> None:
+def register_allowed_dependency(package_name: str) -> bool:
     """Enregistre dynamiquement une dépendance de confiance dans la whitelist."""
-    if package_name and isinstance(package_name, str):
-        ALLOWED_DEPENDENCY_WHITELIST.add(package_name.strip())
+    if not package_name or not isinstance(package_name, str):
+        return False
+    cleaned = package_name.strip()
+    if not cleaned or cleaned.startswith("-") or any(c in cleaned for c in " \t\r\n;:`$()\"'\\/"):
+        return False
+    ALLOWED_DEPENDENCY_WHITELIST.add(cleaned)
+    return True
 
 
 class CapabilityManager:
