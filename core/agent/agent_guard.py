@@ -127,9 +127,18 @@ class AgentPolicyGuard:
 
         # 5. Commandes PowerShell
         if tool_name == "run_powershell":
-            cmd = args.get("command", "").lower()
-            if any(t in cmd for t in ["pytest", "git status", "git diff", "git log", "git show", "ruff"]):
+            cmd = args.get("command", "")
+            cmd_lower = cmd.lower()
+            if any(t in cmd_lower for t in ["pytest", "ruff"]):
                 return "SAFE", "Commande shell de test ou d'inspection"
+            if "git" in cmd_lower:
+                from core.agent.command_executor import GovernedCommandExecutor
+                exec_cls, reason = GovernedCommandExecutor(self.workspace_root).classify_action(cmd)
+                if exec_cls == "SAFE":
+                    return "SAFE", f"Commande shell git d'inspection : {reason}"
+                elif exec_cls == "CRITICAL":
+                    return "CRITICAL", f"Commande shell git critique : {reason}"
+                return "SENSITIVE", f"Commande shell git modificatrice d'état : {reason}"
             return "SENSITIVE", "Commande shell susceptible d'altérer l'état"
 
         return "SAFE", "Action autorisée par défaut"

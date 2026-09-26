@@ -182,7 +182,7 @@ class GovernedCommandExecutor:
                 if sub in SAFE_GIT_SUBCOMMANDS:
                     return "SAFE", f"Opération git d'inspection sécurisée: {sub}"
                 return "SENSITIVE", f"Opération git non-inspectrice: {sub}"
-            return "SAFE", "Opération git d'inspection sécurisée: status"
+            return "SENSITIVE", "Sous-commande git absente ou ambiguë — classification fail-closed"
 
         # 6. Outils de test et d'analyse statique
         if base_exe in ["pytest", "pytest.exe", "ruff", "ruff.exe"]:
