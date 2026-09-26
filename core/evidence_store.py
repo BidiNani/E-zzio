@@ -1,13 +1,17 @@
 import json
 from datetime import UTC, datetime
+from pathlib import Path
 from typing import Any
 
 import aiosqlite
 
 
 class EvidenceStore:
-    def __init__(self, db_path: str = "runtime/evidence/evidence.db"):
-        self.db_path = db_path
+    def __init__(self, db_path: str = "runtime/evidence/evidence.db", workspace_root: str = r"G:\AI\E-zzio"):
+        if not Path(db_path).is_absolute():
+            self.db_path = str(Path(workspace_root) / db_path)
+        else:
+            self.db_path = db_path
 
     async def init(self) -> None:
         async with aiosqlite.connect(self.db_path) as db:

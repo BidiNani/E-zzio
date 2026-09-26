@@ -14,12 +14,18 @@ from core.evidence_store import EvidenceStore
 logger = logging.getLogger("ezzio.memory.gateway")
 
 
+from pathlib import Path
+
+
 class UnifiedMemoryGateway:
     """Passerelle unifiée : PRAGMAs NVMe, indexation FTS5, recherche croisée et cycle de vie."""
 
-    def __init__(self, db_path: str = "runtime/evidence/evidence.db"):
-        self.db_path = db_path
-        self.evidence_store = EvidenceStore(db_path)
+    def __init__(self, db_path: str = "runtime/evidence/evidence.db", workspace_root: str = r"G:\AI\E-zzio"):
+        if not Path(db_path).is_absolute():
+            self.db_path = str(Path(workspace_root) / db_path)
+        else:
+            self.db_path = db_path
+        self.evidence_store = EvidenceStore(self.db_path, workspace_root=workspace_root)
 
     async def init(self) -> None:
         """Initialisation des PRAGMAs haute vitesse et des schémas."""

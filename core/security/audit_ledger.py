@@ -24,8 +24,11 @@ GENESIS_HASH = "0" * 64
 class AuditLedger:
     """Registre d'audit append-only scellé cryptographiquement et protégé contre les écritures concurrentes."""
 
-    def __init__(self, db_path: str = "runtime/evidence/audit_ledger.db"):
-        self.db_path = Path(db_path).resolve()
+    def __init__(self, db_path: str = "runtime/evidence/audit_ledger.db", workspace_root: str = r"G:\AI\E-zzio"):
+        if not Path(db_path).is_absolute():
+            self.db_path = (Path(workspace_root) / db_path).resolve()
+        else:
+            self.db_path = Path(db_path).resolve()
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         self._write_lock = threading.Lock()
         self._init_db()

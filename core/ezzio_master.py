@@ -4,6 +4,7 @@ Version épurée : GeminiProvider direct, plus de fédération/missions/workers.
 """
 from __future__ import annotations
 
+import asyncio
 import logging
 import time
 import uuid
@@ -38,6 +39,45 @@ def _audit_command(action: str, payload: dict[str, Any],
         logger.warning("[EzzioMaster] Audit commande non enregistré : %s", exc)
 
 
+def determine_intent(
+    user_prompt: str,
+    mission_profile: str = "AUTO",
+    is_mission: bool = False,
+) -> str:
+    """Détermine dynamiquement l'intention : CHAT ou MISSION.
+
+    Règles :
+      - Si is_mission est True ou mission_profile in ("MISSION", "COMPLEX_MISSION", "COMPLEX") -> MISSION.
+      - Si mission_profile in ("STANDARD", "CHAT", "CONVERSATIONAL") -> CHAT.
+      - Si mission_profile in ("AUTO", "", "DEFAULT"):
+          Analyse de l'intention réelle d'action/exécution vs conversation/question.
+    """
+    if is_mission:
+        return "MISSION"
+
+    prof = (mission_profile or "AUTO").upper().strip()
+    if prof in ("MISSION", "COMPLEX_MISSION", "COMPLEX"):
+        return "MISSION"
+    if prof in ("STANDARD", "CHAT", "CONVERSATIONAL"):
+        return "CHAT"
+
+    # En mode AUTO, classification déterministe / heuristique d'intention d'action vs conversation
+    p_lower = user_prompt.lower().strip()
+
+    # Mots-clés/Intentions explicites d'exécution / d'audit / de modification technique (MISSION)
+    mission_triggers = (
+        "audite", "audit ", "inspecte et corrige", "exécute les tests", "execute les tests",
+        "crée un patch", "cree un patch", "refactorise", "corrige le bug", "fix the bug",
+        "déploie", "deploie", "analyse et corrige", "vérifie et corrige", "verifie et corrige",
+        "exécute la tâche", "execute la tache", "run mission", "lance la mission"
+    )
+    if any(trigger in p_lower for trigger in mission_triggers):
+        return "MISSION"
+
+    # Tout le reste (salutations, questions générales, demandes d'explications, questions sur statut/avis) -> CHAT
+    return "CHAT"
+
+
 class EzzioMaster:
     """Orchestrateur central E-ZZIO : conversation via ProviderFactory canonique."""
 
@@ -52,6 +92,7 @@ class EzzioMaster:
         if self.hermes_adapter is None:
             from core.agent.hermes_worker_adapter import HermesWorkerAdapter
             self.hermes_adapter = HermesWorkerAdapter(workspace_root=self.workspace_root)
+        self._background_tasks: set[asyncio.Task] = set()
 
 
     async def _record_assistant_memory(self, res_dict: dict[str, Any],
@@ -99,6 +140,20 @@ class EzzioMaster:
                         continue
                     role = "Utilisateur" if h.get("role") == "user" else "Assistant"
                     ctx_lines.append(f"{role} : {content[:400]}")
+            except Exception:
+                pass
+
+            try:
+                from core.agent.mission_controller import mission_registry
+                active_m = mission_registry.get_active_mission_for_session(session_id)
+                if not active_m:
+                    active_m = mission_registry.get_latest_mission_for_session(session_id)
+                if active_m:
+                    m_st = str(active_m.status.value if hasattr(active_m.status, "value") else active_m.status)
+                    m_line = f"Mission active/récente (#{active_m.mission_id}) : Statut={m_st} | Objectif: {active_m.goal[:150]}"
+                    if active_m.result and active_m.result.get("synthesis"):
+                        m_line += f" | Synthèse: {active_m.result.get('synthesis')[:200]}"
+                    ctx_lines.append(m_line)
             except Exception:
                 pass
         parts = [persona.strip(), "- Réponds en français, direct et concis.",
@@ -325,7 +380,7 @@ class EzzioMaster:
         force_cloud: bool = False,
         session_id: str = "",
         system_prompt: str = "",
-        mission_profile: str = "STANDARD",
+        mission_profile: str = "AUTO",
         model_target: str | None = "auto",
         channel: str = "web",
         user_id: str = "operator",
@@ -342,9 +397,80 @@ class EzzioMaster:
         # (important pour les tests et l'injection de memoire custom)
         self.harness.memory = self.memory
 
-        # Router vers le runtime mission uniquement si mission_profile est MISSION/COMPLEX
-        if (mission_profile or "").upper() in ("MISSION", "COMPLEX_MISSION", "COMPLEX") or kwargs.get("is_mission"):
+        # Détermination dynamique de l'intention : CHAT vs MISSION
+        intent = determine_intent(user_prompt, mission_profile, kwargs.get("is_mission", False))
+        _audit_command("INTENT_DECIDED", {
+            "intent": intent,
+            "profile": mission_profile,
+            "prompt_preview": user_prompt[:100],
+            "session_id": session_id or ""
+        })
+
+        if intent == "MISSION":
             logger.info("[EzzioMaster] Execution d'une mission multi-agents (profile=%s, channel=%s)", mission_profile, channel)
+
+            if kwargs.get("background") or kwargs.get("async_mission"):
+                from core.agent.mission_controller import (
+                    MissionRecord,
+                    MissionStatus,
+                    mission_registry,
+                )
+                mission_id = f"msn-{uuid.uuid4().hex[:8]}"
+                mission_record = MissionRecord(
+                    mission_id=mission_id,
+                    goal=user_prompt,
+                    worker_type="MULTI_AGENT",
+                    status=MissionStatus.RUNNING,
+                    request_id=session_id or "",
+                    created_at=datetime.now(UTC).isoformat(),
+                )
+                mission_registry.register(mission_record)
+
+                async def _run_bg_mission():
+                    try:
+                        return await self.orchestrate_multi_agent_mission(
+                            mission_prompt=user_prompt,
+                            subtask_specs=kwargs.get("subtask_specs"),
+                            session_id=session_id,
+                            channel=channel,
+                            user_id=user_id,
+                            mission_id=mission_id,
+                        )
+                    except asyncio.CancelledError:
+                        logger.warning("[EzzioMaster] Background mission %s cancelled", mission_id)
+                        mission_record.status = MissionStatus.CANCELLED
+                        mission_record.result = {"status": "CANCELLED", "error": "Mission cancelled"}
+                        raise
+                    except Exception as bg_err:
+                        logger.error("[EzzioMaster] Background mission %s failed: %s", mission_id, bg_err)
+                        mission_record.status = MissionStatus.FAILED
+                        mission_record.result = {"error": str(bg_err)}
+
+                bg_task = asyncio.create_task(_run_bg_mission())
+                mission_record._async_task = bg_task
+                self._background_tasks.add(bg_task)
+                bg_task.add_done_callback(self._background_tasks.discard)
+
+                elapsed_ms = int((time.perf_counter() - start_time) * 1000)
+                res_bg = {
+                    "response": f"[Mission #{mission_id} démarrée en arrière-plan]",
+                    "answer": f"[Mission #{mission_id} démarrée en arrière-plan]",
+                    "content": f"[Mission #{mission_id} démarrée en arrière-plan]",
+                    "message": f"[Mission #{mission_id} démarrée en arrière-plan]",
+                    "source": "Master / TaskDAG Background",
+                    "authority": "CanonicalIdentity",
+                    "model": "auto",
+                    "provider": "gemini",
+                    "mission": mission_profile or "MISSION",
+                    "channel": channel,
+                    "elapsed_ms": elapsed_ms,
+                    "ok": True,
+                    "mission_id": mission_id,
+                    "status": "RUNNING",
+                    "used_fallback": False,
+                }
+                return await self._record_assistant_memory(res_bg, session_id, channel)
+
             mission_res = await self.orchestrate_multi_agent_mission(
                 mission_prompt=user_prompt,
                 subtask_specs=kwargs.get("subtask_specs"),
@@ -554,15 +680,21 @@ class EzzioMaster:
         router = ModelRouter()
 
         # 0. Initialisation et enregistrement de la Mission dans le MissionRegistry
-        mission_id = f"msn-{uuid.uuid4().hex[:8]}"
-        mission_record = MissionRecord(
-            mission_id=mission_id,
-            goal=mission_prompt,
-            worker_type="MULTI_AGENT",
-            status=MissionStatus.RUNNING,
-            created_at=datetime.now(UTC).isoformat(),
-        )
-        mission_registry.register(mission_record)
+        existing_mission_id = kwargs.get("mission_id")
+        if existing_mission_id and mission_registry.get(existing_mission_id):
+            mission_id = existing_mission_id
+            mission_record = mission_registry.get(existing_mission_id)
+        else:
+            mission_id = f"msn-{uuid.uuid4().hex[:8]}"
+            mission_record = MissionRecord(
+                mission_id=mission_id,
+                goal=mission_prompt,
+                worker_type="MULTI_AGENT",
+                status=MissionStatus.RUNNING,
+                request_id=session_id or "",
+                created_at=datetime.now(UTC).isoformat(),
+            )
+            mission_registry.register(mission_record)
 
         # 1. Décomposition en sous-tâches si non fournies (avec dépendances réelles)
         if not subtask_specs:

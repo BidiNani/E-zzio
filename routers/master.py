@@ -19,7 +19,7 @@ class MasterPrompt(BaseModel):
     text: str
     speed: str = "auto"
     force_cloud: bool = True
-    mission_profile: str = "STANDARD"
+    mission_profile: str = "AUTO"
     model_target: str | None = "auto"
     channel: str = "web"
     session_id: str = ""
@@ -88,13 +88,14 @@ async def get_system_diagnostics():
     agents = [a.to_dict() for a in agent_registry.list_agents()]
 
     # 3. État des bases de données SQLite (intégrité & WAL)
+    ws_root = Path(r"G:\AI\E-zzio")
     db_health = {}
     for db_name, db_file in [
         ("tasks", "runtime/state/tasks.db"),
         ("audit", "runtime/evidence/audit_ledger.db"),
         ("artifacts", "runtime/evidence/artifact_provenance.db"),
     ]:
-        p = Path(db_file)
+        p = Path(db_file) if Path(db_file).is_absolute() else ws_root / db_file
         if p.exists():
             try:
                 with sqlite3.connect(str(p), timeout=5.0) as conn:

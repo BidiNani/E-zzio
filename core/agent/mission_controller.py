@@ -51,6 +51,7 @@ class MissionRecord:
     provider: str = ""
     result: dict[str, Any] = field(default_factory=dict)
     created_at: str = ""
+    _async_task: Any = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -112,6 +113,9 @@ class MissionRegistry:
         if not m:
             return False
         m.status = MissionStatus.CANCELLED
+        task = getattr(m, "_async_task", None)
+        if task and not task.done():
+            task.cancel()
         return True
 
     def pause(self, mission_id: str) -> bool:
@@ -127,6 +131,22 @@ class MissionRegistry:
             return False
         m.status = MissionStatus.RUNNING
         return True
+
+    def get_active_mission_for_session(self, session_id: str) -> MissionRecord | None:
+        if not session_id:
+            return None
+        for m in reversed(list(self._missions.values())):
+            if m.request_id == session_id and m.status in (MissionStatus.RUNNING, MissionStatus.PAUSED, MissionStatus.QUEUED):
+                return m
+        return None
+
+    def get_latest_mission_for_session(self, session_id: str) -> MissionRecord | None:
+        if not session_id:
+            return None
+        for m in reversed(list(self._missions.values())):
+            if m.request_id == session_id:
+                return m
+        return None
 
 
 mission_registry = MissionRegistry()
