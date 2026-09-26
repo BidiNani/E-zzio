@@ -702,10 +702,16 @@ class HermesWorkerAdapter:
         finally:
             self._active_processes.pop(task_id, None)
             if temp_home and os.path.exists(temp_home):
-                try:
-                    shutil.rmtree(temp_home, ignore_errors=True)
-                except Exception as clean_err:
-                    logger.warning("[HermesWorkerAdapter] Cleanup failed for %s: %s", temp_home, clean_err)
+                for attempt in range(3):
+                    try:
+                        shutil.rmtree(temp_home)
+                        break
+                    except Exception as clean_err:
+                        if attempt < 2:
+                            time.sleep(0.1)
+                        else:
+                            shutil.rmtree(temp_home, ignore_errors=True)
+                            logger.warning("[HermesWorkerAdapter] Cleanup failed for %s: %s", temp_home, clean_err)
 
     async def cancel(self, task_id: str) -> bool:
         """Cancels an ongoing task process."""
