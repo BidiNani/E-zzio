@@ -90,8 +90,9 @@ class ValidationProof:
 class AutonomousSelfCorrectionEngine:
     """Engine de diagnostic d'échec et d'auto-réparation bornée pour les tâches multi-agents."""
 
-    def __init__(self, audit_ledger: AuditLedger | None = None):
-        self.audit_ledger = audit_ledger or AuditLedger()
+    def __init__(self, workspace_root: str | None = None, audit_ledger: AuditLedger | None = None):
+        self.workspace_root = workspace_root
+        self.audit_ledger = audit_ledger or (AuditLedger(workspace_root=workspace_root) if workspace_root else AuditLedger())
 
     def diagnose_failure(
         self,
@@ -247,7 +248,10 @@ class AutonomousSelfCorrectionEngine:
         if expected_assertions:
             required_files = expected_assertions.get("required_files") or []
             for req_file in required_files:
-                if not os.path.exists(req_file):
+                target_path = req_file
+                if self.workspace_root and not os.path.isabs(req_file):
+                    target_path = os.path.join(self.workspace_root, req_file)
+                if not os.path.exists(target_path):
                     return ValidationProof(
                         is_valid=False,
                         evidence_type="MISSING_FILE",

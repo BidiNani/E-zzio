@@ -171,6 +171,11 @@ async def test_validation_proof_verification(tmp_path):
     proof_file_ok = engine.validate_proof("some output", expected_assertions={"required_files": [existing_file]})
     assert proof_file_ok.is_valid is True
 
+    # Proof relative file resolution with custom workspace_root
+    engine_ws = AutonomousSelfCorrectionEngine(workspace_root=str(tmp_path))
+    proof_rel_ok = engine_ws.validate_proof("some output", expected_assertions={"required_files": ["existing.txt"]})
+    assert proof_rel_ok.is_valid is True
+
 
 @pytest.mark.asyncio
 async def test_autonomous_self_correction_loop_success(tmp_path):
