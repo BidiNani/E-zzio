@@ -933,8 +933,11 @@ class EzzioMaster:
                         sub_output = tool_result or f"[Résultat {task_role.upper()}] Tâche exécutée sous {routing['model']}."
 
                 is_valid = bool(sub_output and sub_output.strip())
-                if tool_result and any(err_tag in tool_result for err_tag in ("[POLICY_DENIED]", "[RUNTIME POLICY BLOCKED]", "[INVALID_ARGUMENTS]", "[TOOL_ERROR]", "[SECURITY DENY]", "[ERROR]", "[TOOL EXCEPTION]")):
-                    is_valid = False
+                if tool_result:
+                    if any(err_tag in tool_result for err_tag in ("[POLICY_DENIED]", "[RUNTIME POLICY BLOCKED]", "[INVALID_ARGUMENTS]", "[TOOL_ERROR]", "[SECURITY DENY]", "[ERROR]", "[TOOL EXCEPTION]")):
+                        is_valid = False
+                    elif "[EXIT_CODE:" in tool_result and "[EXIT_CODE:0]" not in tool_result:
+                        is_valid = False
                 if worker_type == "hermes" and worker_status not in ("SUCCESS", "COMPLETED"):
                     is_valid = False
 
