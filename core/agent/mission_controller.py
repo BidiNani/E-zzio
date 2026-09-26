@@ -75,6 +75,42 @@ class MissionRecord:
             "tasks": [],
         }
 
+    def get_completion_evidence(self, dag: Any = None) -> dict[str, Any]:
+        nodes_completed = 0
+        retries = 0
+        recovered = False
+        changed_files = []
+        tests_run = 0
+        tests_passed = 0
+
+        if dag and hasattr(dag, "nodes"):
+            for node in dag.nodes.values():
+                if getattr(node, "status", None) == "COMPLETED" or getattr(getattr(node, "status", None), "value", None) == "COMPLETED":
+                    nodes_completed += 1
+                retries += getattr(node, "retry_count", 0)
+                res = getattr(node, "result", None) or {}
+                if isinstance(res, dict):
+                    if "changed_files" in res and isinstance(res["changed_files"], list):
+                        changed_files.extend(res["changed_files"])
+                    if "tests_run" in res:
+                        tests_run += int(res["tests_run"])
+                    if "tests_passed" in res:
+                        tests_passed += int(res["tests_passed"])
+                    if res.get("recovered"):
+                        recovered = True
+
+        return {
+            "mission_id": self.mission_id,
+            "objective": self.goal,
+            "changed_files": list(set(changed_files)),
+            "tests_run": tests_run,
+            "tests_passed": tests_passed,
+            "nodes_completed": nodes_completed,
+            "retries": retries,
+            "recovered": recovered or (retries > 0),
+            "final_status": self.status.value if hasattr(self.status, "value") else str(self.status),
+        }
+
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> MissionRecord:
         status_raw = data.get("status", "QUEUED")
