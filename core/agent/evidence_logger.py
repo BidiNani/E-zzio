@@ -35,12 +35,38 @@ class CodingTaskEvidence:
     human_approved: bool | None = None
     notes: str = ""
 
+    def add_command_result(self, command: str, exit_code: int = 0, duration_ms: int = 0) -> None:
+        """Ajoute le résultat d'une commande gouvernée dans les preuves."""
+        self.commands.append({
+            "command": redact_secrets(command),
+            "exit_code": exit_code,
+            "duration_ms": duration_ms,
+        })
+
+    def add_test_result(self, name: str, passed: bool, summary: str = "") -> None:
+        """Ajoute le résultat d'un test dans les preuves."""
+        self.tests.append({
+            "name": name,
+            "passed": passed,
+            "summary": summary,
+        })
+
+    def add_file_changed(self, file_path: str) -> None:
+        """Ajoute un fichier modifié sans doublon en préservant l'ordre."""
+        if file_path not in self.files_changed:
+            self.files_changed.append(file_path)
+
     def complete(self, result: str, final_diff: str = "", rollback_applied: bool = False) -> None:
         self.end_time = time.time()
         self.duration_sec = round(self.end_time - self.start_time, 3)
         self.result = result
         self.final_diff = redact_secrets(final_diff)
         self.rollback_state = rollback_applied
+        deduped: list[str] = []
+        for f in self.files_changed:
+            if f not in deduped:
+                deduped.append(f)
+        self.files_changed = deduped
 
 
 class EvidenceLogger:
@@ -50,6 +76,18 @@ class EvidenceLogger:
         self.workspace_root = os.path.abspath(workspace_root)
         self.evidence_dir = os.path.join(self.workspace_root, "state", "evidence")
         os.makedirs(self.evidence_dir, exist_ok=True)
+
+    def get_evidence(self, task_id: str) -> dict[str, Any] | None:
+        """Lit et désérialise une preuve d'exécution JSON sauvegardée."""
+        json_filename = f"{task_id}_evidence.json"
+        json_path = os.path.join(self.evidence_dir, json_filename)
+        if not os.path.exists(json_path):
+            return None
+        try:
+            with open(json_path, encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return None
 
     def record_evidence(self, evidence: CodingTaskEvidence) -> dict[str, str]:
         """Persiste la preuve en JSON et en Markdown structuré.

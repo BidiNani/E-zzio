@@ -120,11 +120,11 @@ class CodingAgentHarness:
 
             # Traçabilité budget
             if t_name in ["apply_patch", "write_file"] and "path" in t_args:
-                evidence.files_changed.append(t_args["path"])
+                evidence.add_file_changed(t_args["path"])
                 active_budget.record_file(t_args["path"])
             elif t_name == "run_powershell":
                 active_budget.record_command()
-                evidence.commands.append({"command": t_args.get("command", ""), "exit_code": 0})
+                evidence.add_command_result(t_args.get("command", ""), exit_code=0)
 
             raw_observation = self.registry.execute(t_name, t_args)
 
