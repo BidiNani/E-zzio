@@ -778,7 +778,7 @@ class EzzioMaster:
                 max_retries=bounded_retries,
             )
 
-        # 3. Handler local d'exécution pour les nœuds du DAG
+        # 3. Handler local d'exécution pour les nœuds du DAG avec auto-correction autonome
         async def dag_handler(node: DAGNode) -> dict[str, Any]:
             spec = node.payload
             task_id = node.task_id
@@ -804,13 +804,38 @@ class EzzioMaster:
                 agent_desc.current_task_id = task_id
                 agent_desc.current_action = f"Executing subtask {task_id} ({task_role})"
 
-            tool_executed = None
-            tool_result = None
-            sub_output = ""
-            worker_pid = None
-            worker_status = "SUCCESS"
+            from core.orchestration.self_correction import BoundedRepairPlan, self_correction_engine
 
-            try:
+            # Propagation des résultats des dépendances amont
+            dependency_results = {}
+            for dep_id in node.dependencies:
+                dep_node = dag.nodes.get(dep_id)
+                if dep_node and dep_node.result and "output" in dep_node.result:
+                    dependency_results[dep_id] = dep_node.result.get("output", "")
+
+            original_prompt = spec.get("prompt", mission_prompt)
+            if dependency_results:
+                dep_text = "\n".join(
+                    f"- [{dep_id}] : {out[:300]}" for dep_id, out in dependency_results.items()
+                )
+                original_prompt = (
+                    f"{original_prompt}\n\n"
+                    f"[RÉSULTATS DÉPENDANCES EN AMONT]\n{dep_text}\n[/RÉSULTATS DÉPENDANCES]"
+                )
+
+            async def _single_execution(
+                prompt_to_send: str,
+                repair_plan: BoundedRepairPlan | None = None,
+            ) -> dict[str, Any]:
+                if repair_plan:
+                    node.retry_count = repair_plan.attempt
+
+                tool_executed = None
+                tool_result = None
+                sub_output = ""
+                worker_pid = None
+                worker_status = "SUCCESS"
+
                 if tool_name:
                     tool_executed = tool_name
                     try:
@@ -820,33 +845,11 @@ class EzzioMaster:
                     except Exception as t_err:
                         tool_result = f"[TOOL_ERROR] {t_err}"
 
-                # Propagation des résultats des dépendances amont
-                dependency_results = {}
-                for dep_id in node.dependencies:
-                    dep_node = dag.nodes.get(dep_id)
-                    if dep_node and dep_node.result and "output" in dep_node.result:
-                        dependency_results[dep_id] = dep_node.result.get("output", "")
-
-                prompt_to_send = spec.get("prompt", mission_prompt)
-                if dependency_results:
-                    dep_text = "\n".join(
-                        f"- [{dep_id}] : {out[:300]}" for dep_id, out in dependency_results.items()
-                    )
-                    prompt_to_send = (
-                        f"{prompt_to_send}\n\n"
-                        f"[RÉSULTATS DÉPENDANCES EN AMONT]\n{dep_text}\n[/RÉSULTATS DÉPENDANCES]"
-                    )
-
+                current_prompt_with_tool = prompt_to_send
                 if tool_result:
-                    prompt_to_send = (
-                        f"{prompt_to_send}\n\n"
+                    current_prompt_with_tool = (
+                        f"{current_prompt_with_tool}\n\n"
                         f"[RÉSULTAT OUTIL {tool_name}]\n{tool_result}\n[/RÉSULTAT OUTIL]"
-                    )
-
-                if node.retry_count > 0:
-                    prompt_to_send = (
-                        f"[RETRY {node.retry_count}/{node.max_retries} - Corrige l'erreur précédente]\n"
-                        f"{prompt_to_send}"
                     )
 
                 if worker_type == "hermes":
@@ -866,12 +869,12 @@ class EzzioMaster:
                         try:
                             pack = build_context_pack(
                                 task_id=task_id,
-                                objective=prompt_to_send,
+                                objective=current_prompt_with_tool,
                                 file_paths=spec_files,
                                 workspace_root=self.workspace_root,
                                 audit_ledger=getattr(self.hermes_adapter, "audit_ledger", None),
                             )
-                            prompt_to_send = render_context_prompt(pack, worker_profile)
+                            current_prompt_with_tool = render_context_prompt(pack, worker_profile)
                         except Exception as pack_err:
                             sub_output = f"[POLICY_DENIED] Context pack creation failed: {pack_err}"
                             worker_status = "POLICY_DENIED"
@@ -879,7 +882,7 @@ class EzzioMaster:
                     if worker_status != "POLICY_DENIED":
                         hermes_res = await self.hermes_adapter.submit(
                             task_id=task_id,
-                            prompt=prompt_to_send,
+                            prompt=current_prompt_with_tool,
                             model=routing.get("model"),
                             provider=routing.get("provider"),
                             timeout=spec.get("timeout", worker_profile.default_timeout_sec),
@@ -905,7 +908,7 @@ class EzzioMaster:
                     if sub_provider is not None:
                         try:
                             resp: ProviderResponse = await sub_provider.generate(
-                                prompt=prompt_to_send,
+                                prompt=current_prompt_with_tool,
                                 model=routing["model"],
                                 thinking_level=routing.get("thinking_level", "off"),
                                 max_tokens=300
@@ -950,6 +953,16 @@ class EzzioMaster:
                     "output": sub_output or f"[Résultat {task_role.upper()}] Audit/Code validé avec succès.",
                     "dependency_results": dependency_results,
                 }
+
+            try:
+                expected_assertions = spec.get("expected_assertions")
+                return await self_correction_engine.execute_with_self_correction(
+                    task_id=task_id,
+                    original_prompt=original_prompt,
+                    execution_fn=_single_execution,
+                    max_repair_retries=bounded_retries,
+                    expected_assertions=expected_assertions,
+                )
             finally:
                 if agent_desc:
                     agent_desc.status = AgentStatus.IDLE
