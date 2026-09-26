@@ -477,6 +477,7 @@ class EzzioMaster:
                 session_id=session_id,
                 channel=channel,
                 user_id=user_id,
+                mission_id=kwargs.get("mission_id"),
             )
             elapsed_ms = int((time.perf_counter() - start_time) * 1000)
             res_mission = {
@@ -682,9 +683,19 @@ class EzzioMaster:
 
         # 0. Initialisation et enregistrement de la Mission dans le MissionRegistry
         existing_mission_id = kwargs.get("mission_id")
-        if existing_mission_id and mission_registry.get(existing_mission_id):
+        if existing_mission_id:
             mission_id = existing_mission_id
             mission_record = mission_registry.get(existing_mission_id)
+            if not mission_record:
+                mission_record = MissionRecord(
+                    mission_id=mission_id,
+                    goal=mission_prompt,
+                    worker_type="MULTI_AGENT",
+                    status=MissionStatus.RUNNING,
+                    request_id=session_id or "",
+                    created_at=datetime.now(UTC).isoformat(),
+                )
+                mission_registry.register(mission_record)
         else:
             mission_id = f"msn-{uuid.uuid4().hex[:8]}"
             mission_record = MissionRecord(
@@ -922,7 +933,7 @@ class EzzioMaster:
                         sub_output = tool_result or f"[Résultat {task_role.upper()}] Tâche exécutée sous {routing['model']}."
 
                 is_valid = bool(sub_output and sub_output.strip())
-                if tool_result and ("[POLICY_DENIED]" in tool_result or "[RUNTIME POLICY BLOCKED]" in tool_result):
+                if tool_result and any(err_tag in tool_result for err_tag in ("[POLICY_DENIED]", "[RUNTIME POLICY BLOCKED]", "[INVALID_ARGUMENTS]", "[TOOL_ERROR]", "[SECURITY DENY]", "[ERROR]", "[TOOL EXCEPTION]")):
                     is_valid = False
                 if worker_type == "hermes" and worker_status not in ("SUCCESS", "COMPLETED"):
                     is_valid = False
