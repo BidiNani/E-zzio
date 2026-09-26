@@ -53,6 +53,26 @@ def test_status_filter_outcomes_and_multi_matching():
         assert len(unknown) == 0
 
 
+def test_status_filter_empty_input_fallback():
+    """Verify empty/None status inputs fall back deterministically to SUCCESS."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        logger = EvidenceLogger(workspace_root=tmpdir)
+        ev_s = CodingTaskEvidence(task_id="task_fallback_s", result="SUCCESS", start_time=100.0)
+        ev_f = CodingTaskEvidence(task_id="task_fallback_f", result="FAILED", start_time=200.0)
+        logger.record_evidence(ev_s)
+        logger.record_evidence(ev_f)
+
+        assert len(logger.get_evidence_by_status(None, limit=10)) == 1
+        assert logger.get_evidence_by_status(None, limit=10)[0]["task_id"] == "task_fallback_s"
+
+        assert len(logger.get_evidence_by_status("", limit=10)) == 1
+        assert logger.get_evidence_by_status("", limit=10)[0]["task_id"] == "task_fallback_s"
+
+        assert len(logger.get_evidence_by_status("   ", limit=10)) == 1
+        assert len(logger.get_evidence_by_status([], limit=10)) == 1
+        assert len(logger.get_evidence_by_status(["", "  "], limit=10)) == 1
+
+
 def test_status_filter_limits_and_ordering():
     """Verify limit normalization, upper capping, and deterministic start_time ordering."""
     with tempfile.TemporaryDirectory() as tmpdir:
