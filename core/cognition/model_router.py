@@ -36,7 +36,7 @@ class ModelRouter:
         task_lower = (task_type or "").lower()
 
         # 1. Évaluation Local-First si demandé ou compatible
-        if prefer_local or "local" in task_lower:
+        if prefer_local or task_lower == "local" or task_lower.startswith("local_"):
             is_local_eligible, reason = self.local_autonomy.evaluate_local_first(
                 task_type=task_type,
                 complexity_score=complexity_score,

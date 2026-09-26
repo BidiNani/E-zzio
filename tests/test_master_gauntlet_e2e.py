@@ -170,12 +170,15 @@ async def test_gauntlet_6_worker_cancellation_and_process_cleanup(tmp_path):
         sys.executable, "-c", "import time; time.sleep(10)",
         cwd=str(tmp_path),
     )
-    assert proc.poll() is None
+    assert proc.returncode is None
 
     # Cancel & kill process tree
     adapter._kill_process_tree(proc)
-    await asyncio.sleep(0.1)
-    assert proc.poll() is not None
+    try:
+        await asyncio.wait_for(proc.wait(), timeout=1.0)
+    except Exception:
+        pass
+    assert proc.returncode is not None
 
 
 # -----------------------------------------------------------------------------
