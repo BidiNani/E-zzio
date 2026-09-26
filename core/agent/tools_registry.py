@@ -9,6 +9,7 @@ from typing import Any
 from core.agent.agent_guard import AgentPolicyGuard
 from core.agent.codebase_indexer import CodebaseIndexer
 from core.agent.command_executor import GovernedCommandExecutor, redact_secrets
+from core.agent.evidence_logger import EvidenceLogger
 from core.agent.patch_engine import PatchEngine
 from core.agent.skill_manager import SkillManager
 
@@ -25,6 +26,7 @@ class ToolRegistry:
         self.guard = AgentPolicyGuard(workspace_root)
         self.skill_manager = SkillManager(workspace_root)
         self.executor = GovernedCommandExecutor(workspace_root)
+        self.evidence_logger = EvidenceLogger(workspace_root)
         self.audit_file = os.path.join(self.workspace_root, "state", "audit", "tool_executions.jsonl")
         self._chain_depth = 0
 
@@ -98,6 +100,16 @@ class ToolRegistry:
                 "name": "run_powershell",
                 "description": "Exécute une commande PowerShell (tests unitaires, diagnostic).",
                 "parameters": {"command": "commande"}
+            },
+            {
+                "name": "get_evidence",
+                "description": "Récupère la preuve d'exécution complète d'une tâche par son ID.",
+                "parameters": {"task_id": "ID de la tâche"}
+            },
+            {
+                "name": "list_evidences",
+                "description": "Liste les synthèses de preuves d'exécution des tâches récentes.",
+                "parameters": {"limit": "nombre max de preuves à retourner"}
             }
         ]
 
@@ -187,6 +199,7 @@ class ToolRegistry:
             "apply_patch": ["path", "search", "replace"],
             "run_test_file": ["test_path"],
             "run_powershell": ["command"],
+            "get_evidence": ["task_id"],
         }
         if tool_name in required_params:
             for req in required_params[tool_name]:
@@ -289,6 +302,19 @@ class ToolRegistry:
                 res = self.executor.execute(cmd, timeout=60)
                 output = (res.get("stdout", "") + "\n" + res.get("stderr", "")).strip()
                 out = output or "[SUCCESS] Commande exécutée sans retour texte."
+
+            elif tool_name == "get_evidence":
+                task_id = args.get("task_id", "")
+                ev_data = self.evidence_logger.get_evidence(task_id)
+                if ev_data is None:
+                    out = f"[NOT_FOUND] Aucune preuve trouvée pour task_id '{task_id}'"
+                else:
+                    out = json.dumps(ev_data, indent=2, ensure_ascii=False)
+
+            elif tool_name == "list_evidences":
+                limit = int(args.get("limit", 10))
+                summaries = self.evidence_logger.list_evidences(limit=limit)
+                out = json.dumps(summaries, indent=2, ensure_ascii=False)
 
             else:
                 err = f"[ERROR] Outil ou Skill inconnu : {tool_name}"

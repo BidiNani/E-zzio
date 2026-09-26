@@ -89,6 +89,34 @@ class EvidenceLogger:
         except Exception:
             return None
 
+    def list_evidences(self, limit: int = 10) -> list[dict[str, Any]]:
+        """Scanne le répertoire d'evidence et retourne un index synthétique des preuves récentes."""
+        summaries: list[dict[str, Any]] = []
+        if not os.path.exists(self.evidence_dir):
+            return summaries
+        for filename in os.listdir(self.evidence_dir):
+            if filename.endswith("_evidence.json"):
+                path = os.path.join(self.evidence_dir, filename)
+                try:
+                    with open(path, encoding="utf-8") as f:
+                        data = json.load(f)
+                    summaries.append({
+                        "task_id": data.get("task_id"),
+                        "result": data.get("result", "UNKNOWN"),
+                        "duration_sec": data.get("duration_sec", 0.0),
+                        "files_changed_count": len(data.get("files_changed", [])),
+                        "commands_count": len(data.get("commands", [])),
+                        "tests_count": len(data.get("tests", [])),
+                        "provider": data.get("provider", "unknown"),
+                        "model_used": data.get("model_used", "unknown"),
+                        "cost_class": data.get("cost_class", "FREE_ONLY"),
+                        "start_time": data.get("start_time", 0.0),
+                    })
+                except Exception:
+                    continue
+        summaries.sort(key=lambda x: x.get("start_time", 0.0), reverse=True)
+        return summaries[:limit]
+
     def record_evidence(self, evidence: CodingTaskEvidence) -> dict[str, str]:
         """Persiste la preuve en JSON et en Markdown structuré.
 
