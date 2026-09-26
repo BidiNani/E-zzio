@@ -142,11 +142,23 @@ class EvidenceLogger:
         summaries.sort(key=lambda x: x.get("start_time", 0.0), reverse=True)
         return summaries[:clean_limit]
 
-    def get_evidence_by_status(self, status: str = "SUCCESS", limit: Any = 10) -> list[dict[str, Any]]:
-        """Retourne un index des preuves filtrées par statut d'exécution (SUCCESS, FAILED, ROLLBACK, etc.)."""
-        target_status = str(status).strip().upper() if status else "SUCCESS"
+    def get_evidence_by_status(self, status: Any = "SUCCESS", limit: Any = 10) -> list[dict[str, Any]]:
+        """Retourne un index des preuves filtrées par statut d'exécution (ex: SUCCESS, FAILED, ROLLBACK, ou liste/chaîne séparée par virgules)."""
+        target_statuses: set[str] = set()
+        if isinstance(status, (list, tuple, set)):
+            for s in status:
+                if s and isinstance(s, str) and s.strip():
+                    target_statuses.add(s.strip().upper())
+        elif isinstance(status, str) and status.strip():
+            for s in status.split(","):
+                if s.strip():
+                    target_statuses.add(s.strip().upper())
+
+        if not target_statuses:
+            target_statuses.add("SUCCESS")
+
         all_summaries = self.list_evidences(limit=100)
-        filtered = [s for s in all_summaries if s.get("result", "").upper() == target_status]
+        filtered = [s for s in all_summaries if s.get("result", "").upper() in target_statuses]
         try:
             raw_limit = 10 if limit is None else int(limit)
         except (ValueError, TypeError):
