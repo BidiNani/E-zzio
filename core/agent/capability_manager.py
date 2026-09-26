@@ -109,6 +109,12 @@ ALLOWED_DEPENDENCY_WHITELIST: set[str] = {
 }
 
 
+def register_allowed_dependency(package_name: str) -> None:
+    """Enregistre dynamiquement une dépendance de confiance dans la whitelist."""
+    if package_name and isinstance(package_name, str):
+        ALLOWED_DEPENDENCY_WHITELIST.add(package_name.strip())
+
+
 class CapabilityManager:
     """Gestionnaire de capacités : preflight, vérification d'outils et installation autonome venv-local sécurisée."""
 
@@ -190,12 +196,22 @@ class CapabilityManager:
                 else:
                     missing_deps.append(dep)
 
-        is_ready = len(missing_deps) == 0
+        available_tools = []
+        missing_tools = []
+        for tool in profile.tools:
+            if self.check_external_tool(tool):
+                available_tools.append(tool)
+            else:
+                missing_tools.append(tool)
+
+        is_ready = len(missing_deps) == 0 and len(missing_tools) == 0
 
         result = {
             "role": profile.role,
             "ready": is_ready,
             "tools": profile.tools,
+            "available_tools": available_tools,
+            "missing_tools": missing_tools,
             "skills": profile.skills,
             "installed_deps": installed_deps,
             "missing_deps": missing_deps,
