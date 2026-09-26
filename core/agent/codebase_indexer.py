@@ -54,7 +54,7 @@ class CodebaseIndexer:
                             tree = ast.parse(f.read(), filename=file)
                         file_symbols = []
                         for node in tree.body:
-                            if isinstance(node, ast.FunctionDef):
+                            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                                 file_symbols.append(f"  def {node.name}()")
                             elif isinstance(node, ast.ClassDef):
                                 file_symbols.append(f"  class {node.name}")
