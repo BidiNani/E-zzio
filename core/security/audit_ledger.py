@@ -92,6 +92,7 @@ class AuditLedger:
         with self._write_lock:
             now = time.time()
             with self._get_connection() as conn:
+                conn.execute("BEGIN IMMEDIATE;")
                 cursor = conn.cursor()
                 cursor.execute("SELECT current_hash FROM audit_trail ORDER BY id DESC LIMIT 1")
                 row = cursor.fetchone()
