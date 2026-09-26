@@ -11,6 +11,7 @@ from typing import Any
 from urllib.parse import urlparse
 
 from core.agent.input_access_manager import InputDocument, InputType
+from core.security.untrusted import wrap_webpage
 
 logger = logging.getLogger("ezzio.agent.web_access_manager")
 
@@ -130,11 +131,13 @@ class WebAccessManager:
 
             self._log_provenance(url, mode.value, resp.status_code, len(clean_text))
 
+            wrapped_content = wrap_webpage(clean_text, url=url)
+
             return InputDocument(
                 source=url,
                 input_type=InputType.URL,
                 status="READY",
-                content_text=f"[DONNÉES WEB EXTRACTIVES : {url}]\n{clean_text}",
+                content_text=wrapped_content,
                 extracted_data={"http_status": resp.status_code, "content_type": content_type},
                 metadata={"url": url, "access_mode": mode.value}
             )
