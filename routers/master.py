@@ -57,9 +57,8 @@ async def get_providers_health():
     if _last_health_cache["data"] and (now - _last_health_cache["timestamp"] < 15.0):
         return {"ok": True, "health": _last_health_cache["data"]}
 
-    from core.cognitive_router import ModelRouter
-    router_inst = ModelRouter()
-    health_data = await router_inst.get_providers_health()
+    from core.models.provider_health import get_full_providers_health
+    health_data = await get_full_providers_health()
     _last_health_cache["timestamp"] = now
     _last_health_cache["data"] = health_data
     return {"ok": True, "health": health_data}
