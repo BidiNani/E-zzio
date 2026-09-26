@@ -10,8 +10,8 @@ import pytest
 
 from core.agents.registry import AgentDescriptor, AgentRegistry, AgentStatus, agent_registry
 from core.artifacts.provenance import ArtifactProvenanceEngine, ArtifactSeal
-from core.cognitive_router import ModelRouter
 from core.governance.diff_viewer import HITLDiffViewer
+from core.models.provider_health import probe_ollama_detailed
 from core.orchestration.dag import (
     CycleDetectedError,
     DAGExecutionStatus,
@@ -141,7 +141,6 @@ def test_hitl_diff_viewer_unified_diff():
 # 5. Tests Provider Health Probes
 @pytest.mark.asyncio
 async def test_provider_health_probe_resilience():
-    router = ModelRouter(ollama_url="http://127.0.0.1:11434")
-    health = await router.probe_ollama()
+    health = await probe_ollama_detailed("http://127.0.0.1:11434")
     assert "online" in health
     assert "latency_ms" in health

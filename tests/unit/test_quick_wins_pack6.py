@@ -145,85 +145,8 @@ class TestTask:
 
 
 # ============================================================
-# 2. core/orchestrator.py
+# 2. core/orchestrator.py (Deprecated - legacy orchestrator removed)
 # ============================================================
-
-def _make_orchestrator():
-    """Construit un Orchestrator avec bus + router mockés."""
-    from core.orchestrator import Orchestrator
-    bus = MagicMock()
-    bus.emit = AsyncMock()
-    router = MagicMock()
-    router.resolve_route = MagicMock(return_value={
-        "primary": {"provider": "groq", "model": "qwen"},
-    })
-    router.complete = AsyncMock(return_value={
-        "text": "Reponse finale",
-        "provider_used": "groq",
-        "model_used": "qwen",
-        "fallback_triggered": False,
-    })
-    sandbox = MagicMock()
-    sandbox.assess_risk = MagicMock(return_value=("safe", False))
-    sandbox.execute = AsyncMock(return_value=MagicMock(
-        command="ls",
-        exit_code=0,
-        stdout="file.txt",
-        stderr="",
-        approved=True,
-    ))
-    orch = Orchestrator(bus=bus, router=router, sandbox=sandbox)
-    return orch, bus, router, sandbox
-
-
-class TestOrchestrator:
-    @pytest.mark.asyncio
-    async def test_run_simple_prompt(self):
-        orch, bus, router, sandbox = _make_orchestrator()
-        result = await orch.run(run_id="r1", prompt="Bonjour")
-        assert result["status"] == "completed"
-        assert result["text"] == "Reponse finale"
-        assert result["provider"] == "groq"
-        assert result["execution"] is None  # pas de exec:
-        # 3 emit : plan, thought, final
-        assert bus.emit.await_count == 3
-
-    @pytest.mark.asyncio
-    async def test_run_with_exec_command(self):
-        orch, bus, router, sandbox = _make_orchestrator()
-        result = await orch.run(run_id="r2", prompt="exec: ls -la")
-        assert result["status"] == "completed"
-        assert result["execution"] is not None
-        assert result["execution"]["command"] == "ls"
-        # 5 emit : plan, thought, tool_call, terminal, final
-        assert bus.emit.await_count == 5
-
-    @pytest.mark.asyncio
-    async def test_run_with_run_prefix(self):
-        orch, bus, router, sandbox = _make_orchestrator()
-        result = await orch.run(run_id="r3", prompt="run: echo hello")
-        assert result["execution"] is not None
-
-    @pytest.mark.asyncio
-    async def test_run_router_exception_returns_failed(self):
-        orch, bus, router, sandbox = _make_orchestrator()
-        router.resolve_route = MagicMock(side_effect=RuntimeError("boom"))
-        result = await orch.run(run_id="r4", prompt="test")
-        assert result["status"] == "failed"
-        assert "boom" in result["error"]
-
-    @pytest.mark.asyncio
-    async def test_run_sandbox_sensitive_command(self):
-        orch, bus, router, sandbox = _make_orchestrator()
-        sandbox.assess_risk = MagicMock(return_value=("sensitive", True))
-        result = await orch.run(run_id="r5", prompt="exec: rm -rf dir")
-        assert result["status"] == "completed"
-        # L'event tool_call doit avoir requires_approval=True
-        # On peut verifier les appels
-        calls = bus.emit.await_args_list
-        tool_calls = [c for c in calls if c.args[0].event_type == "tool_call"]
-        assert len(tool_calls) == 1
-        assert tool_calls[0].args[0].requires_approval is True
 
 
 # ============================================================
