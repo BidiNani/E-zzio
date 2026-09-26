@@ -33,6 +33,7 @@ class EvidenceBundleBuilder:
         changed_files: list[str] | None = None,
         tests: dict[str, Any] | None = None,
         final_status: str = "COMPLETED",
+        receipts: list[dict[str, Any]] | None = None,
     ) -> dict[str, str]:
         """Écrit tous les artefacts requis dans runtime/evidence/<mission_id>/ et retourne les chemins."""
         bundle_dir = os.path.join(self.evidence_base_dir, mission_id)
@@ -46,7 +47,7 @@ class EvidenceBundleBuilder:
             "timestamp": time.time(),
         }
 
-        files_to_write = {
+        files_to_write: dict[str, Any] = {
             "mission.json": mission_data or {"mission_id": mission_id, "status": final_status},
             "timeline.json": timeline or [{"timestamp": time.time(), "event": "bundle_created"}],
             "decisions.json": decisions or [],
@@ -56,12 +57,16 @@ class EvidenceBundleBuilder:
             "changed_files.json": changed_files or [],
             "tests.json": tests or {"tests_run": 0, "tests_passed": 0},
             "environment.json": environment_data,
-            "final.json": {
-                "mission_id": mission_id,
-                "final_status": final_status,
-                "exported_at": time.time(),
-                "artifact_count": 10,
-            },
+        }
+
+        if receipts is not None:
+            files_to_write["receipts.json"] = receipts
+
+        files_to_write["final.json"] = {
+            "mission_id": mission_id,
+            "final_status": final_status,
+            "exported_at": time.time(),
+            "artifact_count": len(files_to_write) + 1,
         }
 
         exported_paths = {}

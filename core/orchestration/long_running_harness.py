@@ -179,10 +179,15 @@ class LongRunningMissionHarness:
 
         # IDEMPOTENCE :
         # 1. COMPLETED et SKIPPED restent COMPLETED et SKIPPED (pas de rejeu).
-        # 2. RUNNING sans terminaison est réinitialisé à PENDING pour reprise propre.
+        # 2. RUNNING sur nœud externe sans complétion -> OUTCOME_UNKNOWN (réconciliation requise).
+        # 3. RUNNING sur nœud interne/idempotent -> réinitialisé à PENDING pour reprise propre.
         for node in recovered_dag.nodes.values():
             if node.status == DAGExecutionStatus.RUNNING:
-                node.status = DAGExecutionStatus.PENDING
+                if getattr(node, "is_external", False):
+                    node.status = DAGExecutionStatus.OUTCOME_UNKNOWN
+                    node.reconciliation_status = "RECONCILIATION_REQUIRED"
+                else:
+                    node.status = DAGExecutionStatus.PENDING
 
         logger.info(
             "[LongRunHarness] Mission %s reprise avec succès en %.2f ms",

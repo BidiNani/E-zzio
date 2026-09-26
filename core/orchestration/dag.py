@@ -19,6 +19,7 @@ class DAGExecutionStatus(StrEnum):
     FAILED = "FAILED"
     SKIPPED = "SKIPPED"
     BLOCKED = "BLOCKED"
+    OUTCOME_UNKNOWN = "OUTCOME_UNKNOWN"
 
 
 class CycleDetectedError(Exception):
@@ -55,6 +56,12 @@ class DAGNode:
     started_at: str | None = None
     completed_at: str | None = None
     correlation_id: str = field(default_factory=lambda: f"corr_{uuid.uuid4().hex[:12]}")
+    operation_id: str | None = None
+    payload_hash: str | None = None
+    is_external: bool = False
+    is_idempotent: bool = True
+    lease_id: str | None = None
+    reconciliation_status: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -76,6 +83,12 @@ class DAGNode:
             "started_at": self.started_at,
             "completed_at": self.completed_at,
             "correlation_id": self.correlation_id,
+            "operation_id": self.operation_id,
+            "payload_hash": self.payload_hash,
+            "is_external": self.is_external,
+            "is_idempotent": self.is_idempotent,
+            "lease_id": self.lease_id,
+            "reconciliation_status": self.reconciliation_status,
         }
 
     @classmethod
@@ -104,6 +117,12 @@ class DAGNode:
             started_at=data.get("started_at"),
             completed_at=data.get("completed_at"),
             correlation_id=data.get("correlation_id") or f"corr_{uuid.uuid4().hex[:12]}",
+            operation_id=data.get("operation_id"),
+            payload_hash=data.get("payload_hash"),
+            is_external=bool(data.get("is_external", False)),
+            is_idempotent=bool(data.get("is_idempotent", True)),
+            lease_id=data.get("lease_id"),
+            reconciliation_status=data.get("reconciliation_status"),
         )
 
 
