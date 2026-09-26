@@ -55,9 +55,10 @@ class PatchEngine:
         """Restaure le dernier snapshot disponible pour ce fichier."""
         full_path = self._resolve_path(rel_path)
         safe_name = rel_path.replace("/", "_").replace("\\", "_")
+        prefix = f"{safe_name}_"
         matches = sorted([
             f for f in os.listdir(self.snapshots_dir)
-            if f.startswith(safe_name) and f.endswith(".bak")
+            if f.startswith(prefix) and f.endswith(".bak") and f[len(prefix):-4].isdigit()
         ])
         if not matches:
             return False
