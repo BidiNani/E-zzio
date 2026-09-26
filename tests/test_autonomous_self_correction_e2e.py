@@ -3,12 +3,13 @@ E-ZZIO Core V9.2 — Autonomous Validation & Self-Correction E2E Test Suite.
 Verifies the end-to-end self-correction pipeline:
 EXECUTE -> VALIDATE -> DETECT FAILURE -> DIAGNOSE -> REPAIR -> RETEST -> VALIDATE -> COMPLETE
 """
+import sys
 from collections.abc import AsyncIterator
 
 import pytest
 
 from core.ezzio_master import EzzioMaster
-from core.orchestration.dag import TaskDAG
+from core.orchestration.dag import DAGExecutionStatus, TaskDAG
 from core.orchestration.engine import DAGOrchestrator
 from core.orchestration.self_correction import (
     AutonomousSelfCorrectionEngine,
@@ -264,3 +265,115 @@ async def test_checkpoint_recovery_with_self_correction_state(tmp_path):
 
     assert loaded_node.retry_count == 1
     assert loaded_node.result["repair_history"][0]["attempt"] == 1
+
+
+@pytest.mark.asyncio
+async def test_e2e_calculator_self_correction_and_crash_recovery(tmp_path):
+    """Scenario:
+    inspect -> defect -> modify -> test FAIL -> diagnose -> repair -> test PASS -> validate -> checkpoint -> recovery.
+    """
+    proj_dir = tmp_path / "calc_proj"
+    proj_dir.mkdir(parents=True, exist_ok=True)
+    calc_file = proj_dir / "calculator.py"
+    test_file = proj_dir / "test_calculator.py"
+
+    # Defective implementation (subtraction instead of addition)
+    calc_file.write_text("def add(a: int, b: int) -> int:\n    return a - b\n", encoding="utf-8")
+    test_file.write_text(
+        "import sys\n"
+        "from pathlib import Path\n"
+        "sys.path.insert(0, str(Path(__file__).parent))\n"
+        "from calculator import add\n\n"
+        "def test_add():\n"
+        "    assert add(2, 3) == 5\n",
+        encoding="utf-8",
+    )
+
+    db_path = tmp_path / "missions_calc.db"
+    audit_db_path = tmp_path / "audit_calc.db"
+    from core.agent.mission_controller import MissionRecord, MissionRegistry, MissionStatus
+    registry = MissionRegistry(db_path=db_path)
+    ledger = AuditLedger(db_path=str(audit_db_path), workspace_root=str(tmp_path))
+    orchestrator = DAGOrchestrator(audit_ledger=ledger)
+
+    dag = TaskDAG(dag_id="dag-calc-repair", name="calculator_repair_flow")
+    node = dag.add_node(
+        task_id="task-fix-calc",
+        title="Fix Calculator Bug",
+        action_type="coding",
+        max_retries=2,
+    )
+
+    mission_rec = MissionRecord(
+        mission_id="calc-repair-m1",
+        goal="Fix calculator addition bug",
+        status=MissionStatus.RUNNING,
+    )
+    registry.register(mission_rec)
+
+    # 1. First execution fails test
+    engine = AutonomousSelfCorrectionEngine(audit_ledger=ledger)
+
+    # Simuler le premier test échoué
+    import subprocess
+    first_test_res = subprocess.run(
+        [sys.executable, "-m", "pytest", str(test_file)],
+        capture_output=True,
+        text=True,
+    )
+    assert first_test_res.returncode != 0
+
+    # 2. Diagnostic & Repair
+    diag = engine.diagnose_failure(
+        task_id="task-fix-calc",
+        output_or_error=first_test_res.stdout + first_test_res.stderr,
+    )
+    assert diag.failure_type == FailureType.ASSERTION_FAILED
+    assert diag.repairable is True
+
+    repair_plan = engine.generate_repair_plan(
+        task_id="task-fix-calc",
+        diagnosis=diag,
+        attempt=1,
+        max_attempts=2,
+        original_prompt="Fix add function in calculator.py",
+    )
+    assert repair_plan.repair_action == "FIX_ASSERTION_FAILURE"
+
+    # 3. Apply Repair (Modify file)
+    calc_file.write_text("def add(a: int, b: int) -> int:\n    return a + b\n", encoding="utf-8")
+
+    # 4. Retest & Empirical Validation
+    second_test_res = subprocess.run(
+        [sys.executable, "-m", "pytest", str(test_file)],
+        capture_output=True,
+        text=True,
+    )
+    assert second_test_res.returncode == 0
+
+    proof = engine.validate_proof(
+        second_test_res.stdout,
+        expected_assertions={"required_files": [str(calc_file)], "contains": ["passed"]},
+    )
+    assert proof.is_valid is True
+
+    # Mark node COMPLETED & Checkpoint
+    node.status = DAGExecutionStatus.COMPLETED
+    node.result = {
+        "output": second_test_res.stdout,
+        "self_correction_applied": True,
+        "repair_history": [{"attempt": 1, "diagnosis": diag.to_dict()}],
+        "validation_proof": proof.to_dict(),
+    }
+    registry.checkpoint_dag("calc-repair-m1", dag)
+
+    # 5. Crash Simulation & Recovery Verification
+    registry_v2 = MissionRegistry(db_path=db_path)
+    loaded_checkpoint = registry_v2.get_dag_checkpoint("calc-repair-m1")
+    loaded_dag = TaskDAG.from_dict(loaded_checkpoint)
+    loaded_node = loaded_dag.nodes["task-fix-calc"]
+
+    assert loaded_node.status == DAGExecutionStatus.COMPLETED
+    assert loaded_node.result["validation_proof"]["is_valid"] is True
+    assert loaded_node.result["self_correction_applied"] is True
+
