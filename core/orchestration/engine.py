@@ -64,6 +64,11 @@ class DAGOrchestrator:
         async with self._lock:
             self._active_dags[dag.dag_id] = dag
 
+        # Récupération après interruption : réinitialiser les nœuds restés à RUNNING suite à un crash
+        for node in dag.nodes.values():
+            if node.status == DAGExecutionStatus.RUNNING:
+                node.status = DAGExecutionStatus.PENDING
+
         # Journalisation Genesis DAG dans l'AuditLedger
         try:
             self.audit_ledger.record_event(
@@ -79,6 +84,9 @@ class DAGOrchestrator:
             )
         except Exception as e:
             logger.warning("Audit log error on DAG start: %s", e)
+
+        # Extraction de mission_id si présent
+        mission_id = dag.dag_id.replace("dag-", "") if dag.dag_id.startswith("dag-") else dag.dag_id
 
         # Boucle d'exécution continue par résolution des nœuds prêts
         while not dag.is_completed() and not dag.is_failed():
@@ -103,7 +111,21 @@ class DAGOrchestrator:
                 )
                 for node in ready_nodes
             ]
-            await asyncio.gather(*tasks)
+            try:
+                await asyncio.gather(*tasks)
+            except asyncio.CancelledError:
+                # Annulation propre en cas de cancellation async
+                for task in tasks:
+                    if not task.done():
+                        task.cancel()
+                raise
+
+            # Checkpoint déterministe après la vague de nœuds
+            try:
+                from core.agent.mission_controller import mission_registry
+                mission_registry.checkpoint_dag(mission_id, dag)
+            except Exception:
+                pass
 
         status_str = "COMPLETED" if dag.is_completed() else "FAILED"
 
@@ -130,6 +152,8 @@ class DAGOrchestrator:
         dag: TaskDAG,
         default_handler: TaskHandler | None,
     ) -> None:
+        if node.status in (DAGExecutionStatus.COMPLETED, DAGExecutionStatus.SKIPPED):
+            return
         async with self.semaphore:
             node.status = DAGExecutionStatus.RUNNING
             node.started_at = utc_now()

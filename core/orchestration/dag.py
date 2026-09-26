@@ -78,6 +78,34 @@ class DAGNode:
             "correlation_id": self.correlation_id,
         }
 
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> DAGNode:
+        status_val = data.get("status", "PENDING")
+        try:
+            status = DAGExecutionStatus(status_val)
+        except ValueError:
+            status = DAGExecutionStatus.PENDING
+        return cls(
+            task_id=data["task_id"],
+            title=data.get("title", ""),
+            action_type=data.get("action_type", ""),
+            payload=data.get("payload") or {},
+            dependencies=list(data.get("dependencies") or []),
+            parent_id=data.get("parent_id"),
+            agent_id=data.get("agent_id", "coder_worker"),
+            provider=data.get("provider", "local_ollama"),
+            policy_decision=data.get("policy_decision", "ALLOW"),
+            approval_id=data.get("approval_id"),
+            status=status,
+            result=data.get("result"),
+            error=data.get("error"),
+            retry_count=data.get("retry_count", 0),
+            max_retries=data.get("max_retries", 2),
+            started_at=data.get("started_at"),
+            completed_at=data.get("completed_at"),
+            correlation_id=data.get("correlation_id") or f"corr_{uuid.uuid4().hex[:12]}",
+        )
+
 
 
 class TaskDAG:
@@ -213,3 +241,13 @@ class TaskDAG:
             "is_failed": self.is_failed(),
             "nodes": {k: v.to_dict() for k, v in self.nodes.items()},
         }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> TaskDAG:
+        dag = cls(dag_id=data.get("dag_id"), name=data.get("name", "sovereign_task_workflow"))
+        dag.created_at = data.get("created_at") or utc_now()
+        nodes_data = data.get("nodes", {})
+        for task_id, node_dict in nodes_data.items():
+            dag.nodes[task_id] = DAGNode.from_dict(node_dict)
+        dag.validate()
+        return dag
