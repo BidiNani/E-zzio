@@ -149,8 +149,31 @@ class ModelRouter:
         primary = routes["primary"]
         fallback = routes["fallback"]
 
-        client = self._client or httpx.AsyncClient()
-        close_client = self._client is None
+        if self._client is None:
+            from core.providers.registry import ProviderFactory
+            try:
+                prov = ProviderFactory.create(primary["provider"])
+                resp = await prov.generate(prompt=prompt, model=primary["model"])
+                return {
+                    "text": resp.content or "",
+                    "provider_used": primary["provider"],
+                    "model_used": primary["model"],
+                    "fallback_triggered": False,
+                }
+            except Exception as primary_err:
+                fb_prov = ProviderFactory.create(fallback["provider"])
+                fb_resp = await fb_prov.generate(prompt=prompt, model=fallback["model"])
+                return {
+                    "text": fb_resp.content or "",
+                    "provider_used": fallback["provider"],
+                    "model_used": fallback["model"],
+                    "fallback_triggered": True,
+                    "primary_error": str(primary_err),
+                }
+
+        client = self._client
+        close_client = False
+
 
         try:
             try:
