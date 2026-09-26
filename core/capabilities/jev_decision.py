@@ -208,3 +208,106 @@ class JevDecisionCapability:
         if "jev-router" in model:
             return 0.0
         return (tokens / 1_000_000.0) * JEV_1_13_INPUT_COST_PER_1M
+
+
+@dataclass
+class JevShadowRecord:
+    timestamp: float
+    decision_id: str
+    decision_type: str
+    canonical_decision: str
+    jev_decision: str
+    jev_confidence: float
+    latency_ms: float
+    api_success: bool
+    fallback: bool
+    match: bool
+    model_used: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "timestamp": self.timestamp,
+            "decision_id": self.decision_id,
+            "decision_type": self.decision_type,
+            "canonical_decision": self.canonical_decision,
+            "jev_decision": self.jev_decision,
+            "jev_confidence": self.jev_confidence,
+            "latency_ms": self.latency_ms,
+            "api_success": self.api_success,
+            "fallback": self.fallback,
+            "match": self.match,
+            "model_used": self.model_used,
+        }
+
+
+class JevShadowEvaluator:
+    """Évaluateur en Shadow Mode purement observatif pour JEV 1.13 et JEV Router.
+    N'altère pas le chemin nominal et n'a aucune autorité opérationnelle.
+    """
+
+    def __init__(self, capability: JevDecisionCapability | None = None):
+        self.capability = capability or JevDecisionCapability()
+        self.records: list[JevShadowRecord] = []
+
+    async def record_shadow_decision(
+        self,
+        decision_id: str,
+        decision_type: str,
+        prompt: str,
+        possible_decisions: list[str],
+        canonical_decision: str,
+        model: str = JEV_1_13_MODEL,
+        mock_response: dict[str, Any] | None = None,
+    ) -> JevShadowRecord:
+        jev_res = await self.capability.evaluate_decision(
+            prompt=prompt,
+            possible_decisions=possible_decisions,
+            model=model,
+            mock_response=mock_response,
+        )
+
+        match = (jev_res.decision == canonical_decision)
+        rec = JevShadowRecord(
+            timestamp=time.time(),
+            decision_id=decision_id,
+            decision_type=decision_type,
+            canonical_decision=canonical_decision,
+            jev_decision=jev_res.decision,
+            jev_confidence=jev_res.confidence,
+            latency_ms=jev_res.latency_ms,
+            api_success=jev_res.schema_valid and not jev_res.fallback,
+            fallback=jev_res.fallback,
+            match=match,
+            model_used=model,
+        )
+        self.records.append(rec)
+        return rec
+
+    def compute_metrics(self) -> dict[str, Any]:
+        if not self.records:
+            return {"total": 0}
+
+        total = len(self.records)
+        matches = sum(1 for r in self.records if r.match)
+        successful_api = sum(1 for r in self.records if r.api_success)
+        fallbacks = sum(1 for r in self.records if r.fallback)
+
+        high_conf_records = [r for r in self.records if r.jev_confidence >= 0.85]
+        high_conf_total = len(high_conf_records)
+        high_conf_matches = sum(1 for r in high_conf_records if r.match)
+
+        latencies = [r.latency_ms for r in self.records]
+        latencies.sort()
+        p50 = latencies[int(len(latencies) * 0.5)] if latencies else 0.0
+        p95 = latencies[int(len(latencies) * 0.95) - 1] if latencies else 0.0
+
+        return {
+            "total": total,
+            "accuracy": (matches / total) * 100.0 if total > 0 else 0.0,
+            "coverage": (successful_api / total) * 100.0 if total > 0 else 0.0,
+            "fallback_rate": (fallbacks / total) * 100.0 if total > 0 else 0.0,
+            "high_confidence_count": high_conf_total,
+            "high_confidence_accuracy": (high_conf_matches / high_conf_total * 100.0) if high_conf_total > 0 else 0.0,
+            "p50_latency_ms": p50,
+            "p95_latency_ms": p95,
+        }
