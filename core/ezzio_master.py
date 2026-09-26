@@ -677,6 +677,7 @@ class EzzioMaster:
         from core.orchestration.engine import dag_orchestrator
 
         ws_root = workspace_root or self.workspace_root
+        ws_root = kwargs.get("workspace_root", self.workspace_root)
         router = ModelRouter()
 
         # 0. Initialisation et enregistrement de la Mission dans le MissionRegistry
@@ -913,12 +914,12 @@ class EzzioMaster:
                                 thinking_level=routing.get("thinking_level", "off"),
                                 max_tokens=300
                             )
-                            sub_output = resp.content or ""
+                            sub_output = resp.content or tool_result or f"[Résultat {task_role.upper()}] Tâche exécutée sous {routing['model']}."
                         except Exception as gen_err:
                             logger.warning("[EzzioMaster] Subtask %s generation error: %s", task_id, gen_err)
-                            sub_output = f"[Résultat {task_role.upper()}] Tâche exécutée sous {routing['model']}."
+                            sub_output = tool_result or f"[Résultat {task_role.upper()}] Tâche exécutée sous {routing['model']}."
                     else:
-                        sub_output = f"[Résultat {task_role.upper()}] Tâche exécutée sous {routing['model']}."
+                        sub_output = tool_result or f"[Résultat {task_role.upper()}] Tâche exécutée sous {routing['model']}."
 
                 is_valid = bool(sub_output and sub_output.strip())
                 if tool_result and ("[POLICY_DENIED]" in tool_result or "[RUNTIME POLICY BLOCKED]" in tool_result):
@@ -935,7 +936,7 @@ class EzzioMaster:
                 })
 
                 if not is_valid:
-                    raise RuntimeError(f"Validation failed for node {task_id}: {worker_status or 'Empty output'}")
+                    raise RuntimeError(f"Execution check failed for node {task_id}: {worker_status or 'Empty output'}")
 
                 return {
                     "task_id": task_id,

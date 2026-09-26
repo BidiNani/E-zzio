@@ -96,8 +96,8 @@ class CanonicalModelRecord:
 ROLE_MAP: dict[str, tuple[str, list[str]]] = {
     # --- Gemini cloud ---
     "gemini-3.8-flash": ("MASTER", ["MASTER", "MASTER_STRATEGIC"]),
-    "gemini-3.7-flash": ("CODING", ["CODING"]),
-    "gemini-3.6-flash": ("FORENSIC", ["FORENSIC"]),
+    "gemini-3.7-flash": ("ADVANCED_CODING", ["ADVANCED_CODING"]),
+    "gemini-3.6-flash": ("CODING", ["CODING", "FORENSIC"]),
     "gemini-3.5-flash-lite": ("STANDARD_CHAT", ["STANDARD_CHAT", "FAST_CHAT", "FAST", "FALLBACK"]),
     "gemini-3.5-flash": ("REFACTOR", ["REFACTOR"]),
 
