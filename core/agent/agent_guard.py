@@ -76,21 +76,22 @@ class AgentPolicyGuard:
     def evaluate_intent(self, tool_name: str, args: dict[str, Any]) -> tuple[bool, str]:
         """Évalue si l'outil et ses arguments respectent la politique de sécurité du Runtime."""
 
-        # 1. Protection du Filesystem / Patches
-        if tool_name in ["read_file", "apply_patch", "write_file", "read_file_slice"]:
-            path = args.get("path", "")
-            if not path:
+        # 1. Protection du Filesystem / Patches / Test Files
+        if tool_name in ["read_file", "apply_patch", "write_file", "read_file_slice", "run_test_file"]:
+            path = args.get("path", "") or args.get("test_path", "")
+            if not path and tool_name != "run_test_file":
                 return False, "Chemin de fichier manquant pour l'opération."
 
-            abs_path = os.path.abspath(
-                path if os.path.isabs(path) else os.path.join(self.workspace_root, path)
-            )
+            if path:
+                abs_path = os.path.abspath(
+                    path if os.path.isabs(path) else os.path.join(self.workspace_root, path)
+                )
 
-            if not self._is_within_workspace(abs_path):
-                return False, f"[SECURITY DENY] Accès hors du workspace interdit : {path}"
+                if not self._is_within_workspace(abs_path):
+                    return False, f"[SECURITY DENY] Accès hors du workspace interdit : {path}"
 
-            if tool_name in ["apply_patch", "write_file"] and self._is_protected_kernel_file(abs_path):
-                return False, f"[SECURITY DENY] Modification d'un composant critique de sécurité interdit : {path}"
+                if tool_name in ["apply_patch", "write_file"] and self._is_protected_kernel_file(abs_path):
+                    return False, f"[SECURITY DENY] Modification d'un composant critique de sécurité interdit : {path}"
 
         # 2. Gouvernance des commandes Shell / PowerShell
         elif tool_name in ["run_powershell", "run_test_file"]:
