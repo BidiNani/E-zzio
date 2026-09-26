@@ -110,6 +110,11 @@ class ToolRegistry:
                 "name": "list_evidences",
                 "description": "Liste les synthèses de preuves d'exécution des tâches récentes.",
                 "parameters": {"limit": "nombre max de preuves à retourner"}
+            },
+            {
+                "name": "get_evidence_by_status",
+                "description": "Liste les synthèses de preuves filtrées par statut (SUCCESS, FAILED, ROLLBACK).",
+                "parameters": {"status": "statut recherché (ex: SUCCESS, FAILED)", "limit": "nombre max de preuves"}
             }
         ]
 
@@ -319,6 +324,13 @@ class ToolRegistry:
             elif tool_name == "list_evidences":
                 limit = args.get("limit", 10)
                 summaries = self.evidence_logger.list_evidences(limit=limit)
+                raw_json = json.dumps(summaries, indent=2, ensure_ascii=False)
+                out = redact_secrets(raw_json)
+
+            elif tool_name == "get_evidence_by_status":
+                status = args.get("status", "SUCCESS")
+                limit = args.get("limit", 10)
+                summaries = self.evidence_logger.get_evidence_by_status(status=status, limit=limit)
                 raw_json = json.dumps(summaries, indent=2, ensure_ascii=False)
                 out = redact_secrets(raw_json)
 

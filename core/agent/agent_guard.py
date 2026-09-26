@@ -114,7 +114,7 @@ class AgentPolicyGuard:
             return "CRITICAL", reason
 
         # 2. Outils de lecture / inspection -> SAFE
-        if tool_name in ["read_file", "read_file_slice", "grep_codebase", "find_files", "get_codebase_map", "get_symbol_map", "get_evidence", "list_evidences"]:
+        if tool_name in ["read_file", "read_file_slice", "grep_codebase", "find_files", "get_codebase_map", "get_symbol_map", "get_evidence", "list_evidences", "get_evidence_by_status"]:
             return "SAFE", "Opération de lecture ou recherche"
 
         # 3. Tests unitaires -> SAFE

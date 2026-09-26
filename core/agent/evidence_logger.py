@@ -142,6 +142,18 @@ class EvidenceLogger:
         summaries.sort(key=lambda x: x.get("start_time", 0.0), reverse=True)
         return summaries[:clean_limit]
 
+    def get_evidence_by_status(self, status: str = "SUCCESS", limit: Any = 10) -> list[dict[str, Any]]:
+        """Retourne un index des preuves filtrées par statut d'exécution (SUCCESS, FAILED, ROLLBACK, etc.)."""
+        target_status = str(status).strip().upper() if status else "SUCCESS"
+        all_summaries = self.list_evidences(limit=100)
+        filtered = [s for s in all_summaries if s.get("result", "").upper() == target_status]
+        try:
+            raw_limit = 10 if limit is None else int(limit)
+        except (ValueError, TypeError):
+            raw_limit = 10
+        clean_limit = 10 if raw_limit <= 0 else min(raw_limit, 100)
+        return filtered[:clean_limit]
+
     def record_evidence(self, evidence: CodingTaskEvidence) -> dict[str, str]:
         """Persiste la preuve en JSON et en Markdown structuré.
 
