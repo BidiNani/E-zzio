@@ -305,16 +305,22 @@ class ToolRegistry:
 
             elif tool_name == "get_evidence":
                 task_id = args.get("task_id", "")
+                if not isinstance(task_id, str) or not task_id.strip():
+                    err = f"[INVALID_ARGUMENTS] task_id invalide pour l'outil '{tool_name}'"
+                    self._log_tool_audit(tool_name, args, "INVALID_ARGS", err)
+                    return err
                 ev_data = self.evidence_logger.get_evidence(task_id)
                 if ev_data is None:
                     out = f"[NOT_FOUND] Aucune preuve trouvée pour task_id '{task_id}'"
                 else:
-                    out = json.dumps(ev_data, indent=2, ensure_ascii=False)
+                    raw_json = json.dumps(ev_data, indent=2, ensure_ascii=False)
+                    out = redact_secrets(raw_json)
 
             elif tool_name == "list_evidences":
-                limit = int(args.get("limit", 10))
+                limit = args.get("limit", 10)
                 summaries = self.evidence_logger.list_evidences(limit=limit)
-                out = json.dumps(summaries, indent=2, ensure_ascii=False)
+                raw_json = json.dumps(summaries, indent=2, ensure_ascii=False)
+                out = redact_secrets(raw_json)
 
             else:
                 err = f"[ERROR] Outil ou Skill inconnu : {tool_name}"

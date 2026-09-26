@@ -79,18 +79,43 @@ class EvidenceLogger:
 
     def get_evidence(self, task_id: str) -> dict[str, Any] | None:
         """Lit et désérialise une preuve d'exécution JSON sauvegardée."""
-        json_filename = f"{task_id}_evidence.json"
+        if not isinstance(task_id, str) or not task_id.strip():
+            return None
+        clean_task_id = task_id.strip()
+        if ".." in clean_task_id or "/" in clean_task_id or "\\" in clean_task_id:
+            return None
+
+        json_filename = f"{clean_task_id}_evidence.json"
         json_path = os.path.join(self.evidence_dir, json_filename)
-        if not os.path.exists(json_path):
+        abs_json_path = os.path.abspath(json_path)
+        abs_evidence_dir = os.path.abspath(self.evidence_dir)
+
+        try:
+            if not abs_json_path.startswith(abs_evidence_dir) or os.path.commonpath([abs_evidence_dir, abs_json_path]) != abs_evidence_dir:
+                return None
+        except Exception:
+            return None
+
+        if not os.path.exists(abs_json_path):
             return None
         try:
-            with open(json_path, encoding="utf-8") as f:
+            with open(abs_json_path, encoding="utf-8") as f:
                 return json.load(f)
         except Exception:
             return None
 
-    def list_evidences(self, limit: int = 10) -> list[dict[str, Any]]:
+    def list_evidences(self, limit: Any = 10) -> list[dict[str, Any]]:
         """Scanne le répertoire d'evidence et retourne un index synthétique des preuves récentes."""
+        try:
+            raw_limit = 10 if limit is None else int(limit)
+        except (ValueError, TypeError):
+            raw_limit = 10
+
+        if raw_limit <= 0:
+            clean_limit = 10
+        else:
+            clean_limit = min(raw_limit, 100)
+
         summaries: list[dict[str, Any]] = []
         if not os.path.exists(self.evidence_dir):
             return summaries
@@ -115,7 +140,7 @@ class EvidenceLogger:
                 except Exception:
                     continue
         summaries.sort(key=lambda x: x.get("start_time", 0.0), reverse=True)
-        return summaries[:limit]
+        return summaries[:clean_limit]
 
     def record_evidence(self, evidence: CodingTaskEvidence) -> dict[str, str]:
         """Persiste la preuve en JSON et en Markdown structuré.
