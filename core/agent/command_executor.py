@@ -162,8 +162,21 @@ class GovernedCommandExecutor:
 
         # 5. Gouvernance spécifique pour Git
         if base_exe in ["git", "git.exe"]:
-            if len(tokens) > 1:
-                sub = tokens[1].lower().strip("\"'")
+            sub = None
+            idx = 1
+            while idx < len(tokens):
+                tok = tokens[idx].strip("\"'")
+                tok_lower = tok.lower()
+                if tok_lower in ["-c", "--git-dir", "--work-tree"] and idx + 1 < len(tokens):
+                    idx += 2
+                    continue
+                if tok_lower.startswith("-"):
+                    idx += 1
+                    continue
+                sub = tok_lower
+                break
+
+            if sub:
                 if sub in ["commit", "add", "stash"]:
                     return "SENSITIVE", f"Opération git modificatrice d'état: {sub}"
                 if sub in SAFE_GIT_SUBCOMMANDS:
