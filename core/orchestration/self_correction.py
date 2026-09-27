@@ -104,7 +104,8 @@ class AutonomousSelfCorrectionEngine:
         """Analyse le résultat ou l'exception pour déterminer la cause racine et la réparabilité."""
         err_str = str(exception) if exception else ""
         out_str = str(output_or_error) if output_or_error is not None else ""
-        combined = f"{err_str}\n{out_str}".strip()
+        ctx_str = str(context) if context else ""
+        combined = f"{err_str}\n{out_str}\n{ctx_str}".strip()
 
         # 1. Security / Policy Blocked (Non-réparable de façon autonome sans approbation)
         if any(term in combined for term in ("[POLICY_DENIED]", "[RUNTIME POLICY BLOCKED]", "POLICY_DENIED", "AccessDenied")):
@@ -143,7 +144,7 @@ class AutonomousSelfCorrectionEngine:
             )
 
         # 5. Assertion Failed
-        if any(term in combined for term in ("AssertionError", "ASSERTION_FAILED", "[EXIT_CODE:", "Validation failed", "test failed")):
+        if any(term in combined for term in ("AssertionError", "ASSERTION_FAILED", "[EXIT_CODE:", "Validation failed", "test failed", "FAILED", "assert")):
             return DiagnosisReport(
                 failure_type=FailureType.ASSERTION_FAILED,
                 root_cause="Validation assertion failed or test execution returned non-zero code.",

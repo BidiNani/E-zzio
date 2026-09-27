@@ -925,12 +925,12 @@ class EzzioMaster:
                                 thinking_level=routing.get("thinking_level", "off"),
                                 max_tokens=300
                             )
-                            sub_output = resp.content or tool_result or f"[Résultat {task_role.upper()}] Tâche exécutée sous {routing['model']}."
+                            sub_output = resp.content or tool_result or ""
                         except Exception as gen_err:
                             logger.warning("[EzzioMaster] Subtask %s generation error: %s", task_id, gen_err)
-                            sub_output = tool_result or f"[Résultat {task_role.upper()}] Tâche exécutée sous {routing['model']}."
+                            sub_output = tool_result or ""
                     else:
-                        sub_output = tool_result or f"[Résultat {task_role.upper()}] Tâche exécutée sous {routing['model']}."
+                        sub_output = tool_result or ""
 
                 is_valid = bool(sub_output and sub_output.strip())
                 if tool_result:
