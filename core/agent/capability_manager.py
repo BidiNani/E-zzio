@@ -109,6 +109,26 @@ ALLOWED_DEPENDENCY_WHITELIST: set[str] = {
 }
 
 
+# Whitelist des outils/capacités internes E-ZZIO (non dépendants de binaires système dans PATH)
+INTERNAL_TOOLS: set[str] = {
+    "filesystem",
+    "database_connector",
+    "input_extractor",
+    "grep",
+    "logs",
+    "sqlite",
+    "search",
+    "http_api",
+    "dataset_loader",
+    "pdf_parser",
+    "archive_tool",
+    "image_inspector",
+    "audio",
+    "stt",
+    "tts",
+}
+
+
 def register_allowed_dependency(package_name: str) -> bool:
     """Enregistre dynamiquement une dépendance de confiance dans la whitelist."""
     if not package_name or not isinstance(package_name, str):
@@ -134,7 +154,9 @@ class CapabilityManager:
         return CAPABILITY_PROFILES.get(role_upper, CAPABILITY_PROFILES["FAST"])
 
     def check_external_tool(self, tool_name: str) -> bool:
-        """Vérifie la présence d'un outil externe système (git, powershell, etc.) sans pip."""
+        """Vérifie la présence d'un outil externe système (git, powershell, etc.) sans pip, ou d'un outil interne E-ZZIO."""
+        if tool_name in INTERNAL_TOOLS:
+            return True
         import shutil
         return shutil.which(tool_name) is not None or os.path.exists(tool_name)
 
