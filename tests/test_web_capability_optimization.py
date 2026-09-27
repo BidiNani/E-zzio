@@ -141,8 +141,15 @@ async def test_local_browser_dump_execution():
         pytest.skip("Aucun navigateur local installé.")
 
     wp = WebProvider()
-    res = await wp.browser_dump("https://example.com", max_chars=1000)
-    assert res["ok"] is True
-    assert res["backend"] == f"browser_{browser_name}"
-    assert "Example Domain" in res["raw_content"]
-    assert res["content"].startswith(BEGIN)
+    fake_proc = AsyncMock()
+    fake_proc.communicate.return_value = (
+        b"<html><body><h1>Example Domain</h1><p>This domain is for use in illustrative examples in documents.</p></body></html>",
+        b"",
+    )
+    with patch("asyncio.create_subprocess_exec", return_value=fake_proc) as mock_exec:
+        res = await wp.browser_dump("https://example.com", max_chars=1000)
+        assert res["ok"] is True
+        assert res["backend"] == f"browser_{browser_name}"
+        assert "Example Domain" in res["raw_content"]
+        assert res["content"].startswith(BEGIN)
+        mock_exec.assert_called_once()
