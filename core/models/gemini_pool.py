@@ -148,13 +148,13 @@ class GeminiPoolManager:
 
         candidates = []
         for m in canonical_model_registry.list_models():
-            if m.role == target_role and m.source.name == "GEMINI":
+            if (m.role == target_role or target_role in m.roles) and m.source.name == "GEMINI":
                 candidates.append(m.name)
 
         if not candidates:
             # Fallback
             for m in canonical_model_registry.list_models():
-                if m.role == "MASTER" and m.source.name == "GEMINI":
+                if (m.role == "MASTER" or "MASTER" in m.roles) and m.source.name == "GEMINI":
                     candidates.append(m.name)
 
         return [
