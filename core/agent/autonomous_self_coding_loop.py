@@ -27,6 +27,7 @@ from core.agent.evidence_logger import CodingTaskEvidence, EvidenceLogger
 from core.agent.external_worker_contract import (
     GovernedWorkerSelector,
 )
+from core.cognition.execution_decision_engine import ExecutionDecisionEngine
 from core.agent.patch_engine import PatchEngine
 from core.agent.tools_registry import ToolRegistry
 from core.quality_gate.quality_gate import QualityGateOrchestrator
@@ -93,6 +94,12 @@ class AutonomousSelfCodingLoop:
             audit_ledger=self.audit_ledger,
             policy_guard=self.policy_guard,
         )
+        self.execution_engine = ExecutionDecisionEngine(
+            workspace_root=self.workspace_root,
+            worker_selector=self.worker_selector,
+            policy_guard=self.policy_guard,
+            audit_ledger=self.audit_ledger,
+        )
         self.quality_gate = QualityGateOrchestrator()
 
     def run_mission(
@@ -124,8 +131,15 @@ class AutonomousSelfCodingLoop:
                 summary=f"Mission policy denied: {reason}",
             )
 
-        # 1. Execution Target Selection via GovernedWorkerSelector
-        worker_name, worker_adapter = self.worker_selector.select_execution_target(preferred_worker=preferred_worker)
+        # 1. Execution Target Selection via ExecutionDecisionEngine & GovernedWorkerSelector
+        decision = self.execution_engine.evaluate_and_decide(
+            task_type="coding",
+            objective=objective,
+            preferred_target=preferred_worker,
+            require_worker=True,
+        )
+        worker_name = decision.target_id
+        worker_adapter = self.worker_selector.get_worker(worker_name) or self.worker_selector._workers["native"]
         logger.info("[SelfCodingLoop] Selected worker '%s' for mission %s", worker_name, mission_id)
 
         # Audit Event Log
