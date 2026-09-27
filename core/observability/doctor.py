@@ -11,6 +11,7 @@ import shutil
 import socket
 import subprocess
 import sys
+from pathlib import Path
 from typing import Any
 
 from core.observability.capability_detector import CapabilityDetector
@@ -70,7 +71,34 @@ class EzzioDoctor:
             },
         }
 
-        # 5. DATABASES
+        # 5. IDENTITE (fail-closed : bloque la construction du prompt systeme)
+        # runtime/ est gitignore, donc un clone propre n'a pas cette couche.
+        # Diagnostic avant remede : tools/bootstrap_identity.py
+        identity_state = "PROVEN"
+        identity_details: dict[str, Any] = {}
+        try:
+            from core.identity.canonical_identity import CanonicalIdentity
+
+            ci = CanonicalIdentity(root_dir=Path(self.workspace_root))
+            ci._verify_integrity()
+            identity_details = {
+                "persona_hash": (Path(self.workspace_root) / "runtime/identity/persona.hash")
+                .read_text(encoding="utf-8")
+                .strip()[:16]
+                + "...",
+                "integrity": "VERIFIE",
+                "remedy": "aucun",
+            }
+        except Exception as e:
+            identity_state = "DEGRADED"
+            identity_details = {
+                "integrity": "ROMPU",
+                "error": str(e)[:200],
+                "remedy": "python tools/bootstrap_identity.py",
+            }
+        results["IDENTITE"] = {"status": identity_state, "details": identity_details}
+
+        # 6. DATABASES
         rt_db = os.path.join(self.workspace_root, "runtime")
         db_files = []
         if os.path.exists(rt_db):

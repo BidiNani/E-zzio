@@ -336,3 +336,9 @@ _audit.json
 # Ce dossier est recree et purge a chaque run.
 tmp_pytest/
 .pytest_cache/
+
+# ===== Godot (ajoute 2026-09-27) =====
+# Cache d'editeur Godot : jamais a versionner. 44 fichiers de .godot/ et .import
+# etaient trackes dans projects/arpg_mobile_prototype/.
+.godot/
+*.import
