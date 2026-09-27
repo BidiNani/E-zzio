@@ -15,9 +15,8 @@ from dataclasses import dataclass, field
 from typing import Any, Literal
 
 from core.agent.agent_guard import AgentPolicyGuard
-from core.agent.external_worker_contract import BaseWorkerAdapter, GovernedWorkerSelector
+from core.agent.external_worker_contract import GovernedWorkerSelector
 from core.cognition.model_router import ModelRouter
-from core.routing.model_registry import CanonicalModelRecord, canonical_model_registry
 from core.security.audit_ledger import AuditLedger
 
 logger = logging.getLogger("ExecutionDecisionEngine")
@@ -99,7 +98,6 @@ class ExecutionDecisionEngine:
         Returns a single unified ExecutionDecision under E-ZZIO Master authority.
         """
         candidates: list[ExecutionCandidate] = []
-        task_lower = (task_type or "").lower()
 
         # 1. Evaluate Worker Candidates
         for w_name, adapter in self.worker_selector._workers.items():

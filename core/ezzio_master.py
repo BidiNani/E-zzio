@@ -92,6 +92,14 @@ class EzzioMaster:
         if self.hermes_adapter is None:
             from core.agent.hermes_worker_adapter import HermesWorkerAdapter
             self.hermes_adapter = HermesWorkerAdapter(workspace_root=self.workspace_root)
+        self.execution_engine = kwargs.get("execution_engine")
+        if self.execution_engine is None:
+            from core.cognition.execution_decision_engine import ExecutionDecisionEngine
+            self.execution_engine = ExecutionDecisionEngine(workspace_root=self.workspace_root)
+        self.self_coding_loop = kwargs.get("self_coding_loop")
+        if self.self_coding_loop is None:
+            from core.agent.autonomous_self_coding_loop import AutonomousSelfCodingLoop
+            self.self_coding_loop = AutonomousSelfCodingLoop(workspace_root=self.workspace_root)
         self._background_tasks: set[asyncio.Task] = set()
 
 
@@ -655,6 +663,27 @@ class EzzioMaster:
             channel=channel,
             user_id=user_id,
             **kwargs
+        )
+
+    def run_self_coding_mission(
+        self,
+        objective: str,
+        target_file: str,
+        test_file: str,
+        search_block: str,
+        replace_block: str,
+        preferred_worker: str | None = None,
+        self_correct_replace: str | None = None,
+    ):
+        """Dispatches autonomous self-coding mission under E-ZZIO Master governance."""
+        return self.self_coding_loop.run_mission(
+            objective=objective,
+            target_file=target_file,
+            test_file=test_file,
+            search_block=search_block,
+            replace_block=replace_block,
+            preferred_worker=preferred_worker,
+            self_correct_replace=self_correct_replace,
         )
 
     async def orchestrate_multi_agent_mission(
