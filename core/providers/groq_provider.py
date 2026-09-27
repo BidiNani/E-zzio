@@ -178,8 +178,29 @@ class GroqProvider(BaseProvider, IResearchProvider):
                 latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
                 if res.status_code == 200:
                     data = res.json()
-                    models = [m.get("id") for m in data.get("data", [])]
+                    models = [m.get("id") for m in data.get("data", []) if m.get("id")]
                     self.key_pool.mark_success(idx)
+                    try:
+                        from core.routing.lifecycle import (
+                            LiveModelRecord,
+                            ModelLifecycleStatus,
+                            model_catalog_discovery,
+                        )
+                        live_records = [
+                            LiveModelRecord(
+                                provider_id="groq",
+                                model_id=m_id,
+                                status=ModelLifecycleStatus.AVAILABLE,
+                                eligible=True,
+                                health="healthy",
+                                capabilities=["TEXT", "CODING", "FAST_INFERENCE"],
+                            )
+                            for m_id in models
+                        ]
+                        model_catalog_discovery.update_catalog(live_records, provider_statuses={"groq": "healthy"})
+                    except Exception as disc_err:
+                        logger.warning("[GroqProvider] Catalog sync exception: %s", disc_err)
+
                     return {
                         "status": "healthy",
                         "online": True,
@@ -194,6 +215,11 @@ class GroqProvider(BaseProvider, IResearchProvider):
                         self.key_pool.mark_rate_limited(idx, ttl_seconds=60.0, error_code=429)
                     elif res.status_code in (401, 403):
                         self.key_pool.mark_auth_failed(idx, error_code=res.status_code)
+                        try:
+                            from core.routing.lifecycle import model_catalog_discovery
+                            model_catalog_discovery._provider_status["groq"] = "access_denied"
+                        except Exception:
+                            pass
                     return {
                         "status": "unhealthy",
                         "online": False,
@@ -204,6 +230,11 @@ class GroqProvider(BaseProvider, IResearchProvider):
                     }
         except Exception as exc:
             latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
+            try:
+                from core.routing.lifecycle import model_catalog_discovery
+                model_catalog_discovery._provider_status["groq"] = "unreachable"
+            except Exception:
+                pass
             return {
                 "status": "unhealthy",
                 "online": False,

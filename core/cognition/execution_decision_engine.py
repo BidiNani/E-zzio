@@ -144,7 +144,11 @@ class ExecutionDecisionEngine:
                 m_prov = model_route["provider"]
                 m_is_local = model_route.get("is_local", False)
 
-                m_score = 70.0
+                from core.routing.lifecycle import ModelLifecycleStatus, model_catalog_discovery
+                m_status = model_catalog_discovery.get_model_status(m_prov, m_model)
+                is_m_eligible = (m_status not in (ModelLifecycleStatus.RETIRED, ModelLifecycleStatus.ACCESS_DENIED, ModelLifecycleStatus.UNREACHABLE))
+
+                m_score = 70.0 if is_m_eligible else -100.0
                 if prefer_local and m_is_local:
                     m_score += 25.0
                 if preferred_target and preferred_target.lower() in (m_model.lower(), m_prov.lower()):
@@ -158,10 +162,10 @@ class ExecutionDecisionEngine:
                         candidate_type="MODEL",
                         provider_or_adapter=m_prov,
                         is_local=m_is_local,
-                        is_available=True,
+                        is_available=is_m_eligible,
                         capabilities=["TEXT", "CODING", "REASONING"],
                         score=m_score,
-                        rationale=f"Model {m_model} via provider {m_prov}",
+                        rationale=f"Model {m_model} via provider {m_prov} (Lifecycle: {m_status.value})",
                     )
                 )
 
