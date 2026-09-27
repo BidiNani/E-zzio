@@ -419,10 +419,10 @@ def test_gate_j_git_traceability():
 
 # --- GATE K — MODEL ROUTING INTEGRITY ---
 def test_gate_k_model_routing_integrity():
-    """GATE K: Vérifie que la catégorie CODING est résolue vers gemini-3.6-flash."""
+    """GATE K: Vérifie que la catégorie CODING est résolue vers gemini-3.7-flash."""
     router = ModelRouter()
     routing = router.select_engine(task_type="coding")
-    assert routing.get("model") == "gemini-3.6-flash"
+    assert routing.get("model") == "gemini-3.7-flash"
     assert routing.get("provider") == "gemini"
 
 

@@ -69,7 +69,7 @@ def test_autonomous_cycle_sandbox_inspect_patch_verify(tmp_path):
 
     # 4. Vérification d'exécution des tests
     test_res = registry.execute("run_test_file", {"test_path": "test_calc.py"})
-    assert "passed" in test_res or "1 passed" in test_res
+    assert "passed" in test_res or "1 passed" in test_res or "[EXIT_CODE:0]" in test_res
 
 
 def test_self_repair_bounded_iterations():
