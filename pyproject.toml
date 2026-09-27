@@ -56,26 +56,10 @@ ignore = [
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-addopts = "-q --strict-markers --tb=short -m 'not visual and not hardware'"
-asyncio_mode = "strict"
-asyncio_default_fixture_loop_scope = "function"
-asyncio_default_test_loop_scope = "function"
-markers = [
-    "unit: Isolated unit tests",
-    "e2e: End-to-end tests (necessitent serveur web + browser Chromium)",
-    "slow: tests lents (>10s)",
-    "hardware: requires physical hardware",
-    "integration: requires external services",
-    "visual: tests de certification visuelle (PNG/video)",
-]
-
-filterwarnings = [
-    "ignore::DeprecationWarning:discord.*",
-    "ignore::DeprecationWarning:aiosqlite.*",
-    "ignore::starlette.exceptions.StarletteDeprecationWarning",
-]
+# La configuration pytest vit dans pytest.ini (priorite plus haute que
+# pyproject.toml). Elle y etait en double ici depuis longtemps, avec une liste de
+# marqueurs divergente : deux sources de verite pour la meme chose.
+# Ne pas reintroduire [tool.pytest.ini_options] ici.
 
 [tool.coverage.run]
 source = ["core", "routers", "runtime"]

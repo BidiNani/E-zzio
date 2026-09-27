@@ -2,6 +2,7 @@
 # E-ZZIO — Production Web Server & Unified Governor Lifespan
 # File: G:\AI\E-zzio\web_server.py
 # ==============================================================================
+import logging
 import sys
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -12,6 +13,8 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from core.security.guardian import setup_guardian
+
+logger = logging.getLogger("ezzio.web_server")
 
 # 1. Configuration stricte du Path AVANT les imports locaux
 ROOT_PATH = Path(r"G:\AI\E-zzio")
@@ -38,6 +41,15 @@ from routers.webhook import router as webhook_router
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # setup_production_logging() # DÉSACTIVÉ POUR DEBUG
+    # Un backend « souverain » qui laisse passer /master/* sans le dire est un
+    # defaut de securite : on le signale explicitement au demarrage.
+    if _EZZIO_DISABLE_AUTH:
+        logger.warning(
+            "[SECURITE] EZZIO_DISABLE_AUTH=1 : TOUTES les routes sont ouvertes, "
+            "y compris /master/* et /api/accounts/*. Ne jamais utiliser en production."
+        )
+    warn_if_auth_unenforced("web_server")
+
     from core.memory.instance import memory_gateway
     await memory_gateway.init()
     await init_research_router()
@@ -50,15 +62,29 @@ setup_guardian(app)
 
 # Desktop / Tauri / Mobile Capacitor — CORS adapté aux environnements locaux et mobiles
 # [B2-FIX2] CORSMiddleware retiré — géré par Guardian
-
 # ============================================================
 # AUTH MIDDLEWARE — API key (X-API-Key)
-# Inactif si EZZIO_API_KEY est vide OU si EZZIO_DISABLE_AUTH=1
+#
+# Corrections 2026-09-27 :
+#   - le bloc de verification duplique qui suivait etait mort : il n'etait
+#     atteignable que si le prefixe n'etait PAS protege, donc toutes ses
+#     conditions etaient fausses. Supprime.
+#   - la comparaison `provided != _EZZIO_API_KEY` n'etait pas en temps
+#     constant. Remplacee par core.security.api_key.is_key_valid (compare_digest).
+#   - le silence quand EZZIO_API_KEY est absente laissait /master/* ouvert sans
+#     le dire. Un avertissement est desormais emis au demarrage.
+#
+# Comportement conserve : l'auth globale reste inactive si EZZIO_API_KEY est
+# absente, sans quoi ni le dev local ni les 2352 tests ne fonctionneraient.
+# Les routeurs qui utilisent core.security.api_key (stats, system, webhook) sont
+# fail-closed et refusent toute cle, y compris les anciennes valeurs par defaut.
 # ============================================================
 import os as _os
 import uuid
 
 from fastapi import Request
+
+from core.security.api_key import is_key_valid, warn_if_auth_unenforced
 
 _EZZIO_API_KEY = _os.getenv("EZZIO_API_KEY", "")
 _EZZIO_DISABLE_AUTH = _os.getenv("EZZIO_DISABLE_AUTH", "0") == "1"
@@ -78,23 +104,7 @@ async def api_key_middleware(request: Request, call_next):
         return await call_next(request)
 
     if any(path.startswith(p) for p in _PROTECTED_PREFIXES):
-        provided = request.headers.get("X-API-Key", "")
-        if provided != _EZZIO_API_KEY:
-            from fastapi.responses import JSONResponse
-            return JSONResponse(
-                status_code=401,
-                content={"detail": "API key required. Set X-API-Key header."},
-            )
-
-
-
-    # Endpoints protégés : clé requise
-    if any(path.startswith(p) for p in _PROTECTED_PREFIXES):
-        if not _EZZIO_API_KEY:
-            # Clé non configurée → dev local, on laisse passer
-            return await call_next(request)
-        provided = request.headers.get("X-API-Key", "")
-        if provided != _EZZIO_API_KEY:
+        if not is_key_valid(request.headers.get("X-API-Key")):
             from fastapi.responses import JSONResponse
             return JSONResponse(
                 status_code=401,

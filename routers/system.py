@@ -1,11 +1,11 @@
 import logging
-import os
 
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security.api_key import APIKeyHeader
 from pydantic import BaseModel
 
 from core.dependency_graph_v49 import DependencyGraphV49
+from core.security.api_key import is_key_valid
 from core.system_cleanup import SystemCleanupService
 
 logger = logging.getLogger("ezzio.routers.system")
@@ -14,7 +14,7 @@ router = APIRouter(prefix="/api/v1/system", tags=["System"])
 
 API_KEY_NAME = "X-API-Key"
 api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
-EXPECTED_KEY = os.getenv("EZZIO_API_KEY", "ezzio_secret_key_local_dev")
+# Cle attendue resolue via core.security.api_key (fail-closed, sans defaut public).
 
 # ---------------------------------------------------------------------------
 # CLEANUP
@@ -39,7 +39,7 @@ class CleanupReport(BaseModel):
 
 @router.post("/cleanup", response_model=CleanupReport)
 async def system_cleanup(request: CleanupRequest, api_key: str = Depends(api_key_header)):
-    if api_key != EXPECTED_KEY:
+    if not is_key_valid(api_key):
         raise HTTPException(status_code=403, detail="Clé API invalide")
 
     service = SystemCleanupService()
@@ -78,7 +78,7 @@ async def get_dependency_graph(api_key: str = Depends(api_key_header)):
     """
     Retourne le graphe de dépendances complet (V49).
     """
-    if api_key != EXPECTED_KEY:
+    if not is_key_valid(api_key):
         raise HTTPException(status_code=403, detail="Clé API invalide")
 
     graph = DependencyGraphV49()
@@ -102,7 +102,7 @@ async def query_dependencies(request: DependencyQueryRequest, api_key: str = Dep
     Interroge le graphe de dépendances pour un ensemble de fichiers.
     Retourne la fermeture transitive (si include_transitive=True).
     """
-    if api_key != EXPECTED_KEY:
+    if not is_key_valid(api_key):
         raise HTTPException(status_code=403, detail="Clé API invalide")
 
     graph = DependencyGraphV49()
@@ -133,7 +133,7 @@ async def get_orphan_files(api_key: str = Depends(api_key_header)):
     """
     Retourne la liste des fichiers orphelins (aucun import, aucun fichier ne les importe).
     """
-    if api_key != EXPECTED_KEY:
+    if not is_key_valid(api_key):
         raise HTTPException(status_code=403, detail="Clé API invalide")
 
     graph = DependencyGraphV49()
@@ -147,7 +147,7 @@ async def get_circular_dependencies(api_key: str = Depends(api_key_header)):
     """
     Retourne la liste des dépendances circulaires détectées.
     """
-    if api_key != EXPECTED_KEY:
+    if not is_key_valid(api_key):
         raise HTTPException(status_code=403, detail="Clé API invalide")
 
     graph = DependencyGraphV49()
@@ -172,7 +172,7 @@ class ExportGraphResponse(BaseModel):
 
 @router.post("/dependencies/export", response_model=ExportGraphResponse)
 async def export_dependency_graph(request: ExportGraphRequest, api_key: str = Depends(api_key_header)):
-    if api_key != EXPECTED_KEY:
+    if not is_key_valid(api_key):
         raise HTTPException(status_code=403, detail="Clé API invalide")
 
     graph = DependencyGraphV49()
@@ -203,7 +203,7 @@ class OrphanCleanupReport(BaseModel):
 
 @router.post("/cleanup/orphans", response_model=OrphanCleanupReport)
 async def cleanup_orphans(request: OrphanCleanupRequest, api_key: str = Depends(api_key_header)):
-    if api_key != EXPECTED_KEY:
+    if not is_key_valid(api_key):
         raise HTTPException(status_code=403, detail="Clé API invalide")
 
     graph = DependencyGraphV49()

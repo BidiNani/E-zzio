@@ -329,3 +329,10 @@ htmlcov/
 .tox/
 build/
 _audit.json
+
+# ===== pytest --basetemp (ajoute 2026-09-27) =====
+# pytest.ini impose --basetemp=tmp_pytest pour eviter le lien symbolique
+# pytest-current du TEMP systeme, dont le nettoyage echoue en WinError 5.
+# Ce dossier est recree et purge a chaque run.
+tmp_pytest/
+.pytest_cache/

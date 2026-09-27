@@ -10,7 +10,13 @@ services:
       - SCARF_NO_ANALYTICS=true
       - DO_NOT_TRACK=true
       - ANONYMIZED_TELEMETRY=false
-      - WEBUI_SECRET_KEY=ezzio_super_secret_session_key_2026
+      # Cle de session open-webui : OBLIGATOIRE, aucune valeur par defaut.
+      # Avant, une cle en clair etait versionnee dans ce fichier : toute personne
+      # ayant lu le depot pouvait forger un cookie de session admin sur une
+      # instance exposee. Cette valeur est aussi dans la denylist de
+      # core.security.api_key.
+      # Generer : python -c "import secrets;print(secrets.token_urlsafe(48))"
+      - WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY:?WEBUI_SECRET_KEY est obligatoire. Definissez-la dans un .env local (non versionne) ou dans votre gestionnaire de secrets.}
       - WEBUI_AUTH=true
     volumes:
       - open-webui-data:/app/backend/data

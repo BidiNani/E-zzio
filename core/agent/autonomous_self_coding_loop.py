@@ -27,9 +27,9 @@ from core.agent.evidence_logger import CodingTaskEvidence, EvidenceLogger
 from core.agent.external_worker_contract import (
     GovernedWorkerSelector,
 )
-from core.cognition.execution_decision_engine import ExecutionDecisionEngine
 from core.agent.patch_engine import PatchEngine
 from core.agent.tools_registry import ToolRegistry
+from core.cognition.execution_decision_engine import ExecutionDecisionEngine
 from core.quality_gate.quality_gate import QualityGateOrchestrator
 from core.security.audit_ledger import AuditLedger
 
@@ -139,7 +139,10 @@ class AutonomousSelfCodingLoop:
             require_worker=True,
         )
         worker_name = decision.target_id
-        worker_adapter = self.worker_selector.get_worker(worker_name) or self.worker_selector._workers["native"]
+        # Resultat volontairement non consomme : l'appel sert de resolution de
+        # worker (et de point d'extension). Prefixe _ pour signaler l'inertie
+        # sans supprimer l'appel, qui avait un effet de bord dans worker_selector.
+        _worker_adapter = self.worker_selector.get_worker(worker_name) or self.worker_selector._workers["native"]
         logger.info("[SelfCodingLoop] Selected worker '%s' for mission %s", worker_name, mission_id)
 
         # Audit Event Log

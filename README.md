@@ -19,7 +19,7 @@ Backend Python (FastAPI) du projet E-ZZIO.
 
     core/         Code métier (Frozen Core protégé)
     routers/      Routes FastAPI découpées
-    tests/        Suite pytest (879 tests, 4 skipped)
+    tests/        Suite pytest (2 352 tests collectés au 2026-09-27, cf. docs/TESTS.md)
     docs/         Documentation + manifest Frozen Core
     web_server.py Point d'entrée FastAPI (452 lignes)
     watchdog.ps1  Watchdog PowerShell

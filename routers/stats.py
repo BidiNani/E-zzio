@@ -1,6 +1,5 @@
 import asyncio
 import logging
-import os
 import time
 from datetime import datetime
 
@@ -8,11 +7,13 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security.api_key import APIKeyHeader
 from pydantic import BaseModel
 
+from core.security.api_key import is_key_valid
+
 logger = logging.getLogger("ezzio.routers.stats")
 
 API_KEY_NAME = "X-API-Key"
 api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
-EXPECTED_KEY = os.getenv("EZZIO_API_KEY", "ezzio_secret_key_local_dev")
+
 
 router = APIRouter()
 
@@ -75,14 +76,14 @@ def get_stats_summary() -> StatsResponse:
 # --- Endpoints ---
 @router.get("/api/v1/stats", response_model=StatsResponse, tags=["Stats"])
 async def get_stats(api_key: str = Depends(api_key_header)):
-    if api_key != EXPECTED_KEY:
+    if not is_key_valid(api_key):
         raise HTTPException(status_code=403, detail="Clé API invalide")
     return get_stats_summary()
 
 
 @router.post("/api/v1/stats/notify", tags=["Stats"])
 async def notify_stats(data: StatsNotify, api_key: str = Depends(api_key_header)):
-    if api_key != EXPECTED_KEY:
+    if not is_key_valid(api_key):
         raise HTTPException(status_code=403, detail="Clé API invalide")
 
     stats_data["total_requests"] += 1

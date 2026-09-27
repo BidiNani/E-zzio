@@ -10,13 +10,13 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.security.api_key import APIKeyHeader
 from pydantic import BaseModel
 
+from core.security.api_key import is_key_valid
 from routers.chat import _core
 
 logger = logging.getLogger("ezzio.api.webhook")
 router = APIRouter(prefix="/api/v1/webhook", tags=["Webhook"])
 api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
 
-EXPECTED_KEY = os.getenv("EZZIO_API_KEY", "ezzio_secret_key_local_dev")
 MAX_PAYLOAD_SIZE = int(os.getenv("EZZIO_MAX_PAYLOAD_SIZE", 10 * 1024 * 1024))
 MAX_FILES = int(os.getenv("EZZIO_MAX_FILES", 100))
 MAX_TOKENS_ESTIMATE = int(os.getenv("EZZIO_MAX_TOKENS_ESTIMATE", 50000))
@@ -81,8 +81,7 @@ async def n8n_webhook_receiver(request: Request, api_key: str = Depends(api_key_
     if not check_rate_limit(client_ip):
         raise HTTPException(status_code=429, detail="Rate limit exceeded")
 
-    expected_key = os.getenv("EZZIO_API_KEY") or EXPECTED_KEY
-    if not expected_key or api_key != expected_key:
+    if not is_key_valid(api_key):
         raise HTTPException(status_code=403, detail="Invalid API Key")
 
     body_bytes = await request.body()

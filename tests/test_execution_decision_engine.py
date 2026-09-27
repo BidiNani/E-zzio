@@ -1,7 +1,8 @@
 """Tests for core/cognition/execution_decision_engine.py (Mission 21 Architectural Convergence)."""
 
 import pytest
-from core.cognition.execution_decision_engine import ExecutionDecisionEngine, ExecutionDecision
+
+from core.cognition.execution_decision_engine import ExecutionDecision, ExecutionDecisionEngine
 
 
 def test_execution_decision_engine_default_selection(tmp_path):
