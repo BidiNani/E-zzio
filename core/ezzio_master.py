@@ -87,20 +87,36 @@ class EzzioMaster:
         self.memory = memory_gateway
         self._memory_initialized = False
         self.workspace_root = kwargs.get("workspace_root", r"G:\AI\E-zzio")
-        self.harness = NativeHarness(router=None, policy_guard=None, audit_ledger=None, workspace_root=self.workspace_root)
-        self.hermes_adapter = kwargs.get("hermes_adapter")
-        if self.hermes_adapter is None:
-            from core.agent.hermes_worker_adapter import HermesWorkerAdapter
-            self.hermes_adapter = HermesWorkerAdapter(workspace_root=self.workspace_root)
         self.execution_engine = kwargs.get("execution_engine")
         if self.execution_engine is None:
             from core.cognition.execution_decision_engine import ExecutionDecisionEngine
             self.execution_engine = ExecutionDecisionEngine(workspace_root=self.workspace_root)
+        self.harness = NativeHarness(
+            router=None,
+            policy_guard=None,
+            audit_ledger=None,
+            workspace_root=self.workspace_root,
+            execution_engine=self.execution_engine,
+        )
+        self.hermes_adapter = kwargs.get("hermes_adapter")
+        if self.hermes_adapter is None:
+            from core.agent.hermes_worker_adapter import HermesWorkerAdapter
+            self.hermes_adapter = HermesWorkerAdapter(workspace_root=self.workspace_root)
         self.self_coding_loop = kwargs.get("self_coding_loop")
         if self.self_coding_loop is None:
             from core.agent.autonomous_self_coding_loop import AutonomousSelfCodingLoop
             self.self_coding_loop = AutonomousSelfCodingLoop(workspace_root=self.workspace_root)
+        self.worker_selector = kwargs.get("worker_selector")
+        if self.worker_selector is None:
+            from core.agent.external_worker_contract import GovernedWorkerSelector
+            self.worker_selector = GovernedWorkerSelector(
+                workspace_root=self.workspace_root,
+                audit_ledger=getattr(self.harness, "audit_ledger", None),
+                policy_guard=getattr(self.harness, "policy_guard", None),
+            )
         self._background_tasks: set[asyncio.Task] = set()
+
+
 
 
     async def _record_assistant_memory(self, res_dict: dict[str, Any],
@@ -194,7 +210,6 @@ class EzzioMaster:
         session_id = kwargs.get("session_id", "")
         channel = kwargs.get("channel", "web")
         logger.debug("[EzzioMaster] Generation (session=%s, channel=%s)", session_id, channel)
-        model_target = kwargs.get("model_target", "auto")
         thinking_level = routing.get("thinking_level")
 
         # Override depuis settings utilisateur (toggle frontend)
@@ -208,20 +223,16 @@ class EzzioMaster:
         # Phase 2.3A Etape 2 : le provider vient du ModelRouter (autorite unique)
         from core.providers.registry import ProviderFactory
 
+        # Le provider et le modèle sont strictement résolus par la chaîne gouvernée
         selected_model = routing.get("model", "gemini-3.5-flash-lite")
         provider_name = routing.get("provider", "gemini")
 
-        # Override model_target si specifie
-        if model_target and model_target not in ("auto", "local", "cloud"):
-            selected_model = model_target
 
-        # Override provider si model_target force local/cloud
-        _mt = (model_target or "").lower()
-        if _mt in ("local", "ollama"):
-            provider_name = "ollama"
-            logger.info("[EzzioMaster] Mode local explicite (model_target=%s)", model_target)
-        elif _mt == "cloud":
-            logger.info("[EzzioMaster] Mode cloud explicite (model_target=%s)", model_target)
+        # Extrait la contrainte de souveraineté
+        local_only = kwargs.get("local_only", False) or routing.get("local_only", False)
+        force_cloud = kwargs.get("force_cloud", True)
+        if kwargs.get("prefer_local") and not kwargs.get("force_cloud"):
+            local_only = True
 
         resp: ProviderResponse
         used_fallback = False
@@ -255,9 +266,16 @@ class EzzioMaster:
                 user_prompt=user_prompt,
                 chat_system=chat_system,
                 thinking_level=thinking_level,
+                local_only=local_only,
+                force_cloud=force_cloud,
             )
             if fb_resp is None:
-                raise
+                _audit_command("SOVEREIGNTY_FALLBACK_DENIED", {
+                    "provider": provider_name, "model": selected_model,
+                    "reason": str(cloud_err), "outcome": "REFUSED"}, "BLOCKED")
+                raise RuntimeError(
+                    f"[FAIL-CLOSED] Provider {provider_name} indisponible et fallback cloud non autorisé par la gouvernance de souveraineté (local_only={local_only})."
+                ) from cloud_err
             resp = fb_resp
             used_fallback = True
             fallback_notice = fb_notice
@@ -279,6 +297,8 @@ class EzzioMaster:
                 user_prompt=user_prompt,
                 chat_system=chat_system,
                 thinking_level=thinking_level,
+                local_only=local_only,
+                force_cloud=force_cloud,
             )
             if fb_resp is not None and (fb_resp.content or "").strip():
                 resp = fb_resp
@@ -318,12 +338,14 @@ class EzzioMaster:
         user_prompt: str | None,
         chat_system: str | None,
         thinking_level: str | None,
+        local_only: bool = False,
+        force_cloud: bool = True,
     ):
-        """Bascule vers FALLBACK_MAP[provider] en cas de defaillance.
+        """Bascule vers FALLBACK_MAP[provider] en cas de defaillance (gouverné par la souveraineté).
 
         Retourne (ProviderResponse | None, dict | None).
         - Succes : (resp, notice)
-        - Echec  : (None, None)
+        - Echec / Bloqué par souveraineté : (None, None)
         """
         try:
             from routers.settings import FALLBACK_MAP
@@ -333,11 +355,10 @@ class EzzioMaster:
 
         fb_model = FALLBACK_MAP.get(detected_provider)
         if not fb_model or fb_model == original_model:
-            return None, None
+            fb_model = None
 
-        try:
-            from core.providers.registry import ProviderFactory
-            fb_provider_name = "gemini"
+        fb_provider_name = "gemini"
+        if fb_model:
             try:
                 from core.routing.model_registry import canonical_model_registry
                 rec = canonical_model_registry.get(fb_model)
@@ -346,6 +367,38 @@ class EzzioMaster:
             except Exception:
                 pass
 
+        # Règle de Souveraineté Étape 4 (R1) :
+        # Si la requête exige local_only=True ou interdit le cloud (force_cloud=False / local provider),
+        # tout fallback vers un provider cloud (ex: gemini) est STRICTEMENT INTERDIT (DENY / FAILED).
+        is_fb_cloud = (fb_provider_name != "ollama") if fb_model else True
+        if not fb_model or (is_fb_cloud and (local_only or not force_cloud)):
+            if fb_model:
+                logger.warning(
+                    "[EzzioMaster] Souveraineté : Fallback cloud vers %s REFUSÉ pour la requête locale (%s) [local_only=%s, force_cloud=%s] -> bascule vers fallback local",
+                    fb_provider_name, original_model, local_only, force_cloud,
+                )
+            # Sélection du fallback local sous l'autorité explicite du ModelRouter
+            try:
+                router = getattr(self.execution_engine, "model_router", None)
+                if router is None:
+                    from core.cognition.model_router import ModelRouter
+                    router = ModelRouter()
+                route = router.select_engine(prefer_local=True, budget_permits_cloud=force_cloud)
+                if route.get("status") != "FAIL_CLOSED" and route.get("model") and route.get("provider") and route.get("model") != original_model:
+                    fb_model = route["model"]
+                    fb_provider_name = route["provider"]
+                    is_fb_cloud = (fb_provider_name != "ollama") and not route.get("is_local", False)
+                else:
+                    return None, None
+            except Exception:
+                return None, None
+
+            if is_fb_cloud:
+                return None, None
+
+
+        try:
+            from core.providers.registry import ProviderFactory
             fb_prov = ProviderFactory.create(fb_provider_name)
             fb_resp = await fb_prov.generate(
                 prompt=user_prompt or "",
@@ -381,6 +434,7 @@ class EzzioMaster:
             return None, None
 
 
+
     async def execute_intent(
         self,
         user_prompt: str,
@@ -401,9 +455,11 @@ class EzzioMaster:
         """
         start_time = time.perf_counter()
 
-        # 0. Synchroniser la memoire : le harness doit utiliser la MEME que le master
+        # 0. Synchroniser la memoire & execution_engine : le harness doit utiliser les MEMES que le master
         # (important pour les tests et l'injection de memoire custom)
         self.harness.memory = self.memory
+        self.harness.execution_engine = self.execution_engine
+
 
         # Détermination dynamique de l'intention : CHAT vs MISSION
         intent = determine_intent(user_prompt, mission_profile, kwargs.get("is_mission", False))
@@ -535,7 +591,9 @@ class EzzioMaster:
                 model_target=model_target,
                 # Passage au harness pour la selection du modele
                 mission_profile=mission_profile,
+                **kwargs,
             )
+
         except Exception as harness_err:
             logger.error("[EzzioMaster] Harness a echoue : %s", harness_err)
             elapsed_ms = int((time.perf_counter() - start_time) * 1000)
@@ -739,6 +797,13 @@ class EzzioMaster:
 
         # 1. Décomposition en sous-tâches si non fournies (avec dépendances réelles)
         if not subtask_specs:
+            spec_kw = kwargs.get("spec")
+            if isinstance(spec_kw, dict) and "nodes" in spec_kw:
+                subtask_specs = spec_kw["nodes"]
+            elif isinstance(spec_kw, list):
+                subtask_specs = spec_kw
+
+        if not subtask_specs:
             lower_prompt = mission_prompt.lower()
             if any(w in lower_prompt for w in ("test", "valide", "vérifie", "qa")):
                 subtask_specs = [
@@ -789,19 +854,6 @@ class EzzioMaster:
             "session_id": session_id or ""
         })
 
-        role_agent_map = {
-            "coding": "coder_worker",
-            "forensic": "sec_guard",
-            "security": "sec_guard",
-            "qa": "qa_tester",
-            "test": "qa_tester",
-            "validation": "qa_tester",
-            "research": "researcher_scout",
-            "scout": "researcher_scout",
-            "web": "web_agent",
-            "general": "coder_worker",
-        }
-
         bounded_retries = max(0, min(max_retries, 2))
 
         # 2. Construction du TaskDAG
@@ -819,24 +871,102 @@ class EzzioMaster:
                 max_retries=bounded_retries,
             )
 
-        # 3. Handler local d'exécution pour les nœuds du DAG avec auto-correction autonome
+        # 3. Handler local d'exécution pour les nœuds du DAG gouverné (Context -> Policy -> Budget -> Decision)
         async def dag_handler(node: DAGNode) -> dict[str, Any]:
             spec = node.payload
             task_id = node.task_id
             task_role = node.action_type
-            comp = spec.get("complexity", 0.6)
             tool_name = spec.get("tool_name")
             tool_args = spec.get("tool_args", {})
             worker_type = spec.get("worker", "internal")
+            node_prompt = spec.get("prompt", mission_prompt)
 
-            routing = router.select_engine(
+            # A. CANONICAL POLICY EVALUATION
+            eval_tool = tool_name or task_role or "chat"
+            eval_args = tool_args if tool_name else {"prompt": node_prompt, "task_id": task_id, "role": task_role, **kwargs}
+            allowed, policy_reason = self.harness.policy_guard.evaluate_intent(eval_tool, eval_args)
+            if not allowed:
+                logger.warning(f"[MISSION DAG NODE POLICY DENIED] task_id={task_id} reason={policy_reason}")
+                node.policy_decision = "DENY"
+                node.status = DAGExecutionStatus.FAILED
+                node.error = f"[POLICY_DENIED] {policy_reason}"
+                return {
+                    "status": "DENIED",
+                    "task_id": task_id,
+                    "role": task_role,
+                    "agent_id": node.agent_id,
+                    "model": node.provider,
+                    "output": f"[POLICY_DENIED] {policy_reason}",
+                    "reason": policy_reason,
+                    "policy_decision": "DENY",
+                }
+
+            # B. CANONICAL BUDGET EVALUATION (CognitiveGovernor)
+            budget_override_deny = kwargs.get("budget_deny", False) or spec.get("budget_deny", False)
+            estimated_cost = spec.get("estimated_cost", 100)
+            priority = spec.get("priority", "normal")
+            risk_level = spec.get("risk_level", "low")
+
+            if budget_override_deny:
+                gov_record = {"decision": "DENY", "reason": "[BUDGET EXCEEDED] Budget cognitif épuisé"}
+            else:
+                try:
+                    gov_record = self.harness.governor.evaluate_and_record(
+                        task=node_prompt[:100],
+                        estimated_tokens=estimated_cost,
+                        priority=priority,
+                        risk_level=risk_level,
+                    )
+                except Exception as b_err:
+                    logger.warning(f"[MISSION DAG BUDGET EVAL FAIL] {b_err}")
+                    gov_record = {"decision": "ALLOW", "reason": "Budget check error, fail open"}
+
+            if gov_record.get("decision") == "DENY":
+                b_reason = gov_record.get("reason", "[BUDGET EXCEEDED] Budget insuffisant")
+                logger.warning(f"[MISSION DAG NODE BUDGET DENIED] task_id={task_id} reason={b_reason}")
+                node.policy_decision = "DENY"
+                node.status = DAGExecutionStatus.FAILED
+                node.error = f"[BUDGET_DENIED] {b_reason}"
+                return {
+                    "status": "DENIED",
+                    "task_id": task_id,
+                    "role": task_role,
+                    "agent_id": node.agent_id,
+                    "model": node.provider,
+                    "output": f"[BUDGET_DENIED] {b_reason}",
+                    "reason": b_reason,
+                    "policy_decision": "DENY",
+                }
+
+            # C. EXECUTION DECISION ENGINE (Seulement si Policy=ALLOW et Budget=ALLOW)
+            preferred_target = spec.get("model_target") or spec.get("worker") or kwargs.get("model_target")
+            is_local_req = (kwargs.get("local_only", False)) or (spec.get("local_only", False)) or (preferred_target in ("local", "ollama")) or kwargs.get("prefer_local", False)
+            force_cloud_req = kwargs.get("force_cloud", True) if not is_local_req else False
+
+            decision = self.execution_engine.evaluate_and_decide(
                 task_type=task_role,
-                complexity_score=comp,
-                risk_level="low",
-                channel=channel
+                objective=node_prompt,
+                preferred_target=preferred_target,
+                prefer_local=is_local_req,
+                budget_permits_cloud=force_cloud_req,
             )
-            node.agent_id = role_agent_map.get(task_role.lower(), "coder_worker")
-            node.provider = routing.get("provider", "gemini")
+
+            # Consommation explicite de la décision
+            node.policy_decision = "ALLOW"
+            node.provider = decision.provider
+            node.agent_id = decision.target_id
+
+            routing = {
+                "execution_type": decision.execution_type,
+                "target_id": decision.target_id,
+                "model": decision.target_id,
+                "provider": decision.provider,
+                "is_local": decision.is_local,
+                "score": decision.score,
+                "rationale": decision.rationale,
+                "local_only": is_local_req,
+                "force_cloud": force_cloud_req,
+            }
 
             target_agent_id = node.agent_id
             agent_desc = agent_registry.get_agent(target_agent_id)
@@ -893,7 +1023,42 @@ class EzzioMaster:
                         f"[RÉSULTAT OUTIL {tool_name}]\n{tool_result}\n[/RÉSULTAT OUTIL]"
                     )
 
-                if worker_type == "hermes":
+                if worker_type in ("self_coding_loop", "self_coding") or (decision.execution_type == "WORKER" and decision.target_id in ("self_coding_loop", "self_coding")):
+                    sc_adapter = self.worker_selector.get_worker("self_coding_loop")
+                    if sc_adapter:
+                        from core.agent.external_worker_contract import WorkerRequest
+                        w_req = WorkerRequest(
+                            task_id=task_id,
+                            prompt=current_prompt_with_tool,
+                            objective=current_prompt_with_tool,
+                            working_directory=spec.get("workspace_root") or ws_root,
+                            context=dict(spec),
+                        )
+                        sc_res = await sc_adapter.submit(w_req, execution_decision=decision)
+                        sub_output = sc_res.output or sc_res.error or ""
+                        worker_pid = None
+                        worker_status = sc_res.status
+                elif worker_type in ("coder_worker", "coder") or (decision.execution_type == "WORKER" and decision.target_id in ("coder_worker", "coder")):
+                    coder_adapter = self.worker_selector.get_worker("coder_worker")
+                    if coder_adapter:
+                        from core.agent.external_worker_contract import WorkerRequest
+                        w_req = WorkerRequest(
+                            task_id=task_id,
+                            prompt=current_prompt_with_tool,
+                            objective=current_prompt_with_tool,
+                            working_directory=spec.get("workspace_root") or ws_root,
+                            context={
+                                "target_file": spec.get("target_file", "core/coding/coder_worker.py"),
+                                "dry_run": spec.get("dry_run", False),
+                                "files_context": spec.get("files_context", spec.get("files", [])),
+                                "injected_llm_callback": spec.get("injected_llm_callback"),
+                            },
+                        )
+                        c_res = await coder_adapter.submit(w_req, execution_decision=decision)
+                        sub_output = c_res.output or c_res.stderr or c_res.error or ""
+                        worker_pid = None
+                        worker_status = c_res.status
+                elif worker_type == "hermes":
                     from core.agent.hermes_worker_profiles import (
                         build_context_pack,
                         render_context_prompt,
@@ -929,6 +1094,7 @@ class EzzioMaster:
                             timeout=spec.get("timeout", worker_profile.default_timeout_sec),
                             profile=worker_profile,
                             workspace_root=spec.get("workspace_root") or ws_root,
+                            execution_decision=decision,
                         )
                         sub_output = hermes_res.output or hermes_res.stdout
                         worker_pid = hermes_res.pid
@@ -967,7 +1133,7 @@ class EzzioMaster:
                         is_valid = False
                     elif "[EXIT_CODE:" in tool_result and "[EXIT_CODE:0]" not in tool_result:
                         is_valid = False
-                if worker_type == "hermes" and worker_status not in ("SUCCESS", "COMPLETED"):
+                if (worker_type in ("hermes", "coder_worker", "coder", "self_coding_loop", "self_coding") or decision.target_id in ("coder_worker", "coder", "self_coding_loop", "self_coding")) and worker_status not in ("SUCCESS", "COMPLETED"):
                     is_valid = False
 
                 _audit_command("VALIDATION_RESULT", {
@@ -1136,6 +1302,7 @@ class EzzioMaster:
             "mission": mission_prompt,
             "mission_id": mission_id,
             "dag_id": dag.dag_id,
+            "dag": dag.to_dict(),
             "master_model": master_routing["model"],
             "subtasks": results,
             "synthesis": synthesis_text,
