@@ -5,6 +5,7 @@ Intègre le Secure Vault, la session aiohttp persistante et le statut dynamique.
 
 import asyncio
 import logging
+import os
 import pathlib
 import sys
 from datetime import UTC, datetime
@@ -38,6 +39,29 @@ DISCORD_NET_ERRORS = (
 )
 
 
+def is_pre_request_connect_error(exc: Exception) -> bool:
+    """Détermine si l'erreur réseau s'est produite AVANT l'envoi/acceptation de la requête par le serveur HTTP local.
+
+    Retourne True pour les refus de connexion (serveur hors ligne, ClientConnectorError, ConnectError).
+    Retourne False pour les délais d'attente (TimeoutError, ReadTimeout) et erreurs post-acceptation
+    afin d'éviter une double exécution en parallèle via le fallback in-process.
+    """
+    if isinstance(
+        exc,
+        (
+            aiohttp.ClientConnectorError,
+            _httpx_lib.ConnectError,
+            _httpx_lib.ConnectTimeout,
+        ),
+    ):
+        return True
+    if isinstance(exc, _httpx_lib.RequestError):
+        err_name = type(exc).__name__.lower()
+        if "connect" in err_name or "refused" in str(exc).lower():
+            return True
+    return False
+
+
 def get_http_client():
     """Singleton httpx partagé : 1 pool keepalive, 0 renégociation TLS/message."""
     global _http_client
@@ -59,16 +83,11 @@ PROJECT_ROOT = pathlib.Path(r"G:\AI\E-zzio")
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from runtime.adapters.config.dotenv_provider import DotEnvConfigProvider
-
 from core.config import secrets_loader
 from core.integrations.discord.discord_watchdog import discord_watchdog
 from core.integrations.discord.permission_guard import permission_guard
 from core.security.secret_redactor import secret_redactor
-from core.tool_gateway.google_bridge import GoogleIdentityBridge
-
-config = DotEnvConfigProvider(env_path=str(PROJECT_ROOT / "secrets" / ".env"))
-google_bridge = GoogleIdentityBridge(config=config)
+from core.tool_gateway.google_bridge import google_bridge
 
 # Source de vérité unique : chargement forcé (override=True).
 _LOADED_SECRETS = secrets_loader.load(override=True)
@@ -88,27 +107,28 @@ from core.integrations.discord.routing_rules import (
 
 
 def resolve_discord_token() -> str:
-    try:
-        vault_res = google_bridge.retrieve_tokens()
-        if vault_res.get("valid"):
-            tokens = vault_res.get("tokens", {})
-            if "discord_bot_token" in tokens:
-                return tokens["discord_bot_token"]
-    except Exception:
-        pass
-    return config.get("DISCORD_BOT_TOKEN") or config.get("DISCORD_TOKEN")
+    if google_bridge is not None:
+        try:
+            vault_res = google_bridge.retrieve_tokens()
+            if vault_res.get("valid"):
+                tokens = vault_res.get("tokens", {})
+                if "discord_bot_token" in tokens:
+                    return tokens["discord_bot_token"]
+        except Exception:
+            pass
+    return secrets_loader.discord_token(_LOADED_SECRETS) or os.environ.get("DISCORD_BOT_TOKEN", "") or os.environ.get("DISCORD_TOKEN", "")
 
 
 DISCORD_TOKEN = resolve_discord_token()
 if not DISCORD_TOKEN:
     DISCORD_TOKEN = secrets_loader.discord_token(_LOADED_SECRETS)
-LOCAL_API_URL = config.get("EZZIO_LOCAL_API_URL", "http://127.0.0.1:8001/master/chat")
+LOCAL_API_URL = os.environ.get("EZZIO_LOCAL_API_URL", "http://127.0.0.1:8001/master/chat")
 
 # Points d'accès gouvernés requis : /master/chat (canonique) et
 # /v1/chat/completions (compatibilité OpenAI, même gouvernance).
-COMPLETIONS_URL = config.get("EZZIO_COMPLETIONS_URL", "http://127.0.0.1:8001/v1/chat/completions")
+COMPLETIONS_URL = os.environ.get("EZZIO_COMPLETIONS_URL", "http://127.0.0.1:8001/v1/chat/completions")
 
-PROACTIVE_POLL_URL = config.get(
+PROACTIVE_POLL_URL = os.environ.get(
     "EZZIO_PROACTIVE_API_URL", "http://127.0.0.1:8001/system/proactive/poll"
 )
 
@@ -505,12 +525,74 @@ async def _handle_message(message):
             await StreamEditor().render(_first_chunk, reply_text)
 
         except DISCORD_NET_ERRORS as net_exc:
-            logger.error("[DISCORD] Noyau injoignable : %s", net_exc)
-            backend_down = "⚠️ Erreur noyau E-zzio : Le serveur local (:8001) ne répond pas. Vérifie son exécution."
-            if is_private:
-                await message.channel.send(backend_down)
+            if is_pre_request_connect_error(net_exc):
+                logger.info(
+                    "[DISCORD] API HTTP injoignable (connexion refusée avant requête), basculement vers EzzioMaster in-process : %s",
+                    net_exc,
+                )
+                try:
+                    from core.ezzio_master import ezzio_master
+
+                    data = await ezzio_master.execute_intent(
+                        user_prompt=clean_prompt,
+                        speed="fast",
+                        force_cloud=False,
+                        session_id=session_scope,
+                        mission_profile=mission_profile,
+                        model_target=model_target,
+                        channel="discord",
+                    )
+                    raw_res = data.get("response", "")
+                    if isinstance(raw_res, dict):
+                        body_text = raw_res.get("response") or raw_res.get("answer") or str(raw_res)
+                    elif isinstance(raw_res, str):
+                        body_text = raw_res if raw_res.strip() else "Réponse du noyau."
+                    else:
+                        body_text = str(raw_res)
+
+                    prov = data.get("provider") or "Unknown"
+                    mdl = data.get("model") or "Unknown"
+                    msn = data.get("mission") or mission_profile
+                    status_str = "SUCCESS" if data.get("ok", True) else "FAIL"
+
+                    banner = (
+                        f"**E-ZZIO**\n"
+                        f"━━━━━━━━━━━━━━━━━━\n"
+                        f"**Mission**  : `{msn}`\n"
+                        f"**Provider** : `{prov}`\n"
+                        f"**Model**    : `{mdl}`\n"
+                        f"**Status**   : `{status_str}`\n"
+                        f"━━━━━━━━━━━━━━━━━━\n\n"
+                    )
+                    reply_text = banner + body_text
+
+                    from core.integrations.discord.ui_components import StreamEditor
+
+                    async def _first_chunk(content: str):
+                        if is_private:
+                            return await message.channel.send(content)
+                        return await message.reply(content)
+
+                    await StreamEditor().render(_first_chunk, reply_text)
+                    return
+                except Exception as master_exc:
+                    logger.error("[DISCORD] Échec in-process EzzioMaster : %s", master_exc)
+
+                backend_down = "⚠️ Erreur noyau E-zzio : Le serveur local ne répond pas. Vérifie son exécution."
+                if is_private:
+                    await message.channel.send(backend_down)
+                else:
+                    await message.reply(backend_down)
             else:
-                await message.reply(backend_down)
+                logger.warning(
+                    "[DISCORD] Délai d'attente dépassé ou erreur post-connexion (pas de fallback in-process pour éviter la double exécution) : %s",
+                    net_exc,
+                )
+                timeout_msg = "⏱️ Délai d'attente dépassé lors du traitement de la mission par le serveur local (pas de réexécution)."
+                if is_private:
+                    await message.channel.send(timeout_msg)
+                else:
+                    await message.reply(timeout_msg)
         except Exception as e:
             logger.exception("[DISCORD] Erreur traitement message")
             secret_redactor.sanitize(str(e))

@@ -7,24 +7,43 @@ import base64
 import hashlib
 import hmac
 import json
+import os
 from datetime import UTC, datetime
 from pathlib import Path
 
 from cryptography.fernet import Fernet
 
 from contracts.config_port import IConfigProvider
+from core.config import secrets_loader
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 VAULT_FILE = ROOT_DIR / "runtime" / "vault" / "google_oauth.vault"
 
 
 class GoogleIdentityBridge:
-    def __init__(self, config: IConfigProvider = None):
-        if config is None:
-            from runtime.adapters.config.dotenv_provider import DotEnvConfigProvider
+    def __init__(self, config: IConfigProvider | None = None):
+        secret = ""
+        if config is not None:
+            try:
+                secret = config.require("EZZIO_LEDGER_SECRET")
+            except Exception:
+                secret = ""
 
-            config = DotEnvConfigProvider()
-        secret = config.require("EZZIO_LEDGER_SECRET")
+        if not secret:
+            loaded = secrets_loader.load(override=False)
+            secret = (
+                loaded.get("EZZIO_LEDGER_SECRET")
+                or os.environ.get("EZZIO_LEDGER_SECRET", "")
+            )
+
+        secret = secrets_loader._clean(secret)
+
+        if not secret:
+            raise ValueError(
+                "[SECURITY-FAIL-CLOSED] EZZIO_LEDGER_SECRET est absent et requis. "
+                "Renseignez EZZIO_LEDGER_SECRET dans secrets/.env ou l'environnement."
+            )
+
         self.master_secret = secret.encode("utf-8")
 
         # Dérivation d'une clé AES/Fernet 32-bytes URL-safe à partir du secret maître
@@ -80,5 +99,8 @@ class GoogleIdentityBridge:
             return {"valid": False, "error": f"VAULT_DECRYPTION_FAILED: {str(e)}"}
 
 
-# Instance globale de rétrocompatibilité pour les modules non encore migrés
-google_bridge = GoogleIdentityBridge()
+# Instance globale de rétrocompatibilité (fail-closed si secret non configuré)
+try:
+    google_bridge = GoogleIdentityBridge()
+except ValueError:
+    google_bridge = None

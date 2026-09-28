@@ -21,6 +21,8 @@ class DiscordWatchdog:
         self.last_message_timestamp = time.time()
 
     def check_vault_health(self) -> str:
+        if google_bridge is None:
+            return "NOT_CONFIGURED"
         try:
             res = google_bridge.retrieve_tokens()
             # Même si le vault est vide, s'il répond sans crash, l'intégrité est OK

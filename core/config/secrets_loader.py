@@ -20,13 +20,12 @@ DISCORD_OWNER_ID: int | None = None
 
 def _refresh_owner(env: dict) -> None:
     global DISCORD_OWNER_ID
-    raw = _clean(env.get("DISCORD_OWNER_ID", ""))
-    try:
-        DISCORD_OWNER_ID = int(raw) if raw.isdigit() else None
-    except (TypeError, ValueError):
-        DISCORD_OWNER_ID = None
-    if DISCORD_OWNER_ID is not None:
+    raw = _clean(env.get("DISCORD_OWNER_ID", "")).split("#")[0].strip().strip("\"'")
+    if raw and raw.isdigit():
+        DISCORD_OWNER_ID = int(raw)
         os.environ["DISCORD_OWNER_ID"] = str(DISCORD_OWNER_ID)
+    else:
+        DISCORD_OWNER_ID = None
 
 
 def is_owner_id(user_id: object, owner_id: object = None) -> bool:
@@ -36,6 +35,30 @@ def is_owner_id(user_id: object, owner_id: object = None) -> bool:
         return oid is not None and int(str(user_id).strip()) == int(str(oid).strip())
     except (TypeError, ValueError):
         return False
+
+
+def _clean_key(key: str) -> str:
+    cleaned = key.lstrip("\ufeff").lstrip("$").strip()
+    upper_cleaned = cleaned.upper()
+    alias_map = {
+        "TOKEN": "DISCORD_BOT_TOKEN",
+        "DISCORDTOKEN": "DISCORD_BOT_TOKEN",
+        "DISCORD_TOKEN": "DISCORD_BOT_TOKEN",
+        "DISCORD_BOT_TOKEN": "DISCORD_BOT_TOKEN",
+        "CLIENTID": "DISCORD_CLIENT_ID",
+        "DISCORD_CLIENT_ID": "DISCORD_CLIENT_ID",
+        "USERID": "DISCORD_OWNER_ID",
+        "OWNERID": "DISCORD_OWNER_ID",
+        "DISCORD_OWNER_ID": "DISCORD_OWNER_ID",
+        "OPENROUTERKEY": "OPENROUTER_API_KEY",
+        "OPENROUTER_KEY": "OPENROUTER_API_KEY",
+        "OPENROUTER_API_KEY": "OPENROUTER_API_KEY",
+    }
+    if upper_cleaned in alias_map:
+        return alias_map[upper_cleaned]
+    if "GROQ_API-KEY" in upper_cleaned:
+        return upper_cleaned.replace("GROQ_API-KEY", "GROQ_API_KEY")
+    return cleaned
 
 
 def load(override: bool = True) -> dict[str, str]:
@@ -56,23 +79,74 @@ def load(override: bool = True) -> dict[str, str]:
             if not s or s.startswith("#") or "=" not in s:
                 continue
             k, _, v = line.partition("=")
-            key = k.strip().lstrip("\ufeff")
-            if key:
-                loaded[key] = _clean(v)
+            key = _clean_key(k)
+            val = _clean(v)
+            if key and val:
+                if key in loaded and loaded[key] != val:
+                    raise ValueError(f"[SECRETS-FAIL-CLOSED] Conflit de secret détecté pour la clé '{key}'.")
+                loaded[key] = val
+    except ValueError:
+        raise
     except Exception as exc:
         logger.error("[SECRETS] Lecture secrets/.env impossible : %s", exc)
 
+    # Détection fail-closed des collisions entre alias de secrets
+    alias_conflict_pairs = [
+        ("DISCORD_BOT_TOKEN", "DISCORD_TOKEN"),
+        ("OPENROUTER_API_KEY", "OPENROUTER_KEY"),
+    ]
+    for k1, k2 in alias_conflict_pairs:
+        v1 = _clean(loaded.get(k1, ""))
+        v2 = _clean(loaded.get(k2, ""))
+        if v1 and v2 and v1 != v2:
+            raise ValueError(f"[SECRETS-FAIL-CLOSED] Conflit de secret détecté entre alias '{k1}' et '{k2}'.")
+
     # Synchronisation canonique des alias
-    disc_val = loaded.get("DISCORD_BOT_TOKEN") or loaded.get("DISCORD_TOKEN") or os.environ.get("DISCORD_BOT_TOKEN") or os.environ.get("DISCORD_TOKEN", "")
+    disc_val = (
+        loaded.get("DISCORD_BOT_TOKEN")
+        or loaded.get("DISCORD_TOKEN")
+        or os.environ.get("DISCORD_BOT_TOKEN")
+        or os.environ.get("DISCORD_TOKEN", "")
+    )
     disc_val = _clean(disc_val)
     if disc_val:
         loaded["DISCORD_BOT_TOKEN"] = disc_val
         loaded["DISCORD_TOKEN"] = disc_val
+        os.environ["DISCORD_BOT_TOKEN"] = disc_val
+        os.environ["DISCORD_TOKEN"] = disc_val
 
-    gem_val = loaded.get("GEMINI_API_KEY") or loaded.get("GEMINI_API_KEY_1") or os.environ.get("GEMINI_API_KEY") or os.environ.get("GEMINI_API_KEY_1", "")
+    gem_val = (
+        loaded.get("GEMINI_API_KEY")
+        or loaded.get("GEMINI_API_KEY_1")
+        or os.environ.get("GEMINI_API_KEY")
+        or os.environ.get("GEMINI_API_KEY_1", "")
+    )
     gem_val = _clean(gem_val)
     if gem_val:
         loaded["GEMINI_API_KEY"] = gem_val
+        os.environ["GEMINI_API_KEY"] = gem_val
+
+    groq_val = (
+        loaded.get("GROQ_API_KEY")
+        or loaded.get("GROQ_API_KEY_1")
+        or os.environ.get("GROQ_API_KEY")
+        or os.environ.get("GROQ_API_KEY_1", "")
+    )
+    groq_val = _clean(groq_val)
+    if groq_val:
+        loaded["GROQ_API_KEY"] = groq_val
+        os.environ["GROQ_API_KEY"] = groq_val
+
+    openrouter_val = (
+        loaded.get("OPENROUTER_API_KEY")
+        or loaded.get("OPENROUTER_API_KEY_1")
+        or os.environ.get("OPENROUTER_API_KEY")
+        or os.environ.get("OPENROUTER_API_KEY_1", "")
+    )
+    openrouter_val = _clean(openrouter_val)
+    if openrouter_val:
+        loaded["OPENROUTER_API_KEY"] = openrouter_val
+        os.environ["OPENROUTER_API_KEY"] = openrouter_val
 
     merged = dict(os.environ)
     if override:
@@ -100,15 +174,14 @@ def discord_token(env: dict[str, str] | None = None) -> str:
 
 def discord_owner_id(env: dict[str, str] | None = None) -> int | None:
     src = dict(os.environ) if env is None else env
-    raw = _clean(src.get("DISCORD_OWNER_ID", ""))
+    raw = _clean(src.get("DISCORD_OWNER_ID", "")).split("#")[0].strip().strip("\"'")
     if not raw:
         logger.warning("[SECRETS] DISCORD_OWNER_ID absent — DM restreints.")
         return None
-    try:
+    if raw.isdigit():
         return int(raw)
-    except ValueError:
-        logger.error("[SECRETS] DISCORD_OWNER_ID non convertible : %r", raw[:12])
-        return None
+    logger.error("[SECRETS] DISCORD_OWNER_ID non convertible : %r", raw[:12])
+    return None
 
 
 def groq_key(env: dict[str, str] | None = None) -> str:
