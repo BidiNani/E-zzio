@@ -87,7 +87,14 @@ async def test_agent_registry_lifecycle():
             "task_id": "subtask-code-verify",
             "role": "coding",
             "prompt": "Génère le patch pour le composant",
-            "complexity": 0.7
+            "complexity": 0.7,
+            # Contrat gouverné : l'exécuteur est désigné via la spécification,
+            # l'ExecutionDecisionEngine reste l'autorité de validation du choix.
+            "worker": "coder_worker",
+            # Contrat gouverné CoderWorker : le canal LLM est fourni par l'autorité
+            # (fail-closed sinon) et l'exécution reste en dry_run dans le test.
+            "dry_run": True,
+            "injected_llm_callback": lambda p: '{"plan":["step 1"],"files":[{"path":"helper.py","content":"def h(): pass"}]}',
         }
     ]
 
@@ -291,20 +298,22 @@ async def test_e2e_two_agent_tool_pipeline():
     assert res["mission"] == mission_goal
     assert "mission_id" in res
 
-    # 2. Agent A (researcher_scout) a utilisé l'outil read_file
+    # 2. Agent A (research) a utilisé l'outil read_file
     sub_a = res["subtasks"][0]
     assert sub_a["role"] == "research"
-    assert sub_a["agent_id"] == "researcher_scout"
+    # Contrat gouverné : le reporting d'exécution est le target_id du worker
+    # gouverné (ExecutionDecision), pas l'ancien id de persona du registre.
+    assert sub_a["agent_id"] in ("native", "hermes", "coder_worker", "self_coding_loop", "pig", "cline")
     assert sub_a["tool"] == "read_file"
     assert sub_a["tool_result"] is not None
     assert "project" in sub_a["tool_result"] or "pytest" in sub_a["tool_result"] or len(sub_a["tool_result"]) > 0
     assert sub_a["validated"] is True
     assert sub_a["status"] == "SUCCESS"
 
-    # 3. Agent B (qa_tester) a validé
+    # 3. Agent B (qa) a validé — reporting gouverné (voir contrat ci-dessus)
     sub_b = res["subtasks"][1]
     assert sub_b["role"] == "qa"
-    assert sub_b["agent_id"] == "qa_tester"
+    assert sub_b["agent_id"] in ("native", "hermes", "coder_worker", "self_coding_loop", "pig", "cline")
     assert sub_b["validated"] is True
     assert sub_b["status"] == "SUCCESS"
 

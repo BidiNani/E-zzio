@@ -80,7 +80,7 @@ class CognitiveGovernor:
 
         last_hash = "0000000000000000000000000000000000000000000000000000000000000000"
         try:
-            with open(self.ledger_path, encoding="utf-8") as f:
+            with self._locked_open("r") as f:
                 for line in f:
                     stripped = line.strip()
                     if not stripped:
@@ -93,7 +93,11 @@ class CognitiveGovernor:
         return last_hash
 
     def verify_ledger_chain(self) -> bool:
-        """Vérifie l'intégrité de la chaîne SHA-256 et la validité des signatures HMAC."""
+        """Vérifie l'intégrité de la chaîne SHA-256 et la validité des signatures HMAC.
+
+        Les lectures passent par le verrou OS (voir _locked_open) : _class_lock
+        ne sérialise que les threads d'un même processus, pas contre les
+        append d'autres processus (xdist/serveur)."""
         with CognitiveGovernor._class_lock:
             if not self.ledger_path.exists():
                 return True
@@ -116,7 +120,7 @@ class CognitiveGovernor:
             ]
 
             block_count = 0
-            with open(self.ledger_path, encoding="utf-8") as f:
+            with self._locked_open("r") as f:
                 for line_num, line in enumerate(f, 1):
                     stripped = line.strip()
                     if not stripped:
@@ -198,7 +202,7 @@ class CognitiveGovernor:
         if not self.ledger_path.exists():
             return 0
         try:
-            with open(self.ledger_path, encoding="utf-8") as f:
+            with self._locked_open("r") as f:
                 for line in f:
                     stripped = line.strip()
                     if not stripped:
@@ -232,6 +236,62 @@ class CognitiveGovernor:
                 os.fsync(f.fileno())
         except Exception as e:
             raise LedgerSecurityError(f"Échec critique de l'écriture du manifeste d'intégrité : {e}") from e
+
+    def _locked_open(self, mode: str = "r", encoding: str = "utf-8"):
+        """Ouvre le ledger en tenant le verrou OS inter-processus.
+
+        Sérialise les LECTURES contre les ÉCRITURES (pytest-xdist, serveur web,
+        CLI) : sans lui, un append verrouillé d'un autre processus laisse voir
+        un bloc partiellement écrit aux lecteurs non verrouillés, d'où des
+        LedgerSecurityError fallacieuses (governor=None -> mission crashée).
+        Complément direct du verrou d'écriture d'evaluate_and_record."""
+        lock_handle = open(str(self.budget_dir / "ledger.lock"), "a")
+        locked = False
+        try:
+            import msvcrt
+
+            msvcrt.locking(lock_handle.fileno(), msvcrt.LK_LOCK, 1)
+            locked = True
+        except ImportError:
+            try:
+                import fcntl
+
+                fcntl.flock(lock_handle.fileno(), fcntl.LOCK_EX)
+                locked = True
+            except Exception:
+                pass
+        except OSError:
+            pass
+
+        fh = open(self.ledger_path, mode, encoding=None if "b" in mode else encoding)
+
+        class _LockedFile:
+            def __init__(self, inner: Any, lh: Any, got: bool) -> None:
+                self._fh = inner
+                self._lh = lh
+                self._locked = got
+
+            def __enter__(self) -> Any:
+                return self._fh
+
+            def __exit__(self, exc_type: Any, exc: Any, tb: Any) -> None:
+                try:
+                    if self._locked:
+                        import msvcrt
+
+                        msvcrt.locking(self._lh.fileno(), msvcrt.LK_UNLCK, 1)
+                except (ImportError, OSError):
+                    try:
+                        import fcntl
+
+                        fcntl.flock(self._lh.fileno(), fcntl.LOCK_UN)
+                    except Exception:
+                        pass
+                finally:
+                    self._fh.close()
+                    self._lh.close()
+
+        return _LockedFile(fh, lock_handle, locked)
 
     def evaluate_and_record(self, task: str, estimated_tokens: int, priority: str = "normal", risk_level: str = "low") -> dict[str, Any]:
         with CognitiveGovernor._class_lock:
@@ -288,17 +348,24 @@ class CognitiveGovernor:
 
             line_to_write = self._canonical_dump(transaction) + "\n"
 
-            try:
-                with open(self.ledger_path, "a", encoding="utf-8") as f:
+            # Garde de concurrence inter-processus : l'append + la mise a jour du
+            # manifeste doivent etre atomiques vis-a-vis de tout autre processus
+            # (pytest-xdist, serveur web, CLI). Sans ce verrou, deux ecrivains
+            # simultanes produisent un manifeste dechire (total_blocks ou
+            # head_hash obsolete) -> LedgerSecurityError au boot suivant.
+            # Append + recount + manifeste sous le meme verrou OS (atomique
+            # vis-a-vis de tout autre processus ET de tout lecteur verrouille).
+            with self._locked_open("a") as f:
+                try:
                     f.write(line_to_write)
                     f.flush()
                     os.fsync(f.fileno())
-            except Exception as e:
-                raise LedgerSecurityError(f"Échec critique de l'écriture durable (fsync) : {e}") from e
+                except Exception as e:
+                    raise LedgerSecurityError(f"Échec critique de l'écriture durable (fsync) : {e}") from e
 
-            # Recompte du nombre total de blocs et mise à jour du manifeste signé
-            total_blocks = sum(1 for line in open(self.ledger_path, encoding="utf-8") if line.strip())
-            self._update_manifest(total_blocks, record_hash)
+                # Recompte du nombre total de blocs et mise à jour du manifeste signé
+                total_blocks = sum(1 for line in open(self.ledger_path, encoding="utf-8") if line.strip())
+                self._update_manifest(total_blocks, record_hash)
 
             self.verify_ledger_chain()
             return transaction

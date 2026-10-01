@@ -10,6 +10,7 @@ Verifies:
 """
 
 import sys
+from types import SimpleNamespace
 
 import pytest
 
@@ -18,6 +19,15 @@ from core.agent.cline_worker_adapter import (
     ClineWorkerRequest,
     ClineWorkerResult,
 )
+
+
+def _pre_authorized_decision(worker_id: str = "cline") -> SimpleNamespace:
+    """Décision pré-exécution minimale conforme au contrat gouverné E-ZZIO.
+
+    Depuis la généralisation du guard pré-exécution (contract 2.x), tout worker
+    exige une ExecutionDecision émise par EzzioMaster/ExecutionDecisionEngine.
+    """
+    return SimpleNamespace(target_id=worker_id, worker_id=worker_id, allowed=True, rationale="test")
 from core.security.audit_ledger import AuditLedger
 
 
@@ -41,7 +51,7 @@ async def test_cline_adapter_availability_and_fallback(tmp_path):
         use_worktree_isolation=False,
     )
 
-    res = await adapter.submit(req)
+    res = await adapter.submit(req, execution_decision=_pre_authorized_decision())
 
     assert isinstance(res, ClineWorkerResult)
     assert res.worker_id == "cline"
@@ -66,7 +76,7 @@ async def test_cline_adapter_policy_denial(tmp_path):
         use_worktree_isolation=False,
     )
 
-    res = await adapter.submit(destructive_req)
+    res = await adapter.submit(destructive_req, execution_decision=_pre_authorized_decision())
 
     assert res.status == "POLICY_DENIED"
     assert "[POLICY_DENIED]" in (res.error or "")

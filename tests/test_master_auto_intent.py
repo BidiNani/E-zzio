@@ -344,9 +344,15 @@ async def test_real_execution_coexistence_with_background_mission():
     # T4: La mission 1 est toujours RUNNING pendant que le CHAT a répondu
     assert rec.status == MissionStatus.RUNNING
 
-    # T5: On libère la mission 1 et on attend sa complétion complète
+    # T5: On libère la mission 1 et on attend sa complétion complète.
+    # La finalisation asynchrone réelle prend ~0,4s (probe) : un sleep(0.1) fixe
+    # était une course perdue d'avance. Attente bornée, l'assertion T6 est inchangée.
     event_release.set()
-    await asyncio.sleep(0.1)
+    for _ in range(50):
+        rec = mission_registry.get(m_id)
+        if rec.status != MissionStatus.RUNNING:
+            break
+        await asyncio.sleep(0.1)
 
     # T6: La mission 1 est maintenant SUCCEEDED
     assert rec.status == MissionStatus.SUCCEEDED

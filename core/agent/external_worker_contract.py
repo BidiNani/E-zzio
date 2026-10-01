@@ -26,6 +26,23 @@ from core.security.audit_ledger import AuditLedger
 logger = logging.getLogger("ExternalWorkerContract")
 
 
+def validate_worker_pre_execution(worker_id: str, execution_decision: Any | None = None) -> tuple[bool, str]:
+    """Validates that a worker execution is pre-authorized by an ExecutionDecision from EzzioMaster/ExecutionDecisionEngine."""
+    if execution_decision is None:
+        return False, "[PRE_EXECUTION_DENIED] No ExecutionDecision provided"
+
+    dec_target = getattr(execution_decision, "target_id", None) or getattr(execution_decision, "worker_id", None)
+    if dec_target and dec_target != worker_id and dec_target != "auto":
+        return False, f"[PRE_EXECUTION_DENIED] Worker target mismatch: expected {worker_id}, got {dec_target}"
+
+    is_allowed = getattr(execution_decision, "allowed", True)
+    if not is_allowed:
+        reason = getattr(execution_decision, "rationale", "Execution denied by policy")
+        return False, f"[PRE_EXECUTION_DENIED] {reason}"
+
+    return True, "Pre-execution authorized"
+
+
 @dataclass
 class WorkerCapability:
     """Capability metadata for execution targets."""
@@ -212,10 +229,17 @@ class NativeWorkerAdapter(BaseWorkerAdapter):
     async def cancel(self, task_id: str) -> bool:
         return True
 
-    def verify_and_integrate(self, result: WorkerResult) -> dict[str, Any]:
-        if result.status == "SUCCESS":
-            return {"accepted": True, "proof_status": "PROVEN", "reason": "Verified by E-ZZIO Native Worker"}
-        return {"accepted": False, "proof_status": "REJECTED", "reason": result.error or "Task failed"}
+    def verify_and_integrate(self, result: WorkerResult, evidence: Any | None = None, require_evidence: bool = True) -> dict[str, Any]:
+        from core.quality_gate.completion_gate import CompletionGate
+        gate = CompletionGate(audit_ledger=self.audit_ledger)
+        decision = gate.evaluate(
+            validation_passed=(result.status == "SUCCESS" and result.exit_code == 0),
+            evidence=evidence,
+            require_evidence=require_evidence,
+            worker_result=result,
+            exit_code=result.exit_code,
+        )
+        return decision.to_dict()
 
 
 class GovernedWorkerSelector:
@@ -278,6 +302,31 @@ class GovernedWorkerSelector:
                 policy_guard=self.policy_guard,
             )
             self._workers["pig"] = adapter
+        except Exception:
+            pass
+
+        # Lazy register SelfCodingLoop Worker
+        try:
+            from core.agent.self_coding_loop_adapter import SelfCodingLoopAdapter
+            adapter = SelfCodingLoopAdapter(
+                workspace_root=self.workspace_root,
+                audit_ledger=self.audit_ledger,
+                policy_guard=self.policy_guard,
+            )
+            self._workers["self_coding_loop"] = adapter
+            self._workers["self_coding"] = adapter
+        except Exception:
+            pass
+
+        # Lazy register CoderWorker
+        try:
+            from core.agent.coder_worker_adapter import CoderWorkerAdapter
+            adapter = CoderWorkerAdapter(
+                workspace_root=self.workspace_root,
+                audit_ledger=self.audit_ledger,
+                policy_guard=self.policy_guard,
+            )
+            self._workers["coder_worker"] = adapter
         except Exception:
             pass
 

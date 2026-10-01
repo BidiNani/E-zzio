@@ -186,9 +186,14 @@ async def test_gauntlet_6_worker_cancellation_and_process_cleanup(tmp_path):
 # -----------------------------------------------------------------------------
 @pytest.mark.asyncio
 async def test_gauntlet_7_external_failure_degraded_fallbacks(tmp_path):
-    # 1. PiG unavailable fallback
+    # 1. PiG unavailable fallback (contrat gouverné : décision pré-exécution requise)
+    from types import SimpleNamespace
     pig_adapter = PiGWorkerAdapter(pig_binary_path="/invalid/pig/path", workspace_root=str(tmp_path))
-    pig_res = await pig_adapter.submit("t-pig", "prompt")
+    pig_res = await pig_adapter.submit(
+        "t-pig",
+        "prompt",
+        execution_decision=SimpleNamespace(target_id="pig", worker_id="pig", allowed=True, rationale="test"),
+    )
     assert pig_res.status == "UNAVAILABLE"
 
     # 2. VoiceStudio unavailable fallback

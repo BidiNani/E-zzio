@@ -100,10 +100,23 @@ class PiGWorkerAdapter:
         timeout_sec: float = 60.0,
         model: str = "auto",
         provider: str = "auto",
+        execution_decision: Any | None = None,
     ) -> PiGWorkerResult:
         """Soumet une sous-tâche au worker PiG sous la gouvernance fail-closed E-ZZIO."""
         start_time = time.time()
         ws_path = workspace_root or self.workspace_root
+
+        # 0. Pre-execution guard check
+        from core.agent.external_worker_contract import validate_worker_pre_execution
+        allowed, reason = validate_worker_pre_execution("pig", execution_decision)
+        if not allowed:
+            duration_ms = (time.time() - start_time) * 1000
+            return PiGWorkerResult(
+                worker="pig",
+                status="POLICY_DENIED",
+                error=reason,
+                duration_ms=duration_ms,
+            )
 
         # 0. Vérification disponibilité & sécurité
         if not self.is_available():

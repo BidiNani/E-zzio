@@ -30,6 +30,7 @@ from core.agent.external_worker_contract import (
 from core.agent.patch_engine import PatchEngine
 from core.agent.tools_registry import ToolRegistry
 from core.cognition.execution_decision_engine import ExecutionDecisionEngine
+from core.quality_gate.completion_gate import CompletionGate
 from core.quality_gate.quality_gate import QualityGateOrchestrator
 from core.security.audit_ledger import AuditLedger
 
@@ -89,18 +90,45 @@ class AutonomousSelfCodingLoop:
         self.registry = ToolRegistry(workspace_root=self.workspace_root)
         self.executor = GovernedCommandExecutor(workspace_root=self.workspace_root)
         self.patcher = PatchEngine(workspace_root=self.workspace_root)
-        self.worker_selector = GovernedWorkerSelector(
-            workspace_root=self.workspace_root,
-            audit_ledger=self.audit_ledger,
-            policy_guard=self.policy_guard,
-        )
-        self.execution_engine = ExecutionDecisionEngine(
-            workspace_root=self.workspace_root,
-            worker_selector=self.worker_selector,
-            policy_guard=self.policy_guard,
-            audit_ledger=self.audit_ledger,
-        )
+        # Initialisation DEFERREE du GovernedWorkerSelector et de l'ExecutionDecisionEngine.
+        # Motif : GovernedWorkerSelector._register_default_workers() construit eagerly
+        # SelfCodingLoopAdapter -> AutonomousSelfCodingLoop -> GovernedWorkerSelector...
+        # (recursion infinie lorsque la boucle est montee DEPUIS le selector).
+        # Ces composants restent lazy: ils sont crees au premier acces via les properties.
+        self._worker_selector: GovernedWorkerSelector | None = None
+        self._execution_engine: ExecutionDecisionEngine | None = None
         self.quality_gate = QualityGateOrchestrator()
+
+    @property
+    def worker_selector(self) -> GovernedWorkerSelector:
+        """Autorité de sélection des workers (créée au premier accès)."""
+        if self._worker_selector is None:
+            self._worker_selector = GovernedWorkerSelector(
+                workspace_root=self.workspace_root,
+                audit_ledger=self.audit_ledger,
+                policy_guard=self.policy_guard,
+            )
+        return self._worker_selector
+
+    @worker_selector.setter
+    def worker_selector(self, value: GovernedWorkerSelector | None) -> None:
+        self._worker_selector = value
+
+    @property
+    def execution_engine(self) -> ExecutionDecisionEngine:
+        """Autorité de décision d'exécution (créée au premier accès)."""
+        if self._execution_engine is None:
+            self._execution_engine = ExecutionDecisionEngine(
+                workspace_root=self.workspace_root,
+                worker_selector=self.worker_selector,
+                policy_guard=self.policy_guard,
+                audit_ledger=self.audit_ledger,
+            )
+        return self._execution_engine
+
+    @execution_engine.setter
+    def execution_engine(self, value: ExecutionDecisionEngine | None) -> None:
+        self._execution_engine = value
 
     def run_mission(
         self,
@@ -215,17 +243,7 @@ class AutonomousSelfCodingLoop:
 
         duration_ms = (time.time() - start_time) * 1000
 
-        # 3. Independent E-ZZIO Verification & CompletionGate
-        if success:
-            proof_status = "PROVEN"
-            status = "COMPLETED"
-            summary = f"Mission {mission_id} completed and verified successfully in {iterations} iterations."
-        else:
-            proof_status = "REJECTED"
-            status = "FAILED"
-            summary = f"Mission {mission_id} failed verification after {iterations} iterations."
-
-        # 4. Evidence Persistence
+        # 3. Evidence Persistence (avant le gate : la preuve doit exister avant evaluation)
         ev = CodingTaskEvidence(
             task_id=mission_id,
             plan=objective,
@@ -235,6 +253,25 @@ class AutonomousSelfCodingLoop:
         )
         ev.complete(result="SUCCESS" if success else "FAILED", final_diff=f"Target: {target_file}")
         evidence_paths = self.evidence_logger.record_evidence(ev)
+
+        # 3bis. CompletionGate — autorite canonique unique de preuve (Worker Result != Proof).
+        # La boucle ne s'auto-declare jamais PROVEN : seul le gate delivre la preuve.
+        gate = CompletionGate(audit_ledger=self.audit_ledger)
+        gate_decision = gate.evaluate(
+            task_id=mission_id,
+            worker_id=worker_name,
+            exit_code=0 if success else 1,
+            validation_passed=success,
+            evidence=ev,
+        )
+        if success and gate_decision.accepted:
+            proof_status = gate_decision.proof_status
+            status = "COMPLETED"
+            summary = f"Mission {mission_id} completed and verified successfully in {iterations} iterations."
+        else:
+            proof_status = "REJECTED"
+            status = "FAILED"
+            summary = f"Mission {mission_id} failed verification after {iterations} iterations."
 
         # Audit Event Log
         self.audit_ledger.record_event(

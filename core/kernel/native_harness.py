@@ -88,13 +88,21 @@ class NativeHarness:
         policy_guard: AgentPolicyGuard | None = None,
         audit_ledger: AuditLedger | None = None,
         tool_registry: ToolRegistry | None = None,
-        workspace_root: str = r"G:\AI\E-zzio"
+        workspace_root: str = r"G:\AI\E-zzio",
+        execution_engine: Any | None = None,
+        **kwargs: Any,
     ) -> None:
         self.router = router or ModelRouter()
         self.policy_guard = policy_guard or AgentPolicyGuard(workspace_root=workspace_root)
         self.audit_ledger = audit_ledger or AuditLedger()
+        self.execution_engine = execution_engine
         self.memory = memory_gateway
         self.tool_registry = tool_registry or ToolRegistry()
+        try:
+            from core.cognition.cognitive_governor import CognitiveGovernor
+            self.governor = CognitiveGovernor()
+        except Exception:
+            self.governor = None
 
     def transition_to(
         self,
@@ -214,8 +222,25 @@ class NativeHarness:
                 task_type=task_type,
                 complexity_score=0.5,
                 risk_level="low",
-                channel=channel
+                channel=channel,
+                model_target=kwargs.get("model_target"),
+                prefer_local=kwargs.get("prefer_local", False),
+                force_cloud=kwargs.get("force_cloud", False),
+                local_only=kwargs.get("local_only", False),
             )
+
+            # Souverainete LOCAL-FIRST : un FAIL_CLOSED du routeur (ex: local_only
+            # interdisant une cible cloud) est terminal. Aucun repli cloud implicite.
+            if routing.get("status") == "FAIL_CLOSED":
+                session.termination_reason = TerminationReason.DENIED
+                self.transition_to(session, HarnessState.TERMINATED, metadata={"reason": routing.get("reason", "Routing FAIL_CLOSED")})
+                return {
+                    "status": "DENIED",
+                    "session_id": session.session_id,
+                    "correlation_id": session.correlation_id,
+                    "reason": routing.get("reason", "Routing FAIL_CLOSED"),
+                    "turn": session.current_turn
+                }
 
             # 3. THINKING -> VALIDATING
             self.transition_to(session, HarnessState.VALIDATING)

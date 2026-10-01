@@ -39,11 +39,23 @@ ALLOWED_SHELL_COMMANDS = frozenset([
     "git", "ls", "dir", "cat", "type", "echo",
 ])
 
+# Lecture seule UNIQUEMENT. Toute opération capable de réécrire, restaurer,
+# supprimer ou publier le dépôt est refusée par défaut (voir
+# GIT_MUTATING_OPERATIONS). Une future opération d'écriture git légitime doit
+# passer par un mécanisme explicitement gouverné et autorisé, pas par cette
+# whitelist générique.
 ALLOWED_GIT_COMMANDS = frozenset([
-    "status", "diff", "log", "add", "commit", "restore",
-    "checkout", "branch", "stash", "ls-files", "show",
+    "status", "diff", "log", "branch", "ls-files", "show",
     "rev-parse", "rev-list", "config",
-    "push",  # autorisé, mais pas --force
+])
+
+# Opérations git destructrices ou de publication : refusées par défaut,
+# même en dry_run, même avec des flags apparemment bénins.
+GIT_MUTATING_OPERATIONS = frozenset([
+    "restore", "reset", "clean", "checkout", "stash", "commit",
+    "push", "pull", "merge", "rebase", "cherry-pick", "apply",
+    "am", "tag", "rm", "mv", "gc", "prune", "bisect", "worktree",
+    "notes", "replace", "add",
 ])
 
 FORBIDDEN_GIT_FLAGS = frozenset([
@@ -149,6 +161,13 @@ class InternalToolBridge:
         if cmd_name not in ALLOWED_SHELL_COMMANDS:
             return ToolResult(success=False, error=f"Commande non autorisée : {command}")
 
+        # Un passage direct par run_command("git", ...) traverse le même
+        # garde-fou que git_command (pas de contournement de la whitelist git).
+        if cmd_name == "git":
+            guard = self._check_git_guard(*(args or []))
+            if guard is not None:
+                return guard
+
         cmd = [command, *args]
         if self.dry_run:
             return ToolResult(
@@ -183,19 +202,42 @@ class InternalToolBridge:
     # GIT
     # --------------------------------------------------------
 
-    def git_command(self, *args: str) -> ToolResult:
-        """Exécute une commande git whitelistée."""
+    def _check_git_guard(self, *args: str) -> ToolResult | None:
+        """Garde fail-closed git : retourne un ToolResult de refus si la
+        commande est interdite, None si elle peut être exécutée."""
         if not args:
             return ToolResult(success=False, error="Aucun argument git")
 
         subcommand = args[0].lower()
-        if subcommand not in ALLOWED_GIT_COMMANDS:
-            return ToolResult(success=False, error=f"Commande git non autorisée : git {subcommand}")
+
+        # Opérations destructrices ou de publication : refusées par défaut
+        # (y compris en dry_run — contrat sans ambiguïté). Vérifiées AVANT les
+        # flags pour un message de refus déterministe.
+        if subcommand in GIT_MUTATING_OPERATIONS:
+            return ToolResult(
+                success=False,
+                error=(
+                    f"Commande git refusée par défaut : git {subcommand} "
+                    "(opération destructrice ou de publication). Une écriture git "
+                    "légitime doit passer par un mécanisme explicitement gouverné."
+                ),
+            )
 
         # Vérifier les flags interdits
         for arg in args:
             if arg in FORBIDDEN_GIT_FLAGS:
                 return ToolResult(success=False, error=f"Flag git interdit : {arg}")
+
+        if subcommand not in ALLOWED_GIT_COMMANDS:
+            return ToolResult(success=False, error=f"Commande git non autorisée : git {subcommand}")
+
+        return None
+
+    def git_command(self, *args: str) -> ToolResult:
+        """Exécute une commande git whitelistée (lecture seule)."""
+        guard = self._check_git_guard(*args)
+        if guard is not None:
+            return guard
 
         return self.run_command("git", list(args))
 
@@ -206,15 +248,18 @@ class InternalToolBridge:
         return self.git_command("diff")
 
     def git_add(self, *paths: str) -> ToolResult:
+        """Refusé par défaut : opération d'index (voir GIT_MUTATING_OPERATIONS)."""
         return self.git_command("add", *paths)
 
     def git_commit(self, message: str) -> ToolResult:
+        """Refusé par défaut : publication d'historique (mécanisme gouverné requis)."""
         return self.git_command("commit", "-m", message)
 
     def git_log(self, limit: int = 5) -> ToolResult:
         return self.git_command("log", "--oneline", f"-{limit}")
 
     def git_restore(self, path: str) -> ToolResult:
+        """Refusé par défaut : écrasement du working tree (perte de données)."""
         return self.git_command("restore", path)
 
     # --------------------------------------------------------
@@ -256,4 +301,5 @@ __all__ = [
     "ToolResult",
     "ALLOWED_SHELL_COMMANDS",
     "ALLOWED_GIT_COMMANDS",
+    "GIT_MUTATING_OPERATIONS",
 ]

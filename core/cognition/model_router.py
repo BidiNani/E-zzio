@@ -35,6 +35,48 @@ class ModelRouter:
         """Aiguillage capacitaire et conversationnel basé sur le registre canonique et l'autonomie locale."""
         task_lower = (task_type or "").lower()
 
+        # 0. Resolution d'un model_target explicite si fourni (ex: "groq/llama-3.3-70b" ou "gemini-3.5-flash")
+        model_target = kwargs.get("model_target")
+        if model_target and model_target != "auto":
+            local_only = bool(kwargs.get("local_only", False))
+            provider = "gemini"
+            model_name = model_target
+            if model_target.strip().lower() == "local":
+                # Token canonique "local" : resolution via le registre (source LOCAL d'abord)
+                local_rec = canonical_model_registry.get_by_role("FAST") or canonical_model_registry.get_by_role("CODING")
+                if local_rec and local_rec.source.name == "LOCAL":
+                    provider, model_name = "ollama", local_rec.name
+                else:
+                    provider, model_name = "ollama", "qwen2.5-coder:7b"
+            elif "/" in model_target:
+                parts = model_target.split("/", 1)
+                provider = parts[0]
+            else:
+                rec = canonical_model_registry.get(model_target)
+                if rec and rec.provider:
+                    provider = rec.provider
+                elif any(loc in model_target.lower() for loc in ("qwen", "ollama", "deepseek", "phi")):
+                    provider = "ollama"
+            is_local_target = (provider == "ollama")
+            # Souverainete (LOCAL-FIRST) : local_only interdit toute cible cloud,
+            # y compris explicite. FAIL-CLOSED observable, jamais de bascule cloud implicite.
+            if local_only and not is_local_target:
+                return {
+                    "status": "FAIL_CLOSED",
+                    "error": "LOCAL_ONLY_BLOCKS_CLOUD_TARGET",
+                    "reason": f"local_only=True forbids cloud target '{model_target}' (resolved provider={provider})",
+                    "provider": None,
+                    "model": None,
+                }
+            return {
+                "provider": provider,
+                "model": model_name,
+                "thinking_level": "off",
+                "role": "EXPLICIT_TARGET",
+                "is_local": is_local_target,
+                "local_only": local_only,
+            }
+
         # 1. Évaluation Local-First si demandé ou compatible
         if prefer_local or task_lower == "local" or task_lower.startswith("local_"):
             is_local_eligible, reason = self.local_autonomy.evaluate_local_first(

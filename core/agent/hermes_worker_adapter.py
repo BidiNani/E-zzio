@@ -286,11 +286,30 @@ class HermesWorkerAdapter:
         isolate_home: bool = True,
         profile: WorkerProfile | str | None = None,
         workspace_root: str | None = None,
+        execution_decision: Any | None = None,
         **kwargs: Any,
     ) -> HermesWorkerResult:
         """Submits a bounded execution subtask to the Hermes external worker under profile governance."""
         start_time = time.time()
         hermes_ver = self.get_hermes_version()
+
+        # 0. Pre-execution decision guard check
+        exec_decision = execution_decision or kwargs.get("execution_decision")
+        from core.agent.external_worker_contract import validate_worker_pre_execution
+        allowed, reason = validate_worker_pre_execution("hermes", exec_decision)
+        if not allowed:
+            return HermesWorkerResult(
+                task_id=task_id,
+                status="POLICY_DENIED",
+                stdout="",
+                stderr=f"[POLICY_DENIED] {reason}",
+                exit_code=-2,
+                duration_ms=0,
+                output="",
+                error=reason,
+                model=model,
+                hermes_version=hermes_ver,
+            )
 
         # 1. Deterministic Profile Resolution & Capability Snapshot
         try:
@@ -702,16 +721,24 @@ class HermesWorkerAdapter:
         finally:
             self._active_processes.pop(task_id, None)
             if temp_home and os.path.exists(temp_home):
-                for attempt in range(3):
+                # taskkill /F /T est quasi-synchrone mais Windows relâche les
+                # descripteurs du runtime hermes (uv/python) avec un délai
+                # variable : backoff exponentiel borné avant l'abandon.
+                cleaned = False
+                for attempt in range(6):
                     try:
                         shutil.rmtree(temp_home)
+                        cleaned = True
                         break
                     except Exception as clean_err:
-                        if attempt < 2:
-                            await asyncio.sleep(0.1)
+                        if attempt < 5:
+                            await asyncio.sleep(0.25 * (attempt + 1))
                         else:
-                            shutil.rmtree(temp_home, ignore_errors=True)
-                            logger.warning("[HermesWorkerAdapter] Cleanup failed for %s: %s", temp_home, clean_err)
+                            logger.warning(
+                                "[HermesWorkerAdapter] Cleanup failed for %s: %s", temp_home, clean_err
+                            )
+                if not cleaned:
+                    shutil.rmtree(temp_home, ignore_errors=True)
 
     async def cancel(self, task_id: str) -> bool:
         """Cancels an ongoing task process."""

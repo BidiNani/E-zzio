@@ -207,10 +207,27 @@ class ClineWorkerAdapter:
         except Exception as exc:
             logger.warning("[ClineWorkerAdapter] Process tree termination failed: %s", exc)
 
-    async def submit(self, request: ClineWorkerRequest) -> ClineWorkerResult:
+    async def submit(
+        self,
+        request: ClineWorkerRequest,
+        execution_decision: Any | None = None,
+    ) -> ClineWorkerResult:
         """Submits a coding task to the Cline external worker under strict E-ZZIO governance."""
         start_time = time.time()
         task_id = request.task_id
+
+        # 0. Pre-execution guard check
+        from core.agent.external_worker_contract import validate_worker_pre_execution
+        allowed, reason = validate_worker_pre_execution("cline", execution_decision)
+        if not allowed:
+            duration_ms = (time.time() - start_time) * 1000
+            return ClineWorkerResult(
+                task_id=task_id,
+                status="POLICY_DENIED",
+                exit_code=-2,
+                duration_ms=duration_ms,
+                error=reason,
+            )
 
         # 1. Availability check (Fail-Closed)
         if not self.is_available():
@@ -411,26 +428,28 @@ class ClineWorkerAdapter:
         """Independent E-ZZIO Verification Gate.
 
         Worker Result != Proof.
-        E-ZZIO independently verifies the worker output before official acceptance.
+        Delegation canonique au CompletionGate : seule l'autorite de preuve finale
+        delivre PROVEN. L'adapter ne s'auto-proclame jamais autorite de preuve.
         """
-        if result.status != "SUCCESS":
-            return {
-                "accepted": False,
-                "reason": f"Worker reported non-success status: {result.status}",
-                "proof_status": "REJECTED",
-            }
+        from core.quality_gate.completion_gate import CompletionGate
 
-        # Independent E-ZZIO verification: check changed files and validate syntax / test suite
-        verification_passed = True
-        verification_details = []
-
-        if not result.changed_files:
+        gate = CompletionGate(audit_ledger=self.audit_ledger)
+        decision = gate.evaluate(
+            task_id=result.task_id,
+            worker_id=result.worker_id,
+            exit_code=result.exit_code,
+            output=result.output or result.stdout,
+            validation_passed=(result.status == "SUCCESS" and result.exit_code == 0),
+            evidence=("changed_files", list(result.changed_files)) if result.changed_files else None,
+        )
+        verification_details: list[str] = []
+        if result.status == "SUCCESS" and not result.changed_files:
             verification_details.append("No files were reported changed by worker.")
 
         return {
-            "accepted": verification_passed,
-            "reason": "Verified by E-ZZIO Governance" if verification_passed else "Verification failed",
-            "proof_status": "PROVEN" if verification_passed else "REJECTED",
+            "accepted": decision.accepted,
+            "reason": decision.rationale,
+            "proof_status": decision.proof_status,
             "details": verification_details,
         }
 

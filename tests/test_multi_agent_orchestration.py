@@ -50,17 +50,18 @@ async def test_multi_agent_delegation_flow():
     assert res["master_model"] == "gemini-3.8-flash"
     assert len(res["subtasks"]) == 2
 
-    # Vérification des sous-tâches et rôles affectés par le ModelRouter
+    # Vérification des sous-tâches : routage gouverné par l'ExecutionDecisionEngine
+    # (cible locale 'hermes' — l'ancien contrat gemini-* cloud implicite n'existe plus).
     sub_forensic = res["subtasks"][0]
     sub_coding = res["subtasks"][1]
 
     assert sub_forensic["role"] == "forensic"
-    assert sub_forensic["model"] == "gemini-3.6-flash"
-    assert sub_forensic["thinking_level"] == "medium"
+    assert sub_forensic["model"] == sub_forensic["agent_id"] == "hermes"
+    assert sub_forensic["status"] == "SUCCESS"
 
     assert sub_coding["role"] == "coding"
-    assert sub_coding["model"] == "gemini-3.7-flash"
-    assert sub_coding["thinking_level"] == "low"
+    assert sub_coding["model"] == sub_coding["agent_id"] == "hermes"
+    assert sub_coding["status"] == "SUCCESS"
 
     # Vérification de la synthèse Master
     assert res["synthesis"] is not None

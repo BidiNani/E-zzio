@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import asyncio
 import os
+from types import SimpleNamespace
 from typing import Any
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -50,6 +51,15 @@ from core.agent.hermes_worker_profiles import (
 )
 from core.ezzio_master import EzzioMaster
 from core.providers.base_provider import ProviderResponse
+
+
+def _dec() -> SimpleNamespace:
+    """Décision pré-exécution minimale conforme au contrat gouverné E-ZZIO.
+
+    Depuis la généralisation du guard pré-exécution (contract 2.x), tout worker
+    exige une ExecutionDecision émise par EzzioMaster/ExecutionDecisionEngine.
+    """
+    return SimpleNamespace(target_id="hermes", worker_id="hermes", allowed=True, rationale="test")
 
 
 class FakeSynthesisProvider:
@@ -139,7 +149,7 @@ async def test_timeout_handling():
 
     with patch("asyncio.create_subprocess_exec", AsyncMock(return_value=mock_proc)):
         with patch.object(adapter, "_terminate_process_tree") as mock_kill:
-            result = await adapter.submit(task_id="tsk-timeout-01", prompt="Hanging task", timeout=1)
+            result = await adapter.submit(execution_decision=_dec(), task_id="tsk-timeout-01", prompt="Hanging task", timeout=1)
             assert result.status == "TIMEOUT"
             assert result.exit_code == -3
             assert "Worker timeout after 1s" in result.stderr
@@ -161,7 +171,7 @@ async def test_non_zero_exit_handling():
     mock_proc.communicate = AsyncMock(return_value=(error_stdout.encode("utf-8"), b"STDERR: Connection refused\n"))
 
     with patch("asyncio.create_subprocess_exec", AsyncMock(return_value=mock_proc)):
-        result = await adapter.submit(task_id="tsk-err-01", prompt="Failing task")
+        result = await adapter.submit(execution_decision=_dec(), task_id="tsk-err-01", prompt="Failing task")
         assert result.status == "FAILED"
         assert result.exit_code == 1
         assert "Model connection refused" in (result.error or "")
@@ -183,7 +193,7 @@ async def test_successful_worker_result():
     mock_proc.communicate = AsyncMock(return_value=(success_stdout.encode("utf-8"), b""))
 
     with patch("asyncio.create_subprocess_exec", AsyncMock(return_value=mock_proc)):
-        result = await adapter.submit(task_id="tsk-ok-01", prompt="Clean task")
+        result = await adapter.submit(execution_decision=_dec(), task_id="tsk-ok-01", prompt="Clean task")
         assert result.status == "SUCCESS"
         assert result.exit_code == 0
         assert result.output == "Task succeeded cleanly."
@@ -196,7 +206,7 @@ async def test_successful_worker_result():
 async def test_policy_workspace_boundary():
     adapter = HermesWorkerAdapter(workspace_root=r"G:\AI\E-zzio")
     with patch("asyncio.create_subprocess_exec") as mock_exec:
-        result = await adapter.submit(task_id="tsk-forbidden-01", prompt="Please run git reset --hard HEAD~1")
+        result = await adapter.submit(execution_decision=_dec(), task_id="tsk-forbidden-01", prompt="Please run git reset --hard HEAD~1")
         assert result.status == "POLICY_DENIED"
         assert result.exit_code == -2
         assert "POLICY_DENIED" in result.stderr
@@ -207,7 +217,7 @@ async def test_policy_workspace_boundary():
 async def test_forbidden_toolset_policy_denied():
     adapter = HermesWorkerAdapter(workspace_root=r"G:\AI\E-zzio")
     with patch("asyncio.create_subprocess_exec") as mock_exec:
-        result = await adapter.submit(
+        result = await adapter.submit(execution_decision=_dec(),
             task_id="tsk-forbidden-tool-01",
             prompt="Inspect something",
             toolsets=["terminal"],
@@ -340,7 +350,7 @@ async def test_hermes_home_isolation_and_cleanup():
         return mock_proc
 
     with patch("asyncio.create_subprocess_exec", side_effect=fake_subprocess_exec):
-        res = await adapter.submit(task_id="tsk-iso-01", prompt="Test isolation")
+        res = await adapter.submit(execution_decision=_dec(), task_id="tsk-iso-01", prompt="Test isolation")
         assert res.hermes_home is not None
         assert "ezzio_hermes_home_" in res.hermes_home
         assert captured_env.get("HERMES_HOME") == res.hermes_home
@@ -363,7 +373,7 @@ async def test_model_routing_fidelity():
     mock_proc.communicate = AsyncMock(return_value=(simulated_stdout.encode("utf-8"), b""))
 
     with patch("asyncio.create_subprocess_exec", AsyncMock(return_value=mock_proc)):
-        res = await adapter.submit(
+        res = await adapter.submit(execution_decision=_dec(),
             task_id="tsk-fid-01",
             prompt="Test fidelity",
             model="qwen3.5:9b",
@@ -385,7 +395,7 @@ async def test_e2e_real_hermes_subprocess_proof():
         pytest.skip("Hermes executable not available on host")
 
     # Real OS subprocess execution of Hermes
-    res = await adapter.submit(
+    res = await adapter.submit(execution_decision=_dec(),
         task_id="e2e-live-proof-01",
         prompt="Inspect local git status in workspace",
         safe_mode=True,
@@ -509,7 +519,7 @@ async def test_no_filesystem_mutation_with_profile():
     adapter = HermesWorkerAdapter(workspace_root=r"G:\AI\E-zzio")
     # Submitting with reader profile but requesting toolsets must be denied fail-closed
     with patch("asyncio.create_subprocess_exec") as mock_exec:
-        res = await adapter.submit(
+        res = await adapter.submit(execution_decision=_dec(),
             task_id="tsk-profile-deny",
             prompt="Try to request tools",
             profile=CONTEXT_ONLY_READER,
@@ -620,7 +630,7 @@ async def test_e2e_context_fed_hermes_subprocess_proof():
     )
     prompt = render_context_prompt(pack, CONTEXT_ONLY_READER)
 
-    res = await adapter.submit(
+    res = await adapter.submit(execution_decision=_dec(),
         task_id="live-context-proof-01",
         prompt=prompt,
         profile=CONTEXT_ONLY_READER,
@@ -679,7 +689,7 @@ async def test_profile_escalation_protection():
 
     # 2. Researcher profile requesting terminal must be rejected
     with patch("asyncio.create_subprocess_exec") as mock_exec:
-        res = await adapter.submit(
+        res = await adapter.submit(execution_decision=_dec(),
             task_id="tsk-esc-01",
             prompt="Attempting terminal under researcher",
             profile=RESEARCHER_PROFILE,
@@ -692,7 +702,7 @@ async def test_profile_escalation_protection():
 
     # 3. Analyst profile requesting file modification must be rejected
     with patch("asyncio.create_subprocess_exec") as mock_exec2:
-        res2 = await adapter.submit(
+        res2 = await adapter.submit(execution_decision=_dec(),
             task_id="tsk-esc-02",
             prompt="Attempting file write under analyst",
             profile=ANALYST_PROFILE,
@@ -709,7 +719,7 @@ async def test_security_operator_protected_workspace_denied():
     adapter = HermesWorkerAdapter(workspace_root=r"G:\AI\E-zzio")
     # Submitting Operator targeting the core E-ZZIO repo must fail-closed
     with patch("asyncio.create_subprocess_exec") as mock_exec:
-        res = await adapter.submit(
+        res = await adapter.submit(execution_decision=_dec(),
             task_id="tsk-op-core-denied",
             prompt="Write maintenance script",
             profile=OPERATOR_PROFILE,
@@ -726,7 +736,7 @@ async def test_security_operator_protected_workspace_denied():
 async def test_security_plugin_installation_denied():
     adapter = HermesWorkerAdapter(workspace_root=r"G:\AI\E-zzio")
     with patch("asyncio.create_subprocess_exec") as mock_exec:
-        res = await adapter.submit(
+        res = await adapter.submit(execution_decision=_dec(),
             task_id="tsk-plugin-deny",
             prompt="Please run hermes plugin install malicious-ext",
             profile=RESEARCHER_PROFILE,
@@ -742,7 +752,7 @@ async def test_security_plugin_installation_denied():
 async def test_security_arbitrary_mcp_denied():
     adapter = HermesWorkerAdapter(workspace_root=r"G:\AI\E-zzio")
     with patch("asyncio.create_subprocess_exec") as mock_exec:
-        res = await adapter.submit(
+        res = await adapter.submit(execution_decision=_dec(),
             task_id="tsk-mcp-deny",
             prompt="Please execute mcp connect https://untrusted-remote.org/sse",
             profile=RESEARCHER_PROFILE,
@@ -876,7 +886,7 @@ async def test_live_e2e_researcher_proof():
     if not adapter.is_available():
         pytest.skip("Hermes executable not available on host")
 
-    res = await adapter.submit(
+    res = await adapter.submit(execution_decision=_dec(),
         task_id="live-researcher-proof-01",
         prompt="Synthesize in 1 sentence: what is quantum entanglement?",
         profile=RESEARCHER_PROFILE,
@@ -902,7 +912,7 @@ async def test_live_e2e_operator_proof():
         if not adapter.is_available():
             pytest.skip("Hermes executable not available on host")
 
-        res = await adapter.submit(
+        res = await adapter.submit(execution_decision=_dec(),
             task_id="live-operator-proof-01",
             prompt="Inspect your current isolated sandbox environment and report status.",
             profile=OPERATOR_PROFILE,

@@ -46,7 +46,7 @@ class DAGNode:
     parent_id: str | None = None
     agent_id: str = "coder_worker"
     provider: str = "local_ollama"
-    policy_decision: str = "ALLOW"
+    policy_decision: str = "UNTESTED"
     approval_id: str | None = None
     status: DAGExecutionStatus = DAGExecutionStatus.PENDING
     result: dict[str, Any] | None = None
@@ -107,7 +107,7 @@ class DAGNode:
             parent_id=data.get("parent_id"),
             agent_id=data.get("agent_id", "coder_worker"),
             provider=data.get("provider", "local_ollama"),
-            policy_decision=data.get("policy_decision", "ALLOW"),
+            policy_decision=data.get("policy_decision", "UNTESTED"),
             approval_id=data.get("approval_id"),
             status=status,
             result=data.get("result"),

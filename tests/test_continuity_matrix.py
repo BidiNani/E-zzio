@@ -135,7 +135,13 @@ async def test_scenario_3_groq_down_fallback(monkeypatch):
 # ------------------------------------------------------------
 @pytest.mark.asyncio
 async def test_scenario_4_ollama_down_fallback(monkeypatch):
-    """SCÉNARIO 4: Ollama local DOWN -> bascule vers le provider cloud -> DEGRADED."""
+    """SCÉNARIO 4 (contrat souveraineté actuel) : Ollama local DOWN.
+
+    Depuis l'alignement LOCAL-FIRST (force_cloud=False par défaut), une panne du
+    provider local n'autorise PLUS de bascule cloud implicite : le fallback cloud
+    est REFUSÉ (§ Souveraineté R1) et la réponse est FAIL-CLOSED observable.
+    La bascule cloud reste possible uniquement via force_cloud=True explicite.
+    """
     calls = []
 
     def mock_create(name: str, **kwargs):
@@ -157,9 +163,10 @@ async def test_scenario_4_ollama_down_fallback(monkeypatch):
 
     res = await master.execute_intent("Prompt Ollama Down", model_target="local", session_id="sess-sc4")
 
-    assert res["ok"] is True
-    assert res["used_fallback"] is True
-    assert "Reponse cloud de secours" in res["response"]
+    # Contrat actuel : pas de cloud implicite sur panne locale (force_cloud=False par défaut)
+    assert res["ok"] is False
+    assert "FAIL-CLOSED" in str(res.get("response", ""))
+    assert res.get("used_fallback") is False
 
 
 # ------------------------------------------------------------

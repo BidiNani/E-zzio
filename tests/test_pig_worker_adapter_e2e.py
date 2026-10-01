@@ -7,11 +7,21 @@ Verifies:
 4. Comparison benchmark between native E-ZZIO worker and PiG worker.
 """
 import sys
+from types import SimpleNamespace
 
 import pytest
 
 from core.agent.pig_worker_adapter import PiGWorkerAdapter, PiGWorkerResult
 from core.security.audit_ledger import AuditLedger
+
+
+def _dec() -> SimpleNamespace:
+    """Décision pré-exécution minimale conforme au contrat gouverné E-ZZIO.
+
+    Depuis la généralisation du guard pré-exécution (contract 2.x), tout worker
+    exige une ExecutionDecision émise par EzzioMaster/ExecutionDecisionEngine.
+    """
+    return SimpleNamespace(target_id="pig", worker_id="pig", allowed=True, rationale="test")
 
 
 @pytest.mark.asyncio
@@ -30,6 +40,7 @@ async def test_pig_adapter_availability_and_fallback(tmp_path):
         task_id="pig-test-01",
         prompt="Write a function in python",
         workspace_root=str(tmp_path),
+        execution_decision=_dec(),
     )
 
     assert isinstance(res, PiGWorkerResult)

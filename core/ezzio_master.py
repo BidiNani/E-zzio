@@ -230,7 +230,7 @@ class EzzioMaster:
 
         # Extrait la contrainte de souveraineté
         local_only = kwargs.get("local_only", False) or routing.get("local_only", False)
-        force_cloud = kwargs.get("force_cloud", True)
+        force_cloud = kwargs.get("force_cloud", False)
         if kwargs.get("prefer_local") and not kwargs.get("force_cloud"):
             local_only = True
 
@@ -339,7 +339,7 @@ class EzzioMaster:
         chat_system: str | None,
         thinking_level: str | None,
         local_only: bool = False,
-        force_cloud: bool = True,
+        force_cloud: bool = False,
     ):
         """Bascule vers FALLBACK_MAP[provider] en cas de defaillance (gouverné par la souveraineté).
 
@@ -368,10 +368,11 @@ class EzzioMaster:
                 pass
 
         # Règle de Souveraineté Étape 4 (R1) :
-        # Si la requête exige local_only=True ou interdit le cloud (force_cloud=False / local provider),
+        # Si la requête exige local_only=True ou interdit le cloud pour une requête locale (force_cloud=False / local provider),
         # tout fallback vers un provider cloud (ex: gemini) est STRICTEMENT INTERDIT (DENY / FAILED).
+        is_local_req = (detected_provider == "ollama")
         is_fb_cloud = (fb_provider_name != "ollama") if fb_model else True
-        if not fb_model or (is_fb_cloud and (local_only or not force_cloud)):
+        if not fb_model or (is_fb_cloud and (local_only or (is_local_req and not force_cloud))):
             if fb_model:
                 logger.warning(
                     "[EzzioMaster] Souveraineté : Fallback cloud vers %s REFUSÉ pour la requête locale (%s) [local_only=%s, force_cloud=%s] -> bascule vers fallback local",

@@ -189,8 +189,8 @@ class DAGOrchestrator:
 
                 # Validation contractuelle du résultat : conversion des réponses d'échec dictionnaire en exception canonique
                 if isinstance(res, dict):
-                    if res.get("ok") is False or res.get("status") in ("FAILED", "ERROR"):
-                        err_msg = res.get("error") or res.get("error_detail") or f"Task execution returned failure status: {res.get('status') or 'ok=False'}"
+                    if res.get("ok") is False or res.get("status") in ("FAILED", "ERROR", "DENIED", "REJECTED"):
+                        err_msg = res.get("error") or res.get("reason") or res.get("error_detail") or f"Task execution returned failure status: {res.get('status') or 'ok=False'}"
                         raise RuntimeError(err_msg)
 
                 node.result = res

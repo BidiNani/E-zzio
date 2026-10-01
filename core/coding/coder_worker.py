@@ -128,10 +128,30 @@ class CoderWorker:
     # --------------------------------------------------------
 
     def _call_llm(self, prompt: str) -> str:
-        """Appelle le meilleur provider disponible.
+        """Appelle le canal LLM gouverné fourni par l'autorité E-ZZIO.
 
-        Fallback automatique : si un provider échoue (ex. 429), on passe au
-        suivant. Les providers en cooldown (429 récent) sont ignorés.
+        Contrat d'autorité (§ EXECUTION AUTHORITY) : un worker ne choisit ni un
+        provider ni un fallback. Le seul canal LLM autorisé est le callback
+        gouverné injecté par CoderWorkerAdapter (lui-même mandaté par une
+        ExecutionDecision émise par EzzioMaster/ExecutionDecisionEngine).
+        Sans canal gouverné : fail-closed. Le routage provider (FALLBACK_MAP,
+        force_cloud, local_only) reste la responsabilité exclusive du
+        ModelRouter / ProviderFactory pilotés par la décision d'exécution.
+        """
+        if getattr(self, "_injected_llm_callback", None) is not None:
+            return self._injected_llm_callback(prompt)
+
+        raise RuntimeError(
+            "[GOVERNANCE] Aucun canal LLM gouverné fourni à CoderWorker. "
+            "Le worker ne peut pas sélectionner un provider lui-même : "
+            "une ExecutionDecision et un callback injecté par l'adaptateur gouverné sont requis."
+        )
+
+    def _legacy_unrouted_provider_call(self, prompt: str) -> str:
+        """[INTERDIT EN PRODUCTION] Ancien chemin provider non routé, conservé à des fins de référence.
+
+        NE JAMAIS appeler depuis le chemin gouverné : ce contournement du
+        ModelRouter est incompatible avec l'autorité d'exécution E-ZZIO.
         """
         from core.coding.providers import get_all_available
 
@@ -380,6 +400,8 @@ class CoderWorker:
                 "rolled_back_files": list(self._original_state.keys()),
             },
         )
+
+    execute_governed = execute
 
 
 __all__ = ["CoderWorker", "PlanStep", "FileEdit"]
