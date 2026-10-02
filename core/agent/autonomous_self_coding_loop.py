@@ -30,6 +30,7 @@ from core.agent.external_worker_contract import (
 from core.agent.patch_engine import PatchEngine
 from core.agent.tools_registry import ToolRegistry
 from core.cognition.execution_decision_engine import ExecutionDecisionEngine
+from core.config.paths import get_project_root_str
 from core.quality_gate.completion_gate import CompletionGate
 from core.quality_gate.quality_gate import QualityGateOrchestrator
 from core.security.audit_ledger import AuditLedger
@@ -76,13 +77,13 @@ class AutonomousSelfCodingLoop:
 
     def __init__(
         self,
-        workspace_root: str = r"G:\AI\E-zzio",
+        workspace_root: str | None = None,
         max_iterations: int = 3,
         audit_ledger: AuditLedger | None = None,
         policy_guard: AgentPolicyGuard | None = None,
         evidence_logger: EvidenceLogger | None = None,
     ) -> None:
-        self.workspace_root = os.path.abspath(workspace_root)
+        self.workspace_root = os.path.abspath(workspace_root or get_project_root_str())
         self.max_iterations = max_iterations
         self.audit_ledger = audit_ledger or AuditLedger()
         self.policy_guard = policy_guard or AgentPolicyGuard(workspace_root=self.workspace_root)

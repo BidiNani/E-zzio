@@ -5,9 +5,10 @@ et l'exploitation directe des métadonnées du registre de capacités.
 """
 
 import json
-from pathlib import Path
 
-ROOT_DIR = Path("G:/AI/E-zzio").resolve()
+from core.config.paths import get_project_root
+
+ROOT_DIR = get_project_root()
 CAPABILITIES_PATH = ROOT_DIR / "runtime" / "models" / "model_capabilities.json"
 LATENCY_LOG_PATH = ROOT_DIR / "runtime" / "audit" / "model_latency.json"
 

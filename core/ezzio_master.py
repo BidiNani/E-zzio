@@ -11,6 +11,7 @@ import uuid
 from datetime import UTC, datetime
 from typing import Any
 
+from core.config.paths import get_project_root_str
 from core.kernel.native_harness import NativeHarness
 from core.memory.instance import memory_gateway
 from core.providers.base_provider import BaseProvider, ProviderResponse
@@ -86,7 +87,7 @@ class EzzioMaster:
         self._injected_provider = provider  # None si pas injecte (utilise ProviderFactory)
         self.memory = memory_gateway
         self._memory_initialized = False
-        self.workspace_root = kwargs.get("workspace_root", r"G:\AI\E-zzio")
+        self.workspace_root = kwargs.get("workspace_root") or get_project_root_str()
         self.execution_engine = kwargs.get("execution_engine")
         if self.execution_engine is None:
             from core.cognition.execution_decision_engine import ExecutionDecisionEngine

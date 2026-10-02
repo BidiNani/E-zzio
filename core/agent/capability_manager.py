@@ -11,6 +11,8 @@ import sys
 from dataclasses import dataclass, field
 from typing import Any
 
+from core.config.paths import get_project_root_str
+
 logger = logging.getLogger("ezzio.agent.capability_manager")
 
 @dataclass
@@ -144,7 +146,7 @@ class CapabilityManager:
     """Gestionnaire de capacités : preflight, vérification d'outils et installation autonome venv-local sécurisée."""
 
     def __init__(self, workspace_root: str | None = None):
-        self.workspace_root = workspace_root or r"G:\AI\E-zzio"
+        self.workspace_root = workspace_root or get_project_root_str()
         self.python_bin = sys.executable
         self._cache: dict[str, bool] = {}
 

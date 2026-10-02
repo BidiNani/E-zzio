@@ -27,6 +27,7 @@ from typing import Any
 
 from core.agent.agent_guard import AgentPolicyGuard
 from core.agent.command_executor import redact_secrets
+from core.config.paths import get_project_root_str
 from core.security.audit_ledger import AuditLedger
 
 logger = logging.getLogger("ClineWorkerAdapter")
@@ -49,7 +50,7 @@ class ClineWorkerRequest:
     task_id: str
     prompt: str
     mission_id: str | None = None
-    working_directory: str = r"G:\AI\E-zzio"
+    working_directory: str | None = None
     allowed_tools: list[str] = field(default_factory=list)
     timeout_sec: float = 60.0
     max_turns: int | None = None
@@ -105,12 +106,12 @@ class ClineWorkerAdapter:
     def __init__(
         self,
         cline_binary_path: str | None = None,
-        workspace_root: str = r"G:\AI\E-zzio",
+        workspace_root: str | None = None,
         audit_ledger: AuditLedger | None = None,
         policy_guard: AgentPolicyGuard | None = None,
         default_timeout_sec: float = 60.0,
     ) -> None:
-        self.workspace_root = os.path.abspath(workspace_root)
+        self.workspace_root = os.path.abspath(workspace_root or get_project_root_str())
         self.cline_binary_path = self._resolve_cline_bin(cline_binary_path)
         self.audit_ledger = audit_ledger or AuditLedger()
         self.policy_guard = policy_guard or AgentPolicyGuard(workspace_root=self.workspace_root)
@@ -269,7 +270,7 @@ class ClineWorkerAdapter:
                     provenance={"policy_approved": False, "reason": err_msg},
                 )
 
-        target_dir = request.working_directory
+        target_dir = request.working_directory or self.workspace_root
         worktree_created_dir: str | None = None
 
         # 3. Worktree Isolation Setup (if requested)
@@ -280,7 +281,7 @@ class ClineWorkerAdapter:
                 target_dir = temp_dir
             except Exception as wt_err:
                 logger.warning("[ClineWorkerAdapter] Failed to create worktree isolation dir: %s", wt_err)
-                target_dir = request.working_directory
+                target_dir = request.working_directory or self.workspace_root
 
         # Audit Event Log: CLINE_WORKER_SUBMITTED
         self._record_audit(

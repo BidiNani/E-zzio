@@ -14,6 +14,8 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+from core.config.paths import get_project_root
+
 logger = logging.getLogger(__name__)
 
 
@@ -26,9 +28,14 @@ class LedgerSecurityError(Exception):
 class CognitiveGovernor:
     _class_lock = threading.RLock()
 
-    def __init__(self, root_dir: Path = Path(r"G:\\AI\E-zzio")):
+    def __init__(self, root_dir: Path | None = None):
+        # La valeur par défaut historique était Path(r"G:\\AI\E-zzio") : le
+        # double antislash de la raw string produisait un chemin malformé.
+        # La racine est désormais résolue dynamiquement (EZZIO_ROOT, puis
+        # découverte ascendante), l'argument restant prioritaire pour isoler
+        # une instance sur un dossier temporaire.
         logger.info("Initialisation du Cognitive Governor [HMAC Attestation Mode V7.62.0]...")
-        self.root_dir = root_dir
+        self.root_dir = Path(root_dir) if root_dir is not None else get_project_root()
         self.budget_dir = self.root_dir / "runtime" / "cognition" / "budget"
         self.ledger_path = self.budget_dir / "cognitive_budget_ledger.jsonl"
         self.manifest_path = self.budget_dir / "ledger_manifest.json"

@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any
 
 from core.capabilities.registry import capability_registry
+from core.config.paths import get_project_root_str
 from core.ezzio_master import ezzio_master
 from core.generators.generation_router import generation_router
 from core.memory.instance import memory_gateway
@@ -24,8 +25,8 @@ from core.perception.universal_reader import UniversalReader
 class EzzioSDK:
     """Façade souveraine consolidant l'ensemble des points d'entrée d'E-ZZIO."""
 
-    def __init__(self, workspace_root: str = "G:\\AI\\E-zzio"):
-        self.workspace_root = Path(workspace_root).resolve()
+    def __init__(self, workspace_root: str | None = None):
+        self.workspace_root = Path(workspace_root or get_project_root_str()).resolve()
         self.master = ezzio_master
         self.generator = generation_router
         self.reader = UniversalReader()

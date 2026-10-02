@@ -21,6 +21,7 @@ from core.agent.external_worker_contract import (
 )
 from core.coding.coder_worker import CoderWorker
 from core.coding.protocol import CodingRequest, ExecutionMode
+from core.config.paths import get_project_root_str
 from core.quality_gate.completion_gate import CompletionGate
 from core.security.audit_ledger import AuditLedger
 
@@ -32,11 +33,11 @@ class CoderWorkerAdapter(BaseWorkerAdapter):
 
     def __init__(
         self,
-        workspace_root: str = r"G:\AI\E-zzio",
+        workspace_root: str | None = None,
         audit_ledger: AuditLedger | None = None,
         policy_guard: AgentPolicyGuard | None = None,
     ) -> None:
-        self.workspace_root = os.path.abspath(workspace_root)
+        self.workspace_root = os.path.abspath(workspace_root or get_project_root_str())
         self.audit_ledger = audit_ledger or AuditLedger()
         self.policy_guard = policy_guard or AgentPolicyGuard(workspace_root=self.workspace_root)
         self.worker_id = "coder_worker"

@@ -19,12 +19,14 @@ from __future__ import annotations
 
 import os
 from collections.abc import AsyncIterator
+from pathlib import Path
 from typing import Any
 
 import pytest
 
 from core.agent.hermes_worker_adapter import HermesWorkerResult
 from core.agent.mission_controller import MissionRecord, MissionStatus, mission_registry
+from core.cognition.cognitive_governor import CognitiveGovernor
 from core.cognition.model_router import ModelRouter
 from core.ezzio_master import EzzioMaster
 from core.providers.base_provider import (
@@ -87,13 +89,53 @@ class MockCodingProvider(BaseProvider):
 
 @pytest.fixture
 def workspace_root():
-    return r"G:\AI\E-zzio"
+    """Racine du dépôt, résolue dynamiquement.
+
+    Elle était codée en dur (G:\\AI\\E-zzio), ce qui rendait le test
+    dépendant d'un emplacement de clone : dans un worktree, le dépôt est
+    checkout ailleurs et les Gates A/B échouaient en écrivant dans le
+    mauvais dossier.
+
+    On remonte donc depuis ce fichier jusqu'à un ancrage de dépôt fiable :
+    un répertoire .git (clone normal), un fichier .git (worktree ou
+    sous-module), ou un pyproject.toml. Sans ancrage, on retombe sur le
+    parent du dossier tests/.
+
+    Retourne une chaîne : la valeur est injectée dans EzzioMaster puis
+    consommée via os.path.join / os.path.abspath.
+    """
+    here = Path(__file__).resolve()
+    for candidate in here.parents:
+        if (candidate / ".git").exists() or (candidate / "pyproject.toml").is_file():
+            return str(candidate)
+    return str(here.parents[1])
 
 
 @pytest.fixture
-def mock_master(workspace_root):
+def mock_master(workspace_root, tmp_path):
+    """EzzioMaster isolé pour la qualification.
+
+    Le harness instancie CognitiveGovernor() sans argument, donc avec son
+    root_dir par défaut : il lit et écrit le ledger de production
+    (runtime/cognition/budget/cognitive_budget_ledger.jsonl). Ce ledger est
+    persistant et déjà saturé au plafond de session, ce qui faisait échouer
+    les Gates A et B avec « Budget insuffisant. Restant: 0 tokens » — un
+    état mut sur disque, donc un test non déterministe qui, en prime,
+    empilait des lignes DENY à chaque exécution.
+
+    On redirige le gouverneur vers tmp_path : clé HMAC, ledger et manifest
+    sont alors créés dans un dossier isolé et jeté, et le budget repart de
+    zéro. Le ledger de production n'est ni lu ni modifié.
+    """
     provider = MockCodingProvider()
-    return EzzioMaster(provider=provider, workspace_root=workspace_root)
+    master = EzzioMaster(provider=provider, workspace_root=workspace_root)
+
+    # Isolation du seul composant à état persistant de la chaîne.
+    budget_root = tmp_path / "runtime" / "cognition" / "budget"
+    budget_root.mkdir(parents=True, exist_ok=True)
+    master.harness.governor = CognitiveGovernor(root_dir=tmp_path)
+
+    return master
 
 
 # --- GATE A — REAL VALIDATION AFTER WRITE (WRITE != SUCCESS) ---

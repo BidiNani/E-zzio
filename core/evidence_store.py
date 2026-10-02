@@ -5,9 +5,12 @@ from typing import Any
 
 import aiosqlite
 
+from core.config.paths import get_project_root_str
+
 
 class EvidenceStore:
-    def __init__(self, db_path: str = "runtime/evidence/evidence.db", workspace_root: str = r"G:\AI\E-zzio"):
+    def __init__(self, db_path: str = "runtime/evidence/evidence.db", workspace_root: str | None = None):
+        workspace_root = workspace_root or get_project_root_str()
         if not Path(db_path).is_absolute():
             self.db_path = str(Path(workspace_root) / db_path)
         else:
