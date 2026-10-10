@@ -19,6 +19,7 @@ from typing import Any
 
 from core.agent.agent_guard import AgentPolicyGuard
 from core.cognition.model_router import ModelRouter
+from core.config.paths import get_project_root_str
 from core.memory.instance import memory_gateway
 from core.security.audit_ledger import AuditLedger
 from core.tools.registry import ToolRegistry
@@ -88,10 +89,15 @@ class NativeHarness:
         policy_guard: AgentPolicyGuard | None = None,
         audit_ledger: AuditLedger | None = None,
         tool_registry: ToolRegistry | None = None,
-        workspace_root: str = r"G:\AI\E-zzio",
+        workspace_root: str | None = None,
         execution_engine: Any | None = None,
         **kwargs: Any,
     ) -> None:
+        # La racine par defaut etait codee en dur (G:\AI\E-zzio), ce qui
+        # rendait le harness non portable a un worktree. L'appelant garde la
+        # priorite : workspace_root n'est surcharg que s'il est absent.
+        workspace_root = workspace_root or get_project_root_str()
+        self.workspace_root = workspace_root
         self.router = router or ModelRouter()
         self.policy_guard = policy_guard or AgentPolicyGuard(workspace_root=workspace_root)
         self.audit_ledger = audit_ledger or AuditLedger()

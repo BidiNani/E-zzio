@@ -29,6 +29,7 @@ from core.agent.hermes_worker_profiles import (
     parse_structured_result,
     resolve_profile,
 )
+from core.config.paths import get_project_root_str
 from core.security.audit_ledger import AuditLedger
 
 logger = logging.getLogger("HermesWorkerAdapter")
@@ -91,13 +92,13 @@ class HermesWorkerAdapter:
 
     def __init__(
         self,
-        workspace_root: str = r"G:\AI\E-zzio",
+        workspace_root: str | None = None,
         hermes_bin: str | None = None,
         policy_guard: AgentPolicyGuard | None = None,
         audit_ledger: AuditLedger | None = None,
         default_timeout_sec: int = 60,
     ) -> None:
-        self.workspace_root = os.path.abspath(workspace_root)
+        self.workspace_root = os.path.abspath(workspace_root or get_project_root_str())
         self.hermes_bin = self._resolve_hermes_bin(hermes_bin)
         self.policy_guard = policy_guard or AgentPolicyGuard(self.workspace_root)
         self.audit_ledger = audit_ledger or AuditLedger()
@@ -349,7 +350,11 @@ class HermesWorkerAdapter:
         # 2. Operator Workspace Confinement Guard
         if not resolved_profile.read_only:
             norm_ws = os.path.normcase(os.path.abspath(target_workspace))
-            norm_core = os.path.normcase(os.path.abspath(r"G:\AI\E-zzio"))
+            # La cible interdite est la RACINE CANONIQUE DU PROJET (depot protege),
+            # pas le workspace courant : un worker en sandbox legitime doit pouvoir
+            # cibler ce sandbox (target_workspace == self.workspace_root) sans etre
+            # refuse. La comparaison reste portable via get_project_root_str().
+            norm_core = os.path.normcase(os.path.abspath(get_project_root_str()))
             if norm_ws == norm_core:
                 reason = "Operator profile is prohibited from targeting protected repository root directly"
                 logger.warning("[HermesWorkerAdapter POLICY DENIED] %s", reason)
