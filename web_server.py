@@ -88,7 +88,40 @@ from core.security.api_key import is_key_valid, warn_if_auth_unenforced
 
 _EZZIO_API_KEY = _os.getenv("EZZIO_API_KEY", "")
 _EZZIO_DISABLE_AUTH = _os.getenv("EZZIO_DISABLE_AUTH", "0") == "1"
-_PROTECTED_PREFIXES = ("/master/", "/api/accounts/", "/api/models/select")
+
+# ============================================================
+# CLASSIFICATION D'AUTHENTIFICATION EXPLICITE (doctrine §9)
+# ============================================================
+#   PUBLIC        : /health, /ping, /metrics, /api/_routes, /, /agent-view
+#   PRIVILEGED    : /master/* (autorite missionnelle), /api/accounts/*,
+#                   /api/models/select (mutation de la selection canonique)
+#   AUTHENTICATED : surfaces /api sensibles = lecture/ecriture d'etat,
+#                   exploration de fichiers, kill switch, config UI.
+#
+# Avant correctif, seules /master/*, /api/accounts/* et /api/models/select
+# etaient protegees : /api/files, /api/memory, /api/automations, /api/kill,
+# /api/missions, /api/projects, /api/objectives, /api/approvals et
+# /api/settings restaient accessibles sans cle des qu'EZZIO_API_KEY etait
+# configuree (le client desktop, lui, envoie deja X-API-Key partout).
+#
+# En l'absence de EZZIO_API_KEY ces surfaces restent ouvertes (mode dev) mais
+# un avertissement explicite est emis au demarrage (cf. warn_if_auth_unenforced).
+_PROTECTED_PREFIXES = (
+    # PRIVILEGED
+    "/master/",
+    "/api/accounts/",
+    "/api/models/select",
+    # AUTHENTICATED — surfaces /api sensibles
+    "/api/files",
+    "/api/memory",
+    "/api/automations",
+    "/api/kill",
+    "/api/missions",
+    "/api/objectives",
+    "/api/projects",
+    "/api/approvals",
+    "/api/settings",
+)
 _PUBLIC_PATHS = {"/health", "/ping", "/metrics", "/api/_routes", "/", "/agent-view"}
 
 
