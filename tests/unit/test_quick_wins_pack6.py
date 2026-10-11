@@ -361,8 +361,11 @@ class TestModelRouter:
         with patch("core.cognition.model_router.canonical_model_registry") as reg:
             reg.get_by_role = MagicMock(return_value=None)
             result = r.select_engine(task_type="general")
-        assert result["model"] == "gemini-3.8-flash"
-        assert result["provider"] == "gemini"
+        # #5 : registre vide -> FAIL-CLOSED (aucun moteur fabriqué hors registre).
+        assert result.get("status") == "FAIL_CLOSED"
+        assert result.get("error") == "NO_CANONICAL_ENGINE"
+        assert result.get("provider") is None
+        assert result.get("model") is None
 
     def test_select_engine_local_provider(self):
         from core.cognition.model_router import ModelRouter

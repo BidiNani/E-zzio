@@ -128,9 +128,26 @@ class ModelRouter:
             )
 
             if is_local_eligible:
-                # Modèle local sélectionné depuis le registre canonique
-                local_rec = canonical_model_registry.get_by_role("FAST") or canonical_model_registry.get_by_role("CODING")
-                local_model = local_rec.name if (local_rec and local_rec.source.name == "LOCAL") else "qwen2.5-coder:7b"
+                # Modèle local sélectionné depuis le registre canonique (rôles LOCAL
+                # uniquement — les rôles FAST/CODING sont des rôles cloud).
+                local_rec = (
+                    canonical_model_registry.get_by_role("LOCAL")
+                    or canonical_model_registry.get_by_role("LOCAL_CODING")
+                    or canonical_model_registry.get_by_role("FAST_LOCAL")
+                )
+                if local_rec is not None and local_rec.source.name == "LOCAL":
+                    local_model = local_rec.name
+                else:
+                    try:
+                        local_model = canonical_registry.default_local()
+                    except Exception:
+                        return {
+                            "status": "FAIL_CLOSED",
+                            "error": "NO_LOCAL_ENGINE",
+                            "reason": "Local eligible but no canonical local engine declared (registry)",
+                            "provider": None,
+                            "model": None,
+                        }
                 logger.info(f"Routage LOCAL autonome sélectionné -> Modèle: {local_model} (Raison: {reason})")
                 return {
                     "provider": "ollama",
@@ -140,11 +157,16 @@ class ModelRouter:
                     "is_local": True,
                 }
             else:
-                # Événement d'escalade observable (Pas de fallback silencieux)
+                # Événement d'escalade observable (Pas de fallback silencieux).
+                # Le repli cloud dérive du registre (jamais d'ID déprécié codé en dur).
                 fallback_role = "CODING" if ("code" in task_lower or "coding" in task_lower) else "FAST_CHAT"
                 fallback_rec = canonical_model_registry.get_by_role(fallback_role)
-                fallback_model = fallback_rec.name if fallback_rec else "gemini-2.5-flash"
-                fallback_provider = fallback_rec.provider if fallback_rec else "gemini"
+                if fallback_rec is not None:
+                    fallback_model = fallback_rec.name
+                    fallback_provider = fallback_rec.provider or "gemini"
+                else:
+                    fallback_model = canonical_registry.PROVIDERS["gemini"].default_model
+                    fallback_provider = "gemini"
 
                 if not budget_permits_cloud:
                     # RÈGLE A11 : Budget bloque cloud -> FAIL-CLOSED
@@ -156,10 +178,14 @@ class ModelRouter:
                         "model": None,
                     }
 
+                try:
+                    attempted_model = canonical_registry.default_local()
+                except Exception:
+                    attempted_model = "unknown-local"
                 escalation = LocalEscalationEvent(
                     event_type="LOCAL_UNAVAILABLE",
                     reason=reason,
-                    attempted_model="qwen2.5-coder:7b",
+                    attempted_model=attempted_model,
                     fallback_model=fallback_model,
                     fallback_provider=fallback_provider,
                 )
@@ -203,7 +229,16 @@ class ModelRouter:
         if not record:
             record = canonical_model_registry.get_by_role("MASTER_STRATEGIC") or canonical_model_registry.get_by_role("MASTER")
 
-        engine = record.name if record else "gemini-3.8-flash"
+        # Gouvernance : aucun moteur canonique -> FAIL-CLOSED (jamais de modèle fabriqué).
+        if record is None:
+            return {
+                "status": "FAIL_CLOSED",
+                "error": "NO_CANONICAL_ENGINE",
+                "reason": f"No canonical engine for role '{role}' (registry)",
+                "provider": None,
+                "model": None,
+            }
+        engine = record.name
         if record and getattr(record, "provider", ""):
             provider = record.provider
         elif record and record.source.name == "LOCAL":

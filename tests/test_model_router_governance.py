@@ -80,3 +80,57 @@ def test_nvidia_provider_default_model_resolves():
     r = _route("nvidia")
     assert r["provider"] == "nvidia"
     assert r["model"].startswith("nvidia/")
+
+
+# ============================================================
+# #5 — Aucun repli fabriqué : tout moteur dérive du registre
+# ============================================================
+
+def test_local_eligible_uses_canonical_full_id():
+    from core.cognition.local_autonomy import LocalAutonomyManager
+    from core.routing import registry as canonical_registry
+
+    mgr = LocalAutonomyManager()
+    mgr.set_local_availability(True)
+    d = ModelRouter(local_autonomy=mgr).select_engine(
+        task_type="coding", complexity_score=0.4, prefer_local=True,
+    )
+    assert d["provider"] == "ollama"
+    assert d["role"] == "LOCAL_AUTONOMOUS"
+    # ID canonique complet, jamais l'ID nu "qwen2.5-coder:7b" (hors registre).
+    assert d["model"] == "qwen2.5-coder:7b-instruct-q4_K_M"
+    assert canonical_registry.get_local(d["model"]) is not None
+
+
+def test_escalation_never_uses_deprecated_fallback():
+    from unittest.mock import MagicMock, patch
+
+    from core.cognition.local_autonomy import LocalAutonomyManager
+    from core.routing import registry as canonical_registry
+
+    mgr = LocalAutonomyManager()
+    mgr.set_local_availability(False)
+    router = ModelRouter(local_autonomy=mgr)
+    with patch("core.cognition.model_router.canonical_model_registry") as reg:
+        reg.get_by_role = MagicMock(return_value=None)
+        d = router.select_engine(task_type="coding", complexity_score=0.4, prefer_local=True)
+    # Registre vide -> FAIL-CLOSED (aucun moteur fabriqué)...
+    assert d.get("status") == "FAIL_CLOSED"
+    assert d.get("error") == "NO_CANONICAL_ENGINE"
+    # ...mais l'escalade reste observable avec des défauts canoniques.
+    ev = mgr.metrics.escalation_events[0]
+    assert ev["attempted_model"] == canonical_registry.default_local()
+    assert ev["fallback_model"] == canonical_registry.PROVIDERS["gemini"].default_model
+    assert "gemini-2.5-flash" not in (ev["attempted_model"], ev["fallback_model"])
+
+
+def test_no_canonical_engine_fails_closed():
+    from unittest.mock import MagicMock, patch
+
+    with patch("core.cognition.model_router.canonical_model_registry") as reg:
+        reg.get_by_role = MagicMock(return_value=None)
+        d = ModelRouter().select_engine(task_type="general")
+    assert d.get("status") == "FAIL_CLOSED"
+    assert d.get("error") == "NO_CANONICAL_ENGINE"
+    assert d.get("provider") is None
+    assert d.get("model") is None
