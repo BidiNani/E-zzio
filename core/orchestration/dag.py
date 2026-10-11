@@ -146,7 +146,7 @@ class TaskDAG:
         parent_id: str | None = None,
         agent_id: str = "coder_worker",
         provider: str = "local_ollama",
-        policy_decision: str = "ALLOW",
+        policy_decision: str = "UNTESTED",
         approval_id: str | None = None,
         max_retries: int = 2,
         correlation_id: str | None = None,
