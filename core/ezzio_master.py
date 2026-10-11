@@ -920,8 +920,13 @@ class EzzioMaster:
                         risk_level=risk_level,
                     )
                 except Exception as b_err:
+                    # Canonique fail-closed : une erreur d'evaluation budgetaire ne doit
+                    # JAMAIS autoriser l'execution (interdiction de fail-open).
                     logger.warning(f"[MISSION DAG BUDGET EVAL FAIL] {b_err}")
-                    gov_record = {"decision": "ALLOW", "reason": "Budget check error, fail open"}
+                    gov_record = {
+                        "decision": "DENY",
+                        "reason": f"[BUDGET EVAL ERROR] fail-closed: {b_err}",
+                    }
 
             if gov_record.get("decision") == "DENY":
                 b_reason = gov_record.get("reason", "[BUDGET EXCEEDED] Budget insuffisant")

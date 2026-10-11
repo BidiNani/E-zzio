@@ -7,7 +7,7 @@ import pytest
 
 from core.cognition.execution_decision_engine import ExecutionDecision
 from core.ezzio_master import EzzioMaster
-from core.orchestration.dag import DAGExecutionStatus, DAGNode
+from core.orchestration.dag import DAGExecutionStatus, DAGNode, TaskDAG
 from core.providers.base_provider import ProviderResponse
 
 
@@ -28,6 +28,14 @@ def dummy_provider():
 async def test_mission_node_default_policy_decision_untested():
     """Test D — aucun ALLOW fabriqué: Un nouveau nœud DAG ne doit pas valoir ALLOW par défaut."""
     node = DAGNode(task_id="t1", title="test", action_type="coding")
+    assert node.policy_decision == "UNTESTED"
+    assert node.policy_decision != "ALLOW"
+
+
+def test_dag_add_node_default_policy_decision_untested():
+    """Test D2 — la fabrique ne doit pas fabriquer ALLOW par défaut (aucun ALLOW non prouvé)."""
+    dag = TaskDAG(dag_id="dag-default", name="default_policy")
+    node = dag.add_node("t1", "test", "coding")
     assert node.policy_decision == "UNTESTED"
     assert node.policy_decision != "ALLOW"
 
@@ -121,6 +129,38 @@ async def test_mission_budget_deny(dummy_provider):
                 node = dag["nodes"]["sub1"]
                 assert node["policy_decision"] == "DENY"
                 assert node["status"] == DAGExecutionStatus.FAILED.value
+
+
+@pytest.mark.asyncio
+async def test_mission_budget_eval_error_fails_closed(dummy_provider):
+    """Test C2 — fail-closed: une ERREUR d'évaluation budget ne doit JAMAIS autoriser l'exécution."""
+    master = EzzioMaster(provider=dummy_provider)
+
+    with patch.object(master.harness.policy_guard, "evaluate_intent", return_value=(True, "Allowed")):
+        with patch.object(
+            master.harness.governor,
+            "evaluate_and_record",
+            side_effect=RuntimeError("governor unavailable"),
+        ):
+            with patch.object(master.execution_engine, "evaluate_and_decide") as mock_decide:
+                res = await master.orchestrate_multi_agent_mission(
+                    mission_prompt="Exécution dont le budget échoue",
+                    subtask_specs=[
+                        {
+                            "task_id": "sub1",
+                            "role": "coding",
+                            "prompt": "Task with budget error",
+                        }
+                    ]
+                )
+
+                assert not mock_decide.called
+                dag = res.get("dag")
+                assert dag is not None
+                node = dag["nodes"]["sub1"]
+                assert node["policy_decision"] == "DENY"
+                assert node["status"] == DAGExecutionStatus.FAILED.value
+                assert "fail-closed" in node["error"]
 
 
 @pytest.mark.asyncio
