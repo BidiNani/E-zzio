@@ -562,6 +562,7 @@ class EzzioMaster:
                 "mission_id": mission_res.get("mission_id"),
                 "dag_id": mission_res.get("dag_id"),
                 "subtasks": mission_res.get("subtasks", []),
+                "proof_status": mission_res.get("proof_status"),
                 "used_fallback": False,
             }
             return await self._record_assistant_memory(res_mission, session_id, channel)
@@ -665,6 +666,18 @@ class EzzioMaster:
 
         elapsed_ms = int((time.perf_counter() - start_time) * 1000)
 
+        # 2bis. CompletionGate sur le chemin CHAT : sans artefact de preuve, un succès
+        # du harness vaut MEASURED (accepté, jamais PROVEN). Observable, jamais bloquant.
+        from core.quality_gate.completion_gate import CompletionGate
+        chat_gate = CompletionGate(audit_ledger=getattr(self.harness, "audit_ledger", None))
+        chat_decision = chat_gate.evaluate(
+            task_id=harness_result.get("correlation_id") or session_id or "",
+            worker_id="chat",
+            exit_code=0,
+            validation_passed=True,
+            evidence=None,
+        )
+
         res_conv = {
             "response": inner.get("response", ""),
             "answer": inner.get("answer", inner.get("response", "")),
@@ -685,10 +698,12 @@ class EzzioMaster:
             "harness_session_id": harness_result.get("session_id"),
             "harness_correlation_id": harness_result.get("correlation_id"),
             "harness_turn": harness_result.get("turn"),
+            "proof_status": chat_decision.proof_status,
         }
 
         _audit_command("CONV_MODEL", {
             "model": res_conv["model"], "provider": res_conv["provider"],
+            "proof_status": chat_decision.proof_status,
             "outcome": "RESPONDED",
             "session_id": session_id or "",
             "harness_session_id": harness_result.get("session_id"),
@@ -1285,12 +1300,26 @@ class EzzioMaster:
             synthesis_text = f"[Synthèse E-ZZIO Master {master_routing['model']}] Mission #{mission_id} orchestrée avec succès sur {len(results)} sous-tâches."
 
         all_ok = dag.is_completed()
+        # 6bis. CompletionGate — autorité canonique unique de preuve (Worker Result != Proof).
+        # La mission ne s'auto-déclare jamais PROVEN : seul le gate délivre la preuve,
+        # à partir des résultats des sous-tâches (évidence). DAG incomplet -> REJECTED.
+        from core.quality_gate.completion_gate import CompletionGate
+        mission_gate = CompletionGate(audit_ledger=getattr(self.harness, "audit_ledger", None))
+        mission_decision = mission_gate.evaluate(
+            task_id=mission_id,
+            worker_id="master-synthesis",
+            exit_code=0 if all_ok else 1,
+            validation_passed=all_ok,
+            evidence={"synthesis": synthesis_text, "subtasks": results, "dag_id": dag.dag_id},
+        )
+        proof_status = mission_decision.proof_status
         mission_record.status = MissionStatus.SUCCEEDED if all_ok else MissionStatus.FAILED
         mission_record.result = {
             "synthesis": synthesis_text,
             "master_model": master_routing["model"],
             "subtasks_count": len(results),
             "dag_id": dag.dag_id,
+            "proof_status": proof_status,
         }
 
         _audit_command("MISSION_SYNTHESIS_COMPLETED", {
@@ -1299,6 +1328,7 @@ class EzzioMaster:
             "master_model": master_routing["model"],
             "subtask_count": len(results),
             "all_ok": all_ok,
+            "proof_status": proof_status,
             "session_id": session_id or ""
         })
 
@@ -1320,6 +1350,7 @@ class EzzioMaster:
             "master_model": master_routing["model"],
             "subtasks": results,
             "synthesis": synthesis_text,
+            "proof_status": proof_status,
             "ok": all_ok
         }
 
