@@ -55,3 +55,28 @@ def test_local_only_blocks_cloud_target():
     r = _route("groq/llama-3.3-70b", local_only=True)
     assert r["status"] == "FAIL_CLOSED"
     assert r["error"] == "LOCAL_ONLY_BLOCKS_CLOUD_TARGET"
+
+
+def test_openrouter_provider_default_model_resolves():
+    r = _route("openrouter")
+    assert r["provider"] == "openrouter"
+    assert r["model"]
+
+
+def test_openrouter_namespaced_model_id_resolves():
+    # Les ids OpenRouter contiennent un '/' : la validation se fait par id complet.
+    r = _route("z-ai/glm-5.2:free")
+    assert r["provider"] == "openrouter"
+    assert r["model"] == "z-ai/glm-5.2:free"
+
+
+def test_openrouter_unknown_model_fails_closed():
+    r = _route("openrouter/not-a-real-model:free")
+    assert r["status"] == "FAIL_CLOSED"
+    assert r["error"] == "UNKNOWN_MODEL_TARGET"
+
+
+def test_nvidia_provider_default_model_resolves():
+    r = _route("nvidia")
+    assert r["provider"] == "nvidia"
+    assert r["model"].startswith("nvidia/")

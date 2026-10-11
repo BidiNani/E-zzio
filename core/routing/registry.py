@@ -24,7 +24,9 @@ from typing import Literal
 
 ThinkingMethod = Literal["thinkingLevel", "thinkingBudget", "budget_tokens", "none"]
 Level = Literal["off", "low", "medium", "high"]
-ProviderName = Literal["gemini", "groq", "anthropic", "openai", "mistral"]
+ProviderName = Literal[
+    "gemini", "groq", "anthropic", "openai", "mistral", "openrouter", "nvidia",
+]
 LocalRole = Literal[
     "FAST_LOCAL", "LOCAL", "LOCAL_CODING", "LOCAL_MINI",
     "LOCAL_THINKING", "LOCAL_AGENT", "VISION", "EMBEDDING",
@@ -141,6 +143,22 @@ MISTRAL_MODELS = (
               thinking_method="none"),
 )
 
+# OpenRouter : modèles GRATUITS (ids namespacés, source dynamique codée en dur ici).
+# Les prix/gratuité réels restent vérifiés par core/coding/model_registry.py (live).
+OPENROUTER_MODELS = (
+    ModelSpec("z-ai/glm-5.2:free", "openrouter", "glm-5", is_free=True),
+    ModelSpec("cohere/north-mini-code:free", "openrouter", "north", is_free=True),
+    ModelSpec("qwen/qwen3.8-27b:free", "openrouter", "qwen3.8", is_free=True),
+    ModelSpec("nvidia/nemotron-3-ultra-550b-a55b:free", "openrouter", "nemotron-3", is_free=True),
+    ModelSpec("google/gemma-4-31b-it:free", "openrouter", "gemma-4", is_free=True),
+    ModelSpec("google/gemma-4-26b-a4b-it:free", "openrouter", "gemma-4", is_free=True),
+)
+
+# NVIDIA NIM (endpoint OpenAI-compatible).
+NVIDIA_MODELS = (
+    ModelSpec("nvidia/nemotron-3.5-lightning-30b-a3b", "nvidia", "nemotron-3.5"),
+)
+
 
 
 # ============================================================
@@ -194,6 +212,21 @@ PROVIDERS: dict[ProviderName, ProviderSpec] = {
         default_model="mistral/mistral-large",
         api_key_env=("MISTRAL_API_KEY",),
         models=MISTRAL_MODELS,
+    ),
+    "openrouter": ProviderSpec(
+        name="openrouter",
+        base_url="https://openrouter.ai/api/v1",
+        default_model="z-ai/glm-5.2:free",
+        fallback_models=("qwen/qwen3.8-27b:free", "google/gemma-4-31b-it:free"),
+        api_key_env=("OPENROUTER_API_KEY",),
+        models=OPENROUTER_MODELS,
+    ),
+    "nvidia": ProviderSpec(
+        name="nvidia",
+        base_url="https://integrate.api.nvidia.com/v1",
+        default_model="nvidia/nemotron-3.5-lightning-30b-a3b",
+        api_key_env=("NVIDIA_API_KEY", "NVIDIA_CLOUD_API_KEY"),
+        models=NVIDIA_MODELS,
     ),
 }
 

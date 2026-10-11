@@ -50,6 +50,28 @@
         "MISTRAL_API_KEY"
       ],
       "models_count": 1
+    },
+    "openrouter": {
+      "base_url": "https://openrouter.ai/api/v1",
+      "default_model": "z-ai/glm-5.2:free",
+      "fallback_models": [
+        "qwen/qwen3.8-27b:free",
+        "google/gemma-4-31b-it:free"
+      ],
+      "api_key_env": [
+        "OPENROUTER_API_KEY"
+      ],
+      "models_count": 6
+    },
+    "nvidia": {
+      "base_url": "https://integrate.api.nvidia.com/v1",
+      "default_model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+      "fallback_models": [],
+      "api_key_env": [
+        "NVIDIA_API_KEY",
+        "NVIDIA_CLOUD_API_KEY"
+      ],
+      "models_count": 1
     }
   },
   "models": {
@@ -69,7 +91,8 @@
       "source": "GEMINI",
       "role": "CODING",
       "roles": [
-        "CODING"
+        "CODING",
+        "ADVANCED_CODING"
       ],
       "thinking_level": "low",
       "enabled": true
@@ -172,9 +195,9 @@
     }
   },
   "counts": {
-    "cloud_active": 12,
+    "cloud_active": 19,
     "local_active": 13,
     "with_roles": 11,
-    "providers": 5
+    "providers": 7
   }
 }
