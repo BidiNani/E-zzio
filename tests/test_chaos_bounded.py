@@ -173,4 +173,8 @@ def test_unknown_model_target_fail_closed():
             channel="test", model_target="modele-inexistant-xyz")
 
     res = asyncio.run(_run())
-    assert res.get("ok") is True or "model" in res
+    # Une cible de modèle hors registre canonique ne doit JAMAIS être routée :
+    # le noyau refuse en FAIL-CLOSED.
+    assert res.get("ok") is False
+    assert "FAIL-CLOSED" in str(res.get("response", ""))
+    assert "canonical" in str(res.get("error", ""))

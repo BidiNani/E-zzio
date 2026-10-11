@@ -625,7 +625,14 @@ class EzzioMaster:
         if harness_result.get("status") != "SUCCESS":
             elapsed_ms = int((time.perf_counter() - start_time) * 1000)
             error_info = harness_result.get("error", {})
-            error_msg = error_info.get("safe_message", "Harness execution failed")
+            if isinstance(error_info, dict):
+                error_msg = (
+                    error_info.get("safe_message")
+                    or harness_result.get("reason")
+                    or "Harness execution failed"
+                )
+            else:
+                error_msg = str(error_info) if error_info else "Harness execution failed"
             fail_msg = f"[FAIL-CLOSED] {error_msg}"
             _audit_command("HARNESS_FAILED", {
                 "status": harness_result.get("status"),

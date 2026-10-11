@@ -10,6 +10,7 @@ from core.cognition.local_autonomy import (
     LocalAutonomyManager,
     LocalEscalationEvent,
 )
+from core.routing import registry as canonical_registry
 from core.routing.model_registry import canonical_model_registry
 
 logger = logging.getLogger(__name__)
@@ -18,6 +19,61 @@ logger = logging.getLogger(__name__)
 class ModelRouter:
     def __init__(self, local_autonomy: LocalAutonomyManager | None = None):
         self.local_autonomy = local_autonomy or LocalAutonomyManager()
+
+    def _resolve_explicit_target(self, model_target: str) -> dict[str, Any] | None:
+        """Valide et résout une cible explicite contre la SOURCE CANONIQUE (registry).
+
+        Accepte uniquement :
+          - "provider/modèle"     si le provider est canonique (model_target.split('/')[0])
+          - "modèle"              si présent dans le registre canonique (cloud)
+          - "local"/"ollama"/nom local connu
+          - nom de provider seul ("gemini", "groq"...) -> modèle PAR DÉFAUT du provider
+        Toute cible inconnue est FAIL-CLOSED : aucune cible arbitraire hors registre.
+        """
+        raw = (model_target or "").strip()
+        lowered = raw.lower()
+
+        if lowered in ("local", "ollama"):
+            # "local" est déjà traité en amont (get_by_role FAST/CODING) ; "ollama"
+            # n'a pas de modèle unique -> on délègue à la sélection LOCAL canonique.
+            local_rec = canonical_model_registry.get_by_role("LOCAL") or canonical_model_registry.get_by_role("LOCAL_CODING")
+            if local_rec and local_rec.source.name == "LOCAL":
+                return {"provider": "ollama", "model": local_rec.name}
+            return {"provider": "ollama", "model": canonical_registry.default_local()}
+
+        # 1. Cible de la forme "provider/modèle"
+        if "/" in raw:
+            provider, model_name = raw.split("/", 1)
+            provider = provider.strip().lower()
+            model_name = model_name.strip()
+            if provider in canonical_registry.PROVIDERS:
+                # L'identifiant canonique du modèle inclut le préfixe provider pour
+                # certains providers (ex: groq/llama-3.3-70b). On valide l'id complet
+                # contre la source unique : toute cible non déclarée -> FAIL-CLOSED.
+                if canonical_registry.get_model(raw):
+                    return {"provider": provider, "model": raw}
+                return None
+            if provider == "ollama":
+                if model_name and canonical_registry.get_local(model_name):
+                    return {"provider": "ollama", "model": model_name}
+                return None
+            return None
+
+        # 2. Nom de provider seul -> modèle par défaut canonique
+        if lowered in canonical_registry.PROVIDERS:
+            return {"provider": lowered, "model": canonical_registry.PROVIDERS[lowered].default_model}
+
+        # 3. Modèle canonique enregistré (cloud)
+        rec = canonical_model_registry.get(raw)
+        if rec and getattr(rec, "provider", ""):
+            return {"provider": rec.provider, "model": rec.name}
+
+        # 4. Modèle local connu
+        if canonical_registry.get_local(raw):
+            return {"provider": "ollama", "model": raw}
+
+        # 5. Inconnu -> FAIL-CLOSED
+        return None
 
     def select_engine(
         self,
@@ -39,24 +95,19 @@ class ModelRouter:
         model_target = kwargs.get("model_target")
         if model_target and model_target != "auto":
             local_only = bool(kwargs.get("local_only", False))
-            provider = "gemini"
-            model_name = model_target
-            if model_target.strip().lower() == "local":
-                # Token canonique "local" : resolution via le registre (source LOCAL d'abord)
-                local_rec = canonical_model_registry.get_by_role("FAST") or canonical_model_registry.get_by_role("CODING")
-                if local_rec and local_rec.source.name == "LOCAL":
-                    provider, model_name = "ollama", local_rec.name
-                else:
-                    provider, model_name = "ollama", "qwen2.5-coder:7b"
-            elif "/" in model_target:
-                parts = model_target.split("/", 1)
-                provider = parts[0]
-            else:
-                rec = canonical_model_registry.get(model_target)
-                if rec and rec.provider:
-                    provider = rec.provider
-                elif any(loc in model_target.lower() for loc in ("qwen", "ollama", "deepseek", "phi")):
-                    provider = "ollama"
+            # Gouvernance : la cible explicite est VALIDEE contre la source canonique
+            # (core.routing.registry). Toute cible inconnue -> FAIL-CLOSED.
+            resolved = self._resolve_explicit_target(model_target)
+            if resolved is None:
+                return {
+                    "status": "FAIL_CLOSED",
+                    "error": "UNKNOWN_MODEL_TARGET",
+                    "reason": f"model_target '{model_target}' is not a canonical provider/model (registry)",
+                    "provider": None,
+                    "model": None,
+                }
+            provider = resolved["provider"]
+            model_name = resolved["model"]
             is_local_target = (provider == "ollama")
             # Souverainete (LOCAL-FIRST) : local_only interdit toute cible cloud,
             # y compris explicite. FAIL-CLOSED observable, jamais de bascule cloud implicite.
